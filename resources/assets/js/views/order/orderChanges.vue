@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>订单变更</h2>
+        <h2>订单管理</h2>
     </div>
 </template>
 <script>

@@ -1716,7 +1716,8 @@
       },
       urls:{
         get:function(){
-          return this.$store.state.urls
+            console.log(this.$store.state.urls);
+          return this.$store.state.urls;
         },
         set:function(){}
       }
@@ -1738,7 +1739,10 @@
             this.newOpt[1].nClick = false;
             this.newOpt[2].nClick = false;
             this.newOpt[3].nClick = false;
-            this.$fetch(this.urls.purchases,{purchase_status:'new',include:'user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination'})
+            this.$fetch(this.urls.purchases,{
+                purchase_status:'new',
+                include:'user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination'
+            })
               .then(res => {
                 this.newLoading = false;
                 this.newData = res.data;
