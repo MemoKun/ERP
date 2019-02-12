@@ -655,7 +655,7 @@ const constantRouterMap = [
       },
     ]
   },
- /* {
+  {
     name: 'System',
     path: '/system',
     component: Layout,
@@ -681,7 +681,7 @@ const constantRouterMap = [
         meta: {title: '角色用户关联', icon: 'asso',requireAuth: true}
       }
     ]
-  },*/
+  },
  /* {
     name: 'ReportStatistics',
     path: '/reportStatistics',

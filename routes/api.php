@@ -61,7 +61,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('acctypes/editstatus', 'AccountingTypesController@editStatusByIds')
             ->name('api.acctypes.editstatusbyids');
 
-            
+
         //费用类型
         $api->get('feetypes', 'FeeTypesController@index')
             ->name('api.feetypes.index');
@@ -157,7 +157,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 //            ->name('api.storagetypes.destroybyids');
 //        $api->put('storagetypes', 'StorageTypesController@editStatusByIds')
 //            ->name('api.storagetypes.editstatusbyids');
-            
+
         //城市信息
         $api->get('cityinfos', 'CityInfosController@index')
             ->name('api.cityinfos.index');
@@ -168,8 +168,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('cityinfos', 'CityInfosController@destroybyids')
             ->name('api.cityinfos.destroybyids');
         $api->put('cityinfos/editstatus', 'CityInfosController@editStatusByIds')
-            ->name('api.cityinfos.editstatusbyids');            
-            
+            ->name('api.cityinfos.editstatusbyids');
+
         //损坏商品
         $api->get('damagedgoods', 'DamagedGoodsController@index')
             ->name('api.damagedgoods.index');
@@ -184,8 +184,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('damagedgoods', 'DamagedGoodsController@destroybyids')
             ->name('api.damagedgoods.destroybyids');
         $api->put('damagedgoods/editstatus', 'DamagedGoodsController@editStatusByIds')
-            ->name('api.damagedgoods.editstatusbyids');            
-        
+            ->name('api.damagedgoods.editstatusbyids');
+
         //物流区域资源
         $api->get('logisticsareas', 'LogisticsAreasController@index')
             ->name('api.logisticsareas.index');
@@ -200,7 +200,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('logisticsareas', 'LogisticsAreasController@destroybyids')
             ->name('api.logisticsareas.destroybyids');
         $api->put('logisticsareas/editstatus', 'LogisticsAreasController@editStatusByIds')
-            ->name('api.logisticsareas.editstatusbyids');  
+            ->name('api.logisticsareas.editstatusbyids');
 
         //物流资源
         $api->get('logistics', 'LogisticsController@index')
@@ -281,7 +281,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.suppliers.destroybyids');
         $api->put('suppliers/editstatus', 'SuppliersController@editStatusByIds')
             ->name('api.suppliers.editstatusbyids');
-            
+
         //供应商资源
         $api->get('shops', 'ShopsController@index')
             ->name('api.shops.index');
@@ -297,7 +297,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.shops.destroybyids');
         $api->put('shops/editstatus', 'ShopsController@editStatusByIds')
             ->name('api.shops.editstatusbyids');
-            
+
         //系列资源
         $api->get('series', 'SeriesController@index')
             ->name('api.series.index');
@@ -312,8 +312,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('series', 'SeriesController@destroybyids')
             ->name('api.series.destroybyids');
         $api->put('series/editstatus', 'SeriesController@editStatusByIds')
-            ->name('api.series.editstatusbyids'); 
-                       
+            ->name('api.series.editstatusbyids');
+
         //打印报表资源
         $api->get('printreports', 'PrintReportsController@index')
             ->name('api.printreports.index');
@@ -328,7 +328,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('printreports', 'PrintReportsController@destroybyids')
             ->name('api.printreports.destroybyids');
         $api->put('printreports/editstatus', 'PrintReportsController@editStatusByIds')
-            ->name('api.printreports.editstatusbyids');  
+            ->name('api.printreports.editstatusbyids');
 
         //平台资源
         $api->get('platforms', 'PlatformsController@index')
@@ -345,7 +345,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.platforms.destroybyids');
         $api->put('platforms/editstatus', 'PlatformsController@editStatusByIds')
             ->name('api.platforms.editstatusbyids');
-            
+
         //平台资源
         $api->get('departments', 'DepartmentsController@index')
             ->name('api.departments.index');
@@ -397,7 +397,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
              ->name('api.products.destroybyids');
          $api->put('products/editstatus', 'ProductsController@editStatusByIds')
              ->name('api.products.editstatusbyids');
-        
+
         //产品子件资源
          $api->get('productcomponents', 'ProductComponentsController@index')
              ->name('api.productcomponents.index');
@@ -903,6 +903,9 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
+
+        $api->get('roledetails', 'RoleDetailsController@index')
+            ->name('api.roledetails.index');
 
     });
 
