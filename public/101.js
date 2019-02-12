@@ -1,14 +1,14 @@
 webpackJsonp([101],{
 
-/***/ 500:
+/***/ 533:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(638)
+var __vue_script__ = __webpack_require__(771)
 /* template */
-var __vue_template__ = __webpack_require__(639)
+var __vue_template__ = __webpack_require__(772)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,18 +25,18 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\views\\basicInf\\offlineAccountConf.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/miniPackageMag.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-018fc15a", Component.options)
+    hotAPI.createRecord("data-v-0b5fd6bd", Component.options)
   } else {
-    hotAPI.reload("data-v-018fc15a", Component.options)
+    hotAPI.reload("data-v-0b5fd6bd", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 638:
+/***/ 771:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65,10 +65,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       newOpt: [{
         cnt: '新增',
         icon: 'bf-add',
-        ent: this.test
-      }, {
-        cnt: '修改',
-        icon: 'bf-change',
         ent: this.test
       }, {
         cnt: '删除',
@@ -102,7 +98,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 639:
+/***/ 772:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -116,7 +112,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("线下账户配置")])])
+    return _c("div", [_c("h2", [_vm._v("最小包管理")])])
   }
 ]
 render._withStripped = true
@@ -124,7 +120,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-018fc15a", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0b5fd6bd", module.exports)
   }
 }
 

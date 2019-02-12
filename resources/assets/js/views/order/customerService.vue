@@ -1,15 +1,16 @@
 <template>
     <div>
         <el-tabs v-model="activeName" @tab-click="outerHandleClick">
-            <el-tab-pane label="订单列表" name="0">
+            <el-tab-pane label="订单" name="0">
                 <div>
                     <div class="searchBox">
-                        <span><label>会员名称</label><el-input v-model="searchBox.vip_name" clearable></el-input></span>
-                        <span><label>订单编号</label><el-input v-model="searchBox.order_num" clearable></el-input></span>
-                        <span><label>收货人</label><el-input v-model="searchBox.order_man" clearable></el-input></span>
-                        <span v-if="filterBox"><label>收货手机</label><el-input v-model="searchBox.order_phone" clearable></el-input></span>
+                      <sapn><label>我就不信你显示不出来了！！</label></sapn>
+                        <span><label>你为什么不显示呢</label><el-input v-model="searchBox.vip_name" clearable></el-input></span>
+                        <span><label>订单编号666</label><el-input v-model="searchBox.order_num" clearable></el-input></span>
+                        <span><label>收货人666</label><el-input v-model="searchBox.order_man" clearable></el-input></span>
+                        <span v-if="filterBox"><label>收货手机666</label><el-input v-model="searchBox.order_phone" clearable></el-input></span>
                         <span v-else>
-                                <el-button type="primary">筛选</el-button>
+                                <el-button type="primary">筛选666</el-button>
                                 <el-button>重置</el-button>
                                 <span @click="toggleShow">
                                     <el-button type="text">展开</el-button>

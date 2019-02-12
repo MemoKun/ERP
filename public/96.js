@@ -1,14 +1,14 @@
 webpackJsonp([96],{
 
-/***/ 498:
+/***/ 529:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(634)
+var __vue_script__ = __webpack_require__(763)
 /* template */
-var __vue_template__ = __webpack_require__(635)
+var __vue_template__ = __webpack_require__(764)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,18 +25,18 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\views\\basicInf\\proMap.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/proBom.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0293093b", Component.options)
+    hotAPI.createRecord("data-v-293375a8", Component.options)
   } else {
-    hotAPI.reload("data-v-0293093b", Component.options)
+    hotAPI.reload("data-v-293375a8", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,11 +48,25 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 634:
+/***/ 763:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -67,6 +81,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: 'bf-add',
         ent: this.test
       }, {
+        cnt: '修改',
+        icon: 'bf-change',
+        ent: this.test
+      }, {
         cnt: '删除',
         icon: 'bf-del',
         ent: this.test
@@ -74,13 +92,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         cnt: '刷新',
         icon: 'bf-refresh',
         ent: this.test
-      }]
+      }],
+      searchBox: {
+        buyNick: '',
+        shopTitle: ''
+      },
+      currentPage: true
     };
   },
 
   methods: {
     test: function test() {
       console.log(1);
+    },
+    getData: function getData() {
+      alert(this.searchBox);
+      console.log(this.searchBox);
     }
   },
   mounted: function mounted() {
@@ -98,29 +125,121 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 635:
+/***/ 764:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm.currentPage
+      ? _c("div", { staticClass: "searchBox" }, [
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("商品简称")]),
+              _vm._v(" "),
+              _c("el-input", {
+                staticClass: "half",
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      "keyCode" in $event &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.getData($event)
+                  }
+                },
+                model: {
+                  value: _vm.searchBox.buyNick,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "buyNick", $$v)
+                  },
+                  expression: "searchBox.buyNick"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("规格名称")]),
+              _vm._v(" "),
+              _c("el-input", {
+                staticClass: "half",
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      "keyCode" in $event &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.getData($event)
+                  }
+                },
+                model: {
+                  value: _vm.searchBox.shopTitle,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                  },
+                  expression: "searchBox.shopTitle"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("包含材料")]),
+              _vm._v(" "),
+              _c("el-input", {
+                staticClass: "half",
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      "keyCode" in $event &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.getData($event)
+                  }
+                },
+                model: {
+                  value: _vm.searchBox.shopTitle,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                  },
+                  expression: "searchBox.shopTitle"
+                }
+              })
+            ],
+            1
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("h2", [_vm._v("产品Bom")])
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("产品映射")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-0293093b", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-293375a8", module.exports)
   }
 }
 

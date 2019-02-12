@@ -1,14 +1,14 @@
 webpackJsonp([58],{
 
-/***/ 490:
+/***/ 488:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(617)
+var __vue_script__ = __webpack_require__(672)
 /* template */
-var __vue_template__ = __webpack_require__(618)
+var __vue_template__ = __webpack_require__(673)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,18 +25,18 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\views\\basicInf\\accountType.vue"
+Component.options.__file = "resources/assets/js/views/refund/afterSaleReAudit.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1d4fcfeb", Component.options)
+    hotAPI.createRecord("data-v-7cc79279", Component.options)
   } else {
-    hotAPI.reload("data-v-1d4fcfeb", Component.options)
+    hotAPI.reload("data-v-7cc79279", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 617:
+/***/ 672:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58,668 +58,89 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      //操作
       newOpt: [{
-        cnt: '新增',
-        icon: 'bf-add',
-        ent: this.addNew
+        cnt: '修改',
+        icon: 'bf-change',
+        ent: this.test
       }, {
         cnt: '删除',
         icon: 'bf-del',
-        ent: this.doDelMore
+        ent: this.test
+      }, {
+        cnt: '锁定',
+        icon: 'bf-lock',
+        ent: this.test
+      }, {
+        cnt: '解锁',
+        icon: 'bf-delock',
+        ent: this.test
+      }, {
+        cnt: '驳回',
+        icon: 'bf-reject',
+        ent: this.test
+      }, {
+        cnt: '审核',
+        icon: 'bf-audit',
+        ent: this.test
+      }, {
+        cnt: '退审',
+        icon: 'bf-auditfaild',
+        ent: this.test
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
-        ent: this.refresh
-      }],
-      //表格
-      tableKey: [[{
-        label: '类型',
-        width: '280',
-        prop: "name",
-        holder: '输入类型',
-        type: 'text'
-      }, {
-        label: '状态',
-        width: '280',
-        prop: "status",
-        holder: '状态',
-        type: 'select_stu',
-        doSort: true
-      }]],
-      url: ['/acctypes'],
-      title: ['新增记账类型'],
-      ruleForm: [{
-        name: '',
-        status: '1'
-      }],
-      rules: [{
-        name: [{ required: true, message: '请输入标记代码', trigger: 'blur' }]
-      }],
-      addArr: [[{
-        label: '类型',
-        prop: 'name',
-        holder: '请输入类型',
-        type: 'text'
-      }, {
-        label: '状态',
-        prop: 'status',
-        holder: '请选择状态',
-        type: 'select_stu'
-      }]]
+        ent: this.test
+      }]
     };
   },
 
   methods: {
-    //新增
-    addNew: function addNew() {
-      this.$store.dispatch('setShowAdd', true);
-    },
-    edit: function edit(row) {
-      var obj = {
-        id: row.id,
-        name: row.name,
-        status: row.status
-      };
-      this.$store.dispatch('setRow', row);
-      this.$store.dispatch('setUrl', this.url[0] + "/");
-      this.$store.dispatch('doEdit', obj);
-    },
-    doDelMore: function doDelMore() {
-      this.$refs.tabs.$emit('delMore');
-    },
-    refresh: function refresh() {
-      this.$store.dispatch('refresh');
+    test: function test() {
+      console.log(1);
     }
   },
   mounted: function mounted() {
-    this.$store.dispatch('setTabs', false);
-    this.$store.dispatch('setOpt', this.newOpt);
+    this.$store.state.opt.opts = this.newOpt;
+    this.$store.commit('change', this.newOpt);
     var that = this;
     $(window).resize(function () {
-      that.$store.dispatch('setOpt', that.newOpt);
+      return function () {
+        that.$store.state.opt.opts = that.newOpt;
+        that.$store.commit('change', that.newOpt);
+      }();
     });
   }
 });
 
 /***/ }),
 
-/***/ 618:
+/***/ 673:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("v-tabs", {
-        ref: "tabs",
-        attrs: {
-          "table-key": _vm.tableKey,
-          url: _vm.url,
-          title: _vm.title,
-          "rule-form": _vm.ruleForm,
-          rules: _vm.rules,
-          "add-arr": _vm.addArr
-        },
-        on: { edit: _vm.edit }
-      })
-    ],
-    1
-  )
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h2", [_vm._v("售后退款审核")])])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-1d4fcfeb", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7cc79279", module.exports)
   }
 }
 

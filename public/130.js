@@ -6,9 +6,9 @@ webpackJsonp([130],{
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(634)
+var __vue_script__ = __webpack_require__(628)
 /* template */
-var __vue_template__ = __webpack_require__(635)
+var __vue_template__ = __webpack_require__(629)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,18 +25,18 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\views\\CRMCustomer\\indexOfConsumption.vue"
+Component.options.__file = "resources/assets/js/views/CRMCustomer/SMSTemplate.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-df6a7842", Component.options)
+    hotAPI.createRecord("data-v-17d2061d", Component.options)
   } else {
-    hotAPI.reload("data-v-df6a7842", Component.options)
+    hotAPI.reload("data-v-17d2061d", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 634:
+/***/ 628:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63,8 +63,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
-        cnt: '导出',
-        icon: 'bf-out',
+        cnt: '新增',
+        icon: 'bf-add',
+        ent: this.test
+      }, {
+        cnt: '修改',
+        icon: 'bf-change',
+        ent: this.test
+      }, {
+        cnt: '还原',
+        icon: 'bf-reduce',
+        ent: this.test
+      }, {
+        cnt: '作废',
+        icon: 'bf-void',
         ent: this.test
       }, {
         cnt: '刷新',
@@ -94,7 +106,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 635:
+/***/ 629:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -108,7 +120,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("index of consumption消费指数")])])
+    return _c("div", [_c("h2", [_vm._v("短信模板")])])
   }
 ]
 render._withStripped = true
@@ -116,7 +128,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-df6a7842", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-17d2061d", module.exports)
   }
 }
 

@@ -116,7 +116,7 @@ const constantRouterMap = [
       }
     ]
   },
-  /*{
+  {
     name: 'CRMCustomer',
     path: '/CRMCustomer',
     component: Layout,
@@ -154,8 +154,8 @@ const constantRouterMap = [
         meta: {title: '意向客户', icon: 'intenCus',requireAuth: true}
       }
     ]
-  },*/
- /* {
+  },
+ {
     name: 'Financial',
     path: '/financial',
     component: Layout,
@@ -181,8 +181,8 @@ const constantRouterMap = [
         meta: {title: '财务开票', icon: 'borrow',requireAuth: true}
       }
     ]
-  },*/
- /* {
+  },
+ {
     name: 'ReturnVisit',
     path: '/returnVisit',
     component: Layout,
@@ -208,7 +208,7 @@ const constantRouterMap = [
         meta: {title: '财务确认', icon: 'financial',requireAuth: true}
       }
     ]
-  },*/
+  },
   {
     name: 'Purchase',
     path: '/purchase',
@@ -254,7 +254,7 @@ const constantRouterMap = [
       }
     ]
   },
- /* {
+ {
     name: 'ReturnGoods',
     path: '/returnGoods',
     component: Layout,
@@ -292,8 +292,8 @@ const constantRouterMap = [
         meta: {title: '退货管理中心', icon: 'reCt',requireAuth: true}
       }
     ]
-  },*/
- /* {
+  },
+ {
     name: 'Refund',
     path: '/refund',
     component: Layout,
@@ -331,8 +331,8 @@ const constantRouterMap = [
         meta: {title: '审核校对', icon: 'sync',requireAuth: true}
       }
     ]
-  },*/
- /* {
+  },
+ {
     name: 'Stock',
     path: '/stock',
     component: Layout,
@@ -388,8 +388,8 @@ const constantRouterMap = [
         meta: {title: '半成品出库', icon: 'hPro',requireAuth: true}
       }
     ]
-  },*/
- /* {
+  },
+ {
     name: 'DownloadCenter',
     path: '/dwnCenter',
     component: Layout,
@@ -415,7 +415,7 @@ const constantRouterMap = [
         meta: {title: '退款单下载', icon: 'remoneylist',requireAuth: true}
       }
     ]
-  },*/
+  },
   {
     name: 'BasicInf',
     path: '/basicInf',
@@ -655,7 +655,7 @@ const constantRouterMap = [
       },
     ]
   },
- /* {
+ {
     name: 'System',
     path: '/system',
     component: Layout,
@@ -681,8 +681,8 @@ const constantRouterMap = [
         meta: {title: '角色用户关联', icon: 'asso',requireAuth: true}
       }
     ]
-  },*/
- /* {
+  },
+ {
     name: 'ReportStatistics',
     path: '/reportStatistics',
     component: Layout,
@@ -869,8 +869,8 @@ const constantRouterMap = [
         meta: {title: '运费管理报表', icon: 'typeP',requireAuth: true}
       }
     ]
-  },*/
- /* {
+  },
+ /*{
     name: 'ReSupplied',
     path: '/reSupplied',
     component: Layout,
@@ -903,7 +903,7 @@ const constantRouterMap = [
       },
     ]
   },*/
- /* {
+ {
     name: 'AfterSaleManagement',
     path: '/afterSaleMag',
     component: Layout,
@@ -935,8 +935,8 @@ const constantRouterMap = [
         meta: {title: '售后中心', icon: 'cusMag',requireAuth: true}
       }
     ]
-  },*/
- /* {
+  },
+ {
     name: 'AfterSaleCompensation',
     path: '/afterSaleCompensation',
     component: Layout,
@@ -962,7 +962,7 @@ const constantRouterMap = [
         meta: {title: '赔偿中心', icon: 'cusMag',requireAuth: true}
       }
     ]
-  },*/
+  },
   {
     path: '/hello',
     component: Layout,

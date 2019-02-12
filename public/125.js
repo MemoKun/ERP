@@ -1,14 +1,14 @@
 webpackJsonp([125],{
 
-/***/ 575:
+/***/ 578:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(863)
+var __vue_script__ = __webpack_require__(864)
 /* template */
-var __vue_template__ = __webpack_require__(864)
+var __vue_template__ = __webpack_require__(865)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,18 +25,18 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\views\\afterSaleMag\\afterSCenter.vue"
+Component.options.__file = "resources/assets/js/views/afterSaleCompensation/cmptnCenter.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fcdcaf4a", Component.options)
+    hotAPI.createRecord("data-v-3f287980", Component.options)
   } else {
-    hotAPI.reload("data-v-fcdcaf4a", Component.options)
+    hotAPI.reload("data-v-3f287980", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 863:
+/***/ 864:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63,16 +63,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
-        cnt: '删除',
-        icon: 'bf-del',
-        ent: this.test
-      }, {
         cnt: '导出',
         icon: 'bf-out',
-        ent: this.test
-      }, {
-        cnt: '还原',
-        icon: 'bf-reduce',
         ent: this.test
       }, {
         cnt: '刷新',
@@ -102,7 +94,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 864:
+/***/ 865:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -116,7 +108,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("售后中心")])])
+    return _c("div", [_c("h2", [_vm._v("赔偿中心")])])
   }
 ]
 render._withStripped = true
@@ -124,7 +116,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-fcdcaf4a", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-3f287980", module.exports)
   }
 }
 

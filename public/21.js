@@ -1,14 +1,14 @@
 webpackJsonp([21],{
 
-/***/ 459:
+/***/ 484:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(546)
+var __vue_script__ = __webpack_require__(664)
 /* template */
-var __vue_template__ = __webpack_require__(547)
+var __vue_template__ = __webpack_require__(665)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,18 +25,18 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\views\\order\\auditOfFinancialBrushes.vue"
+Component.options.__file = "resources/assets/js/views/returnGoods/warehouseReReview.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f734b1b4", Component.options)
+    hotAPI.createRecord("data-v-0c1e4e62", Component.options)
   } else {
-    hotAPI.reload("data-v-f734b1b4", Component.options)
+    hotAPI.reload("data-v-0c1e4e62", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 546:
+/***/ 664:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67,18 +67,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: 'bf-change',
         ent: this.test
       }, {
-        cnt: '删除',
-        icon: 'bf-del',
-        ent: this.test
-      }, {
-        cnt: '提交',
-        icon: 'bf-submit',
-        ent: this.test
-      }, {
-        cnt: '驳回',
-        icon: 'bf-reject',
-        ent: this.test
-      }, {
         cnt: '审核',
         icon: 'bf-audit',
         ent: this.test
@@ -87,24 +75,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: 'bf-auditfaild',
         ent: this.test
       }, {
-        cnt: '发货',
-        icon: 'bf-deliver',
-        ent: this.test
-      }, {
-        cnt: '批量处理',
-        icon: 'bf-more',
-        ent: this.test
-      }, {
-        cnt: '导出',
-        icon: 'bf-out',
-        ent: this.test
-      }, {
-        cnt: '下载',
-        icon: 'bf-dwn',
-        ent: this.test
-      }, {
-        cnt: '还原',
-        icon: 'bf-reduce',
+        cnt: '打印',
+        icon: 'bf-printer',
         ent: this.test
       }, {
         cnt: '刷新',
@@ -134,7 +106,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 547:
+/***/ 665:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -148,7 +120,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("财务刷单审核")])])
+    return _c("div", [_c("h2", [_vm._v("仓储退货审核")])])
   }
 ]
 render._withStripped = true
@@ -156,7 +128,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-f734b1b4", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0c1e4e62", module.exports)
   }
 }
 
