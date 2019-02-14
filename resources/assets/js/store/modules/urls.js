@@ -49,7 +49,7 @@ const urls= {
     paymentdetails:'/paymentdetails',
     warehousingdepts:'/warehousingdepts',
     returnreasons:'/returnreasons',
-    roledetails:'/roledetails',
+    roles:'/roles',
 
 
     me:'/me',

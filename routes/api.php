@@ -904,8 +904,12 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
 
-        $api->get('roledetails', 'RoleDetailsController@index')
-            ->name('api.roledetails.index');
+        //角色管理
+        $api->get('roles', 'RolesController@index')
+            ->name('api.roles.index');
+
+        $api->delete('roles','RolesController@destroyByIds')
+            ->name('api.roles.destroybyids');
 
     });
 
