@@ -75,7 +75,8 @@
                   {
                       label: '组',
                       width: '120',
-                      prop: "role_group_id",
+                      prop: "roleGroup",
+                      inProp: "name",
                       holder: '请输入角色组',
                       type: 'text'
                   },
@@ -174,7 +175,9 @@
     methods:{
         //获取数据
         fetchData(){
-            this.$fetch(this.urls.roledetails)
+            this.$fetch(this.urls.roledetails,{
+                include:'roleGroup'
+            })
                 .then(res => {
                     console.log(res.data);
                     this.loading = false;
@@ -214,7 +217,9 @@
         },
         /*分页*/
         handlePagChg(page){
-            this.$fetch(this.urls.roledetails+'?page='+page)
+            this.$fetch(this.urls.roledetails+'?page='+page,{
+                include:'group'
+            })
                 .then(res=>{
                     this.supplierVal = res.data;
                 })

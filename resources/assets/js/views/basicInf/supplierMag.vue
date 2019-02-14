@@ -40,7 +40,7 @@
                             width="95" align="center"
                             :checked="checkboxInit">
                     </el-table-column>
-                    <el-table-column v-for="item in tableHead[1]" :label="item.label" align="center" :width="item.width" :key="item.prop">
+                    <el-table-column v-for="item in tableHead[0]" :label="item.label" align="center" :width="item.width" :key="item.prop">
                         <template slot-scope="scope">
                             <span v-if="item.type=='checkbox'">
                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -685,7 +685,7 @@
         }
       },
       handleTabsClick(){
-        this.loading = true;
+          this.loading = true;
         this.fetchData();
         Object.assign(this.addVal[this.activeName],this.$options.data().addVal[this.activeName]);
         this.delBatchUrl = this.activeName =='0'?this.urls.suppliers:this.urls.series;

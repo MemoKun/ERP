@@ -49,6 +49,7 @@ const urls= {
     paymentdetails:'/paymentdetails',
     warehousingdepts:'/warehousingdepts',
     returnreasons:'/returnreasons',
+    roledetails:'/roledetails',
 
 
     me:'/me',

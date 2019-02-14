@@ -13,6 +13,10 @@ use League\Fractal\TransformerAbstract;
 
 class RoleTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = [
+      'roleGroup'
+    ];
+
     public function transform(Role $role)
     {
         return [
@@ -26,4 +30,10 @@ class RoleTransformer extends TransformerAbstract
             'updated_at' => $role->updated_at?$role->updated_at->toDateTimeString():'',
         ];
     }
+
+    public function includeRoleGroup(Role $role)
+    {
+        return $this->item($role->roleGroup, new RoleGroupTransformer());
+    }
+
 }
