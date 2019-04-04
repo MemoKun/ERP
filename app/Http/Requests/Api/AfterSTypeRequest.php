@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use Log;
 use Illuminate\Validation\Rule;
 
-class AfterSTypeRequset extends FormRequest
+class AfterSTypeRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,10 +14,21 @@ class AfterSTypeRequset extends FormRequest
      */
     public function rules()
     {
+        Log::info($this);
         switch ($this->method()) {
             case 'GET':
                 return [
                     'status' => 'boolean',
+                ];
+                break;
+            case 'POST':
+                return[
+
+                ];
+                break;
+            case 'PATCH':
+                return [
+                    
                 ];
                 break;
         }

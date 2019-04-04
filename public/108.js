@@ -58,6 +58,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -78,16 +96,81 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         cnt: '刷新',
         icon: 'bf-refresh',
         ent: this.test
+      }],
+      activeName: '0',
+      typeData: [],
+      loading: true,
+      checkboxInit: false,
+      tableHead: [{
+        label: '评价类型',
+        prop: 'eval_category',
+        width: '200',
+        type: 'text'
+      }, {
+        label: '描述',
+        prop: 'note',
+        width: '200',
+        type: 'text'
+      }, {
+        label: '是否启用',
+        prop: 'status',
+        width: '200',
+        type: 'text'
+      }, {
+        label: '创建人',
+        prop: 'creator',
+        width: '200',
+        type: 'text'
+      }, {
+        lable: '创建日期',
+        prop: 'created_at',
+        width: '200',
+        type: 'text'
       }]
     };
   },
 
+  computed: {
+    resData: {
+      get: function get() {
+        return this.$store.state.responseData;
+      },
+      set: function set() {}
+    },
+    urls: {
+      get: function get() {
+        return this.$store.state.urls;
+      },
+      set: function set() {}
+    }
+  },
   methods: {
     test: function test() {
       console.log(1);
+    },
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.$fetch(this.urls.evalcategorymag, { include: 'evalCategory,note,status,creator,createdAt' }).then(function (res) {
+        _this.typeData = res.data;
+        _this.loading = false;
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this.$message.error({
+            message: str
+          });
+        }
+      });
     }
   },
   mounted: function mounted() {
+    this.fetchData();
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit('change', this.newOpt);
     var that = this;
@@ -109,16 +192,115 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c(
+        "el-tabs",
+        {
+          model: {
+            value: _vm.activeName,
+            callback: function($$v) {
+              _vm.activeName = $$v
+            },
+            expression: "activeName"
+          }
+        },
+        [
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "评价类型管理", name: "0" } },
+            [
+              _c(
+                "el-table",
+                {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.loading,
+                      expression: "loading"
+                    }
+                  ],
+                  attrs: { data: _vm.typeData, fit: "", height: "300" }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      type: "selection",
+                      width: "95",
+                      align: "center",
+                      checked: _vm.checkboxInit
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.tableHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.prop,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              item.type == "checkbox"
+                                ? _c(
+                                    "span",
+                                    [
+                                      _c("el-checkbox", {
+                                        attrs: { disabled: "" },
+                                        model: {
+                                          value: scope.row[item.prop],
+                                          callback: function($$v) {
+                                            _vm.$set(scope.row, item.prop, $$v)
+                                          },
+                                          expression: "scope.row[item.prop]"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                : _c("span", [
+                                    scope.row[item.prop]
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                   " +
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              ) +
+                                              "\n                 "
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ])
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("评价类别管理")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

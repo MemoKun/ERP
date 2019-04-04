@@ -913,6 +913,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->get('aftersstate','AfterSStateController@index')->name('api.aftersstate.index');
         //售后类型
         $api->get('afterstype','AfterSTypeController@index')->name('api.afterstype.index');
+        //评价类型
+        $api->get('evalcategorymag','EvalCategoryMagController@index')->name('api.evalcategorymag.index');
 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')

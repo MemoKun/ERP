@@ -8,7 +8,7 @@ use App\Transformers\AfterSTypeTransformer;
 use App\Http\Controllers\Traits\CURDTrait;
 
 /**
- * 店铺资源
+ * 收款管理
  * @Resource("shops",uri="/api")
  */
 class AfterSTypeController extends Controller

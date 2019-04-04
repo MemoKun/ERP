@@ -53,6 +53,7 @@ const urls= {
     aftercompensation: '/aftercompensation',
     aftersstate:'/aftersstate',
     afterstype:'/afterstype',
+    evalcategorymag:'/evalcategorymag',
     
 
 
