@@ -4,13 +4,12 @@
             <el-tab-pane label="订单" name="0">
                 <div>
                     <div class="searchBox">
-                      <sapn><label>我就不信你显示不出来了！！</label></sapn>
-                        <span><label>你为什么不显示呢</label><el-input v-model="searchBox.vip_name" clearable></el-input></span>
-                        <span><label>订单编号666</label><el-input v-model="searchBox.order_num" clearable></el-input></span>
-                        <span><label>收货人666</label><el-input v-model="searchBox.order_man" clearable></el-input></span>
-                        <span v-if="filterBox"><label>收货手机666</label><el-input v-model="searchBox.order_phone" clearable></el-input></span>
+                        <span><label>会员名称</label><el-input v-model="searchBox.vip_name" clearable></el-input></span>
+                        <span><label>订单编号</label><el-input v-model="searchBox.order_num" clearable></el-input></span>
+                        <span><label>收货人</label><el-input v-model="searchBox.order_man" clearable></el-input></span>
+                        <span v-if="filterBox"><label>收货手机</label><el-input v-model="searchBox.order_phone" clearable></el-input></span>
                         <span v-else>
-                                <el-button type="primary">筛选666</el-button>
+                                <el-button type="primary">筛选</el-button>
                                 <el-button>重置</el-button>
                                 <span @click="toggleShow">
                                     <el-button type="text">展开</el-button>
@@ -116,6 +115,8 @@
                             </span>
                     </div>
                 </div>
+                
+                <!--显示列表-未处理-->
                 <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
                     <el-tab-pane label="未处理" name="0">
                         <el-table :data="orderListData" fit
@@ -823,7 +824,7 @@
                 <el-tab-pane label="费用类型" name="2">
                     <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick"  :row-class-name="addExpenseRCName">
                         <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-                            <template slot-scope="scope">
+                            <!--<template slot-scope="scope">
                                 <span v-if="expenseRIndex == 'index'+scope.$index">
                                     <span v-if="item.type=='select'">
                                         <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
@@ -848,7 +849,7 @@
                                     {{scope.row[item.prop]}}
                                 </span>
                             </span>
-                            </template>
+                            </template>-->
                         </el-table-column>
                         <el-table-column label="操作" width="90" align="center" fixed="right">
                             <template slot-scope="scope">
@@ -1074,7 +1075,7 @@
         leftTopActiveName:'0',
         rightActiveName: '0',
         orderListData: [],
-        orderListHead: [
+        orderListHead: [//订单表头标签
           {
             label: '系统订单',
             width: '220',
@@ -1672,9 +1673,9 @@
             type: 'checkbox',
           }
         ],
-        loading: true,
-        checkboxInit: false,
-        orderListIndex: '',
+        loading: true,//作用未知
+        checkboxInit: false,//作用未知
+        orderListIndex: '',//作用未知
         alreadyHandle: [],
         orderDtlFormVal: {},
         orderDtlFormHead: [
@@ -1852,7 +1853,7 @@
         proDtlData: [],
         curRowId:'',
         curRowData: {},
-        orderDtlHead: [
+        orderDtlHead: [//新建订单的商品信息的表头
           [
             {
               label: 'sku名称',
@@ -1940,7 +1941,7 @@
         addCustomerMask: false,
         moreForms: true,
         threeParts: true,
-        addCustomerFormVal:{
+        addCustomerFormVal:{//作用未知
           shops_id:'',
           member_nick: '',
           logistics_id:'',
@@ -1988,7 +1989,7 @@
           buyer_message: '',
           status: true
         },
-        addCustomerFormRules:{
+        addCustomerFormRules:{//新建订单的要求格式
           shops_id: [
             {required: true, message: '店铺必选', trigger: 'blur'},
           ],
@@ -2017,7 +2018,7 @@
             {required: true, message: '发货仓库必选', trigger: 'blur'},
           ]
         },
-        addCustomerFormHead:[
+        addCustomerFormHead:[//新建订单的文本框表头
           {
             label: '单据来源',
             prop: 'order_source',
@@ -2761,7 +2762,7 @@
         switch(index){
           case 0:
             this.loading = true;
-           this.fetchData();
+            this.fetchData();
             break;
           case 1:
             let data = this.orderListData[0];

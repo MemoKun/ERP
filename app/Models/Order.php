@@ -10,13 +10,13 @@ class Order extends Model
 {
     protected $table = 'orders';
 
-    const ORDER_STATUS_NEW = 10;
-    const ORDER_STATUS_LOCK = 20;
-    const ORDER_STATUS_CS_AUDIT = 30;
-    const ORDER_STATUS_ONE_AUDIT = 40;
-    const ORDER_STATUS_FD_AUDIT = 50;
-    const ORDER_STATUS_CARGO_AUDIT = 60;
-    const ORDER_STATUS_STOCK_OUT = 70;
+    const ORDER_STATUS_NEW = 10;//新订单
+    const ORDER_STATUS_LOCK = 20;//锁单
+    const ORDER_STATUS_CS_AUDIT = 30;//待客审
+    const ORDER_STATUS_ONE_AUDIT = 40;//待一审
+    const ORDER_STATUS_FD_AUDIT = 50;//待财审
+    const ORDER_STATUS_CARGO_AUDIT = 60;//待货审
+    const ORDER_STATUS_STOCK_OUT = 70;//出库
 
     //退回
     const ORDER_RETURN_LOCK = 21;
@@ -201,7 +201,7 @@ class Order extends Model
             // 随机生成订单号
             $no = $prefix . date('YmdHis') . str_pad(mt_rand(1, 99999), 5, 0, STR_PAD_LEFT);
         } while (static::query()->where($index, $no)->exists());
-
+        
         return $no;
     }
 

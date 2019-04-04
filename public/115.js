@@ -1,14 +1,14 @@
 webpackJsonp([115],{
 
-/***/ 535:
+/***/ 538:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(775)
+var __vue_script__ = __webpack_require__(781)
 /* template */
-var __vue_template__ = __webpack_require__(776)
+var __vue_template__ = __webpack_require__(782)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/brushLockConf.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/afterSType.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-52becb00", Component.options)
+    hotAPI.createRecord("data-v-7e583baa", Component.options)
   } else {
-    hotAPI.reload("data-v-52becb00", Component.options)
+    hotAPI.reload("data-v-7e583baa", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,11 +48,19 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 775:
+/***/ 781:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -89,24 +97,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: 'bf-refresh',
         ent: this.test
       }],
-      searchBox: {
-        buyNick: '',
-        shopTitle: ''
-      },
-      currentPage: true
+      activeName: '0',
+      typeData: [],
+      loading: true,
+      checkboxInit: false,
+      tableHead: [{
+        label: '售后类型',
+        prop: 'after_s_state',
+        width: "200",
+        type: 'text'
+      }, {
+        label: '是否启用',
+        prop: 'is_using',
+        width: "200",
+        type: 'text'
+      }]
     };
   },
 
+  computed: {
+    resData: {
+      get: function get() {
+        return this.$store.state.responseData;
+      },
+      set: function set() {}
+    },
+    urls: {
+      get: function get() {
+        return this.$store.state.urls;
+      },
+      set: function set() {}
+    }
+  },
   methods: {
     test: function test() {
       console.log(1);
     },
-    getData: function getData() {
-      alert(this.searchBox);
-      console.log(this.searchBox);
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.$fetch(this.urls.afterstype, { include: 'afterSType,status' }).then(function (res) {
+        _this.typeData = res.data;
+        _this.loading = false;
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this.$message.error({
+            message: str
+          });
+        }
+      });
     }
   },
   mounted: function mounted() {
+    this.fetchData();
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit('change', this.newOpt);
     var that = this;
@@ -121,82 +170,120 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 776:
+/***/ 782:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.currentPage
-      ? _c("div", { staticClass: "searchBox" }, [
+  return _c(
+    "div",
+    [
+      _c(
+        "el-tabs",
+        {
+          model: {
+            value: _vm.activeName,
+            callback: function($$v) {
+              _vm.activeName = $$v
+            },
+            expression: "activeName"
+          }
+        },
+        [
           _c(
-            "span",
+            "el-tab-pane",
+            { attrs: { label: "售后类型", name: "0" } },
             [
-              _c("label", [_vm._v("执行类型")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      "keyCode" in $event &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
+              _c(
+                "el-table",
+                {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.loading,
+                      expression: "loading"
                     }
-                    return _vm.getData($event)
-                  }
+                  ],
+                  attrs: { data: _vm.typeData, fit: "", height: "300" }
                 },
-                model: {
-                  value: _vm.searchBox.buyNick,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "buyNick", $$v)
-                  },
-                  expression: "searchBox.buyNick"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("包含字符")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      "keyCode" in $event &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      type: "selection",
+                      width: "95",
+                      align: "center",
+                      checked: _vm.checkboxInit
                     }
-                    return _vm.getData($event)
-                  }
-                },
-                model: {
-                  value: _vm.searchBox.shopTitle,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                  },
-                  expression: "searchBox.shopTitle"
-                }
-              })
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.tableHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.prop,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              item.type == "checkbox"
+                                ? _c(
+                                    "span",
+                                    [
+                                      _c("el-checkbox", {
+                                        attrs: { disabled: "" },
+                                        model: {
+                                          value: scope.row[item.prop],
+                                          callback: function($$v) {
+                                            _vm.$set(scope.row, item.prop, $$v)
+                                          },
+                                          expression: "scope.row[item.prop]"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                : _c("span", [
+                                    scope.row[item.prop]
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                   " +
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              ) +
+                                              "\n                 "
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ])
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  })
+                ],
+                2
+              )
             ],
             1
           )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("h2", [_vm._v("刷单锁单配置")])
-  ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -204,7 +291,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-52becb00", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7e583baa", module.exports)
   }
 }
 

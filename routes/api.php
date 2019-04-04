@@ -900,6 +900,20 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
             ->name('api.returnorderitems.destroy');
 
+        //售后赔偿
+        $api->get('aftercompensation/searchuntreated','AfterCompensationController@searchUntreated')
+            ->name('api.aftercompensation.searchuntreated');
+        $api->get('aftercompensation', 'AfterCompensationController@index')
+            ->name('api.aftercompensation.index');
+
+        //门店收款管理
+        $api->get('shopgatheringmag','ShopGatheringMagController@index')->name('api.shopgatheringmag.index');
+
+        //售后状态
+        $api->get('aftersstate','AfterSStateController@index')->name('api.aftersstate.index');
+        //售后类型
+        $api->get('afterstype','AfterSTypeController@index')->name('api.afterstype.index');
+
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');

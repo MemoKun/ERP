@@ -49,6 +49,11 @@ const urls= {
     paymentdetails:'/paymentdetails',
     warehousingdepts:'/warehousingdepts',
     returnreasons:'/returnreasons',
+    shopgatheringmag:'/shopgatheringmag',
+    aftercompensation: '/aftercompensation',
+    aftersstate:'/aftersstate',
+    afterstype:'/afterstype',
+    
 
 
     me:'/me',
