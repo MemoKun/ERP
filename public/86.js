@@ -1117,7 +1117,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.tableHead[1], function(item) {
+                  _vm._l(_vm.tableHead[0], function(item) {
                     return _c("el-table-column", {
                       key: item.prop,
                       attrs: {

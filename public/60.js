@@ -1574,6 +1574,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     urls: {
       get: function get() {
+        console.log(this.$store.state.urls);
         return this.$store.state.urls;
       },
       set: function set() {}
@@ -1606,7 +1607,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = false;
-          this.$fetch(this.urls.purchases, { purchase_status: 'new', include: 'user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination' }).then(function (res) {
+          this.$fetch(this.urls.purchases, {
+            purchase_status: 'new',
+            include: 'user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination'
+          }).then(function (res) {
             _this.newLoading = false;
             _this.newData = res.data;
             _this.checkboxInit = false;
