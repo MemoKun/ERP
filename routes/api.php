@@ -15,7 +15,9 @@ use Illuminate\Http\Request;
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['serializer:array', 'bindings']], function ($api) {
+//$api = new Dingo\Api\Routing\Router();
+
+$api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['serializer:array', 'bindings']], function (Dingo\Api\Routing\Router $api) {
     // 图片验证码
     $api->post('captchas', 'CaptchasController@store')
         ->name('api.captchas.store');
@@ -28,7 +30,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ],
         'limit' => config('api.rate_limits.access.limit'),
         'expires' => config('api.rate_limits.access.expires'),
-    ], function ($api) {
+    ], function (Dingo\Api\Routing\Router $api) {
         //标记颜色
         $api->get('markcolors', 'MarkColorsController@index')
             ->name('api.markcolors.index');
@@ -380,33 +382,33 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 //        $api->put('goods/editstatus', 'GoodsController@editStatusByIds')
 //            ->name('api.goods.editstatusbyids');
 
-         //商品资源
-         $api->get('products', 'ProductsController@index')
-             ->name('api.products.index');
-         $api->get('products/search', 'ProductsController@searchProducts')
-             ->name('api.products.searchproducts');
-         $api->get('products/{product}', 'ProductsController@show')
-             ->name('api.products.show');
-         $api->post('products', 'ProductsController@store')
-             ->name('api.products.store');
-         $api->patch('products/{product}', 'ProductsController@update')
-             ->name('api.products.update');
-         $api->delete('products/{product}', 'ProductsController@destroy')
-             ->name('api.products.destroy');
-         $api->delete('products', 'ProductsController@destroybyids')
-             ->name('api.products.destroybyids');
-         $api->put('products/editstatus', 'ProductsController@editStatusByIds')
-             ->name('api.products.editstatusbyids');
+        //商品资源
+        $api->get('products', 'ProductsController@index')
+            ->name('api.products.index');
+        $api->get('products/search', 'ProductsController@searchProducts')
+            ->name('api.products.searchproducts');
+        $api->get('products/{product}', 'ProductsController@show')
+            ->name('api.products.show');
+        $api->post('products', 'ProductsController@store')
+            ->name('api.products.store');
+        $api->patch('products/{product}', 'ProductsController@update')
+            ->name('api.products.update');
+        $api->delete('products/{product}', 'ProductsController@destroy')
+            ->name('api.products.destroy');
+        $api->delete('products', 'ProductsController@destroybyids')
+            ->name('api.products.destroybyids');
+        $api->put('products/editstatus', 'ProductsController@editStatusByIds')
+            ->name('api.products.editstatusbyids');
 
         //产品子件资源
-         $api->get('productcomponents', 'ProductComponentsController@index')
-             ->name('api.productcomponents.index');
-         $api->get('productcomponents/{productcomponent}', 'ProductComponentsController@show')
-             ->name('api.productcomponents.show');
-         $api->delete('productcomponents/{productcomponent}', 'ProductComponentsController@destroy')
-             ->name('api.productcomponents.destroy');
-         $api->delete('productcomponents', 'ProductComponentsController@destroybyids')
-             ->name('api.goproductcomponentsods.destroybyids');
+        $api->get('productcomponents', 'ProductComponentsController@index')
+            ->name('api.productcomponents.index');
+        $api->get('productcomponents/{productcomponent}', 'ProductComponentsController@show')
+            ->name('api.productcomponents.show');
+        $api->delete('productcomponents/{productcomponent}', 'ProductComponentsController@destroy')
+            ->name('api.productcomponents.destroy');
+        $api->delete('productcomponents', 'ProductComponentsController@destroybyids')
+            ->name('api.goproductcomponentsods.destroybyids');
 
         //组合资源
         $api->get('combinations', 'CombinationsController@index')
@@ -918,7 +920,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         'limit' => config('api.rate_limits.sign.limit'),
         'expires' => config('api.rate_limits.sign.expires'),
         'grouptitle' => '用户中心',
-    ], function ($api) {
+    ], function (Dingo\Api\Routing\Router $api) {
         // 用户注册
         $api->post('users', 'UsersController@store')
             ->name('api.users.store');
