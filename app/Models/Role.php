@@ -27,8 +27,8 @@ class Role extends Model
     /**
      * 所在分组
      */
-    public function group()
+    public function roleGroup()
     {
-        return $this->belongsTo('App\Models\Rolegroup', 'role_group_id');
+        return $this->belongsTo(Rolegroup::class, 'role_group_id');
     }
 }
