@@ -20,6 +20,7 @@ class AfterSStateController extends Controller
 
     /**
      * 获取所有收款管理
+     * 
      */
     public function index(AfterSStateRequest $request)
     {
