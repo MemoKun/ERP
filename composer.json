@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "ext-json": "*",
         "dingo/api": "2.0.0-alpha2",
         "doctrine/dbal": "^2.7",
         "fideloper/proxy": "~3.3",
@@ -14,8 +15,7 @@
         "laravel/tinker": "~1.0",
         "liyu/dingo-serializer-switch": "^0.3.0",
         "tymon/jwt-auth": "1.0.0-rc.2",
-        "viacreative/sudo-su": "^1.1",
-      "ext-json": "*"
+        "viacreative/sudo-su": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
