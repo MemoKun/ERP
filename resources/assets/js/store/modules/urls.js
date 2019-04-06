@@ -56,7 +56,6 @@ const urls= {
     evalcategorymag:'/evalcategorymag',
     roles:'/roles',
 
-
     me:'/me',
     current:'/current',
     uploadimages:'/uploadimages',

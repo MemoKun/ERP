@@ -53,6 +53,26 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -79,11 +99,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       newOpt: [{
         cnt: '新增',
         icon: 'bf-add',
-        ent: this.test
+        ent: this.addType
       }, {
         cnt: '修改',
         icon: 'bf-change',
@@ -95,7 +117,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
-        ent: this.test
+        ent: this.refresh
       }],
       activeName: '0',
       typeData: [],
@@ -103,16 +125,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       checkboxInit: false,
       tableHead: [{
         label: '售后类型',
-        prop: 'after_s_state',
-        width: "200",
+        prop: 'after_s_type',
+        width: '200',
         type: 'text'
       }, {
         label: '是否启用',
-        prop: 'is_using',
-        width: "200",
+        prop: 'status',
+        width: '200',
         type: 'text'
+      }],
+      addMask: false,
+      addTypeFormVal: {
+        after_s_type: '',
+        status: ''
+      },
+      addTypeFormRules: {
+        after_s_type: [{ required: true, message: '售后类型必填', trigger: 'blur' }],
+        status: [{ required: true, message: '是否启用必填', trigger: 'blur' }]
+      },
+      addTypeFormHead: [{
+        label: '售后类型',
+        prop: 'after_s_type',
+        width: '200',
+        type: 'text',
+        editChgAble: true,
+        addChgAble: true
+      }, {
+        label: '是否启用',
+        prop: 'status',
+        width: '200',
+        type: 'checkbox',
+        editChgAble: true,
+        addChgAble: true
       }]
-    };
+    }, _defineProperty(_ref, 'typeData', []), _defineProperty(_ref, 'addIDs', []), _defineProperty(_ref, 'typeRIndex', []), _ref;
   },
 
   computed: {
@@ -136,7 +182,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.afterstype, { include: 'afterSType,status' }).then(function (res) {
+      this.$fetch(this.urls.afterstype).then(function (res) {
         _this.typeData = res.data;
         _this.loading = false;
       }, function (err) {
@@ -151,6 +197,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             message: str
           });
         }
+      });
+    },
+    addType: function addType() {
+      this.addMask = true;
+      this.addIds = [];
+      this.typeData = [];
+      this.typeRIndex = '';
+    },
+    addTypeConfirm: function addTypeConfirm() {
+      var _this2 = this;
+
+      var forData = this.addTypeFormVal;
+      var submitData = {
+        after_s_type: forData.after_s_type,
+        status: forData.status
+      };
+      this.$post(this.urls.afterstype, submitData).then(function () {
+        _this2.addMask = false;
+        _this2.refresh();
+        _this2.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this2.$message.error(str);
+        }
+      });
+    },
+    refresh: function refresh() {
+      this.loading = true;
+      this.fetchData();
+    },
+    addCancel: function addCancel() {
+      this.addMask = false;
+      this.$message({
+        message: '取消添加',
+        type: 'info'
       });
     }
   },
@@ -253,15 +343,13 @@ var render = function() {
                                     scope.row[item.prop]
                                       ? _c("span", [
                                           _vm._v(
-                                            "\n                   " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n                 "
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
+                                                    item.inProp
+                                                  ]
+                                                : scope.row[item.prop]
+                                            )
                                           )
                                         ])
                                       : _vm._e()
@@ -280,6 +368,112 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          staticClass: "dialog",
+          attrs: { title: "新增", visible: _vm.addMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.addMask = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "clearfix" },
+            [
+              _c(
+                "el-form",
+                {
+                  staticClass: "afterSType hidePart",
+                  attrs: {
+                    model: _vm.addTypeFormVal,
+                    rules: _vm.addTypeFormRules,
+                    id: "form"
+                  }
+                },
+                _vm._l(_vm.addTypeFormHead, function(item, index) {
+                  return _c(
+                    "el-form-item",
+                    {
+                      key: index,
+                      attrs: { label: item.label, prop: item.prop }
+                    },
+                    [
+                      item.type == "text"
+                        ? _c(
+                            "span",
+                            [
+                              _c("el-input", {
+                                model: {
+                                  value: _vm.addTypeFormVal[item.prop],
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.addTypeFormVal,
+                                      item.prop,
+                                      typeof $$v === "string" ? $$v.trim() : $$v
+                                    )
+                                  },
+                                  expression: "addTypeFormVal[item.prop]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      item.type == "checkbox"
+                        ? _c(
+                            "span",
+                            [
+                              _c("el-checkbox", {
+                                model: {
+                                  value: _vm.addTypeFormVal[item.prop],
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.addTypeFormVal, item.prop, $$v)
+                                  },
+                                  expression: "addTypeFormVal[item.prop]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticStyle: {} },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.addTypeConfirm }
+                },
+                [_vm._v("确定")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                { attrs: { type: "default" }, on: { click: _vm.addCancel } },
+                [_vm._v("取消")]
+              )
+            ],
+            1
+          )
+        ]
       )
     ],
     1

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Validation\Rule;
 
-class ShopGatheringMagRequset extends FormRequest
+class ShopGatheringMagRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,7 +16,7 @@ class ShopGatheringMagRequset extends FormRequest
         switch ($this->method()) {
             case 'GET':
                 return [
-                    'is_using' => 'boolean',
+                    'status' => 'boolean',
                 ];
                 break;
         }
@@ -26,7 +26,7 @@ class ShopGatheringMagRequset extends FormRequest
     {
         return [
             'gathering_type'=>'收款类型',
-            'is_using' => '是否启用'
+            'status' => '是否启用'
         ];
     }
 }

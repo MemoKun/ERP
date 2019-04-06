@@ -349,7 +349,7 @@
           {
             label: '系统单号',
             width: '220',
-            prop: 'cmptn_system_order_number',
+            prop: 'system_order_number',
             type: 'text',
           },
           {
@@ -361,73 +361,73 @@
           {
             label: '责任方',
             width: '150',
-            prop: 'cmptn_responsible_party',
+            prop: 'responsible_party',
             type: 'text'
           },
           {
             label: '责任人',
             width: '140',
-            prop: 'cmptn_responsible_person',
+            prop: 'responsible_person',
             type: 'text',
           },
           {
             label: '买家昵称',
             width: '140',
-            prop: 'cmptn_buyer_nickname',
+            prop: 'customer_nickname',
             type: 'text',
           },
           {
             label: '买家姓名',
             width: '130',
-            prop: 'cmptn_buyer_name',
+            prop: 'customer_name',
             type: 'text',
           },
           {
             label: '客户电话',
             width: '130',
-            prop: 'cmptn_buyer_phone',
+            prop: 'customer_phone',
             type: 'text',
           },
           {
             label: '客户城市',
             width: '130',
-            prop: 'cmptn_buyer_city',
+            prop: 'customer_city',
             type: 'text',
           },
           {
             label: '赔偿金额',
             width: '130',
-            prop: 'cmptn_amount',
-            type: 'number'
+            prop: 'cmptn_fee',
+            type: 'text'
           },
           {
             label: '协商日期',
             width: '140',
-            prop: 'cmptn_date_of_nagotiation',
+            prop: 'negotiation_date',
             type: 'text',
           },
           {
             label: '发货物流',
             width: '120',
-            prop: 'cmptn_logistics_company',
+            prop: 'logistics_company',
             type: 'text',
           },
           {
             label: '物流单号',
             width: '130',
-            prop: 'cmptn_tracking_number',
+            prop: 'logistics_tracking_number',
             type: 'text',
           },
           {
             label: '结账方式',
             width: '120',
-            prop: 'cmptn_checkway',
+            prop: 'payment_method',
             type: 'text'
           },
           {
             label: '业务员',
             width: '120',
-            prop: 'cmptn_stuff',
+            prop: 'order_stuff',
             type: 'text'
           }
         ],
@@ -736,6 +736,20 @@
         ]
       }
     },
+    computed:{
+      resData:{
+        get:function(){
+          return this.$store.state.responseData
+        },
+        set:function(){}
+      },
+      urls:{
+        get:function(){
+          return this.$store.state.urls
+        },
+        set:function(){}
+      }
+    },
     methods: {
       toggleShow(){
         this.filterBox = !this.filterBox;
@@ -745,75 +759,13 @@
       },
       /*获取数据*/
       outerHandleClick() {
-        let index = this.activeName-0;
-        switch(0){
-          case 0:
-            this.loading = true;
-           this.fetchData();
-            break;
-          case 1:
-            let data = this.cmptnOrderListData[0];
-            /*商品*/
-            if(data){
-              this.orderDtlFormVal = {
-                system_order_no: data.system_order_no,
-                taobao_oid: data.taobao_oid,
-                taobao_tid: data.taobao_tid,
-                association_taobao_oid: data.association_taobao_oid,
-                shop_name: data['shop']['title'],
-                business_personnel_name: data['businessPersonnel'] ? data['businessPersonnel']['username'] : '',
-                member_nick: data.member_nick,
-                receiver_name: data.receiver_name,
-                receiver_mobile: data.receiver_mobile,
-                receiver_phone: data.receiver_phone,
-                receiver_address: data.receiver_address,
-                express_fee: data.express_fee,
-                freight_types_name: data['freightType']['name'],
-                expected_freight: data.expected_freight,
-                deliver_goods_fee: data.deliver_goods_fee,
-                payment_date: data.payment_date,
-                promise_ship_time: data.promise_ship_time,
-                distribution_name: data['distribution']['name'],
-                distribution_method: data['distributionMethod']['name'],
-                service_car_info: data['service_car_info'],
-                distribution_phone: data['distribution_phone'],
-                buyer_message: data['buyer_message'],
-                logistic_name: data['logistic']['name'],
-                distributionType_name: data['distributionType']['name'],
-                total_distribution_fee: data['total_distribution_fee'],
-                customer_service_remark: data['customer_service_remark'],
-                seller_remark: data['seller_remark'],
-              }
-            }
-            if(data['orderItems']['data'].length>0){
-              data['orderItems']['data'].map(item=>{
-                item['name'] = item['combination']['name'];
-                item['productComp'] = item['combination']['productComponents']['data'];
-              })
-            }
-            this.proDtlData = data['orderItems']['data'];
-            /*支付明细*/
-            this.payDtlData = data['paymentDetails']['data'];
-            break;
-        }
+       
       },
-      fetchData(){
-        let index = this.leftTopActiveName-0;
-        switch(index){
-          case 0:
-            this.$fetch(this.urls.aftercompensation+'/searchuntreated',{include:'id,systemOrderNumber,cmptnStatus,orderSource,cmptnDirection,cmptnShop,responsibleParty,responsiblePerson,customerNickname,customerName,customerPhone,customerCity,customerAddress,cmptnAmount,logisticsCompany,logisticsTrackingNumber,paymentMethod,orderStuff,orderNumber,problemGoods,problemDescription,note,refuseReason,feeType,payee,payeeAccount'})
+      fetchData(){ 
+        this.$fetch(this.urls.aftercompensation)
               .then(res => {
                 this.loading = false;
                 this.cmptnOrderListData = res.data;
-                let pg = res.meta.pagination;
-                this.$store.dispatch('currentPage', pg.current_page);
-                this.$store.commit('PER_PAGE', pg.per_page);
-                this.$store.commit('PAGE_TOTAL', pg.total);
-                this.$store.dispatch('paymentmethods', this.urls.paymentmethods);
-                this.$fetch(this.urls.aftercompensation+'/create')
-                  .then(res=>{
-                    this.addSubData = res;
-                  },err=>{})
               }, err => {
                 if (err.response) {
                   let arr = err.response.data.errors;
@@ -824,48 +776,6 @@
                   this.$message.error(arr1.join(','));
                 }
               });
-            break;
-          case 1:
-            this.$fetch(this.urls.aftercompensation,{'order_status': 20,'include':'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order'})
-              .then(res => {
-                this.loading = false;
-                this.alreadyHandle = res.data;
-                let pg = res.meta.pagination;
-                this.$store.dispatch('currentPage', pg.current_page);
-                this.$store.commit('PER_PAGE', pg.per_page);
-                this.$store.commit('PAGE_TOTAL', pg.total);
-              }, err => {
-                if (err.response) {
-                  let arr = err.response.data.errors;
-                  let arr1 = [];
-                  for (let i in arr) {
-                    arr1.push(arr[i]);
-                  }
-                  this.$message.error(arr1.join(','));
-                }
-              });
-            break;
-          case 2:
-            this.$fetch(this.urls.aftercompensation,{'order_status':'等通知发货','include':'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails'})
-              .then(res => {
-                this.loading = false;
-                this.cmptnOrderListData = res.data;
-                let pg = res.meta.pagination;
-                this.$store.dispatch('currentPage', pg.current_page);
-                this.$store.commit('PER_PAGE', pg.per_page);
-                this.$store.commit('PAGE_TOTAL', pg.total);
-              }, err => {
-                if (err.response) {
-                  let arr = err.response.data.errors;
-                  let arr1 = [];
-                  for (let i in arr) {
-                    arr1.push(arr[i]);
-                  }
-                  this.$message.error(arr1.join(','));
-                }
-              });
-            break;
-        }
       },
       leftHandleClick(){
         this.loading = true;
@@ -902,50 +812,6 @@
         this.curRowId = row.id;
         this.curRowData = row;
 
-      },
-      orderDbClick(row){
-        this.activeName = '1';
-        let data = row;
-        if(data){
-          this.orderDtlFormVal={
-            system_order_no: data.system_order_no,
-            taobao_oid: data.taobao_oid,
-            taobao_tid: data.taobao_tid,
-            association_taobao_oid: data.association_taobao_oid,
-            shop_name: data['shop']['title'],
-            business_personnel_name: data['businessPersonnel']?data['businessPersonnel']['username']:'',
-            member_nick: data.member_nick,
-            receiver_name: data.receiver_name,
-            receiver_mobile: data.receiver_mobile,
-            receiver_phone: data.receiver_phone,
-            receiver_address: data.receiver_address,
-            express_fee: data.express_fee,
-            freight_types_name: data['freightType']['name'],
-            expected_freight: data.expected_freight,
-            deliver_goods_fee: data.deliver_goods_fee,
-            payment_date: data.payment_date,
-            promise_ship_time: data.promise_ship_time,
-            distribution_name: data['distribution']['name'],
-            distribution_method: data['distributionMethod']['name'],
-            service_car_info: data['service_car_info'],
-            distribution_phone: data['distribution_phone'],
-            buyer_message: data['buyer_message'],
-            logistic_name: data['logistic']['name'],
-            distributionType_name: data['distributionType']['name'],
-            total_distribution_fee: data['total_distribution_fee'],
-            customer_service_remark: data['customer_service_remark'],
-            seller_remark: data['seller_remark'],
-          }
-        }
-        this.proDtlData = row['orderItems']['data'];
-        if(row['orderItems']['data'].length>0){
-          row['orderItems']['data'].map(item=>{
-            item['name'] = item['combination']['name'];
-            item['productComp'] = item['combination']['productComponents']['data'];
-          })
-        }
-        /*支付明细*/
-        this.payDtlData = row['paymentDetails']['data'];
       },
       proDtlRClick(row){},
       /*新增*/
@@ -1825,98 +1691,6 @@
           }
         }
       },
-      splitCName({row,rowIndex}){row.index = rowIndex;},
-      splitRowClick(row){
-        this.splitRowIndex = `index${row.index}`;
-        this.splitRow = row;
-      },
-      numChg(value){
-        if(value>(this.splitRow['quantity']-0)){
-          this.splitRow['newData']['quantity'] = this.splitRow['quantity'];
-        }
-      },
-      confirmSplit(){
-        let id = this.checkboxId?this.checkboxId:this.curRowId;
-        let confSplit = {
-          order_items: []
-        };
-        if(this.splitVal.length>0){
-          this.splitVal.map(item=>{
-            if(item['newData']['quantity']>0){
-              let list = {
-                id: item.id,
-                quantity: item['newData']['quantity']
-              };
-              confSplit['order_items'].push(list);
-            }
-          })
-        }
-        this.$put(this.urls.aftercompensation + '/' + id + '/splitorder',confSplit)
-          .then(()=>{
-            this.splitMask =false;
-            this.refresh();
-         /*   this.newOpt[1].nClick = false;
-            this.newOpt[2].nClick = false;
-            this.newOpt[3].nClick = true;
-            this.newOpt[4].nClick = false;
-            this.newOpt[5].nClick = false;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = false;
-            this.newOpt[9].nClick = false;
-            this.newOpt[13].nClick = false;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = false;
-            this.newOpt[18].nClick = false;*/
-            this.$message({
-              message:'订单拆分成功',
-              type: 'success'
-            })
-          },err=>{
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(',');
-              this.$message.error(str);
-            }
-          });
-      },
-      cancelSplit(){
-        this.splitMask =false;
-      },
-      handleMergerOrder(){
-        if (this.newOpt[8].nClick){
-          return
-        }else{
-          if(this.mergerIds.length!=2){
-            this.$message({
-              message: '请选择要合并的订单',
-              type:'info'
-            })
-          }else{
-            let ids = [];
-            this.mergerIds.map(item=>{
-              ids.push(item.id);
-            });
-            this.$put(this.urls.aftercompensation+'/mergerorder'+'?order_id_one='+ids[0]+'&order_id_two='+ids[1]).then(()=>{
-                this.refresh();
-                this.$message({
-                  message:'订单合并成功',
-                  type:'success'
-                })
-              },err=>{
-                if (err.response) {
-                  this.$message.error('合并订单出错');
-                }
-              })
-          }
-        }
-      },
-      resets(){
-        this.searchBox = {};
-      }
     },
     mounted() {
       this.fetchData();

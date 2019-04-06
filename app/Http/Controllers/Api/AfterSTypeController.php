@@ -25,6 +25,13 @@ class AfterSTypeController extends Controller
     {
         return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
     }
+    /**
+     * 获取创建售后类型数据
+     */
+    public function store(AfterSTypeRequest $request)
+    {
+        return $this->traitStore($request->validated(),self::MODEL,self::TRANSFORMER);
+    }
 
 
    

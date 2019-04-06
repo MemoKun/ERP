@@ -76,13 +76,6 @@
             width:'200',
             type:'text'
           },
-          {
-            lable:'创建日期',
-            prop:'created_at',
-            width:'200',
-            type:'text'
-          }
-
         ],
       }
     },
@@ -105,7 +98,7 @@
         console.log(1);
       },
       fetchData(){
-        this.$fetch(this.urls.evalcategorymag,{include:'evalCategory,note,status,creator,createdAt'})
+        this.$fetch(this.urls.evalcategorymag)
               .then(res => {
                 this.typeData = res.data;
                 this.loading = false;

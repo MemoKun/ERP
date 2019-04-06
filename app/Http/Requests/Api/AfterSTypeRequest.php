@@ -23,7 +23,8 @@ class AfterSTypeRequest extends FormRequest
                 break;
             case 'POST':
                 return[
-
+                    'after_s_type'=>'required|string|max:50',
+                    'status'=>'required|boolean'
                 ];
                 break;
             case 'PATCH':
@@ -32,6 +33,18 @@ class AfterSTypeRequest extends FormRequest
                 ];
                 break;
         }
+    }
+
+    public function messages()
+    {
+        return [
+            'after_s_type.required'=>'售后类型必填',
+            'after_s_type.string'=>'售后类型必须为string类型',
+            'after_s_type.max'=>'售后类型最大长度为50',
+
+            'status.required'=>'是否启用必填',
+            'status.boolean'=>'是否启用必须为boolean类型',
+        ];
     }
 
     public function attributes()

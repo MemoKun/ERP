@@ -7,14 +7,10 @@ use League\Fractal\TransformerAbstract;
 
 class EvalCategoryMagTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = [
-        'evalCategoryMag','note','status','creator','createdAt'
-    ];
-
     public function transform(EvalCategoryMag $type)
     {
         return [
-            'eval_category_mag' => $type->after_s_type,
+            'eval_category' => $type->eval_category,
             'note'=>$type->note,
             'status' => $type->status,
             'creator'=>$type->creator,

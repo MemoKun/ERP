@@ -7,10 +7,6 @@ use League\Fractal\TransformerAbstract;
 
 class AfterSTypeTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = [
-        'afterSType','status'
-    ];
-
     public function transform(AfterSType $type)
     {
         return [

@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class ShopGatheringMag extends Model{
     protected $table = 'shop_gathering_mag';
 
-    protected $fillable = ['gathering_type','is_using'];
+    protected $fillable = ['gathering_type','status'];
 
     protected $casts = [
-        'is_using' => 'boolean'
+        'status' => 'boolean'
     ];
 }
 ?>

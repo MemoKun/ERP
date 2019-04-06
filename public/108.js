@@ -121,11 +121,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: 'creator',
         width: '200',
         type: 'text'
-      }, {
-        lable: '创建日期',
-        prop: 'created_at',
-        width: '200',
-        type: 'text'
       }]
     };
   },
@@ -151,7 +146,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.evalcategorymag, { include: 'evalCategory,note,status,creator,createdAt' }).then(function (res) {
+      this.$fetch(this.urls.evalcategorymag).then(function (res) {
         _this.typeData = res.data;
         _this.loading = false;
       }, function (err) {

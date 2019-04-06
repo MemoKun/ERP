@@ -901,8 +901,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.returnorderitems.destroy');
 
         //售后赔偿
-        $api->get('aftercompensation/searchuntreated','AfterCompensationController@searchUntreated')
-            ->name('api.aftercompensation.searchuntreated');
         $api->get('aftercompensation', 'AfterCompensationController@index')
             ->name('api.aftercompensation.index');
 
@@ -913,6 +911,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->get('aftersstate','AfterSStateController@index')->name('api.aftersstate.index');
         //售后类型
         $api->get('afterstype','AfterSTypeController@index')->name('api.afterstype.index');
+        $api->post('afterstype','AfterSTypeController@store')->name('api.afterstype.store');
         //评价类型
         $api->get('evalcategorymag','EvalCategoryMagController@index')->name('api.evalcategorymag.index');
 

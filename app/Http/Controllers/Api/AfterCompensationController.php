@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\AfterCompensationOrder;
 
-use App\Http\Requests\Api\AfterCompensationRequset;
+use App\Http\Requests\Api\AfterCompensationRequest;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\MergerOrderRequest;
@@ -47,9 +47,9 @@ class AfterCompensationController extends Controller
     /*
      *获取售后赔偿订单 
     */
-    public function index(AfterCompensationRequest $requset)
+    public function index(AfterCompensationRequest $request)
     {
-        return $this->allOrPage($requset, self::MODEL, self::TRANSFORMER, self::PerPage);
+        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, self::PerPage);
     }
 
 

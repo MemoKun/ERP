@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Validation\Rule;
 
-class AfterSStateRequset extends FormRequest
+class AfterSStateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,7 +16,7 @@ class AfterSStateRequset extends FormRequest
         switch ($this->method()) {
             case 'GET':
                 return [
-                    'id'=>'integer',
+                    'status'=>'boolean',
                 ];
                 break;
         }
@@ -26,6 +26,7 @@ class AfterSStateRequset extends FormRequest
     {
         return [
             'after_s_state'=>'售后状态',
+            'status' => '是否启用'
         ];
     }
 }

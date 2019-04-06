@@ -26,7 +26,4 @@ class EvalCategoryMagController extends Controller
         return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
     }
 
-
-   
-
 }

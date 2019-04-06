@@ -381,7 +381,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       {
         label: '系统单号',
         width: '220',
-        prop: 'cmptn_system_order_number',
+        prop: 'system_order_number',
         type: 'text'
       }, {
         label: '赔偿方向',
@@ -391,62 +391,62 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '责任方',
         width: '150',
-        prop: 'cmptn_responsible_party',
+        prop: 'responsible_party',
         type: 'text'
       }, {
         label: '责任人',
         width: '140',
-        prop: 'cmptn_responsible_person',
+        prop: 'responsible_person',
         type: 'text'
       }, {
         label: '买家昵称',
         width: '140',
-        prop: 'cmptn_buyer_nickname',
+        prop: 'customer_nickname',
         type: 'text'
       }, {
         label: '买家姓名',
         width: '130',
-        prop: 'cmptn_buyer_name',
+        prop: 'customer_name',
         type: 'text'
       }, {
         label: '客户电话',
         width: '130',
-        prop: 'cmptn_buyer_phone',
+        prop: 'customer_phone',
         type: 'text'
       }, {
         label: '客户城市',
         width: '130',
-        prop: 'cmptn_buyer_city',
+        prop: 'customer_city',
         type: 'text'
       }, {
         label: '赔偿金额',
         width: '130',
-        prop: 'cmptn_amount',
-        type: 'number'
+        prop: 'cmptn_fee',
+        type: 'text'
       }, {
         label: '协商日期',
         width: '140',
-        prop: 'cmptn_date_of_nagotiation',
+        prop: 'negotiation_date',
         type: 'text'
       }, {
         label: '发货物流',
         width: '120',
-        prop: 'cmptn_logistics_company',
+        prop: 'logistics_company',
         type: 'text'
       }, {
         label: '物流单号',
         width: '130',
-        prop: 'cmptn_tracking_number',
+        prop: 'logistics_tracking_number',
         type: 'text'
       }, {
         label: '结账方式',
         width: '120',
-        prop: 'cmptn_checkway',
+        prop: 'payment_method',
         type: 'text'
       }, {
         label: '业务员',
         width: '120',
-        prop: 'cmptn_stuff',
+        prop: 'order_stuff',
         type: 'text'
       }],
       loading: true, //加载数据
@@ -712,6 +712,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
+  computed: {
+    resData: {
+      get: function get() {
+        return this.$store.state.responseData;
+      },
+      set: function set() {}
+    },
+    urls: {
+      get: function get() {
+        return this.$store.state.urls;
+      },
+      set: function set() {}
+    }
+  },
   methods: {
     toggleShow: function toggleShow() {
       this.filterBox = !this.filterBox;
@@ -721,126 +735,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     /*获取数据*/
-    outerHandleClick: function outerHandleClick() {
-      var index = this.activeName - 0;
-      switch (0) {
-        case 0:
-          this.loading = true;
-          this.fetchData();
-          break;
-        case 1:
-          var data = this.cmptnOrderListData[0];
-          /*商品*/
-          if (data) {
-            this.orderDtlFormVal = {
-              system_order_no: data.system_order_no,
-              taobao_oid: data.taobao_oid,
-              taobao_tid: data.taobao_tid,
-              association_taobao_oid: data.association_taobao_oid,
-              shop_name: data['shop']['title'],
-              business_personnel_name: data['businessPersonnel'] ? data['businessPersonnel']['username'] : '',
-              member_nick: data.member_nick,
-              receiver_name: data.receiver_name,
-              receiver_mobile: data.receiver_mobile,
-              receiver_phone: data.receiver_phone,
-              receiver_address: data.receiver_address,
-              express_fee: data.express_fee,
-              freight_types_name: data['freightType']['name'],
-              expected_freight: data.expected_freight,
-              deliver_goods_fee: data.deliver_goods_fee,
-              payment_date: data.payment_date,
-              promise_ship_time: data.promise_ship_time,
-              distribution_name: data['distribution']['name'],
-              distribution_method: data['distributionMethod']['name'],
-              service_car_info: data['service_car_info'],
-              distribution_phone: data['distribution_phone'],
-              buyer_message: data['buyer_message'],
-              logistic_name: data['logistic']['name'],
-              distributionType_name: data['distributionType']['name'],
-              total_distribution_fee: data['total_distribution_fee'],
-              customer_service_remark: data['customer_service_remark'],
-              seller_remark: data['seller_remark']
-            };
-          }
-          if (data['orderItems']['data'].length > 0) {
-            data['orderItems']['data'].map(function (item) {
-              item['name'] = item['combination']['name'];
-              item['productComp'] = item['combination']['productComponents']['data'];
-            });
-          }
-          this.proDtlData = data['orderItems']['data'];
-          /*支付明细*/
-          this.payDtlData = data['paymentDetails']['data'];
-          break;
-      }
-    },
+    outerHandleClick: function outerHandleClick() {},
     fetchData: function fetchData() {
       var _this = this;
 
-      var index = this.leftTopActiveName - 0;
-      switch (index) {
-        case 0:
-          this.$fetch(this.urls.aftercompensation + '/searchuntreated', { include: 'id,systemOrderNumber,cmptnStatus,orderSource,cmptnDirection,cmptnShop,responsibleParty,responsiblePerson,customerNickname,customerName,customerPhone,customerCity,customerAddress,cmptnAmount,logisticsCompany,logisticsTrackingNumber,paymentMethod,orderStuff,orderNumber,problemGoods,problemDescription,note,refuseReason,feeType,payee,payeeAccount' }).then(function (res) {
-            _this.loading = false;
-            _this.cmptnOrderListData = res.data;
-            var pg = res.meta.pagination;
-            _this.$store.dispatch('currentPage', pg.current_page);
-            _this.$store.commit('PER_PAGE', pg.per_page);
-            _this.$store.commit('PAGE_TOTAL', pg.total);
-            _this.$store.dispatch('paymentmethods', _this.urls.paymentmethods);
-            _this.$fetch(_this.urls.aftercompensation + '/create').then(function (res) {
-              _this.addSubData = res;
-            }, function (err) {});
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              _this.$message.error(arr1.join(','));
-            }
-          });
-          break;
-        case 1:
-          this.$fetch(this.urls.aftercompensation, { 'order_status': 20, 'include': 'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order' }).then(function (res) {
-            _this.loading = false;
-            _this.alreadyHandle = res.data;
-            var pg = res.meta.pagination;
-            _this.$store.dispatch('currentPage', pg.current_page);
-            _this.$store.commit('PER_PAGE', pg.per_page);
-            _this.$store.commit('PAGE_TOTAL', pg.total);
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              _this.$message.error(arr1.join(','));
-            }
-          });
-          break;
-        case 2:
-          this.$fetch(this.urls.aftercompensation, { 'order_status': '等通知发货', 'include': 'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails' }).then(function (res) {
-            _this.loading = false;
-            _this.cmptnOrderListData = res.data;
-            var pg = res.meta.pagination;
-            _this.$store.dispatch('currentPage', pg.current_page);
-            _this.$store.commit('PER_PAGE', pg.per_page);
-            _this.$store.commit('PAGE_TOTAL', pg.total);
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              _this.$message.error(arr1.join(','));
-            }
-          });
-          break;
-      }
+      this.$fetch(this.urls.aftercompensation).then(function (res) {
+        _this.loading = false;
+        _this.cmptnOrderListData = res.data;
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          _this.$message.error(arr1.join(','));
+        }
+      });
     },
     leftHandleClick: function leftHandleClick() {
       this.loading = true;
@@ -876,50 +787,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
       this.curRowId = row.id;
       this.curRowData = row;
-    },
-    orderDbClick: function orderDbClick(row) {
-      this.activeName = '1';
-      var data = row;
-      if (data) {
-        this.orderDtlFormVal = {
-          system_order_no: data.system_order_no,
-          taobao_oid: data.taobao_oid,
-          taobao_tid: data.taobao_tid,
-          association_taobao_oid: data.association_taobao_oid,
-          shop_name: data['shop']['title'],
-          business_personnel_name: data['businessPersonnel'] ? data['businessPersonnel']['username'] : '',
-          member_nick: data.member_nick,
-          receiver_name: data.receiver_name,
-          receiver_mobile: data.receiver_mobile,
-          receiver_phone: data.receiver_phone,
-          receiver_address: data.receiver_address,
-          express_fee: data.express_fee,
-          freight_types_name: data['freightType']['name'],
-          expected_freight: data.expected_freight,
-          deliver_goods_fee: data.deliver_goods_fee,
-          payment_date: data.payment_date,
-          promise_ship_time: data.promise_ship_time,
-          distribution_name: data['distribution']['name'],
-          distribution_method: data['distributionMethod']['name'],
-          service_car_info: data['service_car_info'],
-          distribution_phone: data['distribution_phone'],
-          buyer_message: data['buyer_message'],
-          logistic_name: data['logistic']['name'],
-          distributionType_name: data['distributionType']['name'],
-          total_distribution_fee: data['total_distribution_fee'],
-          customer_service_remark: data['customer_service_remark'],
-          seller_remark: data['seller_remark']
-        };
-      }
-      this.proDtlData = row['orderItems']['data'];
-      if (row['orderItems']['data'].length > 0) {
-        row['orderItems']['data'].map(function (item) {
-          item['name'] = item['combination']['name'];
-          item['productComp'] = item['combination']['productComponents']['data'];
-        });
-      }
-      /*支付明细*/
-      this.payDtlData = row['paymentDetails']['data'];
     },
     proDtlRClick: function proDtlRClick(row) {},
 
@@ -1840,105 +1707,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         }
       }
-    },
-    splitCName: function splitCName(_ref4) {
-      var row = _ref4.row,
-          rowIndex = _ref4.rowIndex;
-      row.index = rowIndex;
-    },
-    splitRowClick: function splitRowClick(row) {
-      this.splitRowIndex = 'index' + row.index;
-      this.splitRow = row;
-    },
-    numChg: function numChg(value) {
-      if (value > this.splitRow['quantity'] - 0) {
-        this.splitRow['newData']['quantity'] = this.splitRow['quantity'];
-      }
-    },
-    confirmSplit: function confirmSplit() {
-      var _this19 = this;
-
-      var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      var confSplit = {
-        order_items: []
-      };
-      if (this.splitVal.length > 0) {
-        this.splitVal.map(function (item) {
-          if (item['newData']['quantity'] > 0) {
-            var list = {
-              id: item.id,
-              quantity: item['newData']['quantity']
-            };
-            confSplit['order_items'].push(list);
-          }
-        });
-      }
-      this.$put(this.urls.aftercompensation + '/' + id + '/splitorder', confSplit).then(function () {
-        _this19.splitMask = false;
-        _this19.refresh();
-        /*   this.newOpt[1].nClick = false;
-           this.newOpt[2].nClick = false;
-           this.newOpt[3].nClick = true;
-           this.newOpt[4].nClick = false;
-           this.newOpt[5].nClick = false;
-           this.newOpt[6].nClick = true;
-           this.newOpt[8].nClick = false;
-           this.newOpt[9].nClick = false;
-           this.newOpt[13].nClick = false;
-           this.newOpt[14].nClick = true;
-           this.newOpt[15].nClick = false;
-           this.newOpt[18].nClick = false;*/
-        _this19.$message({
-          message: '订单拆分成功',
-          type: 'success'
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this19.$message.error(str);
-        }
-      });
-    },
-    cancelSplit: function cancelSplit() {
-      this.splitMask = false;
-    },
-    handleMergerOrder: function handleMergerOrder() {
-      var _this20 = this;
-
-      if (this.newOpt[8].nClick) {
-        return;
-      } else {
-        if (this.mergerIds.length != 2) {
-          this.$message({
-            message: '请选择要合并的订单',
-            type: 'info'
-          });
-        } else {
-          var ids = [];
-          this.mergerIds.map(function (item) {
-            ids.push(item.id);
-          });
-          this.$put(this.urls.aftercompensation + '/mergerorder' + '?order_id_one=' + ids[0] + '&order_id_two=' + ids[1]).then(function () {
-            _this20.refresh();
-            _this20.$message({
-              message: '订单合并成功',
-              type: 'success'
-            });
-          }, function (err) {
-            if (err.response) {
-              _this20.$message.error('合并订单出错');
-            }
-          });
-        }
-      }
-    },
-    resets: function resets() {
-      this.searchBox = {};
     }
   },
   mounted: function mounted() {

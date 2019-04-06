@@ -1,10 +1,10 @@
 <template>
     <div>
-        <el-tabs v-model="activeName" @tab-click="handleTabsClick">
+        <el-tabs v-model="activeName">
           <el-tab-pane label="门店收款管理" name="0">
             <el-table :data="typeData" fit height="350" v-loading="loading">
               <el-table-column type="selection" width= "95" align= "center" :checked="checkboxInit"></el-table-column>
-              <el-table-column v-for= "item in listHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <el-table-column v-for= "item in tableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                  <template slot-scope="scope">
                    <span v-if="item.type=='checkbox'">
                        <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -51,7 +51,7 @@
         typeData:[],
         checkboxInit:false,
         loading: true,
-        listHead:[
+        tableHead:[
           {
             label:'收款类型',
             prop:'gathering_type',
@@ -60,7 +60,7 @@
           },
           {
             label:'是否启用',
-            prop:'gathering_type',
+            prop:'status',
             width:'200',
             type:'text'
           }
@@ -86,7 +86,7 @@
         console.log(1);
       },
       fetchData(){
-        this.$fetch(this.urls.shopgatheringmag,{include:'gatheringType,isUsing'})
+        this.$fetch(this.urls.shopgatheringmag)
               .then(res => {
                 this.typeData = res.data;
                 this.loading = false;
@@ -110,6 +110,7 @@
       },
     },
     mounted() {
+      this.fetchData();
       this.$store.state.opt.opts = this.newOpt;
       this.$store.commit('change', this.newOpt);
       const that = this;

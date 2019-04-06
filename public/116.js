@@ -53,8 +53,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -81,7 +79,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return _defineProperty({
+    return {
       newOpt: [{
         cnt: '新增',
         icon: 'bf-add',
@@ -97,24 +95,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
-        ent: this.test
-      }],
-      tableHead: [{
-        label: '售后状态',
-        prop: 'afterSState',
-        width: '200',
-        type: 'text'
+        ent: this.refresh
       }],
       stateData: [],
       checkboxInit: false,
       loading: true,
-      activeName: '0'
-    }, 'tableHead', [{
-      label: '售后状态',
-      prop: 'after_s_type',
-      width: '200',
-      type: 'text'
-    }]);
+      activeName: '0',
+      tableHead: [{
+        label: '售后状态',
+        prop: 'after_s_state',
+        width: '200',
+        type: 'text'
+      }, {
+        label: '是否启用',
+        prop: 'status',
+        width: '200',
+        type: 'text'
+      }]
+    };
   },
 
   computed: {
@@ -138,7 +136,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.aftersstate, { include: 'after_s_state' }).then(function (res) {
+      this.$fetch(this.urls.aftersstate).then(function (res) {
         _this.stateData = res.data;
         _this.loading = false;
       }, function (err) {
@@ -154,6 +152,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
       });
+    },
+    refresh: function refresh() {
+      this.loading = true;
+      this.fetchData();
     }
   },
   mounted: function mounted() {

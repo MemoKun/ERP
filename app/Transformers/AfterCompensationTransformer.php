@@ -7,44 +7,14 @@ use League\Fractal\TransformerAbstract;
 
 class AfterCompensationTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = [
-        'cmptn_status',
-        'order_source',
-        'cmptn_direction',
-        'cmptn_shop',
-        'responsible_party',
-        'responsible_person',
-        'customer_nickname',
-        'customer_name',
-        'customer_phone',
-        'customer_city',
-        'customer_address',
-        'cmptn_fee',
-        'logistics_company',
-        'logistics_tracking_number',
-        'payment_method',
-        'order_stuff',
-        'order_number',
-        'problem_goods',
-        'problem_description',
-        'note',
-        'refuse_reason',
-        'is_invalid',
-        'fee_type',
-        'payee',
-        'payee_account',
-        'negotiation_date',
-        'created_at',
-        'submited_at',
-        'audited_at'
-    ];
-
+    
     public function transform(AfterCompensationOrder $afterCompensationOrder)
     {
         return [
             'id' => $afterCompensationOrder->id,
             'system_order_number'=>$afterCompensationOrder->system_order_number,
             'cmptn_status'=>$afterCompensationOrder->cmptn_status,
+            'order_source'=>$afterCompensationOrder->order_source,
             'cmptn_direction'=>$afterCompensationOrder->cmptn_direction,
             'cmptn_shop'=>$afterCompensationOrder->cmptn_shop,
             'responsible_party'=>$afterCompensationOrder->responsible_party,
@@ -62,7 +32,7 @@ class AfterCompensationTransformer extends TransformerAbstract
             'order_stuff'=>$afterCompensationOrder->order_stuff,
             'order_number'=>$afterCompensationOrder->order_number,
             'problem_goods'=>$afterCompensationOrder->problem_goods,
-            'problem_descriptiom'=>$afterCompensationOrder->problem_description,
+            'problem_description'=>$afterCompensationOrder->problem_description,
             'note'=>$afterCompensationOrder->note,
             'refuse_reason'=>$afterCompensationOrder->refuse_reason,
             'is_invalid'=>$afterCompensationOrder->is_invalid,

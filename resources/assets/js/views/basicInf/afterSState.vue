@@ -44,15 +44,7 @@
           {
             cnt: '刷新',
             icon: 'bf-refresh',
-            ent: this.test
-          }
-        ],
-        tableHead:[
-          {
-            label:'售后状态',
-            prop:'afterSState',
-            width:'200',
-            type:'text'
+            ent: this.refresh
           }
         ],
         stateData:[],
@@ -62,7 +54,13 @@
         tableHead:[
           {
             label:'售后状态',
-            prop:'after_s_type',
+            prop:'after_s_state',
+            width:'200',
+            type:'text'
+          },
+          {
+            label:'是否启用',
+            prop:'status',
             width:'200',
             type:'text'
           }
@@ -88,7 +86,7 @@
         console.log(1);
       },
       fetchData(){
-        this.$fetch(this.urls.aftersstate,{include:'after_s_state'})
+        this.$fetch(this.urls.aftersstate)
               .then(res => {
                 this.stateData = res.data;
                 this.loading = false;
@@ -106,6 +104,10 @@
                 }
               });
       },
+      refresh(){
+        this.loading = true;
+        this.fetchData();
+      }
     },
     mounted() {
       this.fetchData();

@@ -101,14 +101,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       typeData: [],
       checkboxInit: false,
       loading: true,
-      listHead: [{
+      tableHead: [{
         label: '收款类型',
         prop: 'gathering_type',
         width: '200',
         type: 'text'
       }, {
         label: '是否启用',
-        prop: 'gathering_type',
+        prop: 'status',
         width: '200',
         type: 'text'
       }]
@@ -136,7 +136,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.shopgatheringmag, { include: 'gatheringType,isUsing' }).then(function (res) {
+      this.$fetch(this.urls.shopgatheringmag).then(function (res) {
         _this.typeData = res.data;
         _this.loading = false;
       }, function (err) {
@@ -159,6 +159,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
+    this.fetchData();
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit('change', this.newOpt);
     var that = this;
@@ -186,7 +187,6 @@ var render = function() {
       _c(
         "el-tabs",
         {
-          on: { "tab-click": _vm.handleTabsClick },
           model: {
             value: _vm.activeName,
             callback: function($$v) {
@@ -223,7 +223,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.listHead, function(item) {
+                  _vm._l(_vm.tableHead, function(item) {
                     return _c("el-table-column", {
                       key: item.label,
                       attrs: {
