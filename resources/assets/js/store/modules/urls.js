@@ -54,7 +54,6 @@ const urls= {
     aftersstate:'/aftersstate',
     afterstype:'/afterstype',
     evalcategorymag:'/evalcategorymag',
-    
     roles:'/roles',
 
 
