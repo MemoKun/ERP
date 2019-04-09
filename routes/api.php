@@ -905,20 +905,89 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.aftercompensation.index');
 
         //门店收款管理
-        $api->get('shopgatheringmag','ShopGatheringMagController@index')->name('api.shopgatheringmag.index');
+        $api->get('shopgatheringmag', 'ShopGatheringMagController@index')
+            ->name('api.shopgatheringmag.index');
+        $api->get('shopgatheringmag/{shopgatheringmag}', 'ShopGatheringMagController@show')
+            ->name('api.shopgatheringmag.show');
+        $api->post('shopgatheringmag', 'ShopGatheringMagController@store')
+            ->name('api.shopgatheringmag.store');
+        $api->patch('shopgatheringmag/{shopgatheringmag}', 'ShopGatheringMagController@update')
+            ->name('api.shopgatheringmag.update');
+        $api->delete('shopgatheringmag/{shopgatheringmag}', 'ShopGatheringMagController@destroy')
+            ->name('api.shopgatheringmag.destroy');
+        $api->delete('shopgatheringmag', 'ShopGatheringMagController@destroybyids')
+            ->name('api.shopgatheringmag.destroybyids');
+        $api->put('shopgatheringmag/editstatus', 'ShopGatheringMagController@editStatusByIds')
+            ->name('api.shopgatheringmag.editstatusbyids');
 
-        //售后状态
-        $api->get('aftersstate','AfterSStateController@index')->name('api.aftersstate.index');
-        //售后类型
-        $api->get('afterstype','AfterSTypeController@index')->name('api.afterstype.index');
-        $api->post('afterstype','AfterSTypeController@store')->name('api.afterstype.store');
         //评价类型
-        $api->get('evalcategorymag','EvalCategoryMagController@index')->name('api.evalcategorymag.index');
+        $api->get('evalcategorymag', 'EvalCategoryMagController@index')
+            ->name('api.evalcategorymag.index');
+        $api->get('evalcategorymag/{evalcategorymag}', 'EvalCategoryMagController@show')
+            ->name('api.evalcategorymag.show');
+        $api->post('evalcategorymag', 'EvalCategoryMagController@store')
+            ->name('api.evalcategorymag.store');
+        $api->patch('evalcategorymag/{evalcategorymag}', 'EvalCategoryMagController@update')
+            ->name('api.evalcategorymag.update');
+        $api->delete('evalcategorymag/{evalcategorymag}', 'EvalCategoryMagController@destroy')
+            ->name('api.evalcategorymag.destroy');
+        $api->delete('evalcategorymag', 'EvalCategoryMagController@destroybyids')
+            ->name('api.evalcategorymag.destroybyids');
+        $api->put('evalcategorymag/editstatus', 'EvalCategoryMagController@editStatusByIds')
+            ->name('api.evalcategorymag.editstatusbyids');
+
+        //用户关联供应商
+        $api->get('userastsupplier', 'UserAstSupplierController@index')
+            ->name('api.userastsupplier.index');
+        $api->get('userastsupplier/{userastsupplier}', 'UserAstSupplierController@show')
+            ->name('api.userastsupplier.show');
+        $api->post('userastsupplier', 'UserAstSupplierController@store')
+            ->name('api.userastsupplier.store');
+        $api->patch('userastsupplier/{userastsupplier}', 'UserAstSupplierController@update')
+            ->name('api.userastsupplier.update');
+        $api->delete('userastsupplier/{userastsupplier}', 'UserAstSupplierController@destroy')
+            ->name('api.userastsupplier.destroy');
+        $api->delete('userastsupplier', 'UserAstSupplierController@destroybyids')
+            ->name('api.userastsupplier.destroybyids');
+        $api->put('userastsupplier/editstatus', 'UserAstSupplierController@editStatusByIds')
+            ->name('api.userastsupplier.editstatusbyids');
+
+            //用户关联供应商
+        $api->get('userastsupplier', 'UserAstSupplierController@index')
+            ->name('api.userastsupplier.index');
+        $api->get('userastsupplier/{userastsupplier}', 'UserAstSupplierController@show')
+            ->name('api.userastsupplier.show');
+        $api->post('userastsupplier', 'UserAstSupplierController@store')
+            ->name('api.userastsupplier.store');
+        $api->patch('userastsupplier/{userastsupplier}', 'UserAstSupplierController@update')
+            ->name('api.userastsupplier.update');
+        $api->delete('userastsupplier/{userastsupplier}', 'UserAstSupplierController@destroy')
+            ->name('api.userastsupplier.destroy');
+        $api->delete('userastsupplier', 'UserAstSupplierController@destroybyids')
+            ->name('api.userastsupplier.destroybyids');
+        $api->put('userastsupplier/editstatus', 'UserAstSupplierController@editStatusByIds')
+            ->name('api.userastsupplier.editstatusbyids');
+
+        //用户关联仓库
+        $api->get('userastwarehouse', 'UserAstWarehouseController@index')
+            ->name('api.userastwarehouse.index');
+        $api->get('userastwarehouse/{userastwarehouse}', 'UserAstWarehouseController@show')
+            ->name('api.userastwarehouse.show');
+        $api->post('userastwarehouse', 'UserAstWarehouseController@store')
+            ->name('api.userastwarehouse.store');
+        $api->patch('userastwarehouse/{userastwarehouse}', 'UserAstWarehouseController@update')
+            ->name('api.userastwarehouse.update');
+        $api->delete('userastwarehouse/{userastwarehouse}', 'UserAstWarehouseController@destroy')
+            ->name('api.userastwarehouse.destroy');
+        $api->delete('userastwarehouse', 'UserAstWarehouseController@destroybyids')
+            ->name('api.userastwarehouse.destroybyids');
+        $api->put('userastwarehouse/editstatus', 'UserAstWarehouseController@editStatusByIds')
+            ->name('api.userastwarehouse.editstatusbyids');
+
 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
-
     });
 
     $api->group([

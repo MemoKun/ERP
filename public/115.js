@@ -96,6 +96,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -201,19 +205,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     addType: function addType() {
       this.addMask = true;
-      this.addIds = [];
-      this.typeData = [];
-      this.typeRIndex = '';
     },
     addTypeConfirm: function addTypeConfirm() {
       var _this2 = this;
 
-      var forData = this.addTypeFormVal;
-      var submitData = {
-        after_s_type: forData.after_s_type,
-        status: forData.status
+      var submit = {
+        after_s_type: this.addTypeFormVal.after_s_type,
+        status: this.addTypeFormVal.status
       };
-      this.$post(this.urls.afterstype, submitData).then(function () {
+      this.$post(this.urls.afterstype, submit).then(function () {
         _this2.addMask = false;
         _this2.refresh();
         _this2.$message({
@@ -327,7 +327,6 @@ var render = function() {
                                     "span",
                                     [
                                       _c("el-checkbox", {
-                                        attrs: { disabled: "" },
                                         model: {
                                           value: scope.row[item.prop],
                                           callback: function($$v) {
@@ -451,6 +450,12 @@ var render = function() {
             ],
             1
           ),
+          _vm._v(" "),
+          _c("div", [
+            _c("label", [_vm._v(_vm._s(_vm.addTypeFormVal.after_s_type))]),
+            _vm._v(" "),
+            _c("label", [_vm._v(_vm._s(_vm.addTypeFormVal.status))])
+          ]),
           _vm._v(" "),
           _c(
             "div",

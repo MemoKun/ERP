@@ -30,7 +30,8 @@ class AfterSTypeController extends Controller
      */
     public function store(AfterSTypeRequest $request)
     {
-        return $this->traitStore($request->validated(),self::MODEL,self::TRANSFORMER);
+        $data[] = $request->validated();
+        return $this->traitStore($data,self::MODEL,self::TRANSFORMER);
     }
 
 

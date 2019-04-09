@@ -17,4 +17,3 @@ class AfterSType extends Model
         'status' => 'boolean'
     ];
 }
-?>

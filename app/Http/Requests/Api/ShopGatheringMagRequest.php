@@ -19,13 +19,25 @@ class ShopGatheringMagRequest extends FormRequest
                     'status' => 'boolean',
                 ];
                 break;
+            case 'POST':
+                return [
+                    'name' => 'required|string|max:255',
+                    'status' => 'boolean',
+                ];
+                break;
+            case 'PATCH':
+                return [
+                    'name' => 'required|string|max:255',
+                    'status' => 'boolean',
+                ];
+                break;
         }
     }
 
     public function attributes()
     {
         return [
-            'gathering_type'=>'收款类型',
+            'name'=>'收款类型',
             'status' => '是否启用'
         ];
     }

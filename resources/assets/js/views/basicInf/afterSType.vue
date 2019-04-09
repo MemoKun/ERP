@@ -7,7 +7,7 @@
             <el-table-column v-for="item in tableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
               <template slot-scope="scope">
                    <span v-if="item.type=='checkbox'">
-                       <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                       <el-checkbox v-model="scope.row[item.prop]"></el-checkbox>
                    </span>
                    <span v-else>
                      <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
@@ -31,6 +31,10 @@
               </span>
             </el-form-item>
           </el-form>
+        </div>
+        <div>
+          <label>{{addTypeFormVal.after_s_type}}</label>
+          <label>{{addTypeFormVal.status}}</label>
         </div>
         <div style="float：right">
             <el-button type="primary" @click="addTypeConfirm">确定</el-button>
@@ -158,27 +162,22 @@
       },
       addType(){
         this.addMask = true;
-        this.addIds =[];
-        this.typeData = [];
-        this.typeRIndex = '';
       },
       addTypeConfirm(){
-        let forData=this.addTypeFormVal;
-        let submitData= {
-          after_s_type: forData.after_s_type,
-          status: forData.status
+        let submit = {
+         after_s_type: this.addTypeFormVal.after_s_type,
+         status: this.addTypeFormVal.status
         };
-        this.$post(this.urls.afterstype,submitData)
-        .then(()=>{
-          this.addMask=false;
-          this.refresh();
-          this.$message(
-            {
+        this.$post(this.urls.afterstype,submit)
+          .then(()=>{
+            this.addMask = false;
+            this.refresh();
+            this.$message({
               message:'添加成功',
               type:'success'
-            });
+            })
         },err=>{
-          if (err.response) {
+            if (err.response) {
               let arr = err.response.data.errors;
               let arr1 = [];
               for (let i in arr) {
@@ -187,7 +186,7 @@
               let str = arr1.join(',');
               this.$message.error(str);
             }
-        })
+          })
       },
       refresh() {
         this.loading = true;

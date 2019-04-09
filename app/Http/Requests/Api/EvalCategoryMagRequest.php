@@ -14,7 +14,6 @@ class EvalCategoryMagRequest extends FormRequest
      */
     public function rules()
     {
-        Log::info($this);
         switch ($this->method()) {
             case 'GET':
                 return [
@@ -22,13 +21,17 @@ class EvalCategoryMagRequest extends FormRequest
                 ];
                 break;
             case 'POST':
-                return[
-
+                return [
+                    'name' => 'required|string|max:255',
+                    'note' => 'required|string|max:255',
+                    'status' => 'boolean',
                 ];
                 break;
             case 'PATCH':
                 return [
-                    
+                    'name' => 'required|string|max:255',
+                    'note' => 'required|string|max:255',
+                    'status' => 'boolean',
                 ];
                 break;
         }
@@ -37,7 +40,7 @@ class EvalCategoryMagRequest extends FormRequest
     public function attributes()
     {
         return [
-            'eval_category'=>'评价类型',
+            'name'=>'评价类型',
             'status' => '是否启用'
         ];
     }

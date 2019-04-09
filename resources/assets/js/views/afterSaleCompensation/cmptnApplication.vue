@@ -103,26 +103,6 @@
                                             <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                                         </span>
                                     </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                          <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                          <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==2">
-                                           <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==3">
-                                           <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==4">
-                                          <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==5">
-                                          <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
                                     <span v-else>
                                         <span v-if="scope.row[item.prop]">
                                           {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}

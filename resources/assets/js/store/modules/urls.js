@@ -54,6 +54,8 @@ const urls= {
     aftersstate:'/aftersstate',
     afterstype:'/afterstype',
     evalcategorymag:'/evalcategorymag',
+    userastsupplier:'/userastsupplier',
+    userastwarehouse:'/userastwarehouse',
     roles:'/roles',
 
     me:'/me',

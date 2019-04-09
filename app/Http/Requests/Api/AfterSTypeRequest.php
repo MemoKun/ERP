@@ -23,8 +23,8 @@ class AfterSTypeRequest extends FormRequest
                 break;
             case 'POST':
                 return[
-                    'after_s_type'=>'required|string|max:50',
-                    'status'=>'required|boolean'
+                    'after_s_type' => 'required|string|max:255',
+                    'status'=>'boolean',
                 ];
                 break;
             case 'PATCH':
