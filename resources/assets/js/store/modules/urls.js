@@ -56,6 +56,15 @@ const urls= {
     current:'/current',
     uploadimages:'/uploadimages',
 
+    //Add by Xyzhao
+    purchaseFabric: '/purchaseFabric',
+    otherStorage: '/otherStorage',
+
+    customerReApplication: '/customerReApplication',
+    afterSaleReAudit: '/afterSaleReAudit',
+    financialReAudit: '/financialReAudit',
+    refundCenter: '/refundCenter',
+    auditProofread: '/auditProofread'
   }
 };
 

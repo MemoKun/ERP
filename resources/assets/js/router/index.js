@@ -293,7 +293,7 @@ const constantRouterMap = [
       }
     ]
   },*/
- /* {
+{
     name: 'Refund',
     path: '/refund',
     component: Layout,
@@ -331,7 +331,7 @@ const constantRouterMap = [
         meta: {title: '审核校对', icon: 'sync',requireAuth: true}
       }
     ]
-  },*/
+  },
  /* {
     name: 'Stock',
     path: '/stock',
