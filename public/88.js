@@ -1,14 +1,14 @@
 webpackJsonp([88],{
 
-/***/ 536:
+/***/ 510:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(777)
+var __vue_script__ = __webpack_require__(700)
 /* template */
-var __vue_template__ = __webpack_require__(778)
+var __vue_template__ = __webpack_require__(701)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/shopGatheringMag.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/evalCategoryMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6ab8667b", Component.options)
+    hotAPI.createRecord("data-v-286e5fa0", Component.options)
   } else {
-    hotAPI.reload("data-v-6ab8667b", Component.options)
+    hotAPI.reload("data-v-286e5fa0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 777:
+/***/ 700:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100,15 +100,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       disHead: [{
-        label: '门店收款管理',
-        prop: "name",
-        holder: '门店收款管理',
+        label: '评价类别',
+        prop: "eval_category",
+        holder: '评价类别',
+        type: 'text'
+      }, {
+        label: '评价描述',
+        prop: "eval_description",
+        holder: '评价描述',
         type: 'text'
       }, {
         label: '状态',
         prop: "status",
         holder: '状态',
-        // type: 'select_stu',
         type: 'checkbox',
         doSort: true,
         chgAble: true,
@@ -129,8 +133,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         chgAble: true,
         editChgAble: false
       }],
-      url: ['/shopgatheringmag', '/stockintypes'],
-      title: ['新增配送方式', '新增入库方式'],
+      url: ['/evalcategorymag', '/stockintypes'],
+      title: ['新增用户评价类别', '新增入库方式'],
       ruleForm: [{
         name: '',
         status: true
@@ -139,14 +143,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status: true
       }],
       rules: [{
-        name: [{ required: true, message: '请输入门店收款管理', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入用户评价类别', trigger: 'blur' }]
       }, {
         name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '门店收款管理',
-        prop: 'name',
-        holder: '请输入门店收款方式',
+        label: '评价类别',
+        prop: 'eval_category',
+        holder: '请输入用户',
+        type: 'text'
+      }, {
+        label: '评价描述',
+        prop: 'eval_description',
+        holder: '请输入评价描述',
         type: 'text'
       }, {
         label: '状态',
@@ -391,7 +400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 778:
+/***/ 701:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -416,7 +425,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "门店收款管理", name: "0" } },
+            { attrs: { label: "用户评价类别管理", name: "0" } },
             [
               _c("light-table", {
                 attrs: {
@@ -512,7 +521,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6ab8667b", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-286e5fa0", module.exports)
   }
 }
 

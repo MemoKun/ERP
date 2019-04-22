@@ -1,14 +1,14 @@
 webpackJsonp([81],{
 
-/***/ 500:
+/***/ 479:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(696)
+var __vue_script__ = __webpack_require__(638)
 /* template */
-var __vue_template__ = __webpack_require__(697)
+var __vue_template__ = __webpack_require__(639)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/dwnCenter/orderDwn.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/memberMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-592805bf", Component.options)
+    hotAPI.createRecord("data-v-620a5290", Component.options)
   } else {
-    hotAPI.reload("data-v-592805bf", Component.options)
+    hotAPI.reload("data-v-620a5290", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,70 +48,11 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 696:
+/***/ 638:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -133,26 +74,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
-        cnt: '下载',
-        icon: 'bf-dwn',
+        cnt: '新增',
+        icon: 'bf-add',
+        ent: this.test
+      }, {
+        cnt: '修改',
+        icon: 'bf-change',
+        ent: this.test
+      }, {
+        cnt: '删除',
+        icon: 'bf-del',
+        ent: this.test
+      }, {
+        cnt: '导入',
+        icon: 'bf-in',
+        ent: this.test
+      }, {
+        cnt: '导出',
+        icon: 'bf-out',
+        ent: this.test
+      }, {
+        cnt: '刷新',
+        icon: 'bf-refresh',
         ent: this.test
       }],
+      currentPage: true,
       searchBox: {
-        shop_name: '',
-        dwn_type: '',
-        pro_num: '',
-        order_num: '',
-        shopNames: [{ label: '店铺1', value: 0 }, { label: '店铺2', value: 1 }],
-        work_date: ''
-      },
-      tableData3: [],
-      multipleSelection: []
+        buyNick: '',
+        shopTitle: ''
+      }
     };
   },
 
   methods: {
     test: function test() {
       console.log(1);
+    },
+    getData: function getData() {
+      alert(this.searchBox);
+      console.log(this.searchBox);
     }
   },
   mounted: function mounted() {
@@ -170,159 +130,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 697:
+/***/ 639:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", [_vm._v("订单下载")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "box" }, [
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("店铺名称")]),
-            _vm._v(" "),
-            _c(
-              "el-select",
-              {
-                attrs: { clearable: "", placeholder: "请选择" },
+  return _c("div", [
+    _vm.currentPage
+      ? _c("div", { staticClass: "searchBox" }, [
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("买家昵称")]),
+              _vm._v(" "),
+              _c("el-input", {
+                staticClass: "half",
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.getData($event)
+                  }
+                },
                 model: {
-                  value: _vm.searchBox.shop_name,
+                  value: _vm.searchBox.buyNick,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shop_name", $$v)
+                    _vm.$set(_vm.searchBox, "buyNick", $$v)
                   },
-                  expression: "searchBox.shop_name"
+                  expression: "searchBox.buyNick"
                 }
-              },
-              _vm._l(_vm.searchBox.shopNames, function(item) {
-                return _c("el-option", {
-                  key: item.value,
-                  attrs: { label: item.label, value: item.value }
-                })
-              }),
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("业务日期")]),
-            _vm._v(" "),
-            _c("el-date-picker", {
-              attrs: {
-                type: "daterange",
-                "range-separator": "至",
-                "start-placeholder": "开始日期",
-                "end-placeholder": "结束日期"
-              },
-              model: {
-                value: _vm.searchBox.work_date,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "work_date", $$v)
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("会员姓名")]),
+              _vm._v(" "),
+              _c("el-input", {
+                staticClass: "half",
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.getData($event)
+                  }
                 },
-                expression: "searchBox.work_date"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("买家昵称")]),
-            _vm._v(" "),
-            _c("el-input", {
-              attrs: { clearable: "" },
-              model: {
-                value: _vm.searchBox.pro_num,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "pro_num", $$v)
-                },
-                expression: "searchBox.pro_num"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("订单编号")]),
-            _vm._v(" "),
-            _c("el-input", {
-              attrs: { clearable: "" },
-              model: {
-                value: _vm.searchBox.order_num,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "order_num", $$v)
-                },
-                expression: "searchBox.order_num"
-              }
-            })
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "el-table",
-        {
-          ref: "multipleTable",
-          staticStyle: { width: "100%" },
-          attrs: { data: _vm.tableData3, "tooltip-effect": "dark" },
-          on: { "selection-change": _vm.handleSelectionChange }
-        },
-        [
-          _c("el-table-column", { attrs: { type: "selection", width: "55" } }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "订单交易号", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "应付金额", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "实付金额", "show-overflow-tooltip": "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "买家昵称", "show-overflow-tooltip": "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "创建时间", "show-overflow-tooltip": "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "订单状态", "show-overflow-tooltip": "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: {
-              prop: "",
-              label: "分阶段状态",
-              "show-overflow-tooltip": ""
-            }
-          })
-        ],
-        1
-      )
-    ],
-    1
-  )
+                model: {
+                  value: _vm.searchBox.shopTitle,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                  },
+                  expression: "searchBox.shopTitle"
+                }
+              })
+            ],
+            1
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("h2", [_vm._v("会员管理")])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -330,7 +213,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-592805bf", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-620a5290", module.exports)
   }
 }
 

@@ -382,7 +382,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 //        $api->put('goods/editstatus', 'GoodsController@editStatusByIds')
 //            ->name('api.goods.editstatusbyids');
 
-<<<<<<< HEAD
          //商品资源
          $api->get('products', 'ProductsController@index')
              ->name('api.products.index');
@@ -401,26 +400,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
          $api->put('products/editstatus', 'ProductsController@editStatusByIds')
              ->name('api.products.editstatusbyids');
         
-=======
-        //商品资源
-        $api->get('products', 'ProductsController@index')
-            ->name('api.products.index');
-        $api->get('products/search', 'ProductsController@searchProducts')
-            ->name('api.products.searchproducts');
-        $api->get('products/{product}', 'ProductsController@show')
-            ->name('api.products.show');
-        $api->post('products', 'ProductsController@store')
-            ->name('api.products.store');
-        $api->patch('products/{product}', 'ProductsController@update')
-            ->name('api.products.update');
-        $api->delete('products/{product}', 'ProductsController@destroy')
-            ->name('api.products.destroy');
-        $api->delete('products', 'ProductsController@destroybyids')
-            ->name('api.products.destroybyids');
-        $api->put('products/editstatus', 'ProductsController@editStatusByIds')
-            ->name('api.products.editstatusbyids');
-
->>>>>>> 40f162f1a1846bb9db082f30d7320ef1a2431237
         //产品子件资源
         $api->get('productcomponents', 'ProductComponentsController@index')
             ->name('api.productcomponents.index');
