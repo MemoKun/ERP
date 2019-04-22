@@ -292,8 +292,13 @@ const constantRouterMap = [
         meta: {title: '退货管理中心', icon: 'reCt',requireAuth: true}
       }
     ]
+<<<<<<< HEAD
   },
  {
+=======
+  },*/
+{
+>>>>>>> 40f162f1a1846bb9db082f30d7320ef1a2431237
     name: 'Refund',
     path: '/refund',
     component: Layout,
@@ -332,7 +337,11 @@ const constantRouterMap = [
       }
     ]
   },
+<<<<<<< HEAD
  {
+=======
+ /* {
+>>>>>>> 40f162f1a1846bb9db082f30d7320ef1a2431237
     name: 'Stock',
     path: '/stock',
     component: Layout,
