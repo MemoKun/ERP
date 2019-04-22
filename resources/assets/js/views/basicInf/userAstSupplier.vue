@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-tabs v-model="activeName" @tab-click="tabsClick">
-            <el-tab-pane label="用户关联供应商管理" name="0">
+            <el-tab-pane label="用户关联供应商" name="0">
                  <light-table :listData="getsData"
                             :tableHead="disHead" @editSave="editSave" @handleEdit="handleEdit" @del="del" :loading="loading[activeName]" :currentIndex="currentIndex" @edit="edit" @editCancel="editCancel"  @handleSelect="handleSelectionChange"></light-table>
             </el-tab-pane>
@@ -50,23 +50,47 @@
         ],
         disHead:[
           {
-            label: '用户账号',
+            label: '用户',
             prop: "user",
-            holder:'用户账号',
+            holder:'用户',
             type: 'text'
           },
           {
             label: '供应商',
             prop: "supplier",
-            holder: '供应商',
-            type: 'text',
+            holder:'供应商',
+            type: 'text'
+          },
+          {
+            label: '状态',
+            prop: "status",
+            holder: '状态',
+            type: 'checkbox',
             doSort: true,
             chgAble: true,
             editChgAble: false
           }
         ],
-        url:['/userastsupplier'],
-        title: ['新增用户关联供应商'],
+        stockHead:[
+          {
+            label: '入库方式方式',
+            prop: "name",
+            holder:'配送方式',
+            type: 'text'
+          },
+          {
+            label: '状态',
+            prop: "status",
+            holder: '状态',
+            // type: 'select_stu',
+            type: 'checkbox',
+            doSort: true,
+            chgAble: true,
+            editChgAble: false
+          }
+        ],
+        url:['/userastsupplier','/stockintypes'],
+        title: ['新增用户关联供应商','新增入库方式'],
         ruleForm: [
           {
           name: '',
@@ -82,27 +106,51 @@
           name:
             [{required: true, message: '请输入用户关联供应商', trigger: 'blur'}]
             },
-          ],
+            {
+            name:
+              [{required: true, message: '请输入入库方式', trigger: 'blur'}]
+            }],
         addArr:[
           [
             {
               label:'用户',
               prop:'user',
-              holder:'请输入用户账号',
+              holder:'请输入用户',
               type: 'text'
             },
             {
               label:'供应商',
               prop:'supplier',
-              holder:'请选择供应商',
-              // type: 'select_stu'
+              holder:'请输入供应商',
               type: 'text'
+            },
+            {
+              label:'状态',
+              prop:'status',
+              holder:'请选择状态',
+              // type: 'select_stu'
+              type: 'checkbox'
             }
           ],
+          [
+            {
+              label:'入库方式',
+              prop:'name',
+              holder:'请输入入库方式',
+              type: 'text'
+            },
+            {
+              label:'状态',
+              prop:'status',
+              holder:'请选择状态',
+              // type: 'select_stu'
+              type: 'checkbox'
+            }
+          ]
         ],
         activeName:'0',
         getsData:[],
-        loading: [true],
+        loading: [true,true],
         currentIndex:'',
         /*新增*/
         showMask: false,
@@ -111,7 +159,7 @@
         inputChange: false,
         delArr:[],
         multipleSelection:[],
-        refArr:['uas'],
+        refArr:['uas','stock'],
       }
     },
     methods:{
@@ -222,7 +270,7 @@
         });
       },
       confirmD(id) {
-        this.$del(this.url[this.activeName] + '/' + id)
+        this.$del(this.url[0] + '/' + id)
           .then(() => {
             this.$message({
               message: '删除成功',

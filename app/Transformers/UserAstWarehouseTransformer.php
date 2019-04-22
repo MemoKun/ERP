@@ -13,6 +13,7 @@ class UserAstWarehouseTransformer extends TransformerAbstract
             'id' => $uaw->id,
             'user' => $uaw->user,
             'warehouse' => $uaw->warehouse,
+            'status'=>$uaw->status,
             'created_at' => $uaw->created_at
                                     ->toDateTimeString(),
             'updated_at' => $uaw->updated_at

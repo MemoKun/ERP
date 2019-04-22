@@ -1513,20 +1513,24 @@ var render = function() {
                     align: "center",
                     width: item.width
                   },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(scope.row[item.prop]) +
-                              "\n                "
-                          )
-                        ]
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(scope.row[item.prop]) +
+                                "\n                "
+                            )
+                          ]
+                        }
                       }
-                    }
-                  ])
+                    ],
+                    null,
+                    true
+                  )
                 })
               }),
               _vm._v(" "),

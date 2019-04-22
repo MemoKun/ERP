@@ -102,6 +102,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       disHead: [{
         label: '门店收款管理',
         prop: "name",
+        holder: '门店收款管理',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: "status",
+        holder: '状态',
+        // type: 'select_stu',
+        type: 'checkbox',
+        doSort: true,
+        chgAble: true,
+        editChgAble: false
+      }],
+      stockHead: [{
+        label: '入库方式方式',
+        prop: "name",
         holder: '配送方式',
         type: 'text'
       }, {
@@ -114,8 +129,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         chgAble: true,
         editChgAble: false
       }],
-      url: ['/shopgatheringmag'],
-      title: ['新增门店收款方式'],
+      url: ['/shopgatheringmag', '/stockintypes'],
+      title: ['新增配送方式', '新增入库方式'],
       ruleForm: [{
         name: '',
         status: true
@@ -124,12 +139,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status: true
       }],
       rules: [{
-        name: [{ required: true, message: '请输入门店收款方式', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入门店收款管理', trigger: 'blur' }]
+      }, {
+        name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '门店收款方式',
+        label: '门店收款管理',
         prop: 'name',
         holder: '请输入门店收款方式',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
+        // type: 'select_stu'
+        type: 'checkbox'
+      }], [{
+        label: '入库方式',
+        prop: 'name',
+        holder: '请输入入库方式',
         type: 'text'
       }, {
         label: '状态',
@@ -140,7 +168,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }]],
       activeName: '0',
       getsData: [],
-      loading: [true],
+      loading: [true, true],
       currentIndex: '',
       /*新增*/
       showMask: false,
@@ -149,7 +177,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       inputChange: false,
       delArr: [],
       multipleSelection: [],
-      refArr: ['mag']
+      refArr: ['mag', 'stock']
     };
   },
 
@@ -266,7 +294,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     confirmD: function confirmD(id) {
       var _this4 = this;
 
-      this.$del(this.url[this.activeName] + '/' + id).then(function () {
+      this.$del(this.url[0] + '/' + id).then(function () {
         _this4.$message({
           message: '删除成功',
           type: 'success'

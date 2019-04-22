@@ -9,29 +9,32 @@ class UserAstWarehouseRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
-        switch ($this->method()) {
-            case 'GET':
-                return [
-                    'user' => 'required|string|max:255',
-                    'warehouse' => 'required|string|max:255'
-                ];
-                break;
-            case 'POST':
-                return [
-                    'user' => 'required|string|max:255',
-                    'warehouse' => 'required|string|max:255'
-                ];
-                break;
-            case 'PATCH':
-                return [
-                    'user' => 'required|string|max:255',
-                    'warehouse' => 'required|string|max:255'
-                ];
-                break;
-        }
-    }
+     public function rules()
+     {
+         switch ($this->method()) {
+             case 'GET':
+                 return [
+                     'user' => 'string',
+                     'warehouse' => 'string', 
+                     'status'=>'boolean'
+                 ];
+                 break;
+             case 'POST':
+                 return [
+                     'user' => 'string',
+                     'warehouse' => 'string',
+                     'status'=>'boolean'
+                 ];
+                 break;
+             case 'PATCH':
+                 return [
+                     'user' => 'string',
+                     'warehouse' => 'string',
+                     'status'=>'boolean'
+                 ];
+                 break;
+         }
+     }
 
     public function messages()
     {
@@ -51,7 +54,7 @@ class UserAstWarehouseRequest extends FormRequest
     {
         return [
             'user' => '用户账户',
-            'warehouse' => '仓库名称'
+            'warehouse' => '仓库名称',
         ];
     }
 }

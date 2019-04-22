@@ -151,7 +151,7 @@ var render = function() {
                 nativeOn: {
                   keyup: function($event) {
                     if (
-                      "keyCode" in $event &&
+                      !$event.type.indexOf("key") &&
                       _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                     ) {
                       return null
@@ -182,7 +182,7 @@ var render = function() {
                 nativeOn: {
                   keyup: function($event) {
                     if (
-                      "keyCode" in $event &&
+                      !$event.type.indexOf("key") &&
                       _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                     ) {
                       return null
