@@ -1,14 +1,14 @@
 webpackJsonp([112],{
 
-/***/ 512:
+/***/ 560:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(729)
+var __vue_script__ = __webpack_require__(809)
 /* template */
-var __vue_template__ = __webpack_require__(730)
+var __vue_template__ = __webpack_require__(810)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/departmentMag.vue"
+Component.options.__file = "resources/assets/js/components/index.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-bab69950", Component.options)
+    hotAPI.createRecord("data-v-c05e4f6a", Component.options)
   } else {
-    hotAPI.reload("data-v-bab69950", Component.options)
+    hotAPI.reload("data-v-c05e4f6a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 729:
+/***/ 809:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75,351 +75,633 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      newOpt: [{
-        cnt: '新增',
-        icon: 'bf-add',
-        ent: this.addNew
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
       }, {
-        cnt: '删除',
-        icon: 'bf-del',
-        ent: this.delMore
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
       }, {
-        cnt: '刷新',
-        icon: 'bf-refresh',
-        ent: this.refresh
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
       }],
-      getsInfo: [],
+      data: [{}, { color: '1', length: '100', is_comb: 1 }, { color: '2', length: '200', is_comb: 1 }, { color: '3', length: '40', is_comb: 0 }, { color: '4', length: '40', is_comb: 0 }],
       tableHead: [{
-        label: '部门代码',
-        width: '',
-        prop: "dept_no",
-        holder: '请输入部门代码',
-        type: 'text',
-        beAble: true
+        label: '组合',
+        prop: 'is_comb',
+        type: 'checkbox'
       }, {
-        label: '部门名称',
-        width: '',
-        prop: "name",
-        holder: '请输入部门名称',
-        type: 'text'
+        label: '颜色',
+        prop: 'color'
       }, {
-        label: '所属部门',
-        width: '',
-        prop: "p_dept",
-        holder: '请输入所属部门',
-        type: 'text'
-      }, {
-        label: '是否验证',
-        width: '',
-        prop: "is_verify",
-        holder: '请选择是否验证',
-        type: 'select_def'
-      }, {
-        label: '备注',
-        width: '',
-        prop: "remark",
-        holder: '请输入备注',
-        type: 'textarea'
-      }, {
-        label: '状态',
-        width: '',
-        prop: "status",
-        holder: '状态',
-        type: 'select_stu',
-        doSort: true
+        label: '长度',
+        prop: 'length'
       }],
-      loading: true,
-      currentIndex: '',
-      url: '/departments',
-      showMaskArr: false,
-      title: '新增部门',
-      ruleForm: {
-        dept_no: '',
-        name: '',
-        p_dept: '',
-        is_verify: '0',
-        remark: '',
-        status: '1'
-      },
-      rules: {
-        dept_no: [{ required: true, message: '请输入部门代码', trigger: 'blur' }],
-        name: [{ required: true, message: '请输入部门名称', trigger: 'blur' }],
-        p_dept: [{ required: true, message: '请输入所属部门', trigger: 'blur' }]
-      },
-      addArr: [{
-        label: '部门代码',
-        prop: 'dept_no',
-        holder: '请输入运费类型',
-        type: 'text'
-      }, {
-        label: '部门名称',
-        prop: 'name',
-        holder: '请输入部门名称',
-        type: 'text'
-      }, {
-        label: '所属部门',
-        prop: 'p_dept',
-        holder: '请输入所属部门',
-        type: 'text'
-      }, {
-        label: '是否验证',
-        prop: 'is_verify',
-        holder: '请选择是否验证',
-        type: 'select_def'
-      }, {
-        label: '备注',
-        prop: 'remark',
-        holder: '请输入备注',
-        type: 'textarea'
-      }, {
-        label: '状态',
-        prop: 'status',
-        holder: '请选择状态',
-        type: 'select_stu'
-      }],
-      refArr: 'ruleDepart',
-      showDel: false,
-      delId: '',
-      inputChange: false,
-      multipleSelection: [],
-      delArr: [],
-      pagination: {
-        current_page: 1,
-        per_page: 0,
-        page_total: 0
-      }
+      chg: false,
+      doSelect: false,
+      tt: '0'
+
     };
   },
 
   methods: {
-    test: function test() {
-      console.log(1);
+    rowName: function rowName(_ref) {
+      var row = _ref.row,
+          rowIndex = _ref.rowIndex;
+      row.index = rowIndex;
     },
-    addNew: function addNew() {
-      this.ruleForm.name = '';
-      this.showMaskArr = true;
+    rowClick: function rowClick(row) {
+      // console.log(row);
+      if (row.is_comb == 1) {
+        row.index;
+      }
+      /*点击新一行时重置*/
+      // this.chg = false;
+      if (this.chg) {
+        // alert(1);
+        Object.assign(this.$data.data[row.index], row);
+      }
     },
-    CB_dialog: function CB_dialog(val) {
-      this.showMaskArr = val;
+    valChg: function valChg(val) {
+      // console.log(index);
+      // console.log(val);
+      // this.chg = true;
+      console.log(val);
     },
-    submitForm: function submitForm() {
+    selectComb: function selectComb() {
       var _this = this;
 
-      this.$post(this.url, this.ruleForm).then(function () {
-        _this.$message({
-          message: '添加成功',
-          type: 'success'
-        });
-        _this.showMaskArr = false;
-        _this.refresh();
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-
-    /*处理批量删除*/
-    handleSelectionChange: function handleSelectionChange(val) {
-      this.multipleSelection = val;
-      var del = [];
-      this.multipleSelection.forEach(function (selectedItem) {
-        del.push(selectedItem.id);
-      });
-      this.delArr = del.join(',');
-    },
-    delMore: function delMore() {
-      var _this2 = this;
-
-      if (this.delArr.length === 0) {
-        this.$message({
-          message: '没有选中数据',
-          type: 'warning'
-        });
-      } else {
-        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(function () {
-          _this2.$del(_this2.url, { ids: _this2.delArr }).then(function () {
-            _this2.$message({
-              message: '删除成功',
-              type: 'success'
-            });
-            _this2.refresh();
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              var str = arr1.join(',');
-              _this2.$message.error({
-                message: str
-              });
-            }
-          });
-        }).catch(function () {
-          _this2.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
-      }
-    },
-
-    /*修改保存*/
-    edit: function edit(index) {
-      this.currentIndex = 'index' + index;
-    },
-    editCancel: function editCancel() {
-      this.$message({
-        message: '取消修改',
-        type: 'info'
-      });
-      this.currentIndex = '';
-    },
-    editSave: function editSave(row) {
-      var _this3 = this;
-
-      var obj = {
-        id: row.id,
-        name: row.name,
-        is_default: row.is_default,
-        status: row.status
-      };
-      if (this.inputChange) {
-        this.$patch(this.url + '/' + row.id, obj).then(function () {
-          _this3.$message({
-            message: '修改成功',
-            type: 'success'
-          });
-          _this3.getInfo(_this3.url);
-          _this3.currentIndex = '';
-          _this3.inputChange = false;
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(',');
-            _this3.$message.error({
-              message: str
-            });
+      /*如果是确定*/
+      if (this.doSelect) {
+        this.data.map(function (item, index) {
+          if (item.is_comb == 0) {
+            _this.data.splice(index, 1);
           }
         });
       } else {
-        this.$message({
-          message: '数据未改动',
-          type: 'info'
-        });
+        Object.assign(this.$data.data, this.$options.data().data);
       }
     },
-    handleEdit: function handleEdit() {
-      this.inputChange = true;
+    curChg: function curChg(currentRow, oldCurrentRow) {
+      console.log(currentRow);
+      console.log(oldCurrentRow);
     },
-    getInfo: function getInfo(url) {
-      var _this4 = this;
-
-      this.showPage = true;
-      this.$fetch(url).then(function (res) {
-        _this4.getsInfo = res.data;
-        _this4.$store.dispatch('setFreights', res.data);
-        _this4.loading = false;
-        var pg = res.meta.pagination;
-        _this4.$store.dispatch('currentPage', pg.current_page);
-        _this4.$store.commit('PER_PAGE', pg.per_page);
-        _this4.$store.commit('PAGE_TOTAL', pg.total);
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this4.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    del: function del(row, e) {
-      this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
-      this.delId = row.id;
-    },
-    cancelD: function cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: '取消删除',
-        type: 'info'
-      });
-    },
-    confirmD: function confirmD(id) {
-      var _this5 = this;
-
-      this.$del(this.url + '/' + id).then(function () {
-        _this5.$message({
-          message: '删除成功',
-          type: 'success'
-        });
-        _this5.showDel = false;
-        _this5.refresh();
-      }, function (err) {
-        if (err.response) {
-          _this5.showDel = false;
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this5.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    refresh: function refresh() {
-      var _this6 = this;
-
-      this.loading = true;
-      this.getInfo(this.url);
-      setTimeout(function () {
-        _this6.loading = false;
-      }, 2000);
-    }
+    updateCount: function updateCount() {}
   },
-  mounted: function mounted() {
-    this.getInfo(this.url);
-    this.$store.dispatch('setOpt', this.newOpt);
-    var that = this;
-    $(window).resize(function () {
-      that.$store.dispatch('setOpt', that.newOpt);
-    });
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
 
-/***/ 730:
+/***/ 810:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -429,84 +711,112 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("light-table", {
-        attrs: {
-          listData: _vm.getsInfo,
-          tableHead: _vm.tableHead,
-          loading: _vm.loading,
-          currentIndex: _vm.currentIndex
-        },
-        on: {
-          handleSelect: _vm.handleSelectionChange,
-          editSave: _vm.editSave,
-          handleEdit: _vm.handleEdit,
-          del: _vm.del,
-          edit: _vm.edit,
-          editCancel: _vm.editCancel
-        }
-      }),
-      _vm._v(" "),
-      _c("add-new", {
-        attrs: {
-          "visible-add": _vm.showMaskArr,
-          title: _vm.title,
-          "rule-form": _vm.ruleForm,
-          rules: _vm.rules,
-          "add-arr": _vm.addArr,
-          url: _vm.url,
-          "new-ref": _vm.refArr
-        },
-        on: { submitEvent: _vm.submitForm, "CB-dialog": _vm.CB_dialog }
+      _c("el-checkbox", {
+        attrs: { checked: _vm.tt == 1 ? true : false, disabled: "" }
       }),
       _vm._v(" "),
       _c(
-        "el-popover",
+        "el-table",
         {
-          attrs: { slot: "tip", placement: "top", width: "160" },
-          slot: "tip",
-          model: {
-            value: _vm.showDel,
-            callback: function($$v) {
-              _vm.showDel = $$v
-            },
-            expression: "showDel"
-          }
+          attrs: { data: _vm.data, "row-class-name": _vm.rowName },
+          on: { "row-click": _vm.rowClick, "current-change": _vm.curChg }
         },
-        [
-          _c("p", [_vm._v("确定删除该条数据？")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticStyle: { "text-align": "right", margin: "0" } },
-            [
-              _c(
-                "el-button",
+        _vm._l(_vm.tableHead, function(item, index) {
+          return _c("el-table-column", {
+            key: index,
+            attrs: { label: item.label, align: "center", width: item.width },
+            scopedSlots: _vm._u(
+              [
                 {
-                  attrs: { size: "mini", type: "text" },
-                  on: { click: _vm.cancelD }
-                },
-                [_vm._v("取消")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "mini" },
-                  on: {
-                    click: function($event) {
-                      return _vm.confirmD(_vm.delId)
-                    }
+                  key: "default",
+                  fn: function(scope) {
+                    return [
+                      item.type == "checkbox"
+                        ? _c("span", [
+                            scope.$index == 0
+                              ? _c(
+                                  "span",
+                                  [
+                                    _c("el-checkbox", {
+                                      on: { change: _vm.selectComb },
+                                      model: {
+                                        value: _vm.doSelect,
+                                        callback: function($$v) {
+                                          _vm.doSelect = $$v
+                                        },
+                                        expression: "doSelect"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _c("span", [
+                                  scope.row.is_comb == 1
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c(
+                                            "el-checkbox",
+                                            {
+                                              attrs: {
+                                                checked: true,
+                                                disabled: ""
+                                              }
+                                            },
+                                            [_vm._v(_vm._s(scope.row.is_comb))]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c(
+                                            "el-checkbox",
+                                            {
+                                              attrs: {
+                                                checked: false,
+                                                disabled: ""
+                                              }
+                                            },
+                                            [_vm._v(_vm._s(scope.row.is_comb))]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                ])
+                          ])
+                        : _c(
+                            "span",
+                            [
+                              _c("el-input", {
+                                attrs: {
+                                  size: "small",
+                                  placeholder: item.holder
+                                },
+                                on: { change: _vm.valChg },
+                                model: {
+                                  value: scope.row[item.prop],
+                                  callback: function($$v) {
+                                    _vm.$set(scope.row, item.prop, $$v)
+                                  },
+                                  expression: "scope.row[item.prop]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                    ]
                   }
-                },
-                [_vm._v("确定")]
-              )
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("Pagination", { attrs: { "page-url": _vm.url } })
+                }
+              ],
+              null,
+              true
+            )
+          })
+        }),
+        1
+      )
     ],
     1
   )
@@ -517,7 +827,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-bab69950", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-c05e4f6a", module.exports)
   }
 }
 

@@ -1,14 +1,14 @@
 webpackJsonp([44],{
 
-/***/ 571:
+/***/ 551:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(849)
+var __vue_script__ = __webpack_require__(789)
 /* template */
-var __vue_template__ = __webpack_require__(850)
+var __vue_template__ = __webpack_require__(790)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/reportStatistics/freightMag.vue"
+Component.options.__file = "resources/assets/js/views/reSupplied/reSCenter.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f7996176", Component.options)
+    hotAPI.createRecord("data-v-aeff93ac", Component.options)
   } else {
-    hotAPI.reload("data-v-f7996176", Component.options)
+    hotAPI.reload("data-v-aeff93ac", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 849:
+/***/ 789:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63,6 +63,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
+        cnt: '修改',
+        icon: 'bf-change',
+        ent: this.test
+      }, {
+        cnt: '删除',
+        icon: 'bf-del',
+        ent: this.test
+      }, {
+        cnt: '提交',
+        icon: 'bf-submit',
+        ent: this.test
+      }, {
+        cnt: '驳回',
+        icon: 'bf-reject',
+        ent: this.test
+      }, {
+        cnt: '审核',
+        icon: 'bf-audit',
+        ent: this.test
+      }, {
+        cnt: '退审',
+        icon: 'bf-auditfaild',
+        ent: this.test
+      }, {
+        cnt: '发货',
+        icon: 'bf-deliver',
+        ent: this.test
+      }, {
+        cnt: '批量处理',
+        icon: 'bf-more',
+        ent: this.test
+      }, {
         cnt: '导出',
         icon: 'bf-out',
         ent: this.test
@@ -71,11 +103,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: 'bf-dwn',
         ent: this.test
       }, {
+        cnt: '还原',
+        icon: 'bf-reduce',
+        ent: this.test
+      }, {
         cnt: '刷新',
         icon: 'bf-refresh',
         ent: this.test
       }]
     };
+  },
+
+  methods: {
+    test: function test() {
+      console.log(1);
+    }
   },
   mounted: function mounted() {
     this.$store.state.opt.opts = this.newOpt;
@@ -92,7 +134,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 850:
+/***/ 790:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -106,7 +148,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("运费管理报表")])])
+    return _c("div", [_c("h2", [_vm._v("补件中心")])])
   }
 ]
 render._withStripped = true
@@ -114,7 +156,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-f7996176", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-aeff93ac", module.exports)
   }
 }
 
