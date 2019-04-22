@@ -901,19 +901,58 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.returnorderitems.destroy');
 
         //售后赔偿
+        $api->get('aftercompensation/searchall', 'AfterCompensationController@searchAll')
+            ->name('api.aftercompensation.searchall');
+        $api->get('aftercompensation/searchuntreated', 'AfterCompensationController@searchUntreated')
+            ->name('api.aftercompensation.searchuntreated');
+        $api->get('aftercompensation/searchalluntreated', 'AfterCompensationController@searchAllUntreated')
+            ->name('api.aftercompensation.searchalluntreated');
+        $api->get('aftercompensation/searchtreated', 'AfterCompensationController@searchTreated')
+            ->name('api.aftercompensation.searchtreated');
+        $api->get('aftercompensation/searchsectreated', 'AfterCompensationController@searchSecTreated')
+            ->name('api.aftercompensation.searchtreated');
         $api->get('aftercompensation', 'AfterCompensationController@index')
             ->name('api.aftercompensation.index');
+        $api->get('aftercompensation/create', 'AfterCompensationController@create')
+            ->name('api.aftercompensation.create');
+        $api->get('aftercompensation/{order}', 'AfterCompensationController@show')
+            ->name('api.aftercompensation.show');
+        $api->post('aftercompensation', 'AfterCompensationController@store')
+            ->name('api.aftercompensation.store');
+        $api->patch('aftercompensation/{order}', 'AfterCompensationController@update')
+            ->name('api.aftercompensation.update');
+        $api->delete('aftercompensation/{order}', 'AfterCompensationController@destroy')
+            ->name('api.aftercompensation.destroy');
+        $api->delete('aftercompensation', 'AfterCompensationController@destroybyids')
+            ->name('api.aftercompensation.destroybyids');
+        $api->put('aftercompensation/editstatus', 'AfterCompensationController@editStatusByIds')
+            ->name('api.aftercompensation.editstatusbyids');
+        $api->put('aftercompensation/{order}/lockorunlock', 'AfterCompensationController@isLockOrUnlock')
+            ->name('api.aftercompensation.islockorunlock');
+        $api->put('aftercompensation/{order}/audit', 'AfterCompensationController@isAudit')
+            ->name('api.aftercompensation.isaudit');
+        $api->put('aftercompensation/{order}/secaudit', 'AfterCompensationController@isSecAudit')
+            ->name('api.aftercompensation.issecaudit');
+        $api->put('aftercompensation/{order}/unaudit', 'AfterCompensationController@isUnAudit')
+            ->name('api.aftercompensation.isunaudit');
+        $api->put('aftercompensation/{order}/secunaudit', 'AfterCompensationController@isSecUnAudit')
+            ->name('api.aftercompensation.issecunaudit');
+        $api->put('aftercompensation/{order}/splitorder', 'AfterCompensationController@isSplitOrder')
+            ->name('api.aftercompensation.issplitorder');
+        $api->put('aftercompensation/mergerorder', 'AfterCompensationController@isMergerOrder')
+            ->name('api.aftercompensation.ismergerorder');
+
 
         //门店收款管理
         $api->get('shopgatheringmag', 'ShopGatheringMagController@index')
             ->name('api.shopgatheringmag.index');
-        $api->get('shopgatheringmag/{shopgatheringmag}', 'ShopGatheringMagController@show')
+        $api->get('shopgatheringmag/{mag}', 'ShopGatheringMagController@show')
             ->name('api.shopgatheringmag.show');
         $api->post('shopgatheringmag', 'ShopGatheringMagController@store')
             ->name('api.shopgatheringmag.store');
-        $api->patch('shopgatheringmag/{shopgatheringmag}', 'ShopGatheringMagController@update')
+        $api->patch('shopgatheringmag/{mag}', 'ShopGatheringMagController@update')
             ->name('api.shopgatheringmag.update');
-        $api->delete('shopgatheringmag/{shopgatheringmag}', 'ShopGatheringMagController@destroy')
+        $api->delete('shopgatheringmag/{mag}', 'ShopGatheringMagController@destroy')
             ->name('api.shopgatheringmag.destroy');
         $api->delete('shopgatheringmag', 'ShopGatheringMagController@destroybyids')
             ->name('api.shopgatheringmag.destroybyids');
@@ -923,13 +962,13 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //评价类型
         $api->get('evalcategorymag', 'EvalCategoryMagController@index')
             ->name('api.evalcategorymag.index');
-        $api->get('evalcategorymag/{evalcategorymag}', 'EvalCategoryMagController@show')
+        $api->get('evalcategorymag/{mag}', 'EvalCategoryMagController@show')
             ->name('api.evalcategorymag.show');
         $api->post('evalcategorymag', 'EvalCategoryMagController@store')
             ->name('api.evalcategorymag.store');
-        $api->patch('evalcategorymag/{evalcategorymag}', 'EvalCategoryMagController@update')
+        $api->patch('evalcategorymag/{mag}', 'EvalCategoryMagController@update')
             ->name('api.evalcategorymag.update');
-        $api->delete('evalcategorymag/{evalcategorymag}', 'EvalCategoryMagController@destroy')
+        $api->delete('evalcategorymag/{mag}', 'EvalCategoryMagController@destroy')
             ->name('api.evalcategorymag.destroy');
         $api->delete('evalcategorymag', 'EvalCategoryMagController@destroybyids')
             ->name('api.evalcategorymag.destroybyids');
@@ -939,29 +978,13 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //用户关联供应商
         $api->get('userastsupplier', 'UserAstSupplierController@index')
             ->name('api.userastsupplier.index');
-        $api->get('userastsupplier/{userastsupplier}', 'UserAstSupplierController@show')
+        $api->get('userastsupplier/{uas}', 'UserAstSupplierController@show')
             ->name('api.userastsupplier.show');
         $api->post('userastsupplier', 'UserAstSupplierController@store')
             ->name('api.userastsupplier.store');
-        $api->patch('userastsupplier/{userastsupplier}', 'UserAstSupplierController@update')
+        $api->patch('userastsupplier/{uas}', 'UserAstSupplierController@update')
             ->name('api.userastsupplier.update');
-        $api->delete('userastsupplier/{userastsupplier}', 'UserAstSupplierController@destroy')
-            ->name('api.userastsupplier.destroy');
-        $api->delete('userastsupplier', 'UserAstSupplierController@destroybyids')
-            ->name('api.userastsupplier.destroybyids');
-        $api->put('userastsupplier/editstatus', 'UserAstSupplierController@editStatusByIds')
-            ->name('api.userastsupplier.editstatusbyids');
-
-            //用户关联供应商
-        $api->get('userastsupplier', 'UserAstSupplierController@index')
-            ->name('api.userastsupplier.index');
-        $api->get('userastsupplier/{userastsupplier}', 'UserAstSupplierController@show')
-            ->name('api.userastsupplier.show');
-        $api->post('userastsupplier', 'UserAstSupplierController@store')
-            ->name('api.userastsupplier.store');
-        $api->patch('userastsupplier/{userastsupplier}', 'UserAstSupplierController@update')
-            ->name('api.userastsupplier.update');
-        $api->delete('userastsupplier/{userastsupplier}', 'UserAstSupplierController@destroy')
+        $api->delete('userastsupplier/{uas}', 'UserAstSupplierController@destroy')
             ->name('api.userastsupplier.destroy');
         $api->delete('userastsupplier', 'UserAstSupplierController@destroybyids')
             ->name('api.userastsupplier.destroybyids');
@@ -971,19 +994,51 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //用户关联仓库
         $api->get('userastwarehouse', 'UserAstWarehouseController@index')
             ->name('api.userastwarehouse.index');
-        $api->get('userastwarehouse/{userastwarehouse}', 'UserAstWarehouseController@show')
+        $api->get('userastwarehouse/{uas}', 'UserAstWarehouseController@show')
             ->name('api.userastwarehouse.show');
         $api->post('userastwarehouse', 'UserAstWarehouseController@store')
             ->name('api.userastwarehouse.store');
-        $api->patch('userastwarehouse/{userastwarehouse}', 'UserAstWarehouseController@update')
+        $api->patch('userastwarehouse/{uas}', 'UserAstWarehouseController@update')
             ->name('api.userastwarehouse.update');
-        $api->delete('userastwarehouse/{userastwarehouse}', 'UserAstWarehouseController@destroy')
+        $api->delete('userastwarehouse/{uas}', 'UserAstWarehouseController@destroy')
             ->name('api.userastwarehouse.destroy');
         $api->delete('userastwarehouse', 'UserAstWarehouseController@destroybyids')
             ->name('api.userastwarehouse.destroybyids');
         $api->put('userastwarehouse/editstatus', 'UserAstWarehouseController@editStatusByIds')
             ->name('api.userastwarehouse.editstatusbyids');
 
+
+        //打印机配置
+        $api->get('printerconf', 'PrinterConfController@index')
+            ->name('api.printerconf.index');
+        $api->get('printerconf/{conf}', 'PrinterConfController@show')
+            ->name('api.printerconf.show');
+        $api->post('printerconf', 'PrinterConfController@store')
+            ->name('api.printerconf.store');
+        $api->patch('printerconf/{conf}', 'PrinterConfController@update')
+            ->name('api.printerconf.update');
+        $api->delete('printerconf/{conf}', 'PrinterConfController@destroy')
+            ->name('api.printerconf.destroy');
+        $api->delete('printerconf', 'PrinterConfController@destroybyids')
+            ->name('api.printerconf.destroybyids');
+        $api->put('printerconf/editstatus', 'PrinterConfController@editStatusByIds')
+            ->name('api.printerconf.editstatusbyids');
+
+        //负库存配置
+        $api->get('negativeinvconf', 'NegativeInvConfController@index')
+            ->name('api.negativeinvconf.index');
+        $api->get('negativeinvconf/{conf}', 'NegativeInvConfController@show')
+            ->name('api.negativeinvconf.show');
+        $api->post('negativeinvconf', 'NegativeInvConfController@store')
+            ->name('api.negativeinvconf.store');
+        $api->patch('negativeinvconf/{conf}', 'NegativeInvConfController@update')
+            ->name('api.negativeinvconf.update');
+        $api->delete('negativeinvconf/{conf}', 'NegativeInvConfController@destroy')
+            ->name('api.negativeinvconf.destroy');
+        $api->delete('negativeinvconf', 'NegativeInvConfController@destroybyids')
+            ->name('api.negativeinvconf.destroybyids');
+        $api->put('negativeinvconf/editstatus', 'NegativeInvConfController@editStatusByIds')
+            ->name('api.negativeinvconf.editstatusbyids');
 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')

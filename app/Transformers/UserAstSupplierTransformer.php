@@ -13,6 +13,7 @@ class UserAstSupplierTransformer extends TransformerAbstract
             'id' => $uas->id,
             'user' => $uas->user,
             'supplier' => $uas->supplier,
+            'status'=>$uas->status,
             'created_at' => $uas->created_at
                                     ->toDateTimeString(),
             'updated_at' => $uas->updated_at

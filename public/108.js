@@ -100,14 +100,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       disHead: [{
-        label: '评价类别管理',
-        prop: "name",
+        label: '评价类别',
+        prop: "eval_category",
         holder: '评价类别',
         type: 'text'
       }, {
-        label: '描述',
-        prop: "note",
-        holder: '描述',
+        label: '评价描述',
+        prop: "eval_description",
+        holder: '评价描述',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: "status",
+        holder: '状态',
+        type: 'checkbox',
+        doSort: true,
+        chgAble: true,
+        editChgAble: false
+      }],
+      stockHead: [{
+        label: '入库方式方式',
+        prop: "name",
+        holder: '配送方式',
         type: 'text'
       }, {
         label: '状态',
@@ -118,14 +132,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         doSort: true,
         chgAble: true,
         editChgAble: false
-      }, {
-        label: '创建人',
-        prop: 'creator',
-        holder: '创建人',
-        type: 'text'
       }],
-      url: ['/evalcategorymag'],
-      title: ['新增评价类别管理'],
+      url: ['/evalcategorymag', '/stockintypes'],
+      title: ['新增用户评价类别', '新增入库方式'],
       ruleForm: [{
         name: '',
         status: true
@@ -134,17 +143,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status: true
       }],
       rules: [{
-        name: [{ required: true, message: '请输入评价类别管理', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入用户评价类别', trigger: 'blur' }]
+      }, {
+        name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '评价类别管理',
-        prop: 'name',
-        holder: '请输入评价类别管理',
+        label: '评价类别',
+        prop: 'eval_category',
+        holder: '请输入用户',
         type: 'text'
       }, {
-        label: '描述',
-        prop: "note",
-        holder: '描述',
+        label: '评价描述',
+        prop: 'eval_description',
+        holder: '请输入评价描述',
         type: 'text'
       }, {
         label: '状态',
@@ -152,15 +163,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         holder: '请选择状态',
         // type: 'select_stu'
         type: 'checkbox'
-      }, {
-        label: '创建人',
-        prop: 'creator',
-        holder: '创建人',
+      }], [{
+        label: '入库方式',
+        prop: 'name',
+        holder: '请输入入库方式',
         type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
+        // type: 'select_stu'
+        type: 'checkbox'
       }]],
       activeName: '0',
       getsData: [],
-      loading: [true],
+      loading: [true, true],
       currentIndex: '',
       /*新增*/
       showMask: false,
@@ -169,7 +186,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       inputChange: false,
       delArr: [],
       multipleSelection: [],
-      refArr: ['type']
+      refArr: ['mag', 'stock']
     };
   },
 
@@ -286,7 +303,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     confirmD: function confirmD(id) {
       var _this4 = this;
 
-      this.$del(this.url[this.activeName] + '/' + id).then(function () {
+      this.$del(this.url[0] + '/' + id).then(function () {
         _this4.$message({
           message: '删除成功',
           type: 'success'
@@ -408,7 +425,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "评价类别管理", name: "0" } },
+            { attrs: { label: "用户评价类别管理", name: "0" } },
             [
               _c("light-table", {
                 attrs: {

@@ -14,19 +14,23 @@ class UserAstSupplierRequest extends FormRequest
         switch ($this->method()) {
             case 'GET':
                 return [
-                    
+                    'user' => 'string',
+                    'supplier' => 'string', 
+                    'status'=>'boolean'
                 ];
                 break;
             case 'POST':
                 return [
-                    'user' => 'required|string|max:255',
-                    'supplier' => 'required|string|max:255',
+                    'user' => 'string',
+                    'supplier' => 'string',
+                    'status'=>'boolean'
                 ];
                 break;
             case 'PATCH':
                 return [
-                    'user' => 'required|string|max:255',
-                    'supplier' => 'required|string|max:255',
+                    'user' => 'string',
+                    'supplier' => 'string',
+                    'status'=>'boolean'
                 ];
                 break;
         }
@@ -35,13 +39,8 @@ class UserAstSupplierRequest extends FormRequest
     public function messages()
     {
         return [
-            'user.required' => '用户账号必填',
-            'user.max' => '用户账号最大长度为255',
             'user.string' => '用户账号必须string类型',
-
-            'supplier.required' => '供应商名称必填',
-            'supplier.string' => '供应商名称必须string类型',
-            'supplier.max' => '供应商名称最大长度为255',
+            'supplier.string' => '供应商名称必须为string类型',
         ];
     }
 

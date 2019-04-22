@@ -52,6 +52,24 @@
           {
             label: '门店收款管理',
             prop: "name",
+            holder:'门店收款管理',
+            type: 'text'
+          },
+          {
+            label: '状态',
+            prop: "status",
+            holder: '状态',
+            // type: 'select_stu',
+            type: 'checkbox',
+            doSort: true,
+            chgAble: true,
+            editChgAble: false
+          }
+        ],
+        stockHead:[
+          {
+            label: '入库方式方式',
+            prop: "name",
             holder:'配送方式',
             type: 'text'
           },
@@ -66,8 +84,8 @@
             editChgAble: false
           }
         ],
-        url:['/shopgatheringmag'],
-        title: ['新增门店收款方式'],
+        url:['/shopgatheringmag','/stockintypes'],
+        title: ['新增配送方式','新增入库方式'],
         ruleForm: [
           {
           name: '',
@@ -81,13 +99,16 @@
         rules:[
             {
           name:
-            [{required: true, message: '请输入门店收款方式', trigger: 'blur'}]
+            [{required: true, message: '请输入门店收款管理', trigger: 'blur'}]
             },
-          ],
+            {
+            name:
+              [{required: true, message: '请输入入库方式', trigger: 'blur'}]
+            }],
         addArr:[
           [
             {
-              label:'门店收款方式',
+              label:'门店收款管理',
               prop:'name',
               holder:'请输入门店收款方式',
               type: 'text'
@@ -100,10 +121,25 @@
               type: 'checkbox'
             }
           ],
+          [
+            {
+              label:'入库方式',
+              prop:'name',
+              holder:'请输入入库方式',
+              type: 'text'
+            },
+            {
+              label:'状态',
+              prop:'status',
+              holder:'请选择状态',
+              // type: 'select_stu'
+              type: 'checkbox'
+            }
+          ]
         ],
         activeName:'0',
         getsData:[],
-        loading: [true],
+        loading: [true,true],
         currentIndex:'',
         /*新增*/
         showMask: false,
@@ -112,7 +148,7 @@
         inputChange: false,
         delArr:[],
         multipleSelection:[],
-        refArr:['mag'],
+        refArr:['mag','stock'],
       }
     },
     methods:{
@@ -223,7 +259,7 @@
         });
       },
       confirmD(id) {
-        this.$del(this.url[this.activeName] + '/' + id)
+        this.$del(this.url[0] + '/' + id)
           .then(() => {
             this.$message({
               message: '删除成功',

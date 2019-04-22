@@ -14,7 +14,6 @@ use App\Http\Requests\Api\EditStatuRequest;
 use App\Http\Requests\Api\DestroyRequest;
 
 use App\Transformers\AfterCompensationTransformer;
-
 use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Controllers\Traits\ProcedureTrait;
 
@@ -37,33 +36,56 @@ class AfterCompensationController extends Controller
     /**
      * 搜索未处理订单
      */
+
+     public function searchAll()
+     {
+         $order = AfterCompensationOrder::query()->whereIn('status',[AfterCompensationOrder::RIGHT_STATUS]);
+         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+     }
+
     public function searchUntreated()
     {
-        $order = AfterCompensationOrder::query()->whereIn('order_status',[AfterCompensationOrder::CMPTN_STATUS_NEW]);
+        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_NEW]);
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
-    
+
+    public function searchAllUntreated()
+    {
+        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_NEW,AfterCompensationOrder::CMPTN_STATUS_ONE_AUDIT]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchTreated()
+    {
+        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_ONE_AUDIT]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);   
+    }
+
+    public function searchSecTreated()
+    {
+        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_SEC_AUDIT]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);   
+    }
 
     /*
      *获取售后赔偿订单 
     */
     public function index(AfterCompensationRequest $request)
     {
-        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, self::PerPage);
+        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_ONE_AUDIT]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
-
 
     /**
      * 获取创建订单数据
      */
-    public function create(Order $order)
+    public function create(AfterCompensationOrder $order)
     {
         return $this->response
             ->item($order, new \App\Transformers\CreateOrderDataTransformer())
             ->setStatusCode(200)
             ->addMeta('status_code', '200');
     }
-
 
     /**
      * 新增客服部(可选参数：include)
@@ -231,7 +253,7 @@ class AfterCompensationController extends Controller
      *      @Response(201, body={
      *          "id": 1,
      *          "system_order_no": "DD2018082011365716512",
-     *          "order_status": "未处理",
+     *          "cmptn_status": "未处理",
      *          "order_source": "system",
      *          "shops_id": 1,
      *          "logistics_id": 1,
@@ -309,45 +331,11 @@ class AfterCompensationController extends Controller
      *      })
      * })
      */
-    public function store(
-        CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
-        PaymentDetailRequest $paymentDetailRequest,
-        \App\Handlers\ValidatedHandler $validatedHandler
-    ){
-        $data[] = $customerServiceDepartmentRequset->validated();
-        $data[] = $customerServiceDepartmentRequset->input('order_items');
-        $data[] = $paymentDetailRequest->validated()['payment_details'] ?? null;
-
-        $id = DB::transaction(function () use (
-            $data,
-            $customerServiceDepartmentRequset,
-            $paymentDetailRequest,
-            $validatedHandler
-        ) {
-            $model = Order::create($data[0]);
-            if ($data[1]) {
-                foreach ($data[1] as $item) {
-                    $model->orderItems()->create(
-                        $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item)
-                    );
-                }
-            }
-            if($data[2]){
-                foreach ($data[2] as $item) {
-                    $model->paymentDetails()->create(
-                        $validatedHandler->getValidatedData($paymentDetailRequest->rules(), $item)
-                    );
-                }
-            }
-            return $model->id;
-        });
-
-        return $this->response
-            ->item(Order::find($id), self::TRANSFORMER)
-            ->setStatusCode(201)
-            ->addMeta('status_code', '201');
-    }
-
+     public function store(AfterCompensationRequest $request)
+     {
+         return $this->traitStore($request->validated(), self::MODEL, self::TRANSFORMER);
+     }
+     
     /**
      * 显示单条客服部
      *
@@ -361,7 +349,7 @@ class AfterCompensationController extends Controller
      *      @Response(200, body={
      *          "id": 1,
      *          "system_order_no": "DD2018082011365716512",
-     *          "order_status": "未处理",
+     *          "cmptn_status": "未处理",
      *          "order_source": "system",
      *          "shops_id": 1,
      *          "logistics_id": 1,
@@ -436,7 +424,7 @@ class AfterCompensationController extends Controller
      *      })
      * })
      */
-    public function show(Order $order)
+    public function show(AfterCompensationOrder $order)
     {
         return $this->traitShow($order, self::TRANSFORMER);
     }
@@ -616,7 +604,7 @@ class AfterCompensationController extends Controller
      *      @Response(201, body={
      *          "id": 1,
      *          "system_order_no": "DD2018082011365716512",
-     *          "order_status": "未处理",
+     *          "cmptn_status": "未处理",
      *          "order_source": "system",
      *          "shops_id": 1,
      *          "logistics_id": 1,
@@ -692,58 +680,24 @@ class AfterCompensationController extends Controller
      * })
      */
     public function update(
-        CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
-        PaymentDetailRequest $paymentDetailRequest,
-        Order $order,
+        AfterCompensationRequest $afterCompensationRequest,
+        AfterCompensationOrder $order,
         \App\Handlers\ValidatedHandler $validatedHandler)
     {
-        //锁定才能修改
-        if ($order->unlock())
-            throw new UpdateResourceFailedException('订单未锁定无法修改');
-
-        $data[] = $customerServiceDepartmentRequset->validated();
-        $data[] = $customerServiceDepartmentRequset->input('order_items');
-        $data[] = $paymentDetailRequest->validated()['payment_details'];
+        $data[] = $afterCompensationRequest->validated();
 
         $order = DB::transaction(function() use (
             $data,
-            $customerServiceDepartmentRequset,
-            $paymentDetailRequest,
+            $afterCompensationRequest,
             $order,
             $validatedHandler
         ) {
             $order->update($data[0]);
-
-            if ($data[1]??null) {
-                foreach ($data[1] as $item) {
-                    //计算要通过的字段
-                    $validatedData = $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item);
-                    //存在id则更新,否则插入
-                    if (isset($item['id'])) {
-                        $order->orderItems()->findOrFail($item['id'])->update($validatedData);
-                    } else {
-                        $order->orderItems()->create($validatedData);
-                    }
-                }
-            }
-
-            if ($data[2]??null) {
-                foreach ($data[2] as $item) {
-                    //计算要通过的字段
-                    $validatedData = $validatedHandler->getValidatedData($paymentDetailRequest->rules(), $item);
-                    //存在id则更新,否则插入
-                    if (isset($item['id'])) {
-                        $order->paymentDetails()->findOrFail($item['id'])->update($validatedData);
-                    } else {
-                        $order->paymentDetails()->create($validatedData);
-                    }
-                }
-            }
             return $order;
         });
 
         return $this->response
-            ->item($order, new OrderTransformer())
+            ->item($order, new AfterCompensationTransformer())
             ->setStatusCode(201);
     }
 
@@ -761,15 +715,13 @@ class AfterCompensationController extends Controller
      *      @Response(204, body={})
      * })
      */
-    public function destroy(Order $order)
+    public function destroy(AfterCompensationOrder $order)
     {
         DB::transaction(function() use ($order) {
 
-            $orderItems = $order->orderItems()->delete();
-            $paymentDetails = $order->paymentDetails()->delete();
             $order = $order->delete();
 
-            if ($orderItems === false || $paymentDetails === false || $order === false) {
+            if ($order === false) {
                 throw new DeleteResourceFailedException('The given data was invalid.');
             }
         });
@@ -804,11 +756,9 @@ class AfterCompensationController extends Controller
 
         DB::transaction(function() use ($ids) {
 
-            $orderItems = \App\Models\OrderItem::whereIn('orders_id', $ids)->delete();
-            $paymentDetails = \App\Models\PaymentDetail::whereIn('orders_id',$ids)->delete();
-            $order = Order::destroy($ids);
+            $order = AfterCompensationOrder::destroy($ids);
 
-            if ($orderItems === false || $paymentDetails === false || $order === false) {
+            if ($order === false) {
                 throw new DeleteResourceFailedException('The given data was invalid.');
             }
         });
@@ -864,11 +814,11 @@ class AfterCompensationController extends Controller
      *      @Response(204, body={})
      * })
      */
-    public function isLockOrUnlock(Order $order)
+    public function isLockOrUnlock(AfterCompensationOrder $order)
     {
         return $this->traitAction(
             $order,
-            !$order->status || $order->getOriginal('order_status') >= $order::ORDER_STATUS_CS_AUDIT,
+            !$order->status || $order->getOriginal('cmptn_status') >= $order::CMPTN_STATUS_ONE_AUDIT,
             '无法锁定',
             'lockOrUnlock'
         );
@@ -887,14 +837,14 @@ class AfterCompensationController extends Controller
      *      @Response(204, body={})
      * })
      */
-    public function isAudit(Order $order)
+    public function isAudit(AfterCompensationOrder $order)
     {
-        return $this->traitAction(
-            $order,
-            !$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_LOCK,
-            '客审出错',
-            'audit'
-        );
+        return $this->traitAction($order,!$order->status || $order->getOriginal('cmptn_status') ==  $order::CMPTN_STATUS_ONE_AUDIT,'客审出错','audit');
+    }
+
+    public function isSecAudit(AfterCompensationOrder $order)
+    {
+        return $this->traitAction($order,!$order->status || $order->getOriginal('cmptn_status') ==  $order::CMPTN_STATUS_SEC_AUDIT,'客审出错','secaudit');
     }
 
     /**
@@ -910,13 +860,23 @@ class AfterCompensationController extends Controller
      *      @Response(204, body={})
      * })
      */
-    public function isUnAudit(Order $order)
+    public function isUnAudit(AfterCompensationOrder $order)
     {
         return $this->traitAction(
             $order,
-            !$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_CS_AUDIT,
+            !$order->status || $order->getOriginal('cmptn_status') != $order::CMPTN_STATUS_ONE_AUDIT,
             '退审出错',
             'unAudit'
+        );
+    }
+
+    public function isSecUnAudit(AfterCompensationOrder $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status || $order->getOriginal('cmptn_status') != $order::CMPTN_STATUS_SEC_AUDIT,
+            '退审出错',
+            'SecUnAudit'
         );
     }
 
@@ -937,11 +897,11 @@ class AfterCompensationController extends Controller
      *      @Response(204, body={})
      * })
      */
-    public function isSplitOrder(SplitOrderRequest $splitOrderRequest, Order $order)
+    public function isSplitOrder(SplitOrderRequest $splitOrderRequest, AfterCompensationOrder $order)
     {
         return $this->traitAction(
             $order,
-            !$order->status || $order->getOriginal('order_status') >= $order::ORDER_STATUS_FD_AUDIT,
+            !$order->status || $order->getOriginal('cmptn_status') >= $order::ORDER_STATUS_FD_AUDIT,
             '拆单出错',
             'splitOrder',
             $splitOrderRequest->validated()['order_items']
@@ -965,7 +925,7 @@ class AfterCompensationController extends Controller
      *      @Response(204, body={})
      * })
      */
-    public function isMergerOrder(MergerOrderRequest $mergerOrderRequest, Order $order)
+    public function isMergerOrder(MergerOrderRequest $mergerOrderRequest, AfterCompensationOrder $order)
     {
         return $this->traitAction(
             $order,

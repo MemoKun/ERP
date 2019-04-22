@@ -100,21 +100,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       disHead: [{
-        label: '用户账号',
+        label: '用户',
         prop: "user",
-        holder: '用户账号',
+        holder: '用户',
         type: 'text'
       }, {
         label: '仓库',
         prop: "warehouse",
         holder: '仓库',
-        type: 'text',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: "status",
+        holder: '状态',
+        type: 'checkbox',
         doSort: true,
         chgAble: true,
         editChgAble: false
       }],
-      url: ['/userastwarehouse'],
-      title: ['新增用户关联仓库'],
+      stockHead: [{
+        label: '入库方式方式',
+        prop: "name",
+        holder: '配送方式',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: "status",
+        holder: '状态',
+        // type: 'select_stu',
+        type: 'checkbox',
+        doSort: true,
+        chgAble: true,
+        editChgAble: false
+      }],
+      url: ['/userastwarehouse', '/stockintypes'],
+      title: ['新增用户关联仓库', '新增入库方式'],
       ruleForm: [{
         name: '',
         status: true
@@ -123,22 +143,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status: true
       }],
       rules: [{
-        name: [{ required: true, message: '请输入用户仓库', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入用户关联仓库', trigger: 'blur' }]
+      }, {
+        name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
       addArr: [[{
         label: '用户',
         prop: 'user',
-        holder: '请输入用户账号',
+        holder: '请输入用户',
         type: 'text'
       }, {
         label: '仓库',
         prop: 'warehouse',
-        holder: '请选择仓库',
+        holder: '请输入仓库',
         type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
+        // type: 'select_stu'
+        type: 'checkbox'
+      }], [{
+        label: '入库方式',
+        prop: 'name',
+        holder: '请输入入库方式',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
+        // type: 'select_stu'
+        type: 'checkbox'
       }]],
       activeName: '0',
       getsData: [],
-      loading: [true],
+      loading: [true, true],
       currentIndex: '',
       /*新增*/
       showMask: false,
@@ -147,7 +186,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       inputChange: false,
       delArr: [],
       multipleSelection: [],
-      refArr: ['uaw']
+      refArr: ['uaw', 'stock']
     };
   },
 
@@ -264,7 +303,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     confirmD: function confirmD(id) {
       var _this4 = this;
 
-      this.$del(this.url[this.activeName] + '/' + id).then(function () {
+      this.$del(this.url[0] + '/' + id).then(function () {
         _this4.$message({
           message: '删除成功',
           type: 'success'
@@ -386,7 +425,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "用户关联仓库管理", name: "0" } },
+            { attrs: { label: "用户关联仓库", name: "0" } },
             [
               _c("light-table", {
                 attrs: {

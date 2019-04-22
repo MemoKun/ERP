@@ -7,11 +7,10 @@ use League\Fractal\TransformerAbstract;
 
 class ShopGatheringMagTransformer extends TransformerAbstract
 {
-
     public function transform(ShopGatheringMag $mag)
     {
         return [
-            'id'=>$mag->id,
+            'id' => $mag->id,
             'name' => $mag->name,
             'status' => $mag->status,
             'created_at' => $mag->created_at
@@ -20,6 +19,4 @@ class ShopGatheringMagTransformer extends TransformerAbstract
                                     ->toDateTimeString(),
         ];
     }
-
-
 }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Validation\Rule;
-
 class ShopGatheringMagRequest extends FormRequest
 {
     /**
@@ -21,13 +19,13 @@ class ShopGatheringMagRequest extends FormRequest
                 break;
             case 'POST':
                 return [
-                    'name' => 'required|string|max:255',
+                    'name' => 'required|string',
                     'status' => 'boolean',
                 ];
                 break;
             case 'PATCH':
                 return [
-                    'name' => 'required|string|max:255',
+                    'name' => 'string',
                     'status' => 'boolean',
                 ];
                 break;

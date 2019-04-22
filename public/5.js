@@ -62,7 +62,7 @@ var content = __webpack_require__(866);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("1255cb0e", content, false, {});
+var update = __webpack_require__(6)("4bbcaa4e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -1190,16 +1190,20 @@ var render = function() {
                                 return _c("el-table-column", {
                                   key: item.id,
                                   attrs: { label: item.label, width: "120" },
-                                  scopedSlots: _vm._u([
-                                    {
-                                      key: "default",
-                                      fn: function(scope) {
-                                        return [
-                                          _vm._v(_vm._s(scope.row[item.prop]))
-                                        ]
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "default",
+                                        fn: function(scope) {
+                                          return [
+                                            _vm._v(_vm._s(scope.row[item.prop]))
+                                          ]
+                                        }
                                       }
-                                    }
-                                  ])
+                                    ],
+                                    null,
+                                    true
+                                  )
                                 })
                               })
                             ],
