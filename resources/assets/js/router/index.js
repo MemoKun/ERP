@@ -292,7 +292,7 @@ const constantRouterMap = [
         meta: {title: '退货管理中心', icon: 'reCt',requireAuth: true}
       }
     ]
-  },
+  },*/
 {
     name: 'Refund',
     path: '/refund',
