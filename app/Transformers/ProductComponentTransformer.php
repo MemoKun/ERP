@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class ProductComponentTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'product','distributionMethod'
+        'product','distributionMethod','resupplieOrderItem'
     ];
 
     public function transform(ProductComponent $productComponent)
@@ -68,5 +68,10 @@ class ProductComponentTransformer extends TransformerAbstract
     public function includeDistributionMethod(ProductComponent $productComponent)
     {
         return $this->item($productComponent->distributionMethod, new DistributionMethodTransformer());
+    }
+
+    public function includeResupplieOrderItem(ProductComponent $productComponent)
+    {
+        return $this->collection($productComponent->resupplieOrderItem, new ResupplieOrderItemTransformer());
     }
 }
