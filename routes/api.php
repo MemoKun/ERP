@@ -1041,6 +1041,21 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.negativeinvconf.destroybyids');
         $api->put('negativeinvconf/editstatus', 'NegativeInvConfController@editStatusByIds')
             ->name('api.negativeinvconf.editstatusbyids');
+        //问题产品
+        $api->get('problemProduct', 'ProblemProductController@index')
+            ->name('api.problemProduct.index');
+        $api->get('problemProduct/{problemProduct}', 'ProblemProductController@show')
+            ->name('api.problemProduct.show');
+        $api->post('problemProduct', 'ProblemProductController@store')
+            ->name('api.problemProduct.store');
+        $api->patch('problemProduct/{problemProduct}', 'ProblemProductController@update')
+            ->name('api.problemProduct.update');
+        $api->delete('problemProduct/{problemProduct}', 'ProblemProductController@destroy')
+            ->name('api.problemProduct.destroy');
+        $api->delete('problemProduct', 'ProblemProductController@destroybyids')
+            ->name('api.problemProduct.destroybyids');
+        $api->put('problemProduct/editstatus', 'ProblemProductController@editStatusByIds')
+            ->name('api.problemProduct.editstatusbyids');
 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
