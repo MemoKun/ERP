@@ -49,6 +49,7 @@ const urls= {
     paymentdetails:'/paymentdetails',
     warehousingdepts:'/warehousingdepts',
     returnreasons:'/returnreasons',
+    //add by xuejunhao
     shopgatheringmag:'/shopgatheringmag',
     aftercompensation: '/aftercompensation',
     aftersstate:'/aftersstate',
@@ -89,6 +90,16 @@ const urls= {
     resupplieResponsible:'/resupplieResponsible',
     resupplieOrderItem:'/resupplieOrderItem',
     resupplieProblemProduct:'/resupplieProblemProduct',
+    
+    //add by xuetao
+    offlineaccountconf:'/offlineaccountconf',
+    aftersale:'/aftersale',
+    aftersalestate: '/aftersalestate',
+    aftersaletype: '/aftersaletype',
+    brushlockconf:'/brushlockconf',
+    minipackage:'/minipackage',
+    promap:'/promap',
+    aftersaleschedule:'/aftersaleschedule',
   }
 };
 
