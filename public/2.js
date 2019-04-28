@@ -34599,17 +34599,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cmptn_direction: [{ label: '我们赔偿', value: '我们赔偿' }, { label: '赔偿我们', value: '赔偿我们' }],
       responsible_party: [{ label: '顾客', value: '顾客' }, { label: '我们', value: '我们' }, { label: '仓库', value: '仓库' }, { label: '供应商', value: '供应商' }]
     }), _defineProperty(_ref, 'addDefProVal', {
-      picUrl: '',
-      commodity_code: '',
-      spec_code: '',
-      short_name: '',
-      spec: '',
-      color: '',
-      materials: '',
-      function: '',
-      special: '',
-      other: '',
-      buy_number: ''
+      picUrl: '11',
+      commodity_code: '11',
+      spec_code: '11',
+      short_name: '11',
+      spec: '11',
+      color: '11',
+      materials: '11',
+      function: '11',
+      special: '11',
+      other: '11',
+      buy_number: '11'
     }), _ref;
   },
 

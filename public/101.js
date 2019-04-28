@@ -53,8 +53,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -103,92 +101,90 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       newOpt: [{
-        cnt: '新增',
-        icon: 'bf-add',
-        ent: this.addType
+        cnt: "新增",
+        icon: "bf-add",
+        ent: this.addNew
       }, {
-        cnt: '修改',
-        icon: 'bf-change',
-        ent: this.test
+        cnt: "删除",
+        icon: "bf-del",
+        ent: this.delMore
       }, {
-        cnt: '删除',
-        icon: 'bf-del',
-        ent: this.test
-      }, {
-        cnt: '刷新',
-        icon: 'bf-refresh',
+        cnt: "刷新",
+        icon: "bf-refresh",
         ent: this.refresh
       }],
-      activeName: '0',
-      typeData: [],
-      loading: true,
-      checkboxInit: false,
-      tableHead: [{
-        label: '售后类型',
-        prop: 'after_s_type',
-        width: '200',
-        type: 'text'
+      disHead: [{
+        label: "售后类型",
+        prop: "name",
+        holder: "售后类型",
+        type: "text"
       }, {
-        label: '是否启用',
-        prop: 'status',
-        width: '200',
-        type: 'text'
+        label: "状态",
+        prop: "status",
+        holder: "状态",
+        type: "checkbox",
+        doSort: true,
+        chgAble: true,
+        editChgAble: false
       }],
-      addMask: false,
-      addTypeFormVal: {
-        after_s_type: '',
-        status: ''
+      url: "/aftersaletype",
+      ruleForm: {
+        name: "",
+        status: true
       },
-      addTypeFormRules: {
-        after_s_type: [{ required: true, message: '售后类型必填', trigger: 'blur' }],
-        status: [{ required: true, message: '是否启用必填', trigger: 'blur' }]
+      rules: {
+        name: [{ required: true, message: "请输入售后类型", trigger: "blur" }]
       },
-      addTypeFormHead: [{
-        label: '售后类型',
-        prop: 'after_s_type',
-        width: '200',
-        type: 'text',
-        editChgAble: true,
-        addChgAble: true
+      addArr: [{
+        label: "售后类型",
+        prop: "name",
+        holder: "请输入售后类型",
+        type: "text"
       }, {
-        label: '是否启用',
-        prop: 'status',
-        width: '200',
-        type: 'checkbox',
-        editChgAble: true,
-        addChgAble: true
-      }]
-    }, _defineProperty(_ref, 'typeData', []), _defineProperty(_ref, 'addIDs', []), _defineProperty(_ref, 'typeRIndex', []), _ref;
+        label: "状态",
+        prop: "status",
+        holder: "请选择状态",
+        type: "checkbox"
+      }],
+      activeName: "0",
+      getsData: [],
+      loading: true,
+      currentIndex: "",
+      /*新增*/
+      showMask: false,
+      showDel: false,
+      editId: "",
+      inputChange: false,
+      delArr: [],
+      multipleSelection: [],
+      refArr: "type"
+    };
   },
 
-  computed: {
-    resData: {
-      get: function get() {
-        return this.$store.state.responseData;
-      },
-      set: function set() {}
-    },
-    urls: {
-      get: function get() {
-        return this.$store.state.urls;
-      },
-      set: function set() {}
-    }
-  },
   methods: {
     test: function test() {
       console.log(1);
     },
-    fetchData: function fetchData() {
+
+    //新增
+    addNew: function addNew() {
+      this.showMask = true;
+    },
+    CB_dialog: function CB_dialog(val) {
+      this.showMask = val;
+    },
+    submitForm: function submitForm() {
       var _this = this;
 
-      this.$fetch(this.urls.afterstype).then(function (res) {
-        _this.typeData = res.data;
-        _this.loading = false;
+      this.$post(this.url, this.ruleForm).then(function () {
+        _this.$message({
+          message: "添加成功",
+          type: "success"
+        });
+        _this.showMask = false;
+        _this.refresh();
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -196,30 +192,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this.$message.error({
             message: str
           });
         }
       });
     },
-    addType: function addType() {
-      this.addMask = true;
+    tabsClick: function tabsClick() {
+      this.loading = true;
+      this.getData(this.url);
     },
-    addTypeConfirm: function addTypeConfirm() {
+    getData: function getData(url) {
       var _this2 = this;
 
-      var submit = {
-        after_s_type: this.addTypeFormVal.after_s_type,
-        status: this.addTypeFormVal.status
-      };
-      this.$post(this.urls.afterstype, submit).then(function () {
-        _this2.addMask = false;
-        _this2.refresh();
-        _this2.$message({
-          message: '添加成功',
-          type: 'success'
-        });
+      this.$fetch(url).then(function (res) {
+        _this2.loading = false;
+        _this2.getsData = res.data;
+        var pg = res.meta.pagination;
+        _this2.$store.dispatch("currentPage", pg.current_page);
+        _this2.$store.commit("PER_PAGE", pg.per_page);
+        _this2.$store.commit("PAGE_TOTAL", pg.total);
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -227,32 +220,160 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
-          _this2.$message.error(str);
+          var str = arr1.join(",");
+          _this2.$message.error({
+            message: str
+          });
         }
       });
     },
+    edit: function edit(index) {
+      this.currentIndex = "index" + index;
+    },
+    handleEdit: function handleEdit() {
+      this.inputChange = true;
+    },
+    editCancel: function editCancel() {
+      this.$message({
+        message: "取消修改",
+        type: "info"
+      });
+      this.currentIndex = "";
+    },
+    editSave: function editSave(row) {
+      var _this3 = this;
+
+      this.$patch(this.url + "/" + row.id, row).then(function () {
+        _this3.$message({
+          message: "修改成功",
+          type: "success"
+        });
+        _this3.currentIndex = "";
+        _this3.inputChange = false;
+        _this3.refresh();
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this3.$message.error({
+            message: str
+          });
+        }
+      });
+    },
+    del: function del(row, e) {
+      this.showDel = true;
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
+      this.delId = row.id;
+    },
+    cancelD: function cancelD() {
+      this.showDel = false;
+      this.$message({
+        message: "取消删除",
+        type: "info"
+      });
+    },
+    confirmD: function confirmD(id) {
+      var _this4 = this;
+
+      this.$del(this.url + "/" + id).then(function () {
+        _this4.$message({
+          message: "删除成功",
+          type: "success"
+        });
+        _this4.showDel = false;
+        _this4.refresh();
+      }, function (err) {
+        if (err.response) {
+          _this4.showDel = false;
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this4.$message.error({
+            message: str
+          });
+        }
+      });
+    },
+
+    /*批量删除*/
+    delMore: function delMore() {
+      var _this5 = this;
+
+      if (this.delArr.length === 0) {
+        this.$message({
+          message: "没有选中数据",
+          type: "warning"
+        });
+      } else {
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          _this5.$del(_this5.url, { ids: _this5.delArr }).then(function () {
+            _this5.$message({
+              message: "删除成功",
+              type: "success"
+            });
+            _this5.refresh();
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this5.$message.error({
+                message: str
+              });
+            }
+          });
+        }).catch(function () {
+          _this5.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+      }
+    },
+    handleSelectionChange: function handleSelectionChange(val) {
+      if (val.length != 0) {
+        this.editId = val[0].id;
+      } else {
+        this.editId = "";
+      }
+      this.multipleSelection = val;
+      var del = [];
+      this.multipleSelection.forEach(function (selectedItem) {
+        del.push(selectedItem.id);
+      });
+      this.delArr = del.join(",");
+    },
+
+    /*页面刷新*/
     refresh: function refresh() {
       this.loading = true;
-      this.fetchData();
-    },
-    addCancel: function addCancel() {
-      this.addMask = false;
-      this.$message({
-        message: '取消添加',
-        type: 'info'
-      });
+      this.getData(this.url);
     }
   },
   mounted: function mounted() {
-    this.fetchData();
+    this.getData(this.url);
     this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit('change', this.newOpt);
+    this.$store.commit("change", this.newOpt);
     var that = this;
     $(window).resize(function () {
       return function () {
         that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit('change', that.newOpt);
+        that.$store.commit("change", that.newOpt);
       }();
     });
   }
@@ -273,6 +394,7 @@ var render = function() {
       _c(
         "el-tabs",
         {
+          on: { "tab-click": _vm.tabsClick },
           model: {
             value: _vm.activeName,
             callback: function($$v) {
@@ -286,90 +408,23 @@ var render = function() {
             "el-tab-pane",
             { attrs: { label: "售后类型", name: "0" } },
             [
-              _c(
-                "el-table",
-                {
-                  directives: [
-                    {
-                      name: "loading",
-                      rawName: "v-loading",
-                      value: _vm.loading,
-                      expression: "loading"
-                    }
-                  ],
-                  attrs: { data: _vm.typeData, fit: "", height: "300" }
+              _c("light-table", {
+                attrs: {
+                  listData: _vm.getsData,
+                  tableHead: _vm.disHead,
+                  height: "400",
+                  loading: _vm.loading,
+                  currentIndex: _vm.currentIndex
                 },
-                [
-                  _c("el-table-column", {
-                    attrs: {
-                      type: "selection",
-                      width: "95",
-                      align: "center",
-                      checked: _vm.checkboxInit
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.tableHead, function(item) {
-                    return _c("el-table-column", {
-                      key: item.prop,
-                      attrs: {
-                        label: item.label,
-                        align: "center",
-                        width: item.width
-                      },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(scope) {
-                              return [
-                                item.type == "checkbox"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-checkbox", {
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c("span", [
-                                      scope.row[item.prop]
-                                        ? _c("span", [
-                                            _vm._v(
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              )
-                                            )
-                                          ])
-                                        : _vm._e()
-                                    ])
-                              ]
-                            }
-                          }
-                        ],
-                        null,
-                        true
-                      )
-                    })
-                  })
-                ],
-                2
-              )
+                on: {
+                  editSave: _vm.editSave,
+                  handleEdit: _vm.handleEdit,
+                  del: _vm.del,
+                  edit: _vm.edit,
+                  editCancel: _vm.editCancel,
+                  handleSelect: _vm.handleSelectionChange
+                }
+              })
             ],
             1
           )
@@ -377,117 +432,67 @@ var render = function() {
         1
       ),
       _vm._v(" "),
+      _c("add-new", {
+        attrs: {
+          "visible-add": _vm.showMask,
+          title: _vm.title,
+          "rule-form": _vm.ruleForm,
+          rules: _vm.rules,
+          "add-arr": _vm.addArr,
+          url: _vm.url,
+          "new-ref": _vm.refArr
+        },
+        on: { submitEvent: _vm.submitForm, "CB-dialog": _vm.CB_dialog }
+      }),
+      _vm._v(" "),
       _c(
-        "el-dialog",
+        "el-popover",
         {
-          staticClass: "dialog",
-          attrs: { title: "新增", visible: _vm.addMask },
-          on: {
-            "update:visible": function($event) {
-              _vm.addMask = $event
-            }
+          attrs: { slot: "tip", placement: "top", width: "160" },
+          slot: "tip",
+          model: {
+            value: _vm.showDel,
+            callback: function($$v) {
+              _vm.showDel = $$v
+            },
+            expression: "showDel"
           }
         },
         [
-          _c(
-            "div",
-            { staticClass: "clearfix" },
-            [
-              _c(
-                "el-form",
-                {
-                  staticClass: "afterSType hidePart",
-                  attrs: {
-                    model: _vm.addTypeFormVal,
-                    rules: _vm.addTypeFormRules,
-                    id: "form"
-                  }
-                },
-                _vm._l(_vm.addTypeFormHead, function(item, index) {
-                  return _c(
-                    "el-form-item",
-                    {
-                      key: index,
-                      attrs: { label: item.label, prop: item.prop }
-                    },
-                    [
-                      item.type == "text"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-input", {
-                                model: {
-                                  value: _vm.addTypeFormVal[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.addTypeFormVal,
-                                      item.prop,
-                                      typeof $$v === "string" ? $$v.trim() : $$v
-                                    )
-                                  },
-                                  expression: "addTypeFormVal[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      item.type == "checkbox"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-checkbox", {
-                                model: {
-                                  value: _vm.addTypeFormVal[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.addTypeFormVal, item.prop, $$v)
-                                  },
-                                  expression: "addTypeFormVal[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e()
-                    ]
-                  )
-                }),
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", [
-            _c("label", [_vm._v(_vm._s(_vm.addTypeFormVal.after_s_type))]),
-            _vm._v(" "),
-            _c("label", [_vm._v(_vm._s(_vm.addTypeFormVal.status))])
-          ]),
+          _c("p", [_vm._v("确定删除该条数据？")]),
           _vm._v(" "),
           _c(
             "div",
-            { staticStyle: {} },
+            { staticStyle: { "text-align": "right", margin: "0" } },
             [
               _c(
                 "el-button",
                 {
-                  attrs: { type: "primary" },
-                  on: { click: _vm.addTypeConfirm }
+                  attrs: { size: "mini", type: "text" },
+                  on: { click: _vm.cancelD }
                 },
-                [_vm._v("确定")]
+                [_vm._v("取消")]
               ),
               _vm._v(" "),
               _c(
                 "el-button",
-                { attrs: { type: "default" }, on: { click: _vm.addCancel } },
-                [_vm._v("取消")]
+                {
+                  attrs: { type: "primary", size: "mini" },
+                  on: {
+                    click: function($event) {
+                      return _vm.confirmD(_vm.delId)
+                    }
+                  }
+                },
+                [_vm._v("确定")]
               )
             ],
             1
           )
         ]
-      )
+      ),
+      _vm._v(" "),
+      _c("Pagination", { attrs: { "page-url": _vm.url } })
     ],
     1
   )

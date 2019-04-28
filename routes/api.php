@@ -1056,9 +1056,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.problemProduct.destroybyids');
         $api->put('problemProduct/editstatus', 'ProblemProductController@editStatusByIds')
             ->name('api.problemProduct.editstatusbyids');
-<<<<<<< HEAD
-=======
-
+            
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
@@ -1376,7 +1374,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //退货子单
         $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
             ->name('api.returnorderitems.destroy');
->>>>>>> yylou15-master
 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
