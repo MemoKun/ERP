@@ -52,4 +52,9 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class, 'products_id');
     }
+
+    public function afterCompensationOrder()
+    {
+        return $this->belongsTo(AfterCompensationOrder::class);
+    }
 }

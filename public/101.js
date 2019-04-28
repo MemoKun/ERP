@@ -1,14 +1,14 @@
 webpackJsonp([101],{
 
-/***/ 513:
+/***/ 514:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(711)
+var __vue_script__ = __webpack_require__(714)
 /* template */
-var __vue_template__ = __webpack_require__(712)
+var __vue_template__ = __webpack_require__(715)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/afterSState.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/afterSType.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-97f30a5e", Component.options)
+    hotAPI.createRecord("data-v-7e583baa", Component.options)
   } else {
-    hotAPI.reload("data-v-97f30a5e", Component.options)
+    hotAPI.reload("data-v-7e583baa", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,11 +48,35 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 711:
+/***/ 714:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -79,11 +103,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       newOpt: [{
         cnt: '新增',
         icon: 'bf-add',
-        ent: this.test
+        ent: this.addType
       }, {
         cnt: '修改',
         icon: 'bf-change',
@@ -97,13 +123,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: 'bf-refresh',
         ent: this.refresh
       }],
-      stateData: [],
-      checkboxInit: false,
-      loading: true,
       activeName: '0',
+      typeData: [],
+      loading: true,
+      checkboxInit: false,
       tableHead: [{
-        label: '售后状态',
-        prop: 'after_s_state',
+        label: '售后类型',
+        prop: 'after_s_type',
         width: '200',
         type: 'text'
       }, {
@@ -111,8 +137,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: 'status',
         width: '200',
         type: 'text'
+      }],
+      addMask: false,
+      addTypeFormVal: {
+        after_s_type: '',
+        status: ''
+      },
+      addTypeFormRules: {
+        after_s_type: [{ required: true, message: '售后类型必填', trigger: 'blur' }],
+        status: [{ required: true, message: '是否启用必填', trigger: 'blur' }]
+      },
+      addTypeFormHead: [{
+        label: '售后类型',
+        prop: 'after_s_type',
+        width: '200',
+        type: 'text',
+        editChgAble: true,
+        addChgAble: true
+      }, {
+        label: '是否启用',
+        prop: 'status',
+        width: '200',
+        type: 'checkbox',
+        editChgAble: true,
+        addChgAble: true
       }]
-    };
+    }, _defineProperty(_ref, 'typeData', []), _defineProperty(_ref, 'addIDs', []), _defineProperty(_ref, 'typeRIndex', []), _ref;
   },
 
   computed: {
@@ -136,8 +186,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.aftersstate).then(function (res) {
-        _this.stateData = res.data;
+      this.$fetch(this.urls.afterstype).then(function (res) {
+        _this.typeData = res.data;
         _this.loading = false;
       }, function (err) {
         if (err.response) {
@@ -153,9 +203,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
     },
+    addType: function addType() {
+      this.addMask = true;
+    },
+    addTypeConfirm: function addTypeConfirm() {
+      var _this2 = this;
+
+      var submit = {
+        after_s_type: this.addTypeFormVal.after_s_type,
+        status: this.addTypeFormVal.status
+      };
+      this.$post(this.urls.afterstype, submit).then(function () {
+        _this2.addMask = false;
+        _this2.refresh();
+        _this2.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this2.$message.error(str);
+        }
+      });
+    },
     refresh: function refresh() {
       this.loading = true;
       this.fetchData();
+    },
+    addCancel: function addCancel() {
+      this.addMask = false;
+      this.$message({
+        message: '取消添加',
+        type: 'info'
+      });
     }
   },
   mounted: function mounted() {
@@ -174,7 +260,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 712:
+/***/ 715:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -198,7 +284,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "售后状态", name: "0" } },
+            { attrs: { label: "售后类型", name: "0" } },
             [
               _c(
                 "el-table",
@@ -211,7 +297,7 @@ var render = function() {
                       expression: "loading"
                     }
                   ],
-                  attrs: { data: _vm.stateData, fit: "", height: "300" }
+                  attrs: { data: _vm.typeData, fit: "", height: "300" }
                 },
                 [
                   _c("el-table-column", {
@@ -242,7 +328,6 @@ var render = function() {
                                       "span",
                                       [
                                         _c("el-checkbox", {
-                                          attrs: { disabled: "" },
                                           model: {
                                             value: scope.row[item.prop],
                                             callback: function($$v) {
@@ -262,15 +347,13 @@ var render = function() {
                                       scope.row[item.prop]
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                   " +
-                                                _vm._s(
-                                                  item.inProp
-                                                    ? scope.row[item.prop][
-                                                        item.inProp
-                                                      ]
-                                                    : scope.row[item.prop]
-                                                ) +
-                                                "\n                 "
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              )
                                             )
                                           ])
                                         : _vm._e()
@@ -292,6 +375,118 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          staticClass: "dialog",
+          attrs: { title: "新增", visible: _vm.addMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.addMask = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "clearfix" },
+            [
+              _c(
+                "el-form",
+                {
+                  staticClass: "afterSType hidePart",
+                  attrs: {
+                    model: _vm.addTypeFormVal,
+                    rules: _vm.addTypeFormRules,
+                    id: "form"
+                  }
+                },
+                _vm._l(_vm.addTypeFormHead, function(item, index) {
+                  return _c(
+                    "el-form-item",
+                    {
+                      key: index,
+                      attrs: { label: item.label, prop: item.prop }
+                    },
+                    [
+                      item.type == "text"
+                        ? _c(
+                            "span",
+                            [
+                              _c("el-input", {
+                                model: {
+                                  value: _vm.addTypeFormVal[item.prop],
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.addTypeFormVal,
+                                      item.prop,
+                                      typeof $$v === "string" ? $$v.trim() : $$v
+                                    )
+                                  },
+                                  expression: "addTypeFormVal[item.prop]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      item.type == "checkbox"
+                        ? _c(
+                            "span",
+                            [
+                              _c("el-checkbox", {
+                                model: {
+                                  value: _vm.addTypeFormVal[item.prop],
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.addTypeFormVal, item.prop, $$v)
+                                  },
+                                  expression: "addTypeFormVal[item.prop]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _c("label", [_vm._v(_vm._s(_vm.addTypeFormVal.after_s_type))]),
+            _vm._v(" "),
+            _c("label", [_vm._v(_vm._s(_vm.addTypeFormVal.status))])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticStyle: {} },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.addTypeConfirm }
+                },
+                [_vm._v("确定")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                { attrs: { type: "default" }, on: { click: _vm.addCancel } },
+                [_vm._v("取消")]
+              )
+            ],
+            1
+          )
+        ]
       )
     ],
     1
@@ -303,7 +498,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-97f30a5e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7e583baa", module.exports)
   }
 }
 

@@ -49,7 +49,7 @@ class AfterCompensationOrder extends Model
         'order_stuff',
         'payee',
         'payee_account',
-        'problem_goods',
+        'problem_product_id',
         'problem_description',
         'note',
         'refuse_reason',
@@ -67,8 +67,12 @@ class AfterCompensationOrder extends Model
 
     //设置类型
     protected $casts = [
-        
+        'status'=>'boolean'
     ];
+
+    
+    
+    
 
     protected static function boot()
     {
@@ -117,6 +121,8 @@ class AfterCompensationOrder extends Model
 
         });
     }
+
+    
 
     /**
     **
@@ -430,8 +436,21 @@ class AfterCompensationOrder extends Model
              AfterCompensationOrder::destroy($orderOneId, $orderTwoId);
  
              //记录拆分操作
- 
+
          });
      }
+
+     public function feeType()
+     {
+         return $this->hasMany(FeeType::class);
+     }
+
+     public function problemProduct()
+     {
+         return $this->hasMany(ProblemProduct::class);
+     }
+
+
+     
 }
 ?>

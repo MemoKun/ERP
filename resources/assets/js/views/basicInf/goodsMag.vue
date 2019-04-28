@@ -166,6 +166,7 @@
                      <span v-else-if="item.type=='url'">
                        <el-input type="url" v-model.trim="ruleForm[item.prop]" :placeholder="item.holder"></el-input>
                     </span>
+                    <!--选择框拉取数据库数据-->
                      <span v-else-if="item.type=='select'">
                         <el-select v-model="ruleForm[item.prop]" :placeholder="item.holder">
                                <span v-for="list in resData[item.stateVal]" :key="list.id">

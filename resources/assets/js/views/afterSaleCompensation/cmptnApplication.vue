@@ -74,7 +74,7 @@
                         <span @click="toggleShow" style="display: inline">
                                 <el-button type="text">收起</el-button>
                                 <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-                            </span>
+                        </span>
                     </div>
                 </div>
                 
@@ -85,7 +85,7 @@
                                   @selection-change="handleSelectionChange"
                                   v-loading="loading"
                                   height="350"
-                                  @row-click="orderListRClick"
+                                  @row-click="defProRClick"
                                   @row-dblclick="orderDbClick">
                             <el-table-column
                                     type="selection"
@@ -97,7 +97,7 @@
                                     <span v-if="item.type=='checkbox'">
                                         <span v-if="item.inProp">
                                              <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                              </span>
+                                        </span>
                                         <span v-else>
                                             <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                                         </span>
@@ -141,7 +141,7 @@
                                   @selection-change="handleSelectionChange"
                                   v-loading="loading"
                                   height="350"
-                                  @row-click="orderListRClick"
+                                  @row-click="defProRClick"
                                   @row-dblclick="orderDbClick">
                             <el-table-column
                                     type="selection"
@@ -193,18 +193,13 @@
                         </el-table>
                     </el-tab-pane>
                 </el-tabs>
+                <!--底部tab-->
                 <el-tabs>
                   <el-tab-pane label="问题产品" name="0">
                     <el-table :data="defProData">
                       <el-table-column v-for="item in defProTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
                         <template slot-scope="scope">
-                          <span v-if="item.type=='select'">
-                            <span v-if="scope.row[item.prop]==''"></span>
-                            <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">
-                              {{scope.row[item.prop][item.nmProp]}}
-                            </span>
-                          </span>
-                          <span v-else-if="item.type=='checkbox'">
+                          <span v-if="item.type=='checkbox'">
                             <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                           </span>
                           <span v-else-if="item.type=='img'">
@@ -250,10 +245,18 @@
                             <el-input type="number" v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                         </span>
                     </span>
+                    <!--选择框拉取数据库数据-->
                     <span v-else-if="item.type=='select'">
                       <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
                         <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                           <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                          </span>
+                      </el-select>
+                    </span>
+                    <span v-else-if="item.type == 'selects'">
+                      <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in selectVal[item.prop]" :key="list.value">
+                          <el-option :label="list.label" :value="list.value"></el-option>
                         </span>
                       </el-select>
                     </span>
@@ -274,85 +277,79 @@
                 </el-form-item>
             </el-form>
             <el-tabs v-model="addActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
-                <el-tab-pane label="问题产品" name="0">
-                    <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-                        <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <el-tab-pane label="问题产品" name="0">
+                <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
+                  <el-table-column v-for="item in addDefProHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                    <template slot-scope="scope">
+                      <span v-if="item.prop=='newData'">
+                        <span v-if="proRIndex == 'index'+scope.$index">
+                          <span v-if="item.type=='number'">
+                            <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                          </span>
+                          <span v-else-if="item.type == 'checkbox'">
+                            <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
+                          </span>
+                          <span v-else>
+                            <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                          </span>
+                        </span>
+                        <span v-else>
+                          <span v-if="item.type=='checkbox'">
+                            <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                          </span>
+                          <span v-else>
+                            {{scope.row[item.prop][item.inProp]}}
+                          </span>
+                        </span>
+                      </span>
+                      <span v-else-if="item.prop">
+                        <span v-if="item.type=='checkbox'">
+                          <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                        </span>
+                        <span v-else-if="item.type=='img'">
+                          <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                            <img :src="scope.row[item.prop]">
+                            <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                          </el-popover>
+                        </span>
+                        <span v-else>
+                          {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                        </span>
+                      </span>
+                    </template>
+                    </el-table-column>
+                    <el-table-column type="expand" fixed="left">
+                      <template slot-scope="scope">
+                        <el-table :data="scope.row['productComp']" fit>
+                          <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                             <template slot-scope="scope">
-                                <span v-if="item.prop=='newData'">
-                            <span v-if="proRIndex == 'index'+scope.$index">
-                                <span v-if="item.type=='number'">
-                                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                              <span v-if="item.prop">
+                                <span v-if="item.type=='checkbox'">
+                                  <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                                 </span>
-                                <span v-else-if="item.type == 'checkbox'">
-                                    <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
+                                <span v-else-if="item.type=='img'">
+                                  <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                                    <img :src="scope.row[item.prop]">
+                                    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                                  </el-popover>
                                 </span>
                                 <span v-else>
-                                   <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                                  {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
                                 </span>
-                            </span>
-                            <span v-else>
-                               <span v-if="item.type=='checkbox'">
-                                   <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                               </span>
-                                <span v-else>
-                                    {{scope.row[item.prop][item.inProp]}}
-                                </span>
-                            </span>
-                        </span>
-                                <span v-else-if="item.prop">
-                            <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                            <span v-else-if="item.type=='img'">
-                                <el-popover
-                                        placement="right"
-                                        trigger="hover"
-                                        popper-class="picture_detail">
-                       <img :src="scope.row[item.prop]">
-    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-   </el-popover>
-                            </span>
-                            <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                        </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column type="expand" fixed="left">
-                            <template slot-scope="scope">
-                                <el-table :data="scope.row['productComp']" fit>
-                                    <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                        <template slot-scope="scope">
-                                <span v-if="item.prop">
-                                    <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                                    <span v-else-if="item.type=='img'">
-                                <el-popover
-                                        placement="right"
-                                        trigger="hover"
-                                        popper-class="picture_detail">
-                       <img :src="scope.row[item.prop]">
-    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-   </el-popover>
-                            </span>
-                                    <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                                </span>
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="90" align="center" fixed="right">
-                            <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="addDelPro(scope.$index)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
+                              </span>
+                              </template>
+                          </el-table-column>
+                        </el-table>
+                      </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="90" align="center" fixed="right">
+                      <template slot-scope="scope">
+                        <el-button size="mini" type="danger" @click="addDelPro(scope.$index)">删除</el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
                 </el-tab-pane>
-            </el-tabs>
+              </el-tabs>
             <div slot="footer" class="dialog-footer clearfix">
                 <div style="float: left">
                     <el-button type="primary" @click="addProDtl" v-if="addActiveName=='0'">添加商品</el-button>
@@ -413,62 +410,67 @@
 
         <!--修改-->
         <el-dialog title="修改明细" :visible.sync="updateCustomerMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
-            <div class="clearfix">
-                <el-button type="text" style="float: left">基础信息</el-button>
-                <el-button type="primary" style="float: right;padding: 6px 10px;
-    font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>
-            </div>
+          <div class="clearfix">
+            <el-button type="text" style="float: left">基础信息</el-button>
+            <el-button type="primary" style="float: right;padding: 6px 10px;font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>
+          </div>
             <el-form :model="updateCmptnOrderFormVal" :rules="addCmptnOrderFormRules" class="cmptnAddForm hidePart" id="form">
-                <el-form-item v-for="(item,index) in addCmptnOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
-                    <span v-if="item.type=='text'">
-                         <span v-if="item.inProp">
-                            <el-input v-model.trim="updateCmptnOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                        </span>
-                        <span v-else>
-                          <el-input v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+              <el-form-item v-for="(item,index) in addCmptnOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
+                <span v-if="item.type=='text'">
+                  <span v-if="item.inProp">
+                    <el-input v-model.trim="updateCmptnOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                  </span>
+                  <span v-else>
+                    <el-input v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='number'">
+                  <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+                    <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+                  </span>
+                  <span v-else>
+                    <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='select'">
+                    <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+                      <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                        <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                      </span>
+                    </el-select>
+                </span>
+                <span v-else-if="item.type == 'selects'">
+                  <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder">
+                    <span v-for="list in selectVal[item.prop]" :key="list.value">
+                      <el-option :label="list.label" :value="list.value"></el-option>
                     </span>
-                    </span>
-                    <span v-else-if="item.type=='number'">
-                        <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                           <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
-                        </span>
-                        <span v-else>
-                            <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                        </span>
-                    </span>
-                    <span v-else-if="item.type=='select'">
-                             <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-                                      <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                                    <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
-                               </span>
-                           </el-select>
-                    </span>
-                    <span v-else-if="item.type=='textarea'">
-                         <el-input type="textarea" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type=='checkbox'">
-                            <el-checkbox v-model="updateCmptnOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
-                    </span>
-                    <span v-else-if="item.type=='radio'">
-                            <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-                            <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
-                        </span>
-                    <span v-else-if="item.type=='DatePicker'">
-                            <el-date-picker v-model="updateCmptnOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
-                            </el-date-picker>
-                    </span>
-                </el-form-item>
+                  </el-select>
+                </span>
+                <span v-else-if="item.type=='textarea'">
+                  <el-input type="textarea" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
+                </span>
+                <span v-else-if="item.type=='checkbox'">
+                  <el-checkbox v-model="updateCmptnOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
+                </span>
+                <span v-else-if="item.type=='radio'">
+                  <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                  <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+                </span>
+                <span v-else-if="item.type=='DatePicker'">
+                  <el-date-picker v-model="updateCmptnOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+                </span>
+              </el-form-item>
             </el-form>
             <el-tabs v-model="updateActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
                 <el-tab-pane label="商品信息" name="0">
                     <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-                        <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                        <el-table-column v-for="item in addDefProHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                             <template slot-scope="scope">
                                 <span v-if="item.prop=='newData'">
-                            <span v-if="proRIndex == 'index'+scope.$index">
-                                <span v-if="item.type=='number'">
-                                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                                </span>
+                                  <span v-if="proRIndex == 'index'+scope.$index">
+                                    <span v-if="item.type=='number'">
+                                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                                    </span>
                                 <span v-else-if="item.type == 'checkbox'">
                                     <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
                                 </span>
@@ -538,43 +540,6 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="费用类型" name="1">
-                    <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick"  :row-class-name="addExpenseRCName">
-                        <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-                            <template slot-scope="scope">
-                                <span v-if="expenseRIndex == 'index'+scope.$index">
-                                    <span v-if="item.type=='select'">
-                                        <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
-                                            <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                                                <el-option :label="list.name" :value="list.id"></el-option>
-                                           </span>
-                                       </el-select>
-                                    </span>
-                                    <span v-else>
-                                       <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                                    </span>
-                                </span>
-                                <span v-else>
-                                    <span v-if="item.type=='select'">
-                                         <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
-                                             <span v-if="list.id==scope.row[item.prop]">
-                                                 {{list.name}}
-                                             </span>
-                                         </span>
-                                    </span>
-                                <span v-else>
-                                    {{scope.row[item.prop]}}
-                                </span>
-                            </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="90" align="center" fixed="right">
-                            <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="updateDelExpense(scope.row,scope.$index)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
             </el-tabs>
             <div slot="footer" class="dialog-footer clearfix">
                 <div style="float: left">
@@ -636,6 +601,9 @@
     </div>
 </template>
 <script>
+  import FileSaver from 'file-saver'
+  import XLSX from 'xlsx'
+  import { mapGetters } from 'vuex'
   import { regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
   export default {
     data() {
@@ -787,7 +755,8 @@
             label: '发货物流',
             width: '120',
             prop: 'logistics_company',
-            type: 'text',
+            nmprop:'name',
+            type: 'select',
           },
           {
             label: '物流单号',
@@ -1140,7 +1109,7 @@
         moreForms: true,
         threeParts: true,
         addCmptnOrderFormVal:{
-          order_number:'nodata',
+          order_number:'',
           cmptn_shop:'',
           cmptn_direction:'',
           responsible_party:'',
@@ -1149,7 +1118,7 @@
           customer_name:'',
           customer_phone:'',
           customer_city:'',
-          customer_address:'no data',
+          customer_address:'',
           cmptn_fee:'',
           fee_type:'',
           logistics_company:'',
@@ -1158,7 +1127,7 @@
           order_stuff:'',
           payee:'',
           payee_account:'',
-          problem_goods:'no data',
+          problem_product_id:'',
           problem_description:'',
           note:'',
           refuse_reason:'',
@@ -1257,9 +1226,8 @@
           {
             label: '结账方式',
             prop: 'payment_method',
-            type: 'text',
-            editChgAble: true,
-            addChgAble: false,
+            type: 'selects',
+            stateVal:'payment_method',
           },
           {
             label: '发货物流',
@@ -1278,7 +1246,7 @@
           {
             label: '责任方',
             prop: 'responsible_party',
-            type: 'text',
+            type: 'selects',
             editChgAble: true,
             addChgAble: false,
           },
@@ -1292,7 +1260,7 @@
           {
             label: '赔偿方向',
             prop: 'cmptn_direction',
-            type: 'text',
+            type: 'selects',
             editChgAble: true,
             addChgAble: false,
           },
@@ -1321,6 +1289,7 @@
             label: '费用类型',
             prop: 'fee_type',
             type: 'text',
+            //stateVal:'feetypes',
             editChgAble: true,
             addChgAble: false,
           },
@@ -1368,9 +1337,15 @@
         addActiveName: '0',
         proData: [],
         options: regionDataPlus,
-        addHead:[
+        addDefProHead:[
           [
            {
+            label: '产品图片',
+            width: '120',
+            prop: "img",
+            type: 'img'
+          },
+          {
             label: '商品编码',
             prop: "commodity_code",
             type: 'text',
@@ -1430,56 +1405,7 @@
             type: 'text',
             width: '120'
           }
-         ],
-          [
-            {
-              label: '姓名',
-              prop: 'receiver_name',
-              holder: '请输入姓名',
-              type: 'text'
-            },
-            {
-              label: '固定电话',
-              prop: 'receiver_phone',
-              holder: '请输入固定电话',
-              type: 'number'
-            },
-            {
-              label: '手机',
-              prop: 'receiver_mobile',
-              holder: '请输入手机号码',
-              type: 'number'
-            },
-            {
-              label: '省市区',
-              prop: 'provinces',
-              type: 'cascader'
-            },
-            {
-              label: '地址',
-              prop: 'receiver_address',
-              type: 'text',
-            },
-            {
-              label: '邮编',
-              prop: 'receiver_zip',
-              holder: '请输入邮编',
-              type: 'text'
-            }
-          ],
-          [
-            {
-              label: '类型名称',
-              prop: 'payment_methods_id',
-              type: 'select',
-              stateVal: 'fee_type'
-            },
-            {
-              label: '金额',
-              prop: 'payment',
-              type: 'number',
-            },
-          ]
+         ]
         ],
         proMask: false,
         proQuery:{
@@ -1761,6 +1687,12 @@
         mergerIds: [],
         defProTableHead:[
           {
+            label: '产品图片',
+            width: '120',
+            prop: "img",
+            type: 'img'
+          },
+          {
             label: '商品编码',
             prop: "commodity_code",
             type: 'text',
@@ -1821,6 +1753,7 @@
             width: '120'
           }
         ],
+        /** 
         defProData:{
           commodity_code:'',
           spec_code:'',
@@ -1832,7 +1765,28 @@
           special:'',
           other:'',
           buy_number:''
-        },
+        },*/
+        defProData:[],
+        addSubData:[],
+        selectVal:{
+          payment_method:[{label:'支付宝',value:'支付宝'},{label:'微信',value:'微信'},{label:'银行卡',value:'银行卡'}],
+          cmptn_direction:[{label:'我们赔偿',value:'我们赔偿'},{label:'赔偿我们',value:'赔偿我们'}],
+          responsible_party:[{label:'顾客',value:'顾客'},{label:'我们',value:'我们'},{label:'仓库',value:'仓库'},{label:'供应商',value:'供应商'}],
+          },
+        addDefProVal:{
+          picUrl:'11',
+          commodity_code:'11',
+          spec_code:'11',
+          short_name:'11',
+          spec:'11',
+          color:'11',
+          materials:'11',
+          function:'11',
+          special:'11',
+          other:'11',
+          buy_number:'11'
+        }
+
       }
     },
     computed: {
@@ -1932,14 +1886,17 @@
         let index = this.leftTopActiveName-0;
         switch(index){
           case 0:
-            this.$fetch(this.urls.aftercompensation+'/searchuntreated')
+            this.$fetch(this.urls.aftercompensation+'/searchuntreated',{include:'problemProduct.afterCompensationOrder'})
               .then(res => {
                 this.loading = false;
                 this.orderListData = res.data;
+                this.defProData = res.data[0]?res.data[0]['problemProduct'].data:[];
+                //this.addSubData = res.data;
                 let pg = res.meta.pagination;
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
                 this.$store.commit('PAGE_TOTAL', pg.total);
+                //this.$store.dispatch('feetypes','/feetypes');
               }, err => {
                 if (err.response) {
                   let arr = err.response.data.errors;
@@ -1952,10 +1909,11 @@
               });
             break;
           case 1:
-            this.$fetch(this.urls.aftercompensation+'/searchtreated')
+            this.$fetch(this.urls.aftercompensation+'/searchtreated',{include:'problemProduct.afterCompensationOrder'})
               .then(res => {
                 this.loading = false;
                 this.alreadyHandle = res.data;
+                this.defProData = res.data[0]?res.data[0]['problemProduct'].data:[];
                 let pg = res.meta.pagination;
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
@@ -1971,26 +1929,6 @@
                 }
               });
             break;
-          case 2:
-            this.$fetch(this.urls.aftercompensation)
-              .then(res => {
-                this.loading = false;
-                this.orderListData = res.data;
-                let pg = res.meta.pagination;
-                this.$store.dispatch('currentPage', pg.current_page);
-                this.$store.commit('PER_PAGE', pg.per_page);
-                this.$store.commit('PAGE_TOTAL', pg.total);
-              }, err => {
-                if (err.response) {
-                  let arr = err.response.data.errors;
-                  let arr1 = [];
-                  for (let i in arr) {
-                    arr1.push(arr[i]);
-                  }
-                  this.$message.error(arr1.join(','));
-                }
-              });
-            break
         }
       },
       leftHandleClick(){
@@ -1998,36 +1936,9 @@
         this.fetchData();
       },
       rightHandleClick(){},
-      orderListRClick(row){
-        if(row['locker_id'] == 0){
-          this.newOpt[1].nClick = true;
-          this.newOpt[2].nClick = true;
-          this.newOpt[3].nClick = false;
-          this.newOpt[4].nClick = true;
-          this.newOpt[8].nClick = true;
-          this.newOpt[9].nClick = true;
-          this.newOpt[14].nClick = true;
-          if(row['order_status']=="已客审"){
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = false;
-          }else{
-            this.newOpt[5].nClick = false;
-            this.newOpt[6].nClick = true;
-          }
-        }else{
-          this.newOpt[1].nClick = false;
-          this.newOpt[2].nClick = false;
-          this.newOpt[3].nClick = true;
-          this.newOpt[4].nClick = false;
-          this.newOpt[5].nClick = false;
-          this.newOpt[6].nClick = true;
-          this.newOpt[8].nClick = false;
-          this.newOpt[9].nClick = false;
-          this.newOpt[14].nClick = false;
-        }
+      defProRClick(row){
         this.curRowId = row.id;
-        this.curRowData = row;
-
+        this.defProData = row['problemProduct'].data;
       },
       orderDbClick(row){
         this.activeName = '1';
@@ -2197,8 +2108,8 @@
         }
       },
       proRowClick(row){
-        this.proSkuVal = [];
-        this.proCompRowIndex = '';
+        
+        this.proCompRowIndex = `index${row.index}`;
         let comb = row['combinations']['data'];
         if(comb.length>0){
           let total_volume = 0;
@@ -2382,7 +2293,7 @@
         /*拿到当前id*/
         this.checkboxId=val.length>0?val[val.length-1].id:'';
         this.curRowData=val.length>0?val[val.length-1]:'';
-        this.mergerIds = val;
+
       },
       delBatch(){
         if (this.ids.length === 0) {

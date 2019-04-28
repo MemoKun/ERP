@@ -1,14 +1,14 @@
 webpackJsonp([102],{
 
-/***/ 500:
+/***/ 513:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(685)
+var __vue_script__ = __webpack_require__(712)
 /* template */
-var __vue_template__ = __webpack_require__(686)
+var __vue_template__ = __webpack_require__(713)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/accountType.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/afterSState.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-16860a7e", Component.options)
+    hotAPI.createRecord("data-v-97f30a5e", Component.options)
   } else {
-    hotAPI.reload("data-v-16860a7e", Component.options)
+    hotAPI.reload("data-v-97f30a5e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 685:
+/***/ 712:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -76,618 +76,105 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      //操作
       newOpt: [{
         cnt: '新增',
         icon: 'bf-add',
-        ent: this.addNew
+        ent: this.test
+      }, {
+        cnt: '修改',
+        icon: 'bf-change',
+        ent: this.test
       }, {
         cnt: '删除',
         icon: 'bf-del',
-        ent: this.doDelMore
+        ent: this.test
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
         ent: this.refresh
       }],
-      //表格
-      tableKey: [[{
-        label: '类型',
-        width: '280',
-        prop: "name",
-        holder: '输入类型',
+      stateData: [],
+      checkboxInit: false,
+      loading: true,
+      activeName: '0',
+      tableHead: [{
+        label: '售后状态',
+        prop: 'after_s_state',
+        width: '200',
         type: 'text'
       }, {
-        label: '状态',
-        width: '280',
-        prop: "status",
-        holder: '状态',
-        type: 'select_stu',
-        doSort: true
-      }]],
-      url: ['/acctypes'],
-      title: ['新增记账类型'],
-      ruleForm: [{
-        name: '',
-        status: '1'
-      }],
-      rules: [{
-        name: [{ required: true, message: '请输入标记代码', trigger: 'blur' }]
-      }],
-      addArr: [[{
-        label: '类型',
-        prop: 'name',
-        holder: '请输入类型',
-        type: 'text'
-      }, {
-        label: '状态',
+        label: '是否启用',
         prop: 'status',
-        holder: '请选择状态',
-        type: 'select_stu'
-      }]]
+        width: '200',
+        type: 'text'
+      }]
     };
   },
 
+  computed: {
+    resData: {
+      get: function get() {
+        return this.$store.state.responseData;
+      },
+      set: function set() {}
+    },
+    urls: {
+      get: function get() {
+        return this.$store.state.urls;
+      },
+      set: function set() {}
+    }
+  },
   methods: {
-    //新增
-    addNew: function addNew() {
-      this.$store.dispatch('setShowAdd', true);
+    test: function test() {
+      console.log(1);
     },
-    edit: function edit(row) {
-      var obj = {
-        id: row.id,
-        name: row.name,
-        status: row.status
-      };
-      this.$store.dispatch('setRow', row);
-      this.$store.dispatch('setUrl', this.url[0] + "/");
-      this.$store.dispatch('doEdit', obj);
-    },
-    doDelMore: function doDelMore() {
-      this.$refs.tabs.$emit('delMore');
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.$fetch(this.urls.aftersstate).then(function (res) {
+        _this.stateData = res.data;
+        _this.loading = false;
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this.$message.error({
+            message: str
+          });
+        }
+      });
     },
     refresh: function refresh() {
-      this.$store.dispatch('refresh');
+      this.loading = true;
+      this.fetchData();
     }
   },
   mounted: function mounted() {
-    this.$store.dispatch('setTabs', false);
-    this.$store.dispatch('setOpt', this.newOpt);
+    this.fetchData();
+    this.$store.state.opt.opts = this.newOpt;
+    this.$store.commit('change', this.newOpt);
     var that = this;
     $(window).resize(function () {
-      that.$store.dispatch('setOpt', that.newOpt);
+      return function () {
+        that.$store.state.opt.opts = that.newOpt;
+        that.$store.commit('change', that.newOpt);
+      }();
     });
   }
 });
 
 /***/ }),
 
-/***/ 686:
+/***/ 713:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -697,18 +184,115 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("v-tabs", {
-        ref: "tabs",
-        attrs: {
-          "table-key": _vm.tableKey,
-          url: _vm.url,
-          title: _vm.title,
-          "rule-form": _vm.ruleForm,
-          rules: _vm.rules,
-          "add-arr": _vm.addArr
+      _c(
+        "el-tabs",
+        {
+          model: {
+            value: _vm.activeName,
+            callback: function($$v) {
+              _vm.activeName = $$v
+            },
+            expression: "activeName"
+          }
         },
-        on: { edit: _vm.edit }
-      })
+        [
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "售后状态", name: "0" } },
+            [
+              _c(
+                "el-table",
+                {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.loading,
+                      expression: "loading"
+                    }
+                  ],
+                  attrs: { data: _vm.stateData, fit: "", height: "300" }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      type: "selection",
+                      width: "95",
+                      align: "center",
+                      checked: _vm.checkboxInit
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.tableHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.prop,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type == "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      scope.row[item.prop]
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                   " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                 "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -719,7 +303,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-16860a7e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-97f30a5e", module.exports)
   }
 }
 

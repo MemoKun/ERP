@@ -6,9 +6,9 @@ webpackJsonp([1],{
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(636)
+var __vue_script__ = __webpack_require__(646)
 /* template */
-var __vue_template__ = __webpack_require__(646)
+var __vue_template__ = __webpack_require__(647)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -62,9 +62,9 @@ module.exports = Component.exports
 
 
 
-var base64 = __webpack_require__(640)
-var ieee754 = __webpack_require__(641)
-var isArray = __webpack_require__(642)
+var base64 = __webpack_require__(569)
+var ieee754 = __webpack_require__(570)
+var isArray = __webpack_require__(571)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -3376,943 +3376,7 @@ if (typeof module !== 'undefined' && module.exports && typeof DO_NOT_EXPORT_CODE
 
 /***/ }),
 
-/***/ 636:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver__ = __webpack_require__(637);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_file_saver__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx__ = __webpack_require__(639);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_xlsx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_element_china_area_data__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      newOpt: [{
-        cnt: '新增',
-        icon: 'bf-add',
-        ent: this.addLogic
-      }, {
-        cnt: '修改',
-        icon: 'bf-change',
-        ent: this.updateLogic,
-        nClick: false
-      }, {
-        cnt: '删除',
-        icon: 'bf-del',
-        ent: this.delBatch
-      }, {
-        cnt: '导入',
-        icon: 'bf-in',
-        // ent: this.createP,
-        ent: this.test
-      }, {
-        cnt: '导出',
-        icon: 'bf-out',
-        // ent: this.exportExcel,
-        ent: this.test
-      }, {
-        cnt: '同步',
-        icon: 'bf-sync',
-        ent: this.test
-      }, {
-        cnt: '刷新',
-        icon: 'bf-refresh',
-        ent: this.refresh
-      }],
-      /*获取数据*/
-      logisticsData: [],
-      activeName: '0',
-      loading: true,
-      logisticsHead: [{
-        label: '物流代码',
-        width: '150',
-        prop: "code",
-        type: 'text'
-      }, {
-        label: '物流名称',
-        width: '150',
-        prop: "name",
-        type: 'text'
-      }, {
-        label: '报表格式',
-        width: '130',
-        prop: 'printReport',
-        inProp: 'name',
-        // stateVal: 'printreports',
-        type: 'text'
-      }, {
-        label: '运费类型',
-        width: '130',
-        prop: "freightType",
-        inProp: 'name',
-        // stateVal: 'freighttypes',
-        type: 'text'
-      }, {
-        label: '预计天数',
-        width: '120',
-        prop: "expected_days",
-        type: 'number'
-      }, {
-        label: '物流电话',
-        width: '130',
-        prop: "phone",
-        type: 'number'
-      }, {
-        label: '物流地址',
-        width: '160',
-        prop: "address",
-        type: 'text'
-      }, {
-        label: '备注',
-        width: '120',
-        prop: "remark",
-        type: 'textarea'
-      }, {
-        label: '是否启用',
-        width: '90',
-        prop: "status",
-        type: 'checkbox'
-      }, {
-        label: '创建时间',
-        width: '200',
-        prop: "created_at",
-        type: 'text'
-      }],
-      checkboxInit: false,
-      btmActiveName: '0',
-      logicRow: {},
-      pagination: {
-        current_page: 1,
-        per_page: 0,
-        page_total: 0
-      },
-      /*城市信息*/
-      cityData: [],
-      cityHead: [{
-        label: '物流名称',
-        width: '140',
-        prop: "logistics",
-        inProp: 'name',
-        type: 'text'
-      }, {
-        label: '省',
-        width: '100',
-        prop: "province",
-        type: 'text'
-      }, {
-        label: '市',
-        width: '100',
-        prop: "city",
-        type: 'text'
-      }, {
-        label: '区',
-        width: '120',
-        prop: "district",
-        type: 'text'
-      }, {
-        label: '提货地址',
-        width: '180',
-        prop: "address",
-        type: 'text'
-      }, {
-        label: '提货电话',
-        width: '130',
-        prop: "phone",
-        type: 'number'
-      }, {
-        label: '物流费用',
-        width: '120',
-        prop: "price",
-        type: 'number'
-      }, {
-        label: '重量单价',
-        width: '120',
-        prop: "weight_univalent",
-        type: 'number'
-      }, {
-        label: '到达天数',
-        width: '120',
-        prop: "expected_days",
-        type: 'number'
-      }, {
-        label: '直达(中转)',
-        width: '120',
-        prop: "route",
-        type: 'select_def'
-      }, {
-        label: '包邮',
-        width: '90',
-        prop: "is_free_shipping",
-        type: 'checkbox'
-      }, {
-        label: '备注',
-        width: '120',
-        prop: "remark",
-        type: 'textarea'
-      }],
-      /*新增*/
-      addLogicMask: false,
-      moreForms: true,
-      addLogicForm: {
-        code: '',
-        name: '',
-        report_id: '',
-        expected_days: '',
-        phone: '',
-        address: '',
-        freight_type_id: '',
-        remark: '',
-        status: true
-      },
-      addLogicRules: {
-        code: [{ required: true, message: '请输入物流代码', trigger: 'blur' }],
-        name: [{ required: true, message: '请输入物流名称', trigger: 'blur' }],
-        report_id: [{ required: true, message: '请选择报表格式', trigger: 'blur' }],
-        expected_days: [{ required: true, message: '请输入预计天数', trigger: 'blur' }],
-        phone: [{ required: true, message: '请输入物流电话', trigger: 'blur' }],
-        address: [{ required: true, message: '请输入物流地址', trigger: 'blur' }],
-        freight_type_id: [{ required: true, message: '请选择运费类型', trigger: 'blur' }]
-      },
-      addLogicHead: [{
-        label: '物流代码',
-        prop: 'code',
-        holder: '请输入物流代码',
-        type: 'text'
-      }, {
-        label: '物流名称',
-        prop: 'name',
-        holder: '请输入物流名称',
-        type: 'text'
-      }, {
-        label: '报表格式',
-        prop: 'report_id',
-        holder: '请选择报表格式',
-        type: 'select',
-        stateVal: 'printreports'
-      }, {
-        label: '运费类型',
-        prop: 'freight_type_id',
-        holder: '请输入运费类型',
-        type: 'select',
-        stateVal: 'freighttypes'
-      }, {
-        label: '预计天数',
-        prop: 'expected_days',
-        holder: '请输入预计天数',
-        type: 'number'
-      }, {
-        label: '物流电话',
-        prop: 'phone',
-        holder: '请输入物流电话',
-        type: 'number'
-      }, {
-        label: '物流地址',
-        prop: 'address',
-        holder: '请输入物流地址',
-        type: 'text'
-      }, {
-        label: '状态',
-        prop: 'status',
-        holder: '请选择是否启用',
-        type: 'checkbox'
-      }, {
-        label: '备注',
-        prop: 'remark',
-        holder: '请输入备注',
-        type: 'textarea'
-      }],
-      addCityVal: [{
-        provinces: [],
-        province: '',
-        city: '',
-        district: '',
-        address: '',
-        phone: '',
-        price: '',
-        weight_univalent: '',
-        expected_days: '',
-        route: '',
-        is_free_shipping: false,
-        remark: ''
-      }],
-      addCityHead: [{
-        label: '省市区',
-        prop: 'provinces',
-        width: '220',
-        holder: '请输入所在省',
-        type: 'cascader'
-      }, {
-        label: '提货地址',
-        prop: 'address',
-        width: '160',
-        holder: '请输入提货地址',
-        type: 'text'
-      }, {
-        label: '提货电话',
-        prop: 'phone',
-        width: '130',
-        holder: '请输入提货电话',
-        type: 'number'
-      }, {
-        label: '物流费用',
-        prop: 'price',
-        width: '120',
-        holder: '请输入物流费用',
-        type: 'number'
-      }, {
-        label: '重量单价',
-        width: '120',
-        prop: 'weight_univalent',
-        holder: '请输入重量单价',
-        type: 'number'
-      }, {
-        label: '城市到达天数',
-        prop: 'expected_days',
-        width: '140',
-        holder: '请输入城市到达天数',
-        type: 'number'
-      }, {
-        label: '中转或直达',
-        prop: 'route',
-        width: '130',
-        holder: '请选择中转或直达',
-        type: 'selects'
-      }, {
-        label: '包邮',
-        width: '90',
-        prop: 'is_free_shipping',
-        holder: '请选择是否包邮',
-        type: 'checkbox'
-      }, {
-        label: '备注',
-        width: '150',
-        prop: 'remark',
-        holder: '请输入备注',
-        type: 'textarea'
-      }],
-      transfers: [{ label: '中转', value: '0' }, { label: '直达', value: '1' }],
-      options: __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["regionDataPlus"],
-      cityIndex: '',
-      /*修改*/
-      updateLogicMask: false,
-      updateLogicForm: {},
-      updateCityVal: [],
-      updateIndex: '',
-      /*删除*/
-      showDel: false,
-      delUrl: '',
-      delId: '',
-      delBatchUrl: '',
-      ids: [],
-      currentId: ''
-    };
-  },
-
-  computed: {
-    resData: {
-      get: function get() {
-        return this.$store.state.responseData;
-      },
-      set: function set() {}
-    },
-    urls: {
-      get: function get() {
-        return this.$store.state.urls;
-      },
-      set: function set() {}
-    }
-  },
-  methods: {
-    test: function test() {
-      console.log(1);
-    },
-
-    /*获取数据*/
-    fetchLogData: function fetchLogData() {
-      var _this = this;
-
-      this.$fetch(this.urls.logistics, { include: 'cityInfos.logistics,printReport,freightType' }).then(function (res) {
-        _this.logisticsData = res.data;
-        _this.cityData = res.data[0] ? res.data[0]['cityInfos'].data : [];
-        _this.loading = false;
-        var pg = res.meta.pagination;
-        _this.$store.dispatch('currentPage', pg.current_page);
-        _this.$store.commit('PER_PAGE', pg.per_page);
-        _this.$store.commit('PAGE_TOTAL', pg.total);
-        _this.$store.dispatch('printreports', '/printreports');
-        _this.$store.dispatch('freighttypes', '/freighttypes');
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    logicRowClick: function logicRowClick(row) {
-      this.cityData = row['cityInfos'].data;
-      this.logicRow = row;
-    },
-
-    /*新增*/
-    addLogic: function addLogic() {
-      this.addLogicMask = true;
-      this.cityIndex = 'index0';
-      Object.assign(this.addLogicForm, this.$options.data().addLogicForm);
-      Object.assign(this.addCityVal, this.$options.data().addCityVal);
-    },
-    addCityCName: function addCityCName(_ref) {
-      var row = _ref.row,
-          rowIndex = _ref.rowIndex;
-      row.index = rowIndex;
-    },
-    addCityRClick: function addCityRClick(row) {
-      this.cityIndex = 'index' + row.index;
-    },
-    addCityDtl: function addCityDtl(index) {
-      this.addCityVal.splice(index, 1);
-      this.$message({
-        message: '删除城市信息成功',
-        type: 'success'
-      });
-    },
-    addCityInfo: function addCityInfo() {
-      var cityInfo = {
-        provinces: [],
-        province: '',
-        city: '',
-        district: '',
-        address: '',
-        phone: '',
-        price: '',
-        weight_univalent: '',
-        expected_days: '',
-        route: '',
-        is_free_shipping: false,
-        remark: ''
-      };
-      if (this.addLogicMask) {
-        this.addCityVal.push(cityInfo);
-        this.cityIndex = 'index' + (this.addCityVal.length - 1);
-      } else {
-        this.updateCityVal.push(cityInfo);
-        this.updateIndex = 'index' + (this.updateCityVal.length - 1);
-      }
-    },
-    addConfirm: function addConfirm() {
-      var _this2 = this;
-
-      this.addCityVal.map(function (item, index) {
-        if (item.provinces.length > 0) {
-          item.province = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[0]];
-          item.city = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[1]];
-          item.district = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[2]];
-        }
-        for (var i in item) {
-          if (item[i] === '') {
-            _this2.addCityVal.splice(index, 1);
-          }
-        }
-      });
-      var data = {
-        code: this.addLogicForm.code,
-        name: this.addLogicForm.name,
-        report_id: this.addLogicForm.report_id,
-        expected_days: this.addLogicForm.expected_days,
-        phone: this.addLogicForm.phone,
-        address: this.addLogicForm.address,
-        freight_type_id: this.addLogicForm.freight_type_id,
-        remark: this.addLogicForm.remark,
-        status: this.addLogicForm.status,
-        city_infos: this.addCityVal
-      };
-      this.$post(this.urls.logistics, data).then(function () {
-        _this2.addLogicMask = false;
-        _this2.refresh();
-        _this2.$message({
-          message: '添加成功',
-          type: 'success'
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this2.$message.error(str);
-        }
-      });
-    },
-    addCancel: function addCancel() {
-      this.addLogicMask = false;
-      this.$message({
-        message: '取消添加',
-        type: 'info'
-      });
-    },
-
-    /*修改*/
-    updateLogic: function updateLogic() {
-      var _this3 = this;
-
-      this.updateLogicMask = true;
-      var id = void 0;
-      id = this.currentId ? this.currentId : this.logicRow.id;
-      this.$fetch(this.urls.logistics + '/' + id, { include: 'cityInfos.logistics,printReport,freightType' }).then(function (res) {
-        _this3.updateLogicForm = {
-          code: res.code,
-          name: res.name,
-          report_id: res.report_id,
-          expected_days: res.expected_days,
-          phone: res.phone,
-          address: res.address,
-          freight_type_id: res.freight_type_id,
-          remark: res.remark,
-          status: res.status
-        };
-        res['cityInfos']['data'].map(function (item) {
-          _this3.$set(item, 'provinces', [__WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["TextToCode"][item.province].code, __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["TextToCode"][item.province][item.city].code, __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["TextToCode"][item.province][item.city][item.district].code]);
-        });
-        _this3.updateCityVal = res['cityInfos']['data'];
-      }, function (err) {});
-    },
-    updateCityCName: function updateCityCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
-      row.index = rowIndex;
-    },
-    updateCityRClick: function updateCityRClick(row) {
-      this.updateIndex = 'index' + row.index;
-    },
-    updateCityDtl: function updateCityDtl(row, index) {
-      var _this4 = this;
-
-      if (row.id) {
-        this.$del(this.urls.cityinfos + '/' + row.id).then(function () {
-          _this4.updateCityVal.splice(index, 1);
-          _this4.$message({
-            message: '删除城市信息成功',
-            type: 'success'
-          });
-        });
-      } else {
-        this.updateCityVal.splice(index, 1);
-        this.$message({
-          message: '删除城市信息成功',
-          type: 'success'
-        });
-      }
-    },
-    updateConfirm: function updateConfirm() {
-      var _this5 = this;
-
-      var id = void 0;
-      id = this.currentId ? this.currentId : this.logicRow.id;
-      this.updateCityVal.map(function (item, index) {
-        item.province = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[0]];
-        item.city = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[1]];
-        item.district = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[2]];
-        for (var i in item) {
-          if (item[i] === '') {
-            _this5.updateCityVal.splice(index, 1);
-          }
-        }
-      });
-      var data = {
-        code: this.updateLogicForm.code,
-        name: this.updateLogicForm.name,
-        report_id: this.updateLogicForm.report_id,
-        expected_days: this.updateLogicForm.expected_days,
-        phone: this.updateLogicForm.phone,
-        address: this.updateLogicForm.address,
-        freight_type_id: this.updateLogicForm.freight_type_id,
-        remark: this.updateLogicForm.remark,
-        status: this.updateLogicForm.status,
-        city_infos: this.updateCityVal
-      };
-      this.$patch(this.urls.logistics + '/' + id, data).then(function () {
-        _this5.updateLogicMask = false;
-        _this5.refresh();
-        _this5.$message({
-          message: '修改成功',
-          type: 'success'
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this5.$message.error(str);
-        }
-      });
-    },
-    updateCancel: function updateCancel() {
-      this.updateLogicMask = false;
-      this.$message({
-        message: '取消修改',
-        type: 'info'
-      });
-    },
-
-    /*分页*/
-    handlePagChg: function handlePagChg(page) {
-      var _this6 = this;
-
-      this.$fetch(this.urls.logistics + '?page=' + page, { include: 'cityInfos.logistics,printReport,freightType' }).then(function (res) {
-        _this6.logisticsData = res.data;
-      });
-    },
-
-    /*删除*/
-    delSingle: function delSingle(row, e) {
-      this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
-      this.delId = row.id;
-      this.delUrl = row['cityInfos'] ? this.urls.logistics : this.urls.cityinfos;
-    },
-    cancelD: function cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: '取消删除',
-        type: 'info'
-      });
-    },
-    confirmD: function confirmD(url, id) {
-      var _this7 = this;
-
-      this.$del(url + '/' + id).then(function () {
-        _this7.$message({
-          message: '删除成功',
-          type: 'success'
-        });
-        _this7.showDel = false;
-        _this7.refresh();
-      }, function (err) {
-        if (err.response) {
-          _this7.showDel = false;
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this7.$message.error(str);
-        }
-      });
-    },
-
-    /*批量删除*/
-    handleSelectionChange: function handleSelectionChange(val) {
-      /*拿到id集合*/
-      var delArr = [];
-      val.forEach(function (selectedItem) {
-        delArr.push(selectedItem.id);
-      });
-      this.ids = delArr.join(',');
-      /*拿到当前id*/
-      this.currentId = val.length > 0 ? val[val.length - 1].id : '';
-    },
-    delBatch: function delBatch() {
-      var _this8 = this;
-
-      if (this.ids.length === 0) {
-        this.$message({
-          message: '没有选中数据',
-          type: 'warning'
-        });
-      } else {
-        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(function () {
-          _this8.$del(_this8.urls.logistics, { ids: _this8.ids }).then(function () {
-            _this8.$message({
-              message: '删除成功',
-              type: 'success'
-            });
-            _this8.refresh();
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              var str = arr1.join(',');
-              _this8.$message.error(str);
-            }
-          });
-        }).catch(function () {
-          _this8.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
-      }
-    },
-
-    /*刷新*/
-    refresh: function refresh() {
-      this.loading = true;
-      this.fetchLogData();
-    }
-  },
-  mounted: function mounted() {
-    this.fetchLogData();
-    this.$store.dispatch('setOpt', this.newOpt);
-    var that = this;
-    $(window).resize(function () {
-      that.$store.dispatch('setOpt', that.newOpt);
-    });
-  }
-});
-
-/***/ }),
-
-/***/ 637:
+/***/ 566:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* FileSaver.js
@@ -4498,7 +3562,7 @@ var saveAs = saveAs || (function(view) {
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports.saveAs = saveAs;
-} else if (("function" !== "undefined" && __webpack_require__(638) !== null) && (__webpack_require__(563) !== null)) {
+} else if (("function" !== "undefined" && __webpack_require__(567) !== null) && (__webpack_require__(563) !== null)) {
   !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
     return saveAs;
   }).call(exports, __webpack_require__, exports, module),
@@ -4508,7 +3572,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 /***/ }),
 
-/***/ 638:
+/***/ 567:
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -4518,7 +3582,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 639:
+/***/ 568:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, Buffer, process) {/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -6631,7 +5695,7 @@ var jszip;
 if(typeof JSZipSync !== 'undefined') jszip = JSZipSync;
 if(true) {
 	if(typeof module !== 'undefined' && module.exports) {
-		if(typeof jszip === 'undefined') jszip = __webpack_require__(643);
+		if(typeof jszip === 'undefined') jszip = __webpack_require__(572);
 	}
 }
 
@@ -7252,7 +6316,7 @@ var make_offcrypto = function(O, _crypto) {
 	var crypto;
 	if(typeof _crypto !== 'undefined') crypto = _crypto;
 	else if(true) {
-		try { crypto = __webpack_require__(644); }
+		try { crypto = __webpack_require__(573); }
 		catch(e) { crypto = null; }
 	}
 
@@ -24623,7 +23687,7 @@ return utils;
 })(utils);
 
 if(has_buf && "function" != 'undefined') (function() {
-	var Readable = __webpack_require__(645).Readable;
+	var Readable = __webpack_require__(574).Readable;
 
 	var write_csv_stream = function(sheet, opts) {
 		var stream = Readable();
@@ -24772,7 +23836,7 @@ var XLS = XLSX, ODS = XLSX;
 
 /***/ }),
 
-/***/ 640:
+/***/ 569:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24894,7 +23958,7 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ 641:
+/***/ 570:
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -24985,7 +24049,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 /***/ }),
 
-/***/ 642:
+/***/ 571:
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -24997,7 +24061,7 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ 643:
+/***/ 572:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*
@@ -34007,14 +33071,14 @@ module.exports = ZStream;
 
 /***/ }),
 
-/***/ 644:
+/***/ 573:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 645:
+/***/ 574:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -34022,6 +33086,942 @@ module.exports = ZStream;
 /***/ }),
 
 /***/ 646:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver__ = __webpack_require__(566);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_file_saver__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx__ = __webpack_require__(568);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_xlsx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_element_china_area_data__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      newOpt: [{
+        cnt: '新增',
+        icon: 'bf-add',
+        ent: this.addLogic
+      }, {
+        cnt: '修改',
+        icon: 'bf-change',
+        ent: this.updateLogic,
+        nClick: false
+      }, {
+        cnt: '删除',
+        icon: 'bf-del',
+        ent: this.delBatch
+      }, {
+        cnt: '导入',
+        icon: 'bf-in',
+        // ent: this.createP,
+        ent: this.test
+      }, {
+        cnt: '导出',
+        icon: 'bf-out',
+        // ent: this.exportExcel,
+        ent: this.test
+      }, {
+        cnt: '同步',
+        icon: 'bf-sync',
+        ent: this.test
+      }, {
+        cnt: '刷新',
+        icon: 'bf-refresh',
+        ent: this.refresh
+      }],
+      /*获取数据*/
+      logisticsData: [],
+      activeName: '0',
+      loading: true,
+      logisticsHead: [{
+        label: '物流代码',
+        width: '150',
+        prop: "code",
+        type: 'text'
+      }, {
+        label: '物流名称',
+        width: '150',
+        prop: "name",
+        type: 'text'
+      }, {
+        label: '报表格式',
+        width: '130',
+        prop: 'printReport',
+        inProp: 'name',
+        // stateVal: 'printreports',
+        type: 'text'
+      }, {
+        label: '运费类型',
+        width: '130',
+        prop: "freightType",
+        inProp: 'name',
+        // stateVal: 'freighttypes',
+        type: 'text'
+      }, {
+        label: '预计天数',
+        width: '120',
+        prop: "expected_days",
+        type: 'number'
+      }, {
+        label: '物流电话',
+        width: '130',
+        prop: "phone",
+        type: 'number'
+      }, {
+        label: '物流地址',
+        width: '160',
+        prop: "address",
+        type: 'text'
+      }, {
+        label: '备注',
+        width: '120',
+        prop: "remark",
+        type: 'textarea'
+      }, {
+        label: '是否启用',
+        width: '90',
+        prop: "status",
+        type: 'checkbox'
+      }, {
+        label: '创建时间',
+        width: '200',
+        prop: "created_at",
+        type: 'text'
+      }],
+      checkboxInit: false,
+      btmActiveName: '0',
+      logicRow: {},
+      pagination: {
+        current_page: 1,
+        per_page: 0,
+        page_total: 0
+      },
+      /*城市信息*/
+      cityData: [],
+      cityHead: [{
+        label: '物流名称',
+        width: '140',
+        prop: "logistics",
+        inProp: 'name',
+        type: 'text'
+      }, {
+        label: '省',
+        width: '100',
+        prop: "province",
+        type: 'text'
+      }, {
+        label: '市',
+        width: '100',
+        prop: "city",
+        type: 'text'
+      }, {
+        label: '区',
+        width: '120',
+        prop: "district",
+        type: 'text'
+      }, {
+        label: '提货地址',
+        width: '180',
+        prop: "address",
+        type: 'text'
+      }, {
+        label: '提货电话',
+        width: '130',
+        prop: "phone",
+        type: 'number'
+      }, {
+        label: '物流费用',
+        width: '120',
+        prop: "price",
+        type: 'number'
+      }, {
+        label: '重量单价',
+        width: '120',
+        prop: "weight_univalent",
+        type: 'number'
+      }, {
+        label: '到达天数',
+        width: '120',
+        prop: "expected_days",
+        type: 'number'
+      }, {
+        label: '直达(中转)',
+        width: '120',
+        prop: "route",
+        type: 'select_def'
+      }, {
+        label: '包邮',
+        width: '90',
+        prop: "is_free_shipping",
+        type: 'checkbox'
+      }, {
+        label: '备注',
+        width: '120',
+        prop: "remark",
+        type: 'textarea'
+      }],
+      /*新增*/
+      addLogicMask: false,
+      moreForms: true,
+      addLogicForm: {
+        code: '',
+        name: '',
+        report_id: '',
+        expected_days: '',
+        phone: '',
+        address: '',
+        freight_type_id: '',
+        remark: '',
+        status: true
+      },
+      addLogicRules: {
+        code: [{ required: true, message: '请输入物流代码', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入物流名称', trigger: 'blur' }],
+        report_id: [{ required: true, message: '请选择报表格式', trigger: 'blur' }],
+        expected_days: [{ required: true, message: '请输入预计天数', trigger: 'blur' }],
+        phone: [{ required: true, message: '请输入物流电话', trigger: 'blur' }],
+        address: [{ required: true, message: '请输入物流地址', trigger: 'blur' }],
+        freight_type_id: [{ required: true, message: '请选择运费类型', trigger: 'blur' }]
+      },
+      addLogicHead: [{
+        label: '物流代码',
+        prop: 'code',
+        holder: '请输入物流代码',
+        type: 'text'
+      }, {
+        label: '物流名称',
+        prop: 'name',
+        holder: '请输入物流名称',
+        type: 'text'
+      }, {
+        label: '报表格式',
+        prop: 'report_id',
+        holder: '请选择报表格式',
+        type: 'select',
+        stateVal: 'printreports'
+      }, {
+        label: '运费类型',
+        prop: 'freight_type_id',
+        holder: '请输入运费类型',
+        type: 'select',
+        stateVal: 'freighttypes'
+      }, {
+        label: '预计天数',
+        prop: 'expected_days',
+        holder: '请输入预计天数',
+        type: 'number'
+      }, {
+        label: '物流电话',
+        prop: 'phone',
+        holder: '请输入物流电话',
+        type: 'number'
+      }, {
+        label: '物流地址',
+        prop: 'address',
+        holder: '请输入物流地址',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择是否启用',
+        type: 'checkbox'
+      }, {
+        label: '备注',
+        prop: 'remark',
+        holder: '请输入备注',
+        type: 'textarea'
+      }],
+      addCityVal: [{
+        provinces: [],
+        province: '',
+        city: '',
+        district: '',
+        address: '',
+        phone: '',
+        price: '',
+        weight_univalent: '',
+        expected_days: '',
+        route: '',
+        is_free_shipping: false,
+        remark: ''
+      }],
+      addCityHead: [{
+        label: '省市区',
+        prop: 'provinces',
+        width: '220',
+        holder: '请输入所在省',
+        type: 'cascader'
+      }, {
+        label: '提货地址',
+        prop: 'address',
+        width: '160',
+        holder: '请输入提货地址',
+        type: 'text'
+      }, {
+        label: '提货电话',
+        prop: 'phone',
+        width: '130',
+        holder: '请输入提货电话',
+        type: 'number'
+      }, {
+        label: '物流费用',
+        prop: 'price',
+        width: '120',
+        holder: '请输入物流费用',
+        type: 'number'
+      }, {
+        label: '重量单价',
+        width: '120',
+        prop: 'weight_univalent',
+        holder: '请输入重量单价',
+        type: 'number'
+      }, {
+        label: '城市到达天数',
+        prop: 'expected_days',
+        width: '140',
+        holder: '请输入城市到达天数',
+        type: 'number'
+      }, {
+        label: '中转或直达',
+        prop: 'route',
+        width: '130',
+        holder: '请选择中转或直达',
+        type: 'selects'
+      }, {
+        label: '包邮',
+        width: '90',
+        prop: 'is_free_shipping',
+        holder: '请选择是否包邮',
+        type: 'checkbox'
+      }, {
+        label: '备注',
+        width: '150',
+        prop: 'remark',
+        holder: '请输入备注',
+        type: 'textarea'
+      }],
+      transfers: [{ label: '中转', value: '0' }, { label: '直达', value: '1' }],
+      options: __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["regionDataPlus"],
+      cityIndex: '',
+      /*修改*/
+      updateLogicMask: false,
+      updateLogicForm: {},
+      updateCityVal: [],
+      updateIndex: '',
+      /*删除*/
+      showDel: false,
+      delUrl: '',
+      delId: '',
+      delBatchUrl: '',
+      ids: [],
+      currentId: ''
+    };
+  },
+
+  computed: {
+    resData: {
+      get: function get() {
+        return this.$store.state.responseData;
+      },
+      set: function set() {}
+    },
+    urls: {
+      get: function get() {
+        return this.$store.state.urls;
+      },
+      set: function set() {}
+    }
+  },
+  methods: {
+    test: function test() {
+      console.log(1);
+    },
+
+    /*获取数据*/
+    fetchLogData: function fetchLogData() {
+      var _this = this;
+
+      this.$fetch(this.urls.logistics, { include: 'cityInfos.logistics,printReport,freightType' }).then(function (res) {
+        _this.logisticsData = res.data;
+        _this.cityData = res.data[0] ? res.data[0]['cityInfos'].data : [];
+        _this.loading = false;
+        var pg = res.meta.pagination;
+        _this.$store.dispatch('currentPage', pg.current_page);
+        _this.$store.commit('PER_PAGE', pg.per_page);
+        _this.$store.commit('PAGE_TOTAL', pg.total);
+        _this.$store.dispatch('printreports', '/printreports');
+        _this.$store.dispatch('freighttypes', '/freighttypes');
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this.$message.error({
+            message: str
+          });
+        }
+      });
+    },
+    logicRowClick: function logicRowClick(row) {
+      this.cityData = row['cityInfos'].data;
+      this.logicRow = row;
+    },
+
+    /*新增*/
+    addLogic: function addLogic() {
+      this.addLogicMask = true;
+      this.cityIndex = 'index0';
+      Object.assign(this.addLogicForm, this.$options.data().addLogicForm);
+      Object.assign(this.addCityVal, this.$options.data().addCityVal);
+    },
+    addCityCName: function addCityCName(_ref) {
+      var row = _ref.row,
+          rowIndex = _ref.rowIndex;
+      row.index = rowIndex;
+    },
+    addCityRClick: function addCityRClick(row) {
+      this.cityIndex = 'index' + row.index;
+    },
+    addCityDtl: function addCityDtl(index) {
+      this.addCityVal.splice(index, 1);
+      this.$message({
+        message: '删除城市信息成功',
+        type: 'success'
+      });
+    },
+    addCityInfo: function addCityInfo() {
+      var cityInfo = {
+        provinces: [],
+        province: '',
+        city: '',
+        district: '',
+        address: '',
+        phone: '',
+        price: '',
+        weight_univalent: '',
+        expected_days: '',
+        route: '',
+        is_free_shipping: false,
+        remark: ''
+      };
+      if (this.addLogicMask) {
+        this.addCityVal.push(cityInfo);
+        this.cityIndex = 'index' + (this.addCityVal.length - 1);
+      } else {
+        this.updateCityVal.push(cityInfo);
+        this.updateIndex = 'index' + (this.updateCityVal.length - 1);
+      }
+    },
+    addConfirm: function addConfirm() {
+      var _this2 = this;
+
+      this.addCityVal.map(function (item, index) {
+        if (item.provinces.length > 0) {
+          item.province = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[0]];
+          item.city = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[1]];
+          item.district = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[2]];
+        }
+        for (var i in item) {
+          if (item[i] === '') {
+            _this2.addCityVal.splice(index, 1);
+          }
+        }
+      });
+      var data = {
+        code: this.addLogicForm.code,
+        name: this.addLogicForm.name,
+        report_id: this.addLogicForm.report_id,
+        expected_days: this.addLogicForm.expected_days,
+        phone: this.addLogicForm.phone,
+        address: this.addLogicForm.address,
+        freight_type_id: this.addLogicForm.freight_type_id,
+        remark: this.addLogicForm.remark,
+        status: this.addLogicForm.status,
+        city_infos: this.addCityVal
+      };
+      this.$post(this.urls.logistics, data).then(function () {
+        _this2.addLogicMask = false;
+        _this2.refresh();
+        _this2.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this2.$message.error(str);
+        }
+      });
+    },
+    addCancel: function addCancel() {
+      this.addLogicMask = false;
+      this.$message({
+        message: '取消添加',
+        type: 'info'
+      });
+    },
+
+    /*修改*/
+    updateLogic: function updateLogic() {
+      var _this3 = this;
+
+      this.updateLogicMask = true;
+      var id = void 0;
+      id = this.currentId ? this.currentId : this.logicRow.id;
+      this.$fetch(this.urls.logistics + '/' + id, { include: 'cityInfos.logistics,printReport,freightType' }).then(function (res) {
+        _this3.updateLogicForm = {
+          code: res.code,
+          name: res.name,
+          report_id: res.report_id,
+          expected_days: res.expected_days,
+          phone: res.phone,
+          address: res.address,
+          freight_type_id: res.freight_type_id,
+          remark: res.remark,
+          status: res.status
+        };
+        res['cityInfos']['data'].map(function (item) {
+          _this3.$set(item, 'provinces', [__WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["TextToCode"][item.province].code, __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["TextToCode"][item.province][item.city].code, __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["TextToCode"][item.province][item.city][item.district].code]);
+        });
+        _this3.updateCityVal = res['cityInfos']['data'];
+      }, function (err) {});
+    },
+    updateCityCName: function updateCityCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
+      row.index = rowIndex;
+    },
+    updateCityRClick: function updateCityRClick(row) {
+      this.updateIndex = 'index' + row.index;
+    },
+    updateCityDtl: function updateCityDtl(row, index) {
+      var _this4 = this;
+
+      if (row.id) {
+        this.$del(this.urls.cityinfos + '/' + row.id).then(function () {
+          _this4.updateCityVal.splice(index, 1);
+          _this4.$message({
+            message: '删除城市信息成功',
+            type: 'success'
+          });
+        });
+      } else {
+        this.updateCityVal.splice(index, 1);
+        this.$message({
+          message: '删除城市信息成功',
+          type: 'success'
+        });
+      }
+    },
+    updateConfirm: function updateConfirm() {
+      var _this5 = this;
+
+      var id = void 0;
+      id = this.currentId ? this.currentId : this.logicRow.id;
+      this.updateCityVal.map(function (item, index) {
+        item.province = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[0]];
+        item.city = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[1]];
+        item.district = __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__["CodeToText"][item.provinces[2]];
+        for (var i in item) {
+          if (item[i] === '') {
+            _this5.updateCityVal.splice(index, 1);
+          }
+        }
+      });
+      var data = {
+        code: this.updateLogicForm.code,
+        name: this.updateLogicForm.name,
+        report_id: this.updateLogicForm.report_id,
+        expected_days: this.updateLogicForm.expected_days,
+        phone: this.updateLogicForm.phone,
+        address: this.updateLogicForm.address,
+        freight_type_id: this.updateLogicForm.freight_type_id,
+        remark: this.updateLogicForm.remark,
+        status: this.updateLogicForm.status,
+        city_infos: this.updateCityVal
+      };
+      this.$patch(this.urls.logistics + '/' + id, data).then(function () {
+        _this5.updateLogicMask = false;
+        _this5.refresh();
+        _this5.$message({
+          message: '修改成功',
+          type: 'success'
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this5.$message.error(str);
+        }
+      });
+    },
+    updateCancel: function updateCancel() {
+      this.updateLogicMask = false;
+      this.$message({
+        message: '取消修改',
+        type: 'info'
+      });
+    },
+
+    /*分页*/
+    handlePagChg: function handlePagChg(page) {
+      var _this6 = this;
+
+      this.$fetch(this.urls.logistics + '?page=' + page, { include: 'cityInfos.logistics,printReport,freightType' }).then(function (res) {
+        _this6.logisticsData = res.data;
+      });
+    },
+
+    /*删除*/
+    delSingle: function delSingle(row, e) {
+      this.showDel = true;
+      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
+      this.delId = row.id;
+      this.delUrl = row['cityInfos'] ? this.urls.logistics : this.urls.cityinfos;
+    },
+    cancelD: function cancelD() {
+      this.showDel = false;
+      this.$message({
+        message: '取消删除',
+        type: 'info'
+      });
+    },
+    confirmD: function confirmD(url, id) {
+      var _this7 = this;
+
+      this.$del(url + '/' + id).then(function () {
+        _this7.$message({
+          message: '删除成功',
+          type: 'success'
+        });
+        _this7.showDel = false;
+        _this7.refresh();
+      }, function (err) {
+        if (err.response) {
+          _this7.showDel = false;
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this7.$message.error(str);
+        }
+      });
+    },
+
+    /*批量删除*/
+    handleSelectionChange: function handleSelectionChange(val) {
+      /*拿到id集合*/
+      var delArr = [];
+      val.forEach(function (selectedItem) {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(',');
+      /*拿到当前id*/
+      this.currentId = val.length > 0 ? val[val.length - 1].id : '';
+    },
+    delBatch: function delBatch() {
+      var _this8 = this;
+
+      if (this.ids.length === 0) {
+        this.$message({
+          message: '没有选中数据',
+          type: 'warning'
+        });
+      } else {
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function () {
+          _this8.$del(_this8.urls.logistics, { ids: _this8.ids }).then(function () {
+            _this8.$message({
+              message: '删除成功',
+              type: 'success'
+            });
+            _this8.refresh();
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(',');
+              _this8.$message.error(str);
+            }
+          });
+        }).catch(function () {
+          _this8.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      }
+    },
+
+    /*刷新*/
+    refresh: function refresh() {
+      this.loading = true;
+      this.fetchLogData();
+    }
+  },
+  mounted: function mounted() {
+    this.fetchLogData();
+    this.$store.dispatch('setOpt', this.newOpt);
+    var that = this;
+    $(window).resize(function () {
+      that.$store.dispatch('setOpt', that.newOpt);
+    });
+  }
+});
+
+/***/ }),
+
+/***/ 647:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

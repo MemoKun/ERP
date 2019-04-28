@@ -64,16 +64,15 @@ class AfterCompensationController extends Controller
     public function searchSecTreated()
     {
         $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_SEC_AUDIT]);
-        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);   
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
     /*
-     *获取售后赔偿订单 
+     *获取售后赔偿订单
     */
     public function index(AfterCompensationRequest $request)
     {
-        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_ONE_AUDIT]);
-        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, self::PerPage);
     }
 
     /**

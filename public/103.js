@@ -1,14 +1,14 @@
 webpackJsonp([103],{
 
-/***/ 497:
+/***/ 500:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(679)
+var __vue_script__ = __webpack_require__(686)
 /* template */
-var __vue_template__ = __webpack_require__(680)
+var __vue_template__ = __webpack_require__(687)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/ReviewConfMag.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/accountType.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-eb87bea4", Component.options)
+    hotAPI.createRecord("data-v-16860a7e", Component.options)
   } else {
-    hotAPI.reload("data-v-eb87bea4", Component.options)
+    hotAPI.reload("data-v-16860a7e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 679:
+/***/ 686:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58,65 +58,668 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      //操作
       newOpt: [{
-        cnt: '修改',
-        icon: 'bf-change',
-        ent: this.test
+        cnt: '新增',
+        icon: 'bf-add',
+        ent: this.addNew
+      }, {
+        cnt: '删除',
+        icon: 'bf-del',
+        ent: this.doDelMore
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
-        ent: this.test
-      }]
+        ent: this.refresh
+      }],
+      //表格
+      tableKey: [[{
+        label: '类型',
+        width: '280',
+        prop: "name",
+        holder: '输入类型',
+        type: 'text'
+      }, {
+        label: '状态',
+        width: '280',
+        prop: "status",
+        holder: '状态',
+        type: 'select_stu',
+        doSort: true
+      }]],
+      url: ['/acctypes'],
+      title: ['新增记账类型'],
+      ruleForm: [{
+        name: '',
+        status: '1'
+      }],
+      rules: [{
+        name: [{ required: true, message: '请输入标记代码', trigger: 'blur' }]
+      }],
+      addArr: [[{
+        label: '类型',
+        prop: 'name',
+        holder: '请输入类型',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
+        type: 'select_stu'
+      }]]
     };
   },
 
   methods: {
-    test: function test() {
-      console.log(1);
+    //新增
+    addNew: function addNew() {
+      this.$store.dispatch('setShowAdd', true);
+    },
+    edit: function edit(row) {
+      var obj = {
+        id: row.id,
+        name: row.name,
+        status: row.status
+      };
+      this.$store.dispatch('setRow', row);
+      this.$store.dispatch('setUrl', this.url[0] + "/");
+      this.$store.dispatch('doEdit', obj);
+    },
+    doDelMore: function doDelMore() {
+      this.$refs.tabs.$emit('delMore');
+    },
+    refresh: function refresh() {
+      this.$store.dispatch('refresh');
     }
   },
   mounted: function mounted() {
-    this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit('change', this.newOpt);
+    this.$store.dispatch('setTabs', false);
+    this.$store.dispatch('setOpt', this.newOpt);
     var that = this;
     $(window).resize(function () {
-      return function () {
-        that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit('change', that.newOpt);
-      }();
+      that.$store.dispatch('setOpt', that.newOpt);
     });
   }
 });
 
 /***/ }),
 
-/***/ 680:
+/***/ 687:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c("v-tabs", {
+        ref: "tabs",
+        attrs: {
+          "table-key": _vm.tableKey,
+          url: _vm.url,
+          title: _vm.title,
+          "rule-form": _vm.ruleForm,
+          rules: _vm.rules,
+          "add-arr": _vm.addArr
+        },
+        on: { edit: _vm.edit }
+      })
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("复检配置管理")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-eb87bea4", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-16860a7e", module.exports)
   }
 }
 

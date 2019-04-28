@@ -1,14 +1,14 @@
 webpackJsonp([40],{
 
-/***/ 475:
+/***/ 471:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(626)
+var __vue_script__ = __webpack_require__(628)
 /* template */
-var __vue_template__ = __webpack_require__(627)
+var __vue_template__ = __webpack_require__(629)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/refund/auditProofread.vue"
+Component.options.__file = "resources/assets/js/views/refund/customerReApplication.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-27965fda", Component.options)
+    hotAPI.createRecord("data-v-38f0efbb", Component.options)
   } else {
-    hotAPI.reload("data-v-27965fda", Component.options)
+    hotAPI.reload("data-v-38f0efbb", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,11 +48,191 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 626:
+/***/ 628:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -322,6 +502,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             newOpt: [{
+                cnt: '新增',
+                icon: 'bf-add',
+                ent: this.addRefund,
+                nClick: false
+            }, {
+                cnt: '修改',
+                icon: 'bf-change',
+                ent: this.test,
+                nClick: false
+            }, {
+                cnt: '删除',
+                icon: 'bf-del',
+                ent: this.test,
+                nClick: false
+            }, {
                 cnt: '锁定',
                 icon: 'bf-lock',
                 ent: this.test,
@@ -339,6 +534,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }, {
                 cnt: '退审',
                 icon: 'bf-auditfaild',
+                ent: this.test,
+                nClick: false
+            }, {
+                cnt: '打印',
+                icon: 'bf-printer',
                 ent: this.test,
                 nClick: false
             }, {
@@ -361,7 +561,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             topActiveName: 'pending',
             btmActiveName: 'refundDetail',
-
             pending: {
                 table: [{
                     label: '系统单号',
@@ -712,7 +911,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 loading: true,
                 data: []
             },
-
             refundDetail: {
                 system_no: '',
                 refund_no: '',
@@ -734,6 +932,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 sale_remark: '',
                 financial_remark: '',
                 refund_remark: ''
+            },
+
+            newRefundDialog: {
+                show: false,
+                data: {
+                    refund_no: '',
+                    system_no: '',
+                    refund_func: '',
+                    create_at: '',
+                    timeout_at: '',
+                    shopName: '',
+                    refund_account: '',
+                    refund_type: '',
+                    bank_name: '',
+                    bank_address: '',
+                    refund_amount: '',
+                    trans_no: '',
+                    paipai_no: '',
+                    refund_reason: '',
+                    buyer_nick: '',
+                    buyer_name: '',
+                    pay_amount: '',
+                    pai_amount: '',
+                    pai_at: '',
+                    is_ship: false,
+                    principal: '',
+                    refund_mark: '',
+                    business_mark: '',
+
+                    data: [],
+                    tableHead: [{
+                        label: '退款原因',
+                        width: '120',
+                        prop: 'refund_reason',
+                        type: 'img'
+                    }, {
+                        label: '描述',
+                        width: '200',
+                        prop: 'description',
+                        type: 'text'
+                    }, {
+                        label: '金额',
+                        width: '120',
+                        prop: 'amount',
+                        type: 'text'
+                    }]
+                }
             }
 
         };
@@ -765,21 +1010,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             switch (this.topActiveName) {
                 case 'pending':
                     this.pending.loading = true;
-                    this.newOpt[0].nClick = false;
                     this.newOpt[1].nClick = true;
                     this.newOpt[2].nClick = true;
                     this.newOpt[3].nClick = false;
-                    this.newOpt[4].nClick = false;
+                    this.newOpt[4].nClick = true;
+                    this.newOpt[5].nClick = true;
+                    this.newOpt[6].nClick = true;
 
                     this.pending.loading = false;
                     break;
                 case 'solved':
                     this.solved.loading = true;
-                    this.newOpt[0].nClick = true;
                     this.newOpt[1].nClick = true;
                     this.newOpt[2].nClick = true;
                     this.newOpt[3].nClick = true;
-                    this.newOpt[4].nClick = false;
+                    this.newOpt[4].nClick = true;
+                    this.newOpt[5].nClick = true;
+                    this.newOpt[6].nClick = false;
 
                     this.solved.loading = false;
                     break;
@@ -800,7 +1047,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 case 'images':
 
                     break;
+                case 'refundReason':
+
+                    break;
             }
+        },
+        addRefund: function addRefund() {
+
+            this.newRefundDialog.show = true;
         }
     },
     watch: {
@@ -837,7 +1091,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 627:
+/***/ 629:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1058,7 +1312,7 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("退款时间")]),
+              _c("label", [_vm._v("还款时间")]),
               _vm._v(" "),
               _c("el-date-picker", {
                 attrs: {
@@ -1143,13 +1397,13 @@ var render = function() {
                                             "object" && item.nmProp
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                " +
+                                              "\n                                    " +
                                                 _vm._s(
                                                   scope.row[item.prop][
                                                     item.nmProp
                                                   ]
                                                 ) +
-                                                "\n                            "
+                                                "\n                                "
                                             )
                                           ])
                                         : _vm._e()
@@ -1213,7 +1467,7 @@ var render = function() {
                                       scope.row[item.prop]
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                " +
+                                              "\n                                    " +
                                                 _vm._s(
                                                   item.inProp
                                                     ? scope.row[item.prop][
@@ -1221,7 +1475,7 @@ var render = function() {
                                                       ]
                                                     : scope.row[item.prop]
                                                 ) +
-                                                "\n                            "
+                                                "\n                                "
                                             )
                                           ])
                                         : _vm._e()
@@ -1291,13 +1545,13 @@ var render = function() {
                                             "object" && item.nmProp
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                " +
+                                              "\n                                    " +
                                                 _vm._s(
                                                   scope.row[item.prop][
                                                     item.nmProp
                                                   ]
                                                 ) +
-                                                "\n                            "
+                                                "\n                                "
                                             )
                                           ])
                                         : _vm._e()
@@ -1361,7 +1615,7 @@ var render = function() {
                                       scope.row[item.prop]
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                " +
+                                              "\n                                    " +
                                                 _vm._s(
                                                   item.inProp
                                                     ? scope.row[item.prop][
@@ -1369,7 +1623,7 @@ var render = function() {
                                                       ]
                                                     : scope.row[item.prop]
                                                 ) +
-                                                "\n                            "
+                                                "\n                                "
                                             )
                                           ])
                                         : _vm._e()
@@ -1393,7 +1647,9 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("Pagination", { attrs: { "page-url": _vm.urls["auditProofread"] } }),
+      _c("Pagination", {
+        attrs: { "page-url": _vm.urls["customerReApplication"] }
+      }),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -2260,7 +2516,731 @@ var render = function() {
               ],
               1
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _c("el-tab-pane", {
+            attrs: { label: "退款原因", name: "refundReason" }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          class: { "more-forms": _vm.moreForms },
+          attrs: { title: "新增退款单", visible: _vm.newRefundDialog.show },
+          on: {
+            "update:visible": function($event) {
+              return _vm.$set(_vm.newRefundDialog, "show", $event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "search_box" }, [
+            _c("div", { staticClass: "searchBox cancelPur" }, [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("退款单号")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { placeholder: "系统自动生成", disabled: "" },
+                    model: {
+                      value: _vm.newRefundDialog.data.refund_no,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "refund_no", $$v)
+                      },
+                      expression: "newRefundDialog.data.refund_no"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("系统单号")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.system_no,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "system_no", $$v)
+                      },
+                      expression: "newRefundDialog.data.system_no"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("退款方式")]),
+                  _vm._v(" "),
+                  _c("el-select", {
+                    attrs: { clearable: "", placeholder: "请选择" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.handleQuery($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.newRefundDialog.data.refund_func,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "refund_func", $$v)
+                      },
+                      expression: "newRefundDialog.data.refund_func"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("建单时间")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { disabled: "" },
+                    model: {
+                      value: _vm.newRefundDialog.data.create_at,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "create_at", $$v)
+                      },
+                      expression: "newRefundDialog.data.create_at"
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "searchBox cancelPur" }, [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("超时时间")]),
+                  _vm._v(" "),
+                  _c("el-date-picker", {
+                    attrs: { type: "date" },
+                    model: {
+                      value: _vm.newRefundDialog.data.timeout_at,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "timeout_at", $$v)
+                      },
+                      expression: "newRefundDialog.data.timeout_at"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("所属店铺")]),
+                  _vm._v(" "),
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      nativeOn: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.handleQuery($event)
+                        }
+                      },
+                      model: {
+                        value: _vm.newRefundDialog.data.shopName,
+                        callback: function($$v) {
+                          _vm.$set(_vm.newRefundDialog.data, "shopName", $$v)
+                        },
+                        expression: "newRefundDialog.data.shopName"
+                      }
+                    },
+                    _vm._l(_vm.resData.shopNames, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.name, value: item.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("还款账号")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.refund_account,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.newRefundDialog.data,
+                          "refund_account",
+                          $$v
+                        )
+                      },
+                      expression: "newRefundDialog.data.refund_account"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("还款类型")]),
+                  _vm._v(" "),
+                  _c("el-select", {
+                    attrs: { clearable: "", placeholder: "请选择" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.handleQuery($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.newRefundDialog.data.refund_type,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "refund_type", $$v)
+                      },
+                      expression: "newRefundDialog.data.refund_type"
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "searchBox cancelPur" }, [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("开户银行")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.bank_name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "bank_name", $$v)
+                      },
+                      expression: "newRefundDialog.data.bank_name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("开户地址")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.bank_address,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "bank_address", $$v)
+                      },
+                      expression: "newRefundDialog.data.bank_address"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("还款金额")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.refund_amount,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "refund_amount", $$v)
+                      },
+                      expression: "newRefundDialog.data.refund_amount"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("交易单号")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.trans_no,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "trans_no", $$v)
+                      },
+                      expression: "newRefundDialog.data.trans_no"
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "searchBox cancelPur" }, [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("拍拍单号")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.paipai_no,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "paipai_no", $$v)
+                      },
+                      expression: "newRefundDialog.data.paipai_no"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("退款原因")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.refund_reason,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "refund_reason", $$v)
+                      },
+                      expression: "newRefundDialog.data.refund_reason"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("买家昵称")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.buyer_nick,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "buyer_nick", $$v)
+                      },
+                      expression: "newRefundDialog.data.buyer_nick"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("买家姓名")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.buyer_name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "buyer_name", $$v)
+                      },
+                      expression: "newRefundDialog.data.buyer_name"
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "searchBox cancelPur" }, [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("支付金额")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.pay_amount,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "pay_amount", $$v)
+                      },
+                      expression: "newRefundDialog.data.pay_amount"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("拍单金额")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.pai_amount,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "pai_amount", $$v)
+                      },
+                      expression: "newRefundDialog.data.pai_amount"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("拍单时间")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.pai_at,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "pai_at", $$v)
+                      },
+                      expression: "newRefundDialog.data.pai_at"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("是否发货")]),
+                  _vm._v(" "),
+                  _c("el-checkbox", {
+                    model: {
+                      value: _vm.newRefundDialog.data.is_ship,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "is_ship", $$v)
+                      },
+                      expression: "newRefundDialog.data.is_ship"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("责任人")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    model: {
+                      value: _vm.newRefundDialog.data.principal,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "principal", $$v)
+                      },
+                      expression: "newRefundDialog.data.principal"
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "searchBox cancelPur" }, [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("退款说明")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { type: "textarea" },
+                    model: {
+                      value: _vm.newRefundDialog.data.refund_mark,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "refund_mark", $$v)
+                      },
+                      expression: "newRefundDialog.data.refund_mark"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("业务备注")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { type: "textarea" },
+                    model: {
+                      value: _vm.newRefundDialog.data.business_mark,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newRefundDialog.data, "business_mark", $$v)
+                      },
+                      expression: "newRefundDialog.data.business_mark"
+                    }
+                  })
+                ],
+                1
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("退款原因")]),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: {
+                data: _vm.newRefundDialog.data.data,
+                fit: "",
+                height: "350",
+                "row-class-name": _vm.cancelRowCName
+              },
+              on: { "cell-click": _vm.addCellClick }
+            },
+            [
+              _vm._l(_vm.newRefundDialog.data.tableHead, function(item, index) {
+                return _c("el-table-column", {
+                  key: index,
+                  attrs: {
+                    label: item.label,
+                    align: "center",
+                    width: item.width
+                  },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.prop == "purchase_fabric"
+                              ? _c("span", [
+                                  _vm.addCurRow == "index" + scope.$index
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            on: {
+                                              input: function($event) {
+                                                return _vm.purQChg(scope.row)
+                                              }
+                                            },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                 " +
+                                            _vm._s(scope.row[item.prop]) +
+                                            "\n                             "
+                                        )
+                                      ])
+                                ])
+                              : _c("span", [
+                                  item.type == "img"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c(
+                                            "el-popover",
+                                            {
+                                              attrs: {
+                                                placement: "right",
+                                                trigger: "hover",
+                                                "popper-class": "picture_detail"
+                                              }
+                                            },
+                                            [
+                                              _c("img", {
+                                                attrs: {
+                                                  src: scope.row[item.prop]
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("img", {
+                                                attrs: {
+                                                  slot: "reference",
+                                                  src: scope.row[item.prop]
+                                                },
+                                                slot: "reference"
+                                              })
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "select"
+                                    ? _c(
+                                        "span",
+                                        _vm._l(
+                                          _vm.resData[item.stateVal],
+                                          function(list, index) {
+                                            return _c("span", { key: index }, [
+                                              list.id == scope.row[item.prop]
+                                                ? _c("span", [
+                                                    _vm._v(
+                                                      "\n                                            " +
+                                                        _vm._s(list.name) +
+                                                        "\n                                            "
+                                                    )
+                                                  ])
+                                                : _vm._e()
+                                            ])
+                                          }
+                                        ),
+                                        0
+                                      )
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                               " +
+                                            _vm._s(scope.row[item.prop]) +
+                                            "\n                          "
+                                        )
+                                      ])
+                                ])
+                          ]
+                        }
+                      }
+                    ],
+                    null,
+                    true
+                  )
+                })
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: {
+                  label: "操作",
+                  width: "90",
+                  align: "center",
+                  fixed: "right"
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "danger" },
+                            on: {
+                              click: function($event) {
+                                return _vm.delAddPur(scope.$index)
+                              }
+                            }
+                          },
+                          [_vm._v("删除")]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "dialog-footer", staticStyle: { float: "right" } },
+            [
+              _c("el-button", { attrs: { type: "primary" } }, [
+                _vm._v("增加一行")
+              ]),
+              _vm._v(" "),
+              _c("el-button", [_vm._v("删除一行")])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.confirmAdd } },
+                [_vm._v("确定")]
+              ),
+              _vm._v(" "),
+              _c("el-button", { on: { click: _vm.cancelAdd } }, [
+                _vm._v("取消")
+              ])
+            ],
+            1
+          )
         ],
         1
       )
@@ -2274,7 +3254,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-27965fda", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-38f0efbb", module.exports)
   }
 }
 

@@ -7,7 +7,10 @@ use League\Fractal\TransformerAbstract;
 
 class AfterCompensationTransformer extends TransformerAbstract
 {
-    
+    protected $availableIncludes = [
+        'feeType','problemProduct'
+    ];
+
     public function transform(AfterCompensationOrder $afterCompensationOrder)
     {
         return [
@@ -33,7 +36,7 @@ class AfterCompensationTransformer extends TransformerAbstract
             'order_stuff' =>$afterCompensationOrder->order_stuff,
             'payee' =>$afterCompensationOrder->payee,
             'payee_account' =>$afterCompensationOrder->payee_account,
-            'problem_goods' =>$afterCompensationOrder->problem_goods,
+            'problem_product_id' =>$afterCompensationOrder->problem_product_id,
             'problem_description' =>$afterCompensationOrder->problem_description,
             'note' =>$afterCompensationOrder->note,
             'refuse_reason' =>$afterCompensationOrder->refuse_reason,
@@ -46,6 +49,17 @@ class AfterCompensationTransformer extends TransformerAbstract
             'updated_at' =>optional($afterCompensationOrder->updated_at)->toDateString()
         ];
     }
+    
+    public function includeFeeType(AfterCompensationOrder $afterCompensationOrder)
+    {
+        return $this->collection($afterCompensationOrder->feeType, new FeeTypeTransformer());
+    }
+
+    public function includeProblemProduct(AfterCompensationOrder $afterCompensationOrder)
+    {
+        return $this->collection($afterCompensationOrder->problemProduct,new ProblemProductTransformer());
+    }
+   
 
 
 }

@@ -58,7 +58,9 @@ const urls= {
     userastwarehouse:'/userastwarehouse',
     printerconf:'/printerconf',
     negativeinvconf:'/negativeinvconf',
+    problemproduct:'/problemproduct',
     roles:'/roles',
+    problemProduct:'problemProduct',
 
     me:'/me',
     current:'/current',

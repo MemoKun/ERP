@@ -1,14 +1,14 @@
 webpackJsonp([41],{
 
-/***/ 472:
+/***/ 475:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(620)
+var __vue_script__ = __webpack_require__(636)
 /* template */
-var __vue_template__ = __webpack_require__(621)
+var __vue_template__ = __webpack_require__(637)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/refund/afterSaleReAudit.vue"
+Component.options.__file = "resources/assets/js/views/refund/auditProofread.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7cc79279", Component.options)
+    hotAPI.createRecord("data-v-27965fda", Component.options)
   } else {
-    hotAPI.reload("data-v-7cc79279", Component.options)
+    hotAPI.reload("data-v-27965fda", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,17 +48,11 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 620:
+/***/ 636:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -328,16 +322,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             newOpt: [{
-                cnt: '修改',
-                icon: 'bf-change',
-                ent: this.test,
-                nClick: false
-            }, {
-                cnt: '删除',
-                icon: 'bf-del',
-                ent: this.test,
-                nClick: false
-            }, {
                 cnt: '锁定',
                 icon: 'bf-lock',
                 ent: this.test,
@@ -345,11 +329,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }, {
                 cnt: '解锁',
                 icon: 'bf-delock',
-                ent: this.test,
-                nClick: false
-            }, {
-                cnt: '驳回',
-                icon: 'bf-reject',
                 ent: this.test,
                 nClick: false
             }, {
@@ -382,6 +361,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             topActiveName: 'pending',
             btmActiveName: 'refundDetail',
+
             pending: {
                 table: [{
                     label: '系统单号',
@@ -732,6 +712,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 loading: true,
                 data: []
             },
+
             refundDetail: {
                 system_no: '',
                 refund_no: '',
@@ -754,6 +735,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 financial_remark: '',
                 refund_remark: ''
             }
+
         };
     },
 
@@ -783,14 +765,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             switch (this.topActiveName) {
                 case 'pending':
                     this.pending.loading = true;
-                    this.newOpt[0].nClick = true;
+                    this.newOpt[0].nClick = false;
                     this.newOpt[1].nClick = true;
                     this.newOpt[2].nClick = true;
-                    this.newOpt[3].nClick = true;
-                    this.newOpt[4].nClick = true;
-                    this.newOpt[5].nClick = true;
-                    this.newOpt[6].nClick = true;
-                    this.newOpt[7].nClick = false;
+                    this.newOpt[3].nClick = false;
+                    this.newOpt[4].nClick = false;
 
                     this.pending.loading = false;
                     break;
@@ -801,9 +780,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.newOpt[2].nClick = true;
                     this.newOpt[3].nClick = true;
                     this.newOpt[4].nClick = false;
-                    this.newOpt[5].nClick = true;
-                    this.newOpt[6].nClick = false;
-                    this.newOpt[7].nClick = false;
 
                     this.solved.loading = false;
                     break;
@@ -822,9 +798,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                     break;
                 case 'images':
-
-                    break;
-                case 'refundReason':
 
                     break;
             }
@@ -864,7 +837,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 621:
+/***/ 637:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1085,7 +1058,7 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("还款时间")]),
+              _c("label", [_vm._v("退款时间")]),
               _vm._v(" "),
               _c("el-date-picker", {
                 attrs: {
@@ -1420,7 +1393,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("Pagination", { attrs: { "page-url": _vm.urls["afterSaleReAudit"] } }),
+      _c("Pagination", { attrs: { "page-url": _vm.urls["auditProofread"] } }),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -2287,11 +2260,7 @@ var render = function() {
               ],
               1
             )
-          ]),
-          _vm._v(" "),
-          _c("el-tab-pane", {
-            attrs: { label: "退款原因", name: "refundReason" }
-          })
+          ])
         ],
         1
       )
@@ -2305,7 +2274,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7cc79279", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-27965fda", module.exports)
   }
 }
 
