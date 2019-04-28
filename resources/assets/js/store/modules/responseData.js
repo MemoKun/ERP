@@ -82,6 +82,13 @@ const responseData= {
     FEETYPES:(state, arr)=>{
       state.feetypes = arr;
     },
+    //add by xuetao
+    AFTERSALESTATE:(state, arr)=>{
+      state.aftersalestate = arr;
+    },
+    AFTERSALETYPE:(state, arr)=>{
+      state.aftersaletype = arr;
+    },
   },
   actions: {
     feecates({commit}, url) {
