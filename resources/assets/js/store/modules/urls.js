@@ -72,7 +72,23 @@ const urls= {
     afterSaleReAudit: '/afterSaleReAudit',
     financialReAudit: '/financialReAudit',
     refundCenter: '/refundCenter',
-    auditProofread: '/auditProofread'
+    auditProofread: '/auditProofread',
+    
+    //add by MemoKun
+    dwnConf:'/dwnConf',
+    relateLogistics:'/relateLogistics',
+    relateLogisticsCompany:'/relateLogisticsCompany',
+    buyAndSendPro:'/buyAndSendPro',
+    buyAndSendGift:'/buyAndSendGift',
+    proBom:'/proBom',
+    proBomMaterial:'/proBomMaterial',
+    resupplieApplication:'/resupplieApplication',
+    packageType:'/packageType',
+    refundMethod:'/refundMethod',
+    resupplieCategory:'/resupplieCategory',
+    resupplieResponsible:'/resupplieResponsible',
+    resupplieOrderItem:'/resupplieOrderItem',
+    resupplieProblemProduct:'/resupplieProblemProduct',
   }
 };
 
