@@ -1056,6 +1056,327 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.problemProduct.destroybyids');
         $api->put('problemProduct/editstatus', 'ProblemProductController@editStatusByIds')
             ->name('api.problemProduct.editstatusbyids');
+<<<<<<< HEAD
+=======
+
+        //上传图片
+        $api->post('uploadimages', 'UploadImagesController@store')
+            ->name('api.uploadimages.store');
+        
+        //关联物流用户信息
+        $api->get('relateLogistics', 'RelateLogisticsController@index')
+            ->name('api.relateLogistics.index');
+        $api->post('relateLogistics', 'RelateLogisticsController@store')
+            ->name('api.relateLogistics.store');
+        $api->delete('relateLogistics/{relateLogistics}', 'RelateLogisticsController@destroy')
+            ->name('api.relateLogistics.destroy');
+        $api->delete('relateLogistics', 'RelateLogisticsController@destroybyids')
+            ->name('api.relateLogistics.destroybyids');
+        $api->get('relateLogistics/{relateLogistics}', 'RelateLogisticsController@show')
+            ->name('api.relateLogistics.show');
+        $api->patch('relateLogistics/{relateLogistics}', 'RelateLogisticsController@update')
+            ->name('api.relateLogistics.update');
+        $api->put('relateLogistics/editstatus', 'RelateLogisticsController@editStatusByIds')
+            ->name('api.relateLogistics.editstatusbyids');
+        //关联物流公司信息
+        $api->get('relateLogisticsCompany', 'RelateLogisticsCompanyController@index')
+            ->name('api.relateLogisticsCompany.index');
+        $api->delete('relateLogisticsCompany/{relateLogisticsCompany}', 'RelateLogisticsCompanyController@destroy')
+            ->name('api.relateLogisticsCompany.destroy');
+        $api->delete('relateLogisticsCompany', 'RelateLogisticsCompanyController@destroybyids')
+            ->name('api.relateLogisticsCompany.destroybyids');
+        $api->get('relateLogisticsCompany/{relateLogisticsCompany}', 'RelateLogisticsCompanyController@show')
+            ->name('api.relateLogisticsCompany.show');
+        $api->put('relateLogisticsCompany/editstatus', 'RelateLogisticsCompanyController@editStatusByIds')
+            ->name('api.relateLogisticsCompany.editstatusbyids');
+        //下载配置
+        $api->get('dwnConf', 'DownLoadConfController@index')
+            ->name('api.dwnConf.index');
+        $api->get('dwnConf/{dwnConf}', 'DownLoadConfController@show')
+            ->name('api.dwnConf.show');
+        $api->post('dwnConf', 'DownLoadConfController@store')
+            ->name('api.dwnConf.store');
+        $api->delete('dwnConf/{dwnConf}', 'DownLoadConfController@destroy')
+            ->name('api.dwnConf.destroy');
+        $api->delete('dwnConf', 'DownLoadConfController@destroybyIds')
+            ->name('api.dwnConf.destroybyIds');
+        $api->patch('dwnConf/{dwnConf}', 'DownLoadConfController@update')
+            ->name('api.dwnConf.update');
+        $api->put('dwnConf/editstatus', 'DownLoadConfController@editStatusByIds')
+            ->name('api.dwnConf.editstatusbyids');
+        //买就送商品
+        $api->get('buyAndSendPro', 'BuyAndSendProController@index')
+            ->name('api.buyAndSendPro.index');
+        $api->post('buyAndSendPro', 'BuyAndSendProController@store')
+            ->name('api.buyAndSendPro.store');
+        $api->delete('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@destroy')
+            ->name('api.buyAndSendPro.destroy');
+        $api->delete('buyAndSendPro', 'BuyAndSendProController@destroybyids')
+            ->name('api.buyAndSendPro.destroybyids');
+        $api->get('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@show')
+            ->name('api.buyAndSendPro.show');
+        $api->patch('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@update')
+            ->name('api.buyAndSendPro.update');
+        $api->put('buyAndSendPro/editstatus', 'BuyAndSendProController@editStatusByIds')
+            ->name('api.buyAndSendPro.editstatusbyids');
+        $api->put('buyAndSendPro/{buyAndSendPro}/audit', 'BuyAndSendProController@isAudit')
+            ->name('api.buyAndSendPro.isaudit');
+        $api->put('buyAndSendPro/{buyAndSendPro}/void', 'BuyAndSendProController@isVoid')
+            ->name('api.buyAndSendPro.isaudit');
+        //买就送赠品
+        $api->get('buyAndSendGift', 'BuyAndSendGiftController@index')
+            ->name('api.buyAndSendGift.index');
+        $api->delete('buyAndSendGift/{buyAndSendGift}', 'BuyAndSendGiftController@destroy')
+            ->name('api.buyAndSendGift.destroy');
+        $api->delete('buyAndSendGift', 'BuyAndSendGiftController@destroybyids')
+            ->name('api.buyAndSendGift.destroybyids');
+        $api->get('buyAndSendGift/{buyAndSendGift}', 'BuyAndSendGiftController@show')
+            ->name('api.buyAndSendGift.show');
+        $api->put('buyAndSendGift/editstatus', 'BuyAndSendGiftController@editStatusByIds')
+            ->name('api.buyAndSendGift.editstatusbyids');
+        //产品Bom
+        $api->get('proBom', 'ProBomController@index')
+            ->name('api.proBom.index');
+        $api->post('proBom', 'ProBomController@store')
+            ->name('api.proBom.store');
+        $api->delete('proBom/{proBom}', 'ProBomController@destroy')
+            ->name('api.proBom.destroy');
+        $api->delete('proBom', 'ProBomController@destroybyids')
+            ->name('api.proBom.destroybyids');
+        $api->get('proBom/{proBom}', 'ProBomController@show')
+            ->name('api.proBom.show');
+        $api->patch('proBom/{proBom}', 'ProBomController@update')
+            ->name('api.proBom.update');
+        $api->put('proBom/editstatus', 'ProBomController@editStatusByIds')
+            ->name('api.proBom.editstatusbyids');
+        //产品Bom原材料
+        $api->get('proBomMaterial', 'ProBomMaterialController@index')
+            ->name('api.proBomMaterial.index');
+        $api->delete('proBomMaterial/{proBomMaterial}', 'ProBomMaterialController@destroy')
+            ->name('api.proBomMaterial.destroy');
+        $api->delete('proBomMaterial', 'ProBomMaterialController@destroybyids')
+            ->name('api.proBomMaterial.destroybyids');
+        $api->get('proBomMaterial/{proBomMaterial}', 'ProBomMaterialController@show')
+            ->name('api.proBomMaterial.show');
+        $api->put('proBomMaterial/editstatus', 'ProBomMaterialController@editStatusByIds')
+            ->name('api.proBomMaterial.editstatusbyids');
+        //包件类型
+        $api->get('packageType', 'PackageTypeController@index')
+            ->name('api.packageType.index');
+        $api->get('packageType/{packageType}', 'PackageTypeController@show')
+            ->name('api.packageType.show');
+        $api->post('packageType', 'PackageTypeController@store')
+            ->name('api.packageType.store');
+        $api->patch('packageType/{packageType}', 'PackageTypeController@update')
+            ->name('api.packageType.update');
+        $api->delete('packageType/{packageType}', 'PackageTypeController@destroy')
+            ->name('api.packageType.destroy');
+        $api->delete('packageType', 'PackageTypeController@destroybyids')
+            ->name('api.packageType.destroybyids');
+        $api->put('packageType/editstatus', 'PackageTypeController@editStatusByIds')
+            ->name('api.packageType.editstatusbyids');
+        //补件类别
+        $api->get('resupplieCategory', 'ResupplieCategoryController@index')
+            ->name('api.resupplieCategory.index');
+        $api->get('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@show')
+            ->name('api.resupplieCategory.show');
+        $api->post('resupplieCategory', 'ResupplieCategoryController@store')
+            ->name('api.resupplieCategory.store');
+        $api->patch('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@update')
+            ->name('api.resupplieCategory.update');
+        $api->delete('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@destroy')
+            ->name('api.resupplieCategory.destroy');
+        $api->delete('resupplieCategory', 'ResupplieCategoryController@destroybyids')
+            ->name('api.resupplieCategory.destroybyids');
+        $api->put('resupplieCategory/editstatus', 'ResupplieCategoryController@editStatusByIds')
+            ->name('api.resupplieCategory.editstatusbyids');
+        //退款方式
+        $api->get('refundMethod', 'RefundMethodController@index')
+            ->name('api.refundMethod.index');
+        $api->get('refundMethod/{refundMethod}', 'RefundMethodController@show')
+            ->name('api.refundMethod.show');
+        $api->post('refundMethod', 'RefundMethodController@store')
+            ->name('api.refundMethod.store');
+        $api->patch('refundMethod/{refundMethod}', 'RefundMethodController@update')
+            ->name('api.refundMethod.update');
+        $api->delete('refundMethod/{refundMethod}', 'RefundMethodController@destroy')
+            ->name('api.refundMethod.destroy');
+        $api->delete('refundMethod', 'RefundMethodController@destroybyids')
+            ->name('api.refundMethod.destroybyids');
+        $api->put('refundMethod/editstatus', 'RefundMethodController@editStatusByIds')
+            ->name('api.refundMethod.editstatusbyids');
+        //补件单子单
+        $api->get('resupplieOrderItem', 'ResuppliedOrderItemController@index')
+            ->name('api.resupplieOrderItem.index');
+        $api->get('resupplieOrderItem/{resupplieOrderItem}', 'ResuppliedOrderItemController@show')
+            ->name('api.resupplieOrderItem.show');
+        $api->delete('resupplieOrderItem/{resupplieOrderItem}', 'ResuppliedOrderItemController@destroy')
+            ->name('api.resupplieOrderItem.destroy');
+        $api->delete('resupplieOrderItem', 'ResuppliedOrderItemController@destroybyids')
+            ->name('api.resupplieOrderItem.destroybyids');
+        $api->put('resupplieOrderItem/editstatus', 'ResuppliedOrderItemController@editStatusByIds')
+            ->name('api.resupplieOrderItem.editstatusbyids');
+        //补件问题产品
+        $api->get('resupplieProblemProduct', 'ResupplieProblemProductController@index')
+            ->name('api.resupplieProblemProduct.index');
+        $api->get('resupplieProblemProduct/{resupplieProblemProduct}', 'ResupplieProblemProductController@show')
+            ->name('api.resupplieProblemProduct.show');
+        $api->delete('resupplieProblemProduct/{resupplieProblemProduct}', 'ResupplieProblemProductController@destroy')
+            ->name('api.resupplieProblemProduct.destroy');
+        $api->delete('resupplieProblemProduct', 'ResupplieProblemProductController@destroybyids')
+            ->name('api.resupplieProblemProduct.destroybyids');
+        $api->put('resupplieProblemProduct/editstatus', 'ResupplieProblemProductController@editStatusByIds')
+            ->name('api.resupplieProblemProduct.editstatusbyids');
+        //补件责任方
+        $api->get('resupplieResponsible', 'ResupplieResponsibleController@index')
+            ->name('api.resupplieResponsible.index');
+        $api->get('resupplieResponsible/{resupplieResponsible}', 'ResupplieResponsibleController@show')
+            ->name('api.resupplieResponsible.show');
+        $api->delete('resupplieResponsible/{resupplieResponsible}', 'ResupplieResponsibleController@destroy')
+            ->name('api.resupplieResponsible.destroy');
+        $api->delete('resupplieResponsible', 'ResupplieResponsibleController@destroybyids')
+            ->name('api.resupplieResponsible.destroybyids');
+        $api->put('resupplieResponsible/editstatus', 'ResupplieResponsibleController@editStatusByIds')
+            ->name('api.resupplieResponsible.editstatusbyids');
+        //补件申请
+        $api->get('resupplieApplication', 'ResupplieApplicationController@index')
+            ->name('api.resupplieApplication.index');
+        $api->get('resupplieApplication/searchUnsubmited', 'ResupplieApplicationController@searchUnsubmited')
+            ->name('api.resupplieApplication.index');
+        $api->get('resupplieApplication/searchSubmited', 'ResupplieApplicationController@searchSubmited')
+            ->name('api.resupplieApplication.index');
+        
+        //产品映射
+        $api->get('promap', 'ProMapController@index')
+            ->name('api.promap.index');
+        $api->post('promap', 'ProMapController@store')
+            ->name('api.promap.store');
+        $api->get('promap/{promap}', 'ProMapController@show')
+            ->name('api.promap.show');
+        $api->patch('promap/{promap}', 'ProMapController@update')
+            ->name('api.promap.update');
+        $api->delete('promap/{promap}', 'ProMapController@destroy')
+            ->name('api.promap.destroy');
+        $api->delete('promap', 'ProMapController@destroybyids')
+            ->name('api.promap.destroybyids');
+        $api->put('promap/editstatus', 'ProMapController@editStatusByIds')
+            ->name('api.promap.editstatusbyids');
+        //最小包管理
+        $api->get('minipackage', 'MiniPackageController@index')
+            ->name('api.minipackage.index');
+        $api->post('minipackage', 'MiniPackageController@store')
+            ->name('api.minipackage.store');
+        $api->get('minipackage/{minipackage}', 'MiniPackageController@show')
+            ->name('api.minipackage.show');
+        $api->patch('minipackage/{minipackage}', 'MiniPackageController@update')
+            ->name('api.minipackage.update');
+        $api->delete('minipackage/{minipackage}', 'MiniPackageController@destroy')
+            ->name('api.minipackage.destroy');
+        $api->delete('minipackage', 'MiniPackageController@destroybyids')
+            ->name('api.minipackage.destroybyids');
+        $api->put('minipackage/editstatus', 'MiniPackageController@editStatusByIds')
+            ->name('api.minipackage.editstatusbyids');
+        //线下账户配置
+        $api->get('offlineaccountconf', 'OfflineAccountConfController@index')
+            ->name('api.offlineaccountconf.index');
+        $api->post('offlineaccountconf', 'OfflineAccountConfController@store')
+            ->name('api.offlineaccountconf.store');
+        $api->get('offlineaccountconf/{offlineaccountconf}', 'OfflineAccountConfController@show')
+            ->name('api.offlineaccountconf.show');
+        $api->patch('offlineaccountconf/{offlineaccountconf}', 'OfflineAccountConfController@update')
+            ->name('api.offlineaccountconf.update');
+        $api->delete('offlineaccountconf/{offlineaccountconf}', 'OfflineAccountConfController@destroy')
+            ->name('api.offlineaccountconf.destroy');
+        $api->delete('offlineaccountconf', 'OfflineAccountConfController@destroybyids')
+            ->name('api.offlineaccountconf.destroybyids');
+        $api->put('offlineaccountconf/editstatus', 'OfflineAccountConfController@editStatusByIds')
+            ->name('api.offlineaccountconf.editstatusbyids');
+        //刷单锁单配置
+        $api->get('brushlockconf', 'BrushLockConfController@index')
+            ->name('api.brushlockconf.index');
+        $api->post('brushlockconf', 'BrushLockConfController@store')
+            ->name('api.brushlockconf.store');
+        $api->get('brushlockconf/{brushlockconf}', 'BrushLockConfController@show')
+            ->name('api.brushlockconf.show');
+        $api->patch('brushlockconf/{brushlockconf}', 'BrushLockConfController@update')
+            ->name('api.brushlockconf.update');
+        $api->delete('brushlockconf/{brushlockconf}', 'BrushLockConfController@destroy')
+            ->name('api.brushlockconf.destroy');
+        $api->delete('brushlockconf', 'BrushLockConfController@destroybyids')
+            ->name('api.brushlockconf.destroybyids');
+        $api->put('brushlockconf/editstatus', 'BrushLockConfController@editStatusByIds')
+            ->name('api.brushlockconf.editstatusbyids');
+        //售后状态
+        $api->get('aftersalestate', 'AfterSaleStateController@index')
+            ->name('api.aftersalestate.index');
+        $api->get('aftersalestate/{state}', 'AfterSaleStateController@show')
+            ->name('api.aftersalestate.show');
+        $api->post('aftersalestate', 'AfterSaleStateController@store')
+            ->name('api.aftersalestate.store');
+        $api->patch('aftersalestate/{state}', 'AfterSaleStateController@update')
+            ->name('api.aftersalestate.update');
+        $api->delete('aftersalestate/{state}', 'AfterSaleStateController@destroy')
+            ->name('api.aftersalestate.destroy');
+        $api->delete('aftersalestate', 'AfterSaleStateController@destroybyids')
+            ->name('api.aftersalestate.destroybyids');
+        $api->put('aftersalestate/editstatus', 'AfterSaleStateController@editStatusByIds')
+            ->name('api.aftersalestate.editstatusbyids');
+        //售后类型
+        $api->get('aftersaletype', 'AfterSaleTypeController@index')
+            ->name('api.aftersaletype.index');
+        $api->get('aftersaletype/{type}', 'AfterSaleTypeController@show')
+            ->name('api.aftersaletype.show');
+        $api->post('aftersaletype', 'AfterSaleTypeController@store')
+            ->name('api.aftersaletype.store');
+        $api->patch('aftersaletype/{type}', 'AfterSaleTypeController@update')
+            ->name('api.aftersaletype.update');
+        $api->delete('aftersaletype/{type}', 'AfterSaleTypeController@destroy')
+            ->name('api.aftersaletype.destroy');
+        $api->delete('aftersaletype', 'AfterSaleTypeController@destroybyids')
+            ->name('api.aftersaletype.destroybyids');
+        $api->put('aftersaletype/editstatus', 'AfterSaleTypeController@editStatusByIds')
+            ->name('api.aftersaletype.editstatusbyids');
+        //售后管理
+        $api->get('aftersale', 'AfterSaleController@index')
+            ->name('api.aftersale.index');
+        $api->post('aftersale', 'AfterSaleController@store')
+            ->name('api.aftersale.store');
+        $api->get('aftersale/search', 'AfterSaleController@searchAfterSale')
+            ->name('api.aftersale.searchaftersale');
+        $api->get('aftersale/{product}', 'AfterSaleController@show')
+            ->name('api.aftersale.show');
+        $api->patch('aftersale/{product}', 'AfterSaleController@update')
+            ->name('api.aftersale.update');
+        $api->delete('aftersale/{product}', 'AfterSaleController@destroy')
+            ->name('api.aftersale.destroy');
+        $api->delete('aftersale', 'AfterSaleController@destroybyids')
+            ->name('api.aftersale.destroybyids');
+        $api->put('aftersale/editstatus', 'AfterSaleController@editStatusByIds')
+            ->name('api.aftersale.editstatusbyids');
+        $api->put('aftersale/{product}/lockorunlock', 'AfterSaleController@isLockOrUnlock')
+            ->name('api.aftersale.islockorunlock');
+        $api->put('aftersale/{product}/audit', 'AfterSaleController@isAudit')
+            ->name('api.aftersale.isaudit');
+        $api->put('aftersale/{product}/unaudit', 'AfterSaleController@isUnAudit')
+            ->name('api.aftersale.isunaudit');
+        // 售后进度
+        $api->get('aftersaleschedule', 'AfterSaleScheduleController@index')
+            ->name('api.aftersaleschedule.index');
+        $api->get('aftersaleschedule/{aftersaleschedule}', 'AfterSaleScheduleController@show')
+            ->name('api.aftersaleschedule.show');
+        $api->post('aftersaleschedule', 'AfterSaleScheduleController@store')
+            ->name('api.aftersaleschedule.store');
+        $api->delete('aftersaleschedule/{aftersaleschedule}', 'AfterSaleScheduleController@destroy')
+            ->name('api.aftersaleschedule.destroy');
+        $api->delete('aftersaleschedule', 'AfterSaleScheduleController@destroybyids')
+            ->name('api.aftersaleschedule.destroybyids');
+        $api->put('aftersaleschedule/editstatus', 'AfterSaleScheduleController@editStatusByIds')
+            ->name('api.aftersaleschedule.editstatusbyids');  
+        
+        //退货子单
+        $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
+            ->name('api.returnorderitems.destroy');
+>>>>>>> yylou15-master
 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')

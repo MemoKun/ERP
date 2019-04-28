@@ -51,5 +51,8 @@ class Logistics extends Model
         return $this->hasMany(Order::class,'logistics_id');
     }
 
-
+    public function resupplieOrder()
+    {
+        return $this->hasMany(ResupplieOrder::class,'logistics_id');
+    }
 }
