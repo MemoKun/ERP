@@ -176,11 +176,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -305,7 +300,7 @@ var render = function() {
           }
         },
         [
-          _c("h3", { staticClass: "title" }, [_vm._v("简艺家居ERP系统")]),
+          _c("h1", { staticClass: "title" }, [_vm._v("简艺家居ERP系统")]),
           _vm._v(" "),
           _c(
             "el-form-item",
@@ -322,6 +317,7 @@ var render = function() {
                 attrs: {
                   name: "username",
                   type: "text",
+                  color: "white",
                   autoComplete: "on",
                   placeholder: "请输入用户名"
                 },
@@ -420,7 +416,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("\n                登录\n            ")]
+                [_vm._v("登录")]
               )
             ],
             1

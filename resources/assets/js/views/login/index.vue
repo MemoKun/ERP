@@ -1,39 +1,34 @@
 <template>
-    <div class="login-container" :style="backgroundDiv">
-        <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm"
-                 label-position="left">
-            <h3 class="title">简艺家居ERP系统</h3>
-            <el-form-item prop="username">
+  <div class="login-container" :style="backgroundDiv">
+    <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
+      <h1 class="title">简艺家居ERP系统</h1>
+      <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user"/>
         </span>
-                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入用户名"/>
-            </el-form-item>
-
-            <el-form-item prop="password">
+        <el-input name="username" type="text" color="white" v-model="loginForm.username" autoComplete="on" placeholder="请输入用户名"/>
+      </el-form-item>
+      <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password"></svg-icon>
         </span>
-                <el-input name="password" :type="pwdType" v-model="loginForm.password"
-                          placeholder="请输入密码"></el-input>
-                <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye"/></span>
-            </el-form-item>
-            <el-form-item prop="code">
+        <el-input name="password" :type="pwdType" v-model="loginForm.password" placeholder="请输入密码"></el-input>
+        <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye"/></span>
+      </el-form-item>
+      <el-form-item prop="code">
         <span class="svg-container">
           <i class="iconfont bf-yzm"></i>
         </span>
-                <el-input name="yzCode" type="text" v-model="loginForm.code" placeholder="请输入验证码" id="yzCode"></el-input>
-                <span class="show-pwd yzc" @click="this.getCode">
-           <img :src="src" alt="">
+        <el-input name="yzCode" type="text" v-model="loginForm.code" placeholder="请输入验证码" id="yzCode"></el-input>
+        <span class="show-pwd yzc" @click="this.getCode">
+        <img :src="src" alt="">
         </span>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" style="width:100%;" :loading="loading" @click="submitForm('loginForm')">
-                    登录
-                </el-button>
-            </el-form-item>
-        </el-form>
-    </div>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" style="width:100%;" :loading="loading" @click="submitForm('loginForm')">登录</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
