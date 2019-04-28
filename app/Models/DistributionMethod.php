@@ -21,4 +21,9 @@ class DistributionMethod extends Model
     public function orders(){
         return $this->hasMany(Order::class,'distribution_methods_id');
     }
+    
+    public function resupplieOrder()
+    {
+        return $this->hasMany(ResupplieOrder::class,'distribution_methods_id');
+    }
 }

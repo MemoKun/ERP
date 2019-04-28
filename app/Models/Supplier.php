@@ -39,4 +39,9 @@ class Supplier extends Model
     {
         return $this->hasMany(PurchaseReturnDetail::class,'suppliers_id');
     }
+
+    public function resupplieOrder()
+    {
+        return $this->hasMany(ResupplieOrder::class,'suppliers_id');
+    }
 }

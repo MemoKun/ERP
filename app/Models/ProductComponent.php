@@ -122,4 +122,9 @@ class ProductComponent extends Model
     {
         return $this->hasMany(PurchaseList::class);
     }
+
+    public function resupplieOrderItem()
+    {
+        return $this->hasMany(ResupplieOrderItem::class, 'product_components_id');
+    }
 }
