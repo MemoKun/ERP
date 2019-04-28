@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests\Api;
 
-
-class DistributionMethodRequest extends FormRequest
+class PackageTypeRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -37,8 +35,8 @@ class DistributionMethodRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => '配送方式名称必填',
-            'name.string' => '配送方式名称必须string类型',
+            'name.required' => '包件类型名称必填',
+            'name.string' => '包件类型名称必须string类型',
             'status.boolean' => '状态必须布尔类型',
             'status.required' => '状态必填',
         ];
@@ -47,10 +45,8 @@ class DistributionMethodRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => '配送方式名称',
-            'status' => '配送方式状态'
+            'name' => '包件类型名称',
+            'status' => '包件类型状态',
         ];
     }
-
-
 }
