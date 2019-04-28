@@ -1,51 +1,208 @@
 <template>
     <div>
-        <h2>补件中心</h2>
+      <!--筛选信息输入-->
+      <div>
+        <div class="searchBox" v-if="currentPage">
+            <span>
+                <label>单号</label>
+                <el-input v-model="searchBox.shopTitle" clearable class="half" @keyup.enter.native="getData"></el-input>
+            </span>
+            <span>
+                <label>买家昵称</label>
+                <el-input v-model="searchBox.shopTitle" clearable class="half" @keyup.enter.native="getData"></el-input>
+            </span>
+            <span>
+                <label>买家姓名</label>
+                <el-input v-model="searchBox.shopTitle" clearable class="half" @keyup.enter.native="getData"></el-input>
+            </span>
+            <span v-if="filterBox">
+              <label>补件类别</label>
+                <el-select v-model="searchBox.shopTitle" clearable placeholder="请选择">
+                  <el-option v-for="item in searchBox.shopTitle"
+                      :key="item.value" :label="item.label" :value="item.value">
+                   </el-option>
+               </el-select>            
+            </span>
+            <span v-else>
+               <el-button type="primary">筛选</el-button>
+               <el-button>重置</el-button>
+               <span @click="toggleShow">
+                 <el-button type="text">展开</el-button>
+                    <i class="el-icon-arrow-down" style="color:#409EFF"></i>
+                </span>
+            </span>
+        </div>
+        <div class="searchBox" v-show="filterBox">
+           <span>
+                <label>包含产品</label>
+                <el-input v-model="searchBox.shopTitle" clearable class="half" @keyup.enter.native="getData"></el-input>
+            </span>
+            <span>
+                <label>店铺昵称</label>
+                  <el-select v-model="searchBox.shopTitle" clearable placeholder="请选择">
+                    <el-option v-for="item in searchBox.shopTitle"
+                        :key="item.value" :label="item.label" :value="item.value">
+                    </el-option>
+                  </el-select>            
+            </span>
+            <span>
+                <label>省市区</label>
+                <el-cascader size="middle" :options="options" v-model="searchBox.shopTitle" ></el-cascader>
+            </span>
+        </div>
+        <div class="searchBox" v-show="filterBox">
+          <span style="text-align: left">
+            <label>审核时间</label>
+            <el-date-picker v-model="searchBox.shopTitle"
+             type="daterange" range-separator="至"
+             start-placeholder="开始日期" end-placeholder="结束日期">
+            </el-date-picker>
+          </span>
+          <span style="text-align: left">
+            <label>承诺时间</label>
+            <el-date-picker v-model="searchBox.shopTitle"
+             type="daterange" range-separator="至"
+             start-placeholder="开始日期" end-placeholder="结束日期">
+            </el-date-picker>
+          </span>
+          <span style="text-align: left">
+            <label>结算时间</label>
+            <el-date-picker v-model="searchBox.shopTitle"
+             type="daterange" range-separator="至"
+             start-placeholder="开始日期" end-placeholder="结束日期">
+            </el-date-picker>
+          </span>
+         </div>
+         <div class="searchBox" v-show="filterBox">
+           <span>
+                <label>标记名称</label>
+                <el-input v-model="searchBox.shopTitle" clearable class="half" @keyup.enter.native="getData"></el-input>
+            </span>
+            <span>
+              <label>不显示作废</label>
+              <el-checkbox></el-checkbox>
+            </span>
+            <div v-if="filterBox" style="text-align: right">
+            <el-button type="primary">筛选</el-button>
+              <el-button @click="resets">重置</el-button>
+                <span @click="toggleShow" style="display: inline">
+                  <el-button type="text">收起</el-button>
+                     <i class="el-icon-arrow-up" style="color:#409EFF"></i>
+                </span>
+           </div>
+         </div>
+      </div>
+      <!--补件单tab-->
+      <el-tabs>
+        <el-tab-pane label="所有补件单" name='0'>
+           <el-table :data="orderData">
+              <el-table-column v-for="item in orderHead" :label="item.label" 
+              :width="item.width" :key="item.label" align="center">
+
+              </el-table-column>
+            </el-table>
+        </el-tab-pane>
+      </el-tabs>
+      <!--页码-->
+      <!--补件信息tab-->
+      <el-tabs v-model="activeName" @tab-click="bottomTabsClick">
+        <el-tab-pane label="补件产品" name='0'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+            </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="问题产品" name='1'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+            </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="图片信息" name='2'>
+          图片信息
+        </el-tab-pane>
+        <el-tab-pane label="驳回原因" name='3'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+            </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="采购明细" name='4'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+            </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="操作记录" name='5'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+            </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="订单操作记录" name='6'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+            </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="补件进度" name='7'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+          </el-table>
+          <div style="text-align: right">
+              <el-button>新增进度</el-button>
+              <el-button>修改进度</el-button>
+              <el-button>删除进度</el-button>
+            </div>
+        </el-tab-pane>
+        <el-tab-pane label="内部便签" name='8'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+            </el-table>
+          <div style="text-align: right">
+              <el-button>修改内部便签</el-button>
+              <el-button>删除内部便签</el-button>
+           </div>
+        </el-tab-pane>
+        <el-tab-pane label="补件责任方" name='9'>补件责任方</el-tab-pane>
+        <el-tab-pane label="电子面单" name='10'>
+          <el-table :data="resupplyData">
+            <el-table-column v-for="item in resupplyHead[this.activeName]"
+            :label="item.label" align="center" :width="item.width" :key="item.label">
+
+            </el-table-column>
+            </el-table>
+          </el-tab-pane>        
+      </el-tabs>
     </div>
 </template>
 <script>
+  import {regionDataPlus} from'element-china-area-data'
   export default {
     data() {
       return {
         newOpt: [
           {
-            cnt: '修改',
-            icon: 'bf-change',
-            ent: this.test
-          },
-          {
-            cnt: '删除',
-            icon: 'bf-del',
-            ent: this.test
-          },
-          {
-            cnt: '提交',
-            icon: 'bf-submit',
-            ent: this.test
-          },
-          {
-            cnt: '驳回',
-            icon: 'bf-reject',
-            ent: this.test
-          },
-          {
-            cnt: '审核',
-            icon: 'bf-audit',
-            ent: this.test
-          },
-          {
             cnt: '退审',
             icon: 'bf-auditfaild',
-            ent: this.test
-          },
-          {
-            cnt: '发货',
-            icon: 'bf-deliver',
-            ent: this.test
-          },
-          {
-            cnt: '批量处理',
-            icon: 'bf-more',
             ent: this.test
           },
           {
@@ -54,27 +211,702 @@
             ent: this.test
           },
           {
-            cnt: '下载',
-            icon: 'bf-dwn',
-            ent: this.test
-          },
-          {
-            cnt: '还原',
-            icon: 'bf-reduce',
-            ent: this.test
+            cnt: '作废',
+            icon: 'bf-void',
+            ent: this.void,
           },
           {
             cnt: '刷新',
             icon: 'bf-refresh',
             ent: this.test
           }
+        ],
+        currentPage:true,
+        filterBox:false,
+        activeName:'0',
+        searchBox:{
+          buyNick:'',
+          shopTitle:''
+        },
+        options: regionDataPlus,
+        //补件单
+        orderData:[],
+        orderHead:[
+          {
+            label: '补件单号',
+            width: '220',
+            prop: 'resupply_order_no',
+            type: 'text',
+          },
+          {
+            label: '系统单号',
+            width: '220',
+            prop: 'system_order_no',
+            type: 'text',
+          },
+          {
+            label: '包件类型',
+            width: '140',
+            prop: 'package_type',
+            type: 'text',
+          },
+          {
+            label: '补件类别',
+            width: '140',
+            prop: 'resupply_category',
+            type: 'text',
+          },
+          {
+            label: '补件成本',
+            width: '130',
+            prop: 'resupply_cost',
+            type: 'number',
+          },
+          {
+            label: '补件金额',
+            width: '130',
+            prop: 'resupply_money',
+            type: 'number',
+          },
+          {
+            label: '补件原因',
+            width: '300',
+            prop: 'resupply_reason',
+            type: 'text',
+          },
+          {
+            label: '补件备注',
+            width: '300',
+            prop: 'resupply_remark',
+            type: 'text',
+          },
+          {
+            label: '补件责任方',
+            width: '160',
+            prop: 'resupply_responsibility',
+            type: 'text',
+          },
+          {
+            label: '原订单业务员',
+            width: '160',
+            prop: 'salesman',
+            type: 'text',
+          },
+           {
+            label: '店铺昵称',
+            width: '130',
+            prop: 'shop_nick',
+            type: 'text',
+          },
+          {
+            label: '买家昵称',
+            width: '130',
+            prop: 'member_nick',
+            type: 'text',
+          },
+          {
+            label: '店铺分组',
+            width: '140',
+            prop: 'shop_group',
+            type: 'text',
+          },
+          {
+            label: '买家姓名',
+            width: '130',
+            prop: 'member_name',
+            type: 'text',
+          },
+          {
+            label: '买家电话',
+            width: '160',
+            prop: 'member_phone',
+            type: 'text',
+          },
+          {
+            label: '供应商',
+            width: '130',
+            prop: 'supplier',
+            type: 'text',
+          },
+          {
+            label: '物流代码',
+            width: '140',
+            prop: 'logistic_code',
+            type: 'text',
+          },
+          {
+            label: '物流名称',
+            width: '140',
+            prop: 'logistic_name',
+            type: 'text',
+          },
+          {
+            label: '物流电话',
+            width: '140',
+            prop: 'logistic_phone',
+            type: 'text',
+          },
+          {
+            label: '快递单号',
+            width: '140',
+            prop: 'express_no',
+            type: 'text',
+          },
+          {
+            label: '配送方式',
+            width: '160',
+            prop: 'distribution_method',
+            type: 'text',
+          },
+          {
+            label: '运费类型',
+            width: '140',
+            prop: 'fee_type',
+            type: 'text',
+          },
+          {
+            label: '预计运费',
+            width: '130',
+            prop: 'estimated_fee',
+            type: 'number',
+          },
+          {
+            label: '物流赔偿费用',
+            width: '130',
+            prop: 'compensate_fee',
+            type: 'number',
+          },
+          {
+            label: '木架费用',
+            width: '130',
+            prop: 'wooden_frame_fee',
+            type: 'number',
+          },
+          {
+            label: '送装费用',
+            width: '130',
+            prop: 'load_fee',
+            type: 'number',
+          },
+          {
+            label: '承诺时间',
+            width: '140',
+            prop: 'promise_time',
+            type: 'text',
+          },
+          {
+            label: '补款方式',
+            width: '140',
+            prop: 'refund_method',
+            type: 'text',
+          },
+          {
+            label: '补款账号',
+            width: '160',
+            prop: 'refund_account',
+            type: 'text',
+          },
+          {
+            label: '开户银行',
+            width: '140',
+            prop: 'bank',
+            type: 'text',
+          },
+          {
+            label: '省',
+            width: '120',
+            prop: 'province',
+            type: 'text',
+          },
+          {
+            label: '市',
+            width: '120',
+            prop: 'city',
+            type: 'text',
+          },
+          {
+            label: '区',
+            width: '120',
+            prop: 'district',
+            type: 'text',
+          },
+          {
+            label: '详细地址',
+            width: '200',
+            prop: 'address',
+            type: 'text',
+          },
+          {
+            label: '标记名称',
+            width: '140',
+            prop: 'mark_name',
+            type: 'text'
+          },
+          {
+            label: '标记人',
+            width: '140',
+            prop: 'marker',
+            type: 'text',
+          },
+          {
+            label: '标记时间',
+            width: '140',
+            prop: 'mark_time',
+            type: 'text',
+          },
+          {
+            label: '创建人',
+            width: '140',
+            prop: 'creator',
+            type: 'text',
+          },
+          {
+            label: '提交人',
+            width: '140',
+            prop: 'submitter',
+            type: 'text',
+          },
+          {
+            label: '审核人',
+            width: '140',
+            prop: 'reviewer',
+            type: 'text',
+          },
+          {
+            label: '发货人',
+            width: '140',
+            prop: 'consigner',
+            type: 'text',
+          },
+          {
+            label: '发货仓库',
+            width: '160',
+            prop: 'consign_warehouse',
+            type: 'text',
+          },
+          {
+            label: '发货备注',
+            width: '200',
+            prop: 'consign_remark',
+            type: 'text',
+          },
+          {
+            label: '创建时间',
+            width: '140',
+            prop: 'created_at',
+            type: 'text',
+          },
+          {
+            label: '提交时间',
+            width: '140',
+            prop: 'submit_time',
+            type: 'text',
+          },
+          {
+            label: '审核时间',
+            width: '140',
+            prop: 'review_time',
+            type: 'text',
+          },
+          {
+            label: '结算时间',
+            width: '140',
+            prop: 'settle_time',
+            type: 'text',
+          },
+          {
+            label: '系统发货时间',
+            width: '140',
+            prop: 'system_consign_time',
+            type: 'text',
+          },
+          {
+            label: '实际发货时间',
+            width: '140',
+            prop: 'real_consign_time',
+            type: 'text',
+          },
+          {
+            label: '提交',
+            width: '140',
+            prop: 'is_submit',
+            type: 'checkbox',
+          },
+          {
+            label: '审核',
+            width: '140',
+            prop: 'is_review',
+            type: 'checkbox',
+          },
+          {
+            label: '结算',
+            width: '140',
+            prop: 'is_settle',
+            type: 'checkbox',
+          },
+          {
+            label: '发货',
+            width: '140',
+            prop: 'is_consign',
+            type: 'checkbox',
+          },
+          {
+            label: '作废',
+            width: '140',
+            prop: 'is_invalid',
+            type: 'checkbox',
+          },
+          {
+            label: '方数',
+            width: '140',
+            prop: 'square_number',
+            type: 'number',
+          },
+          {
+            label: '件数',
+            width: '140',
+            prop: 'number',
+            type: 'number',
+          },
+          {
+            label: '补件申请标记名称',
+            width: '200',
+            prop: 'application_mark_name',
+            type: 'text',
+          },
+          {
+            label: '补件审核标记名称',
+            width: '200',
+            prop: 'review_mark_name',
+            type: 'text',
+          },
+          {
+            label: '实际发货时间(跟单货审)',
+            width: '140',
+            prop: 'real_consign_time_1',
+            type: 'text',
+          },
+          {
+            label: '入库状态',
+            width: '140',
+            prop: 'warehousing_status',
+            type: 'text',
+          },
+          {
+            label: '采购',
+            width: '140',
+            prop: 'is_purchase',
+            type: 'checkbox',
+          },
+        ],
+        //补件信息
+        resupplyData:[],
+        resupplyHead:[
+          //补件产品，0
+          [
+            {
+               label: '规格图片',
+               width: '120',
+               prop: "img_url",
+               type: 'img'
+            },
+            {
+              label: '商品编码',
+              width: '160',
+              prop: "commodity_code",
+              type: 'text'
+            },
+            {
+              label: '规格编码',
+              width: '160',
+              prop: "spec_code",
+              type: 'text'
+            },
+            {
+              label: '商品简称',
+              width: '160',
+              prop:'short_name',
+              type: 'text'
+            },
+            {
+              label: '规格名称',
+              width: '160',
+              prop:'spec_name',
+              type: 'text'
+            },
+            {
+              label: '数量',
+              width: '120',
+              prop:'quantity',
+              type: 'number'
+            },
+            {
+              label: '商品售价',
+              width: '120',
+              prop:'commodity_price',
+              type: 'number'
+            },
+            {
+              label: '商品成本',
+              width: '120',
+              prop:'cost',
+              type: 'number'
+            },
+            {
+              label: '实际售价',
+              width: '120',
+              prop:'real_price',
+              type: 'number'
+            },
+            {
+              label: '备注',
+              width: '200',
+              prop:'remark',
+              type: 'text'
+            }
+          ],
+          //问题产品，1
+          [
+            {
+               label: '规格图片',
+               width: '120',
+               prop: "img_url",
+               type: 'img'
+            },
+            {
+              label: '商品编码',
+              width: '160',
+              prop: "commodity_code",
+              type: 'text'
+            },
+            {
+              label: '规格编码',
+              width: '160',
+              prop: "spec_code",
+              type: 'text'
+            },
+            {
+              label: '商品简称',
+              width: '160',
+              prop:'short_name',
+              type: 'text'
+            },
+            {
+              label: '规格名称',
+              width: '160',
+              prop:'spec_name',
+              type: 'text'
+            },
+            {
+              label: '供应商',
+              width: '130',
+              prop: 'supplier',
+              type: 'text',
+            },
+            {
+              label: '问题描述',
+              width: '200',
+              prop: 'description',
+              type: 'text',
+            }
+          ],
+          //图片信息，2
+          [],
+          //驳回原因，3
+          [
+            {
+              label: '驳回人',
+              width: '130',
+              prop: 'rejecter',
+              type: 'text',
+            },
+            {
+              label: '驳回时间',
+              width: '130',
+              prop: 'reject_time',
+              type: 'text',
+            },
+            {
+              label: '驳回原因',
+              width: '200',
+              prop: 'reject_reason',
+              type: 'text',
+            }
+          ],
+          //采购明细，4
+          [
+            {
+              label: '商品编码',
+              width: '160',
+              prop: "commodity_code",
+              type: 'text'
+            },
+            {
+              label: '规格编码',
+              width: '160',
+              prop: "spec_code",
+              type: 'text'
+            },
+            {
+              label: '商品简称',
+              width: '160',
+              prop:'short_name',
+              type: 'text'
+            },
+            {
+              label: '规格名称',
+              width: '160',
+              prop:'spec_name',
+              type: 'text'
+            },
+            {
+              label: '采购数',
+              width: '120',
+              prop:'purchase_number',
+              type: 'number'
+            },
+            {
+              label: '已入库数',
+              width: '120',
+              prop:'stock_number',
+              type: 'number'
+            },
+          ],
+          //操作记录，5
+          [
+            {
+              label: '用户',
+              width: '130',
+              prop: 'username',
+              type: 'text',
+            },
+            {
+              label: '操作',
+              width: '160',
+              prop: 'operation',
+              type: 'text',
+            },
+            {
+              label: '操作描述',
+              width: '200',
+              prop: 'operation_description',
+              type: 'text',
+            },
+            {
+              label: '创建时间',
+              width: '130',
+              prop: 'create_time',
+              type: 'text',
+            }
+          ],
+          //订单操作记录，6
+          [
+            {
+              label: '用户',
+              width: '130',
+              prop: 'username',
+              type: 'text',
+            },
+            {
+              label: '操作',
+              width: '160',
+              prop: 'operation',
+              type: 'text',
+            },
+            {
+              label: '操作描述',
+              width: '200',
+              prop: 'operation_description',
+              type: 'text',
+            },
+            {
+              label: '创建时间',
+              width: '130',
+              prop: 'create_time',
+              type: 'text',
+            }
+          ],
+          //补件进度，7
+          [
+            {
+              label: '进度描述',
+              width: '200',
+              prop: 'progress_description',
+              type: 'text',
+            },
+            {
+              label: '创建人',
+              width: '150',
+              prop: 'creator',
+              type: 'text',
+            },
+            {
+              label: '创建时间',
+              width: '200',
+              prop: 'create_time',
+              type: 'text',
+            }
+          ],
+          //内部便签，8
+          [
+            {
+              label: '主题',
+              width: '130',
+              prop: 'theme',
+              type: 'text',
+            },
+            {
+              label: '用户',
+              width: '130',
+              prop: 'username',
+              type: 'text',
+            },
+            {
+              label: '内容',
+              width: '130',
+              prop: 'content',
+              type: 'text',
+            },
+            {
+              label: '提出时间',
+              width: '130',
+              prop: 'proposal_time',
+              type: 'text',
+            },
+          ],
+          //补件责任方，9
+          [
+            {
+              label: '补件责任方名称',
+              width: '130',
+              prop: 'name',
+              type: 'text',
+            }
+          ],
+          //电子面单，10
+          [
+            {
+              label: '电子面单号',
+              width: '130',
+              prop: 'esheet_code',
+              type: 'text',
+            },
+          ]
         ]
       }
     },
     methods:{
       test(){
         console.log(1);
-      }
+      },
+      /*展开 */
+      toggleShow(){
+        this.filterBox = !this.filterBox;
+      },
+      /*补件单tab */
+      handleTabsClick(){},
+      /*补件信息tab */
+      bottomTabsClick(){}
     },
     mounted() {
       this.$store.state.opt.opts = this.newOpt;
