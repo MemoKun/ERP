@@ -939,6 +939,7 @@
           status: true,
           productspecs:[]
         },
+        test1:[],
         rules: {
           commodity_code: [
             {required: true, message: '请输入商品编码', trigger: 'blur'},
