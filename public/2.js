@@ -34839,6 +34839,65 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.curRowId = row.id;
       this.defProData = row['problemProduct'].data;
     },
+    addDefProRow: function addDefProRow() {
+      //数据初始化
+      this.combArr = [];
+      this.combCount = [];
+      this.combIndex = '';
+      this.idNew = [];
+      /*修改*/
+      /* if(this.editMask){
+         this.showComb = true;
+         if(this.chgOrNew=='edit'){
+           /!*修改时修改规格*!/
+           this.$fetch(this.urls.productspecs,{'is_combination':'false'}).then(res => {
+             this.combData = res.data;
+           });
+         }else if(this.chgOrNew=='new'){
+           /!*修改时添加规格*!/
+           this.$fetch(this.urls.productspecs,{'is_combination':'false'}).then(res => {
+             this.combData = res.data;
+           });
+         }
+       }else if(this.showMask){
+         /!*添加*!/
+         if(!this.ruleForm.commodity_code){
+           this.$message.error({
+             message: '商品编码不能为空'
+           });
+           return
+         }else if(!this.ruleForm.productspecs[0].spec_code){
+           /!*规格编码不能为空*!/
+           this.$message.error({
+             message: '规格编码不能为空'
+           });
+           return
+         }else{
+           this.showComb = true;
+           this.$fetch(this.url[1],{'is_combination':'false'}).then(res => {
+             this.combData = res.data;
+           }, err => {});
+         }
+       }*/
+      if (this.editMask) {
+        this.showComb = true;
+      } else if (this.showMask) {
+        if (!this.addCmptnOrderFormVal.defPro[0].commodity_code) {
+          this.$message.error({
+            message: '商品编码不能为空'
+          });
+          return;
+        } else if (!this.addCmptnOrderFormVal.defPro[0].spec) {
+          /*规格编码不能为空*/
+          this.$message.error({
+            message: '规格编码不能为空'
+          });
+          return;
+        } else {
+          this.showComb = true;
+        }
+      }
+    },
     orderDbClick: function orderDbClick(row) {
       this.activeName = '1';
       var data = row;
@@ -38691,16 +38750,14 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.updateActiveName == "2"
-                    ? _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary" },
-                          on: { click: _vm.addExpenseLine }
-                        },
-                        [_vm._v("新增行")]
-                      )
-                    : _vm._e()
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.addDefProRow }
+                    },
+                    [_vm._v("新增行")]
+                  )
                 ],
                 1
               ),
