@@ -27,7 +27,7 @@ class ProblemProductTransformer extends TransformerAbstract
             'special' => $problemProduct->special,
             'other' => $problemProduct->other,
             'buy_number' => $problemProduct->buy_number,
-            'url' => $problemProduct->url,
+            'img_url' => $problemProduct->img_url,
             'status' => $problemProduct->status,
             'created_at' => $problemProduct->created_at
                                     ->toDateTimeString(),

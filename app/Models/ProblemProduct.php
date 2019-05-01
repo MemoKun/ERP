@@ -9,7 +9,7 @@ class ProblemProduct extends Model
     protected $fillable = [
         'after_compensation_order_id','commodity_code','spec_code',
         'short_name','spec','color','materials','function',
-        'special','other','buy_number','url'
+        'special','other','buy_number','img_url'
     ];
 
     //设置类型

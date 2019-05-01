@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\AfterCompensationOrder;
 
 use App\Http\Requests\Api\AfterCompensationRequest;
+use App\Http\Requests\Api\ProblemProductRequest;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\MergerOrderRequest;
@@ -330,9 +331,18 @@ class AfterCompensationController extends Controller
      *      })
      * })
      */
-     public function store(AfterCompensationRequest $request)
+     public function store(AfterCompensationRequest $request, ProblemProductRequest $problemProductRequest)
      {
-         return $this->traitStore($request->validated(), self::MODEL, self::TRANSFORMER);
+        $data[] = $request->validated();
+        $data[] = $request->input('problem_product');
+
+        return $this->traitJoint2Store(
+            $data,
+            'problemProduct',
+            $problemProductRequest->rules(),
+            self::MODEL,
+            self::TRANSFORMER
+        );
      }
      
     /**

@@ -1,82 +1,87 @@
 <template>
-    <div>
-        <el-tabs v-model="activeName" @tab-click="outerHandleClick">
-            <el-tab-pane label="订单" name="0">
-                <div>
-                    <div class="searchBox">
-                        <span><label>买家昵称</label><el-input v-model="searchBox.customer_nickname" clearable></el-input></span>
-                        <span><label>买家姓名</label><el-input v-model="searchBox.customer_name" clearable></el-input></span>
-                        <span><label>买家电话</label><el-input v-model="searchBox.customer_phone" clearable></el-input></span>
-                        <span v-if="filterBox"><label>买家地址</label><el-input v-model="searchBox.customer_address" clearable></el-input></span>
-                        <span v-else>
-                                <el-button type="primary">筛选</el-button>
-                                <el-button>重置</el-button>
-                                <span @click="toggleShow">
-                                    <el-button type="text">展开</el-button>
-                                    <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-                                </span>
-                        </span>
-                    </div>
-                    <div class="searchBox" v-show="filterBox">
-                        <span><label>业务员</label><el-input v-model="searchBox.order_stuff" clearable></el-input></span>
-                        <span>
-                            <label>赔偿方向</label>
-                            <el-select v-model="searchBox.cmptn_direction" clearable placeholder="请选择">
-                                <el-option
-                                        v-for="item in searchBox.cmptn_directions"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span>
-                            <label>责任方</label>
-                            <el-select v-model="searchBox.responsible_party" clearable placeholder="请选择">
-                                <el-option
-                                        v-for="item in searchBox.responsible_partys"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span><label>责任人</label><el-input v-model="searchBox.responsible_person" clearable></el-input></span>
-                    </div>
-                    <div class="searchBox" v-show="filterBox">
-                        <span>
-                            <label>发货物流</label>
-                            <el-select v-model="searchBox.logistics_company" clearable placeholder="请选择">
-                                <el-option
-                                        v-for="item in searchBox.logistics_companys"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span><label>物流单号</label><el-input v-model="searchBox.logistics_tracking_number"></el-input></span>
-                        <span>
-                            <label>所属店铺</label>
-                            <el-select v-model="searchBox.cmptn_shop" clearable placeholder="请选择">
-                                <el-option
-                                        v-for="item in searchBox.cmptn_shops"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                    </div>
-                    <div v-if="filterBox" style="text-align: right">
-                        <el-button type="primary">筛选</el-button>
-                        <el-button @click="resets">重置</el-button>
-                        <span @click="toggleShow" style="display: inline">
-                                <el-button type="text">收起</el-button>
-                                <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-                        </span>
-                    </div>
-                </div>
+  <div>
+    <el-tabs v-model="activeName" @tab-click="outerHandleClick">
+      <el-tab-pane label="订单" name="0">
+        <div>
+          <div class="searchBox">
+            <span><label>买家昵称</label><el-input v-model="searchBox.customer_nickname" clearable></el-input></span>
+            <span><label>买家姓名</label><el-input v-model="searchBox.customer_name" clearable></el-input></span>
+            <span><label>买家电话</label><el-input v-model="searchBox.customer_phone" clearable></el-input></span>
+            <span v-if="filterBox"><label>买家地址</label><el-input v-model="searchBox.customer_address" clearable></el-input></span>
+            <span v-else>
+              <el-button type="primary">筛选</el-button>
+              <el-button>重置</el-button>
+              <span @click="toggleShow">
+                <el-button type="text">展开</el-button>
+                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
+              </span>
+            </span>
+          </div>
+          <div class="searchBox" v-show="filterBox">
+            <span><label>业务员</label><el-input v-model="searchBox.order_stuff" clearable></el-input></span>
+            <span>
+              <label>赔偿方向</label>
+              <el-select v-model="searchBox.cmptn_direction" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in searchBox.cmptn_directions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span>
+              <label>责任方</label>
+              <el-select v-model="searchBox.responsible_party" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in searchBox.responsible_partys"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span>
+              <label>责任人</label><el-input v-model="searchBox.responsible_person" clearable></el-input>
+            </span>
+          </div>
+          <div class="searchBox" v-show="filterBox">
+            <span>
+              <label>发货物流</label>
+              <el-select v-model="searchBox.logistics_company" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in searchBox.logistics_companys"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span>
+              <label>物流单号</label>
+              <el-input v-model="searchBox.logistics_tracking_number"></el-input>
+            </span>
+            <span>
+              <label>所属店铺</label>
+                <el-select v-model="searchBox.cmptn_shop" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in searchBox.cmptn_shops"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+            </span>
+          </div>
+          <div v-if="filterBox" style="text-align: right">
+            <el-button type="primary">筛选</el-button>
+            <el-button @click="resets">重置</el-button>
+            <span @click="toggleShow" style="display: inline">
+              <el-button type="text">收起</el-button>
+                <i class="el-icon-arrow-up" style="color:#409EFF"></i>
+            </span>
+          </div>
+        </div>
                 
                 <!--显示列表-未处理-->
                 <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
@@ -85,7 +90,7 @@
                                   @selection-change="handleSelectionChange"
                                   v-loading="loading"
                                   height="350"
-                                  @row-click="defProRClick"
+                                  @row-click="problemProRClick"
                                   @row-dblclick="orderDbClick">
                             <el-table-column
                                     type="selection"
@@ -104,22 +109,22 @@
                                     </span>
                                     <span v-else-if="item.type=='flag'">
                                         <span v-if="scope.row[item.prop]==0">
-                             <i class="iconfont bf-flag"></i>
+                                          <i class="iconfont bf-flag"></i>
                                         </span>
                                         <span v-else-if="scope.row[item.prop]==1">
-                        <i class="iconfont bf-flag" style="color:red"></i>
+                                          <i class="iconfont bf-flag" style="color:red"></i>
                                         </span>
                                          <span v-else-if="scope.row[item.prop]==2">
-                        <i class="iconfont bf-flag" style="color:yellow"></i>
+                                           <i class="iconfont bf-flag" style="color:yellow"></i>
                                         </span>
                                          <span v-else-if="scope.row[item.prop]==3">
-                        <i class="iconfont bf-flag" style="color:green"></i>
+                                           <i class="iconfont bf-flag" style="color:green"></i>
                                         </span>
                                          <span v-else-if="scope.row[item.prop]==4">
-                        <i class="iconfont bf-flag" style="color:blue"></i>
+                                           <i class="iconfont bf-flag" style="color:blue"></i>
                                         </span>
                                          <span v-else-if="scope.row[item.prop]==5">
-                        <i class="iconfont bf-flag" style="color:purple"></i>
+                                           <i class="iconfont bf-flag" style="color:purple"></i>
                                         </span>
                                     </span>
                                     <span v-else>
@@ -141,7 +146,7 @@
                                   @selection-change="handleSelectionChange"
                                   v-loading="loading"
                                   height="350"
-                                  @row-click="defProRClick"
+                                  @row-click="problemProRClick"
                                   @row-dblclick="orderDbClick">
                             <el-table-column
                                     type="selection"
@@ -160,22 +165,22 @@
                                     </span>
                                     <span v-else-if="item.type=='flag'">
                                         <span v-if="scope.row[item.prop]==0">
-                             <i class="iconfont bf-flag"></i>
+                                          <i class="iconfont bf-flag"></i>
                                         </span>
                                         <span v-else-if="scope.row[item.prop]==1">
-                        <i class="iconfont bf-flag" style="color:red"></i>
+                                          <i class="iconfont bf-flag" style="color:red"></i>
                                         </span>
                                          <span v-else-if="scope.row[item.prop]==2">
-                        <i class="iconfont bf-flag" style="color:yellow"></i>
+                                           <i class="iconfont bf-flag" style="color:yellow"></i>
                                         </span>
                                          <span v-else-if="scope.row[item.prop]==3">
-                        <i class="iconfont bf-flag" style="color:green"></i>
+                                           <i class="iconfont bf-flag" style="color:green"></i>
                                         </span>
                                          <span v-else-if="scope.row[item.prop]==4">
-                        <i class="iconfont bf-flag" style="color:blue"></i>
+                                           <i class="iconfont bf-flag" style="color:blue"></i>
                                         </span>
                                          <span v-else-if="scope.row[item.prop]==5">
-                        <i class="iconfont bf-flag" style="color:purple"></i>
+                                           <i class="iconfont bf-flag" style="color:purple"></i>
                                         </span>
                                     </span>
                                     <span v-else>
@@ -196,8 +201,8 @@
                 <!--底部tab-->
                 <el-tabs>
                   <el-tab-pane label="问题产品" name="0">
-                    <el-table :data="defProData">
-                      <el-table-column v-for="item in defProTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
+                    <el-table :data="problemProData">
+                      <el-table-column v-for="item in problemProTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
                         <template slot-scope="scope">
                           <span v-if="item.type=='checkbox'">
                             <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -252,16 +257,6 @@
                           </span>
                       </el-select>
                     </span>
-                    <span v-else-if="item.type=='img'">
-                      <span v-if="noUpload">
-                        <el-upload class="upload-demo" action="" :before-upload="beforeUpload" :on-preview="handlePreview" :on-remove="handleRemove">
-                          <el-button size="small" type="primary">点击上传</el-button>
-                        </el-upload>
-                      </span>
-                      <span v-else>
-                        <img :src="item.imgPath" alt="商品图片">
-                      </span>
-                    </span>
                     <span v-else-if="item.type == 'selects'">
                       <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder">
                         <span v-for="list in selectVal[item.prop]" :key="list.value">
@@ -285,51 +280,66 @@
                         </span>
                 </el-form-item>
             </el-form>
-            <el-button type="text">问题商品信息</el-button><label>{{defProCurrentIndex}}</label><label>{{newC}}</label><lable>{{addCmptnOrderFormVal.commodity_code}}</lable>
-            <el-table :data="addCmptnOrderFormVal.defPro" fit highlight-current-row height="300" @row-click="addProRowClick" :row-class-name="addProRCName">
-              <el-table-column v-for="(item,index) in addDefProHead" :label="item.label" align="center" :width="item.width" :key="index">
+            <el-button type="text">问题商品信息</el-button>
+            <el-table :data="addCmptnOrderFormVal.problem_product" fit height="300" :row-class-name="addProRCName" @row-click="addProRowClick">
+              <el-table-column v-for="(item,index) in addProblemProHead" :label="item.label" align="center" :width="item.width" :key="index">
                 <template slot-scope="scope">
-                  <span v-if="newC =='index'+scope.$index">
+                  <span v-if="problemProCurIndex =='index'+scope.$index">
                     <span v-if="item.type=='number'">
-                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit" :disabled="item.beAble"></el-input>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                     </span>
-                    <span v-else-if="item.type=='img'">
-                      <span v-if="noUpload">
-                        <el-upload class="upload-demo" action="" :before-upload="beforeUpload" :on-preview="handlePreview" :on-remove="handleRemove">
-                          <el-button size="small" type="primary">点击上传</el-button>
-                        </el-upload>
-                      </span>
-                      <span v-else>
-                        <img :src="item.imgPath" alt="商品图片">
-                      </span>
+                    <span v-else-if="item.type=='url'">
+                      <el-input size="small" type="url" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                     </span>
                     <span v-else-if="item.type == 'textarea'">
-                      <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit"></el-input>
+                      <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                    <span v-else-if="item.type == 'select'">
+                      <el-select v-model="scope.row[item.prop]"  :placeholder="item.holder">
+                        <span v-for="list in resData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
                     </span>
                     <span v-else-if="item.type == 'checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop]" :disabled="item.prop=='is_combination'?true:false"></el-checkbox>
+                      <el-checkbox v-model="scope.row[item.prop]"></el-checkbox>
                     </span>
                     <span v-else-if="item.type=='img'">
-                      <span v-if="noUpload">
-                        <el-upload class="upload-demo" action="" :before-upload="beforeUpload" :on-preview="handlePreview" :on-remove="handleRemove">
+                      <span v-if="compUpload=='upload'+scope.$index">
+                        <el-upload action="" :before-upload="beforeUploadComp">
                           <el-button size="small" type="primary">点击上传</el-button>
                         </el-upload>
                       </span>
                       <span v-else>
-                        <img :src="item.imgPath" alt="商品图片">
+                        <img :src="scope.row[item.prop]">
+                        <el-upload class="chgDiv" action="" :before-upload="beforeUpload">
+                          <el-button type="primary" icon="el-icon-edit" size="mini" class="chg" v-show="tableChgBtn=='show'+scope.$index"></el-button>
+                        </el-upload>
                       </span>
                     </span>
                     <span v-else>
-                      <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit" :disabled="item.beAble"></el-input>
-                      <label>{{scope.row}}</label>
+                      <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                     </span>
                   </span>
                   <span v-else>
-                    <span v-if="item.type=='checkbox'">
+                    <span v-if="item.type=='select'">
+                      <span v-if="scope.row[item.prop]==''"></span>
+                      <span v-else>
+                        <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                          <span v-if="list.id==scope.row[item.prop]">
+                            {{list.name}}
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else-if="item.type=='checkbox'">
                       <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                     </span>
+                    <span v-else-if="item.type == 'img'">
+                      <img :src="scope.row[item.prop]" alt="">
+                    </span>
                     <span v-else>
-                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                      {{scope.row[item.prop]}}
                     </span>
                   </span>
                 </template>
@@ -345,14 +355,15 @@
                     <el-button type="primary" @click="addProDtl" v-if="addActiveName=='0'">添加商品</el-button>
                 </div>
                 <div style="float: right">
-                    <el-button type="primary" @click="addCustomerConfirm">确定</el-button>
+                    <el-button type="primary" @click="addCmptnOrderConfirm">确定</el-button>
+                    <el-button @click="resetAddInfo" type="info">重置</el-button>
                     <el-button @click="addCustomerCancel">取消</el-button>
                 </div>
             </div>
         </el-dialog>
 
         <!--添加问题商品-->
-        <el-dialog title="添加商品" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
+        <!--<el-dialog title="添加商品" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
             <el-button type="text">选择商品</el-button>
             <div class="searchBox">
                 <span>
@@ -392,10 +403,10 @@
                 </el-table-column>
             </el-table>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="confirmAddProDtl">确定</el-button>
+                <el-button type="primary" @click="addCmptnOrderConfirm">确定</el-button>
                 <el-button @click="cancelAddProDtl">关闭</el-button>
             </div>
-        </el-dialog>
+        </el-dialog>-->
 
         <!--修改-->
         <el-dialog title="修改明细" :visible.sync="updateCustomerMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
@@ -453,10 +464,10 @@
             <el-tabs v-model="updateActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
                 <el-tab-pane label="商品信息" name="0">
                     <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-                        <el-table-column v-for="item in addDefProHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                        <el-table-column v-for="item in addProblemProHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                             <template slot-scope="scope">
                                 <span v-if="item.prop=='newData'">
-                                  <span v-if="newC == 'index'+scope.$index">
+                                  <span v-if="problemProCurIndex == 'index'+scope.$index">
                                     <span v-if="item.type=='number'">
                                       <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                                     </span>
@@ -533,7 +544,7 @@
             <div slot="footer" class="dialog-footer clearfix">
                 <div style="float: left">
                     <el-button type="primary" @click="addProDtl" v-if="updateActiveName=='0'">添加商品</el-button>
-                    <el-button type="primary" @click="addDefProRow">新增行</el-button>
+                    <el-button type="primary" @click="addproblemProRow">新增行</el-button>
                 </div>
                 <div style="float: right">
                     <el-button type="primary" @click="updateCmptnConfirm">确定</el-button>
@@ -635,7 +646,7 @@
       return {
         imgPath: '',
         fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
-        defProCurrentIndex:'',
+        problemProCurIndexNum:'',
         fd: [],
         newOpt: [
           {
@@ -1167,7 +1178,22 @@
           audited_at:'',
           updated_at:'',
           status:true,
-          defPro:[]
+          problem_product:[
+            {
+              commodity_code:'',
+              spec_code:'',
+              short_name:'',
+              spec:'',
+              color:'',
+              materials:'',
+              function:'',
+              special:'',
+              other:'',
+              buy_number:'1',
+              img_url:''
+
+            }
+          ]
         },
         addCmptnOrderFormRules:{//新建订单的要求格式
           customer_phone:[
@@ -1215,7 +1241,7 @@
           problem_description:[
             {required: true, message: '问题描述必选', trigger:'blur'},
           ],
-          defPro:[
+          problem_product:[
              {required: true, message: '请选择选择问题商品', trigger: 'blur'}
           ]
         },
@@ -1371,13 +1397,13 @@
         addActiveName: '0',
         proData: [],
         options: regionDataPlus,
-        addDefProHead:[
+        addProblemProHead:[
            {
             label: '产品图片',
             width: '120',
             prop: "img_url",
             type: 'img',
-            imgPath:'/uploads/images/temp/201808/13/1_1534132543_6yliM4uees.jpg',
+            imgPath:'',
           },
           {
             label: '商品编码',
@@ -1441,31 +1467,7 @@
             width: '100',
           }
         ],
-        defProKey:{
-          order_number:'',
-          cmptn_shop:'',
-          cmptn_direction:'',
-          responsible_party:'',
-          responsible_person:'',
-          customer_nickname:'',
-          customer_name:'',
-          customer_phone:'',
-          customer_city:'',
-          customer_address:'',
-          cmptn_fee:'',
-          fee_type:'',
-          logistics_company:'',
-          logistics_tracking_number:'',
-          payment_method:'',
-          order_stuff:'',
-          payee:'',
-          payee_account:'',
-          problem_product_id:'',
-          problem_description:'',
-          note:'',
-          refuse_reason:'',
-          negotiation_date:'',
-          img_url:'',
+        problemProKey:{
           commodity_code:'',
           spec_code:'',
           short_name:'',
@@ -1475,9 +1477,11 @@
           function:'',
           special:'',
           other:'',
-          buy_number:'1'
+          buy_number:'1',
+          img_url:'',
         },
         proMask: false,
+        showChgBtn:'',
         proQuery:{
           commodity_code:'',
           component_code: '',
@@ -1491,7 +1495,7 @@
           {
             label: '产品图片',
             width: '200',
-            prop: "img",
+            prop: "img_url",
             type: 'img'
           },
           {
@@ -1607,7 +1611,7 @@
           {
             label: '子件图片',
             width: '120',
-            prop: 'img_url',
+            prop: 'img',
             type: 'img',
           },
           {
@@ -1700,7 +1704,7 @@
         proIds: [],
         addIds: [],
         proCompRow: {},
-        defProCurrentIndex: 'index0',
+        problemProCurIndexNum:0,
         receiveInfo: {
           receiver_name: '',
           receiver_phone: '',
@@ -1724,6 +1728,7 @@
         updateReceiveInfo: {},
         updateExpenseData: [],
         updateProIds: [],
+        tableChgBtn:'',
         /*删除单条*/
         showDel: false,
         delUrl: '',
@@ -1758,11 +1763,11 @@
         splitRowIndex: '',
         splitRow: {},
         mergerIds: [],
-        defProTableHead:[
+        problemProTableHead:[
           {
             label: '产品图片',
             width: '200',
-            prop: "img",
+            prop: "img_url",
             type: 'img'
           },
           {
@@ -1827,9 +1832,13 @@
           }
         ],
         inputChange: false,
-        newC:'',
-        defProData:[],
+        problemProCurIndex:'',
+        problemProData:[],
         addSubData:[],
+        compUpload:'upload0',
+        updateCompUpload:'upload0',
+        updateRwIndex:'0',
+        updateChgBtn:false,
         selectVal:{
           payment_method:[{label:'支付宝',value:'支付宝'},{label:'微信',value:'微信'},{label:'银行卡',value:'银行卡'}],
           cmptn_direction:[{label:'我们赔偿',value:'我们赔偿'},{label:'赔偿我们',value:'赔偿我们'}],
@@ -1945,7 +1954,7 @@
               .then(res => {
                 this.loading = false;
                 this.orderListData = res.data;
-                this.defProData = res.data[0]?res.data[0]['problemProduct'].data:[];
+                this.problemProData = res.data[0]?res.data[0]['problemProduct'].data:[];
                 //this.addSubData = res.data;
                 let pg = res.meta.pagination;
                 this.$store.dispatch('currentPage', pg.current_page);
@@ -1968,7 +1977,7 @@
               .then(res => {
                 this.loading = false;
                 this.alreadyHandle = res.data;
-                this.defProData = res.data[0]?res.data[0]['problemProduct'].data:[];
+                this.problemProData = res.data[0]?res.data[0]['problemProduct'].data:[];
                 let pg = res.meta.pagination;
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
@@ -1991,11 +2000,11 @@
         this.fetchData();
       },
       rightHandleClick(){},
-      defProRClick(row){
+      problemProRClick(row){
         this.curRowId = row.id;
-        this.defProData = row['problemProduct'].data;
+        this.problemProData = row['problemProduct'].data;
       },
-      addDefProRow() {
+      addproblemProRow() {
         //数据初始化
         this.combArr = [];
         this.combCount = [];
@@ -2038,12 +2047,12 @@
         if(this.editMask){
           this.showComb = true;
         }else if(this.showMask){
-          if(!this.addCmptnOrderFormVal.defPro[0].commodity_code){
+          if(!this.addCmptnOrderFormVal.problem_product[0].commodity_code){
             this.$message.error({
               message: '商品编码不能为空'
             });
             return
-          }else if(!this.addCmptnOrderFormVal.defPro[0].spec){
+          }else if(!this.addCmptnOrderFormVal.problem_product[0].spec){
             /*规格编码不能为空*/
             this.$message.error({
               message: '规格编码不能为空'
@@ -2102,18 +2111,19 @@
       /*新增*/
       resetAddInfo(){
         Object.assign(this.$data.addCmptnOrderFormVal, this.$options.data().addCmptnOrderFormVal)
-        Object.assign(this.$data.defProKey, this.$options.data().defProKey)
-        this.addCmptnOrderFormVal.defPro.push(this.defProKey);
-        this.newC= 'index0';
-        this.defProCurrentIndex = 0;
+        this.problemProCurIndex= 'index0';
+        this.compUpload = 'upload0';
+        this.problemProCurIndexNum = 0;
+        this.noUpload = true;
       },
       addCmptnOrder(){
         this.resetAddInfo();
         this.addCmptnOrderMask = true;
         this.addIds =[];
         this.proData = [];
-        this.defProCurrentIndex = 0;
-        this.newC = 'index0';
+        this.problemProCurIndexNum = 0;
+        this.problemProCurIndex = 'index0';
+        this.compUpload = 'upload0';
       },
       proQueryClick(){
         this.proSkuVal = [];
@@ -2156,40 +2166,36 @@
         row.index =rowIndex;
       },
       addProRowClick(row){
-        this.defProCurrentIndex = row.index;
-        this.newC = 'index'+row.index;
+        this.problemProCurIndexNum = row.index;
+        this.problemProCurIndex = 'index'+row.index;
+        if(row.img_url){
+          this.tableChgBtn = 'show'+ row.index;
+        }else{
+          this.compUpload = 'upload'+row.index
+        }
       },
       addDelPro(index){this.proData.splice(index,1)},
-      addCustomerConfirm(){
-        let forData = this.addCmptnOrderFormVal;
-        let submitData = {
-          customer_nickname: forData.customer_nickname,
-          customer_name: forData.customer_name,
-          customer_phone: forData.customer_phone,
-          customer_city: forData.customer_city,
-          payment_method: forData.payment_method,
-          logistics_company: forData.logistics_company,
-          logistics_tracking_number: forData.logistics_tracking_number,
-          responsible_party: forData.responsible_party,
-          responsible_person: forData.responsible_person,
-          cmptn_direction: forData.cmptn_direction,
-          cmptn_fee: forData.cmptn_fee,
-          negotiation_date: forData.negotiation_date,
-          order_stuff: forData.order_stuff,
-          fee_type: forData.fee_type,
-          payee: forData.payee,
-          payee_account: forData.payee_account,
-          cmptn_shop: forData.cmptn_shop,
-          problem_description:forData.problem_description,
-          note: forData.note,
-          cmptn_status:forData.cmptn_status,
-        };
-        this.$post(this.urls.aftercompensation,submitData)
+      addCmptnOrderConfirm(){
+        let formData = this.addCmptnOrderFormVal;
+        this.$message({
+              message: '添加成功111',
+              type: 'success'
+            })
+        formData.problem_product.map((item,index)=>{
+          if(!item.commodity_code){
+            formData.problem_product.splice(index,1);
+          }
+        })
+        this.$message({
+              message: '添加成功222',
+              type: 'success'
+            })
+        this.$post(this.urls.aftercompensation,formData)
           .then(()=>{
             this.addCmptnOrderMask = false;
             this.refresh();
             this.$message({
-              message: '添加成功',
+              message: '添加成功333',
               type: 'success'
             })
           },err=>{
@@ -2551,8 +2557,8 @@
         this.expenseRIndex ='';
         this.updateCmptnOrderFormVal = {};
         this.updateCustomerMask = true;
-        this.newC = '';
-        this.defProCurrentIndex = 0;
+        this.problemProCurIndex = '';
+        this.problemProCurIndexNum = 0;
         let id = this.checkboxId?this.checkboxId:this.curRowId;
         this.$fetch(this.urls.aftercompensation+'/'+id)
           .then(res=>{
@@ -2645,28 +2651,28 @@
         }
       },
       updateCmptnConfirm(){
-        let forData = this.updateCmptnOrderFormVal;
+        let formData = this.updateCmptnOrderFormVal;
         let submitData = {
-          customer_nickname: forData.customer_nickname,
-          customer_name: forData.customer_name,
-          customer_phone: forData.customer_phone,
-          customer_city: forData.customer_city,
-          payment_method: forData.payment_method,
-          logistics_company: forData.logistics_company,
-          logistics_tracking_number: forData.logistics_tracking_number,
-          responsible_party: forData.responsible_party,
-          responsible_person: forData.responsible_person,
-          cmptn_direction: forData.cmptn_direction,
-          cmptn_fee: forData.cmptn_fee,
-          negotiation_date: forData.negotiation_date,
-          order_stuff: forData.order_stuff,
-          fee_type: forData.fee_type,
-          payee: forData.payee,
-          payee_account: forData.payee_account,
-          cmptn_shop: forData.cmptn_shop,
-          problem_description:forData.problem_description,
-          note: forData.note,
-          cmptn_status:forData.cmptn_status
+          customer_nickname: formData.customer_nickname,
+          customer_name: formData.customer_name,
+          customer_phone: formData.customer_phone,
+          customer_city: formData.customer_city,
+          payment_method: formData.payment_method,
+          logistics_company: formData.logistics_company,
+          logistics_tracking_number: formData.logistics_tracking_number,
+          responsible_party: formData.responsible_party,
+          responsible_person: formData.responsible_person,
+          cmptn_direction: formData.cmptn_direction,
+          cmptn_fee: formData.cmptn_fee,
+          negotiation_date: formData.negotiation_date,
+          order_stuff: formData.order_stuff,
+          fee_type: formData.fee_type,
+          payee: formData.payee,
+          payee_account: formData.payee_account,
+          cmptn_shop: formData.cmptn_shop,
+          problem_description:formData.problem_description,
+          note: formData.note,
+          cmptn_status:formData.cmptn_status
         };
         let id = this.checkboxId?this.checkboxId:this.curRowId;
         this.$patch(this.urls.aftercompensation+'/'+id,submitData)
@@ -2832,28 +2838,40 @@
       cancelSplit(){
         this.splitMask =false;
       },
-      beforeUpload(file){
+      beforeUploadComp(file){
+        this.tableChgBtn = '';
+        this.judgeFm(file);
+        let formData  = new FormData();
+        formData.append('image', file);
+        axios.post(this.urls.uploadimages,formData).then(res=>{
+          let imageInfo = res.data.meta;
+          if(imageInfo.status_code == 201){
+            this.compUpload = '';
+            this.tableChgBtn = 'show'+this.problemProCurIndexNum;
+            this.addCmptnOrderFormVal.problem_product[this.problemProCurIndexNum].img_url = res.data.path;
+          }
+        }).catch(err=>{})
+      },
+      judgeFm(file){
         const isJPG = file.type === 'image/jpeg';
         const isGIF = file.type === 'image/gif';
         const isPNG = file.type === 'image/png';
-        // const isBMP = file.type === 'image/bmp';
 
         if (!isJPG && !isGIF && !isPNG) {
-          this.$message.error({
-            message: '上传图片必须是JPG/GIF/PNG 格式!'
-          })
+          this.$message.error("上传图片必须是JPG/GIF/PNG 格式!")
         }
+      },
+      beforeUpload(file){
+        this.showChgBtn = false;
+        this.judgeFm(file);
         let formData  = new FormData();
         formData.append('image', file);
         axios.post(this.urls.uploadimages,formData).then(res=>{
           let imageInfo = res.data.meta;
           if(imageInfo.status_code == 201){
             this.noUpload = false;
-            this.addDefProHead.map(item=>{
-              if(item.type == 'img'){
-                item.imgPath = res.data.path;
-              }
-            })
+            this.showChgBtn = true;
+            this.proForm.img = res.data.path;
           }
         }).catch(err=>{})
       },
