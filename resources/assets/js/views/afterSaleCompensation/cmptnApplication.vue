@@ -222,7 +222,7 @@
         </el-tabs>
 
         <!--新增-->
-        <el-dialog title="新增售后赔偿申请" :visible.sync="addCmptnOrderMask" :class="{'more-forms':moreForms}" class="bigDialog">
+        <el-dialog title="新增售后赔偿申请" :visible.sync="addCmptnOrderMask" :class="{'more-forms':moreForms}">
             <div class="clearfix">
                 <el-button type="text" style="float: left">售后赔偿信息</el-button>
             </div>
@@ -285,11 +285,11 @@
                         </span>
                 </el-form-item>
             </el-form>
-            <el-button type="text">商品信息</el-button>
+            <el-button type="text">问题商品信息</el-button><label>{{defProCurrentIndex}}</label><label>{{newC}}</label><lable>{{addCmptnOrderFormVal.commodity_code}}</lable>
             <el-table :data="addCmptnOrderFormVal.defPro" fit highlight-current-row height="300" @row-click="addProRowClick" :row-class-name="addProRCName">
               <el-table-column v-for="(item,index) in addDefProHead" :label="item.label" align="center" :width="item.width" :key="index">
                 <template slot-scope="scope">
-                  <span v-if="proRIndex =='index'+scope.$index">
+                  <span v-if="newC =='index'+scope.$index">
                     <span v-if="item.type=='number'">
                       <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit" :disabled="item.beAble"></el-input>
                     </span>
@@ -321,6 +321,7 @@
                     </span>
                     <span v-else>
                       <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit" :disabled="item.beAble"></el-input>
+                      <label>{{scope.row}}</label>
                     </span>
                   </span>
                   <span v-else>
@@ -455,7 +456,7 @@
                         <el-table-column v-for="item in addDefProHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                             <template slot-scope="scope">
                                 <span v-if="item.prop=='newData'">
-                                  <span v-if="proRIndex == 'index'+scope.$index">
+                                  <span v-if="newC == 'index'+scope.$index">
                                     <span v-if="item.type=='number'">
                                       <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                                     </span>
@@ -634,7 +635,7 @@
       return {
         imgPath: '',
         fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
-        proRIndex:'',
+        defProCurrentIndex:'',
         fd: [],
         newOpt: [
           {
@@ -1382,70 +1383,62 @@
             label: '商品编码',
             prop: "commodity_code",
             type: 'text',
-            width: '180',
-            editChgAble: true,
+            width: '160',
+            holder:'请输入商品编码'
           },
           {
             label: '规格编码',
             prop: "spec_code",
             type: 'text',
-            width: '150',
-            editChgAble: true,
+            width: '160'
           },
           {
             label: '商品简称',
             prop: "short_name",
-            editChgAble: true,
             type: 'text',
-            width: '120'
+            width: '160'
           },
           {
             label: '规格',
             prop: "spec",
             type: 'text',
-            width: '120',
-            editChgAble: true,
+            width: '160',
           },
           {
             label: '颜色',
             prop: "color",
             type: 'text',
             width: '120',
-            editChgAble: true,
           },
           {
             label: '材质',
             prop: "materials",
             type: 'text',
-            width: '120',
-            editChgAble: true,
+            width: '160',
           },
           {
             label: '功能',
             prop: "function",
             type: 'text',
-            width: '120',
-            editChgAble: true,
+            width: '160',
           },
           {
             label: '特殊',
             prop: "special",
             type: 'text',
-            width: '120',
-            editChgAble: true,
+            width: '160',
           },
           {
             label: '其他',
             prop: "other",
             type: 'text',
-            width: '120'
+            width: '160'
           },
           {
             label: '购买数量',
             prop: "buy_number",
             type: 'number',
-            width: '120',
-            editChgAble: true,
+            width: '100',
           }
         ],
         defProKey:{
@@ -1493,7 +1486,6 @@
         },
         editSpecIndex:'',
         editIndex: 0,
-        inputChg: false,
         chgEId: '',
         proHead:[
           {
@@ -1708,7 +1700,7 @@
         proIds: [],
         addIds: [],
         proCompRow: {},
-        proRIndex: '',
+        defProCurrentIndex: 'index0',
         receiveInfo: {
           receiver_name: '',
           receiver_phone: '',
@@ -1834,8 +1826,8 @@
             width: '120'
           }
         ],
-        inputChg: false,
-        
+        inputChange: false,
+        newC:'',
         defProData:[],
         addSubData:[],
         selectVal:{
@@ -2112,14 +2104,16 @@
         Object.assign(this.$data.addCmptnOrderFormVal, this.$options.data().addCmptnOrderFormVal)
         Object.assign(this.$data.defProKey, this.$options.data().defProKey)
         this.addCmptnOrderFormVal.defPro.push(this.defProKey);
-        this.proRIndex = 'index0';
+        this.newC= 'index0';
+        this.defProCurrentIndex = 0;
       },
       addCmptnOrder(){
         this.resetAddInfo();
         this.addCmptnOrderMask = true;
         this.addIds =[];
         this.proData = [];
-        this.proRIndex = '';
+        this.defProCurrentIndex = 0;
+        this.newC = 'index0';
       },
       proQueryClick(){
         this.proSkuVal = [];
@@ -2162,7 +2156,8 @@
         row.index =rowIndex;
       },
       addProRowClick(row){
-        this.proRIndex = `index${row.index}`;
+        this.defProCurrentIndex = row.index;
+        this.newC = 'index'+row.index;
       },
       addDelPro(index){this.proData.splice(index,1)},
       addCustomerConfirm(){
@@ -2556,7 +2551,8 @@
         this.expenseRIndex ='';
         this.updateCmptnOrderFormVal = {};
         this.updateCustomerMask = true;
-        this.proRIndex = '';
+        this.newC = '';
+        this.defProCurrentIndex = 0;
         let id = this.checkboxId?this.checkboxId:this.curRowId;
         this.$fetch(this.urls.aftercompensation+'/'+id)
           .then(res=>{

@@ -33693,6 +33693,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -33741,7 +33742,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return _ref = {
       imgPath: '',
       fileList2: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
-      proRIndex: '',
+      defProCurrentIndex: '',
       fd: [],
       newOpt: [{
         cnt: '增加',
@@ -34333,61 +34334,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       label: '商品编码',
       prop: "commodity_code",
       type: 'text',
-      width: '180',
-      editChgAble: true
+      width: '160',
+      holder: '请输入商品编码'
     }, {
       label: '规格编码',
       prop: "spec_code",
       type: 'text',
-      width: '150',
-      editChgAble: true
+      width: '160'
     }, {
       label: '商品简称',
       prop: "short_name",
-      editChgAble: true,
       type: 'text',
-      width: '120'
+      width: '160'
     }, {
       label: '规格',
       prop: "spec",
       type: 'text',
-      width: '120',
-      editChgAble: true
+      width: '160'
     }, {
       label: '颜色',
       prop: "color",
       type: 'text',
-      width: '120',
-      editChgAble: true
+      width: '120'
     }, {
       label: '材质',
       prop: "materials",
       type: 'text',
-      width: '120',
-      editChgAble: true
+      width: '160'
     }, {
       label: '功能',
       prop: "function",
       type: 'text',
-      width: '120',
-      editChgAble: true
+      width: '160'
     }, {
       label: '特殊',
       prop: "special",
       type: 'text',
-      width: '120',
-      editChgAble: true
+      width: '160'
     }, {
       label: '其他',
       prop: "other",
       type: 'text',
-      width: '120'
+      width: '160'
     }, {
       label: '购买数量',
       prop: "buy_number",
       type: 'number',
-      width: '120',
-      editChgAble: true
+      width: '100'
     }]), _defineProperty(_ref, 'defProKey', {
       order_number: '',
       cmptn_shop: '',
@@ -34428,7 +34421,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       component_code: '',
       shops_id: '',
       short_name: ''
-    }), _defineProperty(_ref, 'editSpecIndex', ''), _defineProperty(_ref, 'editIndex', 0), _defineProperty(_ref, 'inputChg', false), _defineProperty(_ref, 'chgEId', ''), _defineProperty(_ref, 'proHead', [{
+    }), _defineProperty(_ref, 'editSpecIndex', ''), _defineProperty(_ref, 'editIndex', 0), _defineProperty(_ref, 'chgEId', ''), _defineProperty(_ref, 'proHead', [{
       label: '产品图片',
       width: '200',
       prop: "img",
@@ -34592,7 +34585,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       width: '90',
       prop: 'is_stop_pro',
       type: 'checkbox'
-    }]), _defineProperty(_ref, 'proCompRowIndex', ''), _defineProperty(_ref, 'proSubmitData', []), _defineProperty(_ref, 'proIds', []), _defineProperty(_ref, 'addIds', []), _defineProperty(_ref, 'proCompRow', {}), _defineProperty(_ref, 'proRIndex', ''), _defineProperty(_ref, 'receiveInfo', {
+    }]), _defineProperty(_ref, 'proCompRowIndex', ''), _defineProperty(_ref, 'proSubmitData', []), _defineProperty(_ref, 'proIds', []), _defineProperty(_ref, 'addIds', []), _defineProperty(_ref, 'proCompRow', {}), _defineProperty(_ref, 'defProCurrentIndex', 'index0'), _defineProperty(_ref, 'receiveInfo', {
       receiver_name: '',
       receiver_phone: '',
       receiver_mobile: '',
@@ -34674,7 +34667,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       prop: "buy_number",
       type: 'text',
       width: '120'
-    }]), _defineProperty(_ref, 'inputChg', false), _defineProperty(_ref, 'defProData', []), _defineProperty(_ref, 'addSubData', []), _defineProperty(_ref, 'selectVal', {
+    }]), _defineProperty(_ref, 'inputChange', false), _defineProperty(_ref, 'newC', ''), _defineProperty(_ref, 'defProData', []), _defineProperty(_ref, 'addSubData', []), _defineProperty(_ref, 'selectVal', {
       payment_method: [{ label: '支付宝', value: '支付宝' }, { label: '微信', value: '微信' }, { label: '银行卡', value: '银行卡' }],
       cmptn_direction: [{ label: '我们赔偿', value: '我们赔偿' }, { label: '赔偿我们', value: '赔偿我们' }],
       responsible_party: [{ label: '顾客', value: '顾客' }, { label: '我们', value: '我们' }, { label: '仓库', value: '仓库' }, { label: '供应商', value: '供应商' }]
@@ -34949,14 +34942,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       Object.assign(this.$data.addCmptnOrderFormVal, this.$options.data().addCmptnOrderFormVal);
       Object.assign(this.$data.defProKey, this.$options.data().defProKey);
       this.addCmptnOrderFormVal.defPro.push(this.defProKey);
-      this.proRIndex = 'index0';
+      this.newC = 'index0';
+      this.defProCurrentIndex = 0;
     },
     addCmptnOrder: function addCmptnOrder() {
       this.resetAddInfo();
       this.addCmptnOrderMask = true;
       this.addIds = [];
       this.proData = [];
-      this.proRIndex = '';
+      this.defProCurrentIndex = 0;
+      this.newC = 'index0';
     },
     proQueryClick: function proQueryClick() {
       var _this2 = this;
@@ -35001,7 +34996,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       row.index = rowIndex;
     },
     addProRowClick: function addProRowClick(row) {
-      this.proRIndex = 'index' + row.index;
+      this.defProCurrentIndex = row.index;
+      this.newC = 'index' + row.index;
     },
     addDelPro: function addDelPro(index) {
       this.proData.splice(index, 1);
@@ -35425,7 +35421,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.expenseRIndex = '';
       this.updateCmptnOrderFormVal = {};
       this.updateCustomerMask = true;
-      this.proRIndex = '';
+      this.newC = '';
+      this.defProCurrentIndex = 0;
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$fetch(this.urls.aftercompensation + '/' + id).then(function (res) {
         _this12.updateCmptnOrderFormVal = res;
@@ -36790,7 +36787,6 @@ var render = function() {
       _c(
         "el-dialog",
         {
-          staticClass: "bigDialog",
           class: { "more-forms": _vm.moreForms },
           attrs: { title: "新增售后赔偿申请", visible: _vm.addCmptnOrderMask },
           on: {
@@ -37192,7 +37188,14 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("el-button", { attrs: { type: "text" } }, [_vm._v("商品信息")]),
+          _c("el-button", { attrs: { type: "text" } }, [
+            _vm._v("问题商品信息")
+          ]),
+          _c("label", [_vm._v(_vm._s(_vm.defProCurrentIndex))]),
+          _c("label", [_vm._v(_vm._s(_vm.newC))]),
+          _c("lable", [
+            _vm._v(_vm._s(_vm.addCmptnOrderFormVal.commodity_code))
+          ]),
           _vm._v(" "),
           _c(
             "el-table",
@@ -37221,7 +37224,7 @@ var render = function() {
                         key: "default",
                         fn: function(scope) {
                           return [
-                            _vm.proRIndex == "index" + scope.$index
+                            _vm.newC == "index" + scope.$index
                               ? _c("span", [
                                   item.type == "number"
                                     ? _c(
@@ -37421,7 +37424,11 @@ var render = function() {
                                               },
                                               expression: "scope.row[item.prop]"
                                             }
-                                          })
+                                          }),
+                                          _vm._v(" "),
+                                          _c("label", [
+                                            _vm._v(_vm._s(scope.row))
+                                          ])
                                         ],
                                         1
                                       )
@@ -38291,8 +38298,7 @@ var render = function() {
                                   return [
                                     item.prop == "newData"
                                       ? _c("span", [
-                                          _vm.proRIndex ==
-                                          "index" + scope.$index
+                                          _vm.newC == "index" + scope.$index
                                             ? _c("span", [
                                                 item.type == "number"
                                                   ? _c(

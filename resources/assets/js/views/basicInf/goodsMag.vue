@@ -287,8 +287,8 @@
                      <el-button type="primary" @click="addComb">添加子件</el-button>
                  </div>
                  <div style="float: right">
-                     <el-button type="primary" @click="submitForm">确认新增</el-button>
-                     <!--<el-button @click="resetAddInfo">重置</el-button>-->
+                     <el-button type="primary" @click="submitForm">确认新建</el-button>
+                     <el-button @click="resetAddInfo">重置</el-button>
                      <el-button @click="cancelAdd">取消</el-button>
                  </div>
              </div>

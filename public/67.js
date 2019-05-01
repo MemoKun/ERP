@@ -128,6 +128,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -142,7 +145,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         dwn_type: '',
         pro_num: '',
         order_num: '',
-        shopNames: [{ label: '店铺1', value: 0 }, { label: '店铺2', value: 1 }],
+        shopNames: [{ label: '简艺家具旗舰店', value: 0 }, { label: '迪洛家具旗舰店', value: 1 }],
         work_date: ''
       },
       tableData3: [],
@@ -180,143 +183,173 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", [_vm._v("订单下载")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "box" }, [
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("店铺名称")]),
-            _vm._v(" "),
-            _c(
-              "el-select",
-              {
-                attrs: { clearable: "", placeholder: "请选择" },
+      _c("el-tabs", [
+        _c("div", { staticClass: "searchBox" }, [
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("店铺名称")]),
+              _c(
+                "el-select",
+                {
+                  attrs: { clearable: "", placeholder: "请选择" },
+                  model: {
+                    value: _vm.searchBox.shop_name,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "shop_name", $$v)
+                    },
+                    expression: "searchBox.shop_name"
+                  }
+                },
+                _vm._l(_vm.searchBox.shopNames, function(item) {
+                  return _c("el-option", {
+                    key: item.value,
+                    attrs: { label: item.label, value: item.value }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("业务日期")]),
+              _vm._v(" "),
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
                 model: {
-                  value: _vm.searchBox.shop_name,
+                  value: _vm.searchBox.work_date,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shop_name", $$v)
+                    _vm.$set(_vm.searchBox, "work_date", $$v)
                   },
-                  expression: "searchBox.shop_name"
+                  expression: "searchBox.work_date"
                 }
-              },
-              _vm._l(_vm.searchBox.shopNames, function(item) {
-                return _c("el-option", {
-                  key: item.value,
-                  attrs: { label: item.label, value: item.value }
-                })
-              }),
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("业务日期")]),
-            _vm._v(" "),
-            _c("el-date-picker", {
-              attrs: {
-                type: "daterange",
-                "range-separator": "至",
-                "start-placeholder": "开始日期",
-                "end-placeholder": "结束日期"
-              },
-              model: {
-                value: _vm.searchBox.work_date,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "work_date", $$v)
-                },
-                expression: "searchBox.work_date"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("买家昵称")]),
-            _vm._v(" "),
-            _c("el-input", {
-              attrs: { clearable: "" },
-              model: {
-                value: _vm.searchBox.pro_num,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "pro_num", $$v)
-                },
-                expression: "searchBox.pro_num"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("订单编号")]),
-            _vm._v(" "),
-            _c("el-input", {
-              attrs: { clearable: "" },
-              model: {
-                value: _vm.searchBox.order_num,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "order_num", $$v)
-                },
-                expression: "searchBox.order_num"
-              }
-            })
-          ],
-          1
-        )
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("买家昵称")]),
+              _vm._v(" "),
+              _c("el-input", {
+                attrs: { clearable: "" },
+                model: {
+                  value: _vm.searchBox.pro_num,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "pro_num", $$v)
+                  },
+                  expression: "searchBox.pro_num"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("订单编号")]),
+              _vm._v(" "),
+              _c("el-input", {
+                attrs: { clearable: "" },
+                model: {
+                  value: _vm.searchBox.order_num,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "order_num", $$v)
+                  },
+                  expression: "searchBox.order_num"
+                }
+              })
+            ],
+            1
+          )
+        ])
       ]),
       _vm._v(" "),
       _c(
-        "el-table",
-        {
-          ref: "multipleTable",
-          staticStyle: { width: "100%" },
-          attrs: { data: _vm.tableData3, "tooltip-effect": "dark" },
-          on: { "selection-change": _vm.handleSelectionChange }
-        },
+        "el-tabs",
         [
-          _c("el-table-column", { attrs: { type: "selection", width: "55" } }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "订单交易号", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "应付金额", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "实付金额", "show-overflow-tooltip": "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "买家昵称", "show-overflow-tooltip": "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "创建时间", "show-overflow-tooltip": "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "订单状态", "show-overflow-tooltip": "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: {
-              prop: "",
-              label: "分阶段状态",
-              "show-overflow-tooltip": ""
-            }
-          })
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "订单信息", name: "0" } },
+            [
+              _c(
+                "el-table",
+                {
+                  ref: "multipleTable",
+                  staticStyle: { width: "100%" },
+                  attrs: { data: _vm.tableData3, "tooltip-effect": "dark" },
+                  on: { "selection-change": _vm.handleSelectionChange }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: { type: "selection", width: "55" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { label: "订单交易号", width: "120" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "", label: "应付金额", width: "120" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "",
+                      label: "实付金额",
+                      "show-overflow-tooltip": ""
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "",
+                      label: "买家昵称",
+                      "show-overflow-tooltip": ""
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "",
+                      label: "创建时间",
+                      "show-overflow-tooltip": ""
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "",
+                      label: "订单状态",
+                      "show-overflow-tooltip": ""
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "",
+                      label: "分阶段状态",
+                      "show-overflow-tooltip": ""
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
       )

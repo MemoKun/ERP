@@ -98,6 +98,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -162,107 +169,134 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", [_vm._v("商品下载")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "box" }, [
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("店铺名称")]),
-            _vm._v(" "),
-            _c(
-              "el-select",
-              {
-                attrs: { clearable: "", placeholder: "请选择" },
-                model: {
-                  value: _vm.searchBox.shop_name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shop_name", $$v)
-                  },
-                  expression: "searchBox.shop_name"
-                }
-              },
-              _vm._l(_vm.searchBox.shopNames, function(item) {
-                return _c("el-option", {
-                  key: item.value,
-                  attrs: { label: item.label, value: item.value }
-                })
-              }),
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("下载类型")]),
-            _vm._v(" "),
-            _c(
-              "el-select",
-              {
-                attrs: { clearable: "", placeholder: "请选择" },
-                model: {
-                  value: _vm.searchBox.dwn_type,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "dwn_type", $$v)
-                  },
-                  expression: "searchBox.dwn_type"
-                }
-              },
-              _vm._l(_vm.searchBox.dwnTypes, function(item) {
-                return _c("el-option", {
-                  key: item.value,
-                  attrs: { label: item.label, value: item.value }
-                })
-              }),
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("商品编码")]),
-            _vm._v(" "),
-            _c("el-input", {
-              attrs: { clearable: "" },
-              model: {
-                value: _vm.searchBox.pro_num,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "pro_num", $$v)
-                },
-                expression: "searchBox.pro_num"
-              }
-            })
-          ],
-          1
-        )
-      ]),
+      _c(
+        "el-tabs",
+        [
+          _c("el-tab-pane", { attrs: { label: "商品下载", name: "0" } }, [
+            _c("div", { staticClass: "searchBox" }, [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("店铺名称")]),
+                  _vm._v(" "),
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      model: {
+                        value: _vm.searchBox.shop_name,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "shop_name", $$v)
+                        },
+                        expression: "searchBox.shop_name"
+                      }
+                    },
+                    _vm._l(_vm.searchBox.shopNames, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.label, value: item.value }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("下载类型")]),
+                  _vm._v(" "),
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      model: {
+                        value: _vm.searchBox.dwn_type,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "dwn_type", $$v)
+                        },
+                        expression: "searchBox.dwn_type"
+                      }
+                    },
+                    _vm._l(_vm.searchBox.dwnTypes, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.label, value: item.value }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("商品编码")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { clearable: "" },
+                    model: {
+                      value: _vm.searchBox.pro_num,
+                      callback: function($$v) {
+                        _vm.$set(_vm.searchBox, "pro_num", $$v)
+                      },
+                      expression: "searchBox.pro_num"
+                    }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
-        "el-table",
-        {
-          ref: "multipleTable",
-          staticStyle: { width: "100%" },
-          attrs: { data: _vm.tableData3, "tooltip-effect": "dark" },
-          on: { "selection-change": _vm.handleSelectionChange }
-        },
+        "el-tabs",
         [
-          _c("el-table-column", { attrs: { type: "selection", width: "55" } }),
-          _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "商品编码", width: "120" } }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "商品标题", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "卖家昵称", "show-overflow-tooltip": "" }
-          })
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "商品信息", name: "0" } },
+            [
+              _c(
+                "el-table",
+                {
+                  ref: "multipleTable",
+                  staticStyle: { width: "100%" },
+                  attrs: { data: _vm.tableData3, "tooltip-effect": "dark" },
+                  on: { "selection-change": _vm.handleSelectionChange }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: { type: "selection", width: "55" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { label: "商品编码", width: "120" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "", label: "商品标题", width: "120" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "",
+                      label: "卖家昵称",
+                      "show-overflow-tooltip": ""
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
       )
