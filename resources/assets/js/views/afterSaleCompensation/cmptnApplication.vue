@@ -83,283 +83,283 @@
           </div>
         </div>
                 
-                <!--显示列表-未处理-->
-                <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
-                    <el-tab-pane label="未处理" name="0">
-                        <el-table :data="orderListData" fit
-                                  @selection-change="handleSelectionChange"
-                                  v-loading="loading"
-                                  height="350"
-                                  @row-click="problemProRClick"
-                                  @row-dblclick="orderDbClick">
-                            <el-table-column
-                                    type="selection"
-                                    width="95" align="center"
-                                    :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                             <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                        </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                          <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                          <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==2">
-                                           <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==3">
-                                           <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==4">
-                                           <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==5">
-                                           <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                     {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                </span>
-                            </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <el-tab-pane label="已处理" name="1">
-                        <el-table :data="alreadyHandle" fit
-                                  @selection-change="handleSelectionChange"
-                                  v-loading="loading"
-                                  height="350"
-                                  @row-click="problemProRClick"
-                                  @row-dblclick="orderDbClick">
-                            <el-table-column
-                                    type="selection"
-                                    width="95" align="center"
-                                    :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                             <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                              </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                          <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                          <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==2">
-                                           <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==3">
-                                           <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==4">
-                                           <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==5">
-                                           <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                     {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                </span>
-                            </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                </el-tabs>
-                <!--底部tab-->
-                <el-tabs>
-                  <el-tab-pane label="问题产品" name="0">
-                    <el-table :data="problemProData">
-                      <el-table-column v-for="item in problemProTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
-                        <template slot-scope="scope">
-                          <span v-if="item.type=='checkbox'">
-                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                          </span>
-                          <span v-else-if="item.type=='img'">
-                            <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                              <img :src="scope.row[item.prop]">
-                              <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                            </el-popover>
-                          </span>
-                          <span v-else>
-                            <span v-if="scope.row[item.prop]">
-                              {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                            </span>
-                          </span>
-                        </template>
-                      </el-table-column>
-                    </el-table>
-                  </el-tab-pane>
-                </el-tabs>
-            </el-tab-pane>
-        </el-tabs>
-
-        <!--新增-->
-        <el-dialog title="新增售后赔偿申请" :visible.sync="addCmptnOrderMask" :class="{'more-forms':moreForms}">
-            <div class="clearfix">
-                <el-button type="text" style="float: left">售后赔偿信息</el-button>
-            </div>
-            <el-form :model="addCmptnOrderFormVal" :rules="addCmptnOrderFormRules" class="cmptnAddForm" id="form">
-                <el-form-item v-for="(item,index) in addCmptnOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
-                    <span v-if="item.type=='text'">
-                         <span v-if="item.inProp">
-                            <el-input v-model.trim="addCmptnOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                        </span>
-                        <span v-else>
-                          <el-input v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                    </span>
-                    </span>
-                    <span v-else-if="item.type=='number'">
-                        <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                           <el-input type="number" v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
-                        </span>
-                        <span v-else>
-                            <el-input type="number" v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                        </span>
-                    </span>
-                    <!--选择框拉取数据库数据-->
-                    <span v-else-if="item.type=='select'">
-                      <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                          <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
-                          </span>
-                      </el-select>
-                    </span>
-                    <span v-else-if="item.type == 'selects'">
-                      <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder">
-                        <span v-for="list in selectVal[item.prop]" :key="list.value">
-                          <el-option :label="list.label" :value="list.value"></el-option>
-                        </span>
-                      </el-select>
-                    </span>
-                    <span v-else-if="item.type=='textarea'">
-                         <el-input type="textarea" v-model.trim="addCmptnOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type=='checkbox'">
-                            <el-checkbox v-model="addCmptnOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
-                        </span>
-                    <span v-else-if="item.type=='radio'">
-                            <el-radio v-model="addCmptnOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-                            <el-radio v-model="addCmptnOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
-                        </span>
-                    <span v-else-if="item.type=='DatePicker'">
-                            <el-date-picker v-model="addCmptnOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
-                            </el-date-picker>
-                        </span>
-                </el-form-item>
-            </el-form>
-            <el-button type="text">问题商品信息</el-button>
-            <el-table :data="addCmptnOrderFormVal.problem_product" fit height="300" :row-class-name="addProRCName" @row-click="addProRowClick">
-              <el-table-column v-for="(item,index) in addProblemProHead" :label="item.label" align="center" :width="item.width" :key="index">
+        <!--显示列表-未处理-->
+        <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
+          <el-tab-pane label="未处理" name="0">
+            <el-table :data="cmptnOrderListTableData" fit
+                @selection-change="handleSelectionChange"
+                v-loading="loading"
+                height="350"
+                @row-click="problemProRowClick"
+                @row-dblclick="orderDbClick">
+              <el-table-column
+                type="selection"
+                width="95" align="center"
+                :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
-                  <span v-if="problemProCurIndex =='index'+scope.$index">
-                    <span v-if="item.type=='number'">
-                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type=='url'">
-                      <el-input size="small" type="url" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type == 'textarea'">
-                      <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type == 'select'">
-                      <el-select v-model="scope.row[item.prop]"  :placeholder="item.holder">
-                        <span v-for="list in resData[item.stateVal]" :key="list.id">
-                          <el-option :label="list.name" :value="list.id"></el-option>
-                        </span>
-                      </el-select>
-                    </span>
-                    <span v-else-if="item.type == 'checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop]"></el-checkbox>
-                    </span>
-                    <span v-else-if="item.type=='img'">
-                      <span v-if="compUpload=='upload'+scope.$index">
-                        <el-upload action="" :before-upload="beforeUploadComp">
-                          <el-button size="small" type="primary">点击上传</el-button>
-                        </el-upload>
-                      </span>
-                      <span v-else>
-                        <img :src="scope.row[item.prop]">
-                        <el-upload class="chgDiv" action="" :before-upload="beforeUpload">
-                          <el-button type="primary" icon="el-icon-edit" size="mini" class="chg" v-show="tableChgBtn=='show'+scope.$index"></el-button>
-                        </el-upload>
-                      </span>
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
                     </span>
                     <span v-else>
-                      <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
                     </span>
                   </span>
                   <span v-else>
-                    <span v-if="item.type=='select'">
-                      <span v-if="scope.row[item.prop]==''"></span>
-                      <span v-else>
-                        <span v-for="(list,index) in resData[item.stateVal]" :key="index">
-                          <span v-if="list.id==scope.row[item.prop]">
-                            {{list.name}}
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                    <span v-else-if="item.type=='checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                    </span>
-                    <span v-else-if="item.type == 'img'">
-                      <img :src="scope.row[item.prop]" alt="">
-                    </span>
-                    <span v-else>
-                      {{scope.row[item.prop]}}
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
                     </span>
                   </span>
                 </template>
               </el-table-column>
               <el-table-column label="操作" width="90" align="center" fixed="right">
                 <template slot-scope="scope">
-                  <el-button size="mini" type="danger" @click="addDelPro(scope.$index)">删除</el-button>
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
-            <div slot="footer" class="dialog-footer clearfix">
-                <div style="float: left">
-                    <el-button type="primary" @click="addProDtl" v-if="addActiveName=='0'">添加商品</el-button>
-                </div>
-                <div style="float: right">
-                    <el-button type="primary" @click="addCmptnOrderConfirm">确定</el-button>
-                    <el-button @click="resetAddInfo" type="info">重置</el-button>
-                    <el-button @click="addCustomerCancel">取消</el-button>
-                </div>
-            </div>
+          </el-tab-pane>
+          <el-tab-pane label="已处理" name="1">
+            <el-table :data="alreadyHandle" fit
+              @selection-change="handleSelectionChange"
+              v-loading="loading"
+              height="350"
+              @row-click="problemProRowClick"
+              @row-dblclick="orderDbClick">
+            <el-table-column
+              type="selection"
+              width="95" align="center"
+              :checked="checkboxInit">
+            </el-table-column>
+            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <span v-if="item.inProp">
+                    <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                  </span>
+                  <span v-else>
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='flag'">
+                  <span v-if="scope.row[item.prop]==0">
+                    <i class="iconfont bf-flag"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==1">
+                    <i class="iconfont bf-flag" style="color:red"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==2">
+                    <i class="iconfont bf-flag" style="color:yellow"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==3">
+                    <i class="iconfont bf-flag" style="color:green"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==4">
+                    <i class="iconfont bf-flag" style="color:blue"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==5">
+                    <i class="iconfont bf-flag" style="color:purple"></i>
+                  </span>
+                  </span>
+                    <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+        </el-tabs>
+
+        <!--底部tab-->
+        <el-tabs>
+          <el-tab-pane label="问题产品" name="0">
+            <el-table :data="problemProData">
+              <el-table-column v-for="item in problemProTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                  <span v-else-if="item.type=='img'">
+                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                      <img :src="scope.row[item.prop]">
+                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                    </el-popover>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+    </el-tabs>
+
+    <!--新增-->
+    <el-dialog title="新增售后赔偿申请" :visible.sync="addCmptnOrderMask" :class="{'more-forms':moreForms}">
+      <div class="clearfix">
+        <el-button type="text" style="float: left">售后赔偿信息</el-button>
+      </div>
+      <el-form :model="addCmptnOrderFormVal" :rules="addCmptnOrderFormRules" class="cmptnAddForm" id="form">
+        <el-form-item v-for="(item,index) in cmptnOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
+          <span v-if="item.type=='text'">
+            <span v-if="item.inProp">
+              <el-input v-model.trim="addCmptnOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+            </span>
+            <span v-else>
+              <el-input v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+            </span>
+          </span>
+          <span v-else-if="item.type=='number'">
+            <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+              <el-input type="number" v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+            </span>
+            <span v-else>
+              <el-input type="number" v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+            </span>
+          </span>
+          <!--选择框拉取数据库数据-->
+          <span v-else-if="item.type=='select'">
+            <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+              <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+              </span>
+            </el-select>
+          </span>
+          <span v-else-if="item.type == 'selects'">
+            <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder">
+              <span v-for="list in selectVal[item.prop]" :key="list.value">
+                <el-option :label="list.label" :value="list.value"></el-option>
+              </span>
+            </el-select>
+          </span>
+          <span v-else-if="item.type=='textarea'">
+            <el-input type="textarea" v-model.trim="addCmptnOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
+          </span>
+          <span v-else-if="item.type=='checkbox'">
+            <el-checkbox v-model="addCmptnOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
+          </span>
+          <span v-else-if="item.type=='radio'">
+            <el-radio v-model="addCmptnOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+            <el-radio v-model="addCmptnOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+          </span>
+          <span v-else-if="item.type=='DatePicker'">
+            <el-date-picker v-model="addCmptnOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+          </span>
+        </el-form-item>
+      </el-form>
+      <el-button type="text">问题商品信息</el-button>
+        <el-table :data="addCmptnOrderFormVal.problem_product" fit height="300" :row-class-name="addProRCName" @row-click="addProRowClick">
+          <el-table-column v-for="(item,index) in addProblemProHead" :label="item.label" align="center" :width="item.width" :key="index">
+            <template slot-scope="scope">
+              <span v-if="problemProCurIndex =='index'+scope.$index">
+                <span v-if="item.type=='number'">
+                  <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                </span>
+                <span v-else-if="item.type=='url'">
+                  <el-input size="small" type="url" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                </span>
+                <span v-else-if="item.type == 'textarea'">
+                  <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                </span>
+                <span v-else-if="item.type == 'select'">
+                  <el-select v-model="scope.row[item.prop]"  :placeholder="item.holder">
+                    <span v-for="list in resData[item.stateVal]" :key="list.id">
+                      <el-option :label="list.name" :value="list.id"></el-option>
+                    </span>
+                  </el-select>
+                </span>
+                <span v-else-if="item.type == 'checkbox'">
+                  <el-checkbox v-model="scope.row[item.prop]"></el-checkbox>
+                </span>
+                <span v-else-if="item.type=='img'">
+                  <span v-if="compUpload=='upload'+scope.$index">
+                    <el-upload action="" :before-upload="beforeUploadComp">
+                      <el-button size="small" type="primary">点击上传</el-button>
+                    </el-upload>
+                  </span>
+                  <span v-else>
+                    <img :src="scope.row[item.prop]">
+                    <el-upload class="chgDiv" action="" :before-upload="beforeUpload">
+                      <el-button type="primary" icon="el-icon-edit" size="mini" class="chg" v-show="tableChgBtn=='show'+scope.$index"></el-button>
+                    </el-upload>
+                  </span>
+                </span>
+                <span v-else>
+                  <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                </span>
+              </span>
+              <span v-else>
+                <span v-if="item.type=='select'">
+                  <span v-if="scope.row[item.prop]==''"></span>
+                  <span v-else>
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name}}
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='checkbox'">
+                  <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                </span>
+                <span v-else-if="item.type == 'img'">
+                  <img :src="scope.row[item.prop]" alt="">
+                </span>
+                <span v-else>
+                  {{scope.row[item.prop]}}
+                </span>
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="90" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button size="mini" type="danger" @click="addDelPro(scope.$index)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div slot="footer" class="dialog-footer clearfix">
+          <div style="float: left">
+            <el-button type="primary" @click="addProDtl" v-if="addActiveName=='0'">添加商品</el-button>
+          </div>
+          <div style="float: right">
+            <el-button type="primary" @click="addCmptnOrderConfirm">确定</el-button>
+            <el-button @click="resetAddInfo" type="info">重置</el-button>
+            <el-button @click="addCmptnOrderCancel">取消</el-button>
+          </div>
+        </div>
         </el-dialog>
 
         <!--添加问题商品-->
@@ -409,148 +409,118 @@
         </el-dialog>-->
 
         <!--修改-->
-        <el-dialog title="修改明细" :visible.sync="updateCustomerMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
+        <el-dialog title="修改售后赔偿订单" :visible.sync="updateCmptnOrderMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
           <div class="clearfix">
-            <el-button type="text" style="float: left">基础信息</el-button>
+            <el-button type="text" style="float: left">售后赔偿订单信息</el-button>
             <el-button type="primary" style="float: right;padding: 6px 10px;font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>
           </div>
-            <el-form :model="updateCmptnOrderFormVal" :rules="addCmptnOrderFormRules" class="cmptnAddForm hidePart" id="form">
-              <el-form-item v-for="(item,index) in addCmptnOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
-                <span v-if="item.type=='text'">
-                  <span v-if="item.inProp">
-                    <el-input v-model.trim="updateCmptnOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                  </span>
-                  <span v-else>
-                    <el-input v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                  </span>
+          <el-form :model="updateCmptnOrderFormVal" :rules="addCmptnOrderFormRules" class="cmptnUpdateForm hidePart" id="form">
+            <el-form-item v-for="(item,index) in cmptnOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
+              <span v-if="item.type=='text'">
+                <span v-if="item.inProp">
+                  <el-input v-model.trim="updateCmptnOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
-                <span v-else-if="item.type=='number'">
-                  <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                    <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
-                  </span>
-                  <span v-else>
-                    <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                  </span>
+                <span v-else>
+                  <el-input v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
-                <span v-else-if="item.type=='select'">
-                    <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-                      <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                        <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
-                      </span>
-                    </el-select>
+              </span>
+              <span v-else-if="item.type=='number'">
+                <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+                  <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
                 </span>
-                <span v-else-if="item.type == 'selects'">
-                  <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder">
-                    <span v-for="list in selectVal[item.prop]" :key="list.value">
-                      <el-option :label="list.label" :value="list.value"></el-option>
+                <span v-else>
+                  <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+              </span>
+              <span v-else-if="item.type=='select'">
+                <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+                  <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                    <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                  </span>
+                </el-select>
+              </span>
+              <span v-else-if="item.type == 'selects'">
+                <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder">
+                  <span v-for="list in selectVal[item.prop]" :key="list.value">
+                    <el-option :label="list.label" :value="list.value"></el-option>
+                  </span>
+                </el-select>
+              </span>
+              <span v-else-if="item.type=='textarea'">
+                <el-input type="textarea" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
+              </span>
+              <span v-else-if="item.type=='checkbox'">
+                <el-checkbox v-model="updateCmptnOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
+              </span>
+              <span v-else-if="item.type=='radio'">
+                <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+              </span>
+              <span v-else-if="item.type=='DatePicker'">
+                <el-date-picker v-model="updateCmptnOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+              </span>
+            </el-form-item>
+          </el-form>
+          <el-button type="text">问题商品信息</el-button>
+          <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
+            <el-table-column v-for="item in addProblemProHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.prop=='newData'">
+                  <span v-if="problemProCurIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='number'">
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                     </span>
-                  </el-select>
+                    <span v-else-if="item.type == 'checkbox'">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='checkbox'">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop][item.inProp]}}
+                    </span>
+                  </span>
                 </span>
-                <span v-else-if="item.type=='textarea'">
-                  <el-input type="textarea" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
+                <span v-else-if="item.prop">
+                  <span v-if="item.type=='checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                  <span v-else-if="item.type=='img'">
+                    <el-popover
+                        placement="right"
+                        trigger="hover"
+                        popper-class="picture_detail">
+                      <img :src="scope.row[item.prop]">
+                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                    </el-popover>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
                 </span>
-                <span v-else-if="item.type=='checkbox'">
-                  <el-checkbox v-model="updateCmptnOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
-                </span>
-                <span v-else-if="item.type=='radio'">
-                  <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-                  <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
-                </span>
-                <span v-else-if="item.type=='DatePicker'">
-                  <el-date-picker v-model="updateCmptnOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
-                </span>
-              </el-form-item>
-            </el-form>
-            <el-tabs v-model="updateActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
-                <el-tab-pane label="商品信息" name="0">
-                    <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-                        <el-table-column v-for="item in addProblemProHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-                            <template slot-scope="scope">
-                                <span v-if="item.prop=='newData'">
-                                  <span v-if="problemProCurIndex == 'index'+scope.$index">
-                                    <span v-if="item.type=='number'">
-                                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                                    </span>
-                                <span v-else-if="item.type == 'checkbox'">
-                                    <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
-                                </span>
-                                <span v-else>
-                                   <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                                </span>
-                            </span>
-                            <span v-else>
-                               <span v-if="item.type=='checkbox'">
-                                   <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                               </span>
-                                <span v-else>
-                                    {{scope.row[item.prop][item.inProp]}}
-                                </span>
-                            </span>
-                        </span>
-                                <span v-else-if="item.prop">
-                            <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                            <span v-else-if="item.type=='img'">
-                                <el-popover
-                                        placement="right"
-                                        trigger="hover"
-                                        popper-class="picture_detail">
-                       <img :src="scope.row[item.prop]">
-    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-   </el-popover>
-                            </span>
-                            <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                        </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column type="expand" fixed="left">
-                            <template slot-scope="scope">
-                                <el-table :data="scope.row['productComp']" fit>
-                                    <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                        <template slot-scope="scope">
-                                <span v-if="item.prop">
-                                    <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                                    <span v-else-if="item.type=='img'">
-                                <el-popover
-                                        placement="right"
-                                        trigger="hover"
-                                        popper-class="picture_detail">
-                       <img :src="scope.row[item.prop]">
-    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-   </el-popover>
-                            </span>
-                                    <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                                </span>
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="90" align="center" fixed="right">
-                            <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="updateDelPro(scope.row,scope.$index)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-            </el-tabs>
-            <div slot="footer" class="dialog-footer clearfix">
-                <div style="float: left">
-                    <el-button type="primary" @click="addProDtl" v-if="updateActiveName=='0'">添加商品</el-button>
-                    <el-button type="primary" @click="addproblemProRow">新增行</el-button>
-                </div>
-                <div style="float: right">
-                    <el-button type="primary" @click="updateCmptnConfirm">确定</el-button>
-                    <el-button @click="updateCustomerCancel">取消</el-button>
-                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="90" align="center" fixed="right">
+              <template slot-scope="scope">
+                <el-button size="mini" type="danger" @click="updateDelPro(scope.row,scope.$index)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div slot="footer" class="dialog-footer clearfix">
+            <div style="float: left">
+              <el-button type="primary" @click="addProDtl" v-if="updateActiveName=='0'">添加商品</el-button>
+              <el-button type="primary" @click="addproblemProRow">新增行</el-button>
             </div>
+            <div style="float: right">
+              <el-button type="primary" @click="updateCmptnConfirm">确定</el-button>
+              <el-button @click="updateCustomerCancel">取消</el-button>
+            </div>
+          </div>
         </el-dialog>
 
         <!--删除单条-->
@@ -729,8 +699,8 @@
         activeName: '0',
         leftTopActiveName:'0',
         rightActiveName: '0',
-        orderListData: [],
-        orderListHead: [//订单表头标签
+        cmptnOrderListTableData: [],
+        cmptnOrderListTableHead: [//订单表头标签
           {
             label: '系统单号',
             width: '220',
@@ -1245,7 +1215,7 @@
              {required: true, message: '请选择选择问题商品', trigger: 'blur'}
           ]
         },
-        addCmptnOrderFormHead:[//新建订单的文本框表头
+        cmptnOrderFormHead:[//新建订单的文本框表头
           {
             label: '系统单号',
             prop: 'system_order_no',
@@ -1721,7 +1691,7 @@
         expenseRIndex:'',
         addSubData:[],
         /*修改*/
-        updateCustomerMask: false,
+        updateCmptnOrderMask: false,
         updateCmptnOrderFormVal: {},
         updateActiveName: '0',
         updateProData: [],
@@ -1901,7 +1871,7 @@
             this.fetchData();
             break;
           case 1:
-            let data = this.orderListData[0];
+            let data = this.cmptnOrderListTableData[0];
             /*商品*/
             if(data){
               this.orderDtlFormVal = {
@@ -1953,7 +1923,7 @@
             this.$fetch(this.urls.aftercompensation+'/searchuntreated',{include:'problemProduct.afterCompensationOrder'})
               .then(res => {
                 this.loading = false;
-                this.orderListData = res.data;
+                this.cmptnOrderListTableData = res.data;
                 this.problemProData = res.data[0]?res.data[0]['problemProduct'].data:[];
                 //this.addSubData = res.data;
                 let pg = res.meta.pagination;
@@ -2000,7 +1970,7 @@
         this.fetchData();
       },
       rightHandleClick(){},
-      problemProRClick(row){
+      problemProRowClick(row){
         this.curRowId = row.id;
         this.problemProData = row['problemProduct'].data;
       },
@@ -2177,25 +2147,17 @@
       addDelPro(index){this.proData.splice(index,1)},
       addCmptnOrderConfirm(){
         let formData = this.addCmptnOrderFormVal;
-        this.$message({
-              message: '添加成功111',
-              type: 'success'
-            })
         formData.problem_product.map((item,index)=>{
           if(!item.commodity_code){
             formData.problem_product.splice(index,1);
           }
         })
-        this.$message({
-              message: '添加成功222',
-              type: 'success'
-            })
         this.$post(this.urls.aftercompensation,formData)
           .then(()=>{
             this.addCmptnOrderMask = false;
             this.refresh();
             this.$message({
-              message: '添加成功333',
+              message: '添加成功',
               type: 'success'
             })
           },err=>{
@@ -2211,10 +2173,10 @@
             }
           })
       },
-      addCustomerCancel(){
+      addCmptnOrderCancel(){
         this.addCmptnOrderMask = false;
         this.$message({
-          message: '取消新增订单明细',
+          message: '取消新增售后赔偿订单',
           type: 'success'
         })
       },
@@ -2470,7 +2432,7 @@
         this.$fetch(this.urls.customerservicedepts+'?page='+page,{include:'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order'})
           .then(res=>{
             if(this.leftTopActiveName == '0'){
-              this.orderListData = res.data;
+              this.cmptnOrderListTableData = res.data;
             }else{
               this.alreadyHandle = res.data;
             }
@@ -2480,83 +2442,13 @@
         this.loading = true;
         this.fetchData();
       },
-      /*锁定*/
-      lockOrder(){
-        if (this.newOpt[3].nClick) {
-          return
-        } else {
-          let id = this.checkboxId?this.checkboxId:this.curRowId;
-          this.$put(this.urls.customerservicedepts + '/' + id + '/lockorunlock')
-            .then(()=>{
-              this.newOpt[1].nClick = false;
-              this.newOpt[2].nClick = false;
-              this.newOpt[3].nClick = true;
-              this.newOpt[4].nClick = false;
-              this.newOpt[5].nClick = false;
-              this.newOpt[6].nClick = true;
-              this.newOpt[8].nClick = false;
-              this.newOpt[9].nClick = false;
-              this.newOpt[14].nClick = false;
-              this.refresh();
-              this.$message({
-                message:'锁定成功',
-                type: 'success'
-              })
-            },err=>{
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                let str = arr1.join(',');
-                this.$message.error(str);
-              }
-            })
-        }
-      },
-      /*解锁*/
-      debLock(){
-        if (this.newOpt[4].nClick) {
-          return
-        } else {
-          let id = this.checkboxId?this.checkboxId:this.curRowId;
-          this.$put(this.urls.customerservicedepts + '/' + id + '/lockorunlock')
-            .then(()=>{
-              this.newOpt[1].nClick = true;
-              this.newOpt[2].nClick = true;
-              this.newOpt[3].nClick = false;
-              this.newOpt[4].nClick = true;
-              this.newOpt[5].nClick = true;
-              this.newOpt[6].nClick = true;
-              this.newOpt[8].nClick = true;
-              this.newOpt[9].nClick = true;
-              this.newOpt[14].nClick = true;
-              this.refresh();
-              this.$message({
-                message:'解锁成功',
-                type: 'success'
-              })
-            },err=>{
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                let str = arr1.join(',');
-                this.$message.error(str);
-              }
-            })
-        }
-      },
       /*修改*/
       updateData(){
         this.proIds = [];
         this.updateProIds = [];
         this.expenseRIndex ='';
         this.updateCmptnOrderFormVal = {};
-        this.updateCustomerMask = true;
+        this.updateCmptnOrderMask = true;
         this.problemProCurIndex = '';
         this.problemProCurIndexNum = 0;
         let id = this.checkboxId?this.checkboxId:this.curRowId;
@@ -2677,7 +2569,7 @@
         let id = this.checkboxId?this.checkboxId:this.curRowId;
         this.$patch(this.urls.aftercompensation+'/'+id,submitData)
           .then(()=>{
-            this.updateCustomerMask = false;
+            this.updateCmptnOrderMask = false;
             this.refresh();
             this.$message({
               message: '修改成功',
@@ -2697,7 +2589,7 @@
           })
       },
       updateCustomerCancel(){
-        this.updateCustomerMask = false;
+        this.updateCmptnOrderMask = false;
         this.$message({
           message: '取消修改订单明细',
           type: 'success'

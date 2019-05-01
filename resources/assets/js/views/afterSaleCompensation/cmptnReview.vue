@@ -81,7 +81,7 @@
                 <!--显示列表-未处理-->
                 <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
                     <el-tab-pane label="未处理" name="0">
-                        <el-table :data="orderListData" fit
+                        <el-table :data="cmptnOrderListTableData" fit
                                   @selection-change="handleSelectionChange"
                                   v-loading="loading"
                                   height="350"
@@ -92,7 +92,7 @@
                                     width="95" align="center"
                                     :checked="checkboxInit">
                             </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                                 <template slot-scope="scope">
                                     <span v-if="item.type=='checkbox'">
                                         <span v-if="item.inProp">
@@ -148,7 +148,7 @@
                                     width="95" align="center"
                                     :checked="checkboxInit">
                             </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                                 <template slot-scope="scope">
                                     <span v-if="item.type=='checkbox'">
                                         <span v-if="item.inProp">
@@ -723,8 +723,8 @@
         activeName: '0',
         leftTopActiveName:'0',
         rightActiveName: '0',
-        orderListData: [],
-        orderListHead: [//订单表头标签
+        cmptnOrderListTableData: [],
+        cmptnOrderListTableHead: [//订单表头标签
           {
             label: '系统单号',
             width: '220',
@@ -1891,7 +1891,7 @@
             this.fetchData();
             break;
           case 1:
-            let data = this.orderListData[0];
+            let data = this.cmptnOrderListTableData[0];
             /*商品*/
             if(data){
               this.orderDtlFormVal = {
@@ -1943,7 +1943,7 @@
             this.$fetch(this.urls.aftercompensation+'/searchtreated')
               .then(res => {
                 this.loading = false;
-                this.orderListData = res.data;
+                this.cmptnOrderListTableData = res.data;
                 let pg = res.meta.pagination;
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
@@ -1983,7 +1983,7 @@
             this.$fetch(this.urls.aftercompensation)
               .then(res => {
                 this.loading = false;
-                this.orderListData = res.data;
+                this.cmptnOrderListTableData = res.data;
                 let pg = res.meta.pagination;
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
@@ -2435,7 +2435,7 @@
         this.$fetch(this.urls.customerservicedepts+'?page='+page,{include:'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order'})
           .then(res=>{
             if(this.leftTopActiveName == '0'){
-              this.orderListData = res.data;
+              this.cmptnOrderListTableData = res.data;
             }else{
               this.alreadyHandle = res.data;
             }

@@ -865,8 +865,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       activeName: '0',
       leftTopActiveName: '0',
       rightActiveName: '0',
-      orderListData: [],
-      orderListHead: [//订单表头标签
+      cmptnOrderListTableData: [],
+      cmptnOrderListTableHead: [//订单表头标签
       {
         label: '系统单号',
         width: '220',
@@ -1781,7 +1781,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.fetchData();
           break;
         case 1:
-          var data = this.orderListData[0];
+          var data = this.cmptnOrderListTableData[0];
           /*商品*/
           if (data) {
             this.orderDtlFormVal = {
@@ -1834,7 +1834,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 0:
           this.$fetch(this.urls.aftercompensation + '/searchall').then(function (res) {
             _this.loading = false;
-            _this.orderListData = res.data;
+            _this.cmptnOrderListTableData = res.data;
             var pg = res.meta.pagination;
             _this.$store.dispatch('currentPage', pg.current_page);
             _this.$store.commit('PER_PAGE', pg.per_page);
@@ -1891,7 +1891,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 3:
           this.$fetch(this.urls.aftercompensation + '/searchsectreated').then(function (res) {
             _this.loading = false;
-            _this.orderListData = res.data;
+            _this.cmptnOrderListTableData = res.data;
             var pg = res.meta.pagination;
             _this.$store.dispatch('currentPage', pg.current_page);
             _this.$store.commit('PER_PAGE', pg.per_page);
@@ -2371,7 +2371,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$fetch(this.urls.customerservicedepts + '?page=' + page, { include: 'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order' }).then(function (res) {
         if (_this9.leftTopActiveName == '0') {
-          _this9.orderListData = res.data;
+          _this9.cmptnOrderListTableData = res.data;
         } else {
           _this9.alreadyHandle = res.data;
         }
@@ -3327,7 +3327,7 @@ var render = function() {
                             }
                           ],
                           attrs: {
-                            data: _vm.orderListData,
+                            data: _vm.cmptnOrderListTableData,
                             fit: "",
                             height: "350"
                           },
@@ -3347,7 +3347,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _vm._l(_vm.orderListHead, function(item) {
+                          _vm._l(_vm.cmptnOrderListTableHead, function(item) {
                             return _c("el-table-column", {
                               key: item.label,
                               attrs: {
@@ -3580,7 +3580,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _vm._l(_vm.orderListHead, function(item) {
+                          _vm._l(_vm.cmptnOrderListTableHead, function(item) {
                             return _c("el-table-column", {
                               key: item.label,
                               attrs: {
@@ -3817,7 +3817,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _vm._l(_vm.orderListHead, function(item) {
+                          _vm._l(_vm.cmptnOrderListTableHead, function(item) {
                             return _c("el-table-column", {
                               key: item.label,
                               attrs: {
@@ -4034,7 +4034,7 @@ var render = function() {
                             }
                           ],
                           attrs: {
-                            data: _vm.orderListData,
+                            data: _vm.cmptnOrderListTableData,
                             fit: "",
                             height: "350"
                           },
@@ -4054,7 +4054,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _vm._l(_vm.orderListHead, function(item) {
+                          _vm._l(_vm.cmptnOrderListTableHead, function(item) {
                             return _c("el-table-column", {
                               key: item.label,
                               attrs: {
