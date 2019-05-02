@@ -284,7 +284,7 @@
         <el-table :data="addCmptnOrderFormVal.problem_product" fit height="300" :row-class-name="addProRCName" @row-click="addProRowClick">
           <el-table-column v-for="(item,index) in addProblemProHead" :label="item.label" align="center" :width="item.width" :key="index">
             <template slot-scope="scope">
-              <span v-if="problemProCurIndex =='index'+scope.$index">
+              <span v-if="addProblemProCurIndex =='index'+scope.$index">
                 <span v-if="item.type=='number'">
                   <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                 </span>
@@ -305,8 +305,8 @@
                   <el-checkbox v-model="scope.row[item.prop]"></el-checkbox>
                 </span>
                 <span v-else-if="item.type=='img'">
-                  <span v-if="compUpload=='upload'+scope.$index">
-                    <el-upload action="" :before-upload="beforeUploadComp">
+                  <span v-if="addProblemProUpload=='upload'+scope.$index">
+                    <el-upload action="" :before-upload="beforeAddUploadProblemProImg">
                       <el-button size="small" type="primary">点击上传</el-button>
                     </el-upload>
                   </span>
@@ -462,45 +462,67 @@
             </el-form-item>
           </el-form>
           <el-button type="text">问题商品信息</el-button>
-          <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-            <el-table-column v-for="item in addProblemProHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+          <!--ceshi-->
+          <label>{{updateProblemProCurIndex}}</label><label>{{updateProblemProCurIndexNum}}</label>
+          <el-table :data="updateCmptnOrderFormVal.problem_product" fit @row-click="addProRowClick" :row-class-name="addProRCName">
+            <el-table-column v-for="(item,index) in addProblemProHead" :label="item.label" align="center" :width="item.width" :key="index">
               <template slot-scope="scope">
-                <span v-if="item.prop=='newData'">
-                  <span v-if="problemProCurIndex == 'index'+scope.$index">
-                    <span v-if="item.type=='number'">
-                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type == 'checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
-                    </span>
-                    <span v-else>
-                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                    </span>
+                <span v-if="updateProblemProCurIndex =='index'+scope.$index">
+                  <span v-if="item.type=='number'">
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                   </span>
-                  <span v-else>
-                    <span v-if="item.type=='checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                    </span>
-                    <span v-else>
-                      {{scope.row[item.prop][item.inProp]}}
-                    </span>
+                  <span v-else-if="item.type=='url'">
+                    <el-input size="small" type="url" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                   </span>
-                </span>
-                <span v-else-if="item.prop">
-                  <span v-if="item.type=='checkbox'">
-                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  <span v-else-if="item.type == 'textarea'">
+                    <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                  </span>
+                  <span v-else-if="item.type == 'select'">
+                    <el-select v-model="scope.row[item.prop]"  :placeholder="item.holder">
+                      <span v-for="list in resData[item.stateVal]" :key="list.id">
+                        <el-option :label="list.name" :value="list.id"></el-option>
+                      </span>
+                    </el-select>
+                  </span>
+                  <span v-else-if="item.type == 'checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]"></el-checkbox>
                   </span>
                   <span v-else-if="item.type=='img'">
-                    <el-popover
-                        placement="right"
-                        trigger="hover"
-                        popper-class="picture_detail">
+                    <span v-if="updateProblemProUpload=='upload'+scope.$index">
+                      <el-upload action="" :before-upload="beforeUpdateUploadProblemProImg">
+                        <el-button size="small" type="primary">点击上传</el-button>
+                      </el-upload>
+                    </span>
+                    <span v-else>
                       <img :src="scope.row[item.prop]">
-                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                    </el-popover>
+                      <el-upload class="chgDiv" action="" :before-upload="beforeUpdateUpload">
+                        <el-button type="primary" icon="el-icon-edit" size="mini" class="chg" v-show="tableChgBtn=='show'+scope.$index"></el-button>
+                      </el-upload>
+                    </span>
                   </span>
                   <span v-else>
-                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                  </span>
+                </span>
+                <span v-else>
+                  <span v-if="item.type=='select'">
+                    <span v-if="scope.row[item.prop]==''"></span>
+                    <span v-else>
+                      <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                  <span v-else-if="item.type == 'img'">
+                    <img :src="scope.row[item.prop]" alt="">
+                  </span>
+                  <span v-else>
+                    {{scope.row[item.prop]}}
                   </span>
                 </span>
               </template>
@@ -616,7 +638,7 @@
       return {
         imgPath: '',
         fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
-        problemProCurIndexNum:'',
+        addProblemProCurIndexNum:'',
         fd: [],
         newOpt: [
           {
@@ -1161,7 +1183,6 @@
               other:'',
               buy_number:'1',
               img_url:''
-
             }
           ]
         },
@@ -1674,7 +1695,7 @@
         proIds: [],
         addIds: [],
         proCompRow: {},
-        problemProCurIndexNum:0,
+        addProblemProCurIndexNum:0,
         receiveInfo: {
           receiver_name: '',
           receiver_phone: '',
@@ -1692,12 +1713,57 @@
         addSubData:[],
         /*修改*/
         updateCmptnOrderMask: false,
-        updateCmptnOrderFormVal: {},
+        updateCmptnOrderFormVal: {
+          order_number:'',
+          cmptn_shop:'',
+          cmptn_direction:'',
+          responsible_party:'',
+          responsible_person:'',
+          customer_nickname:'',
+          customer_name:'',
+          customer_phone:'',
+          customer_city:'',
+          customer_address:'',
+          cmptn_fee:'',
+          fee_type:'',
+          logistics_company:'',
+          logistics_tracking_number:'',
+          payment_method:'',
+          order_stuff:'',
+          payee:'',
+          payee_account:'',
+          problem_product_id:'',
+          problem_description:'',
+          note:'',
+          refuse_reason:'',
+          negotiation_date:'',
+          created_at:'',
+          submited_at:'',
+          audited_at:'',
+          updated_at:'',
+          status:true,
+          problem_product:[
+            {
+              commodity_code:'',
+              spec_code:'',
+              short_name:'',
+              spec:'',
+              color:'',
+              materials:'',
+              function:'',
+              special:'',
+              other:'',
+              buy_number:'1',
+              img_url:''
+            }]
+        },
         updateActiveName: '0',
         updateProData: [],
         updateReceiveInfo: {},
         updateExpenseData: [],
         updateProIds: [],
+        updateProblemProCurIndexNum:0,
+        updateProblemProCurIndex:'index0',
         tableChgBtn:'',
         /*删除单条*/
         showDel: false,
@@ -1802,10 +1868,11 @@
           }
         ],
         inputChange: false,
-        problemProCurIndex:'',
+        addProblemProCurIndex:'',
         problemProData:[],
         addSubData:[],
-        compUpload:'upload0',
+        addProblemProUpload:'upload0',
+        updateProblemProUpload:'',
         updateCompUpload:'upload0',
         updateRwIndex:'0',
         updateChgBtn:false,
@@ -2081,9 +2148,12 @@
       /*新增*/
       resetAddInfo(){
         Object.assign(this.$data.addCmptnOrderFormVal, this.$options.data().addCmptnOrderFormVal)
-        this.problemProCurIndex= 'index0';
-        this.compUpload = 'upload0';
-        this.problemProCurIndexNum = 0;
+        this.addProblemProCurIndex= 'index0';
+        this.updateProblemProCurIndex = 'index0';
+        this.addProblemProCurIndexNum = 0;
+        this.updateProblemProCurIndexNum = 0;
+        this.addProblemProUpload = 'upload0';
+
         this.noUpload = true;
       },
       addCmptnOrder(){
@@ -2091,9 +2161,9 @@
         this.addCmptnOrderMask = true;
         this.addIds =[];
         this.proData = [];
-        this.problemProCurIndexNum = 0;
-        this.problemProCurIndex = 'index0';
-        this.compUpload = 'upload0';
+        this.addProblemProCurIndexNum = 0;
+        this.addProblemProCurIndex = 'index0';
+        this.addProblemProUpload = 'upload0';
       },
       proQueryClick(){
         this.proSkuVal = [];
@@ -2136,12 +2206,12 @@
         row.index =rowIndex;
       },
       addProRowClick(row){
-        this.problemProCurIndexNum = row.index;
-        this.problemProCurIndex = 'index'+row.index;
+        this.addProblemProCurIndexNum = row.index;
+        this.addProblemProCurIndex = 'index'+row.index;
         if(row.img_url){
           this.tableChgBtn = 'show'+ row.index;
         }else{
-          this.compUpload = 'upload'+row.index
+          this.addProblemProUpload = 'upload'+row.index
         }
       },
       addDelPro(index){this.proData.splice(index,1)},
@@ -2449,12 +2519,13 @@
         this.expenseRIndex ='';
         this.updateCmptnOrderFormVal = {};
         this.updateCmptnOrderMask = true;
-        this.problemProCurIndex = '';
-        this.problemProCurIndexNum = 0;
+        this.updateProblemProCurIndex = 'index0';
+        this.updateProblemProCurIndexNum = 0;
         let id = this.checkboxId?this.checkboxId:this.curRowId;
-        this.$fetch(this.urls.aftercompensation+'/'+id)
+        this.$fetch(this.urls.aftercompensation+'/'+id,{include:'problemProduct.afterCompensationOrder'})
           .then(res=>{
             this.updateCmptnOrderFormVal = res;
+            this.updateCmptnOrderFormVal.problem_product = res.problemProduct.data;
           },err=>{
             if (err.response) {
               let arr = err.response.data.errors;
@@ -2543,31 +2614,8 @@
         }
       },
       updateCmptnConfirm(){
-        let formData = this.updateCmptnOrderFormVal;
-        let submitData = {
-          customer_nickname: formData.customer_nickname,
-          customer_name: formData.customer_name,
-          customer_phone: formData.customer_phone,
-          customer_city: formData.customer_city,
-          payment_method: formData.payment_method,
-          logistics_company: formData.logistics_company,
-          logistics_tracking_number: formData.logistics_tracking_number,
-          responsible_party: formData.responsible_party,
-          responsible_person: formData.responsible_person,
-          cmptn_direction: formData.cmptn_direction,
-          cmptn_fee: formData.cmptn_fee,
-          negotiation_date: formData.negotiation_date,
-          order_stuff: formData.order_stuff,
-          fee_type: formData.fee_type,
-          payee: formData.payee,
-          payee_account: formData.payee_account,
-          cmptn_shop: formData.cmptn_shop,
-          problem_description:formData.problem_description,
-          note: formData.note,
-          cmptn_status:formData.cmptn_status
-        };
         let id = this.checkboxId?this.checkboxId:this.curRowId;
-        this.$patch(this.urls.aftercompensation+'/'+id,submitData)
+        this.$patch(this.urls.aftercompensation+'/'+id,this.updateCmptnOrderFormVal)
           .then(()=>{
             this.updateCmptnOrderMask = false;
             this.refresh();
@@ -2730,7 +2778,7 @@
       cancelSplit(){
         this.splitMask =false;
       },
-      beforeUploadComp(file){
+      beforeAddUploadProblemProImg(file){
         this.tableChgBtn = '';
         this.judgeFm(file);
         let formData  = new FormData();
@@ -2738,9 +2786,23 @@
         axios.post(this.urls.uploadimages,formData).then(res=>{
           let imageInfo = res.data.meta;
           if(imageInfo.status_code == 201){
-            this.compUpload = '';
-            this.tableChgBtn = 'show'+this.problemProCurIndexNum;
-            this.addCmptnOrderFormVal.problem_product[this.problemProCurIndexNum].img_url = res.data.path;
+            this.addProblemProUpload = '';
+            this.tableChgBtn = 'show'+this.addProblemProCurIndexNum;
+            this.addCmptnOrderFormVal.problem_product[this.addProblemProCurIndexNum].img_url = res.data.path;
+          }
+        }).catch(err=>{})
+      },
+      beforeUpdateUploadProblemProImg(file){
+        this.tableChgBtn = '';
+        this.judgeFm(file);
+        let formData  = new FormData();
+        formData.append('image', file);
+        axios.post(this.urls.uploadimages,formData).then(res=>{
+          let imageInfo = res.data.meta;
+          if(imageInfo.status_code == 201){
+            this.updateProblemProUpload = '';
+            this.tableChgBtn = 'show'+this.updateProblemProCurIndexNum;
+            this.addCmptnOrderFormVal.problem_product[this.updateProblemProCurIndexNum].img_url = res.data.path;
           }
         }).catch(err=>{})
       },
@@ -2764,6 +2826,20 @@
             this.noUpload = false;
             this.showChgBtn = true;
             this.proForm.img = res.data.path;
+          }
+        }).catch(err=>{})
+      },
+      beforeUpdateUpload(file){
+        this.showChgBtn = false;
+        this.judgeFm(file);
+        let formData  = new FormData();
+        formData.append('image', file);
+        axios.post(this.urls.uploadimages,formData).then(res=>{
+          let imageInfo = res.data.meta;
+          if(imageInfo.status_code == 201){
+            this.noUpload = false;
+            this.showChgBtn = true;
+            this.updateCmptnOrderFormVal.problem_product[this.updateProblemProCurIndexNum].img_url = res.data.path;
           }
         }).catch(err=>{})
       },

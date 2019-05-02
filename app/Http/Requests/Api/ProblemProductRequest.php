@@ -36,7 +36,6 @@ class ProblemProductRequest extends FormRequest
                 break;
             case 'PATCH':
                 return [
-                    'problem_product.*.after_compensation_order_id' => 'string|max:255',
                     'problem_product.*.commodity_code' => 'string|max:255',
                     'problem_product.*.spec_code' => 'string|max:255',
                     'problem_product.*.short_name' => 'string|max:255',

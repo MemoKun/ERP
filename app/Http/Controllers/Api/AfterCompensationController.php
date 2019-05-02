@@ -690,24 +690,20 @@ class AfterCompensationController extends Controller
      */
     public function update(
         AfterCompensationRequest $afterCompensationRequest,
+        ProblemProductRequest $problemProductRequest,
         AfterCompensationOrder $order,
         \App\Handlers\ValidatedHandler $validatedHandler)
     {
         $data[] = $afterCompensationRequest->validated();
+        $data[] = $afterCompensationRequest->input('problem_product');
 
-        $order = DB::transaction(function() use (
+        return $this->traitJoint2Update(
             $data,
-            $afterCompensationRequest,
+            'problemProduct',
+            $problemProductRequest->rules(),
             $order,
-            $validatedHandler
-        ) {
-            $order->update($data[0]);
-            return $order;
-        });
-
-        return $this->response
-            ->item($order, new AfterCompensationTransformer())
-            ->setStatusCode(201);
+            self::TRANSFORMER
+        );
     }
 
 
