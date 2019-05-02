@@ -913,6 +913,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.aftercompensation.searchtreated');
         $api->get('aftercompensation/searchsectreated', 'AfterCompensationController@searchSecTreated')
             ->name('api.aftercompensation.searchtreated');
+        $api->get('aftercompensation/searchcanceled', 'AfterCompensationController@searchCanceled')
+            ->name('api.aftercompensation.searchcanceled');
         $api->get('aftercompensation', 'AfterCompensationController@index')
             ->name('api.aftercompensation.index');
         $api->get('aftercompensation/create', 'AfterCompensationController@create')

@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class FeeTypeTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'feeCategory'
+        'feeCategory','cmptnOrders'
     ];
 
     public function transform(FeeType $feetype)
@@ -31,6 +31,11 @@ class FeeTypeTransformer extends TransformerAbstract
     public function includeFeeCategory(FeeType $feetype)
     {
         return $this->item($feetype->feeCategory, new FeeCategoryTransformer());
+    }
+
+    public function includeAfterCompensationOrder(FeeType $feetype)
+    {
+        return $this->collection($feetype->afterCompensationOrder, new AfterCompensationTransformer());
     }
 
 }

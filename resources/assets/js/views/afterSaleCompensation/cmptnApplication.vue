@@ -253,7 +253,7 @@
           <!--选择框拉取数据库数据-->
           <span v-else-if="item.type=='select'">
             <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-              <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+              <span v-for="list in resData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
@@ -346,13 +346,13 @@
           </el-table-column>
           <el-table-column label="操作" width="90" align="center" fixed="right">
             <template slot-scope="scope">
-              <el-button size="mini" type="danger" @click="addDelPro(scope.$index)">删除</el-button>
+              <el-button size="mini" type="danger" @click="addProblemProDel(scope.$index)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
         <div slot="footer" class="dialog-footer clearfix">
           <div style="float: left">
-            <el-button type="primary" @click="addProDtl" v-if="addActiveName=='0'">添加商品</el-button>
+            <el-button type="primary" @click="addMoreProblemPro" v-if="addActiveName=='0'">添加问题商品</el-button>
           </div>
           <div style="float: right">
             <el-button type="primary" @click="addCmptnOrderConfirm">确定</el-button>
@@ -434,7 +434,7 @@
               </span>
               <span v-else-if="item.type=='select'">
                 <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-                  <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                  <span v-for="list in resData[item.stateVal]" :key="list.id">
                     <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
                   </span>
                 </el-select>
@@ -529,7 +529,7 @@
             </el-table-column>
             <el-table-column label="操作" width="90" align="center" fixed="right">
               <template slot-scope="scope">
-                <el-button size="mini" type="danger" @click="updateDelPro(scope.row,scope.$index)">删除</el-button>
+                <el-button size="mini" type="danger" @click="updateProblemProDel(scope.row,scope.$index)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -702,7 +702,8 @@
               {label:'服务商',value:2},
               {label:'客户',value:3},
               {label:'公司',value:4},
-              {label:'其他',value:5}
+              {label:'仓库',value:5},
+              {label:'其他',value:6}
           ],
           responsible_person:'',
           logistics_company:'',
@@ -720,7 +721,6 @@
         /*获取数据*/
         activeName: '0',
         leftTopActiveName:'0',
-        rightActiveName: '0',
         cmptnOrderListTableData: [],
         cmptnOrderListTableHead: [//订单表头标签
           {
@@ -837,13 +837,6 @@
             addChgAble: false,
           },
           {
-            label: '提交时间',
-            prop: 'submited_at',
-            type: 'text',
-            editChgAble: true,
-            addChgAble: false,
-          },
-          {
             label: '驳回原因',
             prop: 'refuse_reason',
             type: 'text',
@@ -852,7 +845,8 @@
           },
           {
             label: '费用类型',
-            prop: 'fee_type',
+            prop: 'feeType',
+            inProp:'name',
             type: 'text',
             editChgAble: true,
             addChgAble: false,
@@ -873,270 +867,15 @@
           },
         ],
         noUpload: true,
-        loading: true,//作用未知
-        checkboxInit: false,//作用未知
-        orderListIndex: '',//作用未知
+        loading: true,
+        checkboxInit: false,
+        orderListIndex: '',
         alreadyHandle: [],
         orderDtlFormVal: {},
-        orderDtlFormHead: [
-          {
-            label: '系统单号',
-            prop: 'system_order_no',
-            type: 'text'
-          },
-          {
-            label: '淘宝单号',
-            prop: 'taobao_oid',
-            type: 'text',
-          },
-          {
-            label: '交易号',
-            prop: 'taobao_tid',
-            type: 'text'
-          },
-          {
-            label: '单号失联',
-            prop: 'association_taobao_oid',
-            type: 'text'
-          },
-          {
-            label: '所属店铺',
-            prop: 'shop_name',
-            type: 'text'
-          },
-          {
-            label: '业务员',
-            prop: 'business_personnel_name',
-            type: 'text'
-          },
-          {
-            label: '买家昵称',
-            prop: 'member_nick',
-            type: 'text'
-          },
-          {
-            label: '收货人',
-            prop: 'receiver_name',
-            type: 'text'
-          },
-          {
-            label: '手机',
-            prop: 'receiver_mobile',
-            type: 'text'
-          },
-          {
-            label: '电话',
-            prop: 'receiver_phone',
-            type: 'text'
-          },
-          {
-            label: '详细地址',
-            prop: 'receiver_address',
-            type: 'text'
-          },
-          {
-            label: '快递费用',
-            prop: 'express_fee',
-            type: 'number'
-          },
-          /*{
-            label: '标准总金额',
-            prop: 'move_upstairs_fee',
-            type: 'number'
-          },*/
-          {
-            label: '运费类型',
-            prop: 'freight_types_name',
-            type: 'text'
-          },
-          {
-            label: '预付运费',
-            prop: 'expected_freight',
-            type: 'number'
-          },
-          /*{
-            label: '支付总金额',
-            prop: 'distribution_phone',
-            type: 'number'
-          },
-          {
-            label: '三包类型',
-            prop: 'distribution_no',
-            type: 'text'
-          },
-          {
-            label: '三包费用',
-            prop: '',
-            type: 'number'
-          },*/
-          {
-            label: '物流成本',
-            prop: 'deliver_goods_fee',
-            type: 'number'
-          },
-       /*   {
-            label: '订单总额',
-            prop: '',
-            type: 'number'
-          },*/
-        /*  {
-            label: '订单时间',
-            prop: '',
-            type: 'text'
-          },*/
-          {
-            label: '付款时间',
-            prop: 'payment_date',
-            type: 'text'
-          },
-          {
-            label: '承诺时间',
-            prop: 'promise_ship_time',
-            type: 'text'
-          },
-          {
-            label: '物流公司',
-            prop: 'logistic_name',
-            type: 'text'
-          },
-          {
-            label: '配送方式',
-            prop: 'distribution_method',
-            type: 'text'
-          },
-          {
-            label: '配送信息',
-            prop: 'service_car_info',
-            type: 'text'
-          },
-          {
-            label: '费用类型',
-            prop: 'deliver_goods_fee',
-            type: 'text'
-          },
-          {
-            label: '配送商',
-            prop: 'distribution_name',
-            type: 'text'
-          },
-          {
-            label: '配送电话',
-            prop: 'distribution_phone',
-            type: 'text'
-          },
-          {
-            label: '配送类型',
-            prop: 'distributionType_name',
-            type: 'text'
-          },
-          {
-            label: '配送总计',
-            prop: 'total_distribution_fee',
-            type: 'number'
-          },
-          {
-            label: '客服备注',
-            prop: 'customer_service_remark',
-            type: 'textarea'
-          },
-          {
-            label: '卖家备注',
-            prop: 'seller_remark',
-            type: 'textarea'
-          },
-          {
-            label: '买家留言',
-            prop: 'buyer_message',
-            type: 'textarea'
-          },
-        ],
-        proDtlData: [],
         curRowId:'',
         curRowData: {},
-        orderDtlHead: [//新建订单的商品信息的表头
-          [
-            {
-              label: 'sku名称',
-              width: '160',
-              prop:'name',
-              type: 'text'
-            },
-            {
-              label: '数量',
-              width: '130',
-              prop: 'quantity',
-              type: 'number',
-            },
-            {
-              label: '油漆',
-              width: '120',
-              prop: 'paint',
-              type: 'text',
-            },
-            {
-              label: '需要印刷',
-              width: '120',
-              prop: 'is_printing',
-              type: 'checkbox',
-            },
-            {
-              label: '总体积',
-              width: '120',
-              prop: 'total_volume',
-              type: 'number',
-            },
-            {
-              label: '印刷费用',
-              width: '140',
-              prop: 'printing_fee',
-              type: 'number',
-            },
-            {
-              label: '现货',
-              width: '120',
-              prop: 'is_spot_goods',
-              type: 'checkbox',
-            },
-            {
-              label: '单价(线下)',
-              width: '150',
-              prop: 'under_line_univalent',
-              type: 'number'
-            },
-            {
-              label: '优惠(线下)',
-              width: '150',
-              prop: 'under_line_preferential',
-              type: 'number',
-            }
-          ],
-          [
-            {
-              label: '支付金额',
-              prop: 'payment',
-              type: 'number',
-            },
-            {
-              label: '支付方式',
-              prop: 'payment_methods_id',
-              type: 'select',
-              stateVal: 'paymentmethods'
-            },
-            {
-              label: '交易号',
-              prop: 'taobao_tid',
-              type: 'text',
-            },
-            {
-              label: '来源单号',
-              prop: 'taobao_oid',
-              type: 'text',
-            }
-          ],
-          [],
-          []
-        ],
-        payDtlData: [],
+        problemProListIndexNum:'0',
+
         /*新增*/
         addCmptnOrderMask: false,
         moreForms: true,
@@ -1153,7 +892,7 @@
           customer_city:'',
           customer_address:'',
           cmptn_fee:'',
-          fee_type:'',
+          fee_type_id:'',
           logistics_company:'',
           logistics_tracking_number:'',
           payment_method:'',
@@ -1217,7 +956,7 @@
           order_stuff:[
             {required: true, message: '业务员必选', trigger:'blur'},
           ],
-          fee_type:[
+          fee_type_id:[
             {required: true, message: '费用类型必选', trigger:'blur'},
           ],
           payee:[
@@ -1338,9 +1077,9 @@
           },
           {
             label: '费用类型',
-            prop: 'fee_type',
-            type: 'text',
-            //stateVal:'feetypes',
+            prop: 'fee_type_id',
+            type: 'select',
+            stateVal:'feetypes',
             editChgAble: true,
             addChgAble: false,
           },
@@ -1376,15 +1115,6 @@
         moreForms:true,
         threeParts:true,
         toggleText:false,
-        defectiveProductsListVal:[],
-        defectiveProductsHead:[
-          {
-            label:'商品编码',
-            width:'200',
-            prop:'proCode',
-            type:'text',
-          },
-        ],
         addActiveName: '0',
         proData: [],
         options: regionDataPlus,
@@ -1725,7 +1455,7 @@
           customer_city:'',
           customer_address:'',
           cmptn_fee:'',
-          fee_type:'',
+          fee_type_id:'',
           logistics_company:'',
           logistics_tracking_number:'',
           payment_method:'',
@@ -1987,17 +1717,19 @@
         let index = this.leftTopActiveName-0;
         switch(index){
           case 0:
-            this.$fetch(this.urls.aftercompensation+'/searchuntreated',{include:'problemProduct.afterCompensationOrder'})
+            this.$fetch(this.urls.aftercompensation+'/searchuntreated',{include:'problemProduct.afterCompensationOrder,feeType'})
               .then(res => {
                 this.loading = false;
                 this.cmptnOrderListTableData = res.data;
                 this.problemProData = res.data[0]?res.data[0]['problemProduct'].data:[];
                 //this.addSubData = res.data;
+                this.$store.dispatch('feetypes','/feetypes');
+
                 let pg = res.meta.pagination;
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
                 this.$store.commit('PAGE_TOTAL', pg.total);
-                //this.$store.dispatch('feetypes','/feetypes');
+                
               }, err => {
                 if (err.response) {
                   let arr = err.response.data.errors;
@@ -2160,10 +1892,35 @@
         this.resetAddInfo();
         this.addCmptnOrderMask = true;
         this.addIds =[];
-        this.proData = [];
         this.addProblemProCurIndexNum = 0;
         this.addProblemProCurIndex = 'index0';
         this.addProblemProUpload = 'upload0';
+      },
+      addMoreProblemPro(){
+        let problemProKey= {
+          commodity_code:'',
+          spec_code:'',
+          short_name:'',
+          spec:'',
+          color:'',
+          materials:'',
+          function:'',
+          special:'',
+          other:'',
+          buy_number:'1',
+          img_url:''
+        }
+        if(this.addCmptnOrderFormVal.problem_product.length>0&&!this.addCmptnOrderFormVal.problem_product[this.addCmptnOrderFormVal.problem_product.length-1].commodity_code){
+          this.$message({
+            message: '商品编码为空时不能添加新规格',
+            type: 'info'
+          });
+        }else{
+          this.addCmptnOrderFormVal.problem_product.push(problemProKey);
+          this.problemProListIndexNum = this.addCmptnOrderFormVal.problem_product.length-1;
+          this.addProblemProUpload = 'upload'+ this.problemProListIndexNum;
+          this.addProblemProCurIndex = 'index'+this.problemProListIndexNum;
+        }
       },
       proQueryClick(){
         this.proSkuVal = [];
@@ -2258,6 +2015,20 @@
         this.proSkuVal = [];
         this.proIds = [];
       },
+      addProblemProDel(index){
+        this.addCmptnOrderFormVal.problem_product.splice(index,1);
+        this.$message({
+          message:'删除问题商品行成功',
+          type:'success'
+        })
+      },
+      updateProblemProDel(index){
+        this.updateCmptnOrderFormVal.problem_product.splice(index,1);
+        this.$message({
+          message:'删除问题商品行成功',
+          type:'success'
+        })
+      },
       toggleForm(){
         /*展开  partHide
         * 折叠  没有partHide*/
@@ -2332,54 +2103,6 @@
           formVal = this.updateCmptnOrderFormVal;
         }
         formVal['total_distribution_fee']= (formVal['deliver_goods_fee']-0)+(formVal['move_upstairs_fee']-0)+(formVal['installation_fee']-0);
-      },
-      confirmAddProDtl(){
-        if(this.addCmptnOrderMask){
-          this.proSubmitData.map(item=>{
-            if(this.addIds.indexOf(item.id)==-1){
-              this.proData.push(item);
-              this.addIds.push(item.id);
-              this.$message({
-                message: '添加商品信息成功',
-                type: 'success'
-              })
-            }else{
-              this.proData.map((list,index)=>{
-                if(list.id == item.id){
-                  this.proData.splice(index,1);
-                  this.proData.push(item);
-                  this.$message({
-                    message: '添加商品信息成功',
-                    type: 'success'
-                  })
-                }
-              })
-            }
-          });
-        }else{
-          this.proSubmitData.map(item=>{
-            if(this.updateProIds.indexOf(item.id)==-1){
-              this.updateProData.push(item);
-              this.updateProIds.push(item.id);
-              this.$message({
-                message: '添加商品信息成功',
-                type: 'success'
-              })
-            }else{
-              this.updateProData.map((list,index)=>{
-                if(list.combinations_id == item.id){
-                  this.$set(item,'originalId',list.id);
-                  this.updateProData.splice(index,1);
-                  this.updateProData.push(item);
-                  this.$message({
-                    message: '添加商品信息成功',
-                    type: 'success'
-                  })
-                }
-              })
-            }
-          });
-        }
       },
       cancelAddProDtl(){
         this.proMask = false;

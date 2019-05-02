@@ -42,7 +42,7 @@ class AfterCompensationOrder extends Model
         'customer_city',
         'customer_address',
         'cmptn_fee',
-        'fee_type',
+        'fee_type_id',
         'logistics_company',
         'logistics_tracking_number',
         'payment_method',
@@ -83,7 +83,7 @@ class AfterCompensationOrder extends Model
             // 如果模型的 no 字段为空
             if (!$model->system_order_no) {
                 // 调用 findAvailableNo 生成订单流水号
-                $model->system_order_no = static::findAvailableNo('DD', 'system_order_no');
+                $model->system_order_no = static::findAvailableNo('CMPTN', 'system_order_no');
                 // 如果生成失败，则终止创建订单
                 if (!$model->system_order_no) {
                     return false;
@@ -442,7 +442,7 @@ class AfterCompensationOrder extends Model
 
      public function feeType()
      {
-         return $this->hasMany(FeeType::class);
+         return $this->belongsTo(FeeType::class,'fee_type_id');
      }
 
      public function problemProduct()

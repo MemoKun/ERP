@@ -29,7 +29,7 @@ class AfterCompensationTransformer extends TransformerAbstract
             'customer_phone' =>$afterCompensationOrder->customer_phone,
             'customer_address' =>$afterCompensationOrder->customer_address,
             'cmptn_fee' =>$afterCompensationOrder->cmptn_fee,
-            'fee_type' =>$afterCompensationOrder->fee_type,
+            'fee_type_id' =>$afterCompensationOrder->fee_type_id,
             'logistics_company' =>$afterCompensationOrder->logistics_company,
             'logistics_tracking_number' =>$afterCompensationOrder->logistics_tracking_number,
             'payment_method' =>$afterCompensationOrder->payment_method,
@@ -52,7 +52,7 @@ class AfterCompensationTransformer extends TransformerAbstract
     
     public function includeFeeType(AfterCompensationOrder $afterCompensationOrder)
     {
-        return $this->collection($afterCompensationOrder->feeType, new FeeTypeTransformer());
+        return $this->item($afterCompensationOrder->feeType, new FeeTypeTransformer());
     }
 
     public function includeProblemProduct(AfterCompensationOrder $afterCompensationOrder)

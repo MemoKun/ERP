@@ -67,6 +67,10 @@ class AfterCompensationController extends Controller
         $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_SEC_AUDIT]);
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
+    public function searchCanceled(){
+        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_CANCEL]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
 
     /*
      *获取售后赔偿订单

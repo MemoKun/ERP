@@ -1,721 +1,354 @@
 <template>
-    <div>
-        <el-tabs v-model="activeName" @tab-click="outerHandleClick">
-            <el-tab-pane label="订单" name="0">
-                <div>
-                    <div class="searchBox">
-                        <span><label>买家昵称</label><el-input v-model="searchBox.customer_nickname" clearable></el-input></span>
-                        <span><label>买家姓名</label><el-input v-model="searchBox.customer_name" clearable></el-input></span>
-                        <span><label>买家电话</label><el-input v-model="searchBox.customer_phone" clearable></el-input></span>
-                        <span v-if="filterBox"><label>买家地址</label><el-input v-model="searchBox.customer_address" clearable></el-input></span>
-                        <span v-else>
-                                <el-button type="primary">筛选</el-button>
-                                <el-button>重置</el-button>
-                                <span @click="toggleShow">
-                                    <el-button type="text">展开</el-button>
-                                    <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-                                </span>
-                        </span>
-                    </div>
-                    <div class="searchBox" v-show="filterBox">
-                        <span><label>业务员</label><el-input v-model="searchBox.order_stuff" clearable></el-input></span>
-                        <span>
-                            <label>赔偿方向</label>
-                            <el-select v-model="searchBox.cmptn_direction" clearable placeholder="请选择">
-                                <el-option
-                                        v-for="item in searchBox.cmptn_directions"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span>
-                            <label>责任方</label>
-                            <el-select v-model="searchBox.responsible_party" clearable placeholder="请选择">
-                                <el-option
-                                        v-for="item in searchBox.responsible_partys"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span><label>责任人</label><el-input v-model="searchBox.responsible_person" clearable></el-input></span>
-                    </div>
-                    <div class="searchBox" v-show="filterBox">
-                        <span>
-                            <label>发货物流</label>
-                            <el-select v-model="searchBox.logistics_company" clearable placeholder="请选择">
-                                <el-option
-                                        v-for="item in searchBox.logistics_companys"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span><label>物流单号</label><el-input v-model="searchBox.logistics_tracking_number"></el-input></span>
-                        <span>
-                            <label>所属店铺</label>
-                            <el-select v-model="searchBox.cmptn_shop" clearable placeholder="请选择">
-                                <el-option
-                                        v-for="item in searchBox.cmptn_shops"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span>
-                          <label>协商日期</label>
-                          <el-date-picker v-model="searchBox.negotiation_date" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
-                        </span>
-                    </div>
-                    <div class="searchBox" v-show="filterBox">
-                      <span>
-                          <label>创建日期</label>
-                          <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
-                        </span>
-                        <span>
-                          <label>提交日期</label>
-                          <el-date-picker v-model="searchBox.submited_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
-                        </span>
-                        <span>
-                          <label>审核日期</label>
-                          <el-date-picker v-model="searchBox.audited_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
-                        </span>
-                    </div>
-                    <div v-if="filterBox" style="text-align: right">
-                        <el-button type="primary">筛选</el-button>
-                        <el-button @click="resets">重置</el-button>
-                        <span @click="toggleShow" style="display: inline">
-                                <el-button type="text">收起</el-button>
-                                <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-                            </span>
-                    </div>
-                </div>
-                <!--显示列表-未处理-->
-                <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
-                    <el-tab-pane label="所有订单" name="0">
-                        <el-table :data="cmptnOrderListTableData" fit
-                                  @selection-change="handleSelectionChange"
-                                  v-loading="loading"
-                                  height="350"
-                                  @row-click="orderListRClick"
-                                  @row-dblclick="orderDbClick">
-                            <el-table-column
-                                    type="selection"
-                                    width="95" align="center"
-                                    :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                             <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                              </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                             <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                        <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==2">
-                        <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==3">
-                        <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==4">
-                        <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==5">
-                        <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                     {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                </span>
-                            </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <el-tab-pane label="未处理" name="1">
-                        <el-table :data="unHandle" fit
-                                  @selection-change="handleSelectionChange"
-                                  v-loading="loading"
-                                  height="350"
-                                  @row-click="orderListRClick"
-                                  @row-dblclick="orderDbClick">
-                            <el-table-column
-                                    type="selection"
-                                    width="95" align="center"
-                                    :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                             <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                              </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                             <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                        <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==2">
-                        <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==3">
-                        <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==4">
-                        <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==5">
-                        <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                     {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                </span>
-                            </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <el-tab-pane label="已处理" name="2">
-                        <el-table :data="alreadyHandle" fit
-                                  @selection-change="handleSelectionChange"
-                                  v-loading="loading"
-                                  height="350"
-                                  @row-click="orderListRClick"
-                                  @row-dblclick="orderDbClick">
-                            <el-table-column
-                                    type="selection"
-                                    width="95" align="center"
-                                    :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                             <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                              </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                             <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                        <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==2">
-                        <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==3">
-                        <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==4">
-                        <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==5">
-                        <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                     {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                </span>
-                            </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <el-tab-pane label="已作废" name="4">
-                        <el-table :data="cmptnOrderListTableData" fit
-                                  @selection-change="handleSelectionChange"
-                                  v-loading="loading"
-                                  height="350"
-                                  @row-click="orderListRClick"
-                                  @row-dblclick="orderDbClick">
-                            <el-table-column
-                                    type="selection"
-                                    width="95" align="center"
-                                    :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                             <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                              </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                             <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                        <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==2">
-                        <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==3">
-                        <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==4">
-                        <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                         <span v-else-if="scope.row[item.prop]==5">
-                        <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                     {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                </span>
-                            </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                </el-tabs>
-                <el-tabs>
-                  <el-tab-pane label="问题产品" name="0">
-                    <el-table :data="defProData">
-                      <el-table-column v-for="item in defProTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
-                        <template slot-scope="scope">
-                          <span v-if="item.type=='select'">
-                            <span v-if="scope.row[item.prop]==''"></span>
-                            <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">
-                              {{scope.row[item.prop][item.nmProp]}}
-                            </span>
-                          </span>
-                          <span v-else-if="item.type=='checkbox'">
-                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                          </span>
-                          <span v-else-if="item.type=='img'">
-                            <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                              <img :src="scope.row[item.prop]">
-                              <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                            </el-popover>
-                          </span>
-                          <span v-else>
-                            <span v-if="scope.row[item.prop]">
-                              {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                            </span>
-                          </span>
-                        </template>
-                      </el-table-column>
-                    </el-table>
-                  </el-tab-pane>
-                </el-tabs>
-            </el-tab-pane>
+  <div>
+    <el-tabs v-model="activeName" @tab-click="outerHandleClick">
+      <el-tab-pane label="订单" name="0">
+        <div>
+          <div class="searchBox">
+            <span><label>买家昵称</label><el-input v-model="searchBox.customer_nickname" clearable></el-input></span>
+            <span><label>买家姓名</label><el-input v-model="searchBox.customer_name" clearable></el-input></span>
+            <span><label>买家电话</label><el-input v-model="searchBox.customer_phone" clearable></el-input></span>
+            <span v-if="filterBox"><label>买家地址</label><el-input v-model="searchBox.customer_address" clearable></el-input></span>
+            <span v-else>
+              <el-button type="primary">筛选</el-button>
+              <el-button>重置</el-button>
+              <span @click="toggleShow">
+                <el-button type="text">展开</el-button>
+                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
+              </span>
+            </span>
+          </div>
+          <div class="searchBox" v-show="filterBox">
+            <span><label>业务员</label><el-input v-model="searchBox.order_stuff" clearable></el-input></span>
+            <span>
+              <label>赔偿方向</label>
+              <el-select v-model="searchBox.cmptn_direction" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in searchBox.cmptn_directions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span>
+              <label>责任方</label>
+              <el-select v-model="searchBox.responsible_party" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in searchBox.responsible_partys"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span>
+              <label>责任人</label><el-input v-model="searchBox.responsible_person" clearable></el-input>
+            </span>
+          </div>
+          <div class="searchBox" v-show="filterBox">
+            <span>
+              <label>发货物流</label>
+              <el-select v-model="searchBox.logistics_company" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in searchBox.logistics_companys"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span><label>物流单号</label><el-input v-model="searchBox.logistics_tracking_number"></el-input></span>
+            <span>
+              <label>所属店铺</label>
+              <el-select v-model="searchBox.cmptn_shop" clearable placeholder="请选择">
+                <el-option
+                    v-for="item in searchBox.cmptn_shops"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span>
+              <label>协商日期</label>
+                <el-date-picker v-model="searchBox.negotiation_date" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
+            </span>
+          </div>
+          <div class="searchBox" v-show="filterBox">
+            <span>
+              <label>创建日期</label>
+              <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
+            </span>
+            <span>
+              <label>提交日期</label>
+                <el-date-picker v-model="searchBox.submited_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
+            </span>
+            <span>
+              <label>审核日期</label>
+              <el-date-picker v-model="searchBox.audited_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
+            </span>
+          </div>
+          <div v-if="filterBox" style="text-align: right">
+            <el-button type="primary">筛选</el-button>
+            <el-button @click="resets">重置</el-button>
+            <span @click="toggleShow" style="display: inline">
+              <el-button type="text">收起</el-button>
+                <i class="el-icon-arrow-up" style="color:#409EFF"></i>
+            </span>
+          </div>
+        </div>
+                
+        <!--显示列表-未处理-->
+        <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
+          <el-tab-pane label="所有订单" name="0">
+            <el-table :data="cmptnOrderListTableData" fit
+                @selection-change="handleSelectionChange"
+                v-loading="loading"
+                height="350"
+                @row-click="problemProRowClick">
+              <el-table-column
+                type="selection"
+                width="95" align="center"
+                :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="未处理" name="1">
+            <el-table :data="allUnHandle" fit
+              @selection-change="handleSelectionChange"
+              v-loading="loading"
+              height="350"
+              @row-click="problemProRowClick">
+            <el-table-column
+              type="selection"
+              width="95" align="center"
+              :checked="checkboxInit">
+            </el-table-column>
+            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <span v-if="item.inProp">
+                    <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                  </span>
+                  <span v-else>
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='flag'">
+                  <span v-if="scope.row[item.prop]==0">
+                    <i class="iconfont bf-flag"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==1">
+                    <i class="iconfont bf-flag" style="color:red"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==2">
+                    <i class="iconfont bf-flag" style="color:yellow"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==3">
+                    <i class="iconfont bf-flag" style="color:green"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==4">
+                    <i class="iconfont bf-flag" style="color:blue"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==5">
+                    <i class="iconfont bf-flag" style="color:purple"></i>
+                  </span>
+                  </span>
+                    <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="已处理" name="2">
+            <el-table :data="alreadyHandle" fit
+              @selection-change="handleSelectionChange"
+              v-loading="loading"
+              height="350"
+              @row-click="problemProRowClick">
+            <el-table-column
+              type="selection"
+              width="95" align="center"
+              :checked="checkboxInit">
+            </el-table-column>
+            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <span v-if="item.inProp">
+                    <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                  </span>
+                  <span v-else>
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='flag'">
+                  <span v-if="scope.row[item.prop]==0">
+                    <i class="iconfont bf-flag"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==1">
+                    <i class="iconfont bf-flag" style="color:red"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==2">
+                    <i class="iconfont bf-flag" style="color:yellow"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==3">
+                    <i class="iconfont bf-flag" style="color:green"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==4">
+                    <i class="iconfont bf-flag" style="color:blue"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==5">
+                    <i class="iconfont bf-flag" style="color:purple"></i>
+                  </span>
+                  </span>
+                    <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="已作废" name="3">
+            <el-table :data="alreadyCanceled" fit
+              @selection-change="handleSelectionChange"
+              v-loading="loading"
+              height="350"
+              @row-click="problemProRowClick">
+            <el-table-column
+              type="selection"
+              width="95" align="center"
+              :checked="checkboxInit">
+            </el-table-column>
+            <el-table-column v-for="item in cmptnOrderListTableHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <span v-if="item.inProp">
+                    <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                  </span>
+                  <span v-else>
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='flag'">
+                  <span v-if="scope.row[item.prop]==0">
+                    <i class="iconfont bf-flag"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==1">
+                    <i class="iconfont bf-flag" style="color:red"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==2">
+                    <i class="iconfont bf-flag" style="color:yellow"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==3">
+                    <i class="iconfont bf-flag" style="color:green"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==4">
+                    <i class="iconfont bf-flag" style="color:blue"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==5">
+                    <i class="iconfont bf-flag" style="color:purple"></i>
+                  </span>
+                  </span>
+                    <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
         </el-tabs>
 
-        <!--新增-->
-        <el-dialog title="新增售后赔偿申请" :visible.sync="addCmptnOrderMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
-            <div class="clearfix">
-                <el-button type="text" style="float: left">售后赔偿信息</el-button>
-                <el-button type="primary" style="float: right;padding: 6px 10px;font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>
-            </div>
-            <el-form :model="addCmptnOrderFormVal" :rules="addCmptnOrderFormRules" class="cmptnAddForm hidePart" id="form">
-                <el-form-item v-for="(item,index) in addCmptnOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
-                    <span v-if="item.type=='text'">
-                         <span v-if="item.inProp">
-                            <el-input v-model.trim="addCmptnOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                        </span>
-                        <span v-else>
-                          <el-input v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+        <!--底部tab-->
+        <el-tabs>
+          <el-tab-pane label="问题产品" name="0">
+            <el-table :data="problemProData">
+              <el-table-column v-for="item in problemProTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                  <span v-else-if="item.type=='img'">
+                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                      <img :src="scope.row[item.prop]">
+                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                    </el-popover>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
                     </span>
-                    </span>
-                    <span v-else-if="item.type=='number'">
-                        <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                           <el-input type="number" v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
-                        </span>
-                        <span v-else>
-                            <el-input type="number" v-model.trim="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                        </span>
-                    </span>
-                    <span v-else-if="item.type=='select'">
-                      <el-select v-model="addCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                          <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
-                        </span>
-                      </el-select>
-                    </span>
-                    <span v-else-if="item.type=='textarea'">
-                         <el-input type="textarea" v-model.trim="addCmptnOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type=='checkbox'">
-                            <el-checkbox v-model="addCmptnOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
-                        </span>
-                    <span v-else-if="item.type=='radio'">
-                            <el-radio v-model="addCmptnOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-                            <el-radio v-model="addCmptnOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
-                        </span>
-                    <span v-else-if="item.type=='DatePicker'">
-                            <el-date-picker v-model="addCmptnOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
-                            </el-date-picker>
-                        </span>
-                </el-form-item>
-            </el-form>
-            <el-tabs v-model="addActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
-                <el-tab-pane label="问题产品" name="0">
-                    <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-                        <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-                            <template slot-scope="scope">
-                                <span v-if="item.prop=='newData'">
-                            <span v-if="proRIndex == 'index'+scope.$index">
-                                <span v-if="item.type=='number'">
-                                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                                </span>
-                                <span v-else-if="item.type == 'checkbox'">
-                                    <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
-                                </span>
-                                <span v-else>
-                                   <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                                </span>
-                            </span>
-                            <span v-else>
-                               <span v-if="item.type=='checkbox'">
-                                   <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                               </span>
-                                <span v-else>
-                                    {{scope.row[item.prop][item.inProp]}}
-                                </span>
-                            </span>
-                        </span>
-                                <span v-else-if="item.prop">
-                            <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                            <span v-else-if="item.type=='img'">
-                                <el-popover
-                                        placement="right"
-                                        trigger="hover"
-                                        popper-class="picture_detail">
-                       <img :src="scope.row[item.prop]">
-    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-   </el-popover>
-                            </span>
-                            <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                        </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column type="expand" fixed="left">
-                            <template slot-scope="scope">
-                                <el-table :data="scope.row['productComp']" fit>
-                                    <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                        <template slot-scope="scope">
-                                <span v-if="item.prop">
-                                    <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                                    <span v-else-if="item.type=='img'">
-                                <el-popover
-                                        placement="right"
-                                        trigger="hover"
-                                        popper-class="picture_detail">
-                       <img :src="scope.row[item.prop]">
-    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-   </el-popover>
-                            </span>
-                                    <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                                </span>
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="90" align="center" fixed="right">
-                            <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="addDelPro(scope.$index)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-            </el-tabs>
-            <div slot="footer" class="dialog-footer clearfix">
-                <div style="float: left">
-                    <el-button type="primary" @click="addProDtl" v-if="addActiveName=='0'">添加商品</el-button>
-                    <el-button type="primary" @click="addExpenseLine" v-if="addActiveName=='2'">新增行</el-button>
-                </div>
-                <div style="float: right">
-                    <el-button type="primary" @click="addCustomerConfirm">确定</el-button>
-                    <el-button @click="addCustomerCancel">取消</el-button>
-                </div>
-            </div>
-        </el-dialog>
-
-        <!--添加问题商品-->
-        <el-dialog title="添加商品" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
-            <el-button type="text">选择商品</el-button>
-            <div class="searchBox">
-                <span>
-                    <label>商品编码</label>
-                    <el-input v-model.trim="proQuery.commodity_code" clearable placeholder="请输入商品编码" @keyup.enter.native="proQueryClick"></el-input>
-                </span>
-                <span>
-                    <label>规格编码</label>
-                    <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
-                </span>
-                <span>
-                    <label>商品简称</label>
-                    <el-input v-model.trim="proQuery.short_name" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
-                </span>
-                <span>
-                     <label>规格</label>
-                    <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
-                </span>
-                <el-button type="primary" @click="proQueryClick">查询</el-button>
-            </div>
-            <el-table :data="proVal" fit height="250" :row-class-name="proCName" @row-click="proRowClick">
-                <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                    <template slot-scope="scope">
-                       <span v-if="item.prop">
-                           <span v-if="item.type=='img'">
-                               <el-popover placement="right" trigger="hover"
-                                           popper-class="picture_detail">
-                                   <img :src="scope.row[item.prop]">
-                                   <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                               </el-popover>
-                           </span>
-                           <span v-else>
-                               {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                           </span>
-                       </span>
-                    </template>
-                </el-table-column>
+                  </span>
+                </template>
+              </el-table-column>
             </el-table>
-            <div slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="confirmAddProDtl">确定</el-button>
-                <el-button @click="cancelAddProDtl">关闭</el-button>
-            </div>
-        </el-dialog>
-
-        <!--修改-->
-        <el-dialog title="修改明细" :visible.sync="updateCustomerMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
-            <div class="clearfix">
-                <el-button type="text" style="float: left">基础信息</el-button>
-                <el-button type="primary" style="float: right;padding: 6px 10px;
-    font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>
-            </div>
-            <el-form :model="updateCmptnOrderFormVal" :rules="addCmptnOrderFormRules" class="cmptnAddForm hidePart" id="form">
-                <el-form-item v-for="(item,index) in addCmptnOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
-                    <span v-if="item.type=='text'">
-                         <span v-if="item.inProp">
-                            <el-input v-model.trim="updateCmptnOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                        </span>
-                        <span v-else>
-                          <el-input v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                    </span>
-                    </span>
-                    <span v-else-if="item.type=='number'">
-                        <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                           <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
-                        </span>
-                        <span v-else>
-                            <el-input type="number" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                        </span>
-                    </span>
-                    <span v-else-if="item.type=='select'">
-                             <el-select v-model="updateCmptnOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-                                      <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                                    <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
-                               </span>
-                           </el-select>
-                    </span>
-                    <span v-else-if="item.type=='textarea'">
-                         <el-input type="textarea" v-model.trim="updateCmptnOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type=='checkbox'">
-                            <el-checkbox v-model="updateCmptnOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
-                    </span>
-                    <span v-else-if="item.type=='radio'">
-                            <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-                            <el-radio v-model="updateCmptnOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
-                        </span>
-                    <span v-else-if="item.type=='DatePicker'">
-                            <el-date-picker v-model="updateCmptnOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
-                            </el-date-picker>
-                    </span>
-                </el-form-item>
-            </el-form>
-            <el-tabs v-model="updateActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
-                <el-tab-pane label="商品信息" name="0">
-                    <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-                        <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-                            <template slot-scope="scope">
-                                <span v-if="item.prop=='newData'">
-                            <span v-if="proRIndex == 'index'+scope.$index">
-                                <span v-if="item.type=='number'">
-                                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                                </span>
-                                <span v-else-if="item.type == 'checkbox'">
-                                    <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
-                                </span>
-                                <span v-else>
-                                   <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                                </span>
-                            </span>
-                            <span v-else>
-                               <span v-if="item.type=='checkbox'">
-                                   <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                               </span>
-                                <span v-else>
-                                    {{scope.row[item.prop][item.inProp]}}
-                                </span>
-                            </span>
-                        </span>
-                                <span v-else-if="item.prop">
-                            <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                            <span v-else-if="item.type=='img'">
-                                <el-popover
-                                        placement="right"
-                                        trigger="hover"
-                                        popper-class="picture_detail">
-                       <img :src="scope.row[item.prop]">
-    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-   </el-popover>
-                            </span>
-                            <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                        </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column type="expand" fixed="left">
-                            <template slot-scope="scope">
-                                <el-table :data="scope.row['productComp']" fit>
-                                    <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                        <template slot-scope="scope">
-                                <span v-if="item.prop">
-                                    <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                                    <span v-else-if="item.type=='img'">
-                                <el-popover
-                                        placement="right"
-                                        trigger="hover"
-                                        popper-class="picture_detail">
-                       <img :src="scope.row[item.prop]">
-    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-   </el-popover>
-                            </span>
-                                    <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                                </span>
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="90" align="center" fixed="right">
-                            <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="updateDelPro(scope.row,scope.$index)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="费用类型" name="1">
-                    <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick"  :row-class-name="addExpenseRCName">
-                        <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-                            <template slot-scope="scope">
-                                <span v-if="expenseRIndex == 'index'+scope.$index">
-                                    <span v-if="item.type=='select'">
-                                        <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
-                                            <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                                                <el-option :label="list.name" :value="list.id"></el-option>
-                                           </span>
-                                       </el-select>
-                                    </span>
-                                    <span v-else>
-                                       <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                                    </span>
-                                </span>
-                                <span v-else>
-                                    <span v-if="item.type=='select'">
-                                         <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
-                                             <span v-if="list.id==scope.row[item.prop]">
-                                                 {{list.name}}
-                                             </span>
-                                         </span>
-                                    </span>
-                                <span v-else>
-                                    {{scope.row[item.prop]}}
-                                </span>
-                            </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="90" align="center" fixed="right">
-                            <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="updateDelExpense(scope.row,scope.$index)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-            </el-tabs>
-            <div slot="footer" class="dialog-footer clearfix">
-                <div style="float: left">
-                    <el-button type="primary" @click="addProDtl" v-if="updateActiveName=='0'">添加商品</el-button>
-                    <el-button type="primary" @click="addExpenseLine" v-if="updateActiveName=='2'">新增行</el-button>
-                </div>
-                <div style="float: right">
-                    <el-button type="primary" @click="updateCmptnConfirm">确定</el-button>
-                    <el-button @click="updateCustomerCancel">取消</el-button>
-                </div>
-            </div>
-        </el-dialog>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+    </el-tabs>
 
         <!--删除单条-->
         <el-popover
@@ -731,44 +364,56 @@
 
         <!--页码-->
         <Pagination :page-url="this.urls.aftercompensation" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
-
-        <!--拆分-->
-        <el-dialog title="拆分订单" :visible.sync="splitMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
-            <el-button type="text">请选择拆出商品</el-button>
-            <el-table :data="splitVal" fit height="300" @row-click="splitRowClick" :row-class-name="splitCName" >
-                <el-table-column v-for="item in splitHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                    <template slot-scope="scope">
-                        <span v-if="item.prop=='newData'">
-                            <span v-if="splitRowIndex == 'index'+scope.$index">
-                                <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" @input="numChg"></el-input>
-                            </span>
-                            <span v-else>
-                                {{scope.row[item.prop][item.inProp]}}
-                            </span>
-                        </span>
-                        <span v-else-if="item.prop">
-                            <span v-if="item.type=='checkbox'">
-                                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                     </span>
-                            <span v-else>
-                             {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                        </span>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <div slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="confirmSplit">确定</el-button>
-                <el-button @click="cancelSplit">关闭</el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 <script>
+  import FileSaver from 'file-saver'
+  import XLSX from 'xlsx'
+  import axios from 'axios'
+  import qs from 'qs'
+  import { mapGetters } from 'vuex'
   import { regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
   export default {
     data() {
+      let validateNum = (rule, value, callback)=>{
+        if (value!=parseFloat(value)) {
+          callback(new Error('只能是数字'));
+        } else if(value<=0){
+          callback(new Error('不能为负数'));
+        }else{
+          callback();
+        }
+      };
+      let validateTel = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('手机号不能为空'));
+        } else {
+          const reg = /^1[3|4|5|7|8|9][0-9]\d{8}$/;
+          if (reg.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入正确的手机号'));
+          }
+        }
+      };
+      let validateUrl = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('网址不能为空'));
+        } else {
+          // const reg = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+          const reg = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/;
+          if (reg.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入正确的网址'));
+          }
+        }
+      };
       return {
+        imgPath: '',
+        fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+        addProblemProCurIndexNum:'',
+        fd: [],
         newOpt: [
           {
             cnt: '导出',
@@ -782,6 +427,8 @@
           }
         ],
         filterBox: false,
+        refuseMask:false,
+        refuse_reason:'',
         searchBox:{
           customer_nickname:'',
           customer_name:'',
@@ -800,7 +447,8 @@
               {label:'服务商',value:2},
               {label:'客户',value:3},
               {label:'公司',value:4},
-              {label:'其他',value:5}
+              {label:'仓库',value:5},
+              {label:'其他',value:6}
           ],
           responsible_person:'',
           logistics_company:'',
@@ -822,7 +470,6 @@
         /*获取数据*/
         activeName: '0',
         leftTopActiveName:'0',
-        rightActiveName: '0',
         cmptnOrderListTableData: [],
         cmptnOrderListTableHead: [//订单表头标签
           {
@@ -889,7 +536,8 @@
             label: '发货物流',
             width: '120',
             prop: 'logistics_company',
-            type: 'text',
+            nmprop:'name',
+            type: 'select',
           },
           {
             label: '物流单号',
@@ -938,13 +586,6 @@
             addChgAble: false,
           },
           {
-            label: '提交时间',
-            prop: 'submited_at',
-            type: 'text',
-            editChgAble: true,
-            addChgAble: false,
-          },
-          {
             label: '驳回原因',
             prop: 'refuse_reason',
             type: 'text',
@@ -953,7 +594,8 @@
           },
           {
             label: '费用类型',
-            prop: 'fee_type',
+            prop: 'feeType',
+            inProp:'name',
             type: 'text',
             editChgAble: true,
             addChgAble: false,
@@ -973,276 +615,22 @@
             addChgAble: false,
           },
         ],
-        loading: true,//作用未知
-        checkboxInit: false,//作用未知
-        orderListIndex: '',//作用未知
+        noUpload: true,
+        loading: true,
+        checkboxInit: false,
+        orderListIndex: '',
         alreadyHandle: [],
         orderDtlFormVal: {},
-        orderDtlFormHead: [
-          {
-            label: '系统单号',
-            prop: 'system_order_no',
-            type: 'text'
-          },
-          {
-            label: '淘宝单号',
-            prop: 'taobao_oid',
-            type: 'text',
-          },
-          {
-            label: '交易号',
-            prop: 'taobao_tid',
-            type: 'text'
-          },
-          {
-            label: '单号失联',
-            prop: 'association_taobao_oid',
-            type: 'text'
-          },
-          {
-            label: '所属店铺',
-            prop: 'shop_name',
-            type: 'text'
-          },
-          {
-            label: '业务员',
-            prop: 'business_personnel_name',
-            type: 'text'
-          },
-          {
-            label: '买家昵称',
-            prop: 'member_nick',
-            type: 'text'
-          },
-          {
-            label: '收货人',
-            prop: 'receiver_name',
-            type: 'text'
-          },
-          {
-            label: '手机',
-            prop: 'receiver_mobile',
-            type: 'text'
-          },
-          {
-            label: '电话',
-            prop: 'receiver_phone',
-            type: 'text'
-          },
-          {
-            label: '详细地址',
-            prop: 'receiver_address',
-            type: 'text'
-          },
-          {
-            label: '快递费用',
-            prop: 'express_fee',
-            type: 'number'
-          },
-          /*{
-            label: '标准总金额',
-            prop: 'move_upstairs_fee',
-            type: 'number'
-          },*/
-          {
-            label: '运费类型',
-            prop: 'freight_types_name',
-            type: 'text'
-          },
-          {
-            label: '预付运费',
-            prop: 'expected_freight',
-            type: 'number'
-          },
-          /*{
-            label: '支付总金额',
-            prop: 'distribution_phone',
-            type: 'number'
-          },
-          {
-            label: '三包类型',
-            prop: 'distribution_no',
-            type: 'text'
-          },
-          {
-            label: '三包费用',
-            prop: '',
-            type: 'number'
-          },*/
-          {
-            label: '物流成本',
-            prop: 'deliver_goods_fee',
-            type: 'number'
-          },
-       /*   {
-            label: '订单总额',
-            prop: '',
-            type: 'number'
-          },*/
-        /*  {
-            label: '订单时间',
-            prop: '',
-            type: 'text'
-          },*/
-          {
-            label: '付款时间',
-            prop: 'payment_date',
-            type: 'text'
-          },
-          {
-            label: '承诺时间',
-            prop: 'promise_ship_time',
-            type: 'text'
-          },
-          {
-            label: '物流公司',
-            prop: 'logistic_name',
-            type: 'text'
-          },
-          {
-            label: '配送方式',
-            prop: 'distribution_method',
-            type: 'text'
-          },
-          {
-            label: '配送信息',
-            prop: 'service_car_info',
-            type: 'text'
-          },
-          {
-            label: '费用类型',
-            prop: 'deliver_goods_fee',
-            type: 'text'
-          },
-          {
-            label: '配送商',
-            prop: 'distribution_name',
-            type: 'text'
-          },
-          {
-            label: '配送电话',
-            prop: 'distribution_phone',
-            type: 'text'
-          },
-          {
-            label: '配送类型',
-            prop: 'distributionType_name',
-            type: 'text'
-          },
-          {
-            label: '配送总计',
-            prop: 'total_distribution_fee',
-            type: 'number'
-          },
-          {
-            label: '客服备注',
-            prop: 'customer_service_remark',
-            type: 'textarea'
-          },
-          {
-            label: '卖家备注',
-            prop: 'seller_remark',
-            type: 'textarea'
-          },
-          {
-            label: '买家留言',
-            prop: 'buyer_message',
-            type: 'textarea'
-          },
-        ],
-        proDtlData: [],
         curRowId:'',
         curRowData: {},
-        orderDtlHead: [//新建订单的商品信息的表头
-          [
-            {
-              label: 'sku名称',
-              width: '160',
-              prop:'name',
-              type: 'text'
-            },
-            {
-              label: '数量',
-              width: '130',
-              prop: 'quantity',
-              type: 'number',
-            },
-            {
-              label: '油漆',
-              width: '120',
-              prop: 'paint',
-              type: 'text',
-            },
-            {
-              label: '需要印刷',
-              width: '120',
-              prop: 'is_printing',
-              type: 'checkbox',
-            },
-            {
-              label: '总体积',
-              width: '120',
-              prop: 'total_volume',
-              type: 'number',
-            },
-            {
-              label: '印刷费用',
-              width: '140',
-              prop: 'printing_fee',
-              type: 'number',
-            },
-            {
-              label: '现货',
-              width: '120',
-              prop: 'is_spot_goods',
-              type: 'checkbox',
-            },
-            {
-              label: '单价(线下)',
-              width: '150',
-              prop: 'under_line_univalent',
-              type: 'number'
-            },
-            {
-              label: '优惠(线下)',
-              width: '150',
-              prop: 'under_line_preferential',
-              type: 'number',
-            }
-          ],
-          [
-            {
-              label: '支付金额',
-              prop: 'payment',
-              type: 'number',
-            },
-            {
-              label: '支付方式',
-              prop: 'payment_methods_id',
-              type: 'select',
-              stateVal: 'paymentmethods'
-            },
-            {
-              label: '交易号',
-              prop: 'taobao_tid',
-              type: 'text',
-            },
-            {
-              label: '来源单号',
-              prop: 'taobao_oid',
-              type: 'text',
-            }
-          ],
-          [],
-          []
-        ],
-        payDtlData: [],
+        problemProListIndexNum:'0',
+
         /*新增*/
         addCmptnOrderMask: false,
         moreForms: true,
         threeParts: true,
         addCmptnOrderFormVal:{
-          order_number:'nodata',
+          order_number:'',
           cmptn_shop:'',
           cmptn_direction:'',
           responsible_party:'',
@@ -1251,16 +639,16 @@
           customer_name:'',
           customer_phone:'',
           customer_city:'',
-          customer_address:'no data',
+          customer_address:'',
           cmptn_fee:'',
-          fee_type:'',
+          fee_type_id:'',
           logistics_company:'',
           logistics_tracking_number:'',
           payment_method:'',
           order_stuff:'',
           payee:'',
           payee_account:'',
-          problem_goods:'no data',
+          problem_product_id:'',
           problem_description:'',
           note:'',
           refuse_reason:'',
@@ -1269,7 +657,22 @@
           submited_at:'',
           audited_at:'',
           updated_at:'',
-          status:true
+          status:true,
+          problem_product:[
+            {
+              commodity_code:'',
+              spec_code:'',
+              short_name:'',
+              spec:'',
+              color:'',
+              materials:'',
+              function:'',
+              special:'',
+              other:'',
+              buy_number:'1',
+              img_url:''
+            }
+          ]
         },
         addCmptnOrderFormRules:{//新建订单的要求格式
           customer_phone:[
@@ -1302,7 +705,7 @@
           order_stuff:[
             {required: true, message: '业务员必选', trigger:'blur'},
           ],
-          fee_type:[
+          fee_type_id:[
             {required: true, message: '费用类型必选', trigger:'blur'},
           ],
           payee:[
@@ -1317,8 +720,11 @@
           problem_description:[
             {required: true, message: '问题描述必选', trigger:'blur'},
           ],
+          problem_product:[
+             {required: true, message: '请选择选择问题商品', trigger: 'blur'}
+          ]
         },
-        addCmptnOrderFormHead:[//新建订单的文本框表头
+        cmptnOrderFormHead:[//新建订单的文本框表头
           {
             label: '系统单号',
             prop: 'system_order_no',
@@ -1359,9 +765,8 @@
           {
             label: '结账方式',
             prop: 'payment_method',
-            type: 'text',
-            editChgAble: true,
-            addChgAble: false,
+            type: 'selects',
+            stateVal:'payment_method',
           },
           {
             label: '发货物流',
@@ -1380,7 +785,7 @@
           {
             label: '责任方',
             prop: 'responsible_party',
-            type: 'text',
+            type: 'selects',
             editChgAble: true,
             addChgAble: false,
           },
@@ -1394,7 +799,7 @@
           {
             label: '赔偿方向',
             prop: 'cmptn_direction',
-            type: 'text',
+            type: 'selects',
             editChgAble: true,
             addChgAble: false,
           },
@@ -1421,8 +826,9 @@
           },
           {
             label: '费用类型',
-            prop: 'fee_type',
-            type: 'text',
+            prop: 'fee_type_id',
+            type: 'select',
+            stateVal:'feetypes',
             editChgAble: true,
             addChgAble: false,
           },
@@ -1458,177 +864,103 @@
         moreForms:true,
         threeParts:true,
         toggleText:false,
-        defectiveProductsListVal:[],
-        defectiveProductsHead:[
-          {
-            label:'商品编码',
-            width:'200',
-            prop:'proCode',
-            type:'text',
-          },
-        ],
         addActiveName: '0',
         proData: [],
         options: regionDataPlus,
-        addHead:[
-          [
+        addProblemProHead:[
            {
+            label: '产品图片',
+            width: '120',
+            prop: "img_url",
+            type: 'img',
+            imgPath:'',
+          },
+          {
             label: '商品编码',
             prop: "commodity_code",
             type: 'text',
-            width: '180'
+            width: '160',
+            holder:'请输入商品编码'
           },
           {
             label: '规格编码',
             prop: "spec_code",
             type: 'text',
-            width: '150'
+            width: '160'
           },
           {
             label: '商品简称',
             prop: "short_name",
             type: 'text',
-            width: '120'
+            width: '160'
           },
           {
             label: '规格',
             prop: "spec",
             type: 'text',
-            width: '120'
+            width: '160',
           },
           {
             label: '颜色',
             prop: "color",
             type: 'text',
-            width: '120'
+            width: '120',
           },
           {
             label: '材质',
             prop: "materials",
             type: 'text',
-            width: '120'
+            width: '160',
           },
           {
             label: '功能',
             prop: "function",
             type: 'text',
-            width: '120'
+            width: '160',
           },
           {
             label: '特殊',
             prop: "special",
             type: 'text',
-            width: '120'
+            width: '160',
           },
           {
             label: '其他',
             prop: "other",
             type: 'text',
-            width: '120'
+            width: '160'
           },
           {
             label: '购买数量',
             prop: "buy_number",
-            type: 'text',
-            width: '120'
+            type: 'number',
+            width: '100',
           }
-         ],
-          [
-            {
-              label: '姓名',
-              prop: 'receiver_name',
-              holder: '请输入姓名',
-              type: 'text'
-            },
-            {
-              label: '固定电话',
-              prop: 'receiver_phone',
-              holder: '请输入固定电话',
-              type: 'number'
-            },
-            {
-              label: '手机',
-              prop: 'receiver_mobile',
-              holder: '请输入手机号码',
-              type: 'number'
-            },
-            {
-              label: '省市区',
-              prop: 'provinces',
-              type: 'cascader'
-            },
-            {
-              label: '地址',
-              prop: 'receiver_address',
-              type: 'text',
-            },
-            {
-              label: '邮编',
-              prop: 'receiver_zip',
-              holder: '请输入邮编',
-              type: 'text'
-            }
-          ],
-          [
-            {
-              label: '类型名称',
-              prop: 'payment_methods_id',
-              type: 'select',
-              stateVal: 'fee_type'
-            },
-            {
-              label: '金额',
-              prop: 'payment',
-              type: 'number',
-            },
-          ]
         ],
+        problemProKey:{
+          commodity_code:'',
+          spec_code:'',
+          short_name:'',
+          spec:'',
+          color:'',
+          materials:'',
+          function:'',
+          special:'',
+          other:'',
+          buy_number:'1',
+          img_url:'',
+        },
         proMask: false,
+        showChgBtn:'',
         proQuery:{
           commodity_code:'',
           component_code: '',
           shops_id:'',
           short_name:'',
         },
-        proHead:[
-          {
-            label: '产品图片',
-            width: '120',
-            prop: "img",
-            type: 'img'
-          },
-          {
-            label: '商品编码',
-            width: '120',
-            prop: "commodity_code",
-            type: 'text'
-          },
-          {
-            label: '工厂型号',
-            width: '120',
-            prop: "factory_model",
-            type: 'text'
-          },
-          {
-            label: '商品简称',
-            width: '120',
-            prop: "short_name",
-            type: 'text'
-          },
-          {
-            label: '类别名称',
-            width: '120',
-            prop: "goodsCategory",
-            inProp: 'name',
-            type: 'text'
-          },
-          {
-            label: '商品备注',
-            width: '120',
-            prop: "remark",
-            type: 'text'
-          }
-        ],
+        editSpecIndex:'',
+        editIndex: 0,
+        chgEId: '',
         proVal:[],
         toggleText: false,
         toggleHeight: true,
@@ -1700,6 +1032,7 @@
           }
         ],
         proCompVal: [],
+        unHandle:[],
         proCompHead: [
           {
             label: '组合',
@@ -1710,7 +1043,7 @@
           {
             label: '子件图片',
             width: '120',
-            prop: 'img_url',
+            prop: 'img',
             type: 'img',
           },
           {
@@ -1803,7 +1136,7 @@
         proIds: [],
         addIds: [],
         proCompRow: {},
-        proRIndex: '',
+        addProblemProCurIndexNum:0,
         receiveInfo: {
           receiver_name: '',
           receiver_phone: '',
@@ -1820,13 +1153,59 @@
         expenseRIndex:'',
         addSubData:[],
         /*修改*/
-        updateCustomerMask: false,
-        updateCmptnOrderFormVal: {},
+        updateCmptnOrderMask: false,
+        updateCmptnOrderFormVal: {
+          order_number:'',
+          cmptn_shop:'',
+          cmptn_direction:'',
+          responsible_party:'',
+          responsible_person:'',
+          customer_nickname:'',
+          customer_name:'',
+          customer_phone:'',
+          customer_city:'',
+          customer_address:'',
+          cmptn_fee:'',
+          fee_type_id:'',
+          logistics_company:'',
+          logistics_tracking_number:'',
+          payment_method:'',
+          order_stuff:'',
+          payee:'',
+          payee_account:'',
+          problem_product_id:'',
+          problem_description:'',
+          note:'',
+          refuse_reason:'',
+          negotiation_date:'',
+          created_at:'',
+          submited_at:'',
+          audited_at:'',
+          updated_at:'',
+          status:true,
+          problem_product:[
+            {
+              commodity_code:'',
+              spec_code:'',
+              short_name:'',
+              spec:'',
+              color:'',
+              materials:'',
+              function:'',
+              special:'',
+              other:'',
+              buy_number:'1',
+              img_url:''
+            }]
+        },
         updateActiveName: '0',
         updateProData: [],
         updateReceiveInfo: {},
         updateExpenseData: [],
         updateProIds: [],
+        updateProblemProCurIndexNum:0,
+        updateProblemProCurIndex:'index0',
+        tableChgBtn:'',
         /*删除单条*/
         showDel: false,
         delUrl: '',
@@ -1835,6 +1214,7 @@
         ids:[],
         splitMask: false,
         splitVal: [],
+        alreadyCanceled:'',
         splitHead: [
           {
             label: '商品编码',
@@ -1861,7 +1241,13 @@
         splitRowIndex: '',
         splitRow: {},
         mergerIds: [],
-        defProTableHead:[
+        problemProTableHead:[
+          {
+            label: '产品图片',
+            width: '200',
+            prop: "img_url",
+            type: 'img'
+          },
           {
             label: '商品编码',
             prop: "commodity_code",
@@ -1923,19 +1309,22 @@
             width: '120'
           }
         ],
-        defProData:{
-          commodity_code:'',
-          spec_code:'',
-          short_name:'',
-          spec:'',
-          color:'',
-          materials:'',
-          function:'',
-          special:'',
-          other:'',
-          buy_number:''
-        },
-        unHandle:[]
+        allUnHandle:[],
+        inputChange: false,
+        addProblemProCurIndex:'',
+        problemProData:[],
+        addSubData:[],
+        addProblemProUpload:'upload0',
+        updateProblemProUpload:'',
+        updateCompUpload:'upload0',
+        updateRwIndex:'0',
+        updateChgBtn:false,
+        selectVal:{
+          payment_method:[{label:'支付宝',value:'支付宝'},{label:'微信',value:'微信'},{label:'银行卡',value:'银行卡'}],
+          cmptn_direction:[{label:'我们赔偿',value:'我们赔偿'},{label:'赔偿我们',value:'赔偿我们'}],
+          responsible_party:[{label:'顾客',value:'顾客'},{label:'我们',value:'我们'},{label:'仓库',value:'仓库'},{label:'供应商',value:'供应商'}],
+          },
+
       }
     },
     computed: {
@@ -1976,6 +1365,82 @@
       },
       test() {
         console.log(1);
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleSecAudit(){
+          let id = this.checkboxId?this.checkboxId:this.curRowId;
+          this.$put(this.urls.aftercompensation + '/' + id + '/secaudit')
+            .then(()=>{
+              this.refresh();
+              this.$message({
+                message:'审核成功',
+                type: 'success'
+              })
+            },err=>{
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(',');
+                this.$message.error(str);
+              }
+            })
+      },
+      refuseCmptn(){
+        this.refuseMask = true;
+      },
+      refuseConfirm(){
+          let id = this.checkboxId?this.checkboxId:this.curRowId;
+          this.$put(this.urls.aftercompensation + '/' + id + '/unaudit')
+            .then(()=>{
+              this.refuseMask=false;
+              this.refuse_reason='';
+              this.$message({
+                message:'退审成功',
+                type: 'success'
+              })
+              this.refresh();
+            },err=>{
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(',');
+                this.$message.error(str);
+              }
+            })
+      },
+      handleSecUnAudit(){
+        let id = this.checkboxId?this.checkboxId:this.curRowId;
+          this.$put(this.urls.aftercompensation + '/' + id + '/secunaudit')
+            .then(()=>{
+              this.refresh();
+              this.refuseMask=false;
+              this.refuse_reason='';
+              this.$message({
+                message:'退审成功',
+                type: 'success'
+              })
+            },err=>{
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(',');
+                this.$message.error(str);
+              }
+            })
       },
       /*获取数据*/
       outerHandleClick() {
@@ -2035,14 +1500,17 @@
         let index = this.leftTopActiveName-0;
         switch(index){
           case 0:
-            this.$fetch(this.urls.aftercompensation+'/searchall')
+            this.$fetch(this.urls.aftercompensation+'/searchall',{include:'problemProduct.afterCompensationOrder'})
               .then(res => {
                 this.loading = false;
                 this.cmptnOrderListTableData = res.data;
+                this.problemProData = res.data[0]?res.data[0]['problemProduct'].data:[];
+                
                 let pg = res.meta.pagination;
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
                 this.$store.commit('PAGE_TOTAL', pg.total);
+                
               }, err => {
                 if (err.response) {
                   let arr = err.response.data.errors;
@@ -2055,11 +1523,13 @@
               });
             break;
           case 1:
-            this.$fetch(this.urls.aftercompensation+'/searchalluntreated')
+            this.$fetch(this.urls.aftercompensation+'/searchalluntreated',{include:'problemProduct.afterCompensationOrder'})
               .then(res => {
                 this.loading = false;
-                this.unHandle = res.data;
+                this.allUnHandle = res.data;
+                this.problemProData = res.data[0]?res.data[0]['problemProduct'].data:[];
                 let pg = res.meta.pagination;
+
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
                 this.$store.commit('PAGE_TOTAL', pg.total);
@@ -2074,12 +1544,14 @@
                 }
               });
             break;
-          case 2:
-            this.$fetch(this.urls.aftercompensation+'/searchsectreated')
+            case 2:
+            this.$fetch(this.urls.aftercompensation+'/searchsectreated',{include:'problemProduct.afterCompensationOrder'})
               .then(res => {
                 this.loading = false;
                 this.alreadyHandle = res.data;
+                this.problemProData = res.data[0]?res.data[0]['problemProduct'].data:[];
                 let pg = res.meta.pagination;
+
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
                 this.$store.commit('PAGE_TOTAL', pg.total);
@@ -2093,13 +1565,15 @@
                   this.$message.error(arr1.join(','));
                 }
               });
-            break
-        case 3:
-            this.$fetch(this.urls.aftercompensation+'/searchsectreated')
+            break;
+            case 3:
+            this.$fetch(this.urls.aftercompensation+'/searchcanceled',{include:'problemProduct.afterCompensationOrder'})
               .then(res => {
                 this.loading = false;
-                this.cmptnOrderListTableData = res.data;
+                this.alreadyCanceled = res.data;
+                this.problemProData = res.data[0]?res.data[0]['problemProduct'].data:[];
                 let pg = res.meta.pagination;
+
                 this.$store.dispatch('currentPage', pg.current_page);
                 this.$store.commit('PER_PAGE', pg.per_page);
                 this.$store.commit('PAGE_TOTAL', pg.total);
@@ -2113,96 +1587,65 @@
                   this.$message.error(arr1.join(','));
                 }
               });
-            break
+            break;
         }
       },
       leftHandleClick(){
         this.loading = true;
         this.fetchData();
       },
-      rightHandleClick(){},
-      orderListRClick(row){
-        if(row['locker_id'] == 0){
-          this.newOpt[1].nClick = true;
-          this.newOpt[2].nClick = true;
-          this.newOpt[3].nClick = false;
-          this.newOpt[4].nClick = true;
-          this.newOpt[8].nClick = true;
-          this.newOpt[9].nClick = true;
-          this.newOpt[14].nClick = true;
-          if(row['order_status']=="已客审"){
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = false;
-          }else{
-            this.newOpt[5].nClick = false;
-            this.newOpt[6].nClick = true;
-          }
-        }else{
-          this.newOpt[1].nClick = false;
-          this.newOpt[2].nClick = false;
-          this.newOpt[3].nClick = true;
-          this.newOpt[4].nClick = false;
-          this.newOpt[5].nClick = false;
-          this.newOpt[6].nClick = true;
-          this.newOpt[8].nClick = false;
-          this.newOpt[9].nClick = false;
-          this.newOpt[14].nClick = false;
-        }
+      problemProRowClick(row){
         this.curRowId = row.id;
-        this.curRowData = row;
-
+        this.problemProData = row['problemProduct'].data;
       },
-      orderDbClick(row){
-        this.activeName = '1';
-        let data = row;
-        if(data){
-          this.orderDtlFormVal={
-            system_order_no: data.system_order_no,
-            taobao_oid: data.taobao_oid,
-            taobao_tid: data.taobao_tid,
-            association_taobao_oid: data.association_taobao_oid,
-            shop_name: data['shop']['title'],
-            business_personnel_name: data['businessPersonnel']?data['businessPersonnel']['username']:'',
-            member_nick: data.member_nick,
-            receiver_name: data.receiver_name,
-            receiver_mobile: data.receiver_mobile,
-            receiver_phone: data.receiver_phone,
-            receiver_address: data.receiver_address,
-            express_fee: data.express_fee,
-            freight_types_name: data['freightType']['name'],
-            expected_freight: data.expected_freight,
-            deliver_goods_fee: data.deliver_goods_fee,
-            payment_date: data.payment_date,
-            promise_ship_time: data.promise_ship_time,
-            distribution_name: data['distribution']['name'],
-            distribution_method: data['distributionMethod']['name'],
-            service_car_info: data['service_car_info'],
-            distribution_phone: data['distribution_phone'],
-            buyer_message: data['buyer_message'],
-            logistic_name: data['logistic']['name'],
-            distributionType_name: data['distributionType']['name'],
-            total_distribution_fee: data['total_distribution_fee'],
-            customer_service_remark: data['customer_service_remark'],
-            seller_remark: data['seller_remark'],
-          }
-        }
-        this.proDtlData = row['orderItems']['data'];
-        if(row['orderItems']['data'].length>0){
-          row['orderItems']['data'].map(item=>{
-            item['name'] = item['combination']['name'];
-            item['productComp'] = item['combination']['productComponents']['data'];
-          })
-        }
-        /*支付明细*/
-        this.payDtlData = row['paymentDetails']['data'];
+      refuseCancel(){
+        refuseMask = false;
+        refuse_reason = '';
       },
-      proDtlRClick(row){},
       /*新增*/
-      addCustomer(){
+      resetAddInfo(){
+        Object.assign(this.$data.addCmptnOrderFormVal, this.$options.data().addCmptnOrderFormVal)
+        this.addProblemProCurIndex= 'index0';
+        this.updateProblemProCurIndex = 'index0';
+        this.addProblemProCurIndexNum = 0;
+        this.updateProblemProCurIndexNum = 0;
+        this.addProblemProUpload = 'upload0';
+
+        this.noUpload = true;
+      },
+      addCmptnOrder(){
+        this.resetAddInfo();
         this.addCmptnOrderMask = true;
         this.addIds =[];
-        this.proData = [];
-        this.proRIndex = '';
+        this.addProblemProCurIndexNum = 0;
+        this.addProblemProCurIndex = 'index0';
+        this.addProblemProUpload = 'upload0';
+      },
+      addMoreProblemPro(){
+        let problemProKey= {
+          commodity_code:'',
+          spec_code:'',
+          short_name:'',
+          spec:'',
+          color:'',
+          materials:'',
+          function:'',
+          special:'',
+          other:'',
+          buy_number:'1',
+          img_url:''
+        }
+        if(this.addCmptnOrderFormVal.problem_product.length>0&&!this.addCmptnOrderFormVal.problem_product[this.addCmptnOrderFormVal.problem_product.length-1].commodity_code){
+          this.$message({
+            message: '商品编码为空时不能添加新规格',
+            type: 'info'
+          });
+        }else{
+          this.addCmptnOrderFormVal.problem_product.push(problemProKey);
+          this.problemProListIndexNum = this.addCmptnOrderFormVal.problem_product.length-1;
+          this.addProblemProUpload = 'upload'+ this.problemProListIndexNum;
+          this.addProblemProCurIndex = 'index'+this.problemProListIndexNum;
+        }
       },
       proQueryClick(){
         this.proSkuVal = [];
@@ -2241,36 +1684,27 @@
       addHandleClick(){
 
       },
-      addProRCName({row,rowIndex}){row.index =rowIndex;},
+      addProRCName({row,rowIndex}){
+        row.index =rowIndex;
+      },
       addProRowClick(row){
-        this.proRIndex = `index${row.index}`;
+        this.addProblemProCurIndexNum = row.index;
+        this.addProblemProCurIndex = 'index'+row.index;
+        if(row.img_url){
+          this.tableChgBtn = 'show'+ row.index;
+        }else{
+          this.addProblemProUpload = 'upload'+row.index
+        }
       },
       addDelPro(index){this.proData.splice(index,1)},
-      addCustomerConfirm(){
-        let forData = this.addCmptnOrderFormVal;
-        let submitData = {
-          customer_nickname: forData.customer_nickname,
-          customer_name: forData.customer_name,
-          customer_phone: forData.customer_phone,
-          customer_city: forData.customer_city,
-          payment_method: forData.payment_method,
-          logistics_company: forData.logistics_company,
-          logistics_tracking_number: forData.logistics_tracking_number,
-          responsible_party: forData.responsible_party,
-          responsible_person: forData.responsible_person,
-          cmptn_direction: forData.cmptn_direction,
-          cmptn_fee: forData.cmptn_fee,
-          negotiation_date: forData.negotiation_date,
-          order_stuff: forData.order_stuff,
-          fee_type: forData.fee_type,
-          payee: forData.payee,
-          payee_account: forData.payee_account,
-          cmptn_shop: forData.cmptn_shop,
-          problem_description:forData.problem_description,
-          note: forData.note,
-          cmptn_status:forData.cmptn_status,
-        };
-        this.$post(this.urls.aftercompensation,submitData)
+      addCmptnOrderConfirm(){
+        let formData = this.addCmptnOrderFormVal;
+        formData.problem_product.map((item,index)=>{
+          if(!item.commodity_code){
+            formData.problem_product.splice(index,1);
+          }
+        })
+        this.$post(this.urls.aftercompensation,formData)
           .then(()=>{
             this.addCmptnOrderMask = false;
             this.refresh();
@@ -2291,10 +1725,10 @@
             }
           })
       },
-      addCustomerCancel(){
+      addCmptnOrderCancel(){
         this.addCmptnOrderMask = false;
         this.$message({
-          message: '取消新增订单明细',
+          message: '取消新增售后赔偿订单',
           type: 'success'
         })
       },
@@ -2305,6 +1739,20 @@
         this.proVal = [];
         this.proSkuVal = [];
         this.proIds = [];
+      },
+      addProblemProDel(index){
+        this.addCmptnOrderFormVal.problem_product.splice(index,1);
+        this.$message({
+          message:'删除问题商品行成功',
+          type:'success'
+        })
+      },
+      updateProblemProDel(index){
+        this.updateCmptnOrderFormVal.problem_product.splice(index,1);
+        this.$message({
+          message:'删除问题商品行成功',
+          type:'success'
+        })
       },
       toggleForm(){
         /*展开  partHide
@@ -2320,8 +1768,8 @@
         }
       },
       proRowClick(row){
-        this.proSkuVal = [];
-        this.proCompRowIndex = '';
+        
+        this.proCompRowIndex = `index${row.index}`;
         let comb = row['combinations']['data'];
         if(comb.length>0){
           let total_volume = 0;
@@ -2380,54 +1828,6 @@
           formVal = this.updateCmptnOrderFormVal;
         }
         formVal['total_distribution_fee']= (formVal['deliver_goods_fee']-0)+(formVal['move_upstairs_fee']-0)+(formVal['installation_fee']-0);
-      },
-      confirmAddProDtl(){
-        if(this.addCmptnOrderMask){
-          this.proSubmitData.map(item=>{
-            if(this.addIds.indexOf(item.id)==-1){
-              this.proData.push(item);
-              this.addIds.push(item.id);
-              this.$message({
-                message: '添加商品信息成功',
-                type: 'success'
-              })
-            }else{
-              this.proData.map((list,index)=>{
-                if(list.id == item.id){
-                  this.proData.splice(index,1);
-                  this.proData.push(item);
-                  this.$message({
-                    message: '添加商品信息成功',
-                    type: 'success'
-                  })
-                }
-              })
-            }
-          });
-        }else{
-          this.proSubmitData.map(item=>{
-            if(this.updateProIds.indexOf(item.id)==-1){
-              this.updateProData.push(item);
-              this.updateProIds.push(item.id);
-              this.$message({
-                message: '添加商品信息成功',
-                type: 'success'
-              })
-            }else{
-              this.updateProData.map((list,index)=>{
-                if(list.combinations_id == item.id){
-                  this.$set(item,'originalId',list.id);
-                  this.updateProData.splice(index,1);
-                  this.updateProData.push(item);
-                  this.$message({
-                    message: '添加商品信息成功',
-                    type: 'success'
-                  })
-                }
-              })
-            }
-          });
-        }
       },
       cancelAddProDtl(){
         this.proMask = false;
@@ -2505,7 +1905,7 @@
         /*拿到当前id*/
         this.checkboxId=val.length>0?val[val.length-1].id:'';
         this.curRowData=val.length>0?val[val.length-1]:'';
-        this.mergerIds = val;
+
       },
       delBatch(){
         if (this.ids.length === 0) {
@@ -2560,88 +1960,20 @@
         this.loading = true;
         this.fetchData();
       },
-      /*锁定*/
-      lockOrder(){
-        if (this.newOpt[3].nClick) {
-          return
-        } else {
-          let id = this.checkboxId?this.checkboxId:this.curRowId;
-          this.$put(this.urls.customerservicedepts + '/' + id + '/lockorunlock')
-            .then(()=>{
-              this.newOpt[1].nClick = false;
-              this.newOpt[2].nClick = false;
-              this.newOpt[3].nClick = true;
-              this.newOpt[4].nClick = false;
-              this.newOpt[5].nClick = false;
-              this.newOpt[6].nClick = true;
-              this.newOpt[8].nClick = false;
-              this.newOpt[9].nClick = false;
-              this.newOpt[14].nClick = false;
-              this.refresh();
-              this.$message({
-                message:'锁定成功',
-                type: 'success'
-              })
-            },err=>{
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                let str = arr1.join(',');
-                this.$message.error(str);
-              }
-            })
-        }
-      },
-      /*解锁*/
-      debLock(){
-        if (this.newOpt[4].nClick) {
-          return
-        } else {
-          let id = this.checkboxId?this.checkboxId:this.curRowId;
-          this.$put(this.urls.customerservicedepts + '/' + id + '/lockorunlock')
-            .then(()=>{
-              this.newOpt[1].nClick = true;
-              this.newOpt[2].nClick = true;
-              this.newOpt[3].nClick = false;
-              this.newOpt[4].nClick = true;
-              this.newOpt[5].nClick = true;
-              this.newOpt[6].nClick = true;
-              this.newOpt[8].nClick = true;
-              this.newOpt[9].nClick = true;
-              this.newOpt[14].nClick = true;
-              this.refresh();
-              this.$message({
-                message:'解锁成功',
-                type: 'success'
-              })
-            },err=>{
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                let str = arr1.join(',');
-                this.$message.error(str);
-              }
-            })
-        }
-      },
       /*修改*/
       updateData(){
         this.proIds = [];
         this.updateProIds = [];
         this.expenseRIndex ='';
         this.updateCmptnOrderFormVal = {};
-        this.updateCustomerMask = true;
-        this.proRIndex = '';
+        this.updateCmptnOrderMask = true;
+        this.updateProblemProCurIndex = 'index0';
+        this.updateProblemProCurIndexNum = 0;
         let id = this.checkboxId?this.checkboxId:this.curRowId;
-        this.$fetch(this.urls.aftercompensation+'/'+id)
+        this.$fetch(this.urls.aftercompensation+'/'+id,{include:'problemProduct.afterCompensationOrder'})
           .then(res=>{
             this.updateCmptnOrderFormVal = res;
+            this.updateCmptnOrderFormVal.problem_product = res.problemProduct.data;
           },err=>{
             if (err.response) {
               let arr = err.response.data.errors;
@@ -2654,109 +1986,11 @@
             }
           })
       },
-      updateDelPro(row,index){
-        if(row['originalId']){
-          this.$del(this.urls.orderitems+'/'+row['originalId'])
-            .then(()=>{
-              this.updateProData.splice(index,1);
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              });
-            },err=>{
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                let str = arr1.join(',');
-                this.$message.error(str);
-              }
-            })
-        }else if(row.id ){
-          this.$del(this.urls.orderitems+'/'+row.id)
-            .then(()=>{
-              this.updateProData.splice(index,1);
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              });
-            },err=>{
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                let str = arr1.join(',');
-                this.$message.error(str);
-              }
-            })
-        }else{
-          this.updateProData.splice(index,1);
-          this.$message({
-            message:'删除商品信息成功',
-            type: 'success'
-          })
-        }
-      },
-      updateDelExpense(row,index){
-        if(row.id){
-          this.$del(this.urls.paymentdetails+'/'+row.id)
-            .then(()=>{
-              this.updateExpenseData.splice(index,1);
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              });
-            },err=>{
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                let str = arr1.join(',');
-                this.$message.error(str);
-              }
-            })
-        }else{
-          this.updateExpenseData.splice(index,1);
-          this.$message({
-            message:'删除商品信息成功',
-            type: 'success'
-          })
-        }
-      },
       updateCmptnConfirm(){
-        let forData = this.updateCmptnOrderFormVal;
-        let submitData = {
-          customer_nickname: forData.customer_nickname,
-          customer_name: forData.customer_name,
-          customer_phone: forData.customer_phone,
-          customer_city: forData.customer_city,
-          payment_method: forData.payment_method,
-          logistics_company: forData.logistics_company,
-          logistics_tracking_number: forData.logistics_tracking_number,
-          responsible_party: forData.responsible_party,
-          responsible_person: forData.responsible_person,
-          cmptn_direction: forData.cmptn_direction,
-          cmptn_fee: forData.cmptn_fee,
-          negotiation_date: forData.negotiation_date,
-          order_stuff: forData.order_stuff,
-          fee_type: forData.fee_type,
-          payee: forData.payee,
-          payee_account: forData.payee_account,
-          cmptn_shop: forData.cmptn_shop,
-          problem_description:forData.problem_description,
-          note: forData.note,
-          cmptn_status:forData.cmptn_status
-        };
         let id = this.checkboxId?this.checkboxId:this.curRowId;
-        this.$patch(this.urls.aftercompensation+'/'+id,submitData)
+        this.$patch(this.urls.aftercompensation+'/'+id,this.updateCmptnOrderFormVal)
           .then(()=>{
-            this.updateCustomerMask = false;
+            this.updateCmptnOrderMask = false;
             this.refresh();
             this.$message({
               message: '修改成功',
@@ -2776,7 +2010,7 @@
           })
       },
       updateCustomerCancel(){
-        this.updateCustomerMask = false;
+        this.updateCmptnOrderMask = false;
         this.$message({
           message: '取消修改订单明细',
           type: 'success'
@@ -2807,6 +2041,9 @@
               }
             })
         }
+      },
+      handleEdit() {
+        this.inputChange = true;
       },
       handleUnAudit(){
           let id = this.checkboxId?this.checkboxId:this.curRowId;
@@ -2914,6 +2151,71 @@
       cancelSplit(){
         this.splitMask =false;
       },
+      beforeAddUploadProblemProImg(file){
+        this.tableChgBtn = '';
+        this.judgeFm(file);
+        let formData  = new FormData();
+        formData.append('image', file);
+        axios.post(this.urls.uploadimages,formData).then(res=>{
+          let imageInfo = res.data.meta;
+          if(imageInfo.status_code == 201){
+            this.addProblemProUpload = '';
+            this.tableChgBtn = 'show'+this.addProblemProCurIndexNum;
+            this.addCmptnOrderFormVal.problem_product[this.addProblemProCurIndexNum].img_url = res.data.path;
+          }
+        }).catch(err=>{})
+      },
+      beforeUpdateUploadProblemProImg(file){
+        this.tableChgBtn = '';
+        this.judgeFm(file);
+        let formData  = new FormData();
+        formData.append('image', file);
+        axios.post(this.urls.uploadimages,formData).then(res=>{
+          let imageInfo = res.data.meta;
+          if(imageInfo.status_code == 201){
+            this.updateProblemProUpload = '';
+            this.tableChgBtn = 'show'+this.updateProblemProCurIndexNum;
+            this.addCmptnOrderFormVal.problem_product[this.updateProblemProCurIndexNum].img_url = res.data.path;
+          }
+        }).catch(err=>{})
+      },
+      judgeFm(file){
+        const isJPG = file.type === 'image/jpeg';
+        const isGIF = file.type === 'image/gif';
+        const isPNG = file.type === 'image/png';
+
+        if (!isJPG && !isGIF && !isPNG) {
+          this.$message.error("上传图片必须是JPG/GIF/PNG 格式!")
+        }
+      },
+      beforeUpload(file){
+        this.showChgBtn = false;
+        this.judgeFm(file);
+        let formData  = new FormData();
+        formData.append('image', file);
+        axios.post(this.urls.uploadimages,formData).then(res=>{
+          let imageInfo = res.data.meta;
+          if(imageInfo.status_code == 201){
+            this.noUpload = false;
+            this.showChgBtn = true;
+            this.proForm.img = res.data.path;
+          }
+        }).catch(err=>{})
+      },
+      beforeUpdateUpload(file){
+        this.showChgBtn = false;
+        this.judgeFm(file);
+        let formData  = new FormData();
+        formData.append('image', file);
+        axios.post(this.urls.uploadimages,formData).then(res=>{
+          let imageInfo = res.data.meta;
+          if(imageInfo.status_code == 201){
+            this.noUpload = false;
+            this.showChgBtn = true;
+            this.updateCmptnOrderFormVal.problem_product[this.updateProblemProCurIndexNum].img_url = res.data.path;
+          }
+        }).catch(err=>{})
+      },
       handleMergerOrder(){
         if (this.newOpt[8].nClick){
           return
@@ -2942,6 +2244,7 @@
           }
         }
       },
+      
       resets(){
         this.searchBox = {};
       }

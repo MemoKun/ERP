@@ -1,14 +1,14 @@
 webpackJsonp([96],{
 
-/***/ 496:
+/***/ 515:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(678)
+var __vue_script__ = __webpack_require__(716)
 /* template */
-var __vue_template__ = __webpack_require__(679)
+var __vue_template__ = __webpack_require__(717)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/distributeMthMag.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/evalCategoryMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-15000968", Component.options)
+    hotAPI.createRecord("data-v-286e5fa0", Component.options)
   } else {
-    hotAPI.reload("data-v-15000968", Component.options)
+    hotAPI.reload("data-v-286e5fa0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,15 +48,11 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 678:
+/***/ 716:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -104,15 +100,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       disHead: [{
-        label: '配送方式',
-        prop: "name",
-        holder: '配送方式',
+        label: '评价类别',
+        prop: "eval_category",
+        holder: '评价类别',
+        type: 'text'
+      }, {
+        label: '评价描述',
+        prop: "eval_description",
+        holder: '评价描述',
         type: 'text'
       }, {
         label: '状态',
         prop: "status",
         holder: '状态',
-        // type: 'select_stu',
         type: 'checkbox',
         doSort: true,
         chgAble: true,
@@ -133,8 +133,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         chgAble: true,
         editChgAble: false
       }],
-      url: ['/distmets', '/stockintypes'],
-      title: ['新增配送方式', '新增入库方式'],
+      url: ['/evalcategorymag', '/stockintypes'],
+      title: ['新增用户评价类别', '新增入库方式'],
       ruleForm: [{
         name: '',
         status: true
@@ -143,14 +143,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status: true
       }],
       rules: [{
-        name: [{ required: true, message: '请输入配送方式', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入用户评价类别', trigger: 'blur' }]
       }, {
         name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '配送方式',
-        prop: 'name',
-        holder: '请输入配送方式',
+        label: '评价类别',
+        prop: 'eval_category',
+        holder: '请输入用户',
+        type: 'text'
+      }, {
+        label: '评价描述',
+        prop: 'eval_description',
+        holder: '请输入评价描述',
         type: 'text'
       }, {
         label: '状态',
@@ -181,7 +186,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       inputChange: false,
       delArr: [],
       multipleSelection: [],
-      refArr: ['distri', 'stock']
+      refArr: ['mag', 'stock']
     };
   },
 
@@ -298,7 +303,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     confirmD: function confirmD(id) {
       var _this4 = this;
 
-      this.$del(this.url[this.activeName] + '/' + id).then(function () {
+      this.$del(this.url[0] + '/' + id).then(function () {
         _this4.$message({
           message: '删除成功',
           type: 'success'
@@ -395,7 +400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 679:
+/***/ 717:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -420,36 +425,12 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "配送方式管理", name: "0" } },
+            { attrs: { label: "用户评价类别管理", name: "0" } },
             [
               _c("light-table", {
                 attrs: {
                   listData: _vm.getsData,
                   tableHead: _vm.disHead,
-                  loading: _vm.loading[_vm.activeName],
-                  currentIndex: _vm.currentIndex
-                },
-                on: {
-                  editSave: _vm.editSave,
-                  handleEdit: _vm.handleEdit,
-                  del: _vm.del,
-                  edit: _vm.edit,
-                  editCancel: _vm.editCancel,
-                  handleSelect: _vm.handleSelectionChange
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-tab-pane",
-            { attrs: { label: "入库方式管理", name: "1" } },
-            [
-              _c("light-table", {
-                attrs: {
-                  listData: _vm.getsData,
-                  tableHead: _vm.stockHead,
                   loading: _vm.loading[_vm.activeName],
                   currentIndex: _vm.currentIndex
                 },
@@ -540,7 +521,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-15000968", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-286e5fa0", module.exports)
   }
 }
 

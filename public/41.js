@@ -1,14 +1,14 @@
 webpackJsonp([41],{
 
-/***/ 475:
+/***/ 473:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(636)
+var __vue_script__ = __webpack_require__(632)
 /* template */
-var __vue_template__ = __webpack_require__(637)
+var __vue_template__ = __webpack_require__(633)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/refund/auditProofread.vue"
+Component.options.__file = "resources/assets/js/views/refund/financialReAudit.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-27965fda", Component.options)
+    hotAPI.createRecord("data-v-ab164b1a", Component.options)
   } else {
-    hotAPI.reload("data-v-27965fda", Component.options)
+    hotAPI.reload("data-v-ab164b1a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,11 +48,111 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 636:
+/***/ 632:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -322,6 +422,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             newOpt: [{
+                cnt: '修改',
+                icon: 'bf-change',
+                ent: this.test,
+                nClick: false
+            }, {
+                cnt: '删除',
+                icon: 'bf-del',
+                ent: this.test,
+                nClick: false
+            }, {
                 cnt: '锁定',
                 icon: 'bf-lock',
                 ent: this.test,
@@ -342,6 +452,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ent: this.test,
                 nClick: false
             }, {
+                cnt: '打印',
+                icon: 'bf-printer',
+                ent: this.test,
+                nClick: false
+            }, {
                 cnt: '刷新',
                 icon: 'bf-refresh',
                 ent: this.test,
@@ -357,11 +472,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 buyer_name: '',
                 refund_info: '',
                 locker: '',
-                refund_time: ''
+                refund_time: '',
+                sale_time: '',
+                audit_time: ''
             },
             topActiveName: 'pending',
             btmActiveName: 'refundDetail',
-
             pending: {
                 table: [{
                     label: '系统单号',
@@ -374,9 +490,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     prop: 'order_no',
                     type: 'text'
                 }, {
-                    label: '卖家昵称',
+                    label: '淘宝单号',
                     width: '120',
-                    prop: 'seller_nick',
+                    prop: 'taobao_no',
                     type: 'text'
                 }, {
                     label: '店铺分组',
@@ -387,6 +503,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     label: '买家昵称',
                     width: '120',
                     prop: 'buyer_nick',
+                    type: 'text'
+                }, {
+                    label: '买家姓名',
+                    width: '120',
+                    prop: 'buyer_name',
+                    type: 'text'
+                }, {
+                    label: '卖家昵称',
+                    width: '120',
+                    prop: 'seller_nick',
+                    type: 'text'
+                }, {
+                    label: '标记名称',
+                    width: '120',
+                    prop: 'mark_name',
                     type: 'text'
                 }, {
                     label: '单据类型',
@@ -494,6 +625,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     prop: 'financial_audit_at',
                     type: 'text'
                 }, {
+                    label: '责任人',
+                    width: '180',
+                    prop: 'principal',
+                    type: 'text'
+                }, {
+                    label: '承担人',
+                    width: '180',
+                    prop: 'bearers',
+                    type: 'text'
+                }, {
+                    label: '责任金额',
+                    width: '180',
+                    prop: 'principal_amount',
+                    type: 'text'
+                }, {
+                    label: '运费',
+                    width: '180',
+                    prop: 'freight',
+                    type: 'text'
+                }, {
                     label: '锁定',
                     width: '100',
                     prop: 'is_lock',
@@ -513,21 +664,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     width: '100',
                     prop: 'is_financial_audit',
                     type: 'checkbox'
-                }, {
-                    label: '标记名称',
-                    width: '100',
-                    prop: 'mark_name',
-                    type: 'text'
-                }, {
-                    label: '标记人',
-                    width: '180',
-                    prop: 'marker',
-                    type: 'text'
-                }, {
-                    label: '标记时间',
-                    width: '100',
-                    prop: 'mark_at',
-                    type: 'text'
                 }, {
                     label: '是否启用',
                     width: '100',
@@ -549,9 +685,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     prop: 'order_no',
                     type: 'text'
                 }, {
-                    label: '卖家昵称',
+                    label: '淘宝单号',
                     width: '120',
-                    prop: 'seller_nick',
+                    prop: 'taobao_no',
                     type: 'text'
                 }, {
                     label: '店铺分组',
@@ -562,6 +698,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     label: '买家昵称',
                     width: '120',
                     prop: 'buyer_nick',
+                    type: 'text'
+                }, {
+                    label: '买家姓名',
+                    width: '120',
+                    prop: 'buyer_name',
+                    type: 'text'
+                }, {
+                    label: '卖家昵称',
+                    width: '120',
+                    prop: 'seller_nick',
+                    type: 'text'
+                }, {
+                    label: '标记名称',
+                    width: '120',
+                    prop: 'mark_name',
                     type: 'text'
                 }, {
                     label: '单据类型',
@@ -669,6 +820,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     prop: 'financial_audit_at',
                     type: 'text'
                 }, {
+                    label: '责任人',
+                    width: '180',
+                    prop: 'principal',
+                    type: 'text'
+                }, {
+                    label: '承担人',
+                    width: '180',
+                    prop: 'bearers',
+                    type: 'text'
+                }, {
+                    label: '责任金额',
+                    width: '180',
+                    prop: 'principal_amount',
+                    type: 'text'
+                }, {
+                    label: '运费',
+                    width: '180',
+                    prop: 'freight',
+                    type: 'text'
+                }, {
                     label: '锁定',
                     width: '100',
                     prop: 'is_lock',
@@ -688,21 +859,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     width: '100',
                     prop: 'is_financial_audit',
                     type: 'checkbox'
-                }, {
-                    label: '标记名称',
-                    width: '100',
-                    prop: 'mark_name',
-                    type: 'text'
-                }, {
-                    label: '标记人',
-                    width: '180',
-                    prop: 'marker',
-                    type: 'text'
-                }, {
-                    label: '标记时间',
-                    width: '100',
-                    prop: 'mark_at',
-                    type: 'text'
                 }, {
                     label: '是否启用',
                     width: '100',
@@ -734,8 +890,227 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 sale_remark: '',
                 financial_remark: '',
                 refund_remark: ''
+            },
+            refundRecord: {
+                table: [{
+                    label: '系统单号',
+                    width: '200',
+                    prop: 'refund_no',
+                    type: 'text'
+                }, {
+                    label: '退款金额',
+                    width: '120',
+                    prop: 'refund_amount',
+                    type: 'text'
+                }, {
+                    label: '支付金额',
+                    width: '120',
+                    prop: 'pay_amount',
+                    type: 'text'
+                }, {
+                    label: '总金额',
+                    width: '120',
+                    prop: 'all_amount',
+                    type: 'text'
+                }, {
+                    label: '买家昵称',
+                    width: '120',
+                    prop: 'buyer_nick',
+                    type: 'text'
+                }, {
+                    label: '买家姓名',
+                    width: '120',
+                    prop: 'buyer_name',
+                    type: 'text'
+                }, {
+                    label: '卖家昵称',
+                    width: '120',
+                    prop: 'seller_nick',
+                    type: 'text'
+                }, {
+                    label: '建单时间',
+                    width: '200',
+                    prop: 'create_at',
+                    type: 'text'
+                }, {
+                    label: '退款类型',
+                    width: '120',
+                    prop: 'refund_type',
+                    type: 'text'
+                }, {
+                    label: '还款账号',
+                    width: '120',
+                    prop: 'refund_account',
+                    type: 'text'
+                }, {
+                    label: '还款类型',
+                    width: '180',
+                    prop: 'pay_type',
+                    type: 'text'
+                }, {
+                    label: '开户银行',
+                    width: '180',
+                    prop: 'bank',
+                    type: 'text'
+                }, {
+                    label: '开户地址',
+                    width: '180',
+                    prop: 'bank_address',
+                    type: 'text'
+                }, {
+                    label: '退款说明',
+                    width: '180',
+                    prop: 'refund_desc',
+                    type: 'text'
+                }, {
+                    label: '单价',
+                    width: '180',
+                    prop: 'unit_price',
+                    type: 'text'
+                }, {
+                    label: '数量',
+                    width: '180',
+                    prop: 'number',
+                    type: 'text'
+                }, {
+                    label: '超时时间',
+                    width: '180',
+                    prop: 'timeout_at',
+                    type: 'text'
+                }, {
+                    label: '锁定人',
+                    width: '180',
+                    prop: 'locker',
+                    type: 'text'
+                }, {
+                    label: '锁定时间',
+                    width: '180',
+                    prop: 'lock_at',
+                    type: 'text'
+                }, {
+                    label: '业务审核人',
+                    width: '180',
+                    prop: 'business_auditor',
+                    type: 'text'
+                }, {
+                    label: '业务审核时间',
+                    width: '180',
+                    prop: 'business_audit_at',
+                    type: 'text'
+                }, {
+                    label: '售后审核人',
+                    width: '180',
+                    prop: 'sale_auditor',
+                    type: 'text'
+                }, {
+                    label: '售后审核时间',
+                    width: '180',
+                    prop: 'sale_audit_at',
+                    type: 'text'
+                }, {
+                    label: '财务审核人',
+                    width: '180',
+                    prop: 'financial_auditor',
+                    type: 'text'
+                }, {
+                    label: '财务审核时间',
+                    width: '180',
+                    prop: 'financial_audit_at',
+                    type: 'text'
+                }, {
+                    label: '单据来源',
+                    width: '180',
+                    prop: 'order_source',
+                    type: 'text'
+                }, {
+                    label: '系统创建时间',
+                    width: '180',
+                    prop: 'system_create_at',
+                    type: 'text'
+                }, {
+                    label: '责任人',
+                    width: '180',
+                    prop: 'principal',
+                    type: 'text'
+                }, {
+                    label: '责任金额',
+                    width: '180',
+                    prop: 'principal_amount',
+                    type: 'text'
+                }, {
+                    label: '运费',
+                    width: '180',
+                    prop: 'freight',
+                    type: 'text'
+                }, {
+                    label: '删除时间',
+                    width: '180',
+                    prop: 'delete_at',
+                    type: 'text'
+                }, {
+                    label: '业务备注',
+                    width: '180',
+                    prop: 'business_mark',
+                    type: 'text'
+                }, {
+                    label: '售后备注',
+                    width: '180',
+                    prop: 'sale_mark',
+                    type: 'text'
+                }, {
+                    label: '财务备注',
+                    width: '180',
+                    prop: 'financial_mark',
+                    type: 'text'
+                }, {
+                    label: '锁定',
+                    width: '100',
+                    prop: 'is_lock',
+                    type: 'checkbox'
+                }, {
+                    label: '业务审核',
+                    width: '100',
+                    prop: 'is_business_audit',
+                    type: 'checkbox'
+                }, {
+                    label: '售后审核',
+                    width: '100',
+                    prop: 'is_sale_audit',
+                    type: 'checkbox'
+                }, {
+                    label: '财务审核',
+                    width: '100',
+                    prop: 'is_financial_audit',
+                    type: 'checkbox'
+                }, {
+                    label: '是否启用',
+                    width: '100',
+                    prop: 'is_use',
+                    type: 'checkbox'
+                }],
+                loading: true,
+                data: []
+            },
+            refundResponsible: {
+                table: [{
+                    label: '责任方',
+                    width: '100',
+                    prop: 'responsible',
+                    type: 'text'
+                }, {
+                    label: '责任方姓名',
+                    width: '100',
+                    prop: 'responsible_name',
+                    type: 'text'
+                }, {
+                    label: '责任金额',
+                    width: '100',
+                    prop: 'responsible_amount',
+                    type: 'text'
+                }],
+                loading: true,
+                data: []
             }
-
         };
     },
 
@@ -765,11 +1140,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             switch (this.topActiveName) {
                 case 'pending':
                     this.pending.loading = true;
-                    this.newOpt[0].nClick = false;
+                    this.newOpt[0].nClick = true;
                     this.newOpt[1].nClick = true;
-                    this.newOpt[2].nClick = true;
-                    this.newOpt[3].nClick = false;
-                    this.newOpt[4].nClick = false;
+                    this.newOpt[2].nClick = false;
+                    this.newOpt[3].nClick = true;
+                    this.newOpt[4].nClick = true;
+                    this.newOpt[5].nClick = false;
+                    this.newOpt[6].nClick = false;
 
                     this.pending.loading = false;
                     break;
@@ -780,6 +1157,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.newOpt[2].nClick = true;
                     this.newOpt[3].nClick = true;
                     this.newOpt[4].nClick = false;
+                    this.newOpt[5].nClick = false;
+                    this.newOpt[6].nClick = false;
 
                     this.solved.loading = false;
                     break;
@@ -791,13 +1170,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                     break;
                 case 'refundRecord':
+                    this.refundRecord.loading = true;
 
+                    this.refundRecord.loading = false;
                     break;
 
+                case 'operatorLog':
+
+                    break;
+                case 'refundResponsible':
+                    this.refundResponsible.loading = true;
+
+                    this.refundResponsible.loading = false;
+                    break;
                 case 'imgInfo':
 
                     break;
                 case 'images':
+
+                    break;
+                case 'refundReason':
 
                     break;
             }
@@ -837,7 +1229,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 637:
+/***/ 633:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1073,6 +1465,56 @@ var render = function() {
                     _vm.$set(_vm.searchBox, "refund_time", $$v)
                   },
                   expression: "searchBox.refund_time"
+                }
+              })
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "searchBox" }, [
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("售后时间")]),
+              _vm._v(" "),
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
+                model: {
+                  value: _vm.searchBox.sale_time,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "sale_time", $$v)
+                  },
+                  expression: "searchBox.sale_time"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("财审时间")]),
+              _vm._v(" "),
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
+                model: {
+                  value: _vm.searchBox.audit_time,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "audit_time", $$v)
+                  },
+                  expression: "searchBox.audit_time"
                 }
               })
             ],
@@ -1393,7 +1835,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("Pagination", { attrs: { "page-url": _vm.urls["auditProofread"] } }),
+      _c("Pagination", { attrs: { "page-url": _vm.urls["financialReAudit"] } }),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -2226,9 +2668,309 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "订单退款记录", name: "refundRecord" } },
+            [
+              _c(
+                "el-table",
+                {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.refundRecord.loading,
+                      expression: "refundRecord.loading"
+                    }
+                  ],
+                  attrs: { data: _vm.refundRecord.data, fit: "", height: "300" }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      type: "selection",
+                      width: "95",
+                      align: "center",
+                      checked: _vm.checkboxInit
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.refundRecord.table, function(item) {
+                    return _c("el-table-column", {
+                      key: item.prop,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type === "select"
+                                  ? _c("span", [
+                                      scope.row[item.prop] === ""
+                                        ? _c("span")
+                                        : typeof scope.row[item.prop] ==
+                                            "object" && item.nmProp
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                " +
+                                                _vm._s(
+                                                  scope.row[item.prop][
+                                                    item.nmProp
+                                                  ]
+                                                ) +
+                                                "\n                            "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                                  : item.type === "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : item.type === "img"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c(
+                                          "el-popover",
+                                          {
+                                            attrs: {
+                                              placement: "right",
+                                              trigger: "hover",
+                                              "popper-class": "picture_detail"
+                                            }
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src: scope.row[item.prop],
+                                                alt: ""
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("img", {
+                                              attrs: {
+                                                slot: "reference",
+                                                src: scope.row[item.prop],
+                                                alt: scope.row[item.alt]
+                                              },
+                                              slot: "reference"
+                                            })
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      scope.row[item.prop]
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                            "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c("el-tab-pane", {
-            attrs: { label: "操作日志", name: "refundRecord" }
+            attrs: { label: "操作日志", name: "operatorLog" }
           }),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "退款责任方", name: "refundResponsible" } },
+            [
+              _c(
+                "el-table",
+                {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.refundResponsible.loading,
+                      expression: "refundResponsible.loading"
+                    }
+                  ],
+                  attrs: {
+                    data: _vm.refundResponsible.data,
+                    fit: "",
+                    height: "300"
+                  }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      type: "selection",
+                      width: "95",
+                      align: "center",
+                      checked: _vm.checkboxInit
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.refundResponsible.table, function(item) {
+                    return _c("el-table-column", {
+                      key: item.prop,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type === "select"
+                                  ? _c("span", [
+                                      scope.row[item.prop] === ""
+                                        ? _c("span")
+                                        : typeof scope.row[item.prop] ==
+                                            "object" && item.nmProp
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                " +
+                                                _vm._s(
+                                                  scope.row[item.prop][
+                                                    item.nmProp
+                                                  ]
+                                                ) +
+                                                "\n                            "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                                  : item.type === "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : item.type === "img"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c(
+                                          "el-popover",
+                                          {
+                                            attrs: {
+                                              placement: "right",
+                                              trigger: "hover",
+                                              "popper-class": "picture_detail"
+                                            }
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src: scope.row[item.prop],
+                                                alt: ""
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("img", {
+                                              attrs: {
+                                                slot: "reference",
+                                                src: scope.row[item.prop],
+                                                alt: scope.row[item.alt]
+                                              },
+                                              slot: "reference"
+                                            })
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      scope.row[item.prop]
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                            "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("el-tab-pane", { attrs: { label: "图片信息", name: "imgInfo" } }, [
             _c(
@@ -2260,7 +3002,11 @@ var render = function() {
               ],
               1
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _c("el-tab-pane", {
+            attrs: { label: "退款原因", name: "refundReason" }
+          })
         ],
         1
       )
@@ -2274,7 +3020,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-27965fda", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-ab164b1a", module.exports)
   }
 }
 
