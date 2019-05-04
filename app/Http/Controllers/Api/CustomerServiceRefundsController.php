@@ -91,6 +91,12 @@ class CustomerServiceRefundsController extends Controller
         return $this->allOrPage($requset, self::MODEL, self::TRANSFORMER, self::PerPage);
     }
 
+    public function searchUntreated()
+    {
+        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_NEW,RefundOrder::REFUND_STATUS_LOCK]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
     /**
      * 新增客服退款(可选参数：include)
      *

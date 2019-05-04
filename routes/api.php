@@ -743,6 +743,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //客服退款申请
         $api->get('customerservicerefunds', 'CustomerServiceRefundsController@index')
             ->name('api.customerservicerefunds.index');
+        $api->get('customerservicerefunds/searchuntreated', 'CustomerServiceRefundsController@searchUntreated')
+            ->name('api.customerservicerefunds.searchuntreated');
         $api->get('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@show')
             ->name('api.customerservicerefunds.show');
         $api->post('customerservicerefunds', 'CustomerServiceRefundsController@store')

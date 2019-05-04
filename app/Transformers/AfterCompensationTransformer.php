@@ -49,7 +49,7 @@ class AfterCompensationTransformer extends TransformerAbstract
             'updated_at' =>optional($afterCompensationOrder->updated_at)->toDateString()
         ];
     }
-    
+
     public function includeFeeType(AfterCompensationOrder $afterCompensationOrder)
     {
         return $this->item($afterCompensationOrder->feeType, new FeeTypeTransformer());
@@ -59,7 +59,7 @@ class AfterCompensationTransformer extends TransformerAbstract
     {
         return $this->collection($afterCompensationOrder->problemProduct,new ProblemProductTransformer());
     }
-   
+
 
 
 }

@@ -71,7 +71,7 @@ const urls= {
     purchaseFabric: '/purchaseFabric',
     otherStorage: '/otherStorage',
 
-    customerReApplication: '/customerReApplication',
+    customerservicerefunds: '/customerservicerefunds',
     afterSaleReAudit: '/afterSaleReAudit',
     financialReAudit: '/financialReAudit',
     refundCenter: '/refundCenter',

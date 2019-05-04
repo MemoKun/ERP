@@ -33443,34 +33443,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -33484,730 +33456,739 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     var validateNum = function validateNum(rule, value, callback) {
       if (value != parseFloat(value)) {
-        callback(new Error('只能是数字'));
+        callback(new Error("只能是数字"));
       } else if (value <= 0) {
-        callback(new Error('不能为负数'));
+        callback(new Error("不能为负数"));
       } else {
         callback();
       }
     };
     var validateTel = function validateTel(rule, value, callback) {
       if (!value) {
-        return callback(new Error('手机号不能为空'));
+        return callback(new Error("手机号不能为空"));
       } else {
         var reg = /^1[3|4|5|7|8|9][0-9]\d{8}$/;
         if (reg.test(value)) {
           callback();
         } else {
-          return callback(new Error('请输入正确的手机号'));
+          return callback(new Error("请输入正确的手机号"));
         }
       }
     };
     var validateUrl = function validateUrl(rule, value, callback) {
       if (!value) {
-        return callback(new Error('网址不能为空'));
+        return callback(new Error("网址不能为空"));
       } else {
         // const reg = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
         var reg = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/;
         if (reg.test(value)) {
           callback();
         } else {
-          return callback(new Error('请输入正确的网址'));
+          return callback(new Error("请输入正确的网址"));
         }
       }
     };
     return _ref = {
-      imgPath: '',
-      fileList2: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
-      addProblemProCurIndexNum: '',
+      imgPath: "",
+      fileList2: [{
+        name: "food.jpeg",
+        url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+      }, {
+        name: "food2.jpeg",
+        url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+      }],
+      addProblemProCurIndexNum: "",
       fd: [],
       newOpt: [{
-        cnt: '导出',
-        icon: 'bf-out',
+        cnt: "导出",
+        icon: "bf-out",
         ent: this.test
       }, {
-        cnt: '刷新',
-        icon: 'bf-refresh',
+        cnt: "刷新",
+        icon: "bf-refresh",
         ent: this.refresh
       }],
       filterBox: false,
       refuseMask: false,
-      refuse_reason: '',
+      refuse_reason: "",
       searchBox: {
-        customer_nickname: '',
-        customer_name: '',
-        customer_phone: '',
-        customer_address: '',
-        order_stuff: '',
-        cmptn_direction: '',
-        cmptn_directions: [{ label: '我们赔偿', value: 0 }, { label: '赔偿我们', value: 1 }],
-        responsible_party: '',
-        responsible_partys: [{ label: '物流', value: 0 }, { label: '工厂', value: 1 }, { label: '服务商', value: 2 }, { label: '客户', value: 3 }, { label: '公司', value: 4 }, { label: '仓库', value: 5 }, { label: '其他', value: 6 }],
-        responsible_person: '',
-        logistics_company: '',
-        logistics_companys: [{ label: '顺丰速运', value: 0 }, { label: '韵达快递', value: 1 }],
-        logistics_tracking_number: '',
-        cmptn_shop: '',
-        cmptn_shops: [{ label: 'Dreasylife家居旗舰店', value: 0 }, { label: '思享家官方旗舰店', value: 1 }],
-        negotiation_date: '',
-        created_at: '',
-        submited_at: '',
-        audited_at: ''
+        customer_nickname: "",
+        customer_name: "",
+        customer_phone: "",
+        customer_address: "",
+        order_stuff: "",
+        cmptn_direction: "",
+        cmptn_directions: [{ label: "我们赔偿", value: 0 }, { label: "赔偿我们", value: 1 }],
+        responsible_party: "",
+        responsible_partys: [{ label: "物流", value: 0 }, { label: "工厂", value: 1 }, { label: "服务商", value: 2 }, { label: "客户", value: 3 }, { label: "公司", value: 4 }, { label: "仓库", value: 5 }, { label: "其他", value: 6 }],
+        responsible_person: "",
+        logistics_company: "",
+        logistics_companys: [{ label: "顺丰速运", value: 0 }, { label: "韵达快递", value: 1 }],
+        logistics_tracking_number: "",
+        cmptn_shop: "",
+        cmptn_shops: [{ label: "Dreasylife家居旗舰店", value: 0 }, { label: "思享家官方旗舰店", value: 1 }],
+        negotiation_date: "",
+        created_at: "",
+        submited_at: "",
+        audited_at: ""
       },
       /*获取数据*/
-      activeName: '0',
-      leftTopActiveName: '0',
+      activeName: "0",
+      leftTopActiveName: "0",
       cmptnOrderListTableData: [],
-      cmptnOrderListTableHead: [//订单表头标签
+      cmptnOrderListTableHead: [
+      //订单表头标签
       {
-        label: '系统单号',
-        width: '220',
-        prop: 'system_order_no',
-        type: 'text'
+        label: "系统单号",
+        width: "220",
+        prop: "system_order_no",
+        type: "text"
       }, {
-        label: '赔偿方向',
-        width: '220',
-        prop: 'cmptn_direction',
-        type: 'text'
+        label: "赔偿方向",
+        width: "220",
+        prop: "cmptn_direction",
+        type: "text"
       }, {
-        label: '责任方',
-        width: '150',
-        prop: 'responsible_party',
-        type: 'text'
+        label: "责任方",
+        width: "150",
+        prop: "responsible_party",
+        type: "text"
       }, {
-        label: '责任人',
-        width: '140',
-        prop: 'responsible_person',
-        type: 'text'
+        label: "责任人",
+        width: "140",
+        prop: "responsible_person",
+        type: "text"
       }, {
-        label: '买家昵称',
-        width: '140',
-        prop: 'customer_nickname',
-        type: 'text'
+        label: "买家昵称",
+        width: "140",
+        prop: "customer_nickname",
+        type: "text"
       }, {
-        label: '买家姓名',
-        width: '130',
-        prop: 'customer_name',
-        type: 'text'
+        label: "买家姓名",
+        width: "130",
+        prop: "customer_name",
+        type: "text"
       }, {
-        label: '客户电话',
-        width: '130',
-        prop: 'customer_phone',
-        type: 'text'
+        label: "客户电话",
+        width: "130",
+        prop: "customer_phone",
+        type: "text"
       }, {
-        label: '客户城市',
-        width: '130',
-        prop: 'customer_city',
-        type: 'text'
+        label: "客户城市",
+        width: "130",
+        prop: "customer_city",
+        type: "text"
       }, {
-        label: '赔偿金额',
-        width: '130',
-        prop: 'cmptn_fee',
-        type: 'text'
+        label: "赔偿金额",
+        width: "130",
+        prop: "cmptn_fee",
+        type: "text"
       }, {
-        label: '协商日期',
-        width: '140',
-        prop: 'negotiation_date',
-        type: 'text'
+        label: "协商日期",
+        width: "140",
+        prop: "negotiation_date",
+        type: "text"
       }, {
-        label: '发货物流',
-        width: '120',
-        prop: 'logistics_company',
-        nmprop: 'name',
-        type: 'select'
+        label: "发货物流",
+        width: "120",
+        prop: "logistics_company",
+        nmprop: "name",
+        type: "select"
       }, {
-        label: '物流单号',
-        width: '130',
-        prop: 'logistics_tracking_number',
-        type: 'text'
+        label: "物流单号",
+        width: "130",
+        prop: "logistics_tracking_number",
+        type: "text"
       }, {
-        label: '结账方式',
-        width: '120',
-        prop: 'payment_method',
-        type: 'text'
+        label: "结账方式",
+        width: "120",
+        prop: "payment_method",
+        type: "text"
       }, {
-        label: '业务员',
-        width: '120',
-        prop: 'order_stuff',
-        type: 'text'
+        label: "业务员",
+        width: "120",
+        prop: "order_stuff",
+        type: "text"
       }, {
-        label: '订单编号',
-        prop: 'order_number',
-        type: 'text',
+        label: "订单编号",
+        prop: "order_number",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '问题描述',
-        prop: 'problem_description',
-        type: 'text',
+        label: "问题描述",
+        prop: "problem_description",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '备注',
-        prop: 'note',
-        type: 'text',
+        label: "备注",
+        prop: "note",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '创建时间',
-        prop: 'created_at',
-        type: 'text',
+        label: "创建时间",
+        prop: "created_at",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '驳回原因',
-        prop: 'refuse_reason',
-        type: 'text',
+        label: "驳回原因",
+        prop: "refuse_reason",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '费用类型',
-        prop: 'feeType',
-        inProp: 'name',
-        type: 'text',
+        label: "费用类型",
+        prop: "feeType",
+        inProp: "name",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '收款人',
-        prop: 'payee',
-        type: 'text',
+        label: "收款人",
+        prop: "payee",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '收款账户',
-        prop: 'payee_account',
-        type: 'text',
+        label: "收款账户",
+        prop: "payee_account",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }],
       noUpload: true,
       loading: true,
       checkboxInit: false,
-      orderListIndex: '',
+      orderListIndex: "",
       alreadyHandle: [],
       orderDtlFormVal: {},
-      curRowId: '',
+      curRowId: "",
       curRowData: {},
-      problemProListIndexNum: '0',
+      problemProListIndexNum: "0",
 
       /*新增*/
       addCmptnOrderMask: false,
       moreForms: true,
       threeParts: true,
       addCmptnOrderFormVal: {
-        order_number: '',
-        cmptn_shop: '',
-        cmptn_direction: '',
-        responsible_party: '',
-        responsible_person: '',
-        customer_nickname: '',
-        customer_name: '',
-        customer_phone: '',
-        customer_city: '',
-        customer_address: '',
-        cmptn_fee: '',
-        fee_type_id: '',
-        logistics_company: '',
-        logistics_tracking_number: '',
-        payment_method: '',
-        order_stuff: '',
-        payee: '',
-        payee_account: '',
-        problem_product_id: '',
-        problem_description: '',
-        note: '',
-        refuse_reason: '',
-        negotiation_date: '',
-        created_at: '',
-        submited_at: '',
-        audited_at: '',
-        updated_at: '',
+        order_number: "",
+        cmptn_shop: "",
+        cmptn_direction: "",
+        responsible_party: "",
+        responsible_person: "",
+        customer_nickname: "",
+        customer_name: "",
+        customer_phone: "",
+        customer_city: "",
+        customer_address: "",
+        cmptn_fee: "",
+        fee_type_id: "",
+        logistics_company: "",
+        logistics_tracking_number: "",
+        payment_method: "",
+        order_stuff: "",
+        payee: "",
+        payee_account: "",
+        problem_product_id: "",
+        problem_description: "",
+        note: "",
+        refuse_reason: "",
+        negotiation_date: "",
+        created_at: "",
+        submited_at: "",
+        audited_at: "",
+        updated_at: "",
         status: true,
         problem_product: [{
-          commodity_code: '',
-          spec_code: '',
-          short_name: '',
-          spec: '',
-          color: '',
-          materials: '',
-          function: '',
-          special: '',
-          other: '',
-          buy_number: '1',
-          img_url: ''
+          commodity_code: "",
+          spec_code: "",
+          short_name: "",
+          spec: "",
+          color: "",
+          materials: "",
+          function: "",
+          special: "",
+          other: "",
+          buy_number: "1",
+          img_url: ""
         }]
       },
-      addCmptnOrderFormRules: { //新建订单的要求格式
-        customer_phone: [{ required: true, message: '买家电话必选', trigger: 'blur' }],
-        payment_method: [{ required: true, message: '结账方式必选', trigger: 'blur' }],
-        logistics_company: [{ required: true, message: '发货物流必选', trigger: 'blur' }],
-        logistics_tracking_number: [{ required: true, message: '物流单号必选', trigger: 'blur' }],
-        responsible_party: [{ required: true, message: '责任方必选', trigger: 'blur' }],
-        responsible_person: [{ required: true, message: '责任人必选', trigger: 'blur' }],
-        cmptn_direction: [{ required: true, message: '赔偿方向必选', trigger: 'blur' }],
-        cmptn_fee: [{ required: true, message: '赔偿金额必选', trigger: 'blur' }],
-        negotiation_date: [{ required: true, message: '协商日期必选', trigger: 'blur' }],
-        order_stuff: [{ required: true, message: '业务员必选', trigger: 'blur' }],
-        fee_type_id: [{ required: true, message: '费用类型必选', trigger: 'blur' }],
-        payee: [{ required: true, message: '收款人必选', trigger: 'blur' }],
-        payee_account: [{ required: true, message: '收款账号必选', trigger: 'blur' }],
-        cmptn_shop: [{ required: true, message: '店铺昵称必选', trigger: 'blur' }],
-        problem_description: [{ required: true, message: '问题描述必选', trigger: 'blur' }],
-        problem_product: [{ required: true, message: '请选择选择问题商品', trigger: 'blur' }]
+      addCmptnOrderFormRules: {
+        //新建订单的要求格式
+        customer_phone: [{ required: true, message: "买家电话必选", trigger: "blur" }],
+        payment_method: [{ required: true, message: "结账方式必选", trigger: "blur" }],
+        logistics_company: [{ required: true, message: "发货物流必选", trigger: "blur" }],
+        logistics_tracking_number: [{ required: true, message: "物流单号必选", trigger: "blur" }],
+        responsible_party: [{ required: true, message: "责任方必选", trigger: "blur" }],
+        responsible_person: [{ required: true, message: "责任人必选", trigger: "blur" }],
+        cmptn_direction: [{ required: true, message: "赔偿方向必选", trigger: "blur" }],
+        cmptn_fee: [{ required: true, message: "赔偿金额必选", trigger: "blur" }],
+        negotiation_date: [{ required: true, message: "协商日期必选", trigger: "blur" }],
+        order_stuff: [{ required: true, message: "业务员必选", trigger: "blur" }],
+        fee_type_id: [{ required: true, message: "费用类型必选", trigger: "blur" }],
+        payee: [{ required: true, message: "收款人必选", trigger: "blur" }],
+        payee_account: [{ required: true, message: "收款账号必选", trigger: "blur" }],
+        cmptn_shop: [{ required: true, message: "店铺昵称必选", trigger: "blur" }],
+        problem_description: [{ required: true, message: "问题描述必选", trigger: "blur" }],
+        problem_product: [{ required: true, message: "请选择选择问题商品", trigger: "blur" }]
       },
-      cmptnOrderFormHead: [//新建订单的文本框表头
+      cmptnOrderFormHead: [
+      //新建订单的文本框表头
       {
-        label: '系统单号',
-        prop: 'system_order_no',
-        holder: '系统自动生成',
-        width: '200',
-        type: 'text',
+        label: "系统单号",
+        prop: "system_order_no",
+        holder: "系统自动生成",
+        width: "200",
+        type: "text",
         editChgAble: true,
         addChgAble: true
       }, {
-        label: '买家昵称',
-        prop: 'customer_nickname',
-        type: 'text',
+        label: "买家昵称",
+        prop: "customer_nickname",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '买家姓名',
-        prop: 'customer_name',
-        type: 'text',
+        label: "买家姓名",
+        prop: "customer_name",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '买家电话',
-        prop: 'customer_phone',
-        type: 'text',
+        label: "买家电话",
+        prop: "customer_phone",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '买家城市',
-        prop: 'customer_city',
-        type: 'text',
+        label: "买家城市",
+        prop: "customer_city",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '结账方式',
-        prop: 'payment_method',
-        type: 'selects',
-        stateVal: 'payment_method'
+        label: "结账方式",
+        prop: "payment_method",
+        type: "selects",
+        stateVal: "payment_method"
       }, {
-        label: '发货物流',
-        prop: 'logistics_company',
-        type: 'text',
+        label: "发货物流",
+        prop: "logistics_company",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '物流单号',
-        prop: 'logistics_tracking_number',
-        type: 'text',
+        label: "物流单号",
+        prop: "logistics_tracking_number",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '责任方',
-        prop: 'responsible_party',
-        type: 'selects',
+        label: "责任方",
+        prop: "responsible_party",
+        type: "selects",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '责任人',
-        prop: 'responsible_person',
-        type: 'text',
+        label: "责任人",
+        prop: "responsible_person",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '赔偿方向',
-        prop: 'cmptn_direction',
-        type: 'selects',
+        label: "赔偿方向",
+        prop: "cmptn_direction",
+        type: "selects",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '赔偿金额',
-        prop: 'cmptn_fee',
-        type: 'text',
+        label: "赔偿金额",
+        prop: "cmptn_fee",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '协商日期',
-        prop: 'negotiation_date',
-        type: 'DatePicker',
+        label: "协商日期",
+        prop: "negotiation_date",
+        type: "DatePicker",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '业务员',
-        prop: 'order_stuff',
-        type: 'text',
+        label: "业务员",
+        prop: "order_stuff",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '费用类型',
-        prop: 'fee_type_id',
-        type: 'select',
-        stateVal: 'feetypes',
+        label: "费用类型",
+        prop: "fee_type_id",
+        type: "select",
+        stateVal: "feetypes",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '收款人',
-        prop: 'payee',
-        type: 'text',
+        label: "收款人",
+        prop: "payee",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '收款账户',
-        prop: 'payee_account',
-        type: 'text',
+        label: "收款账户",
+        prop: "payee_account",
+        type: "text",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '问题描述',
-        prop: 'problem_description',
-        type: 'textarea',
+        label: "问题描述",
+        prop: "problem_description",
+        type: "textarea",
         editChgAble: true,
         addChgAble: false
       }, {
-        label: '备注信息',
-        prop: 'note',
-        type: 'textarea',
+        label: "备注信息",
+        prop: "note",
+        type: "textarea",
         editChgAble: true,
         addChgAble: false
       }]
-    }, _defineProperty(_ref, 'moreForms', true), _defineProperty(_ref, 'threeParts', true), _defineProperty(_ref, 'toggleText', false), _defineProperty(_ref, 'addActiveName', '0'), _defineProperty(_ref, 'proData', []), _defineProperty(_ref, 'options', __WEBPACK_IMPORTED_MODULE_5_element_china_area_data__["regionDataPlus"]), _defineProperty(_ref, 'addProblemProHead', [{
-      label: '产品图片',
-      width: '120',
+    }, _defineProperty(_ref, "moreForms", true), _defineProperty(_ref, "threeParts", true), _defineProperty(_ref, "toggleText", false), _defineProperty(_ref, "addActiveName", "0"), _defineProperty(_ref, "proData", []), _defineProperty(_ref, "options", __WEBPACK_IMPORTED_MODULE_5_element_china_area_data__["regionDataPlus"]), _defineProperty(_ref, "addProblemProHead", [{
+      label: "产品图片",
+      width: "120",
       prop: "img_url",
-      type: 'img',
-      imgPath: ''
+      type: "img",
+      imgPath: ""
     }, {
-      label: '商品编码',
+      label: "商品编码",
       prop: "commodity_code",
-      type: 'text',
-      width: '160',
-      holder: '请输入商品编码'
+      type: "text",
+      width: "160",
+      holder: "请输入商品编码"
     }, {
-      label: '规格编码',
+      label: "规格编码",
       prop: "spec_code",
-      type: 'text',
-      width: '160'
+      type: "text",
+      width: "160"
     }, {
-      label: '商品简称',
+      label: "商品简称",
       prop: "short_name",
-      type: 'text',
-      width: '160'
+      type: "text",
+      width: "160"
     }, {
-      label: '规格',
+      label: "规格",
       prop: "spec",
-      type: 'text',
-      width: '160'
+      type: "text",
+      width: "160"
     }, {
-      label: '颜色',
+      label: "颜色",
       prop: "color",
-      type: 'text',
-      width: '120'
+      type: "text",
+      width: "120"
     }, {
-      label: '材质',
+      label: "材质",
       prop: "materials",
-      type: 'text',
-      width: '160'
+      type: "text",
+      width: "160"
     }, {
-      label: '功能',
+      label: "功能",
       prop: "function",
-      type: 'text',
-      width: '160'
+      type: "text",
+      width: "160"
     }, {
-      label: '特殊',
+      label: "特殊",
       prop: "special",
-      type: 'text',
-      width: '160'
+      type: "text",
+      width: "160"
     }, {
-      label: '其他',
+      label: "其他",
       prop: "other",
-      type: 'text',
-      width: '160'
+      type: "text",
+      width: "160"
     }, {
-      label: '购买数量',
+      label: "购买数量",
       prop: "buy_number",
-      type: 'number',
-      width: '100'
-    }]), _defineProperty(_ref, 'problemProKey', {
-      commodity_code: '',
-      spec_code: '',
-      short_name: '',
-      spec: '',
-      color: '',
-      materials: '',
-      function: '',
-      special: '',
-      other: '',
-      buy_number: '1',
-      img_url: ''
-    }), _defineProperty(_ref, 'proMask', false), _defineProperty(_ref, 'showChgBtn', ''), _defineProperty(_ref, 'proQuery', {
-      commodity_code: '',
-      component_code: '',
-      shops_id: '',
-      short_name: ''
-    }), _defineProperty(_ref, 'editSpecIndex', ''), _defineProperty(_ref, 'editIndex', 0), _defineProperty(_ref, 'chgEId', ''), _defineProperty(_ref, 'proVal', []), _defineProperty(_ref, 'toggleText', false), _defineProperty(_ref, 'toggleHeight', true), _defineProperty(_ref, 'clickFlag', false), _defineProperty(_ref, 'proCurSkuData', {}), _defineProperty(_ref, 'proSkuVal', []), _defineProperty(_ref, 'proSkuHead', [{
-      label: 'sku名称',
-      width: '120',
-      prop: 'name',
-      type: 'text'
+      type: "number",
+      width: "100"
+    }]), _defineProperty(_ref, "problemProKey", {
+      commodity_code: "",
+      spec_code: "",
+      short_name: "",
+      spec: "",
+      color: "",
+      materials: "",
+      function: "",
+      special: "",
+      other: "",
+      buy_number: "1",
+      img_url: ""
+    }), _defineProperty(_ref, "proMask", false), _defineProperty(_ref, "showChgBtn", ""), _defineProperty(_ref, "proQuery", {
+      commodity_code: "",
+      component_code: "",
+      shops_id: "",
+      short_name: ""
+    }), _defineProperty(_ref, "editSpecIndex", ""), _defineProperty(_ref, "editIndex", 0), _defineProperty(_ref, "chgEId", ""), _defineProperty(_ref, "proVal", []), _defineProperty(_ref, "toggleText", false), _defineProperty(_ref, "toggleHeight", true), _defineProperty(_ref, "clickFlag", false), _defineProperty(_ref, "proCurSkuData", {}), _defineProperty(_ref, "proSkuVal", []), _defineProperty(_ref, "proSkuHead", [{
+      label: "sku名称",
+      width: "120",
+      prop: "name",
+      type: "text"
     }, {
-      label: '数量',
-      width: '120',
-      prop: 'newData',
-      inProp: 'quantity',
-      type: 'number'
-    }, {
-      label: '油漆',
-      width: '120',
-      prop: 'newData',
-      inProp: 'paint',
-      type: 'text'
-    }, {
-      label: '总体积',
-      width: '120',
-      prop: 'newData',
-      inProp: 'total_volume',
-      type: 'number'
-    }, {
-      label: '需要印刷',
-      width: '90',
-      prop: 'newData',
-      inProp: 'is_printing',
-      type: 'checkbox'
-    }, {
-      label: '印刷费用',
-      width: '120',
-      prop: 'newData',
-      inProp: 'printing_fee',
-      type: 'number'
-    }, {
-      label: '现货',
-      width: '90',
-      prop: 'newData',
-      inProp: 'is_spot_goods',
-      type: 'checkbox'
-    }, {
-      label: '单价(线下)',
-      width: '130',
-      prop: 'newData',
-      inProp: 'under_line_univalent',
-      type: 'number'
-    }, {
-      label: '优惠(线下)',
-      width: '130',
-      prop: 'newData',
-      inProp: 'under_line_preferential',
-      type: 'number'
-    }]), _defineProperty(_ref, 'proCompVal', []), _defineProperty(_ref, 'unHandle', []), _defineProperty(_ref, 'proCompHead', [{
-      label: '组合',
-      width: '90',
-      prop: 'is_common',
-      type: 'checkbox'
-    }, {
-      label: '子件图片',
-      width: '120',
-      prop: 'img',
-      type: 'img'
-    }, {
-      label: '子件编码',
-      width: '140',
-      prop: 'component_code',
-      type: 'text'
-    }, {
-      label: '子件名称',
-      width: '120',
-      prop: 'spec',
-      type: 'text'
-    }, {
-      label: '颜色',
-      width: '120',
-      prop: 'color',
-      type: 'text'
-    }, {
-      label: '材质',
-      width: '120',
-      prop: 'materials',
-      type: 'text'
-    }, {
-      label: '功能',
-      width: '120',
-      prop: 'function',
-      type: 'text'
-    }, {
-      label: '特殊',
-      width: '120',
-      prop: 'special',
-      type: 'text'
-    }, {
-      label: '其他',
-      width: '120',
-      prop: 'other',
-      type: 'text'
-    }, {
-      label: '淘宝售价',
-      width: '130',
-      prop: 'tb_price',
-      type: 'number'
-    }, {
-      label: '标准售价',
-      width: '130',
-      prop: 'price',
-      type: 'number'
-    }, {
-      label: '最低销售价格',
-      width: '140',
-      prop: 'lowest_price',
-      type: 'number'
-    }, {
-      label: '最高销售价格',
-      width: '140',
-      prop: 'highest_price',
-      type: 'number'
-    }, {
-      label: '体积',
-      width: '120',
-      prop: 'volume',
-      type: 'number'
-    }, {
-      label: '包件数',
-      width: '130',
-      prop: 'package_quantity',
-      type: 'number'
-    }, {
-      label: '停产',
-      width: '90',
-      prop: 'is_stop_pro',
-      type: 'checkbox'
-    }]), _defineProperty(_ref, 'proCompRowIndex', ''), _defineProperty(_ref, 'proSubmitData', []), _defineProperty(_ref, 'proIds', []), _defineProperty(_ref, 'addIds', []), _defineProperty(_ref, 'proCompRow', {}), _defineProperty(_ref, 'addProblemProCurIndexNum', 0), _defineProperty(_ref, 'receiveInfo', {
-      receiver_name: '',
-      receiver_phone: '',
-      receiver_mobile: '',
-      provinces: [],
-      receiver_state: '',
-      receiver_city: '',
-      receiver_district: '',
-      receiver_address: '',
-      receiver_zip: ''
-    }), _defineProperty(_ref, 'halfForm', true), _defineProperty(_ref, 'expenseData', []), _defineProperty(_ref, 'expenseRIndex', ''), _defineProperty(_ref, 'addSubData', []), _defineProperty(_ref, 'updateCmptnOrderMask', false), _defineProperty(_ref, 'updateCmptnOrderFormVal', {
-      order_number: '',
-      cmptn_shop: '',
-      cmptn_direction: '',
-      responsible_party: '',
-      responsible_person: '',
-      customer_nickname: '',
-      customer_name: '',
-      customer_phone: '',
-      customer_city: '',
-      customer_address: '',
-      cmptn_fee: '',
-      fee_type_id: '',
-      logistics_company: '',
-      logistics_tracking_number: '',
-      payment_method: '',
-      order_stuff: '',
-      payee: '',
-      payee_account: '',
-      problem_product_id: '',
-      problem_description: '',
-      note: '',
-      refuse_reason: '',
-      negotiation_date: '',
-      created_at: '',
-      submited_at: '',
-      audited_at: '',
-      updated_at: '',
-      status: true,
-      problem_product: [{
-        commodity_code: '',
-        spec_code: '',
-        short_name: '',
-        spec: '',
-        color: '',
-        materials: '',
-        function: '',
-        special: '',
-        other: '',
-        buy_number: '1',
-        img_url: ''
-      }]
-    }), _defineProperty(_ref, 'updateActiveName', '0'), _defineProperty(_ref, 'updateProData', []), _defineProperty(_ref, 'updateReceiveInfo', {}), _defineProperty(_ref, 'updateExpenseData', []), _defineProperty(_ref, 'updateProIds', []), _defineProperty(_ref, 'updateProblemProCurIndexNum', 0), _defineProperty(_ref, 'updateProblemProCurIndex', 'index0'), _defineProperty(_ref, 'tableChgBtn', ''), _defineProperty(_ref, 'showDel', false), _defineProperty(_ref, 'delUrl', ''), _defineProperty(_ref, 'delId', ''), _defineProperty(_ref, 'ids', []), _defineProperty(_ref, 'splitMask', false), _defineProperty(_ref, 'splitVal', []), _defineProperty(_ref, 'alreadyCanceled', ''), _defineProperty(_ref, 'splitHead', [{
-      label: '商品编码',
-      prop: "commodity_code",
-      type: 'text'
-    }, {
-      label: '商品简称',
-      prop: "short_name",
-      type: 'text'
-    }, {
-      label: '数量',
-      prop: "quantity",
-      type: 'number'
-    }, {
-      label: '实际拆分数量',
+      label: "数量",
+      width: "120",
       prop: "newData",
       inProp: "quantity",
-      type: 'number'
-    }]), _defineProperty(_ref, 'splitRowIndex', ''), _defineProperty(_ref, 'splitRow', {}), _defineProperty(_ref, 'mergerIds', []), _defineProperty(_ref, 'problemProTableHead', [{
-      label: '产品图片',
-      width: '200',
-      prop: "img_url",
-      type: 'img'
+      type: "number"
     }, {
-      label: '商品编码',
-      prop: "commodity_code",
-      type: 'text',
-      width: '180'
+      label: "油漆",
+      width: "120",
+      prop: "newData",
+      inProp: "paint",
+      type: "text"
     }, {
-      label: '规格编码',
-      prop: "spec_code",
-      type: 'text',
-      width: '150'
+      label: "总体积",
+      width: "120",
+      prop: "newData",
+      inProp: "total_volume",
+      type: "number"
     }, {
-      label: '商品简称',
-      prop: "short_name",
-      type: 'text',
-      width: '120'
+      label: "需要印刷",
+      width: "90",
+      prop: "newData",
+      inProp: "is_printing",
+      type: "checkbox"
     }, {
-      label: '规格',
+      label: "印刷费用",
+      width: "120",
+      prop: "newData",
+      inProp: "printing_fee",
+      type: "number"
+    }, {
+      label: "现货",
+      width: "90",
+      prop: "newData",
+      inProp: "is_spot_goods",
+      type: "checkbox"
+    }, {
+      label: "单价(线下)",
+      width: "130",
+      prop: "newData",
+      inProp: "under_line_univalent",
+      type: "number"
+    }, {
+      label: "优惠(线下)",
+      width: "130",
+      prop: "newData",
+      inProp: "under_line_preferential",
+      type: "number"
+    }]), _defineProperty(_ref, "proCompVal", []), _defineProperty(_ref, "unHandle", []), _defineProperty(_ref, "proCompHead", [{
+      label: "组合",
+      width: "90",
+      prop: "is_common",
+      type: "checkbox"
+    }, {
+      label: "子件图片",
+      width: "120",
+      prop: "img",
+      type: "img"
+    }, {
+      label: "子件编码",
+      width: "140",
+      prop: "component_code",
+      type: "text"
+    }, {
+      label: "子件名称",
+      width: "120",
       prop: "spec",
-      type: 'text',
-      width: '120'
+      type: "text"
     }, {
-      label: '颜色',
+      label: "颜色",
+      width: "120",
       prop: "color",
-      type: 'text',
-      width: '120'
+      type: "text"
     }, {
-      label: '材质',
+      label: "材质",
+      width: "120",
       prop: "materials",
-      type: 'text',
-      width: '120'
+      type: "text"
     }, {
-      label: '功能',
+      label: "功能",
+      width: "120",
       prop: "function",
-      type: 'text',
-      width: '120'
+      type: "text"
     }, {
-      label: '特殊',
+      label: "特殊",
+      width: "120",
       prop: "special",
-      type: 'text',
-      width: '120'
+      type: "text"
     }, {
-      label: '其他',
+      label: "其他",
+      width: "120",
       prop: "other",
-      type: 'text',
-      width: '120'
+      type: "text"
     }, {
-      label: '购买数量',
+      label: "淘宝售价",
+      width: "130",
+      prop: "tb_price",
+      type: "number"
+    }, {
+      label: "标准售价",
+      width: "130",
+      prop: "price",
+      type: "number"
+    }, {
+      label: "最低销售价格",
+      width: "140",
+      prop: "lowest_price",
+      type: "number"
+    }, {
+      label: "最高销售价格",
+      width: "140",
+      prop: "highest_price",
+      type: "number"
+    }, {
+      label: "体积",
+      width: "120",
+      prop: "volume",
+      type: "number"
+    }, {
+      label: "包件数",
+      width: "130",
+      prop: "package_quantity",
+      type: "number"
+    }, {
+      label: "停产",
+      width: "90",
+      prop: "is_stop_pro",
+      type: "checkbox"
+    }]), _defineProperty(_ref, "proCompRowIndex", ""), _defineProperty(_ref, "proSubmitData", []), _defineProperty(_ref, "proIds", []), _defineProperty(_ref, "addIds", []), _defineProperty(_ref, "proCompRow", {}), _defineProperty(_ref, "addProblemProCurIndexNum", 0), _defineProperty(_ref, "receiveInfo", {
+      receiver_name: "",
+      receiver_phone: "",
+      receiver_mobile: "",
+      provinces: [],
+      receiver_state: "",
+      receiver_city: "",
+      receiver_district: "",
+      receiver_address: "",
+      receiver_zip: ""
+    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "updateCmptnOrderMask", false), _defineProperty(_ref, "updateCmptnOrderFormVal", {
+      order_number: "",
+      cmptn_shop: "",
+      cmptn_direction: "",
+      responsible_party: "",
+      responsible_person: "",
+      customer_nickname: "",
+      customer_name: "",
+      customer_phone: "",
+      customer_city: "",
+      customer_address: "",
+      cmptn_fee: "",
+      fee_type_id: "",
+      logistics_company: "",
+      logistics_tracking_number: "",
+      payment_method: "",
+      order_stuff: "",
+      payee: "",
+      payee_account: "",
+      problem_product_id: "",
+      problem_description: "",
+      note: "",
+      refuse_reason: "",
+      negotiation_date: "",
+      created_at: "",
+      submited_at: "",
+      audited_at: "",
+      updated_at: "",
+      status: true,
+      problem_product: [{
+        commodity_code: "",
+        spec_code: "",
+        short_name: "",
+        spec: "",
+        color: "",
+        materials: "",
+        function: "",
+        special: "",
+        other: "",
+        buy_number: "1",
+        img_url: ""
+      }]
+    }), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "updateProIds", []), _defineProperty(_ref, "updateProblemProCurIndexNum", 0), _defineProperty(_ref, "updateProblemProCurIndex", "index0"), _defineProperty(_ref, "tableChgBtn", ""), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delUrl", ""), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "ids", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "alreadyCanceled", ""), _defineProperty(_ref, "splitHead", [{
+      label: "商品编码",
+      prop: "commodity_code",
+      type: "text"
+    }, {
+      label: "商品简称",
+      prop: "short_name",
+      type: "text"
+    }, {
+      label: "数量",
+      prop: "quantity",
+      type: "number"
+    }, {
+      label: "实际拆分数量",
+      prop: "newData",
+      inProp: "quantity",
+      type: "number"
+    }]), _defineProperty(_ref, "splitRowIndex", ""), _defineProperty(_ref, "splitRow", {}), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "problemProTableHead", [{
+      label: "产品图片",
+      width: "200",
+      prop: "img_url",
+      type: "img"
+    }, {
+      label: "商品编码",
+      prop: "commodity_code",
+      type: "text",
+      width: "180"
+    }, {
+      label: "规格编码",
+      prop: "spec_code",
+      type: "text",
+      width: "150"
+    }, {
+      label: "商品简称",
+      prop: "short_name",
+      type: "text",
+      width: "120"
+    }, {
+      label: "规格",
+      prop: "spec",
+      type: "text",
+      width: "120"
+    }, {
+      label: "颜色",
+      prop: "color",
+      type: "text",
+      width: "120"
+    }, {
+      label: "材质",
+      prop: "materials",
+      type: "text",
+      width: "120"
+    }, {
+      label: "功能",
+      prop: "function",
+      type: "text",
+      width: "120"
+    }, {
+      label: "特殊",
+      prop: "special",
+      type: "text",
+      width: "120"
+    }, {
+      label: "其他",
+      prop: "other",
+      type: "text",
+      width: "120"
+    }, {
+      label: "购买数量",
       prop: "buy_number",
-      type: 'text',
-      width: '120'
-    }]), _defineProperty(_ref, 'allUnHandle', []), _defineProperty(_ref, 'inputChange', false), _defineProperty(_ref, 'addProblemProCurIndex', ''), _defineProperty(_ref, 'problemProData', []), _defineProperty(_ref, 'addSubData', []), _defineProperty(_ref, 'addProblemProUpload', 'upload0'), _defineProperty(_ref, 'updateProblemProUpload', ''), _defineProperty(_ref, 'updateCompUpload', 'upload0'), _defineProperty(_ref, 'updateRwIndex', '0'), _defineProperty(_ref, 'updateChgBtn', false), _defineProperty(_ref, 'selectVal', {
-      payment_method: [{ label: '支付宝', value: '支付宝' }, { label: '微信', value: '微信' }, { label: '银行卡', value: '银行卡' }],
-      cmptn_direction: [{ label: '我们赔偿', value: '我们赔偿' }, { label: '赔偿我们', value: '赔偿我们' }],
-      responsible_party: [{ label: '顾客', value: '顾客' }, { label: '我们', value: '我们' }, { label: '仓库', value: '仓库' }, { label: '供应商', value: '供应商' }]
+      type: "text",
+      width: "120"
+    }]), _defineProperty(_ref, "allUnHandle", []), _defineProperty(_ref, "inputChange", false), _defineProperty(_ref, "addProblemProCurIndex", ""), _defineProperty(_ref, "problemProData", []), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "addProblemProUpload", "upload0"), _defineProperty(_ref, "updateProblemProUpload", ""), _defineProperty(_ref, "updateCompUpload", "upload0"), _defineProperty(_ref, "updateRwIndex", "0"), _defineProperty(_ref, "updateChgBtn", false), _defineProperty(_ref, "selectVal", {
+      payment_method: [{ label: "支付宝", value: "支付宝" }, { label: "微信", value: "微信" }, { label: "银行卡", value: "银行卡" }],
+      cmptn_direction: [{ label: "我们赔偿", value: "我们赔偿" }, { label: "赔偿我们", value: "赔偿我们" }],
+      responsible_party: [{ label: "顾客", value: "顾客" }, { label: "我们", value: "我们" }, { label: "仓库", value: "仓库" }, { label: "供应商", value: "供应商" }]
     }), _ref;
   },
 
@@ -34227,20 +34208,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   filters: {
     /*conditions: function(items){
-      let searchRegex = new RegExp(this.searchBox.vip_name, 'i');
-      let arr=[];
-      for(let i= 0, j = items.length; i < j; i++){
-        arr[i] = {};
-        arr[i].contacters = [];
-        for(let item = 0, len = items[i].contacters.length; item < len; item++){
-          if(searchRegex.test(items[i].contacters[item].name) || searchRegex.test(items[i].contacters[item].enterpriseName) || searchRegex.test(items[i].contacters[item].phoneNumber) || searchRegex.test(items[i].contacters[item].uniqueID)){
-            arr[i].firstLetter = items[i].firstLetter;
-            arr[i].contacters.push(items[i].contacters[item]);
+        let searchRegex = new RegExp(this.searchBox.vip_name, 'i');
+        let arr=[];
+        for(let i= 0, j = items.length; i < j; i++){
+          arr[i] = {};
+          arr[i].contacters = [];
+          for(let item = 0, len = items[i].contacters.length; item < len; item++){
+            if(searchRegex.test(items[i].contacters[item].name) || searchRegex.test(items[i].contacters[item].enterpriseName) || searchRegex.test(items[i].contacters[item].phoneNumber) || searchRegex.test(items[i].contacters[item].uniqueID)){
+              arr[i].firstLetter = items[i].firstLetter;
+              arr[i].contacters.push(items[i].contacters[item]);
+            }
           }
         }
+        return arr;
       }
-      return arr;
-    }
     */
   },
   methods: {
@@ -34260,11 +34241,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.aftercompensation + '/' + id + '/secaudit').then(function () {
+      this.$put(this.urls.aftercompensation + "/" + id + "/secaudit").then(function () {
         _this.refresh();
         _this.$message({
-          message: '审核成功',
-          type: 'success'
+          message: "审核成功",
+          type: "success"
         });
       }, function (err) {
         if (err.response) {
@@ -34273,7 +34254,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this.$message.error(str);
         }
       });
@@ -34285,12 +34266,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.aftercompensation + '/' + id + '/unaudit').then(function () {
+      this.$put(this.urls.aftercompensation + "/" + id + "/unaudit").then(function () {
         _this2.refuseMask = false;
-        _this2.refuse_reason = '';
+        _this2.refuse_reason = "";
         _this2.$message({
-          message: '退审成功',
-          type: 'success'
+          message: "退审成功",
+          type: "success"
         });
         _this2.refresh();
       }, function (err) {
@@ -34300,7 +34281,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this2.$message.error(str);
         }
       });
@@ -34309,13 +34290,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this3 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.aftercompensation + '/' + id + '/secunaudit').then(function () {
+      this.$put(this.urls.aftercompensation + "/" + id + "/secunaudit").then(function () {
         _this3.refresh();
         _this3.refuseMask = false;
-        _this3.refuse_reason = '';
+        _this3.refuse_reason = "";
         _this3.$message({
-          message: '退审成功',
-          type: 'success'
+          message: "退审成功",
+          type: "success"
         });
       }, function (err) {
         if (err.response) {
@@ -34324,7 +34305,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this3.$message.error(str);
         }
       });
@@ -34347,40 +34328,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               taobao_oid: data.taobao_oid,
               taobao_tid: data.taobao_tid,
               association_taobao_oid: data.association_taobao_oid,
-              shop_name: data['shop']['title'],
-              business_personnel_name: data['businessPersonnel'] ? data['businessPersonnel']['username'] : '',
+              shop_name: data["shop"]["title"],
+              business_personnel_name: data["businessPersonnel"] ? data["businessPersonnel"]["username"] : "",
               member_nick: data.member_nick,
               receiver_name: data.receiver_name,
               receiver_mobile: data.receiver_mobile,
               receiver_phone: data.receiver_phone,
               receiver_address: data.receiver_address,
               express_fee: data.express_fee,
-              freight_types_name: data['freightType']['name'],
+              freight_types_name: data["freightType"]["name"],
               expected_freight: data.expected_freight,
               deliver_goods_fee: data.deliver_goods_fee,
               payment_date: data.payment_date,
               promise_ship_time: data.promise_ship_time,
-              distribution_name: data['distribution']['name'],
-              distribution_method: data['distributionMethod']['name'],
-              service_car_info: data['service_car_info'],
-              distribution_phone: data['distribution_phone'],
-              buyer_message: data['buyer_message'],
-              logistic_name: data['logistic']['name'],
-              distributionType_name: data['distributionType']['name'],
-              total_distribution_fee: data['total_distribution_fee'],
-              customer_service_remark: data['customer_service_remark'],
-              seller_remark: data['seller_remark']
+              distribution_name: data["distribution"]["name"],
+              distribution_method: data["distributionMethod"]["name"],
+              service_car_info: data["service_car_info"],
+              distribution_phone: data["distribution_phone"],
+              buyer_message: data["buyer_message"],
+              logistic_name: data["logistic"]["name"],
+              distributionType_name: data["distributionType"]["name"],
+              total_distribution_fee: data["total_distribution_fee"],
+              customer_service_remark: data["customer_service_remark"],
+              seller_remark: data["seller_remark"]
             };
           }
-          if (data['orderItems']['data'].length > 0) {
-            data['orderItems']['data'].map(function (item) {
-              item['name'] = item['combination']['name'];
-              item['productComp'] = item['combination']['productComponents']['data'];
+          if (data["orderItems"]["data"].length > 0) {
+            data["orderItems"]["data"].map(function (item) {
+              item["name"] = item["combination"]["name"];
+              item["productComp"] = item["combination"]["productComponents"]["data"];
             });
           }
-          this.proDtlData = data['orderItems']['data'];
+          this.proDtlData = data["orderItems"]["data"];
           /*支付明细*/
-          this.payDtlData = data['paymentDetails']['data'];
+          this.payDtlData = data["paymentDetails"]["data"];
           break;
       }
     },
@@ -34390,15 +34371,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.aftercompensation + '/searchall', { include: 'problemProduct.afterCompensationOrder' }).then(function (res) {
+          this.$fetch(this.urls.aftercompensation + "/searchall", {
+            include: "problemProduct.afterCompensationOrder"
+          }).then(function (res) {
             _this4.loading = false;
             _this4.cmptnOrderListTableData = res.data;
-            _this4.problemProData = res.data[0] ? res.data[0]['problemProduct'].data : [];
+            _this4.problemProData = res.data[0] ? res.data[0]["problemProduct"].data : [];
 
             var pg = res.meta.pagination;
-            _this4.$store.dispatch('currentPage', pg.current_page);
-            _this4.$store.commit('PER_PAGE', pg.per_page);
-            _this4.$store.commit('PAGE_TOTAL', pg.total);
+            _this4.$store.dispatch("currentPage", pg.current_page);
+            _this4.$store.commit("PER_PAGE", pg.per_page);
+            _this4.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34406,20 +34389,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this4.$message.error(arr1.join(','));
+              _this4.$message.error(arr1.join(","));
             }
           });
           break;
         case 1:
-          this.$fetch(this.urls.aftercompensation + '/searchalluntreated', { include: 'problemProduct.afterCompensationOrder' }).then(function (res) {
+          this.$fetch(this.urls.aftercompensation + "/searchalluntreated", {
+            include: "problemProduct.afterCompensationOrder"
+          }).then(function (res) {
             _this4.loading = false;
             _this4.allUnHandle = res.data;
-            _this4.problemProData = res.data[0] ? res.data[0]['problemProduct'].data : [];
+            _this4.problemProData = res.data[0] ? res.data[0]["problemProduct"].data : [];
             var pg = res.meta.pagination;
 
-            _this4.$store.dispatch('currentPage', pg.current_page);
-            _this4.$store.commit('PER_PAGE', pg.per_page);
-            _this4.$store.commit('PAGE_TOTAL', pg.total);
+            _this4.$store.dispatch("currentPage", pg.current_page);
+            _this4.$store.commit("PER_PAGE", pg.per_page);
+            _this4.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34427,20 +34412,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this4.$message.error(arr1.join(','));
+              _this4.$message.error(arr1.join(","));
             }
           });
           break;
         case 2:
-          this.$fetch(this.urls.aftercompensation + '/searchsectreated', { include: 'problemProduct.afterCompensationOrder' }).then(function (res) {
+          this.$fetch(this.urls.aftercompensation + "/searchsectreated", {
+            include: "problemProduct.afterCompensationOrder"
+          }).then(function (res) {
             _this4.loading = false;
             _this4.alreadyHandle = res.data;
-            _this4.problemProData = res.data[0] ? res.data[0]['problemProduct'].data : [];
+            _this4.problemProData = res.data[0] ? res.data[0]["problemProduct"].data : [];
             var pg = res.meta.pagination;
 
-            _this4.$store.dispatch('currentPage', pg.current_page);
-            _this4.$store.commit('PER_PAGE', pg.per_page);
-            _this4.$store.commit('PAGE_TOTAL', pg.total);
+            _this4.$store.dispatch("currentPage", pg.current_page);
+            _this4.$store.commit("PER_PAGE", pg.per_page);
+            _this4.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34448,20 +34435,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this4.$message.error(arr1.join(','));
+              _this4.$message.error(arr1.join(","));
             }
           });
           break;
         case 3:
-          this.$fetch(this.urls.aftercompensation + '/searchcanceled', { include: 'problemProduct.afterCompensationOrder' }).then(function (res) {
+          this.$fetch(this.urls.aftercompensation + "/searchcanceled", {
+            include: "problemProduct.afterCompensationOrder"
+          }).then(function (res) {
             _this4.loading = false;
             _this4.alreadyCanceled = res.data;
-            _this4.problemProData = res.data[0] ? res.data[0]['problemProduct'].data : [];
+            _this4.problemProData = res.data[0] ? res.data[0]["problemProduct"].data : [];
             var pg = res.meta.pagination;
 
-            _this4.$store.dispatch('currentPage', pg.current_page);
-            _this4.$store.commit('PER_PAGE', pg.per_page);
-            _this4.$store.commit('PAGE_TOTAL', pg.total);
+            _this4.$store.dispatch("currentPage", pg.current_page);
+            _this4.$store.commit("PER_PAGE", pg.per_page);
+            _this4.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34469,7 +34458,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this4.$message.error(arr1.join(','));
+              _this4.$message.error(arr1.join(","));
             }
           });
           break;
@@ -34481,21 +34470,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     problemProRowClick: function problemProRowClick(row) {
       this.curRowId = row.id;
-      this.problemProData = row['problemProduct'].data;
+      this.problemProData = row["problemProduct"].data;
     },
     refuseCancel: function refuseCancel() {
       refuseMask = false;
-      refuse_reason = '';
+      refuse_reason = "";
     },
 
     /*新增*/
     resetAddInfo: function resetAddInfo() {
       Object.assign(this.$data.addCmptnOrderFormVal, this.$options.data().addCmptnOrderFormVal);
-      this.addProblemProCurIndex = 'index0';
-      this.updateProblemProCurIndex = 'index0';
+      this.addProblemProCurIndex = "index0";
+      this.updateProblemProCurIndex = "index0";
       this.addProblemProCurIndexNum = 0;
       this.updateProblemProCurIndexNum = 0;
-      this.addProblemProUpload = 'upload0';
+      this.addProblemProUpload = "upload0";
 
       this.noUpload = true;
     },
@@ -34504,66 +34493,73 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addCmptnOrderMask = true;
       this.addIds = [];
       this.addProblemProCurIndexNum = 0;
-      this.addProblemProCurIndex = 'index0';
-      this.addProblemProUpload = 'upload0';
+      this.addProblemProCurIndex = "index0";
+      this.addProblemProUpload = "upload0";
     },
     addMoreProblemPro: function addMoreProblemPro() {
       var problemProKey = {
-        commodity_code: '',
-        spec_code: '',
-        short_name: '',
-        spec: '',
-        color: '',
-        materials: '',
-        function: '',
-        special: '',
-        other: '',
-        buy_number: '1',
-        img_url: ''
+        commodity_code: "",
+        spec_code: "",
+        short_name: "",
+        spec: "",
+        color: "",
+        materials: "",
+        function: "",
+        special: "",
+        other: "",
+        buy_number: "1",
+        img_url: ""
       };
       if (this.addCmptnOrderFormVal.problem_product.length > 0 && !this.addCmptnOrderFormVal.problem_product[this.addCmptnOrderFormVal.problem_product.length - 1].commodity_code) {
         this.$message({
-          message: '商品编码为空时不能添加新规格',
-          type: 'info'
+          message: "商品编码为空时不能添加新规格",
+          type: "info"
         });
       } else {
         this.addCmptnOrderFormVal.problem_product.push(problemProKey);
         this.problemProListIndexNum = this.addCmptnOrderFormVal.problem_product.length - 1;
-        this.addProblemProUpload = 'upload' + this.problemProListIndexNum;
-        this.addProblemProCurIndex = 'index' + this.problemProListIndexNum;
+        this.addProblemProUpload = "upload" + this.problemProListIndexNum;
+        this.addProblemProCurIndex = "index" + this.problemProListIndexNum;
       }
     },
     proQueryClick: function proQueryClick() {
       var _this5 = this;
 
       this.proSkuVal = [];
-      this.$fetch(this.urls.products, { 'status': true, 'commodity_code': this.proQuery.commodity_code, 'component_code': this.proQuery.component_code, 'shops_id': this.proQuery.shops_id, 'short_name': this.proQuery.short_name, 'include': 'productComponents.product,shop,supplier,goodsCategory,combinations.productComponents' }).then(function (res) {
+      this.$fetch(this.urls.products, {
+        status: true,
+        commodity_code: this.proQuery.commodity_code,
+        component_code: this.proQuery.component_code,
+        shops_id: this.proQuery.shops_id,
+        short_name: this.proQuery.short_name,
+        include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+      }).then(function (res) {
         _this5.proVal = res.data;
-        var comb = res.data[0]['combinations']['data'];
+        var comb = res.data[0]["combinations"]["data"];
         if (comb.length > 0) {
           var total_volume = 0;
           comb.map(function (item) {
-            item['productComp'] = item['productComponents']['data'];
-            if (item['productComponents']['data'].length > 0) {
-              item['productComponents']['data'].map(function (list) {
+            item["productComp"] = item["productComponents"]["data"];
+            if (item["productComponents"]["data"].length > 0) {
+              item["productComponents"]["data"].map(function (list) {
                 total_volume += list.volume;
               });
             } else {
               total_volume = 0;
             }
-            _this5.$set(item, 'newData', {
-              quantity: '',
-              paint: '',
+            _this5.$set(item, "newData", {
+              quantity: "",
+              paint: "",
               is_printing: false,
-              printing_fee: '',
+              printing_fee: "",
               is_spot_goods: true,
-              under_line_univalent: '',
-              under_line_preferential: '',
+              under_line_univalent: "",
+              under_line_preferential: "",
               total_volume: total_volume
             });
           });
         } else {
-          comb['productComp'] = [];
+          comb["productComp"] = [];
         }
         _this5.proSkuVal = comb;
       }, function (err) {});
@@ -34577,11 +34573,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     addProRowClick: function addProRowClick(row) {
       this.addProblemProCurIndexNum = row.index;
-      this.addProblemProCurIndex = 'index' + row.index;
+      this.addProblemProCurIndex = "index" + row.index;
       if (row.img_url) {
-        this.tableChgBtn = 'show' + row.index;
+        this.tableChgBtn = "show" + row.index;
       } else {
-        this.addProblemProUpload = 'upload' + row.index;
+        this.addProblemProUpload = "upload" + row.index;
       }
     },
     addDelPro: function addDelPro(index) {
@@ -34600,8 +34596,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this6.addCmptnOrderMask = false;
         _this6.refresh();
         _this6.$message({
-          message: '添加成功',
-          type: 'success'
+          message: "添加成功",
+          type: "success"
         });
       }, function (err) {
         if (err.response) {
@@ -34611,7 +34607,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this6.$message.error(str);
         }
       });
@@ -34619,8 +34615,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addCmptnOrderCancel: function addCmptnOrderCancel() {
       this.addCmptnOrderMask = false;
       this.$message({
-        message: '取消新增售后赔偿订单',
-        type: 'success'
+        message: "取消新增售后赔偿订单",
+        type: "success"
       });
     },
 
@@ -34635,59 +34631,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addProblemProDel: function addProblemProDel(index) {
       this.addCmptnOrderFormVal.problem_product.splice(index, 1);
       this.$message({
-        message: '删除问题商品行成功',
-        type: 'success'
+        message: "删除问题商品行成功",
+        type: "success"
       });
     },
     updateProblemProDel: function updateProblemProDel(index) {
       this.updateCmptnOrderFormVal.problem_product.splice(index, 1);
       this.$message({
-        message: '删除问题商品行成功',
-        type: 'success'
+        message: "删除问题商品行成功",
+        type: "success"
       });
     },
     toggleForm: function toggleForm() {
       /*展开  partHide
-      * 折叠  没有partHide*/
+        * 折叠  没有partHide*/
       this.clickFlag = !this.clickFlag;
       this.toggleText = !this.toggleText;
       if (this.clickFlag) {
-        $('#form').removeClass('hidePart');
-        $('#elTabs').removeClass('hidePart');
+        $("#form").removeClass("hidePart");
+        $("#elTabs").removeClass("hidePart");
       } else {
-        $('#form').addClass('hidePart');
-        $('#elTabs').addClass('hidePart');
+        $("#form").addClass("hidePart");
+        $("#elTabs").addClass("hidePart");
       }
     },
     proRowClick: function proRowClick(row) {
       var _this7 = this;
 
-      this.proCompRowIndex = 'index' + row.index;
-      var comb = row['combinations']['data'];
+      this.proCompRowIndex = "index" + row.index;
+      var comb = row["combinations"]["data"];
       if (comb.length > 0) {
         var total_volume = 0;
         comb.map(function (item) {
-          item['productComp'] = item['productComponents']['data'];
-          if (item['productComponents']['data'].length > 0) {
-            item['productComponents']['data'].map(function (list) {
+          item["productComp"] = item["productComponents"]["data"];
+          if (item["productComponents"]["data"].length > 0) {
+            item["productComponents"]["data"].map(function (list) {
               total_volume += list.volume;
             });
           } else {
             total_volume = 0;
           }
-          _this7.$set(item, 'newData', {
-            quantity: '',
-            paint: '',
+          _this7.$set(item, "newData", {
+            quantity: "",
+            paint: "",
             is_printing: false,
-            printing_fee: '0.0',
+            printing_fee: "0.0",
             is_spot_goods: false,
-            under_line_univalent: '0.0',
-            under_line_preferential: '0.0',
+            under_line_univalent: "0.0",
+            under_line_preferential: "0.0",
             total_volume: total_volume
           });
         });
       } else {
-        comb['productComp'] = [];
+        comb["productComp"] = [];
       }
       this.proSkuVal = comb;
     },
@@ -34695,10 +34691,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     proSkuCName: function proSkuCName(_ref3) {
       var row = _ref3.row,
           rowIndex = _ref3.rowIndex;
+
       row.index = rowIndex;
     },
     proSkuRowClick: function proSkuRowClick(row) {
-      this.proCompRowIndex = 'index' + row.index;
+      this.proCompRowIndex = "index" + row.index;
       this.proCompRow = row;
     },
     quantityChg: function quantityChg(value) {
@@ -34726,7 +34723,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         formVal = this.updateCmptnOrderFormVal;
       }
-      formVal['total_distribution_fee'] = formVal['deliver_goods_fee'] - 0 + (formVal['move_upstairs_fee'] - 0) + (formVal['installation_fee'] - 0);
+      formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
     },
     cancelAddProDtl: function cancelAddProDtl() {
       this.proMask = false;
@@ -34734,30 +34731,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addDelExpense: function addDelExpense(index) {
       this.expenseData.splice(index, 1);
       this.$message({
-        message: '删除成功',
-        type: 'success'
+        message: "删除成功",
+        type: "success"
       });
     },
     addExpenseRCName: function addExpenseRCName(_ref4) {
       var row = _ref4.row,
           rowIndex = _ref4.rowIndex;
+
       row.index = rowIndex;
     },
     addExpenseRClick: function addExpenseRClick(row) {
-      this.expenseRIndex = 'index' + row.index;
+      this.expenseRIndex = "index" + row.index;
     },
 
     /*新增行*/
     addExpenseLine: function addExpenseLine() {
       if (this.addCmptnOrderMask) {
         this.expenseData.push({
-          payment_methods_id: '',
-          payment: ''
+          payment_methods_id: "",
+          payment: ""
         });
       } else {
         this.updateExpenseData.push({
-          payment_methods_id: '',
-          payment: ''
+          payment_methods_id: "",
+          payment: ""
         });
       }
     },
@@ -34765,26 +34763,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     /*删除单条*/
     delSingle: function delSingle(row, e) {
       this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
       this.delId = row.id;
       this.delUrl = this.urls.aftercompensation;
     },
     cancelD: function cancelD() {
       this.showDel = false;
       this.$message({
-        message: '取消删除',
-        type: 'info'
+        message: "取消删除",
+        type: "info"
       });
     },
     confirmD: function confirmD(url, id) {
       var _this9 = this;
 
-      this.$del(url + '/' + id).then(function () {
+      this.$del(url + "/" + id).then(function () {
         _this9.showDel = false;
         _this9.refresh();
         _this9.$message({
-          message: '删除成功',
-          type: 'success'
+          message: "删除成功",
+          type: "success"
         });
       }, function (err) {
         if (err.response) {
@@ -34794,7 +34792,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this9.$message.error(str);
         }
       });
@@ -34808,30 +34806,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       val.forEach(function (selectedItem) {
         delArr.push(selectedItem.id);
       });
-      this.ids = delArr.join(',');
+      this.ids = delArr.join(",");
       /*拿到当前id*/
-      this.checkboxId = val.length > 0 ? val[val.length - 1].id : '';
-      this.curRowData = val.length > 0 ? val[val.length - 1] : '';
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
     },
     delBatch: function delBatch() {
       var _this10 = this;
 
       if (this.ids.length === 0) {
         this.$message({
-          message: '没有选中数据',
-          type: 'warning'
+          message: "没有选中数据",
+          type: "warning"
         });
       } else {
-        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
         }).then(function () {
           _this10.$del(_this10.urls.aftercompensation, { ids: _this10.ids }).then(function () {
             _this10.refresh();
             _this10.$message({
-              message: '删除成功',
-              type: 'success'
+              message: "删除成功",
+              type: "success"
             });
           }, function (err) {
             if (err.response) {
@@ -34840,14 +34838,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              var str = arr1.join(',');
+              var str = arr1.join(",");
               _this10.$message.error(str);
             }
           });
         }).catch(function () {
           _this10.$message({
-            type: 'info',
-            message: '已取消删除'
+            type: "info",
+            message: "已取消删除"
           });
         });
       }
@@ -34857,8 +34855,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handlePagChg: function handlePagChg(page) {
       var _this11 = this;
 
-      this.$fetch(this.urls.customerservicedepts + '?page=' + page, { include: 'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order' }).then(function (res) {
-        if (_this11.leftTopActiveName == '0') {
+      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      }).then(function (res) {
+        if (_this11.leftTopActiveName == "0") {
           _this11.cmptnOrderListTableData = res.data;
         } else {
           _this11.alreadyHandle = res.data;
@@ -34876,13 +34876,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.proIds = [];
       this.updateProIds = [];
-      this.expenseRIndex = '';
+      this.expenseRIndex = "";
       this.updateCmptnOrderFormVal = {};
       this.updateCmptnOrderMask = true;
-      this.updateProblemProCurIndex = 'index0';
+      this.updateProblemProCurIndex = "index0";
       this.updateProblemProCurIndexNum = 0;
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$fetch(this.urls.aftercompensation + '/' + id, { include: 'problemProduct.afterCompensationOrder' }).then(function (res) {
+      this.$fetch(this.urls.aftercompensation + "/" + id, {
+        include: "problemProduct.afterCompensationOrder"
+      }).then(function (res) {
         _this12.updateCmptnOrderFormVal = res;
         _this12.updateCmptnOrderFormVal.problem_product = res.problemProduct.data;
       }, function (err) {
@@ -34892,7 +34894,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this12.$message.error(str);
         }
       });
@@ -34901,12 +34903,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this13 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$patch(this.urls.aftercompensation + '/' + id, this.updateCmptnOrderFormVal).then(function () {
+      this.$patch(this.urls.aftercompensation + "/" + id, this.updateCmptnOrderFormVal).then(function () {
         _this13.updateCmptnOrderMask = false;
         _this13.refresh();
         _this13.$message({
-          message: '修改成功',
-          type: 'success'
+          message: "修改成功",
+          type: "success"
         });
       }, function (err) {
         if (err.response) {
@@ -34916,7 +34918,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this13.$message.error(str);
         }
       });
@@ -34924,8 +34926,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     updateCustomerCancel: function updateCustomerCancel() {
       this.updateCmptnOrderMask = false;
       this.$message({
-        message: '取消修改订单明细',
-        type: 'success'
+        message: "取消修改订单明细",
+        type: "success"
       });
     },
 
@@ -34937,11 +34939,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftercompensation + '/' + id + '/audit').then(function () {
+        this.$put(this.urls.aftercompensation + "/" + id + "/audit").then(function () {
           _this14.refresh();
           _this14.$message({
-            message: '审核成功',
-            type: 'success'
+            message: "审核成功",
+            type: "success"
           });
         }, function (err) {
           if (err.response) {
@@ -34950,7 +34952,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             for (var i in arr) {
               arr1.push(arr[i]);
             }
-            var str = arr1.join(',');
+            var str = arr1.join(",");
             _this14.$message.error(str);
           }
         });
@@ -34963,11 +34965,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this15 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.aftercompensation + '/' + id + '/unaudit').then(function () {
+      this.$put(this.urls.aftercompensation + "/" + id + "/unaudit").then(function () {
         _this15.refresh();
         _this15.$message({
-          message: '退审成功',
-          type: 'success'
+          message: "退审成功",
+          type: "success"
         });
       }, function (err) {
         if (err.response) {
@@ -34976,7 +34978,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this15.$message.error(str);
         }
       });
@@ -34988,18 +34990,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       } else {
         this.splitMask = true;
-        this.splitRowIndex = '';
+        this.splitRowIndex = "";
         this.splitVal = [];
-        var orderData = this.curRowData['orderItems']['data'];
+        var orderData = this.curRowData["orderItems"]["data"];
         if (orderData.length > 0) {
           orderData.map(function (item) {
             var list = {
               id: item.id,
-              commodity_code: item.product['commodity_code'],
-              short_name: item.product['short_name'],
-              quantity: item['quantity'],
+              commodity_code: item.product["commodity_code"],
+              short_name: item.product["short_name"],
+              quantity: item["quantity"],
               newData: {
-                quantity: ''
+                quantity: ""
               }
             };
             _this16.splitVal.push(list);
@@ -35010,15 +35012,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     splitCName: function splitCName(_ref5) {
       var row = _ref5.row,
           rowIndex = _ref5.rowIndex;
+
       row.index = rowIndex;
     },
     splitRowClick: function splitRowClick(row) {
-      this.splitRowIndex = 'index' + row.index;
+      this.splitRowIndex = "index" + row.index;
       this.splitRow = row;
     },
     numChg: function numChg(value) {
-      if (value > this.splitRow['quantity'] - 0) {
-        this.splitRow['newData']['quantity'] = this.splitRow['quantity'];
+      if (value > this.splitRow["quantity"] - 0) {
+        this.splitRow["newData"]["quantity"] = this.splitRow["quantity"];
       }
     },
     confirmSplit: function confirmSplit() {
@@ -35030,33 +35033,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       if (this.splitVal.length > 0) {
         this.splitVal.map(function (item) {
-          if (item['newData']['quantity'] > 0) {
+          if (item["newData"]["quantity"] > 0) {
             var list = {
               id: item.id,
-              quantity: item['newData']['quantity']
+              quantity: item["newData"]["quantity"]
             };
-            confSplit['order_items'].push(list);
+            confSplit["order_items"].push(list);
           }
         });
       }
-      this.$put(this.urls.customerservicedepts + '/' + id + '/splitorder', confSplit).then(function () {
+      this.$put(this.urls.customerservicedepts + "/" + id + "/splitorder", confSplit).then(function () {
         _this17.splitMask = false;
         _this17.refresh();
         /*   this.newOpt[1].nClick = false;
-           this.newOpt[2].nClick = false;
-           this.newOpt[3].nClick = true;
-           this.newOpt[4].nClick = false;
-           this.newOpt[5].nClick = false;
-           this.newOpt[6].nClick = true;
-           this.newOpt[8].nClick = false;
-           this.newOpt[9].nClick = false;
-           this.newOpt[13].nClick = false;
-           this.newOpt[14].nClick = true;
-           this.newOpt[15].nClick = false;
-           this.newOpt[18].nClick = false;*/
+          this.newOpt[2].nClick = false;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = false;
+          this.newOpt[5].nClick = false;
+          this.newOpt[6].nClick = true;
+          this.newOpt[8].nClick = false;
+          this.newOpt[9].nClick = false;
+          this.newOpt[13].nClick = false;
+          this.newOpt[14].nClick = true;
+          this.newOpt[15].nClick = false;
+          this.newOpt[18].nClick = false;*/
         _this17.$message({
-          message: '订单拆分成功',
-          type: 'success'
+          message: "订单拆分成功",
+          type: "success"
         });
       }, function (err) {
         if (err.response) {
@@ -35065,7 +35068,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this17.$message.error(str);
         }
       });
@@ -35076,15 +35079,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     beforeAddUploadProblemProImg: function beforeAddUploadProblemProImg(file) {
       var _this18 = this;
 
-      this.tableChgBtn = '';
+      this.tableChgBtn = "";
       this.judgeFm(file);
       var formData = new FormData();
-      formData.append('image', file);
+      formData.append("image", file);
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this18.addProblemProUpload = '';
-          _this18.tableChgBtn = 'show' + _this18.addProblemProCurIndexNum;
+          _this18.addProblemProUpload = "";
+          _this18.tableChgBtn = "show" + _this18.addProblemProCurIndexNum;
           _this18.addCmptnOrderFormVal.problem_product[_this18.addProblemProCurIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
@@ -35092,23 +35095,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     beforeUpdateUploadProblemProImg: function beforeUpdateUploadProblemProImg(file) {
       var _this19 = this;
 
-      this.tableChgBtn = '';
+      this.tableChgBtn = "";
       this.judgeFm(file);
       var formData = new FormData();
-      formData.append('image', file);
+      formData.append("image", file);
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this19.updateProblemProUpload = '';
-          _this19.tableChgBtn = 'show' + _this19.updateProblemProCurIndexNum;
+          _this19.updateProblemProUpload = "";
+          _this19.tableChgBtn = "show" + _this19.updateProblemProCurIndexNum;
           _this19.addCmptnOrderFormVal.problem_product[_this19.updateProblemProCurIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
     judgeFm: function judgeFm(file) {
-      var isJPG = file.type === 'image/jpeg';
-      var isGIF = file.type === 'image/gif';
-      var isPNG = file.type === 'image/png';
+      var isJPG = file.type === "image/jpeg";
+      var isGIF = file.type === "image/gif";
+      var isPNG = file.type === "image/png";
 
       if (!isJPG && !isGIF && !isPNG) {
         this.$message.error("上传图片必须是JPG/GIF/PNG 格式!");
@@ -35120,7 +35123,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showChgBtn = false;
       this.judgeFm(file);
       var formData = new FormData();
-      formData.append('image', file);
+      formData.append("image", file);
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
@@ -35136,7 +35139,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showChgBtn = false;
       this.judgeFm(file);
       var formData = new FormData();
-      formData.append('image', file);
+      formData.append("image", file);
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
@@ -35154,23 +35157,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         if (this.mergerIds.length != 2) {
           this.$message({
-            message: '请选择要合并的订单',
-            type: 'info'
+            message: "请选择要合并的订单",
+            type: "info"
           });
         } else {
           var ids = [];
           this.mergerIds.map(function (item) {
             ids.push(item.id);
           });
-          this.$put(this.urls.customerservicedepts + '/mergerorder' + '?order_id_one=' + ids[0] + '&order_id_two=' + ids[1]).then(function () {
+          this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
             _this22.refresh();
             _this22.$message({
-              message: '订单合并成功',
-              type: 'success'
+              message: "订单合并成功",
+              type: "success"
             });
           }, function (err) {
             if (err.response) {
-              _this22.$message.error('合并订单出错');
+              _this22.$message.error("合并订单出错");
             }
           });
         }
@@ -35182,10 +35185,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.fetchData();
-    this.$store.dispatch('setOpt', this.newOpt);
+    this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
     $(window).resize(function () {
-      that.$store.dispatch('setOpt', that.newOpt);
+      that.$store.dispatch("setOpt", that.newOpt);
     });
   }
 });
@@ -35225,6 +35228,7 @@ var render = function() {
                     "span",
                     [
                       _c("label", [_vm._v("买家昵称")]),
+                      _vm._v(" "),
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
@@ -35243,6 +35247,7 @@ var render = function() {
                     "span",
                     [
                       _c("label", [_vm._v("买家姓名")]),
+                      _vm._v(" "),
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
@@ -35261,6 +35266,7 @@ var render = function() {
                     "span",
                     [
                       _c("label", [_vm._v("买家电话")]),
+                      _vm._v(" "),
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
@@ -35280,6 +35286,7 @@ var render = function() {
                         "span",
                         [
                           _c("label", [_vm._v("买家地址")]),
+                          _vm._v(" "),
                           _c("el-input", {
                             attrs: { clearable: "" },
                             model: {
@@ -35340,6 +35347,7 @@ var render = function() {
                       "span",
                       [
                         _c("label", [_vm._v("业务员")]),
+                        _vm._v(" "),
                         _c("el-input", {
                           attrs: { clearable: "" },
                           model: {
@@ -35424,6 +35432,7 @@ var render = function() {
                       "span",
                       [
                         _c("label", [_vm._v("责任人")]),
+                        _vm._v(" "),
                         _c("el-input", {
                           attrs: { clearable: "" },
                           model: {
@@ -35493,6 +35502,7 @@ var render = function() {
                       "span",
                       [
                         _c("label", [_vm._v("物流单号")]),
+                        _vm._v(" "),
                         _c("el-input", {
                           model: {
                             value: _vm.searchBox.logistics_tracking_number,
