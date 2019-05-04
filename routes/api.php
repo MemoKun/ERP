@@ -744,6 +744,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->get('customerservicerefunds', 'CustomerServiceRefundsController@index')
             ->name('api.customerservicerefunds.index');
         $api->get('customerservicerefunds/searchuntreated', 'CustomerServiceRefundsController@searchUntreated')
+            ->name('api.customerservicerefunds.searchtreated');
+        $api->get('customerservicerefunds/searchtreated', 'CustomerServiceRefundsController@searchTreated')
             ->name('api.customerservicerefunds.searchuntreated');
         $api->get('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@show')
             ->name('api.customerservicerefunds.show');

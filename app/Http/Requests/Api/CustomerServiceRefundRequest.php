@@ -22,7 +22,7 @@ class CustomerServiceRefundRequest extends FormRequest
             case 'POST':
                 return [
                     'refund_sn' => 'string|max:255',
-                    'order_sn' => 'required|string',
+                    'order_sn' => 'string|max:255',
                     'order_no' => 'string|max:255',
                     'shops_id' => 'integer',
                     'order_source' => 'string|max:255',
@@ -34,7 +34,6 @@ class CustomerServiceRefundRequest extends FormRequest
                     'bank' => 'string|max:255',
                     'bank_address' => 'string|max:255',
                     'refund_reasons_id' => 'integer',
-                    'refund_reason' => 'string|max:255',
                     'buyer_nick' => 'string|max:255',
                     'buyer_name' => 'string|max:255',
                     'order_time' => 'string|max:255',
@@ -57,7 +56,7 @@ class CustomerServiceRefundRequest extends FormRequest
             case 'PATCH':
                 return [
                     'refund_sn' => 'string|max:255',
-                    'order_sn' => 'required|string',
+                    'order_sn' => 'string',
                     'order_no' => 'string|max:255',
                     'shops_id' => 'integer',
                     'order_source' => 'string|max:255',

@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\RefundOrder;
+use App\Models\RefundReason;
+
 
 use App\Http\Requests\Api\CustomerServiceRefundRequest;
+use App\Http\Requests\Api\RefundReasonRequest;
 use App\Http\Requests\Api\DestroyRequest;
 
 use App\Transformers\RefundOrderTransformer;
+use App\Transformers\RefundReasonTransformer;
+
 
 use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Controllers\Traits\ProcedureTrait;
@@ -94,6 +99,12 @@ class CustomerServiceRefundsController extends Controller
     public function searchUntreated()
     {
         $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_NEW,RefundOrder::REFUND_STATUS_LOCK]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchTreated()
+    {
+        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_CS_AUDIT]);
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
@@ -190,9 +201,18 @@ class CustomerServiceRefundsController extends Controller
      *      })
      * })
      */
-    public function store(CustomerServiceRefundRequest $request)
+    public function store(CustomerServiceRefundRequest $request, RefundReasonRequest $refundReasonRequest)
     {
-        return $this->traitStore($request->validated(), self::MODEL, self::TRANSFORMER);
+        $data[] = $request->validated();
+        $data[] = $request->input('refund_reason');
+
+        return $this->traitJoint2Store(
+            $data,
+            'refundReason',
+            $refundReasonRequest->rules(),
+            self::MODEL,
+            self::TRANSFORMER
+        );
     }
 
     /**

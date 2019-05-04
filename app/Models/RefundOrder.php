@@ -70,7 +70,7 @@ class RefundOrder extends Model
         'after_sales_id',
         'financial_id',
         'locked_at',
-        'bs_audit_at',
+        'cs_audit_at',
         'as_audit_at',
         'f_audit_at',
         'status',
@@ -85,7 +85,7 @@ class RefundOrder extends Model
 
     protected $dates = [
         'locked_at',
-        'bs_audit_at',
+        'cs_audit_at',
         'as_audit_at',
         'f_audit_at',
         'created_at',
@@ -334,7 +334,7 @@ class RefundOrder extends Model
 
     public function refundReason()
     {
-        return $this->belongsTo(RefundReason::class, 'refund_reasons_id');
+        return $this->hasMany(RefundReason::class);
     }
 
     public function creator()
