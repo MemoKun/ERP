@@ -57,7 +57,7 @@ class CustomerServiceRefundsController extends Controller
      *              "address": "开户地址",
      *              "refund_amount": "10.00",
      *              "transaction_sn": "12345645",
-     *              "refund_reasons_id": 1,
+     *              "refund_reason_type_id": 1,
      *              "buyer_nick": "买家昵称",
      *              "buyer_name": "买家名称",
      *              "payment": "10.00",
@@ -104,7 +104,37 @@ class CustomerServiceRefundsController extends Controller
 
     public function searchTreated()
     {
-        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_CS_AUDIT]);
+        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_CS_AUDIT,RefundOrder::REFUND_STATUS_AS_LOCK]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchAsUntreated()
+    {
+        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_CS_AUDIT,RefundOrder::REFUND_STATUS_AS_LOCK]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchAsTreated()
+    {
+        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_AS_AUDIT,RefundOrder::REFUND_STATUS_FD_LOCK]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchFdUntreated()
+    {
+        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_AS_AUDIT,RefundOrder::REFUND_STATUS_FD_LOCK]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchFdTreated()
+    {
+        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_FD_AUDIT]);
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchAllTreated()
+    {
+        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_NEW,RefundOrder::REFUND_STATUS_LOCK,RefundOrder::REFUND_STATUS_CS_AUDIT,RefundOrder::REFUND_STATUS_AS_LOCK,RefundOrder::REFUND_STATUS_AS_AUDIT,RefundOrder::REFUND_STATUS_FD_LOCK]);
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
@@ -123,7 +153,7 @@ class CustomerServiceRefundsController extends Controller
      *      @Parameter("address", description="开户地址", required=false),
      *      @Parameter("refund_amount", type="numeric", description="退款金额", required=false),
      *      @Parameter("transaction_sn", description="交易单号", required=false),
-     *      @Parameter("refund_reasons_id", type="integer", description="退款原因id", required=true),
+     *      @Parameter("refund_reason_type_id", type="integer", description="退款原因id", required=true),
      *      @Parameter("buyer_nick", description="买家昵称", required=false),
      *      @Parameter("buyer_name", description="买家名称", required=false),
      *      @Parameter("payment", type="numeric", description="支付金额", required=false),
@@ -142,7 +172,7 @@ class CustomerServiceRefundsController extends Controller
      *      "address":"开户地址",
      *      "refund_amount":10,
      *      "transaction_sn":"12345645",
-     *      "refund_reasons_id":1,
+     *      "refund_reason_type_id":1,
      *      "buyer_nick":"买家昵称",
      *      "buyer_name":"买家名称",
      *      "payment":10,
@@ -175,7 +205,7 @@ class CustomerServiceRefundsController extends Controller
      *          "address": "开户地址",
      *          "refund_amount": "10.00",
      *          "transaction_sn": "12345645",
-     *          "refund_reasons_id": 1,
+     *          "refund_reason_type_id": 1,
      *          "buyer_nick": "买家昵称",
      *          "buyer_name": "买家名称",
      *          "payment": "10.00",
@@ -240,7 +270,7 @@ class CustomerServiceRefundsController extends Controller
      *          "address": "开户地址",
      *          "refund_amount": "10.00",
      *          "transaction_sn": "12345645",
-     *          "refund_reasons_id": 1,
+     *          "refund_reason_type_id": 1,
      *          "buyer_nick": "买家昵称",
      *          "buyer_name": "买家名称",
      *          "payment": "10.00",
@@ -283,7 +313,7 @@ class CustomerServiceRefundsController extends Controller
      *      @Parameter("address", description="开户地址", required=false),
      *      @Parameter("refund_amount", type="numeric", description="退款金额", required=false),
      *      @Parameter("transaction_sn", description="交易单号", required=false),
-     *      @Parameter("refund_reasons_id", type="integer", description="退款原因id", required=false),
+     *      @Parameter("refund_reason_type_id", type="integer", description="退款原因id", required=false),
      *      @Parameter("buyer_nick", description="买家昵称", required=false),
      *      @Parameter("buyer_name", description="买家名称", required=false),
      *      @Parameter("payment", type="numeric", description="支付金额", required=false),
@@ -313,13 +343,26 @@ class CustomerServiceRefundsController extends Controller
      *      })
      * })
      */
-    public function update(CustomerServiceRefundRequest $request, RefundOrder $refundorder)
+    public function update( 
+        CustomerServiceRefundRequest $request, 
+        RefundReasonRequest $refundReasonRequest,
+        RefundOrder $refundorder,
+        \App\Handlers\ValidatedHandler $validatedHandler)
     {
         //锁定才能修改
-        if ($refundorder->unlock())
+        if ($refundorder->unlock()||$refundorder->asUnlock())
             throw new UpdateResourceFailedException('订单未锁定无法修改');
 
-        return $this->traitUpdate($request, $refundorder, self::TRANSFORMER);
+        $data[] = $request->validated();
+        $data[] = $request->input('refund_reason');
+        
+        return $this->traitJoint2Update(
+            $data,
+            'refundReason',
+            $refundReasonRequest->rules(),
+            $refundorder,
+            self::TRANSFORMER
+        );
     }
 
     /**
@@ -379,15 +422,47 @@ class CustomerServiceRefundsController extends Controller
      *      @Response(204, body={})
      * })
      */
+
+     public function asRefuse(RefundOrder $refundorder)
+     {
+         return $this->traitAction(
+             $refundorder,
+             !$refundorder->status,
+             '无法驳回', 'asDoRefuse');
+     }
+
     public function isLockOrUnlock(RefundOrder $refundorder)
     {
         return $this->traitAction(
             $refundorder,
             !$refundorder->status
             ||
-            $refundorder->getOriginal('refund_order_status') >= $refundorder::REFUND_STATUS_CS_AUDIT,
+            $refundorder->getOriginal('refund_order_status') > $refundorder::REFUND_STATUS_CS_AUDIT,
             '无法锁定', 'lockOrUnlock');
     }
+
+    public function isAsLockOrUnlock(RefundOrder $refundorder)
+    {
+        return $this->traitAction(
+            $refundorder,
+            !$refundorder->status
+            ||
+            $refundorder->getOriginal('refund_order_status') > $refundorder::REFUND_STATUS_AS_AUDIT,
+            '无法锁定', 'asLockOrUnlock');
+    }
+
+    public function isFdLockOrUnlock(RefundOrder $refundorder)
+    {
+        return $this->traitAction(
+            $refundorder,
+            !$refundorder->status
+            ||
+            $refundorder->getOriginal('refund_order_status') > $refundorder::REFUND_STATUS_FD_AUDIT,//=
+            '无法锁定', 'fdLockOrUnlock');
+    }
+
+
+    
 
     /**
      * 客审
@@ -414,6 +489,30 @@ class CustomerServiceRefundsController extends Controller
         );
     }
 
+    public function isAsAudit(RefundOrder $refundorder)
+    {
+        return $this->traitAction(
+            $refundorder,
+            !$refundorder->status
+            ||
+            $refundorder->getOriginal('refund_order_status') != $refundorder::REFUND_STATUS_AS_LOCK,
+            '售后审核出错',
+            'asAudit'
+        );
+    }
+
+    public function isFdAudit(RefundOrder $refundorder)
+    {
+        return $this->traitAction(
+            $refundorder,
+            !$refundorder->status
+            ||
+            $refundorder->getOriginal('refund_order_status') != $refundorder::REFUND_STATUS_FD_LOCK,
+            '财审出错',
+            'fdAudit'
+        );
+    }
+
     /**
      * 退审
      *
@@ -436,6 +535,28 @@ class CustomerServiceRefundsController extends Controller
             $refundorder->getOriginal('refund_order_status') != $refundorder::REFUND_STATUS_CS_AUDIT,
             '退审出错',
             'unAudit'
+        );
+    }
+    public function isAsUnAudit(RefundOrder $refundorder)
+    {
+        return $this->traitAction(
+            $refundorder,
+            !$refundorder->status
+            ||
+            $refundorder->getOriginal('refund_order_status') != $refundorder::REFUND_STATUS_AS_AUDIT,
+            '售后退审出错',
+            'asUnAudit'
+        );
+    }
+    public function isFdUnAudit(RefundOrder $refundorder)
+    {
+        return $this->traitAction(
+            $refundorder,
+            !$refundorder->status
+            ||
+            $refundorder->getOriginal('refund_order_status') != $refundorder::REFUND_STATUS_FD_AUDIT,
+            '财务退审出错',
+            'fdUnAudit'
         );
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-class RefundReasonRequest extends FormRequest
+class RefundReasonTypeRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

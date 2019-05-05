@@ -24,6 +24,6 @@ class FeeType extends Model
 
     public function afterCompensationOrder()
     {
-        return $this->hasMany(afterCompensationOrder::class);
+        return $this->hasMany(AfterCompensationOrder::class);
     }
 }

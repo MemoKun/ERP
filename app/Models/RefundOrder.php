@@ -47,7 +47,7 @@ class RefundOrder extends Model
         'refund_account',
         'bank',
         'bank_address',
-        'refund_reasons_id',
+        'refund_reason_type_id',
         'refund_reason',
         'buyer_nick',
         'buyer_name',
@@ -56,6 +56,7 @@ class RefundOrder extends Model
         'is_delivered',
         'receipt_type',
         'transaction_sn',
+        'responsible_party',
         'responsible_person',
         'responsible_amount',
         'freight_fee',
@@ -145,7 +146,7 @@ class RefundOrder extends Model
      */
     public function unlock()
     {
-        return $this->getOriginal('refund_order_status') != self::REFUND_STATUS_LOCK;
+        return !(($this->getOriginal('refund_order_status') == self::REFUND_STATUS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_AS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_FD_LOCK));
     }
 
     /**
@@ -179,6 +180,15 @@ class RefundOrder extends Model
         $this->save();
     }
 
+    public function asDoRefuse()
+    {
+        $this->locker_id = 0;
+        $this->refund_order_status = self::REFUND_STATUS_NEW;
+        $this->locked_at = null;
+        $this->save();
+    }
+
+    
     /**
      * 退审
      * @return bool
@@ -197,7 +207,7 @@ class RefundOrder extends Model
      */
     public function asUnlock()
     {
-        return $this->getOriginal('refund_order_status') != self::REFUND_STATUS_AS_LOCK;
+        return !(($this->getOriginal('refund_order_status') == self::REFUND_STATUS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_AS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_FD_LOCK));
     }
 
     /**
@@ -249,7 +259,7 @@ class RefundOrder extends Model
      */
     public function fdUnlock()
     {
-        return $this->getOriginal('refund_order_status') != self::REFUND_STATUS_FD_LOCK;
+        return !(($this->getOriginal('refund_order_status') == self::REFUND_STATUS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_AS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_FD_LOCK));
     }
 
     /**
@@ -337,6 +347,10 @@ class RefundOrder extends Model
         return $this->hasMany(RefundReason::class);
     }
 
+    public function refundReasonType()
+    {
+        return $this->belongsTo(RefundReasonType::class,'refund_reason_type_id');
+    }
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');

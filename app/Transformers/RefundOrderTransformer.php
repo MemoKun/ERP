@@ -30,7 +30,7 @@ class RefundOrderTransformer extends TransformerAbstract
             'refund_account' => $refundOrder->refund_account,
             'bank' => $refundOrder->bank,
             'bank_address' => $refundOrder->bank_address,
-            'refund_reasons_id' => $refundOrder->refund_reasons_id,
+            'refund_reason_type_id' => $refundOrder->refund_reason_type_id,
             'buyer_nick' => $refundOrder->buyer_nick,
             'buyer_name' => $refundOrder->buyer_name,
             'order_time' => optional($refundOrder->order_time)->toDateString(),
@@ -38,6 +38,7 @@ class RefundOrderTransformer extends TransformerAbstract
             'is_delivered' => $refundOrder->is_delivered,
             'receipt_type' => $refundOrder->receipt_type,
             'transaction_sn' => $refundOrder->transaction_sn,
+            'responsible_party' => $refundOrder->responsible_party,
             'responsible_person' => $refundOrder->responsible_person,
             'responsible_amount' => $refundOrder->responsible_amount,
             'freight_fee' => $refundOrder->freight_fee,
@@ -79,6 +80,11 @@ class RefundOrderTransformer extends TransformerAbstract
     public function includeRefundReason(RefundOrder $refundOrder)
     {
         return $this->collection($refundOrder->refundReason, new RefundReasonTransformer());
+    }
+
+    public function includeRefundReasonType(RefundOrder $refundOrder)
+    {
+        return $this->item($refundOrder->refundReasonType, new RefundReasonTypeTransformer());
     }
 
     public function includeCreator(RefundOrder $refundOrder)

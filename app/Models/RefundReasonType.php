@@ -4,7 +4,7 @@ namespace App\Models;
 
 class RefundReasonType extends Model
 {
-    protected $table = 'refund_reasons_type';
+    protected $table = 'refund_reason_type';
 
     protected $fillable = [
         'name', 'status'
@@ -15,9 +15,9 @@ class RefundReasonType extends Model
         'status' => 'boolean',
     ];
 
-    public function refundOrders()
+    public function refundOrder()
     {
-        return $this->hasMany(RefundOrder::class, 'payment_methods_id');
+        return $this->hasMany(RefundOrder::class);
     }
 
 }

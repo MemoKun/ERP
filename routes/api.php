@@ -744,9 +744,20 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->get('customerservicerefunds', 'CustomerServiceRefundsController@index')
             ->name('api.customerservicerefunds.index');
         $api->get('customerservicerefunds/searchuntreated', 'CustomerServiceRefundsController@searchUntreated')
-            ->name('api.customerservicerefunds.searchtreated');
-        $api->get('customerservicerefunds/searchtreated', 'CustomerServiceRefundsController@searchTreated')
             ->name('api.customerservicerefunds.searchuntreated');
+        $api->get('customerservicerefunds/searchtreated', 'CustomerServiceRefundsController@searchTreated')
+            ->name('api.customerservicerefunds.searchtreated');
+        $api->get('customerservicerefunds/searchasuntreated', 'CustomerServiceRefundsController@searchAsUntreated')
+            ->name('api.customerservicerefunds.searchasuntreated');
+        $api->get('customerservicerefunds/searchastreated', 'CustomerServiceRefundsController@searchAsTreated')
+            ->name('api.customerservicerefunds.searchastreated');
+        $api->get('customerservicerefunds/searchfduntreated', 'CustomerServiceRefundsController@searchFdUntreated')
+            ->name('api.customerservicerefunds.searchfduntreated');
+        $api->get('customerservicerefunds/searchfdtreated', 'CustomerServiceRefundsController@searchFdTreated')
+            ->name('api.customerservicerefunds.searchfdtreated');
+        $api->get('customerservicerefunds/searchalltreated', 'CustomerServiceRefundsController@searchAllTreated')
+            ->name('api.customerservicerefunds.searchalltreated');
+
         $api->get('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@show')
             ->name('api.customerservicerefunds.show');
         $api->post('customerservicerefunds', 'CustomerServiceRefundsController@store')
@@ -757,12 +768,29 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicerefunds.destroy');
         $api->delete('customerservicerefunds', 'CustomerServiceRefundsController@destroybyids')
             ->name('api.customerservicerefunds.destroybyids');
+
+        $api->put('customerservicerefunds/{refundorder}/asrefuse', 'CustomerServiceRefundsController@asRefuse')
+            ->name('api.customerservicerefunds.asrefuse');
+
         $api->put('customerservicerefunds/{refundorder}/lockorunlock', 'CustomerServiceRefundsController@isLockOrUnlock')
             ->name('api.customerservicerefunds.islockorunlock');
+        $api->put('customerservicerefunds/{refundorder}/aslockorunlock', 'CustomerServiceRefundsController@isAsLockOrUnlock')
+            ->name('api.customerservicerefunds.isaslockorunlock');
+        $api->put('customerservicerefunds/{refundorder}/fdlockorunlock', 'CustomerServiceRefundsController@isFdLockOrUnlock')
+            ->name('api.customerservicerefunds.isfdlockorunlock');
+
         $api->put('customerservicerefunds/{refundorder}/audit', 'CustomerServiceRefundsController@isAudit')
             ->name('api.customerservicerefunds.isaudit');
         $api->put('customerservicerefunds/{refundorder}/unaudit', 'CustomerServiceRefundsController@isUnAudit')
             ->name('api.customerservicerefunds.isunaudit');
+        $api->put('customerservicerefunds/{refundorder}/asaudit', 'CustomerServiceRefundsController@isAsAudit')
+            ->name('api.customerservicerefunds.isasaudit');
+        $api->put('customerservicerefunds/{refundorder}/asunaudit', 'CustomerServiceRefundsController@isAsUnAudit')
+            ->name('api.customerservicerefunds.isasunaudit');
+        $api->put('customerservicerefunds/{refundorder}/fdaudit', 'CustomerServiceRefundsController@isFdAudit')
+            ->name('api.customerservicerefunds.isfdaudit');
+        $api->put('customerservicerefunds/{refundorder}/fdunaudit', 'CustomerServiceRefundsController@isFdUnAudit')
+            ->name('api.customerservicerefunds.isfdunaudit');
 
         //退款原因
         $api->get('refundreasons', 'RefundReasonsController@index')
