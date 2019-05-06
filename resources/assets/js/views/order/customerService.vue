@@ -1895,7 +1895,7 @@ export default {
         deliver_goods_fee: "",
         move_upstairs_fee: "",
         installation_fee: "",
-        total_distribution_fee: 0,
+        total_distribution_fee: 20,
         distribution_phone: "",
         distribution_no: "",
         distribution_types_id: "",
@@ -3170,7 +3170,7 @@ export default {
     formChg() {
       let formVal;
       if (this.addCustomerMask) {
-        formVal = this.updateCustomerFormVal;
+        formVal = this.addCustomerFormVal;
       } else {
         formVal = this.updateCustomerFormVal;
       }
@@ -3179,6 +3179,11 @@ export default {
         0 +
         (formVal["move_upstairs_fee"] - 0) +
         (formVal["installation_fee"] - 0);
+      if (this.addCustomerMask) {
+        this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      } else {
+        this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      }
     },
     confirmAddProDtl() {
       if (this.addCustomerMask) {
@@ -3726,6 +3731,10 @@ export default {
         }
       });
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$message({
+            message: "加载成功",
+            type: "success"
+          });
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(
         () => {
           this.updateCustomerMask = false;

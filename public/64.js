@@ -920,8 +920,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1022,22 +1020,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       filterBox: false,
       searchBox: {
-        shop_nick: "",
-        order_no: "",
-        buyer_nick: "",
-        buyer_name: "",
-        refund_info: "",
-        locker: "",
-        refund_time: ""
+        vip_name: "",
+        order_num: "",
+        order_man: "",
+        order_phone: "",
+        order_money: "",
+        order_address: "",
+        order_goods: "",
+        order_staff: "",
+        order_promiseDate: "",
+        order_workDate: "",
+        order_transMStart: "",
+        order_transMEnd: "",
+        orderCompany: [{ label: "ceshi", value: 0 }],
+        order_customerInves: "",
+        order_mark: "",
+        order_flag: "",
+        ordertbFlag: [{ label: "ceshi", value: 0 }],
+        order_lock: "",
+        orderLock: [{ label: "ceshi", value: 0 }],
+        order_company: "",
+        order_shop: "",
+        orderShops: [{ label: "ceshi", value: 0 }]
       },
       /*获取数据*/
       activeName: "0",
       leftTopActiveName: "0",
       rightActiveName: "0",
       orderListData: [],
-      orderListHead: [
-      //订单表头标签
-      {
+      orderListHead: [{
         label: "系统订单",
         width: "220",
         prop: "system_order_no",
@@ -1588,9 +1599,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "is_notice",
         type: "checkbox"
       }],
-      loading: true, //作用未知
-      checkboxInit: false, //作用未知
-      orderListIndex: "", //作用未知
+      loading: true,
+      checkboxInit: false,
+      orderListIndex: "",
       alreadyHandle: [],
       orderDtlFormVal: {},
       orderDtlFormHead: [{
@@ -1742,9 +1753,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       proDtlData: [],
       curRowId: "",
       curRowData: {},
-      orderDtlHead: [
-      //新建订单的商品信息的表头
-      [{
+      orderDtlHead: [[{
         label: "sku名称",
         width: "160",
         prop: "name",
@@ -1813,7 +1822,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       moreForms: true,
       threeParts: true,
       addCustomerFormVal: {
-        //作用未知
         shops_id: "",
         member_nick: "",
         logistics_id: "",
@@ -1826,7 +1834,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deliver_goods_fee: "",
         move_upstairs_fee: "",
         installation_fee: "",
-        total_distribution_fee: 0,
+        total_distribution_fee: 20,
         distribution_phone: "",
         distribution_no: "",
         distribution_types_id: "",
@@ -1862,7 +1870,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status: true
       },
       addCustomerFormRules: {
-        //新建订单的要求格式
         shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
         logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
         billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
@@ -1873,9 +1880,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         payment_methods_id: [{ required: true, message: "付款方式必选", trigger: "blur" }],
         warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
       },
-      addCustomerFormHead: [
-      //新建订单的文本框表头
-      {
+      addCustomerFormHead: [{
         label: "单据来源",
         prop: "order_source",
         holder: "系统自动生成",
@@ -2974,11 +2979,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     formChg: function formChg() {
       var formVal = void 0;
       if (this.addCustomerMask) {
-        formVal = this.updateCustomerFormVal;
+        formVal = this.addCustomerFormVal;
       } else {
         formVal = this.updateCustomerFormVal;
       }
       formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
+      if (this.addCustomerMask) {
+        this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      } else {
+        this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      }
     },
     confirmAddProDtl: function confirmAddProDtl() {
       var _this6 = this;
@@ -3515,6 +3525,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$message({
+        message: "加载成功",
+        type: "success"
+      });
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(function () {
         _this15.updateCustomerMask = false;
         _this15.refresh();
@@ -3784,7 +3798,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "订单", name: "0" } },
+            { attrs: { label: "订单列表", name: "0" } },
             [
               _c("div", [
                 _c("div", { staticClass: "searchBox" }, [
@@ -8261,7 +8275,143 @@ var render = function() {
                             label: item.label,
                             align: "center",
                             width: item.width
-                          }
+                          },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "default",
+                                fn: function(scope) {
+                                  return [
+                                    _vm.expenseRIndex == "index" + scope.$index
+                                      ? _c("span", [
+                                          item.type == "select"
+                                            ? _c(
+                                                "span",
+                                                [
+                                                  _c(
+                                                    "el-select",
+                                                    {
+                                                      attrs: {
+                                                        placeholder: item.holder
+                                                      },
+                                                      model: {
+                                                        value:
+                                                          scope.row[item.prop],
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
+                                                            scope.row,
+                                                            item.prop,
+                                                            $$v
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "scope.row[item.prop]"
+                                                      }
+                                                    },
+                                                    _vm._l(
+                                                      _vm.addSubData[
+                                                        item.stateVal
+                                                      ],
+                                                      function(list) {
+                                                        return _c(
+                                                          "span",
+                                                          { key: list.id },
+                                                          [
+                                                            _c("el-option", {
+                                                              attrs: {
+                                                                label:
+                                                                  list.name,
+                                                                value: list.id
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        )
+                                                      }
+                                                    ),
+                                                    0
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            : _c(
+                                                "span",
+                                                [
+                                                  _c("el-input", {
+                                                    attrs: {
+                                                      size: "small",
+                                                      type: "number",
+                                                      placeholder: item.holder
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        scope.row[item.prop],
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          scope.row,
+                                                          item.prop,
+                                                          typeof $$v ===
+                                                            "string"
+                                                            ? $$v.trim()
+                                                            : $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "scope.row[item.prop]"
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              )
+                                        ])
+                                      : _c("span", [
+                                          item.type == "select"
+                                            ? _c(
+                                                "span",
+                                                _vm._l(
+                                                  _vm.addSubData[item.stateVal],
+                                                  function(list, index) {
+                                                    return _c(
+                                                      "span",
+                                                      { key: index },
+                                                      [
+                                                        list.id ==
+                                                        scope.row[item.prop]
+                                                          ? _c("span", [
+                                                              _vm._v(
+                                                                "\n                      " +
+                                                                  _vm._s(
+                                                                    list.name
+                                                                  ) +
+                                                                  "\n                    "
+                                                              )
+                                                            ])
+                                                          : _vm._e()
+                                                      ]
+                                                    )
+                                                  }
+                                                ),
+                                                0
+                                              )
+                                            : _c("span", [
+                                                _vm._v(
+                                                  "\n                  " +
+                                                    _vm._s(
+                                                      scope.row[item.prop]
+                                                    ) +
+                                                    "\n                "
+                                                )
+                                              ])
+                                        ])
+                                  ]
+                                }
+                              }
+                            ],
+                            null,
+                            true
+                          )
                         })
                       }),
                       _vm._v(" "),
