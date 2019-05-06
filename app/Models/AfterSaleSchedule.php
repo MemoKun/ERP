@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Facades\Auth;
 
 class AfterSaleSchedule extends Model
 {
@@ -15,7 +16,7 @@ class AfterSaleSchedule extends Model
     ];
 
     protected $dates = [
-        'subscribed_at','created_at',
+        'created_at',
     ];
 
     protected static function boot()
@@ -27,7 +28,7 @@ class AfterSaleSchedule extends Model
             // 如果模型的 user_id 字段为空
             if (!$model->user_id) {
 
-                $model->user_id = 1;
+                $model->user_id = Auth::guard('api')->id();
                 // 如果生成失败，则终止创建订单
                 if (!$model->user_id) {
                     return false;

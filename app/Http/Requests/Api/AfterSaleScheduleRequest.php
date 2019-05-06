@@ -23,7 +23,7 @@ class AfterSaleScheduleRequest extends FormRequest
                 return [
                     'after_sale_id' => 'required|string|max:255',
                     'schedule_description' => 'required|string|max:255',
-                    'subscribed_at' => 'date',
+                    'subscribed_at' => 'string',
                     'user_id' => 'integer',
                     'status' => 'boolean',
                 ];
@@ -36,7 +36,7 @@ class AfterSaleScheduleRequest extends FormRequest
                     ],
                     'after_sale_id' => 'string|max:255',
                     'schedule_description' => 'string|max:255',
-                    'subscribed_at' => 'date',
+                    'subscribed_at' => 'string',
                     'user_id' => 'integer',
                     'status' => 'boolean',
                 ];
@@ -50,7 +50,7 @@ class AfterSaleScheduleRequest extends FormRequest
             'schedule_description.required' => '进度描述必填',
             'schedule_description.string' => '进度描述必须string类型',
 
-            'subscribed_at.date' => '超时时间必须date类型',
+            'subscribed_at.string' => '超时时间必须string类型',
 
             'status.boolean' => '状态必须布尔类型',
             'status.required' => '状态必填'

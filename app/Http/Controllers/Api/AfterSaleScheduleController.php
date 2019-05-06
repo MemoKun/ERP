@@ -30,6 +30,11 @@ class AfterSaleScheduleController extends Controller
         return $this->traitStore($request->validated(), self::MODEL, self::TRANSFORMER);
     }
 
+    public function update(AfterSaleScheduleRequest $request, AfterSaleSchedule $aftersaleschedule)
+    {
+        return $this->traitUpdate($request, $aftersaleschedule, self::TRANSFORMER);
+    }
+
     public function show(AfterSaleSchedule $aftersaleschedule)
     {
         return $this->traitShow($aftersaleschedule, self::TRANSFORMER);

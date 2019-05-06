@@ -20,7 +20,9 @@ const responseData= {
     customertypes: [],
     paymentmethods: [],
     feetypes: [],
-
+    // 薛涛
+    aftersalestate: [],
+    aftersaletype: [],
 
 
   },
@@ -82,7 +84,7 @@ const responseData= {
     FEETYPES:(state, arr)=>{
       state.feetypes = arr;
     },
-    //add by xuetao
+    // 薛涛
     AFTERSALESTATE:(state, arr)=>{
       state.aftersalestate = arr;
     },
@@ -221,6 +223,21 @@ const responseData= {
       axios.get(url,{params:{ 'status': true}})
         .then(res=>{
           commit('FEETYPES', res.data.data);
+          return res.data.data
+        })
+    },
+    // 薛涛
+    aftersalestate({commit}, url) {
+      axios.get(url,{params:{ 'status': true}})
+        .then(res=>{
+          commit('AFTERSALESTATE', res.data.data);
+          return res.data.data
+        })
+    },
+    aftersaletype({commit}, url) {
+      axios.get(url,{params:{ 'status': true}})
+        .then(res=>{
+          commit('AFTERSALETYPE', res.data.data);
           return res.data.data
         })
     },

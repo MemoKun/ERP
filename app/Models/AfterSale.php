@@ -3,20 +3,65 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Dingo\Api\Exception\UpdateResourceFailedException;
+use Illuminate\Support\Facades\Auth;
 
 class AfterSale extends Model
 {
-    const AFTERSALE_STATUS_NEW = 'new';
-    const AFTERSALE_STATUS_SUBMIT = 'submit';
+    // 售后状态(提交、未提交)
+    const ORDER_STATUS_NEW = 'new';
+    const ORDER_STATUS_SUBMIT = 'submit';
+
+    // 订单状态码
+    const AFTERSALE_STATUS_NEW = 10;
+    const AFTERSALE_STATUS_LOCK = 20;
+    const AFTERSALE_STATUS_SUBMIT = 30; //客服提交
+    const AFTERSALE_STATUS_ONE_AUDIT = 40; //客服审核
+    const AFTERSALE_STATUS_TWO_AUDIT = 50; //主管审核
+
+    const AFTERSALE_RETURN_LOCK = 21;
+    const AFTERSALE_RETURN_SUBMIT = 31;
+    const AFTERSALE_RETURN_ONE_AUDIT = 41; //驳回客服审核
+    const AFTERSALE_RETURN_TWO_AUDIT = 51; //驳回主管审核
 
     public static $orderStatusMap = [
-        self::AFTERSALE_STATUS_NEW => '未提交',
-        self::AFTERSALE_STATUS_SUBMIT => '已提交',
+        self::ORDER_STATUS_NEW => '未提交',
+        self::ORDER_STATUS_SUBMIT => '已提交',
     ];
 
+    // 售后状态(提交、未提交)
     public static $orderStatusCodeMap = [
-        self::AFTERSALE_STATUS_NEW => 0,
-        self::AFTERSALE_STATUS_SUBMIT => 1
+        self::ORDER_STATUS_NEW => 0,
+        self::ORDER_STATUS_SUBMIT => 1
+    ];
+
+    // 售后状态
+    public static $afterSaleStatusMap = [
+        self::AFTERSALE_STATUS_NEW => '未提交',
+        self::AFTERSALE_STATUS_LOCK => '已锁定',
+        self::AFTERSALE_STATUS_SUBMIT => '已客服提交',
+        self::AFTERSALE_STATUS_ONE_AUDIT => '已客服审核',
+        self::AFTERSALE_STATUS_TWO_AUDIT => '已主管审核',
+
+        self::AFTERSALE_RETURN_LOCK => '解锁',
+        self::AFTERSALE_RETURN_SUBMIT => '驳回提交',
+        self::AFTERSALE_RETURN_ONE_AUDIT => '驳回客服审核',
+        self::AFTERSALE_RETURN_TWO_AUDIT => '驳回主管审核',
+    ];
+
+    // 售后操作
+    public static $afterSaleOperationMap = [
+        self::AFTERSALE_STATUS_NEW => '创建',
+        self::AFTERSALE_STATUS_LOCK => '锁定',
+        self::AFTERSALE_STATUS_SUBMIT => '客服提交',
+        self::AFTERSALE_STATUS_ONE_AUDIT => '客服审核',
+        self::AFTERSALE_STATUS_TWO_AUDIT => '主管审核',
+
+        self::AFTERSALE_RETURN_LOCK => '解锁',
+        self::AFTERSALE_RETURN_SUBMIT => '驳回提交',
+        self::AFTERSALE_RETURN_ONE_AUDIT => '驳回客服审核',
+        self::AFTERSALE_RETURN_TWO_AUDIT => '驳回主管审核',
     ];
 
     protected $table = 'after_sale';
@@ -25,10 +70,10 @@ class AfterSale extends Model
     protected $fillable = [
         'after_sale_order_no', 'order_status', 'order_no','deliver_date',
         'client_name', 'suppliers_id', 'logistics_id','shop_name','vip_name',
-        'order_staff', 'order_amount', 'after_sale_type','shop_group',
+        'user_id', 'order_amount', 'after_sale_type','shop_group',
         'after_sale_group', 'after_sale_status', 'order_phone',
         'receiver_state', 'receiver_city', 'receiver_district',
-        'receiver_address', 'rfe_order_at', 'tag_name','logistic_name',
+    'receiver_address', 'rfe_order_at', 'tag_name','logistic_name',
         'tag_at', 'tag_people','parts_duty','after_responsible_party','locking_people',
         'locking_at','after_sale_person','is_reject','customer_service_requirements',
         'refund_status','return_status','patch_status','patch_split',
@@ -59,7 +104,7 @@ class AfterSale extends Model
         'is_solve' => 'boolean',
         'is_service_submit' => 'boolean',
         'is_after_sale_check' => 'boolean',
-        'is_director_check' => 'boolean',
+        'is_director_check' => 'boolean', 
         'status' => 'boolean',
         'is_close' => 'boolean',
     ];
@@ -76,6 +121,16 @@ class AfterSale extends Model
                 $model->after_sale_order_no = static::findAvailableNo();
                 // 如果生成失败，则终止创建订单
                 if (!$model->after_sale_order_no) {
+                    return false;
+                }
+            }
+
+            // 如果模型的 user_id 字段为空
+            if (!$model->user_id) {
+
+                $model->user_id = Auth::guard('api')->id();;
+                // 如果生成失败，则终止创建订单
+                if (!$model->user_id) {
                     return false;
                 }
             }
@@ -104,15 +159,49 @@ class AfterSale extends Model
         return false;
     }
 
+    public function getAfterSaleStatusAttribute($value)
+    {
+        return self::$afterSaleStatusMap[$value] ?? $value;
+    }
+
+    /**
+     * 订单未锁定
+     * @return bool
+     */
+    public function unlock()
+    {
+        return $this->getOriginal('after_sale_status') != self::AFTERSALE_STATUS_LOCK;
+    }
+
+    /**
+     * 订单锁定或释放
+     * @return bool
+     */
+    public function lockOrUnlock()
+    {
+        if($this->unlock()){
+            $this->locking_at = date('Y-m-d h:i:s', time());
+            $this->locking_people = Auth::guard('api')->id();
+            $this->after_sale_status = self::AFTERSALE_STATUS_LOCK;
+        }else{
+            $this->locking_at = date('Y-m-d h:i:s', time());
+            $this->locking_people = 0;
+            $this->after_sale_status = self::AFTERSALE_STATUS_NEW;
+        } 
+
+        $this->save();
+    }
+
     /**
      * 客审提交
      * @return bool
      */
     public function audit()
     {
-        $this->service_submit_person = 1;
-        $this->order_status = self::AFTERSALE_STATUS_SUBMIT;
-        $this->service_submit_date = date('YmdHis');
+        $this->order_status = self::ORDER_STATUS_SUBMIT;
+        $this->service_submit_date = date('Y-m-d h:i:s', time());
+        $this->service_submit_person = Auth::guard('api')->id();
+        $this->is_service_submit = 1;
         $this->save();
     }
 
@@ -123,7 +212,10 @@ class AfterSale extends Model
     public function unAudit()
     {
         $this->service_submit_person = 0;
-        $this->order_status = self::AFTERSALE_STATUS_NEW;
+        $this->order_status = self::ORDER_STATUS_NEW;
+        $this->service_submit_date = date('Y-m-d h:i:s', time());
+        $this->service_submit_person = 0;
+        $this->is_service_submit = 0;
         $this->save();
     }
 
@@ -145,5 +237,10 @@ class AfterSale extends Model
     public function afterSaleSchedules()
     {
         return $this->hasMany(AfterSaleSchedule::class, 'after_sale_id');
+    }
+
+    public function afterSaleDefPros()
+    {
+        return $this->hasMany(AfterSaleDefPro::class, 'after_sale_id');
     }
 }

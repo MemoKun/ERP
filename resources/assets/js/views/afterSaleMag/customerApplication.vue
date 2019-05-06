@@ -22,7 +22,7 @@
         <span>
           <label>业务员</label>
           <el-select
-            v-model="searchBox.order_staff"
+            v-model="searchBox.user_id"
             clearable
             placeholder="请选择"
             @keyup.enter.native="handleQuery"
@@ -246,13 +246,13 @@
           <el-table-column label="操作" width="180" align="center" fixed="right">
             <template slot-scope="scope">
               <el-button size="mini" type="primary" @click="updateSchedule(scope.row,$event)">修改</el-button>
-              <el-button size="mini" type="danger" @click="delSchedule(scope.row,$event)">删除</el-button>
+              <el-button size="mini" type="danger" @click="delBtmTab(scope.row,$event)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="售后产品问题" name="1">
-        <el-table :data="scheduleData">
+        <el-table :data="defProData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -261,32 +261,15 @@
             :key="item.label"
           >
             <template slot-scope="scope">
-              <span v-if="item.type=='select'">
-                <span v-if="scope.row[item.prop]==''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
-                >{{scope.row[item.prop][item.inProp]}}</span>
-              </span>
-              <span v-else-if="item.type=='checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
-                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                  <img :src="scope.row[item.prop]">
-                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                </el-popover>
-              </span>
-              <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
-              </span>
+              <span
+                v-if="scope.row[item.prop]"
+              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="售后图片" name="2">
-        <el-table :data="scheduleData">
+        <el-table :data="defProData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -295,32 +278,18 @@
             :key="item.label"
           >
             <template slot-scope="scope">
-              <span v-if="item.type=='select'">
-                <span v-if="scope.row[item.prop]==''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
-                >{{scope.row[item.prop][item.inProp]}}</span>
-              </span>
-              <span v-else-if="item.type=='checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
+              <span v-if="item.type=='img'">
                 <el-popover placement="right" trigger="hover" popper-class="picture_detail">
                   <img :src="scope.row[item.prop]">
                   <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                 </el-popover>
-              </span>
-              <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="内部便签" name="3">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -354,7 +323,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="操作记录" name="4">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -461,7 +430,7 @@
       <div class="clearfix">
         <el-button type="text">售后问题产品</el-button>
         <el-table
-          :data="defProDtlVal"
+          :data="addAfterSaleForm.after_sale_def_pro"
           fit
           height="180"
           :row-class-name="defRowCName"
@@ -478,6 +447,11 @@
               <span
                 v-if="scope.row[item.prop]"
               >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="90" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button size="mini" type="danger" @click="delAddDefPro(scope.$index)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -628,7 +602,7 @@
       <div class="clearfix">
         <el-button type="text">售后问题产品</el-button>
         <el-table
-          :data="defProDtlVal"
+          :data="updateForm.afterSaleDefPros"
           fit
           height="180"
           :row-class-name="defRowCName"
@@ -645,6 +619,11 @@
               <span
                 v-if="scope.row[item.prop]"
               >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="90" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button size="mini" type="danger" @click="delAddDefPro(scope.row,$event)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -680,11 +659,7 @@
 
     <!-- 新增进度 -->
     <el-dialog title="新增售后进度" :visible.sync="addScheduleMask">
-      <el-form
-        :model="scheduleRuleFormVal"
-        :rules="scheduleRules"
-        id="form"
-      >
+      <el-form :model="scheduleRuleFormVal" :rules="scheduleRules" id="form">
         <el-form-item
           v-for="(item,index) in scheduleRuleFormHead"
           :key="index"
@@ -713,6 +688,41 @@
         <div style="float: right">
           <el-button type="primary" @click="addScheduleFrom">确定</el-button>
           <el-button @click="cancelAddSch">取消</el-button>
+        </div>
+      </div>
+    </el-dialog>
+
+    <!-- 修改进度 -->
+    <el-dialog title="修改售后进度" :visible.sync="updateScheduleMask">
+      <el-form :model="updateScheduleRuleFormVal" :rules="scheduleRules" id="form">
+        <el-form-item
+          v-for="(item,index) in scheduleRuleFormHead"
+          :key="index"
+          :label="item.label"
+          :prop="item.prop"
+        >
+          <span v-if="item.type=='textarea'">
+            <el-input
+              type="textarea"
+              v-model.trim="updateScheduleRuleFormVal[item.prop]"
+              :placehode="item.holder"
+            ></el-input>
+          </span>
+          <span v-else-if="item.type=='DatePicker'">
+            <el-date-picker
+              v-model="updateScheduleRuleFormVal[item.prop]"
+              type="date"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期"
+            ></el-date-picker>
+          </span>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer clearfix">
+        <div style="float: right">
+          <el-button type="primary" @click="updateScheduleFrom(updateSchIndex)">确定</el-button>
+          <el-button @click="cancelUpdateSch">取消</el-button>
         </div>
       </div>
     </el-dialog>
@@ -752,7 +762,7 @@ export default {
         {
           cnt: "退审",
           icon: "bf-auditfaild",
-          ent: this.test,
+          ent: this.unAudit,
           nClick: true
         },
         {
@@ -771,7 +781,6 @@ export default {
         after_sale_order_no: "",
         order_no: "",
         vip_name: "",
-        order_staff: "",
         orderStaff: [{ label: "ceshi", value: 0 }],
         after_sale_status: "",
         after_sale_type: "",
@@ -848,7 +857,8 @@ export default {
         {
           label: "业务员",
           width: "200",
-          prop: "order_staff",
+          prop: "user",
+          inProp: "username",
           type: "text"
         },
         {
@@ -995,9 +1005,15 @@ export default {
       bottomActiveName: "0",
       showBtmDel: false,
       scheduleData: [],
+      defProData: [],
       scheduleRuleFormVal: {
         schedule_description: "",
-        subscribed_at: "",
+        subscribed_at: ""
+      },
+      updateScheduleRuleFormVal: {
+        after_sale_id: "",
+        schedule_description: "",
+        subscribed_at: ""
       },
       scheduleRules: {
         schedule_description: [
@@ -1042,7 +1058,6 @@ export default {
             label: "预约时间",
             width: "180",
             prop: "subscribed_at",
-            inProp: "date",
             type: "text"
           }
         ],
@@ -1055,7 +1070,7 @@ export default {
           },
           {
             label: "规格编码",
-            prop: "specification_id",
+            prop: "spec_code",
             width: "180",
             type: "text"
           },
@@ -1085,7 +1100,7 @@ export default {
           },
           {
             label: "购买数量",
-            prop: "quantity ",
+            prop: "buy_number",
             width: "120",
             type: "text"
           },
@@ -1159,6 +1174,7 @@ export default {
       ],
       // 新增售后进度
       addScheduleMask: false,
+      updateScheduleMask: false,
       scheduleFrom: {},
       /* 新增售后 */
       moreForms: true,
@@ -1224,8 +1240,8 @@ export default {
         },
         {
           label: "业务员",
-          prop: "order_staff",
-          holder: "系统自动生成",
+          prop: "user_id",
+          holder: "创建后系统自动生成",
           type: "text",
           addChgAble: true
         },
@@ -1320,7 +1336,6 @@ export default {
         after_sale_group: "",
         after_sale_status: "",
         order_phone: "",
-        img: "",
         vip_name: "",
         suppliers_id: "",
         logistic_name: "",
@@ -1334,7 +1349,20 @@ export default {
         after_sale_cost: "",
         problem_description: "",
         customer_service_requirements: "",
-        rfe_information: ""
+        rfe_information: "",
+        after_sale_def_pro: [
+          {
+            commodity_code: "",
+            spec_code: "",
+            short_name: "",
+            spec: "",
+            color: "",
+            materials: "",
+            buy_number: 0,
+            supplier_id: "",
+            img_url: ""
+          }
+        ]
       },
       addAfterSaleRules: {
         order_no: [
@@ -1358,7 +1386,7 @@ export default {
         },
         {
           label: "规格编码",
-          prop: "specification_id",
+          prop: "spec_code",
           width: "180",
           type: "text"
         },
@@ -1370,27 +1398,25 @@ export default {
         },
         {
           label: "规格",
-          prop: "specification_name",
+          prop: "spec",
           width: "180",
           type: "text"
         },
         {
           label: "颜色",
-          prop: "productComponents",
-          inProp: "color",
+          prop: "color",
           width: "120",
           type: "text"
         },
         {
           label: "材质",
-          prop: "productComponents",
-          inProp: "materials",
+          prop: "materials",
           width: "120",
           type: "text"
         },
         {
           label: "购买数量",
-          prop: "quantity ",
+          prop: "buy_number",
           width: "120",
           type: "text"
         },
@@ -1402,7 +1428,6 @@ export default {
         }
       ],
       defectiveProduct: [],
-      defProDtlVal: [],
       // 新增售后产品
       addAfterSProMask: false,
       addAfterSProDtlVal: [],
@@ -1418,7 +1443,7 @@ export default {
         },
         {
           label: "规格编码",
-          prop: "specification_id",
+          prop: "spec_code",
           width: "180",
           type: "text"
         },
@@ -1430,27 +1455,25 @@ export default {
         },
         {
           label: "规格",
-          prop: "product_component",
-          inProp: "spec",
+          prop: "spec",
           width: "180",
           type: "text"
         },
         {
           label: "颜色",
-          prop: "product_component",
+          prop: "color",
           width: "120",
           type: "text"
         },
         {
           label: "材质",
-          prop: "product_component",
-          inProp: "materials",
+          prop: "materials",
           width: "120",
           type: "text"
         },
         {
           label: "购买数量",
-          prop: "quantity ",
+          prop: "buy_number",
           width: "120",
           type: "text"
         },
@@ -1496,6 +1519,7 @@ export default {
       updateMask: false,
       updateId: "",
       updateIndex: "",
+      updateSchIndex: "",
       updateForm: {},
       componentShowChg: true,
       updateCompUpload: "upload0",
@@ -1538,7 +1562,7 @@ export default {
         after_sale_order_no: "",
         order_no: "",
         vip_name: "",
-        order_staff: "",
+        user_id: "",
         orderStaff: [{ label: "ceshi", value: 0 }],
         after_sale_status: "",
         after_sale_type: "",
@@ -1568,13 +1592,16 @@ export default {
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: "new",
-            include: "afterSaleSchedules.user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
               this.newLoading = false;
               this.newData = res.data;
               this.scheduleData = res.data[0]
                 ? res.data[0]["afterSaleSchedules"].data
+                : [];
+              this.defProData = res.data[0]
+                ? res.data[0]["afterSaleDefPros"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
@@ -1608,11 +1635,17 @@ export default {
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: "submit",
-            include: "afterSaleSchedules.user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
               this.submitLoading = false;
               this.submitData = res.data;
+              this.scheduleData = res.data[0]
+                ? res.data[0]["afterSaleSchedules"].data
+                : [];
+              this.defProData = res.data[0]
+                ? res.data[0]["afterSaleDefPros"].data
+                : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
@@ -1646,6 +1679,7 @@ export default {
       this.curRowId = row.id;
       this.curRowData = row;
       this.scheduleData = row["afterSaleSchedules"].data;
+      this.defProData = row["afterSaleDefPros"].data;
     },
     // 单条删除
     del(row, e) {
@@ -1689,72 +1723,74 @@ export default {
     handleSelectionChange(val) {
       if (val.length != 0) {
         this.updateId = val[0].id;
-        this.updateForm = {
-          after_responsible_party: val[0].after_responsible_party,
-          after_sale_check_date: val[0].after_sale_check_date,
-          after_sale_check_person: val[0].after_sale_check_person,
-          after_sale_group: val[0].after_sale_group,
-          after_sale_order_no: val[0].after_sale_order_no,
-          after_sale_order_type: val[0].after_sale_order_type,
-          after_sale_person: val[0].after_sale_person,
-          after_sale_status: val[0].after_sale_status,
-          after_sale_type: val[0].after_sale_type,
-          client_name: val[0].client_name,
-          close_date: val[0].close_date,
-          create_date: val[0].create_date,
-          created_at: val[0].created_at,
-          custom_oid: val[0].custom_oid,
-          customer_service_requirements: val[0].customer_service_requirements,
-          deliver_date: val[0].deliver_date,
-          director_check_date: val[0].director_check_date,
-          director_check_person: val[0].director_check_person,
-          id: val[0].id,
-          is_after_sale_check: val[0].is_after_sale_check,
-          is_close: val[0].is_close,
-          is_director_check: val[0].is_director_check,
-          is_finish: val[0].is_finish,
-          is_patch: val[0].is_patch,
-          is_refund: val[0].is_refund,
-          is_reject: val[0].is_reject,
-          is_return: val[0].is_return,
-          is_service_submit: val[0].is_service_submit,
-          is_solve: val[0].is_solve,
-          locking_at: val[0].locking_at,
-          locking_people: val[0].locking_people,
-          logistic_name: val[0].logistic_name,
-          logistics_id: val[0].logistics_id,
-          order_amount: val[0].order_amount,
-          order_no: val[0].order_no,
-          order_phone: val[0].order_phone,
-          order_remark: val[0].order_remark,
-          order_staff: val[0].order_staff,
-          order_status: val[0].order_status,
-          parts_duty: val[0].parts_duty,
-          patch_status: val[0].patch_status,
-          predict_at: val[0].predict_at,
-          previous_order_staff: val[0].previous_order_staff,
-          problem_description: val[0].problem_description,
-          receiver_address: val[0].receiver_address,
-          receiver_city: val[0].receiver_city,
-          receiver_district: val[0].receiver_district,
-          receiver_state: val[0].receiver_state,
-          refund_status: val[0].refund_status,
-          return_status: val[0].return_status,
-          rfe_information: val[0].rfe_information,
-          rfe_order_at: val[0].rfe_order_at,
-          service_submit_date: val[0].service_submit_date,
-          service_submit_person: val[0].service_submit_person,
-          shop_group: val[0].shop_group,
-          shop_name: val[0].shop_name,
-          status: val[0].status,
-          suppliers_id: val[0].suppliers_id,
-          tag_at: val[0].tag_at,
-          tag_name: val[0].tag_name,
-          tag_people: val[0].tag_people,
-          taobao_oid: val[0].taobao_oid,
-          updated_at: val[0].updated_at,
-          vip_name: val[0].vip_name
-        };
+        this.updateForm = val[0];
+        console.log(this.updateForm.afterSaleDefPros);
+        // this.updateForm = {
+        //   after_responsible_party: val[0].after_responsible_party,
+        //   after_sale_check_date: val[0].after_sale_check_date,
+        //   after_sale_check_person: val[0].after_sale_check_person,
+        //   after_sale_group: val[0].after_sale_group,
+        //   after_sale_order_no: val[0].after_sale_order_no,
+        //   after_sale_order_type: val[0].after_sale_order_type,
+        //   after_sale_person: val[0].after_sale_person,
+        //   after_sale_status: val[0].after_sale_status,
+        //   after_sale_type: val[0].after_sale_type,
+        //   client_name: val[0].client_name,
+        //   close_date: val[0].close_date,
+        //   create_date: val[0].create_date,
+        //   created_at: val[0].created_at,
+        //   custom_oid: val[0].custom_oid,
+        //   customer_service_requirements: val[0].customer_service_requirements,
+        //   deliver_date: val[0].deliver_date,
+        //   director_check_date: val[0].director_check_date,
+        //   director_check_person: val[0].director_check_person,
+        //   id: val[0].id,
+        //   is_after_sale_check: val[0].is_after_sale_check,
+        //   is_close: val[0].is_close,
+        //   is_director_check: val[0].is_director_check,
+        //   is_finish: val[0].is_finish,
+        //   is_patch: val[0].is_patch,
+        //   is_refund: val[0].is_refund,
+        //   is_reject: val[0].is_reject,
+        //   is_return: val[0].is_return,
+        //   is_service_submit: val[0].is_service_submit,
+        //   is_solve: val[0].is_solve,
+        //   locking_at: val[0].locking_at,
+        //   locking_people: val[0].locking_people,
+        //   logistic_name: val[0].logistic_name,
+        //   logistics_id: val[0].logistics_id,
+        //   order_amount: val[0].order_amount,
+        //   order_no: val[0].order_no,
+        //   order_phone: val[0].order_phone,
+        //   order_remark: val[0].order_remark,
+        //   user_id: val[0].user_id,
+        //   order_status: val[0].order_status,
+        //   parts_duty: val[0].parts_duty,
+        //   patch_status: val[0].patch_status,
+        //   predict_at: val[0].predict_at,
+        //   previous_order_staff: val[0].previous_order_staff,
+        //   problem_description: val[0].problem_description,
+        //   receiver_address: val[0].receiver_address,
+        //   receiver_city: val[0].receiver_city,
+        //   receiver_district: val[0].receiver_district,
+        //   receiver_state: val[0].receiver_state,
+        //   refund_status: val[0].refund_status,
+        //   return_status: val[0].return_status,
+        //   rfe_information: val[0].rfe_information,
+        //   rfe_order_at: val[0].rfe_order_at,
+        //   service_submit_date: val[0].service_submit_date,
+        //   service_submit_person: val[0].service_submit_person,
+        //   shop_group: val[0].shop_group,
+        //   shop_name: val[0].shop_name,
+        //   status: val[0].status,
+        //   suppliers_id: val[0].suppliers_id,
+        //   tag_at: val[0].tag_at,
+        //   tag_name: val[0].tag_name,
+        //   tag_people: val[0].tag_people,
+        //   taobao_oid: val[0].taobao_oid,
+        //   updated_at: val[0].updated_at,
+        //   vip_name: val[0].vip_name
+        // };
       } else {
         this.updateId = "";
       }
@@ -1769,54 +1805,6 @@ export default {
       this.delArr = del.join(",");
     },
     // 底部tabs
-    addSchedule(row) {
-      this.addScheduleMask = true;
-      this.addId = row.id;
-    },
-    delSchedule(row, e) {
-      this.showBtmDel = true;
-      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
-      this.delId = row.id;
-    },
-    cancelAddSch() {
-      this.addScheduleMask = false;
-      this.$message({
-        message: "取消新增进度",
-        type: "info"
-      });
-    },
-    addScheduleFrom() {
-      let id = this.addId;
-      let data = this.scheduleRuleFormVal;
-      let submitData = {
-        after_sale_id: id,
-        schedule_description: data.schedule_description,
-        subscribed_at: data.subscribed_at
-      };
-      this.$post(this.urls.aftersaleschedule, submitData).then(
-        () => {
-          this.$message({
-            message: "新建售后进度成功",
-            type: "success"
-          });
-          this.addScheduleMask = false;
-          this.refresh();
-        },
-        err => {
-          if (err.response) {
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error({
-              message: str
-            });
-          }
-        }
-      );
-    },
     cancelBtmD() {
       this.showBtmDel = false;
       this.$message({
@@ -1855,12 +1843,127 @@ export default {
           break;
       }
     },
+    delBtmTab(row, e) {
+      this.showBtmDel = true;
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
+      this.delId = row.id;
+    },
+    // 新增售后进度
+    addSchedule(row) {
+      this.addScheduleMask = true;
+      this.addId = row.id;
+    },
+    cancelAddSch() {
+      this.addScheduleMask = false;
+      this.$message({
+        message: "取消新增进度",
+        type: "info"
+      });
+    },
+    addScheduleFrom() {
+      let id = this.addId;
+      let data = this.scheduleRuleFormVal;
+      let submitData = {
+        after_sale_id: id,
+        schedule_description: data.schedule_description,
+        subscribed_at: data.subscribed_at
+      };
+      // console.log(submitData);
+      this.$post(this.urls.aftersaleschedule, submitData).then(
+        () => {
+          this.$message({
+            message: "新建售后进度成功",
+            type: "success"
+          });
+          this.addScheduleMask = false;
+          this.scheduleRuleFormVal = {
+            schedule_description: "",
+            subscribed_at: ""
+          }
+          this.refresh();
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error({
+              message: str
+            });
+          }
+        }
+      );
+    },
+    // 修改售后进度
+    updateSchedule(row) {
+      this.updateScheduleMask = true;
+      this.updateSchIndex = row.id;
+      this.$fetch(this.urls.aftersaleschedule + "/" + this.updateSchIndex).then(
+          res => {
+            this.updateScheduleRuleFormVal = {
+              after_sale_id: res.after_sale_id,
+              schedule_description: res.schedule_description,
+              subscribed_at: res.subscribed_at,
+            };
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+    },
+    updateScheduleFrom(row) {
+      this.$patch(this.urls.aftersaleschedule + "/" + this.updateSchIndex, this.updateScheduleRuleFormVal).then(
+        () => {
+          this.$message({
+            message: "修改售后进度成功",
+            type: "success"
+          });
+          this.updateScheduleMask = false;
+          this.refresh();
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error({
+              message: str
+            });
+          }
+        }
+      );
+    },
+    cancelUpdateSch() {
+      this.updateScheduleMask = false;
+      this.$message({
+        message: "取消新增进度",
+        type: "info"
+      });
+    },
     // 新建售后申请单
     addNew() {
-      this.addAfterSaleMask = true;
+      if (this.newOpt[0].nClick) {
+        return;
+      } else {
+        this.addAfterSaleMask = true;
+        this.resetAddAfterSale();
+      }
     },
     resetAddAfterSale() {
-      this.defProDtlVal = [];
       Object.assign(
         this.addAfterSaleForm,
         this.$options.data().addAfterSaleForm
@@ -1889,7 +1992,7 @@ export default {
           if (imageInfo.status_code == 201) {
             this.noUpload = false;
             this.showChgBtn = true;
-            this.addAfterSaleForm.img = res.data.path;
+            this.addAfterSaleForm.after_sale_def_pro[0].img_url = res.data.path;
           }
         })
         .catch(err => {});
@@ -1902,7 +2005,13 @@ export default {
       });
     },
     confirmAddAfterSale() {
-      this.$post(this.urls.aftersale, this.addAfterSaleForm).then(
+      let submitData = this.addAfterSaleForm;
+      submitData.after_sale_def_pro.map((item, index) => {
+        if (!item.commodity_code) {
+          submitData.after_sale_def_pro.splice(index, 1);
+        }
+      });
+      this.$post(this.urls.aftersale, submitData).then(
         () => {
           this.$message({
             message: "新建售后订单成功",
@@ -1962,6 +2071,10 @@ export default {
         })
         .catch(err => {});
     },
+    // 删除售后产品
+    delAddDefPro(index) {
+      this.addAfterSProDtlVal.splice(index, 1);
+    },
     // 新增售后产品
     addOrderRowCName({ row, rowIndex }) {
       row.index = rowIndex;
@@ -1974,39 +2087,24 @@ export default {
     },
     addOrderRowClick(row) {
       this.addOrderDtlVal = row;
-      console.log(this.addOrderDtlVal);
       this.$fetch(this.urls.products, {
         include:
-          "productComponents,shop,supplier,combinations.productComponents"
+          "productComponents,shop,supplier,goodsCategory,combinations.productComponents"
       }).then(
         res => {
-          this.proDtlVal = res.data;
-          this.proDtlVal.map(item => {
-            // let product_component = [];
-            // console.log(item.productComponents["data"][0]["spec"]);
-            // console.log(item.productComponents["data"][0]["spec"]);
-            // item.productComponents.map(list => {
-            //   let comp = {
-            //     spec: list.spec,
-            //     color: list.color,
-            //     materials: list.materials
-            //   };
-            // });
-            // if (item.productComponents["data"].length > 0) {
-            //   console.log(666);
-            //   let comp = {
-            //     spec: item.productComponents["data"][0]["spec"],
-            //     color: item.productComponents["data"][0]["color"],
-            //     materials: item.productComponents["data"][0]["materials"]
-            //   };
-            // } else {
-            //   let comp = {
-            //     spec: '',
-            //     color: '',
-            //     materials: ''
-            //   };
-            // };
-            //   product_component.push(comp);
+          let resData = res.data;
+          resData.map(item => {
+            let defPro = {
+              commodity_code: item.commodity_code,
+              spec_code: "",
+              short_name: item.short_name,
+              spec: item.productComponents["data"][0].spec,
+              color: item.productComponents["data"][0].color,
+              materials: item.productComponents["data"][0].materials,
+              buy_number: 1,
+              supplier_id: item.supplier.name,
+            };
+            this.proDtlVal.push(defPro);
           });
         },
         err => {
@@ -2065,8 +2163,8 @@ export default {
     },
     confirmAddAfterSPro() {
       this.addAfterSProMask = false;
-      this.defProDtlVal = this.addAfterSProDtlVal;
-      console.log(this.addOrderDtlVal);
+      // console.log(this.addOrderDtlVal);
+      this.addAfterSaleForm.after_sale_def_pro = this.addAfterSProDtlVal;
       this.addAfterSaleForm.order_no = this.addOrderDtlVal.system_order_no;
       this.addAfterSaleForm.shop_name = this.addOrderDtlVal.shops_id;
       this.addAfterSaleForm.after_sale_type = "";
@@ -2074,12 +2172,11 @@ export default {
       this.addAfterSaleForm.after_sale_group = "";
       this.addAfterSaleForm.after_sale_status = "";
       this.addAfterSaleForm.order_phone = this.addOrderDtlVal.receiver_mobile;
-      this.addAfterSaleForm.img = "";
       this.addAfterSaleForm.vip_name = this.addOrderDtlVal.member_nick;
-      this.addAfterSaleForm.suppliers_id = "";
-      this.addAfterSaleForm.logistic_name = "";
-      this.addAfterSaleForm.logistics_id = this.addOrderDtlVal.logistics_id;
-      this.addAfterSaleForm.deliver_date = "";
+      this.addAfterSaleForm.suppliers_id = this.addAfterSaleForm.after_sale_def_pro[0].supplier_id;
+      this.addAfterSaleForm.logistic_name = this.addOrderDtlVal.logistics_id;
+      this.addAfterSaleForm.logistics_id = this.addOrderDtlVal.logistics_sn;
+      this.addAfterSaleForm.deliver_date = this.addOrderDtlVal.promise_ship_time;
       this.addAfterSaleForm.receiver_state = this.addOrderDtlVal.receiver_state;
       this.addAfterSaleForm.receiver_city = this.addOrderDtlVal.receiver_city;
       this.addAfterSaleForm.receiver_district = this.addOrderDtlVal.receiver_district;
@@ -2088,39 +2185,43 @@ export default {
       this.addAfterSaleForm.after_sale_cost = "";
       this.addAfterSaleForm.problem_description = "";
       this.addAfterSaleForm.customer_service_requirements = "";
-      this.addAfterSaleForm.rfe_information = "";
+      this.addAfterSaleForm.taobao_oid = this.addOrderDtlVal.association_taobao_oid;
     },
     // 修改
     edit() {
-      if (this.selection.length == 0) {
-        this.$message({
-          message: "没有选择要修改的数据",
-          type: "warning"
-        });
-        return;
-      } else if (this.selection.length >= 2) {
-        this.$message({
-          message: "只能修改单条数据",
-          type: "warning"
-        });
+      if (this.newOpt[1].nClick) {
         return;
       } else {
-        this.updateMask = true;
-        this.updateIndex = "";
-        this.$fetch(this.urls.aftersale + "/" + this.updateId).then(
-          res => {},
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
+        if (this.selection.length == 0) {
+          this.$message({
+            message: "没有选择要修改的数据",
+            type: "warning"
+          });
+          return;
+        } else if (this.selection.length >= 2) {
+          this.$message({
+            message: "只能修改单条数据",
+            type: "warning"
+          });
+          return;
+        } else {
+          this.updateMask = true;
+          this.updateIndex = "";
+          this.$fetch(this.urls.aftersale + "/" + this.updateId).then(
+            res => {},
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error(str);
               }
-              let str = arr1.join(",");
-              this.$message.error(str);
             }
-          }
-        );
+          );
+        }
       }
     },
     confirmUpdate() {
@@ -2158,46 +2259,51 @@ export default {
     },
     // 删除
     delMore() {
-      if (this.delArr.length === 0) {
-        this.$message({
-          message: "没有选中数据",
-          type: "warning"
-        });
+      if (this.newOpt[2].nClick) {
+        return;
       } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
-            this.$del(this.urls.aftersale, { ids: this.delArr }).then(
-              () => {
-                this.$message({
-                  message: "删除成功",
-                  type: "success"
-                });
-                this.refresh();
-              },
-              err => {
-                if (err.response) {
-                  let arr = err.response.data.errors;
-                  let arr1 = [];
-                  for (let i in arr) {
-                    arr1.push(arr[i]);
-                  }
-                  let str = arr1.join(",");
-                  this.$message.error(str);
-                }
-              }
-            );
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消删除"
-            });
+          if (this.delArr.length === 0) {
+          this.$message({
+            message: "没有选中数据",
+            type: "warning"
           });
+        } else {
+          this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              this.$del(this.urls.aftersale, { ids: this.delArr }).then(
+                () => {
+                  this.$message({
+                    message: "删除成功",
+                    type: "success"
+                  });
+                  this.refresh();
+                },
+                err => {
+                  if (err.response) {
+                    let arr = err.response.data.errors;
+                    let arr1 = [];
+                    for (let i in arr) {
+                      arr1.push(arr[i]);
+                    }
+                    let str = arr1.join(",");
+                    this.$message.error(str);
+                  }
+                }
+              );
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消删除"
+              });
+            });
+        }
       }
+      
     },
     // 审核
     handleAudit() {
@@ -2210,6 +2316,34 @@ export default {
             this.refresh();
             this.$message({
               message: "审核成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    // 退审
+    unAudit() {
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/unaudit").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "退审成功",
               type: "success"
             });
           },

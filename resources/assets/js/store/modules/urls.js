@@ -93,7 +93,7 @@ const urls= {
     resupplieOrderItem:'/resupplieOrderItem',
     resupplieProblemProduct:'/resupplieProblemProduct',
     
-    //add by xuetao
+    // 薛涛
     offlineaccountconf:'/offlineaccountconf',
     aftersale:'/aftersale',
     aftersalestate: '/aftersalestate',
@@ -102,6 +102,7 @@ const urls= {
     minipackage:'/minipackage',
     promap:'/promap',
     aftersaleschedule:'/aftersaleschedule',
+    aftersaledefpro:'/aftersaledefpro',
   }
 };
 

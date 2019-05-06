@@ -22,7 +22,7 @@
         <span v-if="filterBox">
           <label>业务员</label>
           <el-select
-            v-model="searchBox.order_staff"
+            v-model="searchBox.user_id"
             clearable
             placeholder="请选择"
             @keyup.enter.native="handleQuery"
@@ -124,7 +124,7 @@
           @selection-change="handleSelectionChange"
           :row-class-name="afterSaleRCName"
           :row-style="rowStyle"
-          @row-click="afterSSubmissionRowClick"
+          @row-click="afterSReviewRowClick"
         >
           <!-- 左侧选择框 -->
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
@@ -172,7 +172,7 @@
           height="300"
           :row-class-name="afterSaleRCName"
           :row-style="rowStyle"
-          @row-click="afterSSubmissionRowClick"
+          @row-click="afterSReviewRowClick"
         >
           <!-- 左侧选择框 -->
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
@@ -214,6 +214,15 @@
 
     <!-- 页码 -->
 
+    <!--底部tabs删除-->
+    <el-popover placement="top" width="160" v-model="showBtmDel" slot="tip">
+      <p>确定删除该条数据？</p>
+      <div style="text-align: right; margin: 0">
+        <el-button size="mini" type="text" @click="cancelBtmD">取消</el-button>
+        <el-button type="primary" size="mini" @click="confirmBtmD(delId)">确定</el-button>
+      </div>
+    </el-popover>
+
     <!-- 底部tabs -->
     <el-tabs v-model="bottomActiveName">
       <el-tab-pane label="售后进度" name="0">
@@ -226,32 +235,22 @@
             :key="item.label"
           >
             <template slot-scope="scope">
-              <span v-if="item.type=='select'">
-                <span v-if="scope.row[item.prop]==''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
-                >{{scope.row[item.prop][item.inProp]}}</span>
-              </span>
-              <span v-else-if="item.type=='checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
-                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                  <img :src="scope.row[item.prop]">
-                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                </el-popover>
-              </span>
-              <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
-              </span>
+              <span
+                v-if="scope.row[item.prop]"
+              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+            </template>
+          </el-table-column>
+          <!-- 右侧删除键 -->
+          <el-table-column label="操作" width="180" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button size="mini" type="primary" @click="updateSchedule(scope.row,$event)">修改</el-button>
+              <el-button size="mini" type="danger" @click="delBtmTab(scope.row,$event)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="售后图片" name="1">
-        <el-table :data="scheduleData">
+        <el-table :data="defProData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -260,32 +259,18 @@
             :key="item.label"
           >
             <template slot-scope="scope">
-              <span v-if="item.type=='select'">
-                <span v-if="scope.row[item.prop]==''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
-                >{{scope.row[item.prop][item.inProp]}}</span>
-              </span>
-              <span v-else-if="item.type=='checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
+              <span v-if="item.type=='img'">
                 <el-popover placement="right" trigger="hover" popper-class="picture_detail">
                   <img :src="scope.row[item.prop]">
                   <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                 </el-popover>
-              </span>
-              <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退款明细" name="2">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -319,7 +304,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退货明细" name="3">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -353,7 +338,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="补件明细" name="4">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -387,7 +372,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="补发问题产品" name="5">
-        <el-table :data="scheduleData">
+        <el-table :data="defProData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -421,7 +406,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退款责任方" name="6">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -455,7 +440,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退货责任方" name="7">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -489,7 +474,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="补件责任方" name="8">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -523,7 +508,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="驳回原因" name="9">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -557,7 +542,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="售后问题产品" name="10">
-        <el-table :data="scheduleData">
+        <el-table :data="defProData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -566,32 +551,15 @@
             :key="item.label"
           >
             <template slot-scope="scope">
-              <span v-if="item.type=='select'">
-                <span v-if="scope.row[item.prop]==''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
-                >{{scope.row[item.prop][item.inProp]}}</span>
-              </span>
-              <span v-else-if="item.type=='checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
-                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                  <img :src="scope.row[item.prop]">
-                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                </el-popover>
-              </span>
-              <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
-              </span>
+              <span
+                v-if="scope.row[item.prop]"
+              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="内部便签" name="11">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -625,7 +593,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="操作记录" name="12">
-        <el-table :data="scheduleData">
+        <el-table :data="Data">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -814,6 +782,85 @@
         </div>
       </div>
     </el-dialog>
+
+    <!--底部tabs删除-->
+    <el-popover placement="top" width="160" v-model="showBtmDel" slot="tip">
+      <p>确定删除该条数据？</p>
+      <div style="text-align: right; margin: 0">
+        <el-button size="mini" type="text" @click="cancelBtmD">取消</el-button>
+        <el-button type="primary" size="mini" @click="confirmBtmD(delId)">确定</el-button>
+      </div>
+    </el-popover>
+
+    <!-- 新增进度 -->
+    <el-dialog title="新增售后进度" :visible.sync="addScheduleMask">
+      <el-form :model="scheduleRuleFormVal" :rules="scheduleRules" id="form">
+        <el-form-item
+          v-for="(item,index) in scheduleRuleFormHead"
+          :key="index"
+          :label="item.label"
+          :prop="item.prop"
+        >
+          <span v-if="item.type=='textarea'">
+            <el-input
+              type="textarea"
+              v-model.trim="scheduleRuleFormVal[item.prop]"
+              :placehode="item.holder"
+            ></el-input>
+          </span>
+          <span v-else-if="item.type=='DatePicker'">
+            <el-date-picker
+              v-model="scheduleRuleFormVal[item.prop]"
+              type="date"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期"
+            ></el-date-picker>
+          </span>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer clearfix">
+        <div style="float: right">
+          <el-button type="primary" @click="addScheduleFrom">确定</el-button>
+          <el-button @click="cancelAddSch">取消</el-button>
+        </div>
+      </div>
+    </el-dialog>
+
+    <!-- 修改进度 -->
+    <el-dialog title="修改售后进度" :visible.sync="updateScheduleMask">
+      <el-form :model="updateScheduleRuleFormVal" :rules="scheduleRules" id="form">
+        <el-form-item
+          v-for="(item,index) in scheduleRuleFormHead"
+          :key="index"
+          :label="item.label"
+          :prop="item.prop"
+        >
+          <span v-if="item.type=='textarea'">
+            <el-input
+              type="textarea"
+              v-model.trim="updateScheduleRuleFormVal[item.prop]"
+              :placehode="item.holder"
+            ></el-input>
+          </span>
+          <span v-else-if="item.type=='DatePicker'">
+            <el-date-picker
+              v-model="updateScheduleRuleFormVal[item.prop]"
+              type="date"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期"
+            ></el-date-picker>
+          </span>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer clearfix">
+        <div style="float: right">
+          <el-button type="primary" @click="updateScheduleFrom(updateSchIndex)">确定</el-button>
+          <el-button @click="cancelUpdateSch">取消</el-button>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -831,19 +878,19 @@ export default {
         {
           cnt: "驳回",
           icon: "bf-reject",
-          ent: this.test,
+          ent: this.reject,
           nClick: false
         },
         {
           cnt: "审核",
           icon: "bf-audit",
-          ent: this.test,
+          ent: this.handleAudit,
           nClick: false
         },
         {
           cnt: "退审",
           icon: "bf-auditfaild",
-          ent: this.test,
+          ent: this.unAudit,
           nClick: true
         },
         {
@@ -864,7 +911,7 @@ export default {
         after_sale_order_no: "",
         order_no: "",
         vip_name: "",
-        order_staff: "",
+        user_id: "",
         orderStaff: [{ label: "ceshi", value: 0 }],
         client_name: "",
         after_sale_sort: "",
@@ -953,7 +1000,8 @@ export default {
         {
           label: "业务员",
           width: "150",
-          prop: "order_staff",
+          prop: "user",
+          inProp: "username",
           type: "text"
         },
         {
@@ -1088,21 +1136,56 @@ export default {
       unsubmitData: [],
       submitLoading: true,
       unsubmitLoading: true,
+      // 新增售后进度
+      addScheduleMask: false,
+      updateScheduleMask: false,
+      scheduleFrom: {},
       // 底部tabs
+      addId: "",
       bottomActiveName: "0",
+      showBtmDel: false,
       scheduleData: [],
+      defProData: [],
+      scheduleRuleFormVal: {
+        schedule_description: "",
+        subscribed_at: ""
+      },
+      updateScheduleRuleFormVal: {
+        after_sale_id: "",
+        schedule_description: "",
+        subscribed_at: ""
+      },
+      scheduleRules: {
+        schedule_description: [
+          { required: true, message: "进度描述必填", trigger: "blur" }
+        ]
+      },
+      scheduleRuleFormHead: [
+        {
+          label: "进度描述",
+          holder: "请输入进度描述",
+          prop: "schedule_description",
+          type: "textarea"
+        },
+        {
+          label: "预约时间",
+          prop: "subscribed_at",
+          type: "DatePicker"
+        }
+      ],
       btmTableHead: [
         [
           {
             label: "进度描述",
             width: "180",
-            prop: "taobao_oid",
+            prop: "schedule_description",
             type: "text"
           },
           {
             label: "创建人",
             width: "180",
             prop: "user",
+            inProp: "username",
             type: "text"
           },
           {
@@ -1114,7 +1197,7 @@ export default {
           {
             label: "预约时间",
             width: "180",
-            prop: "order_time",
+            prop: "subscribed_at",
             type: "text"
           }
         ],
@@ -1219,7 +1302,7 @@ export default {
           },
           {
             label: "规格编码",
-            prop: "specification_id",
+            prop: "spec_code",
             width: "180",
             type: "text"
           },
@@ -1249,7 +1332,7 @@ export default {
           },
           {
             label: "购买数量",
-            prop: "quantity ",
+            prop: "buy_number",
             width: "120",
             type: "text"
           },
@@ -1319,6 +1402,7 @@ export default {
       updateMask: false,
       updateId: "",
       updateIndex: "",
+      updateSchIndex: "",
       updateForm: {
         refund_data: [],
         return_data: [],
@@ -1452,7 +1536,7 @@ export default {
         after_sale_order_no: "",
         order_no: "",
         vip_name: "",
-        order_staff: "",
+        user_id: "",
         orderStaff: [{ label: "ceshi", value: 0 }],
         client_name: "",
         after_sale_sort: "",
@@ -1483,11 +1567,17 @@ export default {
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: "new",
-            include: "afterSaleSchedules.user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
               this.unsubmitLoading = false;
               this.unsubmitData = res.data;
+              this.scheduleData = res.data[0]
+                ? res.data[0]["afterSaleSchedules"].data
+                : [];
+              this.defProData = res.data[0]
+                ? res.data[0]["afterSaleDefPros"].data
+                : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
@@ -1519,11 +1609,17 @@ export default {
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: "submit",
-            include: "afterSaleSchedules.user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
               this.submitLoading = false;
               this.submitData = res.data;
+              this.scheduleData = res.data[0]
+                ? res.data[0]["afterSaleSchedules"].data
+                : [];
+              this.defProData = res.data[0]
+                ? res.data[0]["afterSaleDefPros"].data
+                : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
@@ -1549,8 +1645,14 @@ export default {
           break;
       }
     },
+    afterSaleRCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
     afterSReviewRowClick(row) {
-      /* 点击行 */
+      this.curRowId = row.id;
+      this.curRowData = row;
+      this.scheduleData = row["afterSaleSchedules"].data;
+      this.defProData = row["afterSaleDefPros"].data;
     },
     handleSelectionChange(val) {
       if (val.length != 0) {
@@ -1565,6 +1667,155 @@ export default {
       let del = [];
       val.forEach(selectedItem => {
         del.push(selectedItem.id);
+      });
+            /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.delArr = del.join(",");
+    },
+    // 底部tabs
+    cancelBtmD() {
+      this.showBtmDel = false;
+      this.$message({
+        message: "取消删除",
+        type: "info"
+      });
+    },
+    confirmBtmD(id) {
+      let index = this.bottomActiveName - 0;
+      switch (index) {
+        case 0:
+          this.$del(this.urls.aftersaleschedule + "/" + id).then(
+            () => {
+              this.$message({
+                message: "删除成功",
+                type: "success"
+              });
+              this.showBtmDel = false;
+              this.refresh();
+            },
+            err => {
+              if (err.response) {
+                this.showBtmDel = false;
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error({
+                  message: str
+                });
+              }
+            }
+          );
+          break;
+      }
+    },
+    delBtmTab(row, e) {
+      this.showBtmDel = true;
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
+      this.delId = row.id;
+    },
+    // 新增售后进度
+    addSchedule(row) {
+      this.addScheduleMask = true;
+      this.addId = row.id;
+    },
+    cancelAddSch() {
+      this.addScheduleMask = false;
+      this.$message({
+        message: "取消新增进度",
+        type: "info"
+      });
+    },
+    addScheduleFrom() {
+      let id = this.addId;
+      let data = this.scheduleRuleFormVal;
+      let submitData = {
+        after_sale_id: id,
+        schedule_description: data.schedule_description,
+        subscribed_at: data.subscribed_at
+      };
+      this.$post(this.urls.aftersaleschedule, submitData).then(
+        () => {
+          this.$message({
+            message: "新建售后进度成功",
+            type: "success"
+          });
+          this.addScheduleMask = false;
+          this.refresh();
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error({
+              message: str
+            });
+          }
+        }
+      );
+    },
+        // 修改售后进度
+    updateSchedule(row) {
+      this.updateScheduleMask = true;
+      this.updateSchIndex = row.id;
+      this.$fetch(this.urls.aftersaleschedule + "/" + this.updateSchIndex).then(
+          res => {
+            this.updateScheduleRuleFormVal = {
+              after_sale_id: res.after_sale_id,
+              schedule_description: res.schedule_description,
+              subscribed_at: res.subscribed_at,
+            };
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+    },
+    updateScheduleFrom(row) {
+      this.$patch(this.urls.aftersaleschedule + "/" + this.updateSchIndex, this.updateScheduleRuleFormVal).then(
+        () => {
+          this.$message({
+            message: "修改售后进度成功",
+            type: "success"
+          });
+          this.updateScheduleMask = false;
+          this.refresh();
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error({
+              message: str
+            });
+          }
+        }
+      );
+    },
+    cancelUpdateSch() {
+      this.updateScheduleMask = false;
+      this.$message({
+        message: "取消新增进度",
+        type: "info"
       });
     },
     // 修改
@@ -1690,23 +1941,56 @@ export default {
       });
     },
     edit() {
-      if (this.selection.length == 0) {
-        this.$message({
-          message: "没有选择要修改的数据",
-          type: "warning"
-        });
-        return;
-      } else if (this.selection.length >= 2) {
-        this.$message({
-          message: "只能修改单条数据",
-          type: "warning"
-        });
+      if (this.newOpt[0].nClick) {
         return;
       } else {
-        this.updateMask = true;
-        this.updateIndex = "";
-        this.$fetch(this.urls.aftersale + "/" + this.updateId).then(
-          res => {},
+        if (this.selection.length == 0) {
+          this.$message({
+            message: "没有选择要修改的数据",
+            type: "warning"
+          });
+          return;
+        } else if (this.selection.length >= 2) {
+          this.$message({
+            message: "只能修改单条数据",
+            type: "warning"
+          });
+          return;
+        } else {
+          this.updateMask = true;
+          this.updateIndex = "";
+          this.$fetch(this.urls.aftersale + "/" + this.updateId).then(
+            res => {},
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error(str);
+              }
+            }
+          );
+        }
+      }
+
+    },
+    // 审核
+    handleAudit() {
+      if (this.newOpt[2].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/audit").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "审核成功",
+              type: "success"
+            });
+          },
           err => {
             if (err.response) {
               let arr = err.response.data.errors;
@@ -1719,6 +2003,42 @@ export default {
             }
           }
         );
+      }
+    },
+    // 退审
+    unAudit() {
+      if (this.newOpt[3].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/unaudit").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "退审成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    // 驳回
+    reject() {
+      if (this.newOpt[1].nClick) {
+        return;
+      } else {
+
       }
     },
     refresh() {

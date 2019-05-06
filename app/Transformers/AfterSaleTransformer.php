@@ -8,10 +8,10 @@ use League\Fractal\TransformerAbstract;
 class AfterSaleTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'afterSaleState','afterSaleType','afterSaleSchedules','user'
+        'afterSaleState','afterSaleType','afterSaleSchedules','user','afterSaleDefPros'
     ];
 
-    public function transform(AfterSale $afterSale)
+    public function transform(AfterSale $afterSale) 
     {
         return [
             'id' => $afterSale->id,
@@ -95,6 +95,11 @@ class AfterSaleTransformer extends TransformerAbstract
     public function includeAfterSaleSchedules(AfterSale $afterSale)
     {
         return $this->collection($afterSale->afterSaleSchedules, new AfterSaleScheduleTransformer());
+    }
+
+    public function includeAfterSaleDefPros(AfterSale $afterSale)
+    {
+        return $this->collection($afterSale->afterSaleDefPros, new AfterSaleDefProTransformer());
     }
 
     public function includeUser(AfterSale $afterSale)

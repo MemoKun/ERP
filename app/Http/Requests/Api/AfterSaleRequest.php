@@ -19,8 +19,8 @@ class AfterSaleRequest extends FormRequest
                 return [
                     'status' => 'boolean',
                     'order_status' => Rule::in([
-                        \App\Models\AfterSale::AFTERSALE_STATUS_NEW,
-                        \App\Models\AfterSale::AFTERSALE_STATUS_SUBMIT
+                        \App\Models\AfterSale::ORDER_STATUS_NEW,
+                        \App\Models\AfterSale::ORDER_STATUS_SUBMIT
                     ]),
                 ];
                 break;
@@ -29,17 +29,13 @@ class AfterSaleRequest extends FormRequest
                     'shop_name' => 'required|string|max:255',
                     'shop_group' => 'string|max:255',
                     'order_no' => 'required|string|max:255',
-                    'previous_order_staff' => 'string|max:255',
                     'vip_name' => 'required|string|max:255', 
                     'client_name' => 'string|max:255', 
-                    'parts_duty' => 'string|max:255',
-                    'after_responsible_party' => 'string|max:255',
                     'suppliers_id' => 'string|max:255',
                     'logistic_name' => 'string|max:255',
                     'logistics_id' => 'string|max:255',
-                    'logistic_name' => 'string|max:255',
-                    'after_sale_person' => 'string|max:255',
-                    'order_amount' => 'integer',
+                    'deliver_date' => 'string|max:255',
+                    'order_amount' => 'numeric',
                     'after_sale_type' => [
                         'required', 'integer',
                         Rule::exists('after_sale_type', 'id')->where(function ($query) {
@@ -53,6 +49,7 @@ class AfterSaleRequest extends FormRequest
                             $query->where('status', 1);
                         }),
                     ],
+                    'order_phone' => 'integer',
                     'problem_description' => 'string|max:255',
                     'customer_service_requirements' => 'string|max:255',
                     'receiver_state' => 'string|max:255',
@@ -60,11 +57,14 @@ class AfterSaleRequest extends FormRequest
                     'receiver_district' => 'string|max:255',
                     'receiver_address' => 'string|max:255',
                     'order_remark' => 'string|max:255',
-                    'taobao_oid' => 'string|max:255',
-                    'rfe_information' => 'string|max:255',
+                    'parts_duty' => 'string|max:255',
+                    'after_responsible_party' => 'string|max:255',
+                    'after_sale_person' => 'string|max:255',
                     'locking_people' => 'string|max:255',
                     'tag_people' => 'string|max:255',
                     'tag_name' => 'string|max:255',
+                    'taobao_oid' => 'string|max:255',
+                    'rfe_information' => 'string|max:255',
                     'custom_oid' => 'string|max:255',
                     'refund_status' => 'string|max:255',
                     'return_status' => 'string|max:255',
@@ -74,6 +74,16 @@ class AfterSaleRequest extends FormRequest
                     'service_submit_person' => 'string|max:255',
                     'after_sale_check_person' => 'string|max:255',
                     'director_check_person' => 'string|max:255',
+                    'is_finish' => 'boolean',
+                    'is_reject' => 'boolean',
+                    'is_refund' => 'boolean',
+                    'is_return' => 'boolean',
+                    'is_patch' => 'boolean',
+                    'is_solve' => 'boolean',
+                    'is_service_submit' => 'boolean',
+                    'is_after_sale_check' => 'boolean',
+                    'is_close' => 'boolean',
+                    'status' => 'boolean',
                 ];
                 break;
             case 'PATCH':
@@ -81,19 +91,27 @@ class AfterSaleRequest extends FormRequest
                     'shop_name' => 'required|string|max:255',
                     'shop_group' => 'string|max:255',
                     'order_no' => 'required|string|max:255',
-                    'previous_order_staff' => 'string|max:255',
-                    'vip_name' => 'required|string|max:255',
-                    'client_name' => 'string|max:255',
-                    'parts_duty' => 'string|max:255',
-                    'after_responsible_party' => 'string|max:255',
+                    'vip_name' => 'required|string|max:255', 
+                    'client_name' => 'string|max:255', 
                     'suppliers_id' => 'string|max:255',
                     'logistic_name' => 'string|max:255',
                     'logistics_id' => 'string|max:255',
-                    'logistic_name' => 'string|max:255',
-                    'after_sale_person' => 'string|max:255',
-                    'after_sale_type' => 'string|max:255',
+                    'deliver_date' => 'string|max:255',
+                    'order_amount' => 'numeric',
+                    'after_sale_type' => [
+                        'required', 'integer',
+                        Rule::exists('after_sale_type', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
                     'after_sale_group' => 'string|max:255',
-                    'after_sale_status' => 'string|max:255',
+                    'after_sale_status' => [
+                        'required', 'integer',
+                        Rule::exists('after_sale_state', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'order_phone' => 'integer',
                     'problem_description' => 'string|max:255',
                     'customer_service_requirements' => 'string|max:255',
                     'receiver_state' => 'string|max:255',
@@ -101,11 +119,14 @@ class AfterSaleRequest extends FormRequest
                     'receiver_district' => 'string|max:255',
                     'receiver_address' => 'string|max:255',
                     'order_remark' => 'string|max:255',
-                    'taobao_oid' => 'string|max:255',
-                    'rfe_information' => 'string|max:255',
+                    'parts_duty' => 'string|max:255',
+                    'after_responsible_party' => 'string|max:255',
+                    'after_sale_person' => 'string|max:255',
                     'locking_people' => 'string|max:255',
                     'tag_people' => 'string|max:255',
                     'tag_name' => 'string|max:255',
+                    'taobao_oid' => 'string|max:255',
+                    'rfe_information' => 'string|max:255',
                     'custom_oid' => 'string|max:255',
                     'refund_status' => 'string|max:255',
                     'return_status' => 'string|max:255',
@@ -115,6 +136,16 @@ class AfterSaleRequest extends FormRequest
                     'service_submit_person' => 'string|max:255',
                     'after_sale_check_person' => 'string|max:255',
                     'director_check_person' => 'string|max:255',
+                    'is_finish' => 'boolean',
+                    'is_reject' => 'boolean',
+                    'is_refund' => 'boolean',
+                    'is_return' => 'boolean',
+                    'is_patch' => 'boolean',
+                    'is_solve' => 'boolean',
+                    'is_service_submit' => 'boolean',
+                    'is_after_sale_check' => 'boolean',
+                    'is_close' => 'boolean',
+                    'status' => 'boolean',
                 ];
                 break;
         }
@@ -128,6 +159,8 @@ class AfterSaleRequest extends FormRequest
             'order_no.required' => '订单号必填',
             'order_no.string' => '订单号必须string类型',
             'order_no.max' => '订单号最大长度为255',
+
+            'order_phone.integer' => '联系方式为数字类型',
 
             'shop_name.required' => '店铺名称必填',
             'shop_name.string' => '店铺名称必须string类型',
