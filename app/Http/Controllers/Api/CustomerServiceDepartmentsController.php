@@ -42,7 +42,7 @@ class CustomerServiceDepartmentsController extends Controller
      * */
     public function searchUntreated()
     {
-        $order = Order::query()->whereIn('order_status', [Order::ORDER_STATUS_NEW,Order::ORDER_STATUS_LOCK]);
+        $order = Order::query()->whereIn('order_status',[Order::ORDER_STATUS_NEW,Order::ORDER_STATUS_LOCK]);
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
@@ -157,7 +157,7 @@ class CustomerServiceDepartmentsController extends Controller
      *
      * @GET("/customerservicedepts/create")
      * @Versions({"v1"})
-     *
+     * 
      * @Response(200, body={
      *       "data": {
      *          "warehouse": {
@@ -718,7 +718,7 @@ class CustomerServiceDepartmentsController extends Controller
         CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
         PaymentDetailRequest $paymentDetailRequest,
         \App\Handlers\ValidatedHandler $validatedHandler
-    ) {
+    ){
         $data[] = $customerServiceDepartmentRequset->validated();
         $data[] = $customerServiceDepartmentRequset->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'] ?? null;
@@ -737,7 +737,7 @@ class CustomerServiceDepartmentsController extends Controller
                     );
                 }
             }
-            if ($data[2]) {
+            if($data[2]){
                 foreach ($data[2] as $item) {
                     $model->paymentDetails()->create(
                         $validatedHandler->getValidatedData($paymentDetailRequest->rules(), $item)
@@ -1100,19 +1100,17 @@ class CustomerServiceDepartmentsController extends Controller
         CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
         PaymentDetailRequest $paymentDetailRequest,
         Order $order,
-        \App\Handlers\ValidatedHandler $validatedHandler
-    ) {
-    
+        \App\Handlers\ValidatedHandler $validatedHandler)
+    {
         //锁定才能修改
-        if ($order->unlock()) {
+        if ($order->unlock())
             throw new UpdateResourceFailedException('订单未锁定无法修改');
-        }
 
         $data[] = $customerServiceDepartmentRequset->validated();
         $data[] = $customerServiceDepartmentRequset->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'];
 
-        $order = DB::transaction(function () use (
+        $order = DB::transaction(function() use (
             $data,
             $customerServiceDepartmentRequset,
             $paymentDetailRequest,
@@ -1170,7 +1168,7 @@ class CustomerServiceDepartmentsController extends Controller
      */
     public function destroy(Order $order)
     {
-        DB::transaction(function () use ($order) {
+        DB::transaction(function() use ($order) {
 
             $orderItems = $order->orderItems()->delete();
             $paymentDetails = $order->paymentDetails()->delete();
@@ -1209,10 +1207,10 @@ class CustomerServiceDepartmentsController extends Controller
     {
         $ids = explode(',', $request->input('ids'));
 
-        DB::transaction(function () use ($ids) {
+        DB::transaction(function() use ($ids) {
 
             $orderItems = \App\Models\OrderItem::whereIn('orders_id', $ids)->delete();
-            $paymentDetails = \App\Models\PaymentDetail::whereIn('orders_id', $ids)->delete();
+            $paymentDetails = \App\Models\PaymentDetail::whereIn('orders_id',$ids)->delete();
             $order = Order::destroy($ids);
 
             if ($orderItems === false || $paymentDetails === false || $order === false) {

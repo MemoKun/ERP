@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="outerHandleClick">
-      <el-tab-pane label="订单" name="0">
+      <el-tab-pane label="订单列表" name="0">
         <div>
           <div class="searchBox">
             <span>
@@ -109,8 +109,6 @@
             </span>
           </div>
         </div>
-
-        <!--显示列表-未处理-->
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">
             <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
@@ -774,32 +772,32 @@
         <el-tab-pane label="费用类型" name="2">
           <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
             <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-              <!--<template slot-scope="scope">
-                                <span v-if="expenseRIndex == 'index'+scope.$index">
-                                    <span v-if="item.type=='select'">
-                                        <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
-                                            <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                                                <el-option :label="list.name" :value="list.id"></el-option>
-                                           </span>
-                                       </el-select>
-                                    </span>
-                                    <span v-else>
-                                       <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                                    </span>
-                                </span>
-                                <span v-else>
-                                    <span v-if="item.type=='select'">
-                                         <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
-                                             <span v-if="list.id==scope.row[item.prop]">
-                                                 {{list.name}}
-                                             </span>
-                                         </span>
-                                    </span>
-                                <span v-else>
-                                    {{scope.row[item.prop]}}
-                                </span>
-                            </span>
-                            </template>-->
+              <template slot-scope="scope">
+                <span v-if="expenseRIndex == 'index'+scope.$index">
+                  <span v-if="item.type=='select'">
+                    <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                      <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                        <el-option :label="list.name" :value="list.id"></el-option>
+                      </span>
+                    </el-select>
+                  </span>
+                  <span v-else>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                  </span>
+                </span>
+                <span v-else>
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{scope.row[item.prop]}}
+                  </span>
+                </span>
+              </template>
             </el-table-column>
             <el-table-column label="操作" width="90" align="center" fixed="right">
               <template slot-scope="scope">
@@ -990,13 +988,28 @@ export default {
       ],
       filterBox: false,
       searchBox: {
-        shop_nick: "",
-        order_no: "",
-        buyer_nick: "",
-        buyer_name: "",
-        refund_info: "",
-        locker: "",
-        refund_time: ""
+        vip_name: "",
+        order_num: "",
+        order_man: "",
+        order_phone: "",
+        order_money: "",
+        order_address: "",
+        order_goods: "",
+        order_staff: "",
+        order_promiseDate: "",
+        order_workDate: "",
+        order_transMStart: "",
+        order_transMEnd: "",
+        orderCompany: [{ label: "ceshi", value: 0 }],
+        order_customerInves: "",
+        order_mark: "",
+        order_flag: "",
+        ordertbFlag: [{ label: "ceshi", value: 0 }],
+        order_lock: "",
+        orderLock: [{ label: "ceshi", value: 0 }],
+        order_company: "",
+        order_shop: "",
+        orderShops: [{ label: "ceshi", value: 0 }]
       },
       /*获取数据*/
       activeName: "0",
@@ -1004,7 +1017,6 @@ export default {
       rightActiveName: "0",
       orderListData: [],
       orderListHead: [
-        //订单表头标签
         {
           label: "系统订单",
           width: "220",
@@ -1602,9 +1614,9 @@ export default {
           type: "checkbox"
         }
       ],
-      loading: true, //作用未知
-      checkboxInit: false, //作用未知
-      orderListIndex: "", //作用未知
+      loading: true,
+      checkboxInit: false,
+      orderListIndex: "",
       alreadyHandle: [],
       orderDtlFormVal: {},
       orderDtlFormHead: [
@@ -1783,7 +1795,6 @@ export default {
       curRowId: "",
       curRowData: {},
       orderDtlHead: [
-        //新建订单的商品信息的表头
         [
           {
             label: "sku名称",
@@ -1872,7 +1883,6 @@ export default {
       moreForms: true,
       threeParts: true,
       addCustomerFormVal: {
-        //作用未知
         shops_id: "",
         member_nick: "",
         logistics_id: "",
@@ -1921,7 +1931,6 @@ export default {
         status: true
       },
       addCustomerFormRules: {
-        //新建订单的要求格式
         shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
         logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
         billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
@@ -1943,7 +1952,6 @@ export default {
         warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
       },
       addCustomerFormHead: [
-        //新建订单的文本框表头
         {
           label: "单据来源",
           prop: "order_source",
