@@ -129,7 +129,6 @@
           v-loading="newLoading"
           height="300"
           :row-class-name="afterSaleRCName"
-          :row-style="rowStyle"
           @row-click="afterSaleRowClick"
         >
           <!-- 左侧选择框 -->
@@ -179,7 +178,6 @@
           v-loading="submitLoading"
           height="300"
           :row-class-name="afterSaleRCName"
-          :row-style="rowStyle"
           @row-click="afterSaleRowClick"
         >
           <!-- 左侧选择框 -->
@@ -289,7 +287,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="内部便签" name="3">
-        <el-table :data="Data">
+        <el-table>
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -323,7 +321,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="操作记录" name="4">
-        <el-table :data="Data">
+        <el-table>
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -433,8 +431,6 @@
           :data="addAfterSaleForm.after_sale_def_pro"
           fit
           height="180"
-          :row-class-name="defRowCName"
-          @row-click="defRowClick"
         >
           <el-table-column
             v-for="item in defProHead"
@@ -605,8 +601,6 @@
           :data="updateForm.afterSaleDefPros"
           fit
           height="180"
-          :row-class-name="defRowCName"
-          @row-click="defRowClick"
         >
           <el-table-column
             v-for="item in defProHead"
@@ -1139,7 +1133,7 @@ export default {
             type: "text"
           },
           {
-            label: "主题",
+            label: "提出时间",
             width: "150",
             prop: "proposed_at",
             type: "text"

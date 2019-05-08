@@ -168,6 +168,11 @@ class OrderTransformer extends TransformerAbstract
         return $this->item($order->locker, new UserTransformer());
     }
 
+    public function includeUser(Order $order)
+    {
+        return $this->item($order->user, new UserTransformer());
+    }
+
 
 
 

@@ -1445,7 +1445,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->post('me', 'AuthorizationsController@me')->middleware('token.canrefresh');
         // 刷新token
         $api->put('authorizations/current', 'AuthorizationsController@update')
-            ->name('api.authorizations.update');
+            ->name('api.authorizations.update');    
         // 删除token（退出登录）
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.authorizations.destroy');

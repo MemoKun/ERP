@@ -16,20 +16,20 @@
               <label>收货人</label>
               <el-input v-model="searchBox.order_man" clearable></el-input>
             </span>
-            <span v-if="filterBox">
+            <span>
               <label>收货手机</label>
               <el-input v-model="searchBox.order_phone" clearable></el-input>
             </span>
-            <span v-else>
+            <!--<span v-else>
               <el-button type="primary">筛选</el-button>
               <el-button>重置</el-button>
               <span @click="toggleShow">
                 <el-button type="text">展开</el-button>
                 <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-              </span>
+              </span>-->
             </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>收货地址</label>
               <el-input v-model="searchBox.order_address" clearable></el-input>
@@ -50,7 +50,7 @@
               <el-input v-model="searchBox.order_staff" clearable></el-input>
             </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>卖家备注</label>
               <el-input v-model="searchBox.order_mark" clearable></el-input>
@@ -77,7 +77,7 @@
               </el-select>
             </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>承诺日期</label>
               <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -100,14 +100,14 @@
               <el-input type="number" v-model="searchBox.order_transMEnd" clearable></el-input>
             </span>
           </div>
-          <div v-if="filterBox" style="text-align: right">
+          <!--<div v-if="filterBox" style="text-align: right">
             <el-button type="primary">筛选</el-button>
             <el-button @click="resets">重置</el-button>
             <span @click="toggleShow" style="display: inline">
               <el-button type="text">收起</el-button>
               <i class="el-icon-arrow-up" style="color:#409EFF"></i>
             </span>
-          </div>
+          </div>-->
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">
@@ -323,8 +323,8 @@
     <el-dialog title="订单明细" :visible.sync="addCustomerMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <div class="clearfix">
         <el-button type="text" style="float: left">基础信息</el-button>
-        <el-button type="primary" style="float: right;padding: 6px 10px;
-    font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>
+        <!--<el-button type="primary" style="float: right;padding: 6px 10px;
+    font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>-->
       </div>
       <el-form :model="addCustomerFormVal" :rules="addCustomerFormRules" class="customerAddForm hidePart" id="form">
         <el-form-item v-for="(item,index) in addCustomerFormHead" :key="index" :label="item.label" :prop="item.prop">
@@ -636,8 +636,8 @@
     <el-dialog title="修改明细" :visible.sync="updateCustomerMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <div class="clearfix">
         <el-button type="text" style="float: left">基础信息</el-button>
-        <el-button type="primary" style="float: right;padding: 6px 10px;
-    font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>
+        <!--<el-button type="primary" style="float: right;padding: 6px 10px;
+    font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>-->
       </div>
       <el-form :model="updateCustomerFormVal" :rules="addCustomerFormRules" class="customerAddForm hidePart" id="form">
         <el-form-item v-for="(item,index) in addCustomerFormHead" :key="index" :label="item.label" :prop="item.prop">
@@ -901,19 +901,19 @@ export default {
           cnt: "解锁",
           icon: "bf-delock",
           ent: this.debLock,
-          nClick: true
+          nClick: false
         },
         {
           cnt: "审核",
           icon: "bf-audit",
           ent: this.handleAudit,
-          nClick: true
+          nClick: false
         },
         {
           cnt: "退审",
           icon: "bf-auditfaild",
           ent: this.handleUnAudit,
-          nClick: true
+          nClick: false
         },
         {
           cnt: "导出",
@@ -968,7 +968,8 @@ export default {
         {
           cnt: "通知发货",
           icon: "bf-deliNotice",
-          ent: this.test
+          ent: this.test,
+          nClick: false
         },
         {
           cnt: "打印",
@@ -978,7 +979,8 @@ export default {
         {
           cnt: "转送款",
           icon: "bf-giveMoney",
-          ent: this.test
+          ent: this.test,
+          nClick:false
         },
         {
           cnt: "刷新",
@@ -1024,6 +1026,12 @@ export default {
           type: "text"
         },
         {
+          label: "创建时间",
+          width: "220",
+          prop: "created_at",
+          type: "text"
+        },
+        {
           label: "淘宝单号",
           width: "220",
           prop: "taobao_oid",
@@ -1039,21 +1047,21 @@ export default {
         {
           label: "业务员账号",
           width: "140",
-          prop: "businessPersonnel",
+          prop: "user",
           inProp: "username",
           type: "text"
         },
         {
           label: "业务员姓名",
           width: "140",
-          prop: "businessPersonnel",
+          prop: "user",
           inProp: "username",
           type: "text"
         },
         {
           label: "锁定人姓名",
           width: "130",
-          prop: "businessPersonnel",
+          prop: "user",
           inProp: "username",
           type: "text"
         },
@@ -1194,6 +1202,7 @@ export default {
           label: "客审时间",
           width: "180",
           prop: "audit_at",
+          inProp:"date",
           type: "text"
         },
         {
@@ -2417,7 +2426,7 @@ export default {
         }
       ],
       proVal: [],
-      toggleText: false,
+      toggleText: true,
       toggleHeight: true,
       clickFlag: false,
       proCurSkuData: {},
@@ -2707,8 +2716,8 @@ export default {
               taobao_tid: data.taobao_tid,
               association_taobao_oid: data.association_taobao_oid,
               shop_name: data["shop"]["title"],
-              business_personnel_name: data["businessPersonnel"]
-                ? data["businessPersonnel"]["username"]
+              business_personnel_name: data["user"]
+                ? data["user"]["username"]
                 : "",
               member_nick: data.member_nick,
               receiver_name: data.receiver_name,
@@ -2783,7 +2792,7 @@ export default {
           break;
         case 1:
           this.$fetch(this.urls.customerservicedepts, {
-            order_status: 20,
+            order_status: 30,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(

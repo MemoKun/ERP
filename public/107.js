@@ -776,6 +776,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -804,7 +808,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "退审",
         icon: "bf-auditfaild",
-        ent: this.test,
+        ent: this.unAudit,
         nClick: true
       }, {
         cnt: "导出",
@@ -820,7 +824,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         after_sale_order_no: "",
         order_no: "",
         vip_name: "",
-        order_staff: "",
         orderStaff: [{ label: "ceshi", value: 0 }],
         after_sale_status: "",
         after_sale_type: "",
@@ -883,7 +886,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "业务员",
         width: "200",
-        prop: "order_staff",
+        prop: "user",
+        inProp: "username",
         type: "text"
       }, {
         label: "订单金额",
@@ -1007,7 +1011,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       bottomActiveName: "0",
       showBtmDel: false,
       scheduleData: [],
+      defProData: [],
       scheduleRuleFormVal: {
+        schedule_description: "",
+        subscribed_at: ""
+      },
+      updateScheduleRuleFormVal: {
+        after_sale_id: "",
         schedule_description: "",
         subscribed_at: ""
       },
@@ -1044,7 +1054,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "预约时间",
         width: "180",
         prop: "subscribed_at",
-        inProp: "date",
         type: "text"
       }], [{
         label: "商品编码",
@@ -1053,7 +1062,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "规格编码",
-        prop: "specification_id",
+        prop: "spec_code",
         width: "180",
         type: "text"
       }, {
@@ -1078,7 +1087,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "购买数量",
-        prop: "quantity ",
+        prop: "buy_number",
         width: "120",
         type: "text"
       }, {
@@ -1107,7 +1116,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "content",
         type: "text"
       }, {
-        label: "主题",
+        label: "提出时间",
         width: "150",
         prop: "proposed_at",
         type: "text"
@@ -1134,6 +1143,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }]],
       // 新增售后进度
       addScheduleMask: false,
+      updateScheduleMask: false,
       scheduleFrom: {},
       /* 新增售后 */
       moreForms: true,
@@ -1189,8 +1199,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "业务员",
-        prop: "order_staff",
-        holder: "系统自动生成",
+        prop: "user_id",
+        holder: "创建后系统自动生成",
         type: "text",
         addChgAble: true
       }, {
@@ -1271,7 +1281,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         after_sale_group: "",
         after_sale_status: "",
         order_phone: "",
-        img: "",
         vip_name: "",
         suppliers_id: "",
         logistic_name: "",
@@ -1285,7 +1294,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         after_sale_cost: "",
         problem_description: "",
         customer_service_requirements: "",
-        rfe_information: ""
+        rfe_information: "",
+        after_sale_def_pro: [{
+          commodity_code: "",
+          spec_code: "",
+          short_name: "",
+          spec: "",
+          color: "",
+          materials: "",
+          buy_number: 0,
+          supplier_id: "",
+          img_url: ""
+        }]
       },
       addAfterSaleRules: {
         order_no: [{ required: true, message: "订单编号必选", trigger: "blur" }],
@@ -1303,7 +1323,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "规格编码",
-        prop: "specification_id",
+        prop: "spec_code",
         width: "180",
         type: "text"
       }, {
@@ -1313,24 +1333,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "规格",
-        prop: "specification_name",
+        prop: "spec",
         width: "180",
         type: "text"
       }, {
         label: "颜色",
-        prop: "productComponents",
-        inProp: "color",
+        prop: "color",
         width: "120",
         type: "text"
       }, {
         label: "材质",
-        prop: "productComponents",
-        inProp: "materials",
+        prop: "materials",
         width: "120",
         type: "text"
       }, {
         label: "购买数量",
-        prop: "quantity ",
+        prop: "buy_number",
         width: "120",
         type: "text"
       }, {
@@ -1340,7 +1358,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }],
       defectiveProduct: [],
-      defProDtlVal: [],
       // 新增售后产品
       addAfterSProMask: false,
       addAfterSProDtlVal: [],
@@ -1354,7 +1371,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "规格编码",
-        prop: "specification_id",
+        prop: "spec_code",
         width: "180",
         type: "text"
       }, {
@@ -1364,24 +1381,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "规格",
-        prop: "product_component",
-        inProp: "spec",
+        prop: "spec",
         width: "180",
         type: "text"
       }, {
         label: "颜色",
-        prop: "product_component",
+        prop: "color",
         width: "120",
         type: "text"
       }, {
         label: "材质",
-        prop: "product_component",
-        inProp: "materials",
+        prop: "materials",
         width: "120",
         type: "text"
       }, {
         label: "购买数量",
-        prop: "quantity ",
+        prop: "buy_number",
         width: "120",
         type: "text"
       }, {
@@ -1420,6 +1435,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       updateMask: false,
       updateId: "",
       updateIndex: "",
+      updateSchIndex: "",
       updateForm: {},
       componentShowChg: true,
       updateCompUpload: "upload0",
@@ -1464,7 +1480,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         after_sale_order_no: "",
         order_no: "",
         vip_name: "",
-        order_staff: "",
+        user_id: "",
         orderStaff: [{ label: "ceshi", value: 0 }],
         after_sale_status: "",
         after_sale_type: "",
@@ -1494,11 +1510,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: "new",
-            include: "afterSaleSchedules.user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(function (res) {
             _this.newLoading = false;
             _this.newData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
+            _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1529,10 +1546,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: "submit",
-            include: "afterSaleSchedules.user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(function (res) {
             _this.submitLoading = false;
             _this.submitData = res.data;
+            _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
+            _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1567,6 +1586,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.curRowId = row.id;
       this.curRowData = row;
       this.scheduleData = row["afterSaleSchedules"].data;
+      this.defProData = row["afterSaleDefPros"].data;
     },
 
     // 单条删除
@@ -1610,72 +1630,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handleSelectionChange: function handleSelectionChange(val) {
       if (val.length != 0) {
         this.updateId = val[0].id;
-        this.updateForm = {
-          after_responsible_party: val[0].after_responsible_party,
-          after_sale_check_date: val[0].after_sale_check_date,
-          after_sale_check_person: val[0].after_sale_check_person,
-          after_sale_group: val[0].after_sale_group,
-          after_sale_order_no: val[0].after_sale_order_no,
-          after_sale_order_type: val[0].after_sale_order_type,
-          after_sale_person: val[0].after_sale_person,
-          after_sale_status: val[0].after_sale_status,
-          after_sale_type: val[0].after_sale_type,
-          client_name: val[0].client_name,
-          close_date: val[0].close_date,
-          create_date: val[0].create_date,
-          created_at: val[0].created_at,
-          custom_oid: val[0].custom_oid,
-          customer_service_requirements: val[0].customer_service_requirements,
-          deliver_date: val[0].deliver_date,
-          director_check_date: val[0].director_check_date,
-          director_check_person: val[0].director_check_person,
-          id: val[0].id,
-          is_after_sale_check: val[0].is_after_sale_check,
-          is_close: val[0].is_close,
-          is_director_check: val[0].is_director_check,
-          is_finish: val[0].is_finish,
-          is_patch: val[0].is_patch,
-          is_refund: val[0].is_refund,
-          is_reject: val[0].is_reject,
-          is_return: val[0].is_return,
-          is_service_submit: val[0].is_service_submit,
-          is_solve: val[0].is_solve,
-          locking_at: val[0].locking_at,
-          locking_people: val[0].locking_people,
-          logistic_name: val[0].logistic_name,
-          logistics_id: val[0].logistics_id,
-          order_amount: val[0].order_amount,
-          order_no: val[0].order_no,
-          order_phone: val[0].order_phone,
-          order_remark: val[0].order_remark,
-          order_staff: val[0].order_staff,
-          order_status: val[0].order_status,
-          parts_duty: val[0].parts_duty,
-          patch_status: val[0].patch_status,
-          predict_at: val[0].predict_at,
-          previous_order_staff: val[0].previous_order_staff,
-          problem_description: val[0].problem_description,
-          receiver_address: val[0].receiver_address,
-          receiver_city: val[0].receiver_city,
-          receiver_district: val[0].receiver_district,
-          receiver_state: val[0].receiver_state,
-          refund_status: val[0].refund_status,
-          return_status: val[0].return_status,
-          rfe_information: val[0].rfe_information,
-          rfe_order_at: val[0].rfe_order_at,
-          service_submit_date: val[0].service_submit_date,
-          service_submit_person: val[0].service_submit_person,
-          shop_group: val[0].shop_group,
-          shop_name: val[0].shop_name,
-          status: val[0].status,
-          suppliers_id: val[0].suppliers_id,
-          tag_at: val[0].tag_at,
-          tag_name: val[0].tag_name,
-          tag_people: val[0].tag_people,
-          taobao_oid: val[0].taobao_oid,
-          updated_at: val[0].updated_at,
-          vip_name: val[0].vip_name
-        };
+        this.updateForm = val[0];
+        console.log(this.updateForm.afterSaleDefPros);
+        // this.updateForm = {
+        //   after_responsible_party: val[0].after_responsible_party,
+        //   after_sale_check_date: val[0].after_sale_check_date,
+        //   after_sale_check_person: val[0].after_sale_check_person,
+        //   after_sale_group: val[0].after_sale_group,
+        //   after_sale_order_no: val[0].after_sale_order_no,
+        //   after_sale_order_type: val[0].after_sale_order_type,
+        //   after_sale_person: val[0].after_sale_person,
+        //   after_sale_status: val[0].after_sale_status,
+        //   after_sale_type: val[0].after_sale_type,
+        //   client_name: val[0].client_name,
+        //   close_date: val[0].close_date,
+        //   create_date: val[0].create_date,
+        //   created_at: val[0].created_at,
+        //   custom_oid: val[0].custom_oid,
+        //   customer_service_requirements: val[0].customer_service_requirements,
+        //   deliver_date: val[0].deliver_date,
+        //   director_check_date: val[0].director_check_date,
+        //   director_check_person: val[0].director_check_person,
+        //   id: val[0].id,
+        //   is_after_sale_check: val[0].is_after_sale_check,
+        //   is_close: val[0].is_close,
+        //   is_director_check: val[0].is_director_check,
+        //   is_finish: val[0].is_finish,
+        //   is_patch: val[0].is_patch,
+        //   is_refund: val[0].is_refund,
+        //   is_reject: val[0].is_reject,
+        //   is_return: val[0].is_return,
+        //   is_service_submit: val[0].is_service_submit,
+        //   is_solve: val[0].is_solve,
+        //   locking_at: val[0].locking_at,
+        //   locking_people: val[0].locking_people,
+        //   logistic_name: val[0].logistic_name,
+        //   logistics_id: val[0].logistics_id,
+        //   order_amount: val[0].order_amount,
+        //   order_no: val[0].order_no,
+        //   order_phone: val[0].order_phone,
+        //   order_remark: val[0].order_remark,
+        //   user_id: val[0].user_id,
+        //   order_status: val[0].order_status,
+        //   parts_duty: val[0].parts_duty,
+        //   patch_status: val[0].patch_status,
+        //   predict_at: val[0].predict_at,
+        //   previous_order_staff: val[0].previous_order_staff,
+        //   problem_description: val[0].problem_description,
+        //   receiver_address: val[0].receiver_address,
+        //   receiver_city: val[0].receiver_city,
+        //   receiver_district: val[0].receiver_district,
+        //   receiver_state: val[0].receiver_state,
+        //   refund_status: val[0].refund_status,
+        //   return_status: val[0].return_status,
+        //   rfe_information: val[0].rfe_information,
+        //   rfe_order_at: val[0].rfe_order_at,
+        //   service_submit_date: val[0].service_submit_date,
+        //   service_submit_person: val[0].service_submit_person,
+        //   shop_group: val[0].shop_group,
+        //   shop_name: val[0].shop_name,
+        //   status: val[0].status,
+        //   suppliers_id: val[0].suppliers_id,
+        //   tag_at: val[0].tag_at,
+        //   tag_name: val[0].tag_name,
+        //   tag_people: val[0].tag_people,
+        //   taobao_oid: val[0].taobao_oid,
+        //   updated_at: val[0].updated_at,
+        //   vip_name: val[0].vip_name
+        // };
       } else {
         this.updateId = "";
       }
@@ -1691,14 +1713,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     // 底部tabs
-    addSchedule: function addSchedule(row) {
-      this.addScheduleMask = true;
-      this.addId = row.id;
+    cancelBtmD: function cancelBtmD() {
+      this.showBtmDel = false;
+      this.$message({
+        message: "取消删除",
+        type: "info"
+      });
     },
-    delSchedule: function delSchedule(row, e) {
+    confirmBtmD: function confirmBtmD(id) {
+      var _this3 = this;
+
+      var index = this.bottomActiveName - 0;
+      switch (index) {
+        case 0:
+          this.$del(this.urls.aftersaleschedule + "/" + id).then(function () {
+            _this3.$message({
+              message: "删除成功",
+              type: "success"
+            });
+            _this3.showBtmDel = false;
+            _this3.refresh();
+          }, function (err) {
+            if (err.response) {
+              _this3.showBtmDel = false;
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this3.$message.error({
+                message: str
+              });
+            }
+          });
+          break;
+      }
+    },
+    delBtmTab: function delBtmTab(row, e) {
       this.showBtmDel = true;
       $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
       this.delId = row.id;
+    },
+
+    // 新增售后进度
+    addSchedule: function addSchedule(row) {
+      this.addScheduleMask = true;
+      this.addId = row.id;
     },
     cancelAddSch: function cancelAddSch() {
       this.addScheduleMask = false;
@@ -1708,7 +1769,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     addScheduleFrom: function addScheduleFrom() {
-      var _this3 = this;
+      var _this4 = this;
 
       var id = this.addId;
       var data = this.scheduleRuleFormVal;
@@ -1717,13 +1778,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         schedule_description: data.schedule_description,
         subscribed_at: data.subscribed_at
       };
+      // console.log(submitData);
       this.$post(this.urls.aftersaleschedule, submitData).then(function () {
-        _this3.$message({
+        _this4.$message({
           message: "新建售后进度成功",
           type: "success"
         });
-        _this3.addScheduleMask = false;
-        _this3.refresh();
+        _this4.addScheduleMask = false;
+        _this4.scheduleRuleFormVal = {
+          schedule_description: "",
+          subscribed_at: ""
+        };
+        _this4.refresh();
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -1732,102 +1798,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this3.$message.error({
+          _this4.$message.error({
             message: str
           });
         }
       });
     },
-    cancelBtmD: function cancelBtmD() {
-      this.showBtmDel = false;
-      this.$message({
-        message: "取消删除",
-        type: "info"
-      });
-    },
-    confirmBtmD: function confirmBtmD(id) {
-      var _this4 = this;
 
-      var index = this.bottomActiveName - 0;
-      switch (index) {
-        case 0:
-          this.$del(this.urls.aftersaleschedule + "/" + id).then(function () {
-            _this4.$message({
-              message: "删除成功",
-              type: "success"
-            });
-            _this4.showBtmDel = false;
-            _this4.refresh();
-          }, function (err) {
-            if (err.response) {
-              _this4.showBtmDel = false;
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              var str = arr1.join(",");
-              _this4.$message.error({
-                message: str
-              });
-            }
-          });
-          break;
-      }
-    },
-
-    // 新建售后申请单
-    addNew: function addNew() {
-      this.addAfterSaleMask = true;
-    },
-    resetAddAfterSale: function resetAddAfterSale() {
-      this.defProDtlVal = [];
-      Object.assign(this.addAfterSaleForm, this.$options.data().addAfterSaleForm);
-      this.noUpload = true;
-    },
-
-    // 上传图片
-    judgeFm: function judgeFm(file) {
-      var isJPG = file.type === "image/jpeg";
-      var isGIF = file.type === "image/gif";
-      var isPNG = file.type === "image/png";
-
-      if (!isJPG && !isGIF && !isPNG) {
-        this.$message.error("上传图片必须是JPG/GIF/PNG 格式!");
-      }
-    },
-    beforeUpload: function beforeUpload(file) {
+    // 修改售后进度
+    updateSchedule: function updateSchedule(row) {
       var _this5 = this;
 
-      this.showChgBtn = false;
-      this.judgeFm(file);
-      var formData = new FormData();
-      formData.append("image", file);
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
-        var imageInfo = res.data.meta;
-        if (imageInfo.status_code == 201) {
-          _this5.noUpload = false;
-          _this5.showChgBtn = true;
-          _this5.addAfterSaleForm.img = res.data.path;
+      this.updateScheduleMask = true;
+      this.updateSchIndex = row.id;
+      this.$fetch(this.urls.aftersaleschedule + "/" + this.updateSchIndex).then(function (res) {
+        _this5.updateScheduleRuleFormVal = {
+          after_sale_id: res.after_sale_id,
+          schedule_description: res.schedule_description,
+          subscribed_at: res.subscribed_at
+        };
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this5.$message.error(str);
         }
-      }).catch(function (err) {});
-    },
-    cancelAddAfterSale: function cancelAddAfterSale() {
-      this.addAfterSaleMask = false;
-      this.$message({
-        message: "取消新建售后单",
-        type: "info"
       });
     },
-    confirmAddAfterSale: function confirmAddAfterSale() {
+    updateScheduleFrom: function updateScheduleFrom(row) {
       var _this6 = this;
 
-      this.$post(this.urls.aftersale, this.addAfterSaleForm).then(function () {
+      this.$patch(this.urls.aftersaleschedule + "/" + this.updateSchIndex, this.updateScheduleRuleFormVal).then(function () {
         _this6.$message({
-          message: "新建售后订单成功",
+          message: "修改售后进度成功",
           type: "success"
         });
-        _this6.addAfterSaleMask = false;
+        _this6.updateScheduleMask = false;
         _this6.refresh();
       }, function (err) {
         if (err.response) {
@@ -1843,8 +1853,93 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
     },
-    beforeUploadComp: function beforeUploadComp(file) {
+    cancelUpdateSch: function cancelUpdateSch() {
+      this.updateScheduleMask = false;
+      this.$message({
+        message: "取消新增进度",
+        type: "info"
+      });
+    },
+
+    // 新建售后申请单
+    addNew: function addNew() {
+      if (this.newOpt[0].nClick) {
+        return;
+      } else {
+        this.addAfterSaleMask = true;
+        this.resetAddAfterSale();
+      }
+    },
+    resetAddAfterSale: function resetAddAfterSale() {
+      Object.assign(this.addAfterSaleForm, this.$options.data().addAfterSaleForm);
+      this.noUpload = true;
+    },
+
+    // 上传图片
+    judgeFm: function judgeFm(file) {
+      var isJPG = file.type === "image/jpeg";
+      var isGIF = file.type === "image/gif";
+      var isPNG = file.type === "image/png";
+
+      if (!isJPG && !isGIF && !isPNG) {
+        this.$message.error("上传图片必须是JPG/GIF/PNG 格式!");
+      }
+    },
+    beforeUpload: function beforeUpload(file) {
       var _this7 = this;
+
+      this.showChgBtn = false;
+      this.judgeFm(file);
+      var formData = new FormData();
+      formData.append("image", file);
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
+        var imageInfo = res.data.meta;
+        if (imageInfo.status_code == 201) {
+          _this7.noUpload = false;
+          _this7.showChgBtn = true;
+          _this7.addAfterSaleForm.after_sale_def_pro[0].img_url = res.data.path;
+        }
+      }).catch(function (err) {});
+    },
+    cancelAddAfterSale: function cancelAddAfterSale() {
+      this.addAfterSaleMask = false;
+      this.$message({
+        message: "取消新建售后单",
+        type: "info"
+      });
+    },
+    confirmAddAfterSale: function confirmAddAfterSale() {
+      var _this8 = this;
+
+      var submitData = this.addAfterSaleForm;
+      submitData.after_sale_def_pro.map(function (item, index) {
+        if (!item.commodity_code) {
+          submitData.after_sale_def_pro.splice(index, 1);
+        }
+      });
+      this.$post(this.urls.aftersale, submitData).then(function () {
+        _this8.$message({
+          message: "新建售后订单成功",
+          type: "success"
+        });
+        _this8.addAfterSaleMask = false;
+        _this8.refresh();
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this8.$message.error({
+            message: str
+          });
+        }
+      });
+    },
+    beforeUploadComp: function beforeUploadComp(file) {
+      var _this9 = this;
 
       this.tableChgBtn = "";
       this.judgeFm(file);
@@ -1853,14 +1948,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this7.compUpload = "";
-          _this7.tableChgBtn = "show" + _this7.compIndexNum;
-          _this7.proForm.product_components[_this7.compIndexNum].img_url = res.data.path;
+          _this9.compUpload = "";
+          _this9.tableChgBtn = "show" + _this9.compIndexNum;
+          _this9.proForm.product_components[_this9.compIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
     updateTableUpload: function updateTableUpload(file) {
-      var _this8 = this;
+      var _this10 = this;
 
       this.updateChgBtn = "";
       this.judgeFm(file);
@@ -1869,11 +1964,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this8.updateCompUpload = "";
-          _this8.updateChgBtn = "show" + _this8.updateRwIndex;
-          _this8.updateForm.product_components[_this8.updateRwIndex].img_url = res.data.path;
+          _this10.updateCompUpload = "";
+          _this10.updateChgBtn = "show" + _this10.updateRwIndex;
+          _this10.updateForm.product_components[_this10.updateRwIndex].img_url = res.data.path;
         }
       }).catch(function (err) {});
+    },
+
+    // 删除售后产品
+    delAddDefPro: function delAddDefPro(index) {
+      this.addAfterSProDtlVal.splice(index, 1);
     },
 
     // 新增售后产品
@@ -1893,40 +1993,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.addAfterSProDtlVal.push(row);
     },
     addOrderRowClick: function addOrderRowClick(row) {
-      var _this9 = this;
+      var _this11 = this;
 
       this.addOrderDtlVal = row;
-      console.log(this.addOrderDtlVal);
       this.$fetch(this.urls.products, {
-        include: "productComponents,shop,supplier,combinations.productComponents"
+        include: "productComponents,shop,supplier,goodsCategory,combinations.productComponents"
       }).then(function (res) {
-        _this9.proDtlVal = res.data;
-        _this9.proDtlVal.map(function (item) {
-          // let product_component = [];
-          // console.log(item.productComponents["data"][0]["spec"]);
-          // console.log(item.productComponents["data"][0]["spec"]);
-          // item.productComponents.map(list => {
-          //   let comp = {
-          //     spec: list.spec,
-          //     color: list.color,
-          //     materials: list.materials
-          //   };
-          // });
-          // if (item.productComponents["data"].length > 0) {
-          //   console.log(666);
-          //   let comp = {
-          //     spec: item.productComponents["data"][0]["spec"],
-          //     color: item.productComponents["data"][0]["color"],
-          //     materials: item.productComponents["data"][0]["materials"]
-          //   };
-          // } else {
-          //   let comp = {
-          //     spec: '',
-          //     color: '',
-          //     materials: ''
-          //   };
-          // };
-          //   product_component.push(comp);
+        var resData = res.data;
+        resData.map(function (item) {
+          var defPro = {
+            commodity_code: item.commodity_code,
+            spec_code: "",
+            short_name: item.short_name,
+            spec: item.productComponents["data"][0].spec,
+            color: item.productComponents["data"][0].color,
+            materials: item.productComponents["data"][0].materials,
+            buy_number: 1,
+            supplier_id: item.supplier.name
+          };
+          _this11.proDtlVal.push(defPro);
         });
       }, function (err) {
         if (err.response) {
@@ -1936,7 +2021,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this9.$message.error({
+          _this11.$message.error({
             message: str
           });
         }
@@ -1947,14 +2032,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proQueryClick();
     },
     proQueryClick: function proQueryClick() {
-      var _this10 = this;
+      var _this12 = this;
 
       this.orderDtlVal = [];
       this.proDtlVal = [];
       this.addOrderDtlVal = [];
       this.addAfterSProDtlVal = [];
       this.$fetch(this.urls.customerservicedepts).then(function (res) {
-        _this10.orderDtlVal = res.data;
+        _this12.orderDtlVal = res.data;
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -1962,7 +2047,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          _this10.$message.error(arr1.join(","));
+          _this12.$message.error(arr1.join(","));
         }
       });
     },
@@ -1982,8 +2067,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     confirmAddAfterSPro: function confirmAddAfterSPro() {
       this.addAfterSProMask = false;
-      this.defProDtlVal = this.addAfterSProDtlVal;
-      console.log(this.addOrderDtlVal);
+      // console.log(this.addOrderDtlVal);
+      this.addAfterSaleForm.after_sale_def_pro = this.addAfterSProDtlVal;
       this.addAfterSaleForm.order_no = this.addOrderDtlVal.system_order_no;
       this.addAfterSaleForm.shop_name = this.addOrderDtlVal.shops_id;
       this.addAfterSaleForm.after_sale_type = "";
@@ -1991,12 +2076,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.addAfterSaleForm.after_sale_group = "";
       this.addAfterSaleForm.after_sale_status = "";
       this.addAfterSaleForm.order_phone = this.addOrderDtlVal.receiver_mobile;
-      this.addAfterSaleForm.img = "";
       this.addAfterSaleForm.vip_name = this.addOrderDtlVal.member_nick;
-      this.addAfterSaleForm.suppliers_id = "";
-      this.addAfterSaleForm.logistic_name = "";
-      this.addAfterSaleForm.logistics_id = this.addOrderDtlVal.logistics_id;
-      this.addAfterSaleForm.deliver_date = "";
+      this.addAfterSaleForm.suppliers_id = this.addAfterSaleForm.after_sale_def_pro[0].supplier_id;
+      this.addAfterSaleForm.logistic_name = this.addOrderDtlVal.logistics_id;
+      this.addAfterSaleForm.logistics_id = this.addOrderDtlVal.logistics_sn;
+      this.addAfterSaleForm.deliver_date = this.addOrderDtlVal.promise_ship_time;
       this.addAfterSaleForm.receiver_state = this.addOrderDtlVal.receiver_state;
       this.addAfterSaleForm.receiver_city = this.addOrderDtlVal.receiver_city;
       this.addAfterSaleForm.receiver_district = this.addOrderDtlVal.receiver_district;
@@ -2005,51 +2089,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.addAfterSaleForm.after_sale_cost = "";
       this.addAfterSaleForm.problem_description = "";
       this.addAfterSaleForm.customer_service_requirements = "";
-      this.addAfterSaleForm.rfe_information = "";
+      this.addAfterSaleForm.taobao_oid = this.addOrderDtlVal.association_taobao_oid;
     },
 
     // 修改
     edit: function edit() {
-      var _this11 = this;
+      var _this13 = this;
 
-      if (this.selection.length == 0) {
-        this.$message({
-          message: "没有选择要修改的数据",
-          type: "warning"
-        });
-        return;
-      } else if (this.selection.length >= 2) {
-        this.$message({
-          message: "只能修改单条数据",
-          type: "warning"
-        });
+      if (this.newOpt[1].nClick) {
         return;
       } else {
-        this.updateMask = true;
-        this.updateIndex = "";
-        this.$fetch(this.urls.aftersale + "/" + this.updateId).then(function (res) {}, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
+        if (this.selection.length == 0) {
+          this.$message({
+            message: "没有选择要修改的数据",
+            type: "warning"
+          });
+          return;
+        } else if (this.selection.length >= 2) {
+          this.$message({
+            message: "只能修改单条数据",
+            type: "warning"
+          });
+          return;
+        } else {
+          this.updateMask = true;
+          this.updateIndex = "";
+          this.$fetch(this.urls.aftersale + "/" + this.updateId).then(function (res) {}, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this13.$message.error(str);
             }
-            var str = arr1.join(",");
-            _this11.$message.error(str);
-          }
-        });
+          });
+        }
       }
     },
     confirmUpdate: function confirmUpdate() {
-      var _this12 = this;
+      var _this14 = this;
 
       this.$patch(this.urls.aftersale + "/" + this.updateId, this.updateForm).then(function () {
-        _this12.updateMask = false;
-        _this12.$message({
+        _this14.updateMask = false;
+        _this14.$message({
           message: "修改成功",
           type: "success"
         });
-        _this12.refresh();
+        _this14.refresh();
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -2058,7 +2146,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this12.$message.error(str);
+          _this14.$message.error(str);
         }
       });
     },
@@ -2072,56 +2160,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     // 删除
     delMore: function delMore() {
-      var _this13 = this;
+      var _this15 = this;
 
-      if (this.delArr.length === 0) {
-        this.$message({
-          message: "没有选中数据",
-          type: "warning"
-        });
+      if (this.newOpt[2].nClick) {
+        return;
       } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          _this13.$del(_this13.urls.aftersale, { ids: _this13.delArr }).then(function () {
-            _this13.$message({
-              message: "删除成功",
-              type: "success"
-            });
-            _this13.refresh();
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
+        if (this.delArr.length === 0) {
+          this.$message({
+            message: "没有选中数据",
+            type: "warning"
+          });
+        } else {
+          this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(function () {
+            _this15.$del(_this15.urls.aftersale, { ids: _this15.delArr }).then(function () {
+              _this15.$message({
+                message: "删除成功",
+                type: "success"
+              });
+              _this15.refresh();
+            }, function (err) {
+              if (err.response) {
+                var arr = err.response.data.errors;
+                var arr1 = [];
+                for (var i in arr) {
+                  arr1.push(arr[i]);
+                }
+                var str = arr1.join(",");
+                _this15.$message.error(str);
               }
-              var str = arr1.join(",");
-              _this13.$message.error(str);
-            }
+            });
+          }).catch(function () {
+            _this15.$message({
+              type: "info",
+              message: "已取消删除"
+            });
           });
-        }).catch(function () {
-          _this13.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
+        }
       }
     },
 
     // 审核
     handleAudit: function handleAudit() {
-      var _this14 = this;
+      var _this16 = this;
 
       if (this.newOpt[3].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.aftersale + "/" + id + "/audit").then(function () {
-          _this14.refresh();
-          _this14.$message({
+          _this16.refresh();
+          _this16.$message({
             message: "审核成功",
             type: "success"
           });
@@ -2133,7 +2225,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this14.$message.error(str);
+            _this16.$message.error(str);
+          }
+        });
+      }
+    },
+
+    // 退审
+    unAudit: function unAudit() {
+      var _this17 = this;
+
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/unaudit").then(function () {
+          _this17.refresh();
+          _this17.$message({
+            message: "退审成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this17.$message.error(str);
           }
         });
       }
@@ -2282,11 +2402,11 @@ var render = function() {
                     }
                   },
                   model: {
-                    value: _vm.searchBox.order_staff,
+                    value: _vm.searchBox.user_id,
                     callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "order_staff", $$v)
+                      _vm.$set(_vm.searchBox, "user_id", $$v)
                     },
-                    expression: "searchBox.order_staff"
+                    expression: "searchBox.user_id"
                   }
                 },
                 _vm._l(_vm.searchBox.orderStaff, function(item) {
@@ -2624,8 +2744,7 @@ var render = function() {
                     data: _vm.newData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName,
-                    "row-style": _vm.rowStyle
+                    "row-class-name": _vm.afterSaleRCName
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -2815,8 +2934,7 @@ var render = function() {
                     data: _vm.submitData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName,
-                    "row-style": _vm.rowStyle
+                    "row-class-name": _vm.afterSaleRCName
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -3079,7 +3197,7 @@ var render = function() {
                                 attrs: { size: "mini", type: "danger" },
                                 on: {
                                   click: function($event) {
-                                    return _vm.delSchedule(scope.row, $event)
+                                    return _vm.delBtmTab(scope.row, $event)
                                   }
                                 }
                               },
@@ -3103,7 +3221,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.scheduleData } },
+                { attrs: { data: _vm.defProData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3118,84 +3236,17 @@ var render = function() {
                           key: "default",
                           fn: function(scope) {
                             return [
-                              item.type == "select"
+                              scope.row[item.prop]
                                 ? _c("span", [
-                                    scope.row[item.prop] == ""
-                                      ? _c("span")
-                                      : typeof scope.row[item.prop] ==
-                                          "object" && item.inProp
-                                      ? _c("span", [
-                                          _vm._v(
-                                            _vm._s(
-                                              scope.row[item.prop][item.inProp]
-                                            )
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                                : item.type == "checkbox"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-checkbox", {
-                                        attrs: { disabled: "" },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : item.type == "img"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c(
-                                        "el-popover",
-                                        {
-                                          attrs: {
-                                            placement: "right",
-                                            trigger: "hover",
-                                            "popper-class": "picture_detail"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: { src: scope.row[item.prop] }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("img", {
-                                            attrs: {
-                                              slot: "reference",
-                                              src: scope.row[item.prop],
-                                              alt: scope.row[item.alt]
-                                            },
-                                            slot: "reference"
-                                          })
-                                        ]
+                                    _vm._v(
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
                                       )
-                                    ],
-                                    1
-                                  )
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            _vm._s(
-                                              item.inProp
-                                                ? scope.row[item.prop][
-                                                    item.inProp
-                                                  ]
-                                                : scope.row[item.prop]
-                                            )
-                                          )
-                                        ])
-                                      : _vm._e()
+                                    )
                                   ])
+                                : _vm._e()
                             ]
                           }
                         }
@@ -3217,7 +3268,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.scheduleData } },
+                { attrs: { data: _vm.defProData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3232,39 +3283,7 @@ var render = function() {
                           key: "default",
                           fn: function(scope) {
                             return [
-                              item.type == "select"
-                                ? _c("span", [
-                                    scope.row[item.prop] == ""
-                                      ? _c("span")
-                                      : typeof scope.row[item.prop] ==
-                                          "object" && item.inProp
-                                      ? _c("span", [
-                                          _vm._v(
-                                            _vm._s(
-                                              scope.row[item.prop][item.inProp]
-                                            )
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                                : item.type == "checkbox"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-checkbox", {
-                                        attrs: { disabled: "" },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : item.type == "img"
+                              item.type == "img"
                                 ? _c(
                                     "span",
                                     [
@@ -3295,21 +3314,7 @@ var render = function() {
                                     ],
                                     1
                                   )
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            _vm._s(
-                                              item.inProp
-                                                ? scope.row[item.prop][
-                                                    item.inProp
-                                                  ]
-                                                : scope.row[item.prop]
-                                            )
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
+                                : _vm._e()
                             ]
                           }
                         }
@@ -3331,7 +3336,6 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.scheduleData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3445,7 +3449,6 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.scheduleData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3792,48 +3795,78 @@ var render = function() {
                 "el-table",
                 {
                   attrs: {
-                    data: _vm.defProDtlVal,
+                    data: _vm.addAfterSaleForm.after_sale_def_pro,
                     fit: "",
-                    height: "180",
-                    "row-class-name": _vm.defRowCName
-                  },
-                  on: { "row-click": _vm.defRowClick }
+                    height: "180"
+                  }
                 },
-                _vm._l(_vm.defProHead, function(item) {
-                  return _c("el-table-column", {
-                    key: item.label,
-                    attrs: {
-                      label: item.label,
-                      align: "center",
-                      width: item.width
-                    },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              scope.row[item.prop]
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        item.inProp
-                                          ? scope.row[item.prop][item.inProp]
-                                          : scope.row[item.prop]
+                [
+                  _vm._l(_vm.defProHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.label,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                scope.row[item.prop]
+                                  ? _c("span", [
+                                      _vm._v(
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        )
                                       )
-                                    )
-                                  ])
-                                : _vm._e()
-                            ]
+                                    ])
+                                  : _vm._e()
+                              ]
+                            }
                           }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      label: "操作",
+                      width: "90",
+                      align: "center",
+                      fixed: "right"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.delAddDefPro(scope.$index)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除")]
+                            )
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
-                }),
-                1
+                ],
+                2
               )
             ],
             1
@@ -4334,48 +4367,78 @@ var render = function() {
                 "el-table",
                 {
                   attrs: {
-                    data: _vm.defProDtlVal,
+                    data: _vm.updateForm.afterSaleDefPros,
                     fit: "",
-                    height: "180",
-                    "row-class-name": _vm.defRowCName
-                  },
-                  on: { "row-click": _vm.defRowClick }
+                    height: "180"
+                  }
                 },
-                _vm._l(_vm.defProHead, function(item) {
-                  return _c("el-table-column", {
-                    key: item.label,
-                    attrs: {
-                      label: item.label,
-                      align: "center",
-                      width: item.width
-                    },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              scope.row[item.prop]
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        item.inProp
-                                          ? scope.row[item.prop][item.inProp]
-                                          : scope.row[item.prop]
+                [
+                  _vm._l(_vm.defProHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.label,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                scope.row[item.prop]
+                                  ? _c("span", [
+                                      _vm._v(
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        )
                                       )
-                                    )
-                                  ])
-                                : _vm._e()
-                            ]
+                                    ])
+                                  : _vm._e()
+                              ]
+                            }
                           }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      label: "操作",
+                      width: "90",
+                      align: "center",
+                      fixed: "right"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.delAddDefPro(scope.row, $event)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除")]
+                            )
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
-                }),
-                1
+                ],
+                2
               )
             ],
             1
@@ -4634,6 +4697,122 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("el-button", { on: { click: _vm.cancelAddSch } }, [
+                    _vm._v("取消")
+                  ])
+                ],
+                1
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "修改售后进度", visible: _vm.updateScheduleMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.updateScheduleMask = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              attrs: {
+                model: _vm.updateScheduleRuleFormVal,
+                rules: _vm.scheduleRules,
+                id: "form"
+              }
+            },
+            _vm._l(_vm.scheduleRuleFormHead, function(item, index) {
+              return _c(
+                "el-form-item",
+                { key: index, attrs: { label: item.label, prop: item.prop } },
+                [
+                  item.type == "textarea"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-input", {
+                            attrs: { type: "textarea", placehode: item.holder },
+                            model: {
+                              value: _vm.updateScheduleRuleFormVal[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.updateScheduleRuleFormVal,
+                                  item.prop,
+                                  typeof $$v === "string" ? $$v.trim() : $$v
+                                )
+                              },
+                              expression: "updateScheduleRuleFormVal[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "DatePicker"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-date-picker", {
+                            attrs: {
+                              type: "date",
+                              format: "yyyy-MM-dd",
+                              "value-format": "yyyy-MM-dd",
+                              placeholder: "选择日期"
+                            },
+                            model: {
+                              value: _vm.updateScheduleRuleFormVal[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.updateScheduleRuleFormVal,
+                                  item.prop,
+                                  $$v
+                                )
+                              },
+                              expression: "updateScheduleRuleFormVal[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ]
+              )
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "div",
+                { staticStyle: { float: "right" } },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: {
+                        click: function($event) {
+                          return _vm.updateScheduleFrom(_vm.updateSchIndex)
+                        }
+                      }
+                    },
+                    [_vm._v("确定")]
+                  ),
+                  _vm._v(" "),
+                  _c("el-button", { on: { click: _vm.cancelUpdateSch } }, [
                     _vm._v("取消")
                   ])
                 ],

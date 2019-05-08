@@ -61,9 +61,9 @@ const constantRouterMap = [
         meta: {title: '财务部', icon: 'financial',requireAuth: true}
       },
       {
-        path: 'storage',
-        name: 'Storage',
-        component: resolve => void(require(['../views/order/storage.vue'], resolve)),
+        path: 'storageDepart',
+        name: 'StorageDepart',
+        component: resolve => void(require(['../views/order/storageDepart.vue'], resolve)),
         meta: {title: '仓储部', icon: 'store',requireAuth: true}
       },
       {
