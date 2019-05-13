@@ -211,9 +211,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -276,12 +273,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         label: '是否启用',
         width: '160',
-        prop: "status",
+        prop: 'status',
         type: 'checkbox'
       }, {
         label: '创建时间',
         width: '160',
-        prop: "created_at",
+        prop: 'created_at',
         type: 'text'
       }],
       productsRow: {},
@@ -414,8 +411,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       //审核
       //作废
       //刷新
-      loading: true
+      loading: true,
       //分页
+      pagination: {
+        current_page: 1,
+        per_page: 0,
+        page_total: 0
+      }
     };
   },
 
@@ -442,7 +444,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.buyAndSendPro, { include: 'buyAndSendGift.buyAndSendPro' }).then(function (res) {
+      this.$fetch(this.urls.buyAndSendPro, {
+        include: 'buyAndSendGift.buyAndSendPro'
+      }).then(function (res) {
         _this.loading = false;
         _this.productsData = res.data;
         _this.giftData = res.data[0] ? res.data[0]['buyAndSendGift'].data : [];
@@ -475,6 +479,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addGiftName: function addGiftName(_ref) {
       var row = _ref.row,
           rowIndex = _ref.rowIndex;
+
       row.index = rowIndex;
     },
     addGiftRClick: function addGiftRClick(row) {
@@ -552,7 +557,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.updateMask = true;
     var id = void 0;
     id = this.currentId ? this.currentId : this.productsRow.id;
-    this.$fetch(this.urls.buyAndSendPro + '/' + id, { include: 'buyAndSendGift.buyAndSendPro' }).then(function (res) {
+    this.$fetch(this.urls.buyAndSendPro + '/' + id, {
+      include: 'buyAndSendGift.buyAndSendPro'
+    }).then(function (res) {
       _this3.updateProForm = {
         title: res.title,
         commodity_code: res.commodity_code,
@@ -750,7 +757,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), _defineProperty(_methods, 'handlePagChg', function handlePagChg(page) {
     var _this10 = this;
 
-    this.$fetch(this.urls.buyAndSendPro, { include: 'buyAndSendGift.buyAndSendPro' }).then(function (res) {
+    this.$fetch(this.urls.buyAndSendPro, {
+      include: 'buyAndSendGift.buyAndSendPro'
+    }).then(function (res) {
       _this10.productsData = res.data;
     });
   }), _methods),
@@ -851,7 +860,7 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                " +
+                                        "\n              " +
                                           _vm._s(
                                             item.inProp
                                               ? scope.row[item.prop][
@@ -859,7 +868,7 @@ var render = function() {
                                                 ]
                                               : scope.row[item.prop]
                                           ) +
-                                          "\n              "
+                                          "\n            "
                                       )
                                     ])
                               ]
@@ -978,7 +987,7 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                " +
+                                        "\n              " +
                                           _vm._s(
                                             item.inProp
                                               ? scope.row[item.prop][
@@ -986,7 +995,7 @@ var render = function() {
                                                 ]
                                               : scope.row[item.prop]
                                           ) +
-                                          "\n              "
+                                          "\n            "
                                       )
                                     ])
                               ]
@@ -1158,9 +1167,9 @@ var render = function() {
                                       item.type == "text"
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n              " +
+                                              "\n                " +
                                                 _vm._s(scope.row[item.prop]) +
-                                                "\n            "
+                                                "\n              "
                                             )
                                           ])
                                         : _vm._e(),
@@ -1168,9 +1177,9 @@ var render = function() {
                                       item.type == "number"
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n              " +
+                                              "\n                " +
                                                 _vm._s(scope.row[item.prop]) +
-                                                "\n            "
+                                                "\n              "
                                             )
                                           ])
                                         : _vm._e()
@@ -1397,9 +1406,9 @@ var render = function() {
                                       item.type == "text"
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n              " +
+                                              "\n                " +
                                                 _vm._s(scope.row[item.prop]) +
-                                                "\n            "
+                                                "\n              "
                                             )
                                           ])
                                         : _vm._e(),
@@ -1407,9 +1416,9 @@ var render = function() {
                                       item.type == "number"
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n              " +
+                                              "\n                " +
                                                 _vm._s(scope.row[item.prop]) +
-                                                "\n            "
+                                                "\n              "
                                             )
                                           ])
                                         : _vm._e()

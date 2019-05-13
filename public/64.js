@@ -5282,7 +5282,7 @@ var render = function() {
           _c(
             "el-form",
             {
-              staticClass: "customerAddForm hidePart",
+              staticClass: "customerAddForm",
               attrs: {
                 model: _vm.addCustomerFormVal,
                 rules: _vm.addCustomerFormRules,
@@ -7244,7 +7244,7 @@ var render = function() {
           _c(
             "el-form",
             {
-              staticClass: "customerAddForm hidePart",
+              staticClass: "customerAddForm",
               attrs: {
                 model: _vm.updateCustomerFormVal,
                 rules: _vm.addCustomerFormRules,

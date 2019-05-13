@@ -185,10 +185,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -211,6 +207,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: 'bf-refresh',
         ent: this.refresh
       }],
+      //分页
+      pagination: {
+        current_page: 1,
+        per_page: 0,
+        page_total: 0
+      },
       /*用户信息 */
       UserData: [],
       UserHead: [{
@@ -328,7 +330,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.relateLogistics, { include: 'relateLogisticsCompany.relateLogistics' }).then(function (res) {
+      this.$fetch(this.urls.relateLogistics, {
+        include: 'relateLogisticsCompany.relateLogistics'
+      }).then(function (res) {
         _this.loading = false;
         _this.UserData = res.data;
         _this.logisticsData = res.data[0] ? res.data[0]['relateLogisticsCompany'].data : [];
@@ -400,6 +404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addLogisticsCName: function addLogisticsCName(_ref) {
       var row = _ref.row,
           rowIndex = _ref.rowIndex;
+
       row.index = rowIndex;
     },
     addLogisticsRClick: function addLogisticsRClick(row) {
@@ -434,7 +439,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.updateMask = true;
       var id = void 0;
       id = this.currentId ? this.currentId : this.logicRow.id;
-      this.$fetch(this.urls.relateLogistics + '/' + id, { include: 'relateLogisticsCompany.relateLogistics' }).then(function (res) {
+      this.$fetch(this.urls.relateLogistics + '/' + id, {
+        include: 'relateLogisticsCompany.relateLogistics'
+      }).then(function (res) {
         _this3.updateUserForm = {
           username: res.username,
           name: res.name,
@@ -593,7 +600,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     //分页
-    handlePagChg: function handlePagChg(page) {}
+    handlePagChg: function handlePagChg(page) {
+      var _this8 = this;
+
+      this.$fetch(this.urls.relateLogistics + '?page=' + page, {
+        include: 'relateLogisticsCompany.relateLogistics'
+      }).then(function (res) {
+        _this8.logisticsData = res.data;
+      });
+    }
   },
   mounted: function mounted() {
     this.fetchData();
@@ -671,13 +686,13 @@ var render = function() {
                               return [
                                 _c("span", [
                                   _vm._v(
-                                    "\n                " +
+                                    "\n              " +
                                       _vm._s(
                                         item.inProp
                                           ? scope.row[item.prop][item.inProp]
                                           : scope.row[item.prop]
                                       ) +
-                                      "\n              "
+                                      "\n            "
                                   )
                                 ])
                               ]
@@ -775,13 +790,13 @@ var render = function() {
                               return [
                                 _c("span", [
                                   _vm._v(
-                                    "\n                " +
+                                    "\n              " +
                                       _vm._s(
                                         item.inProp
                                           ? scope.row[item.prop][item.inProp]
                                           : scope.row[item.prop]
                                       ) +
-                                      "\n              "
+                                      "\n            "
                                   )
                                 ])
                               ]

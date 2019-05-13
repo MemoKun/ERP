@@ -21,14 +21,14 @@ class ResupplieApplicationRequest extends FormRequest
                     'member_name' => 'string|max:255',
                     'member_phone' => 'string|max:255',
                     're_supplie_categories_id' => [
-                      'integer',
+                      'required','integer',
                         Rule::exists('re_supplie_categories', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     'resupply_money' => 'numeric',
                     'refund_methods_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('refund_methods', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
@@ -37,7 +37,7 @@ class ResupplieApplicationRequest extends FormRequest
                     'bank' => 'string|max:255',
                     'resupply_money' => 'numeric',
                     'logistics_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('logistics', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
@@ -46,20 +46,20 @@ class ResupplieApplicationRequest extends FormRequest
                     'compensate_fee' => 'numeric',
                     'load_fee' => 'numeric',
                     'suppliers_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('suppliers', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     'resupply_reason' => 'string|max:255',
                     'distribution_methods_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('distribution_methods', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     'freight_types_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('freight_types', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
@@ -68,25 +68,25 @@ class ResupplieApplicationRequest extends FormRequest
                     'remark' => 'string|max:255',
                     'address' => 'string|max:255',
                     're_supplie_responsibles_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('re_supplie_responsibles', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     'package_types_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('package_types', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     're_supplie_order_items.*.products_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('products', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     're_supplie_order_items.*.product_components_id' => [
-                        'integer',
+                        'required','integer',
                         Rule::exists('product_components', 'id'),
                     ],
                     're_supplie_order_items.*.quantity' => 'numeric',

@@ -217,12 +217,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -251,6 +245,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         spec: '' //规格名称
         //包含材料
       },
+      //分页
+      pagination: {
+        current_page: 1,
+        per_page: 0,
+        page_total: 0
+      },
       /*产品信息 */
       productsData: [],
       productsHead: [{
@@ -276,22 +276,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '颜色',
         width: '120',
-        prop: "color",
+        prop: 'color',
         type: 'text'
       }, {
         label: '材质',
         width: '160',
-        prop: "material_quality",
+        prop: 'material_quality',
         type: 'text'
       }, {
         label: '特殊',
         width: '160',
-        prop: "special",
+        prop: 'special',
         type: 'text'
       }, {
         label: '其他',
         width: '160',
-        prop: "other",
+        prop: 'other',
         type: 'text'
       }],
       productRow: {},
@@ -320,52 +320,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '颜色',
         width: '120',
-        prop: "color",
+        prop: 'color',
         type: 'text'
       }, {
         label: '材质',
         width: '160',
-        prop: "material_quality",
+        prop: 'material_quality',
         type: 'text'
       }, {
         label: '特殊',
         width: '160',
-        prop: "special",
+        prop: 'special',
         type: 'text'
       }, {
         label: '其他',
         width: '160',
-        prop: "other",
+        prop: 'other',
         type: 'text'
       }, {
         label: '体积',
         width: '160',
-        prop: "volume",
+        prop: 'volume',
         type: 'text'
       }, {
         label: '重量',
         width: '160',
-        prop: "weight",
+        prop: 'weight',
         type: 'text'
       }, {
         label: '单位',
         width: '160',
-        prop: "unit",
+        prop: 'unit',
         type: 'text'
       }, {
         label: '半成品',
         width: '160',
-        prop: "semi_finished",
+        prop: 'semi_finished',
         type: 'checkbox'
       }, {
         label: '启用',
         width: '160',
-        prop: "status",
+        prop: 'status',
         type: 'checkbox'
       }, {
         label: '所需数量',
         width: '160',
-        prop: "need",
+        prop: 'need',
         type: 'text'
       }],
       currentPage: true,
@@ -568,6 +568,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addMaterialCName: function addMaterialCName(_ref) {
       var row = _ref.row,
           rowIndex = _ref.rowIndex;
+
       row.index = rowIndex;
     },
     addMaterialRClick: function addMaterialRClick(row) {
@@ -656,7 +657,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.updateMask = true;
       var id = this.currentId ? this.currentId : this.productRow.id;
-      this.$fetch(this.urls.proBom + '/' + id, { include: 'proBomMaterial.proBom' }).then(function (res) {
+      this.$fetch(this.urls.proBom + '/' + id, {
+        include: 'proBomMaterial.proBom'
+      }).then(function (res) {
         _this2.updateProForm = {
           commodity_code: res.commodity_code,
           spec_code: res.spec_code,
@@ -673,6 +676,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateMaterialCName: function updateMaterialCName(_ref2) {
       var row = _ref2.row,
           rowIndex = _ref2.rowIndex;
+
       row.index = rowIndex;
     },
     updateMaterialRClick: function updateMaterialRClick(row) {
@@ -872,7 +876,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handlePagChg: function handlePagChg(page) {
       var _this8 = this;
 
-      this.$fetch().then(function (res) {
+      this.$fetch(this.urls.proBom + '?page=' + page, {
+        include: 'proBomMaterial.proBom'
+      }).then(function (res) {
         _this8.productsData = res.data;
       });
     }
@@ -1095,7 +1101,7 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                " +
+                                        "\n              " +
                                           _vm._s(
                                             item.inProp
                                               ? scope.row[item.prop][
@@ -1103,7 +1109,7 @@ var render = function() {
                                                 ]
                                               : scope.row[item.prop]
                                           ) +
-                                          "\n              "
+                                          "\n            "
                                       )
                                     ])
                               ]
@@ -1222,7 +1228,7 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                " +
+                                        "\n              " +
                                           _vm._s(
                                             item.inProp
                                               ? scope.row[item.prop][
@@ -1230,7 +1236,7 @@ var render = function() {
                                                 ]
                                               : scope.row[item.prop]
                                           ) +
-                                          "\n              "
+                                          "\n            "
                                       )
                                     ])
                               ]
@@ -1400,9 +1406,9 @@ var render = function() {
                                       )
                                     : _c("span", [
                                         _vm._v(
-                                          "\n                " +
+                                          "\n              " +
                                             _vm._s(scope.row[item.prop]) +
-                                            "\n              "
+                                            "\n            "
                                         )
                                       ])
                                 ])
@@ -1627,9 +1633,9 @@ var render = function() {
                                       )
                                     : _c("span", [
                                         _vm._v(
-                                          "\n                " +
+                                          "\n              " +
                                             _vm._s(scope.row[item.prop]) +
-                                            "\n              "
+                                            "\n            "
                                         )
                                       ])
                                 ])

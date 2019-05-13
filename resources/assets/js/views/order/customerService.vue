@@ -326,7 +326,7 @@
         <!--<el-button type="primary" style="float: right;padding: 6px 10px;
     font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>-->
       </div>
-      <el-form :model="addCustomerFormVal" :rules="addCustomerFormRules" class="customerAddForm hidePart" id="form">
+      <el-form :model="addCustomerFormVal" :rules="addCustomerFormRules" class="customerAddForm" id="form">
         <el-form-item v-for="(item,index) in addCustomerFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">
@@ -639,7 +639,7 @@
         <!--<el-button type="primary" style="float: right;padding: 6px 10px;
     font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>-->
       </div>
-      <el-form :model="updateCustomerFormVal" :rules="addCustomerFormRules" class="customerAddForm hidePart" id="form">
+      <el-form :model="updateCustomerFormVal" :rules="addCustomerFormRules" class="customerAddForm" id="form">
         <el-form-item v-for="(item,index) in addCustomerFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">

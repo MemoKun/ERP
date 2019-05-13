@@ -119,8 +119,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -145,6 +143,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       checkboxInit: false,
       moreForms: false,
       selections: '',
+      //分页
+      pagination: {
+        current_page: 1,
+        per_page: 0,
+        page_total: 0
+      },
       //新增
       addConfMask: false,
       addForm: [{
@@ -154,12 +158,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       addConfHead: [{
         label: '启用覆盖',
         width: '160',
-        prop: "is_covered",
+        prop: 'is_covered',
         type: 'checkbox'
       }, {
         label: '启用合并',
         width: '160',
-        prop: "is_merged",
+        prop: 'is_merged',
         type: 'checkbox'
       }],
       //修改
@@ -179,17 +183,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       confHead: [{
         label: '启用覆盖',
         width: '160',
-        prop: "is_covered",
+        prop: 'is_covered',
         type: 'checkbox'
       }, {
         label: '启用合并',
         width: '160',
-        prop: "is_merged",
+        prop: 'is_merged',
         type: 'checkbox'
       }, {
         label: '创建时间',
         width: '160',
-        prop: "created_at",
+        prop: 'created_at',
         type: 'text'
       }]
     };
@@ -543,7 +547,7 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                " +
+                                        "\n              " +
                                           _vm._s(
                                             item.inProp
                                               ? scope.row[item.prop][
@@ -551,7 +555,7 @@ var render = function() {
                                                 ]
                                               : scope.row[item.prop]
                                           ) +
-                                          "\n              "
+                                          "\n            "
                                       )
                                     ])
                               ]

@@ -626,6 +626,8 @@ export default {
       rejectReasonData: [], //驳回原因
       operationData: [], //操作记录
       progressData: [], //补件进度
+      updateProgressFrom:[],
+      updateProgressMask:false,
       resupplyInfoHead: [
         //补件产品
         {
