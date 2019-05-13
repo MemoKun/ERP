@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class ResupplieCategoryTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'resupplieOrder'
+        'resupplieOrder',
     ];
 
     public function transform(ResupplieCategory $resupplieCategory)
@@ -22,7 +22,7 @@ class ResupplieCategoryTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeResuppliedOrder(ResupplieCategory $resupplieCategory)
+    public function includeResupplieOrder(ResupplieCategory $resupplieCategory)
     {
         return $this->collection($resupplieCategory->resupplieOrder, new ResupplieOrderTransformer());
     }

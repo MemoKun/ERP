@@ -13,6 +13,7 @@ class DownLoadConfTransformer extends TransformerAbstract
             'id' => $downLoadConf->id,
             'is_covered' => $downLoadConf->is_covered,
             'is_merged' => $downLoadConf->is_merged,
+            'status' => $downLoadConf->status,
             'created_at' => $downLoadConf->created_at->toDateTimeString(),
             'updated_at' => $downLoadConf->updated_at->toDateTimeString(),
         ];

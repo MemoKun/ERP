@@ -16,14 +16,12 @@ class DownLoadConfRequest extends FormRequest
                 return[
                     'is_covered' => 'boolean',
                     'is_merged' => 'boolean',
-                    'status' => 'boolean',
                 ];
                 break;
             case'PATCH':
                 return[
                     'is_covered' => 'boolean',
                     'is_merged' => 'boolean',
-                    'status' => 'boolean',
                 ];
                 break;
         }

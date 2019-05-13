@@ -11,6 +11,9 @@ class ResupplieOrderTransformer extends TransformerAbstract
         'packageType', 'resupplieCategory', 'resupplieResponsible',
         'freightType', 'supplier', 'logistic', 'distributionMethod',
         'refundMethod', 'resupplieOrderItem', 'resupplieProblemProduct',
+        'resupplieImage', 'resupplieRejectReason', 'resupplieOperationRecord',
+        'resupplieProgress', 'resuppliePurchase', 'resupplieEsheet',
+        'resupplieInnerNote',
     ];
 
     public function transform(ResupplieOrder $resupplieOrder)
@@ -45,6 +48,7 @@ class ResupplieOrderTransformer extends TransformerAbstract
             'refund_methods_id' => $resupplieOrder->refund_methods_id,
             'refund_account' => $resupplieOrder->refund_account,
             'bank' => $resupplieOrder->bank,
+            'address' => $resupplieOrder->address,
             'mark_name' => $resupplieOrder->mark_name,
             'marker' => $resupplieOrder->marker,
             'mark_time' => optional($resupplieOrder->mark_time)->toDateTimeString(),
@@ -58,10 +62,12 @@ class ResupplieOrderTransformer extends TransformerAbstract
             'submit_time' => optional($resupplieOrder->submit_time)->toDateTimeString(),
             'review_time' => optional($resupplieOrder->review_time)->toDateTimeString(),
             'settle_time' => optional($resupplieOrder->settle_time)->toDateTimeString(),
+            'print_time' => optional($resupplieOrder->print_time)->toDateTimeString(),
             'system_consign_time' => optional($resupplieOrder->system_consign_time)->toDateTimeString(),
             'real_consign_time' => optional($resupplieOrder->real_consign_time)->toDateTimeString(),
             'is_submit' => $resupplieOrder->is_submit,
             'is_review' => $resupplieOrder->is_review,
+            'is_print' => $resupplieOrder->is_print,
             'is_consign' => $resupplieOrder->is_consign,
             'is_invalid' => $resupplieOrder->is_invalid,
             'square_number' => $resupplieOrder->square_number,
@@ -126,5 +132,40 @@ class ResupplieOrderTransformer extends TransformerAbstract
     public function includeResupplieProblemProduct(ResupplieOrder $resupplieOrder)
     {
         return $this->collection($resupplieOrder->resupplieProblemProduct, new ResupplieProblemProductTransformer());
+    }
+
+    public function includeResupplieImage(ResupplieOrder $resupplieOrder)
+    {
+        return $this->collection($resupplieOrder->resupplieImage, new ResupplieImageTransformer());
+    }
+
+    public function includeResupplieRejectReason(ResupplieOrder $resupplieOrder)
+    {
+        return $this->collection($resupplieOrder->resupplieRejectReason, new ResupplieRejectReasonTransformer());
+    }
+
+    public function includeResupplieOperationRecord(ResupplieOrder $resupplieOrder)
+    {
+        return $this->collection($resupplieOrder->resupplieOperationRecord, new ResupplieOperationRecordTransformer());
+    }
+
+    public function includeResupplieProgress(ResupplieOrder $resupplieOrder)
+    {
+        return $this->collection($resupplieOrder->resupplieProgress, new ResupplieProgressTransformer());
+    }
+
+    public function includeResuppliePurchase(ResupplieOrder $resupplieOrder)
+    {
+        return $this->collection($resupplieOrder->resuppliePurchase, new ResuppliePurchaseTransformer());
+    }
+
+    public function includeResupplieEsheet(ResupplieOrder $resupplieOrder)
+    {
+        return $this->collection($resupplieOrder->resupplieEsheet, new ResupplieEsheetTransformer());
+    }
+
+    public function includeResupplieInnerNote(ResupplieOrder $resupplieOrder)
+    {
+        return $this->collection($resupplieOrder->resupplieInnerNote, new ResupplieInnerNoteTransformer());
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Validation\Rule;
 
-class ResupplieOrderItemProductRequest extends FormRequest
+class ResuppliedOrderItemRequest extends FormRequest
 {
     public function rules()
     {
@@ -36,10 +36,13 @@ class ResupplieOrderItemProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'combinations_id.required' => '组合sku_id名称必填',
+            'products_id.required' => '产品id必填',
+            'products_id.integer' => '产品id必须int类型',
+
+            'combinations_id.required' => '组合sku_id必填',
             'combinations_id.integer' => '组合sku_id必须int类型',
 
-            'product_components_id.required' => '子件id名称必填',
+            'product_components_id.required' => '子件id必填',
             'product_components_id.integer' => '子件id必须int类型',
 
             'quantity.integer' => '数量必须int类型',
@@ -54,6 +57,7 @@ class ResupplieOrderItemProductRequest extends FormRequest
     public function attributes()
     {
         return [
+            'products_id' => '产品id',
             'combinations_id' => '组合sku_id',
             'product_components_id' => '子件id',
             'quantity' => '数量',

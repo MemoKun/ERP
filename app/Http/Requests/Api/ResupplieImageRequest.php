@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-class ResupplieImageProductRequest extends FormRequest
+class ResupplieImageRequest extends FormRequest
 {
     public function rules()
     {

@@ -7,7 +7,7 @@ class ResupplieImage extends Model
     protected $table = 're_supplie_images';
 
     protected $fillable = [
-        're_supplie_orders_id', 'img_url', 'status',
+        'img_url', 'status',
     ];
 
     //设置类型

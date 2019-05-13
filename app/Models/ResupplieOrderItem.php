@@ -7,13 +7,18 @@ class ResupplieOrderItem extends Model
     protected $table = 're_supplie_order_items';
 
     protected $fillable = [
-        're_supplie_orders_id', 'combinations_id', 'product_components_id',
+        're_supplie_orders_id', 'products_id', 'combinations_id', 'product_components_id',
         'quantity', 'actual_price', 'remark',
     ];
 
     public function resupplieOrder()
     {
         return $this->belongsTo(ResupplieOrder::class, 're_supplie_orders_id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'products_id');
     }
 
     public function combination()

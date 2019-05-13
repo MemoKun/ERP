@@ -16,9 +16,19 @@ class ResupplieProblemProductRequest extends FormRequest
                 break;
             case 'POST':
                 return [
-                    'combinations_id' => [
-                        'required', 'integer',
-                        Rule::exists('combinations', 'id')->where(function ($query) {
+                    'products_id' => [
+                        'integer',
+                        Rule::exists('products', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'product_components_id' => [
+                        'integer',
+                        Rule::exists('product_components', 'id'),
+                    ],
+                    'suppliers_id' => [
+                        'integer',
+                        Rule::exists('suppliers', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
@@ -26,7 +36,25 @@ class ResupplieProblemProductRequest extends FormRequest
                 ];
                 break;
             case 'PATCH':
-                return [];
+                return [
+                    'products_id' => [
+                        'integer',
+                        Rule::exists('products', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'product_components_id' => [
+                        'integer',
+                        Rule::exists('product_components', 'id'),
+                    ],
+                    'suppliers_id' => [
+                        'integer',
+                        Rule::exists('suppliers', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'problem_description' => 'string|max:255',
+                ];
                 break;
         }
     }
@@ -34,8 +62,14 @@ class ResupplieProblemProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'combinations_id.required' => '组合sku_id名称必填',
-            'combinations_id.integer' => '组合sku_id必须int类型',
+            'products_id.required' => '产品id名称必填',
+            'products_id.integer' => '产品id必须int类型',
+
+            'product_components_id.required' => '子件id名称必填',
+            'product_components_id.integer' => '子件id必须int类型',
+
+            'suppliers_id.required' => '供应商id名称必填',
+            'suppliers_id.integer' => '供应商id必须int类型',
 
             'problem_description.string' => '问题描述必须string类型',
             'problem_description.max' => '问题描述最大长度为255',
@@ -45,7 +79,9 @@ class ResupplieProblemProductRequest extends FormRequest
     public function attributes()
     {
         return [
-            'combinations_id' => '组合sku_id',
+            'products_id' => '产品id',
+            'product_components_id' => '子件id',
+            'suppliers_id' => '供应商id',
             'problem_description' => '问题描述',
         ];
     }

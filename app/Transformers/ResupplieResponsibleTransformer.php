@@ -22,7 +22,7 @@ class ResupplieResponsibleTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeResuppliedOrder(ResupplieResponsible $resupplieResponsible)
+    public function includeResupplieOrder(ResupplieResponsible $resupplieResponsible)
     {
         return $this->collection($resupplieResponsible->resupplieOrder, new ResupplieOrderTransformer());
     }

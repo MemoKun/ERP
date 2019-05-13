@@ -22,6 +22,6 @@ class PackageType extends Model
 
     public function resupplieOrder()
     {
-        return $this->hasMany(ResupplieOrder::class,'package_types_id');
+        return $this->hasMany(ResupplieOrder::class, 'package_types_id');
     }
 }

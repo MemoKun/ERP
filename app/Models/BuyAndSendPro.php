@@ -8,7 +8,7 @@ class BuyAndSendPro extends Model
 
     protected $fillable = [
         'title', 'commodity_code', 'spec_code', 'short_name',
-        'spec_name', 'status'
+        'spec_name', 'status',
     ];
 
     //设置类型
@@ -39,7 +39,6 @@ class BuyAndSendPro extends Model
         $this->status = 0;
         $this->save();
     }
-
 
     public function buyAndSendGift()
     {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api;
 
-//use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rule;
 
-class ResupplieApplicationRequset extends FormRequest
+class ResupplieApplicationRequest extends FormRequest
 {
     public function rules()
     {
@@ -17,12 +17,167 @@ class ResupplieApplicationRequset extends FormRequest
                 break;
             case 'POST':
                 return [
+                    'system_order_no' => 'string|max:255',
+                    'member_name' => 'string|max:255',
+                    'member_phone' => 'string|max:255',
+                    're_supplie_categories_id' => [
+                      'integer',
+                        Rule::exists('re_supplie_categories', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'resupply_money' => 'numeric',
+                    'refund_methods_id' => [
+                        'integer',
+                        Rule::exists('refund_methods', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'refund_account' => 'string|max:255',
+                    'bank' => 'string|max:255',
+                    'resupply_money' => 'numeric',
+                    'logistics_id' => [
+                        'integer',
+                        Rule::exists('logistics', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'estimated_fee' => 'numeric',
+                    'compensate_fee' => 'numeric',
+                    'load_fee' => 'numeric',
+                    'suppliers_id' => [
+                        'integer',
+                        Rule::exists('suppliers', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'resupply_reason' => 'string|max:255',
+                    'distribution_methods_id' => [
+                        'integer',
+                        Rule::exists('distribution_methods', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'freight_types_id' => [
+                        'integer',
+                        Rule::exists('freight_types', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'promise_time' => 'date',
+                    'remark' => 'string|max:255',
+                    'address' => 'string|max:255',
+                    're_supplie_responsibles_id' => [
+                        'integer',
+                        Rule::exists('re_supplie_responsibles', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'package_types_id' => [
+                        'integer',
+                        Rule::exists('package_types', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    're_supplie_order_items.*.products_id' => [
+                        'integer',
+                        Rule::exists('products', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    're_supplie_order_items.*.product_components_id' => [
+                        'integer',
+                        Rule::exists('product_components', 'id'),
+                    ],
+                    're_supplie_order_items.*.quantity' => 'numeric',
+                    're_supplie_order_items.*.cost' => 'numeric',
+                    're_supplie_order_items.*.actual_price' => 'numeric',
+
                     'status' => 'boolean',
                     'is_submit' => 'boolean',
                 ];
                 break;
             case 'PATCH':
-                return [];
+                return [
+                    'system_order_no' => 'string|max:255',
+                    'member_name' => 'string|max:255',
+                    'member_phone' => 'string|max:255',
+                    're_supplie_categories_id' => [
+                      'integer',
+                        Rule::exists('re_supplie_categories', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'resupply_money' => 'numeric',
+                    'refund_methods_id' => [
+                        'integer',
+                        Rule::exists('refund_methods', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'refund_account' => 'string|max:255',
+                    'bank' => 'string|max:255',
+                    'resupply_money' => 'numeric',
+                    'logistics_id' => [
+                        'integer',
+                        Rule::exists('logistics', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'estimated_fee' => 'numeric',
+                    'compensate_fee' => 'numeric',
+                    'load_fee' => 'numeric',
+                    'suppliers_id' => [
+                        'integer',
+                        Rule::exists('suppliers', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'resupply_reason' => 'string|max:255',
+                    'distribution_methods_id' => [
+                        'integer',
+                        Rule::exists('distribution_methods', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'freight_types_id' => [
+                        'integer',
+                        Rule::exists('freight_types', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'promise_time' => 'date',
+                    'remark' => 'string|max:255',
+                    'address' => 'string|max:255',
+                    're_supplie_responsibles_id' => [
+                        'integer',
+                        Rule::exists('re_supplie_responsibles', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    'package_types_id' => [
+                        'integer',
+                        Rule::exists('package_types', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    're_supplie_order_items.*.products_id' => [
+                        'integer',
+                        Rule::exists('products', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
+                    're_supplie_order_items.*.product_components_id' => [
+                        'integer',
+                        Rule::exists('product_components', 'id'),
+                    ],
+                    're_supplie_order_items.*.quantity' => 'numeric',
+                    're_supplie_order_items.*.cost' => 'numeric',
+                    're_supplie_order_items.*.actual_price' => 'numeric',
+
+                    'status' => 'boolean',
+                    'is_submit' => 'boolean',
+                ];
                 break;
         }
     }
@@ -33,6 +188,9 @@ class ResupplieApplicationRequset extends FormRequest
             're_supplie_categories_id.required' => '补件类别id必填',
             're_supplie_categories_id.integer' => '补件类别id必须int类型',
             're_supplie_categories_id.exists' => '需要添加的id在数据库中未找到或未启用',
+
+            'system_order_no.string' => '系统单号必须string类型',
+            'system_order_no.max' => '系统单号最大长度为255',
 
             'resupply_money.numeric' => '补件金额必须是数字',
 

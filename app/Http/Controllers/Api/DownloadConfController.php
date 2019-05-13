@@ -31,9 +31,7 @@ class DownLoadConfController extends Controller
     //新增下载配置
     public function store(DownLoadConfRequest $request)
     {
-        $data[] = $request->validate();
-
-        return $this->traitStore($data, self::MODEL, self::TRANSFORMER);
+        return $this->traitStore($request->validated(), self::MODEL, self::TRANSFORMER);
     }
 
     //删除单条下载配置
@@ -49,7 +47,7 @@ class DownLoadConfController extends Controller
     }
 
     //修改单条下载配置
-    public function update(DestroyRequest $request, DownLoadConf $downLoadConf)
+    public function update(DownLoadConfRequest $request, DownLoadConf $downLoadConf)
     {
         return $this->traitUpdate($request, $downLoadConf, self::TRANSFORMER);
     }
