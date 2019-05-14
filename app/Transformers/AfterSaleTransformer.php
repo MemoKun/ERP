@@ -47,6 +47,7 @@ class AfterSaleTransformer extends TransformerAbstract
             'taobao_oid' => $afterSale->taobao_oid,
             'rfe_information' => $afterSale->rfe_information,
             'rfe_order_at' => optional($afterSale->rfe_order_at)->toDateTimeString(),
+            'is_locked' => $afterSale->is_locked,
             'locking_people' => $afterSale->locking_people,
             'locking_at' => optional($afterSale->locking_at)->toDateTimeString(),
             'tag_people' => $afterSale->tag_people,
