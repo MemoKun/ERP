@@ -19,13 +19,37 @@ class AfterSaleRequest extends FormRequest
                 return [
                     'status' => 'boolean',
                     'order_status' => Rule::in([
-                        \App\Models\AfterSale::ORDER_STATUS_NEW,
-                        \App\Models\AfterSale::ORDER_STATUS_SUBMIT
+                        \App\Models\AfterSale::AFTERSALE_STATUS_NEW,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_SUBMIT,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_LOCK,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_ONE_AUDIT,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_TWO_AUDIT,
+
+                        \App\Models\AfterSale::AFTERSALE_RETURN_SUBMIT,
+                        \App\Models\AfterSale::AFTERSALE_RETURN_LOCK,
+                        \App\Models\AfterSale::AFTERSALE_RETURN_ONE_AUDIT,
+                        \App\Models\AfterSale::AFTERSALE_RETURN_TWO_AUDIT,
+                        \App\Models\AfterSale::AFTERSALE_REJECT,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_FINISH,
                     ]),
                 ];
                 break;
             case 'POST':
                 return [
+                    'order_status' => Rule::in([
+                        \App\Models\AfterSale::AFTERSALE_STATUS_NEW,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_SUBMIT,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_LOCK,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_ONE_AUDIT,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_TWO_AUDIT,
+
+                        \App\Models\AfterSale::AFTERSALE_RETURN_SUBMIT,
+                        \App\Models\AfterSale::AFTERSALE_RETURN_LOCK,
+                        \App\Models\AfterSale::AFTERSALE_RETURN_ONE_AUDIT,
+                        \App\Models\AfterSale::AFTERSALE_RETURN_TWO_AUDIT,
+                        \App\Models\AfterSale::AFTERSALE_REJECT,
+                        \App\Models\AfterSale::AFTERSALE_STATUS_FINISH,
+                    ]),
                     'shop_name' => 'required|string|max:255',
                     'shop_group' => 'string|max:255',
                     'order_no' => 'required|string|max:255',
@@ -49,7 +73,7 @@ class AfterSaleRequest extends FormRequest
                             $query->where('status', 1);
                         }),
                     ],
-                    'order_phone' => 'integer',
+                    'order_phone' => 'string',
                     'problem_description' => 'string|max:255',
                     'customer_service_requirements' => 'string|max:255',
                     'receiver_state' => 'string|max:255',
@@ -75,6 +99,7 @@ class AfterSaleRequest extends FormRequest
                     'after_sale_check_person' => 'string|max:255',
                     'director_check_person' => 'string|max:255',
                     'is_finish' => 'boolean',
+                    'is_locked' => 'boolean',
                     'is_reject' => 'boolean',
                     'is_refund' => 'boolean',
                     'is_return' => 'boolean',
@@ -96,7 +121,6 @@ class AfterSaleRequest extends FormRequest
                     'suppliers_id' => 'string|max:255',
                     'logistic_name' => 'string|max:255',
                     'logistics_id' => 'string|max:255',
-                    'deliver_date' => 'string|max:255',
                     'order_amount' => 'numeric',
                     'after_sale_type' => [
                         'required', 'integer',
@@ -111,7 +135,7 @@ class AfterSaleRequest extends FormRequest
                             $query->where('status', 1);
                         }),
                     ],
-                    'order_phone' => 'integer',
+                    'order_phone' => 'string',
                     'problem_description' => 'string|max:255',
                     'customer_service_requirements' => 'string|max:255',
                     'receiver_state' => 'string|max:255',
@@ -137,6 +161,7 @@ class AfterSaleRequest extends FormRequest
                     'after_sale_check_person' => 'string|max:255',
                     'director_check_person' => 'string|max:255',
                     'is_finish' => 'boolean',
+                    'is_locked' => 'boolean',
                     'is_reject' => 'boolean',
                     'is_refund' => 'boolean',
                     'is_return' => 'boolean',
@@ -159,8 +184,6 @@ class AfterSaleRequest extends FormRequest
             'order_no.required' => '订单号必填',
             'order_no.string' => '订单号必须string类型',
             'order_no.max' => '订单号最大长度为255',
-
-            'order_phone.integer' => '联系方式为数字类型',
 
             'shop_name.required' => '店铺名称必填',
             'shop_name.string' => '店铺名称必须string类型',
