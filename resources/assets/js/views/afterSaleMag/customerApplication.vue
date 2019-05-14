@@ -585,7 +585,7 @@
               </el-upload>
             </span>
             <span v-else>
-              <img :src="updateForm[item.prop]" :disabled="item.addChgAble">
+              <img :src="updateForm.after_sale_def_pro[item.prop]" :disabled="item.addChgAble">
               <el-upload class="chgDiv" action :before-upload="beforeUpload">
                 <el-button
                   type="primary"
@@ -602,7 +602,7 @@
       <div class="clearfix">
         <el-button type="text">售后问题产品</el-button>
         <el-table
-          :data="updateForm.afterSaleDefPros"
+          :data="updateForm.after_sale_def_pro"
           fit
           height="180"
           :row-class-name="defRowCName"
@@ -1591,7 +1591,7 @@ export default {
           this.newOpt[3].nClick = false;
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
-            order_status: "new",
+            order_status: 10,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
@@ -1634,7 +1634,7 @@ export default {
           this.newOpt[3].nClick = true;
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
-            order_status: "submit",
+            order_status: 20,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
@@ -1724,73 +1724,6 @@ export default {
       if (val.length != 0) {
         this.updateId = val[0].id;
         this.updateForm = val[0];
-        console.log(this.updateForm.afterSaleDefPros);
-        // this.updateForm = {
-        //   after_responsible_party: val[0].after_responsible_party,
-        //   after_sale_check_date: val[0].after_sale_check_date,
-        //   after_sale_check_person: val[0].after_sale_check_person,
-        //   after_sale_group: val[0].after_sale_group,
-        //   after_sale_order_no: val[0].after_sale_order_no,
-        //   after_sale_order_type: val[0].after_sale_order_type,
-        //   after_sale_person: val[0].after_sale_person,
-        //   after_sale_status: val[0].after_sale_status,
-        //   after_sale_type: val[0].after_sale_type,
-        //   client_name: val[0].client_name,
-        //   close_date: val[0].close_date,
-        //   create_date: val[0].create_date,
-        //   created_at: val[0].created_at,
-        //   custom_oid: val[0].custom_oid,
-        //   customer_service_requirements: val[0].customer_service_requirements,
-        //   deliver_date: val[0].deliver_date,
-        //   director_check_date: val[0].director_check_date,
-        //   director_check_person: val[0].director_check_person,
-        //   id: val[0].id,
-        //   is_after_sale_check: val[0].is_after_sale_check,
-        //   is_close: val[0].is_close,
-        //   is_director_check: val[0].is_director_check,
-        //   is_finish: val[0].is_finish,
-        //   is_patch: val[0].is_patch,
-        //   is_refund: val[0].is_refund,
-        //   is_reject: val[0].is_reject,
-        //   is_return: val[0].is_return,
-        //   is_service_submit: val[0].is_service_submit,
-        //   is_solve: val[0].is_solve,
-        //   locking_at: val[0].locking_at,
-        //   locking_people: val[0].locking_people,
-        //   logistic_name: val[0].logistic_name,
-        //   logistics_id: val[0].logistics_id,
-        //   order_amount: val[0].order_amount,
-        //   order_no: val[0].order_no,
-        //   order_phone: val[0].order_phone,
-        //   order_remark: val[0].order_remark,
-        //   user_id: val[0].user_id,
-        //   order_status: val[0].order_status,
-        //   parts_duty: val[0].parts_duty,
-        //   patch_status: val[0].patch_status,
-        //   predict_at: val[0].predict_at,
-        //   previous_order_staff: val[0].previous_order_staff,
-        //   problem_description: val[0].problem_description,
-        //   receiver_address: val[0].receiver_address,
-        //   receiver_city: val[0].receiver_city,
-        //   receiver_district: val[0].receiver_district,
-        //   receiver_state: val[0].receiver_state,
-        //   refund_status: val[0].refund_status,
-        //   return_status: val[0].return_status,
-        //   rfe_information: val[0].rfe_information,
-        //   rfe_order_at: val[0].rfe_order_at,
-        //   service_submit_date: val[0].service_submit_date,
-        //   service_submit_person: val[0].service_submit_person,
-        //   shop_group: val[0].shop_group,
-        //   shop_name: val[0].shop_name,
-        //   status: val[0].status,
-        //   suppliers_id: val[0].suppliers_id,
-        //   tag_at: val[0].tag_at,
-        //   tag_name: val[0].tag_name,
-        //   tag_people: val[0].tag_people,
-        //   taobao_oid: val[0].taobao_oid,
-        //   updated_at: val[0].updated_at,
-        //   vip_name: val[0].vip_name
-        // };
       } else {
         this.updateId = "";
       }
@@ -2163,7 +2096,6 @@ export default {
     },
     confirmAddAfterSPro() {
       this.addAfterSProMask = false;
-      // console.log(this.addOrderDtlVal);
       this.addAfterSaleForm.after_sale_def_pro = this.addAfterSProDtlVal;
       this.addAfterSaleForm.order_no = this.addOrderDtlVal.system_order_no;
       this.addAfterSaleForm.shop_name = this.addOrderDtlVal.shops_id;
@@ -2207,8 +2139,14 @@ export default {
         } else {
           this.updateMask = true;
           this.updateIndex = "";
-          this.$fetch(this.urls.aftersale + "/" + this.updateId).then(
-            res => {},
+          this.$fetch(this.urls.aftersale + "/" + this.updateId, {
+            include:
+              "afterSaleSchedules.user,afterSaleDefPros,user"
+          }).then(
+            res => {
+              this.updateForm = res;
+              this.updateForm.after_sale_def_pro = this.updateForm.afterSaleDefPros["data"];
+            },
             err => {
               if (err.response) {
                 let arr = err.response.data.errors;
