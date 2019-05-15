@@ -63,6 +63,7 @@ const urls= {
     problemproduct:'/problemproduct',
     roles:'/roles',
     problemProduct:'problemProduct',
+    redpackagemag:'/redpackagemag',
 
     me:'/me',
     current:'/current',
