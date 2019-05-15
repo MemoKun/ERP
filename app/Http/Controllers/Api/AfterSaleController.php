@@ -54,20 +54,41 @@ class AfterSaleController extends Controller
         return $this->traitShow($aftersale, self::TRANSFORMER);
     }
 
-    public function update(AfterSaleRequest $request, 
+    public function update(AfterSaleRequest $aftersalerequest, 
                            AfterSaleDefProRequest $defprorequest, 
-                           AfterSale $aftersale)
+                           AfterSale $aftersale,
+                           \App\Handlers\ValidatedHandler $validatedHandler)
     {
-        $data[] = $request->validated();
-        $data[] = $request->input('after_sale_def_pro');
+        if ($aftersale->order_status > 10)
+            if (!$aftersale->is_locked)
+                throw new UpdateResourceFailedException('未锁定无法修改');
 
-        return $this->traitJoint2Update(
-            $data,
-            'afterSaleDefPros',
-            $defprorequest->rules(),
-            self::MODEL,
-            self::TRANSFORMER
-        );
+        $aftersale = DB::transaction(function () use ($aftersalerequest,
+                                                     $defprorequest,
+                                                     $aftersale,
+                                                     $validatedHandler) {
+
+            $aftersale->update($aftersalerequest->validated());
+
+            if ($defPros = $defprorequest->validated()['after_sale_def_pro']) {
+
+                foreach ($defPros as $defPro) {
+                    //过滤出经过验证的数据
+                    $data = $validatedHandler->getValidatedData($defprorequest->rules(), $defPro);
+                    //存在id则更新，否则插入
+                    if (isset($defPro['id'])) {
+                        $aftersale->afterSaleDefPros()->findOrFail($defPro['id'])->update($data);
+                    } else {
+                        $defProModel = $aftersale->afterSaleDefPros()->create($data);
+                    }
+                }
+            }
+            return $aftersale;
+        });
+
+        return $this->response
+            ->item($aftersale, new AfterSaleTransformer())
+            ->setStatusCode(201);
     }
 
     public function destroy(AfterSale $aftersale)
@@ -141,7 +162,7 @@ class AfterSaleController extends Controller
     {
         return $this->traitAction(
             $aftersale,
-            !$aftersale->status || $aftersale->getOriginal('after_sale_status') >= $aftersale::AFTERSALE_STATUS_SUBMIT,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_SUBMIT,
             '无法锁定',
             'lockOrUnlock'
         );
@@ -151,7 +172,7 @@ class AfterSaleController extends Controller
     {
         return $this->traitAction(
             $aftersale,
-            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::ORDER_STATUS_NEW || $aftersale->getOriginal('after_sale_status') == $aftersale::AFTERSALE_STATUS_LOCK,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_NEW,
             '提交出错',
             'audit'
         );
@@ -161,10 +182,69 @@ class AfterSaleController extends Controller
     {
         return $this->traitAction(
             $aftersale,
-            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::ORDER_STATUS_SUBMIT,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_SUBMIT,
             '退审出错',
             'unAudit'
         );
     }
 
+    public function isOneAudit(AfterSale $aftersale)
+    {
+        return $this->traitAction(
+            $aftersale,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_SUBMIT,
+            '提交出错',
+            'oneAudit'
+        );
+    }
+
+    public function isUnOneAudit(AfterSale $aftersale)
+    {
+        return $this->traitAction(
+            $aftersale,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_ONE_AUDIT,
+            '退审出错',
+            'unOneAudit'
+        );
+    }
+
+    public function isTwoAudit(AfterSale $aftersale)
+    {
+        return $this->traitAction(
+            $aftersale,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_ONE_AUDIT,
+            '提交出错',
+            'twoAudit'
+        );
+    }
+
+    public function isUnTwoAudit(AfterSale $aftersale)
+    {
+        return $this->traitAction(
+            $aftersale,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_TWO_AUDIT,
+            '退审出错',
+            'unTwoAudit'
+        );
+    }
+
+    public function isReject(AfterSale $aftersale)
+    {
+        return $this->traitAction(
+            $aftersale,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_ONE_AUDIT,
+            '驳回出错',
+            'reject'
+        );
+    }
+
+    public function isFinish(AfterSale $aftersale)
+    {
+        return $this->traitAction(
+            $aftersale,
+            !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_TWO_AUDIT,
+            '结算出错',
+            'finish'
+        );
+    }
 }

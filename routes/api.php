@@ -1539,6 +1539,18 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.aftersale.isaudit');
         $api->put('aftersale/{aftersale}/unaudit', 'AfterSaleController@isUnAudit')
         ->name('api.aftersale.isunaudit');
+        $api->put('aftersale/{aftersale}/oneaudit', 'AfterSaleController@isOneAudit')
+            ->name('api.aftersale.isoneaudit');
+        $api->put('aftersale/{aftersale}/unoneaudit', 'AfterSaleController@isUnOneAudit')
+            ->name('api.aftersale.isunoneaudit');
+        $api->put('aftersale/{aftersale}/twoaudit', 'AfterSaleController@isTwoAudit')
+            ->name('api.aftersale.istwoaudit');
+        $api->put('aftersale/{aftersale}/untwoaudit', 'AfterSaleController@isUnTwoAudit')
+            ->name('api.aftersale.isuntwoaudit');
+        $api->put('aftersale/{aftersale}/reject', 'AfterSaleController@isReject')
+            ->name('api.aftersale.isreject');
+        $api->put('aftersale/{aftersale}/finish', 'AfterSaleController@isFinish')
+            ->name('api.aftersale.isfinish');
         // 售后进度
         $api->get('aftersaleschedule', 'AfterSaleScheduleController@index')
         ->name('api.aftersaleschedule.index');

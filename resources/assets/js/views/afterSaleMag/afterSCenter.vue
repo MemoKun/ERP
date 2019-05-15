@@ -1569,7 +1569,7 @@ export default {
           break;
         case 1:
           this.$fetch(this.urls.aftersale, {
-            is_finish: false,
+            is_finish: 0,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
@@ -1606,7 +1606,7 @@ export default {
           break;
         case 2:
           this.$fetch(this.urls.aftersale, {
-            is_finish: true,
+            order_status: 50,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {

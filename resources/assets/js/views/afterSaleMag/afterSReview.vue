@@ -896,7 +896,7 @@ export default {
         {
           cnt: "结算",
           icon: "bf-finSettle",
-          ent: this.test,
+          ent: this.finish,
           nClick: true
         },
         {
@@ -1566,7 +1566,7 @@ export default {
           this.newOpt[3].nClick = true;
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
-            order_status: "new",
+            order_status: 30,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
@@ -1608,7 +1608,7 @@ export default {
           this.newOpt[3].nClick = false;
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
-            order_status: "submit",
+            order_status: 40,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(
             res => {
@@ -1983,7 +1983,7 @@ export default {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/audit").then(
+        this.$put(this.urls.aftersale + "/" + id + "/twoaudit").then(
           () => {
             this.refresh();
             this.$message({
@@ -2011,7 +2011,7 @@ export default {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/unaudit").then(
+        this.$put(this.urls.aftersale + "/" + id + "/untwoaudit").then(
           () => {
             this.refresh();
             this.$message({
@@ -2038,7 +2038,55 @@ export default {
       if (this.newOpt[1].nClick) {
         return;
       } else {
-
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/reject").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "驳回成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    // 结算
+    finish() {
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/finish").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "结算成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
       }
     },
     refresh() {

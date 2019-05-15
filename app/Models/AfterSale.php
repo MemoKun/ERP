@@ -9,45 +9,29 @@ use Illuminate\Support\Facades\Auth;
 
 class AfterSale extends Model
 {
-    // 售后状态(提交、未提交)
-    const ORDER_STATUS_NEW = 'new';
-    const ORDER_STATUS_SUBMIT = 'submit';
-
-    // 订单状态码
+    // 售后状态
     const AFTERSALE_STATUS_NEW = 10;
+    const AFTERSALE_STATUS_SUBMIT = 20;
     const AFTERSALE_STATUS_LOCK = 20;
-    const AFTERSALE_STATUS_SUBMIT = 30; //客服提交
-    const AFTERSALE_STATUS_ONE_AUDIT = 40; //客服审核
-    const AFTERSALE_STATUS_TWO_AUDIT = 50; //主管审核
+    const AFTERSALE_STATUS_ONE_AUDIT = 30; //客服审核
+    const AFTERSALE_STATUS_TWO_AUDIT = 40; //主管审核
+    const AFTERSALE_STATUS_FINISH = 50; //完成
 
-    const AFTERSALE_RETURN_LOCK = 21;
-    const AFTERSALE_RETURN_SUBMIT = 31;
-    const AFTERSALE_RETURN_ONE_AUDIT = 41; //驳回客服审核
-    const AFTERSALE_RETURN_TWO_AUDIT = 51; //驳回主管审核
+    const AFTERSALE_RETURN_SUBMIT = 10;
+    const AFTERSALE_RETURN_LOCK = 20;
+    const AFTERSALE_RETURN_ONE_AUDIT = 20; //驳回客服审核
+    const AFTERSALE_RETURN_TWO_AUDIT = 30; //驳回主管审核
+    const AFTERSALE_REJECT = 10; //驳回主管审核
 
-    public static $orderStatusMap = [
-        self::ORDER_STATUS_NEW => '未提交',
-        self::ORDER_STATUS_SUBMIT => '已提交',
-    ];
-
-    // 售后状态(提交、未提交)
-    public static $orderStatusCodeMap = [
-        self::ORDER_STATUS_NEW => 0,
-        self::ORDER_STATUS_SUBMIT => 1
-    ];
 
     // 售后状态
-    public static $afterSaleStatusMap = [
+    public static $orderStatusMap = [
         self::AFTERSALE_STATUS_NEW => '未提交',
+        self::AFTERSALE_STATUS_SUBMIT => '已提交',
         self::AFTERSALE_STATUS_LOCK => '已锁定',
-        self::AFTERSALE_STATUS_SUBMIT => '已客服提交',
         self::AFTERSALE_STATUS_ONE_AUDIT => '已客服审核',
         self::AFTERSALE_STATUS_TWO_AUDIT => '已主管审核',
-
-        self::AFTERSALE_RETURN_LOCK => '解锁',
-        self::AFTERSALE_RETURN_SUBMIT => '驳回提交',
-        self::AFTERSALE_RETURN_ONE_AUDIT => '驳回客服审核',
-        self::AFTERSALE_RETURN_TWO_AUDIT => '驳回主管审核',
+        self::AFTERSALE_STATUS_FINISH => '已完成',
     ];
 
     // 售后操作
@@ -57,11 +41,28 @@ class AfterSale extends Model
         self::AFTERSALE_STATUS_SUBMIT => '客服提交',
         self::AFTERSALE_STATUS_ONE_AUDIT => '客服审核',
         self::AFTERSALE_STATUS_TWO_AUDIT => '主管审核',
+        self::AFTERSALE_STATUS_FINISH => '完成',
 
         self::AFTERSALE_RETURN_LOCK => '解锁',
         self::AFTERSALE_RETURN_SUBMIT => '驳回提交',
         self::AFTERSALE_RETURN_ONE_AUDIT => '驳回客服审核',
         self::AFTERSALE_RETURN_TWO_AUDIT => '驳回主管审核',
+        self::AFTERSALE_REJECT => '驳回',
+    ];
+
+    // 售后操作详情
+    public static $afterSaleOperationDescriptionMap = [
+        self::AFTERSALE_STATUS_NEW => '创建售后',
+        self::AFTERSALE_STATUS_LOCK => '锁定售后',
+        self::AFTERSALE_STATUS_SUBMIT => '客服提交',
+        self::AFTERSALE_STATUS_ONE_AUDIT => '客服审核',
+        self::AFTERSALE_STATUS_TWO_AUDIT => '主管审核',
+
+        self::AFTERSALE_RETURN_LOCK => '解锁售后',
+        self::AFTERSALE_RETURN_SUBMIT => '驳回提交',
+        self::AFTERSALE_RETURN_ONE_AUDIT => '驳回客服一审',
+        self::AFTERSALE_RETURN_TWO_AUDIT => '驳回主管二审',
+        self::AFTERSALE_REJECT => '驳回',
     ];
 
     protected $table = 'after_sale';
@@ -71,9 +72,9 @@ class AfterSale extends Model
         'after_sale_order_no', 'order_status', 'order_no','deliver_date',
         'client_name', 'suppliers_id', 'logistics_id','shop_name','vip_name',
         'user_id', 'order_amount', 'after_sale_type','shop_group',
-        'after_sale_group', 'after_sale_status', 'order_phone',
+        'after_sale_group', 'after_sale_status', 'order_phone','rfe_information',
         'receiver_state', 'receiver_city', 'receiver_district',
-    'receiver_address', 'rfe_order_at', 'tag_name','logistic_name',
+        'receiver_address', 'rfe_order_at', 'tag_name','logistic_name',
         'tag_at', 'tag_people','parts_duty','after_responsible_party','locking_people',
         'locking_at','after_sale_person','is_reject','customer_service_requirements',
         'refund_status','return_status','patch_status','patch_split',
@@ -97,6 +98,7 @@ class AfterSale extends Model
     //设置类型
     protected $casts = [
         'is_finish' => 'boolean',
+        'is_locked' => 'boolean',
         'is_reject' => 'boolean',
         'is_refund' => 'boolean',
         'is_return' => 'boolean',
@@ -170,7 +172,7 @@ class AfterSale extends Model
      */
     public function unlock()
     {
-        return $this->getOriginal('after_sale_status') != self::AFTERSALE_STATUS_LOCK;
+        return $this->getOriginal('is_locked') != 1;
     }
 
     /**
@@ -182,11 +184,13 @@ class AfterSale extends Model
         if($this->unlock()){
             $this->locking_at = date('Y-m-d h:i:s', time());
             $this->locking_people = Auth::guard('api')->id();
+            $this->is_locked = 1;
             $this->after_sale_status = self::AFTERSALE_STATUS_LOCK;
         }else{
             $this->locking_at = date('Y-m-d h:i:s', time());
             $this->locking_people = 0;
-            $this->after_sale_status = self::AFTERSALE_STATUS_NEW;
+            $this->is_locked = 0;
+            $this->after_sale_status = self::AFTERSALE_RETURN_LOCK;
         } 
 
         $this->save();
@@ -198,7 +202,7 @@ class AfterSale extends Model
      */
     public function audit()
     {
-        $this->order_status = self::ORDER_STATUS_SUBMIT;
+        $this->order_status = self::AFTERSALE_STATUS_SUBMIT;
         $this->service_submit_date = date('Y-m-d h:i:s', time());
         $this->service_submit_person = Auth::guard('api')->id();
         $this->is_service_submit = 1;
@@ -211,11 +215,85 @@ class AfterSale extends Model
      */
     public function unAudit()
     {
-        $this->service_submit_person = 0;
-        $this->order_status = self::ORDER_STATUS_NEW;
+        $this->order_status = self::AFTERSALE_RETURN_SUBMIT;
         $this->service_submit_date = date('Y-m-d h:i:s', time());
         $this->service_submit_person = 0;
         $this->is_service_submit = 0;
+        $this->save();
+    }
+
+    /**
+     * 客服一审提交
+     * @return bool
+     */
+    public function oneAudit()
+    {
+        $this->order_status = self::AFTERSALE_STATUS_ONE_AUDIT;
+        $this->after_sale_check_date = date('Y-m-d h:i:s', time());
+        $this->after_sale_check_person = Auth::guard('api')->id();
+        $this->is_after_sale_check = 1;
+        $this->save();
+    }
+
+    /**
+     * 客服一审退审
+     * @return bool
+     */
+    public function unOneAudit()
+    {
+        $this->order_status = self::AFTERSALE_RETURN_ONE_AUDIT;
+        $this->after_sale_check_date = date('Y-m-d h:i:s', time());
+        $this->after_sale_check_person = 0;
+        $this->is_after_sale_check = 0;
+        $this->save();
+    }
+
+    /**
+     * 主管二审提交
+     * @return bool
+     */
+    public function twoAudit()
+    {
+        $this->order_status = self::AFTERSALE_STATUS_TWO_AUDIT;
+        $this->director_check_date = date('Y-m-d h:i:s', time());
+        $this->director_check_person = Auth::guard('api')->id();
+        $this->is_director_check = 1;
+        $this->save();
+    }
+
+    /**
+     * 主管二审退审
+     * @return bool
+     */
+    public function unTwoAudit()
+    {
+        $this->order_status = self::AFTERSALE_RETURN_TWO_AUDIT;
+        $this->director_check_date = date('Y-m-d h:i:s', time());
+        $this->director_check_person = 0;
+        $this->is_director_check = 0;
+        $this->save();
+    }
+
+    
+    /**
+     * 驳回
+     * @return bool
+     */
+    public function reject()
+    {
+        $this->order_status = self::AFTERSALE_REJECT;
+        $this->is_reject = 1;
+        $this->save();
+    }
+
+    /**
+     * 结算
+     * @return bool
+     */
+    public function finish()
+    {
+        $this->order_status = self::AFTERSALE_STATUS_FINISH;
+        $this->is_finish = 1;
         $this->save();
     }
 
