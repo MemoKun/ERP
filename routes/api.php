@@ -687,6 +687,25 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //子订单
         $api->delete('orderitems/{orderitem}', 'OrderItemsController@destroy')
             ->name('api.orderitems.destroy');
+        //订单变更
+        $api->get('changeorders/searchnew', 'CustomerServiceChangeOrdersController@searchNew')
+            ->name('api.changeorders.searchnew');
+        $api->get('changeorders/searchuntreated', 'CustomerServiceChangeOrdersController@searchUntreated')
+            ->name('api.changeorders.searchuntreated');
+        $api->get('changeorders/searchtreated', 'CustomerServiceChangeOrdersController@searchTreated')
+            ->name('api.changeorders.searchtreated');
+        $api->get('changeorders/searchcanceled', 'CustomerServiceChangeOrdersController@searchCanceled')
+            ->name('api.changeorders.searchcanceled');
+        $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')
+            ->name('api.changeorders.isaudit');
+        $api->put('changeorders/{order}/unaudit', 'CustomerServiceChangeOrdersController@isUnAudit')
+            ->name('api.changeorders.isunaudit');
+        $api->put('changeorders/{order}/submit', 'CustomerServiceChangeOrdersController@isSubmit')
+            ->name('api.changeorders.issubmit');
+        $api->get('changeorders/create', 'CustomerServiceChangeOrdersController@create')
+            ->name('api.changeorders.create');
+        
+
 
         //跟单部
         $api->get('merchandiserdepts', 'MerchandiserDepartmentsController@index')
@@ -729,6 +748,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //仓储部
         $api->get('warehousingdepts', 'WarehousingDepartmentsController@index')
             ->name('api.warehousingdepts.index');
+        $api->get('warehousingdepts/searchuntreated', 'WarehousingDepartmentsController@searchUntreated')
+            ->name('api.warehousingdepts.searchuntreated');
         $api->get('warehousingdepts/{order}', 'WarehousingDepartmentsController@show')
             ->name('api.warehousingdepts.show');
         $api->patch('warehousingdepts/{order}', 'WarehousingDepartmentsController@update')
@@ -1346,7 +1367,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
     $api->put('resupplieInnerNote/editstatus', 'ResupplieInnerNoteController@editStatusByIds')
         ->name('api.resupplieInnerNote.editstatusbyids');
         //补件申请
-        $api->get('resupplieApplication', 'ResupplieApplicationController@index')
+    $api->get('resupplieApplication', 'ResupplieApplicationController@index')
         ->name('api.resupplieApplication.index');
     $api->post('resupplieApplication', 'ResupplieApplicationController@store')
         ->name('api.resupplieApplication.store');

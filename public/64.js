@@ -981,14 +981,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.test,
         nClick: false
       }, {
-        cnt: "上一条",
-        icon: "bf-beforeItem",
-        ent: this.test
-      }, {
-        cnt: "下一条",
-        icon: "bf-nextItem",
-        ent: this.test
-      }, {
         cnt: "转补款",
         icon: "bf-transferAcc",
         ent: this.test

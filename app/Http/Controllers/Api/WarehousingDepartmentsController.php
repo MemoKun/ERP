@@ -146,6 +146,7 @@ class WarehousingDepartmentsController extends Controller
         return $this->response->paginator($order->paginate(self::PerPage), new OrderTransformer());
     }
 
+    
 
 
     /**

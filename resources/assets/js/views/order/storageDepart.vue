@@ -743,7 +743,7 @@ export default {
         {
           cnt: "返回客审",
           icon: "bf-examination",
-          ent: this.test,
+          ent: this.handleStockOutToCS,
           nClick: false
         },
         {
@@ -797,7 +797,7 @@ export default {
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.test,
+          ent: this.refresh,
           nClick: false
         }
       ],
@@ -2431,7 +2431,8 @@ export default {
       let index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts + "/searchuntreated", {
+          this.$fetch(this.urls.warehousingdepts, {
+            order_status: 60,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(
@@ -2463,8 +2464,8 @@ export default {
           );
           break;
         case 1:
-          this.$fetch(this.urls.customerservicedepts, {
-            order_status: 20,
+          this.$fetch(this.urls.warehousingdepts, {
+            order_status: 70,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(
@@ -2489,7 +2490,7 @@ export default {
           );
           break;
         case 2:
-          this.$fetch(this.urls.customerservicedepts, {
+          this.$fetch(this.urls.warehousingdepts, {
             order_status: "等通知发货",
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
@@ -3455,7 +3456,7 @@ export default {
       }
     },
     handleUnAudit() {
-      if (this.newOpt[6].nClick) {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -3476,6 +3477,41 @@ export default {
             this.refresh();
             this.$message({
               message: "退审成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    handleStockOutToCS() {
+      if (this.newOpt[3].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.warehousingdepts + '/' + id + "/stockouttocs").then(
+          () => {
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = false;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.refresh();
+            this.$message({
+              message: "退回客审成功",
               type: "success"
             });
           },

@@ -940,16 +940,6 @@ export default {
           nClick: false
         },
         {
-          cnt: "上一条",
-          icon: "bf-beforeItem",
-          ent: this.test
-        },
-        {
-          cnt: "下一条",
-          icon: "bf-nextItem",
-          ent: this.test
-        },
-        {
           cnt: "转补款",
           icon: "bf-transferAcc",
           ent: this.test

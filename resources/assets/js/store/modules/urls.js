@@ -49,6 +49,7 @@ const urls= {
     paymentdetails:'/paymentdetails',
     warehousingdepts:'/warehousingdepts',
     returnreasons:'/returnreasons',
+    changeorders:'/changeorders',
     //add by xuejunhao
     shopgatheringmag:'/shopgatheringmag',
     aftercompensation: '/aftercompensation',
