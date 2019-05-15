@@ -950,7 +950,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: "结算",
         icon: "bf-finSettle",
-        ent: this.test,
+        ent: this.finish,
         nClick: true
       }, {
         cnt: "刷新",
@@ -1469,7 +1469,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[3].nClick = true;
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
-            order_status: "new",
+            order_status: 30,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(function (res) {
             _this.unsubmitLoading = false;
@@ -1504,7 +1504,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[3].nClick = false;
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
-            order_status: "submit",
+            order_status: 40,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(function (res) {
             _this.submitLoading = false;
@@ -1865,7 +1865,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/audit").then(function () {
+        this.$put(this.urls.aftersale + "/" + id + "/twoaudit").then(function () {
           _this7.refresh();
           _this7.$message({
             message: "审核成功",
@@ -1893,7 +1893,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/unaudit").then(function () {
+        this.$put(this.urls.aftersale + "/" + id + "/untwoaudit").then(function () {
           _this8.refresh();
           _this8.$message({
             message: "退审成功",
@@ -1915,9 +1915,58 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     // 驳回
     reject: function reject() {
+      var _this9 = this;
+
       if (this.newOpt[1].nClick) {
         return;
-      } else {}
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/reject").then(function () {
+          _this9.refresh();
+          _this9.$message({
+            message: "驳回成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this9.$message.error(str);
+          }
+        });
+      }
+    },
+
+    // 结算
+    finish: function finish() {
+      var _this10 = this;
+
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/finish").then(function () {
+          _this10.refresh();
+          _this10.$message({
+            message: "结算成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this10.$message.error(str);
+          }
+        });
+      }
     },
     refresh: function refresh() {
       this.submitLoading = true;

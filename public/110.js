@@ -1469,7 +1469,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 1:
           this.$fetch(this.urls.aftersale, {
-            is_finish: false,
+            is_finish: 0,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(function (res) {
             _this.unfinishLoading = false;
@@ -1499,7 +1499,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 2:
           this.$fetch(this.urls.aftersale, {
-            is_finish: true,
+            order_status: 50,
             include: "afterSaleSchedules.user,afterSaleDefPros,user"
           }).then(function (res) {
             _this.finishLoading = false;
