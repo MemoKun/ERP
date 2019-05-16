@@ -955,27 +955,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1011,14 +990,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: "bf-bill",
         ent: this.test,
         nClick: false
-      }, {
-        cnt: "上一条",
-        icon: "bf-beforeItem",
-        ent: this.test
-      }, {
-        cnt: "下一条",
-        icon: "bf-nextItem",
-        ent: this.test
       }, {
         cnt: "转赠品",
         icon: "bf-gift",
@@ -1071,7 +1042,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         order_auditorId: "",
 
         orderLock: [{ label: "ceshi", value: 0 }]
-
       },
       /*获取数据*/
       activeName: "0",
@@ -1779,6 +1749,363 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "买家留言",
         prop: "buyer_message",
         type: "textarea"
+      }],
+      /**底部Tab 货审明细 */
+      cargoAuditHead: [{
+        label: "商品编码",
+        prop: "commodity_code",
+        type: "text"
+      }, {
+        label: "规格编码",
+        prop: "productComponents",
+        inProp: "spec",
+        type: "text"
+      }, {
+        label: "仓库名称",
+        prop: "warehouses",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "供应商",
+        prop: "suppliers",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "已货审数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "库存数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "订单数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "总货审数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "订单数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "总货审数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "采购数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "采购数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "不完整数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "借出数量",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "已打印数量",
+        prop: "newData",
+        type: "text"
+      }],
+      /**内部便签 */
+      innerNoteHead: [{
+        label: "主题",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "用户",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "内容",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "提出时间",
+        prop: "newData",
+        type: "text"
+      }],
+      /**底部tab 操作记录 */
+      operationLogHead: [{
+        label: "用户",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "操作",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "操作描述",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "创建时间",
+        prop: "newData",
+        type: "text"
+      }],
+      /**底部Tab 结算明细 */
+      checkDelHead: [{
+        label: "所属部门",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "所属结构",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "结算金额",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "备注",
+        prop: "newData",
+        type: "text"
+      }],
+      /**底部tab 物流公司 */
+      logisticsHead: [{
+        label: "物流单号",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "物流公司",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "物流电话",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "物流成本",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "运费类型",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "配送商",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "配送费用",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "体积单价",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "总体积",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "总包件数",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "收货人",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "发货时间",
+        prop: "newData",
+        type: "text"
+      }, {
+        label: "备注",
+        prop: "newData",
+        type: "text"
+      }],
+      /**补件明细 */
+      reSupplyHead: [{
+        label: "补件单号",
+        width: "220",
+        prop: "resupply_order_no",
+        type: "text"
+      }, {
+        label: "系统单号",
+        width: "220",
+        prop: "system_order_no",
+        type: "text"
+      }, {
+        label: "补件类别",
+        width: "140",
+        prop: "resupplieCategory",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "补件金额",
+        width: "130",
+        prop: "resupply_money",
+        type: "number"
+      }, {
+        label: "补件原因",
+        width: "300",
+        prop: "resupply_reason",
+        type: "text"
+      }, {
+        label: "补件责任方",
+        width: "160",
+        prop: "resupplieResponsible",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "店铺昵称",
+        width: "130",
+        prop: "shop_nick",
+        type: "text"
+      }, {
+        label: "买家昵称",
+        width: "130",
+        prop: "member_nick",
+        type: "text"
+      }, {
+        label: "店铺分组",
+        width: "140",
+        prop: "shop_group",
+        type: "text"
+      }, {
+        label: "买家姓名",
+        width: "130",
+        prop: "member_name",
+        type: "text"
+      }, {
+        label: "买家电话",
+        width: "160",
+        prop: "member_phone",
+        type: "number"
+      }, {
+        label: "物流公司",
+        width: "140",
+        prop: "logistic",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "预计运费",
+        width: "130",
+        prop: "estimated_fee",
+        type: "number"
+      }, {
+        label: "物流赔偿费用",
+        width: "130",
+        prop: "compensate_fee",
+        type: "number"
+      }, {
+        label: "运费类型",
+        width: "140",
+        prop: "freightType",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "供应商",
+        width: "130",
+        prop: "supplier",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "配送方式",
+        width: "160",
+        prop: "distributionMethod",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "送装费",
+        width: "130",
+        prop: "load_fee",
+        type: "number"
+      }, {
+        label: "承诺时间",
+        width: "140",
+        prop: "promise_time",
+        type: "text"
+      }, {
+        label: "补款方式",
+        width: "140",
+        prop: "refundMethod",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "补款账号",
+        width: "160",
+        prop: "refund_account",
+        type: "text"
+      }, {
+        label: "开户银行",
+        width: "140",
+        prop: "bank",
+        type: "text"
+      }, {
+        label: "省",
+        width: "120",
+        prop: "supplier",
+        inProp: "province",
+        type: "text"
+      }, {
+        label: "市",
+        width: "120",
+        prop: "supplier",
+        inProp: "city",
+        type: "text"
+      }, {
+        label: "区",
+        width: "120",
+        prop: "supplier",
+        inProp: "district",
+        type: "text"
+      }, {
+        label: "创建人",
+        width: "140",
+        prop: "creator",
+        type: "text"
+      }, {
+        label: "创建时间",
+        width: "140",
+        prop: "created_at",
+        type: "text"
+      }, {
+        label: "备注",
+        width: "300",
+        prop: "remark",
+        type: "text"
+      }, {
+        label: "标记名称",
+        width: "140",
+        prop: "mark_name",
+        type: "text"
+      }, {
+        label: "标记人",
+        width: "140",
+        prop: "marker",
+        type: "text"
+      }, {
+        label: "标记时间",
+        width: "140",
+        prop: "mark_time",
+        type: "text"
+      }],
+      /**底部Tab 优惠列表 */
+      offerListHead: [{
+        label: "单号",
+        width: "140",
+        prop: "mark_time",
+        type: "text"
+      }, {
+        label: "优惠标题",
+        width: "140",
+        prop: "mark_time",
+        type: "text"
+      }, {
+        label: "优惠金额",
+        width: "140",
+        prop: "mark_time",
+        type: "text"
       }],
       proDtlData: [],
       curRowId: "",
@@ -4762,243 +5089,6 @@ var render = function() {
                       )
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-tab-pane",
-                    { attrs: { label: "已处理", name: "1" } },
-                    [
-                      _c(
-                        "el-table",
-                        {
-                          directives: [
-                            {
-                              name: "loading",
-                              rawName: "v-loading",
-                              value: _vm.loading,
-                              expression: "loading"
-                            }
-                          ],
-                          attrs: {
-                            data: _vm.alreadyHandle,
-                            fit: "",
-                            height: "350"
-                          },
-                          on: {
-                            "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
-                            "row-dblclick": _vm.orderDbClick
-                          }
-                        },
-                        [
-                          _c("el-table-column", {
-                            attrs: {
-                              type: "selection",
-                              width: "95",
-                              align: "center",
-                              checked: _vm.checkboxInit
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm._l(_vm.orderListHead, function(item) {
-                            return _c("el-table-column", {
-                              key: item.label,
-                              attrs: {
-                                label: item.label,
-                                align: "center",
-                                width: item.width
-                              },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "default",
-                                    fn: function(scope) {
-                                      return [
-                                        item.type == "checkbox"
-                                          ? _c("span", [
-                                              item.inProp
-                                                ? _c(
-                                                    "span",
-                                                    [
-                                                      _c("el-checkbox", {
-                                                        attrs: { disabled: "" },
-                                                        model: {
-                                                          value:
-                                                            scope.row[
-                                                              item.prop
-                                                            ][item.inProp],
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              scope.row[
-                                                                item.prop
-                                                              ],
-                                                              item.inProp,
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "scope.row[item.prop][item.inProp]"
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                                : _c(
-                                                    "span",
-                                                    [
-                                                      _c("el-checkbox", {
-                                                        attrs: { disabled: "" },
-                                                        model: {
-                                                          value:
-                                                            scope.row[
-                                                              item.prop
-                                                            ],
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              scope.row,
-                                                              item.prop,
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "scope.row[item.prop]"
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                            ])
-                                          : item.type == "flag"
-                                          ? _c("span", [
-                                              scope.row[item.prop] == 0
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag"
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 1
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "red"
-                                                      }
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 2
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "yellow"
-                                                      }
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 3
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "green"
-                                                      }
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 4
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "blue"
-                                                      }
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 5
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "purple"
-                                                      }
-                                                    })
-                                                  ])
-                                                : _vm._e()
-                                            ])
-                                          : _c("span", [
-                                              scope.row[item.prop]
-                                                ? _c("span", [
-                                                    _vm._v(
-                                                      "\n                    " +
-                                                        _vm._s(
-                                                          item.inProp
-                                                            ? scope.row[
-                                                                item.prop
-                                                              ][item.inProp]
-                                                            : scope.row[
-                                                                item.prop
-                                                              ]
-                                                        ) +
-                                                        "\n                  "
-                                                    )
-                                                  ])
-                                                : _vm._e()
-                                            ])
-                                      ]
-                                    }
-                                  }
-                                ],
-                                null,
-                                true
-                              )
-                            })
-                          }),
-                          _vm._v(" "),
-                          _c("el-table-column", {
-                            attrs: {
-                              label: "操作",
-                              width: "90",
-                              align: "center",
-                              fixed: "right"
-                            },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "default",
-                                fn: function(scope) {
-                                  return [
-                                    _c(
-                                      "el-button",
-                                      {
-                                        attrs: { size: "mini", type: "danger" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.delSingle(
-                                              scope.row,
-                                              $event
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("删除")]
-                                    )
-                                  ]
-                                }
-                              }
-                            ])
-                          })
-                        ],
-                        2
-                      )
-                    ],
-                    1
                   )
                 ],
                 1
@@ -5430,9 +5520,15 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c("el-tab-pane", {
+                    attrs: { label: "订单信息", name: "1" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", { attrs: { label: "货审", name: "2" } }),
+                  _vm._v(" "),
                   _c(
                     "el-tab-pane",
-                    { attrs: { label: "支付明细", name: "1" } },
+                    { attrs: { label: "支付明细", name: "3" } },
                     [
                       _c(
                         "el-table",
@@ -5547,26 +5643,58 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("el-tab-pane", {
-                    attrs: { label: "内部便签", name: "2" }
+                    attrs: { label: "内部便签", name: "4" }
                   }),
                   _vm._v(" "),
                   _c("el-tab-pane", {
-                    attrs: { label: "操作记录", name: "3" }
+                    attrs: { label: "操作记录", name: "5" }
                   }),
                   _vm._v(" "),
                   _c("el-tab-pane", {
-                    attrs: { label: "关联信息", name: "4" }
+                    attrs: { label: "结算明细", name: "6" }
                   }),
                   _vm._v(" "),
                   _c("el-tab-pane", {
-                    attrs: { label: "其他费用", name: "5" }
+                    attrs: { label: "跟单图片", name: "7" }
                   }),
                   _vm._v(" "),
                   _c("el-tab-pane", {
-                    attrs: { label: "驳回原因", name: "6" }
+                    attrs: { label: "物流信息", name: "8" }
                   }),
                   _vm._v(" "),
-                  _c("el-tab-pane", { attrs: { label: "优惠列表", name: "7" } })
+                  _c("el-tab-pane", {
+                    attrs: { label: "补件明细", name: "9" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", {
+                    attrs: { label: "优惠列表", name: "10" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", {
+                    attrs: { label: "订单图片", name: "11" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", {
+                    attrs: { label: "门店收款明细", name: "12" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", {
+                    attrs: { label: "电子面单", name: "13" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", {
+                    attrs: { label: "其他费用", name: "14" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", {
+                    attrs: { label: "库存占比", name: "15" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", { attrs: { label: "备注", name: "16" } }),
+                  _vm._v(" "),
+                  _c("el-tab-pane", {
+                    attrs: { label: "驳回记录", name: "17" }
+                  })
                 ],
                 1
               )

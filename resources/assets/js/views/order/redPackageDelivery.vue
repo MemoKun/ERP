@@ -62,7 +62,7 @@
 
     <!--页码-->
     <Pagination :page-url="goodsUrl"></Pagination>
-
+    <label>{{this.editId}}</label>
     <!--新增商品-->
     <el-dialog :title="title" :visible.sync="showMask" :class="{'more-forms':moreForms}">
       <el-form :model="addRedPackageMagData" :rules="rules" ref="addNew" label-width="100px" :class="{'half-form':halfForm}">
@@ -113,94 +113,8 @@
     <!--修改-->
     <el-dialog title="修改商品" :visible.sync="editMask" :class="{'more-forms':moreForms}">
       <add-new :rule-form="editData" :rules="rules" :add-arr="addRedPackageMagHead" :son-ref="addInfoRef" :onlyInputs="true" ref="addNew" :editSign="true"></add-new>
-      <el-button type="text">规格信息</el-button>
-      <el-table :data="editData.productspecs" fit highlight-current-row type="index" max-height="300" :row-class-name="editRowCName" @row-click="editRowClick">
-        <el-table-column v-for="(item,index) in btmTableHead[1]" :label="item.label" align="center" :width="item.width" :key="index">
-          <template slot-scope="scope">
-            <span v-if="editSpecIndex =='index'+scope.$index">
-              <span v-if="item.type=='number'">
-                <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit" :disabled="item.beAble"></el-input>
-              </span>
-              <span v-else-if="item.type=='url'">
-                <el-input size="small" type="url" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit" :disabled="item.beAble"></el-input>
-              </span>
-              <span v-else-if="item.type == 'textarea'">
-                <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit"></el-input>
-              </span>
-              <span v-else-if="item.type == 'select'">
-                <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
-                  <span v-for="list in resData[item.stateVal]" :key="list.id">
-                    <el-option :label="list.name" :value="list.id"></el-option>
-                  </span>
-                </el-select>
-              </span>
-              <span v-else-if="item.type == 'checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" :disabled="item.prop=='is_combination'?true:false"></el-checkbox>
-              </span>
-              <span v-else>
-                <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder" @change="handleEdit" :disabled="item.beAble"></el-input>
-              </span>
-            </span>
-            <span v-else>
-              <span v-if="item.type=='select'">
-                <span v-if="scope.row[item.prop]==''"></span>
-                <span v-else>
-                  <span v-for="(list,index) in resData[item.stateVal]" :key="index">
-                    <span v-if="list.id==scope.row[item.prop]">
-                      {{list.name}}
-                    </span>
-                  </span>
-                </span>
-              </span>
-              <span v-else-if="item.type=='checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else>
-                {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-              </span>
-            </span>
-          </template>
-        </el-table-column>
-        <!--子规格 -->
-        <el-table-column type="expand" fixed="left">
-          <template slot-scope="scope">
-            <span v-if="scope.row.combinations.length>0">
-              <el-table :data="scope.row.combinations" highlight-current-row max-height="300" fit :header-cell-class-name="setHeadStyle">
-                <el-table-column v-for="(item,index) in btmSpecHead" :label="item.label" align="center" :key="index">
-                  <template slot-scope="scope">
-                    <span v-if="item.inProp">
-                      <span v-if="item.type=='checkbox'">
-                        <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                      </span>
-                      <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
-                    </span>
-                  </template>
-                </el-table-column>
-                <el-table-column label="操作" align="center" width="90">
-                  <template slot-scope="scope">
-                    <el-button size="mini" type="danger" @click="delSonSpec(scope.$index,scope.row)">删除</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="160" align="center" fixed="right">
-          <template slot-scope="scope">
-            <span v-if="editSpecIndex=='index'+scope.$index">
-              <el-button size="mini" @click="saveEdit(scope.$index,scope.row)" type="success">保存</el-button>
-            </span>
-            <span v-else>
-              <el-button size="mini" @click="openEdit(scope.$index)" type="primary">编辑</el-button>
-            </span>
-          </template>
-        </el-table-column>
-      </el-table>
       <!--底部操作按钮-->
       <div slot="footer" class="dialog-footer clearfix">
-        <div style="float: left">
-          <el-button type="primary" @click="addComb">添加组合</el-button>
-        </div>
         <div style="float: right">
           <el-button type="primary" @click="confirmEdit">确定</el-button>
           <el-button @click="cancelEdit">取消</el-button>
@@ -217,31 +131,6 @@
       </div>
     </el-popover>
 
-    <!--选择商品-->
-    <el-dialog title="选择商品" :visible.sync="showComb" class="goodsMag">
-      <div>
-        <label>规格名称</label>
-        <el-input clearable style="width: 60%;margin:0 10px 0 5px;" @keyup.enter.native="getPro" v-model="conditionPro"></el-input>
-        <el-button type="primary" @click="getPro">查询</el-button>
-      </div>
-      <el-table :data="combData" fit highlight-current-row height="400" :row-class-name="combClassName" @row-click="proRClick">
-        <light-table :tableHead="selectPro" :onlyTableColumn="true"></light-table>
-        <el-table-column width="150" align="center" fixed="right" label="组合件数">
-          <template slot-scope="scope">
-            <span v-if="combIndex=='index'+scope.$index">
-              <el-input size="small" v-model.trim="combCount[scope.$index]" type="number" @blur="handleBlur(scope.row)"></el-input>
-            </span>
-            <span v-else>
-              {{combCount[scope.$index]?combCount[scope.$index]:0}}
-            </span>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div style="text-align: right;">
-        <el-button type="primary" @click="confirmAddComb">确认</el-button>
-        <el-button @click="cancelAddComb">取消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -326,13 +215,13 @@ export default {
       activeName: "0",
       RedPackageListData: [],
       orderListHead: [
-        {
+        /*{
           label: "产品图片",
           width: "200",
           prop: "img",
           imgPath: "",
           type: "img"
-        },
+        },*/
         {
           label: "商品编码",
           width: "180",
@@ -671,10 +560,9 @@ export default {
         commodity_code: "",
         short_name: "",
         remark: "",
-        img: "",
+        //img: "",
         status: true
       },
-      test1: [],
       rules: {
         commodity_code: [
           { required: true, message: "请输入商品编码", trigger: "blur" }
@@ -692,8 +580,6 @@ export default {
           prop: "commodity_code",
           holder: "请输入商品编号",
           type: "text",
-          addChgAble: false,
-          editChgAble: true
         },
         {
           label: "商品名称",
@@ -708,288 +594,13 @@ export default {
           type: "textarea"
         },
         {
-          label: "商品图片",
-          prop: "img",
-          holder: "请输入商品图片",
-          type: "img",
-          imgPath: ""
+          label: "是否启用",
+          prop: "status",
+          type: "checkbox",
         }
       ],
       noUpload: true,
       /*子件信息*/
-      specHead: [
-        /*{
-            label: '商品简称',
-            width: '120',
-            prop: "",
-            type: 'text',
-          },*/
-        {
-          label: "商品图片",
-          width: "120",
-          prop: "img_url",
-          type: "img",
-          imgPath: "/uploads/images/temp/201808/13/1_1534132543_6yliM4uees.jpg"
-        },
-        {
-          label: "规格编码",
-          width: "160",
-          prop: "spec_code",
-          type: "text"
-        },
-        {
-          label: "京东规格编号",
-          width: "180",
-          prop: "jd_specs_code",
-          type: "text"
-        },
-        {
-          label: "唯品会规格编号",
-          width: "180",
-          prop: "vips_specs_code",
-          type: "text"
-        },
-        /* {
-             label: '规格图片',
-             width: '120',
-             prop: "img_url",
-             holder: '请输入图片地址',
-             type: 'text'
-           },*/
-        {
-          label: "淘宝价格",
-          width: "120",
-          prop: "tb_price",
-          type: "number"
-        },
-        {
-          label: "成本价格",
-          width: "120",
-          prop: "cost",
-          type: "number"
-        },
-        {
-          label: "销售价格",
-          width: "120",
-          prop: "price",
-          type: "number"
-        },
-        {
-          label: "最低销售价格",
-          width: "120",
-          prop: "lowest_price",
-          type: "number"
-        },
-        {
-          label: "最高销售价格",
-          width: "120",
-          prop: "highest_price",
-          type: "number"
-        },
-        {
-          label: "仓库成本",
-          width: "120",
-          prop: "warehouse_cost",
-          type: "number"
-        },
-        {
-          label: "配装价格",
-          width: "120",
-          prop: "assembly_price",
-          type: "number"
-        },
-        {
-          label: "折扣",
-          width: "120",
-          prop: "discount",
-          type: "number"
-        },
-        {
-          label: "佣金点",
-          width: "100",
-          prop: "commission",
-          type: "number"
-        },
-        {
-          label: "组合",
-          width: "120",
-          prop: "is_combination",
-          type: "checkbox"
-        },
-        {
-          label: "包件数量",
-          width: "120",
-          prop: "package_quantity",
-          type: "number"
-        },
-        {
-          label: "打包费",
-          width: "120",
-          prop: "package_costs",
-          type: "number"
-        },
-        {
-          label: "木架费",
-          width: "120",
-          prop: "wooden_frame_costs",
-          type: "number"
-        },
-        {
-          label: "采购运费",
-          width: "120",
-          prop: "purchase_freight",
-          type: "number"
-        },
-        {
-          label: "库存预警数量",
-          width: "150",
-          prop: "inventory_warning",
-          // holder: '请输入库存预警数量',
-          type: "number"
-        },
-        {
-          label: "采购预警天数",
-          width: "150",
-          prop: "purchase_days_warning",
-          // holder: '请输入采购预警天数',
-          type: "number"
-        },
-        {
-          label: "可售数预警",
-          width: "150",
-          prop: "available_warning",
-          // holder: '请输入采购预警天数',
-          type: "number"
-        },
-
-        {
-          label: "产品配送类别",
-          width: "150",
-          prop: "distribution_method_id",
-          holder: "请选择产品配送类别",
-          stateVal: "distmets",
-          type: "select"
-        },
-        {
-          label: "条形码",
-          width: "120",
-          prop: "bar_code",
-          type: "text"
-        },
-        {
-          label: "规格",
-          width: "200",
-          prop: "spec",
-          // holder: '请输入规格',
-          type: "text"
-        },
-        {
-          label: "颜色",
-          width: "120",
-          prop: "color",
-          // holder: '请输入颜色',
-          type: "text"
-        },
-        {
-          label: "材质",
-          width: "130",
-          prop: "materials",
-          // holder: '请输入材质',
-          type: "text"
-        },
-        {
-          label: "功能",
-          width: "100",
-          prop: "function",
-          // holder: '请输入功能',
-          type: "text"
-        },
-        {
-          label: "特殊",
-          width: "130",
-          prop: "special",
-          // holder: '请输入特殊',
-          type: "text"
-        },
-        {
-          label: "其他",
-          width: "150",
-          prop: "other",
-          // holder: '请输入其他',
-          type: "text"
-        },
-        {
-          label: "长度(mm)",
-          width: "120",
-          prop: "longness",
-          // holder: '请输入长度',
-          type: "number"
-        },
-        {
-          label: "宽度(mm)",
-          width: "120",
-          prop: "width",
-          // holder: '请输入宽度',
-          type: "number"
-        },
-        {
-          label: "高度(mm)",
-          width: "120",
-          prop: "height",
-          // holder: '请输入高度',
-          type: "number"
-        },
-        {
-          label: "体积(m3)",
-          width: "120",
-          prop: "volume",
-          // holder: '请输入体积',
-          type: "number"
-        },
-        {
-          label: "重量",
-          width: "120",
-          prop: "weight",
-          // holder: '请输入重量',
-          type: "number"
-        },
-        {
-          label: "备注",
-          width: "150",
-          prop: "remark",
-          // holder: '请输入备注',
-          type: "textarea"
-        },
-        {
-          label: "成品",
-          width: "120",
-          prop: "finished_pro",
-          // holder: '请选择是否是成品',
-          type: "checkbox"
-        },
-        {
-          label: "停产",
-          width: "120",
-          prop: "is_stop_pro",
-          // holder: '请选择是否是停产',
-          type: "checkbox"
-        },
-        {
-          label: "仓库",
-          width: "120",
-          prop: "",
-          holder: "请选择仓库",
-          stateVal: "",
-          type: "select"
-        },
-        {
-          label: "入库数量",
-          width: "120",
-          prop: "",
-          holder: "请选择入库数量",
-          type: "number"
-        }
-      ],
       halfForm: true,
       refArr: "ruleGoods",
       showDel: false,
@@ -1033,6 +644,7 @@ export default {
       combRowIndex: "",
       sonData: [],
       specRowInfo: {},
+      curRowId:"",
       /*新数据*/
       // goodsComp:[{is_combination: false,finished_pro: true,is_stop_pro: false}],
       goodsComp: [],
@@ -1536,33 +1148,6 @@ export default {
         }
       );
     },
-    /*切换tab时只显示id为第一条商品的规格及其他*/
-    /*添加sku*/
-    addSku(row) {},
-    handleTabsClick() {
-      this.loading = true;
-      // let id = this.RedPackageListData[0].id;
-      if (this.activeName == 1) {
-        /* this.$fetch(this.url[this.activeName] + '/' + id)
-            .then(res => {
-              this.loading = false;
-              this.getsInfo[this.activeName]=[];
-              this.getsInfo[this.activeName].push(res);
-            }, err => {
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                let str = arr1.join(',');
-                this.$message.error({
-                  message: str
-                });
-              }
-            })*/
-      }
-    },
     /*在商品中单击时，tab显示为id为当前商品的规格及其他*/
     proRowClick(row) {
       this.$refs.multipleTable.toggleRowSelection(row);
@@ -1591,7 +1176,7 @@ export default {
       });
     },
     confirmD(id) {
-      this.$del(this.goodsUrl + "/" + id).then(
+      this.$del(this.urls.redpackagemag + "/" + id).then(
         () => {
           this.$message({
             message: "删除成功",
@@ -1630,7 +1215,7 @@ export default {
           type: "warning"
         })
           .then(() => {
-            this.$del(this.goodsUrl, { ids: this.delArr }).then(
+            this.$del(this.urls.redpackagemag, { ids: this.delArr }).then(
               () => {
                 this.$message({
                   message: "删除成功",
@@ -1662,11 +1247,7 @@ export default {
       }
     },
     handleSelectionChange(val) {
-      if (val.length != 0) {
-        this.editId = val[0].id;
-      } else {
-        this.editId = "";
-      }
+      this.editId = val.length > 0 ? val[val.length - 1].id : "";
       this.multipleSelection = val;
       let del = [];
       this.multipleSelection.forEach(selectedItem => {
@@ -1678,14 +1259,11 @@ export default {
     refresh() {
       this.loading = true;
       this.fetchData();
-      /*setTimeout(() => {
-          this.loading = false;
-        }, 2000);*/
     },
     /*修改商品信息*/
     editInfo() {
       /*如果修改按钮是不可点击状态*/
-      if (this.newOpt[1].nClick) {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         /*如果没有选择要修改的项*/
@@ -1703,23 +1281,14 @@ export default {
           return;
         } else {
           this.editMask = true;
-          this.editSpecIndex = "";
-          this.$fetch(this.goodsUrl + "/" + this.editId).then(
+          let id = this.checkboxId ? this.checkboxId : this.curRowId;
+          this.$fetch(this.urls.redpackagemag + "/" + this.editId).then(
             res => {
               this.editData = {
                 commodity_code: res.commodity_code,
-                jd_sn: res.jd_sn,
-                vips_sn: res.vips_sn,
-                factory_model: res.factory_model,
                 short_name: res.short_name,
-                shops_id: res.shops_id,
-                supplier_id: res.supplier.id,
-                category_id: res.category.id,
                 remark: res.remark,
-                title: res.title,
-                img: res.img,
-                url: res.url,
-                productspecs: res.productspecs
+                status: res.status
               };
             },
             err => {
@@ -1739,257 +1308,10 @@ export default {
     tableRowClassName({ row, rowIndex }) {
       row.index = rowIndex;
     },
-    /*规格*/
-    specRowClick(row) {
-      this.specIndex = row.index;
-      // this.newC = 'index' + row.index;
-    },
-    /*添加组合*/
-    addComb() {
-      //数据初始化
-      this.combArr = [];
-      this.combCount = [];
-      this.combIndex = "";
-      this.idNew = [];
-      /*修改*/
-      /* if(this.editMask){
-          this.showComb = true;
-          if(this.chgOrNew=='edit'){
-            /!*修改时修改规格*!/
-            this.$fetch(this.urls.productspecs,{'is_combination':'false'}).then(res => {
-              this.combData = res.data;
-            });
-          }else if(this.chgOrNew=='new'){
-            /!*修改时添加规格*!/
-            this.$fetch(this.urls.productspecs,{'is_combination':'false'}).then(res => {
-              this.combData = res.data;
-            });
-          }
-        }else if(this.showMask){
-          /!*添加*!/
-          if(!this.addRedPackageMagData.commodity_code){
-            this.$message.error({
-              message: '商品编码不能为空'
-            });
-            return
-          }else if(!this.addRedPackageMagData.productspecs[0].spec_code){
-            /!*规格编码不能为空*!/
-            this.$message.error({
-              message: '规格编码不能为空'
-            });
-            return
-          }else{
-            this.showComb = true;
-            this.$fetch(this.url[1],{'is_combination':'false'}).then(res => {
-              this.combData = res.data;
-            }, err => {});
-          }
-        }*/
-      if (this.editMask) {
-        this.showComb = true;
-      } else if (this.showMask) {
-        if (!this.addRedPackageMagData.commodity_code) {
-          this.$message.error({
-            message: "商品编码不能为空"
-          });
-          return;
-        } else if (!this.addRedPackageMagData.productspecs[0].spec_code) {
-          /*规格编码不能为空*/
-          this.$message.error({
-            message: "规格编码不能为空"
-          });
-          return;
-        } else {
-          this.showComb = true;
-        }
-      }
-    },
-    setHeadStyle() {
-      return "header-style";
-    },
-    combClassName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    proRClick(row) {
-      this.combIndex = "index" + row.index;
-    },
-    handleBlur(row) {
-      let obj = {
-        com_pro_specs_id: row.id,
-        count: this.combCount[row.index]
-      };
-      let arr = this.combArr;
-      if (obj.count) {
-        if (arr.length == 0) {
-          arr.push(obj);
-          this.idNew.push(obj.com_pro_specs_id);
-        } else {
-          if (this.idNew.indexOf(obj.com_pro_specs_id) == -1) {
-            this.idNew.push(obj.com_pro_specs_id);
-            arr.push(obj);
-          } else {
-            arr.map(item => {
-              if (item.com_pro_specs_id == obj.com_pro_specs_id) {
-                item.count = obj.count;
-              }
-            });
-          }
-        }
-      }
-    },
-    getPro() {
-      if (this.chgEId) {
-        /*修改时修改规格*/
-        this.$fetch(this.urls.productspecs, {
-          is_combination: "false",
-          except_id: this.chgEId,
-          spec_code: this.conditionPro
-        }).then(res => {
-          this.combData = res.data;
-        });
-      } else {
-        /*修改时添加规格*/
-        this.$fetch(this.urls.productspecs, {
-          is_combination: "false",
-          spec_code: this.conditionPro
-        }).then(res => {
-          this.combData = res.data;
-        });
-      }
-    },
-    confirmAddComb() {
-      /*确认添加时
-        * 如果是修改状态
-        * 拼接combination
-        * */
-      this.showComb = false;
-      let targetVal;
-      if (this.showMask) {
-        targetVal = this.addRedPackageMagData.productspecs[this.specIndex];
-      } else if (this.editMask) {
-        /*如果是修改*/
-        targetVal = this.editData.productspecs[this.editIndex];
-      }
-      targetVal.is_combination = true;
-      this.combArr.map(item => {
-        this.$fetch(this.url[1] + "/" + item.com_pro_specs_id).then(res => {
-          for (let i = 0; i < item.count; i++) {
-            if (this.showMask) {
-              targetVal.combSpecData.push(res);
-              targetVal.combinations.push({
-                com_pro_specs_id: item.com_pro_specs_id
-              });
-            } else if (this.editMask) {
-              targetVal.combinations.push({
-                com_pro_spec: res,
-                com_pro_specs_id: item.com_pro_specs_id
-              });
-            }
-            targetVal.tb_price = targetVal.tb_price - 0 + (res.tb_price - 0);
-            targetVal.cost = targetVal.cost - 0 + (res.cost - 0);
-            targetVal.lowest_price =
-              targetVal.lowest_price - 0 + (res.lowest_price - 0);
-            targetVal.price = targetVal.price - 0 + (res.price - 0);
-            targetVal.highest_price =
-              targetVal.highest_price - 0 + (res.highest_price - 0);
-            targetVal.warehouse_cost =
-              targetVal.warehouse_cost - 0 + (res.warehouse_cost - 0);
-            targetVal.assembly_price =
-              targetVal.assembly_price - 0 + (res.assembly_price - 0);
-            targetVal.package_quantity =
-              targetVal.package_quantity - 0 + (res.package_quantity - 0);
-            targetVal.package_costs =
-              targetVal.package_costs - 0 + (res.package_costs - 0);
-            targetVal.wooden_frame_costs =
-              targetVal.wooden_frame_costs - 0 + (res.wooden_frame_costs - 0);
-            targetVal.purchase_freight =
-              targetVal.purchase_freight - 0 + (res.purchase_freight - 0);
-            targetVal.longness = targetVal.longness - 0 + (res.longness - 0);
-            targetVal.width = targetVal.width - 0 + (res.width - 0);
-            targetVal.height = targetVal.height - 0 + (res.height - 0);
-            targetVal.volume = targetVal.volume - 0 + (res.volume - 0);
-            targetVal.weight = targetVal.weight - 0 + (res.weight - 0);
-          }
-        });
-      });
-    },
-    cancelAddComb() {
-      /*取消添加
-        * 清空数据*/
-      this.specIndex = "";
-      this.combCount = [];
-      this.showComb = false;
-    },
-    /*删除组合*/
-    delComb(index, row) {
-      /*前端界面删除*/
-      /*点击删除是更新specIndex*/
-      let list = this.addRedPackageMagData.productspecs[this.specIndex];
-      list.tb_price -= row.tb_price - 0;
-      list.cost -= row.cost - 0;
-      list.lowest_price -= row.lowest_price - 0;
-      list.price -= row.price - 0;
-      list.highest_price -= row.highest_price - 0;
-      list.warehouse_cost -= row.warehouse_cost - 0;
-      list.assembly_price -= row.assembly_price - 0;
-      list.package_quantity -= row.package_quantity - 0;
-      list.package_costs -= row.package_costs - 0;
-      list.wooden_frame_costs -= row.wooden_frame_costs - 0;
-      list.purchase_freight -= row.purchase_freight - 0;
-      list.longness -= row.longness - 0;
-      list.width -= row.width - 0;
-      list.height -= row.height - 0;
-      list.volume -= row.volume - 0;
-      list.weight -= row.weight - 0;
-      /* this.combArr.map(item=>{
-          if(item.com_pro_specs_id==row.id){
-            if(item.count>0){
-              item.count--;
-            }else{
-              item.count=0;
-            }
-          }
-        });*/
-      this.addRedPackageMagData.productspecs[
-        this.specIndex
-      ].combSpecData.splice(index, 1);
-      this.$message({
-        message: "删除规格成功",
-        type: "success"
-      });
-      /*如果长度为0，是否组合为false*/
-      if (
-        this.addRedPackageMagData.productspecs[this.specIndex].combSpecData
-          .length == 0
-      ) {
-        this.addRedPackageMagData.productspecs[
-          this.specIndex
-        ].is_combination = false;
-      }
-    },
-    /*商品规格筛选数据*/
-    chgStatue(prop) {},
     /*修改*/
     confirmEdit() {
       let obj = this.editData;
-      obj.productspecs.map((item, index) => {
-        if (!item.spec_code) {
-          /*如果是空的话，删除规格*/
-          obj.productspecs.splice(index, 1);
-        }
-        if (item.combinations.length > 0) {
-          item.combinations.map(list => {
-            list.com_pro_spec = [];
-          });
-        }
-      });
-
-      this.resData.shops.map(item => {
-        if (item.id == obj.shops_id) {
-          obj.shop_nick = item.nick;
-        }
-      });
-      this.$patch(this.goodsUrl + "/" + this.editId, this.editData).then(
+      this.$patch(this.urls.redpackagemag + "/" + this.editId, this.editData).then(
         () => {
           this.$message({
             message: "修改成功",
@@ -2017,100 +1339,6 @@ export default {
     cancelEdit() {
       this.editMask = false;
       this.chgEId = "";
-    },
-    saveEdit(index, row) {
-      this.editSpecIndex = "";
-      let item = this.editData.productspecs[this.editIndex];
-      item.spec_code = row.spec_code;
-      item.jd_specs_code = row.jd_specs_code;
-      item.vips_specs_code = row.vips_specs_code;
-      item.tb_price = row.tb_price;
-      item.cost = row.cost;
-      item.price = row.price;
-      item.warehouse_cost = row.warehouse_cost;
-      item.commission = row.commission;
-      item.wooden_frame_costs = row.wooden_frame_costs;
-      item.purchase_freight = row.purchase_freight;
-      item.package_quantity = row.package_quantity;
-      item.inventory_warning = row.inventory_warning;
-      item.purchase_days_warning = row.purchase_days_warning;
-      item.distribution_method_id = row.distribution_method_id;
-      item.spec = row.spec;
-      item.color = row.color;
-      item.materials = row.materials;
-      item.function = row.function;
-      item.special = row.special;
-      item.other = row.other;
-      item.longness = row.longness;
-      item.width = row.width;
-      item.height = row.height;
-      item.volume = row.volume;
-      item.weight = row.weight;
-      item.remark = row.remark;
-      item.finished_pro = row.finished_pro;
-      item.is_stop_pro = row.is_stop_pro;
-      item.width = row.width;
-      item.combinations = row.combinations;
-    },
-    openEdit(index) {
-      this.editSpecIndex = "index" + index;
-      this.editIndex = index;
-    },
-    delSonSpec(index, row) {
-      let specData = this.editData.productspecs[this.editIndex];
-      let curVal = row.com_pro_spec;
-      if (row.id) {
-        /*如果row.id存在，说明是数据库里面的，要发请求删除*/
-        this.$del(this.combUrl + "/" + row.id).then(() => {
-          specData.combinations.splice(index, 1);
-          this.$message({
-            message: "删除成功",
-            type: "success"
-          });
-          specData.tb_price -= curVal.tb_price - 0;
-          specData.cost -= curVal.cost - 0;
-          specData.lowest_price -= curVal.lowest_price - 0;
-          specData.price -= curVal.price - 0;
-          specData.highest_price -= curVal.highest_price - 0;
-          specData.warehouse_cost -= curVal.warehouse_cost - 0;
-          specData.assembly_price -= curVal.assembly_price - 0;
-          specData.package_quantity -= curVal.package_quantity - 0;
-          specData.package_costs -= curVal.package_costs - 0;
-          specData.wooden_frame_costs -= curVal.wooden_frame_costs - 0;
-          specData.purchase_freight -= curVal.purchase_freight - 0;
-          specData.longness -= curVal.longness - 0;
-          specData.width -= curVal.width - 0;
-          specData.height -= curVal.height - 0;
-          specData.volume -= curVal.volume - 0;
-          specData.weight -= curVal.weight - 0;
-        });
-      } else {
-        /*否则是新添加的还没有存库，只需前端删除*/
-        specData.combinations.splice(index, 1);
-        this.$message({
-          message: "删除成功",
-          type: "success"
-        });
-        specData.tb_price -= curVal.tb_price - 0;
-        specData.cost -= curVal.cost - 0;
-        specData.lowest_price -= curVal.lowest_price - 0;
-        specData.price -= curVal.price - 0;
-        specData.highest_price -= curVal.highest_price - 0;
-        specData.warehouse_cost -= curVal.warehouse_cost - 0;
-        specData.assembly_price -= curVal.assembly_price - 0;
-        specData.package_quantity -= curVal.package_quantity - 0;
-        specData.package_costs -= curVal.package_costs - 0;
-        specData.wooden_frame_costs -= curVal.wooden_frame_costs - 0;
-        specData.purchase_freight -= curVal.purchase_freight - 0;
-        specData.longness -= curVal.longness - 0;
-        specData.width -= curVal.width - 0;
-        specData.height -= curVal.height - 0;
-        specData.volume -= curVal.volume - 0;
-        specData.weight -= curVal.weight - 0;
-      }
-      specData.combinations.length > 0
-        ? (specData.is_combination = true)
-        : (specData.is_combination = false);
     },
     /*要追加到哪条规格 修改时行切换*/
     editRowCName({ row, rowIndex }) {

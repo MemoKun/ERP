@@ -714,23 +714,23 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->post('redpackagemag', 'RedPackageController@store')
             ->name('api.redpackagemag.store');
         $api->patch('redpackagemag/{order}', 'RedPackageController@update')
-        ->name('api.redpackagemag.update');
+            ->name('api.redpackagemag.update');
         $api->delete('redpackagemag/{order}', 'RedPackageController@destroy')
-        ->name('api.redpackagemag.destroy');
+            ->name('api.redpackagemag.destroy');
         $api->delete('redpackagemag', 'RedPackageController@destroybyids')
-        ->name('api.redpackagemag.destroybyids');
+            ->name('api.redpackagemag.destroybyids');
         $api->put('redpackagemag/editstatus', 'RedPackageController@editStatusByIds')
-        ->name('api.redpackagemag.editstatusbyids');
+            ->name('api.redpackagemag.editstatusbyids');
         $api->put('redpackagemag/{order}/lockorunlock', 'RedPackageController@isLockOrUnlock')
-        ->name('api.redpackagemag.islockorunlock');
+            ->name('api.redpackagemag.islockorunlock');
         $api->put('redpackagemag/{order}/audit', 'RedPackageController@isAudit')
-        ->name('api.redpackagemag.isaudit');
+            ->name('api.redpackagemag.isaudit');
         $api->put('redpackagemag/{order}/unaudit', 'RedPackageController@isUnAudit')
-        ->name('api.redpackagemag.isunaudit');
+            ->name('api.redpackagemag.isunaudit');
         $api->put('redpackagemag/{order}/splitorder', 'RedPackageController@isSplitOrder')
-        ->name('api.redpackagemag.issplitorder');
+            ->name('api.redpackagemag.issplitorder');
         $api->put('redpackagemag/mergerorder', 'RedPackageController@isMergerOrder')
-        ->name('api.redpackagemag.ismergerorder');
+            ->name('api.redpackagemag.ismergerorder');
         
 
 

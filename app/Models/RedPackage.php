@@ -7,7 +7,7 @@ class RedPackage extends Model
     protected $table = 'red_package_mag';
 
     protected $fillable = [
-        'commodity_code', 'short_name','remark', 'img', 'status'
+        'commodity_code', 'short_name','remark','status'
     ];
 
     //设置类型

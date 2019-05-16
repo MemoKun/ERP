@@ -115,7 +115,7 @@
               <el-input v-model="searchBox.order_outerNo" clearable></el-input>
             </span>
           </div>
-          <div class="searchBox" >
+          <div class="searchBox">
             <span>
               <label>卖家备注</label>
               <el-input v-model="searchBox.order_buyerNote" clearable></el-input>
@@ -139,7 +139,7 @@
               <el-input v-model="searchBox.order_elecNo" clearable></el-input>
             </span>
           </div>
-          <div class="searchBox" >
+          <div class="searchBox">
             <span>
               <label>客审时间</label>
               <el-date-picker v-model="searchBox.order_auditDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -150,10 +150,10 @@
               <el-input v-model="searchBox.order_auditorId" clearable></el-input>
             </span>
             <span>
-             
+
             </span>
             <span>
-             
+
             </span>
           </div>
           <div v-if="filterBox" style="text-align: right">
@@ -214,57 +214,6 @@
               </el-table-column>
             </el-table>
           </el-tab-pane>
-          <el-tab-pane label="已处理" name="1">
-            <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-              </el-table-column>
-              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                <template slot-scope="scope">
-                  <span v-if="item.type=='checkbox'">
-                    <span v-if="item.inProp">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                    </span>
-                    <span v-else>
-                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                    </span>
-                  </span>
-                  <span v-else-if="item.type=='flag'">
-                    <span v-if="scope.row[item.prop]==0">
-                      <i class="iconfont bf-flag"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==1">
-                      <i class="iconfont bf-flag" style="color:red"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==2">
-                      <i class="iconfont bf-flag" style="color:yellow"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==3">
-                      <i class="iconfont bf-flag" style="color:green"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==4">
-                      <i class="iconfont bf-flag" style="color:blue"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==5">
-                      <i class="iconfont bf-flag" style="color:purple"></i>
-                    </span>
-                  </span>
-                  <span v-else>
-                    <span v-if="scope.row[item.prop]">
-                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                    </span>
-                  </span>
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" width="90" align="center" fixed="right">
-                <template slot-scope="scope">
-                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-tab-pane>
-          <!--<el-tab-pane label="等通知发货" name="2">
-
-                    </el-tab-pane>-->
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="订单明细" name="1">
@@ -330,7 +279,13 @@
               </el-table-column>
             </el-table>
           </el-tab-pane>
-          <el-tab-pane label="支付明细" name="1">
+          <el-tab-pane label="订单信息" name="1">
+
+          </el-tab-pane>
+          <el-tab-pane label="货审" name="2">
+
+          </el-tab-pane>
+          <el-tab-pane label="支付明细" name="3">
             <el-table :data="payDtlData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
@@ -353,22 +308,46 @@
               </el-table-column>
             </el-table>
           </el-tab-pane>
-          <el-tab-pane label="内部便签" name="2">
+          <el-tab-pane label="内部便签" name="4">
 
           </el-tab-pane>
-          <el-tab-pane label="操作记录" name="3">
+          <el-tab-pane label="操作记录" name="5">
 
           </el-tab-pane>
-          <el-tab-pane label="关联信息" name="4">
+          <el-tab-pane label="结算明细" name="6">
 
           </el-tab-pane>
-          <el-tab-pane label="其他费用" name="5">
+          <el-tab-pane label="跟单图片" name="7">
 
           </el-tab-pane>
-          <el-tab-pane label="驳回原因" name="6">
+          <el-tab-pane label="物流信息" name="8">
 
           </el-tab-pane>
-          <el-tab-pane label="优惠列表" name="7">
+          <el-tab-pane label="补件明细" name="9">
+
+          </el-tab-pane>
+          <el-tab-pane label="优惠列表" name="10">
+
+          </el-tab-pane>
+          <el-tab-pane label="订单图片" name="11">
+
+          </el-tab-pane>
+          <el-tab-pane label="门店收款明细" name="12">
+
+          </el-tab-pane>
+          <el-tab-pane label="电子面单" name="13">
+
+          </el-tab-pane>
+          <el-tab-pane label="其他费用" name="14">
+
+          </el-tab-pane>
+          <el-tab-pane label="库存占比" name="15">
+
+          </el-tab-pane>
+          <el-tab-pane label="备注" name="16">
+
+          </el-tab-pane>
+          <el-tab-pane label="驳回记录" name="17">
 
           </el-tab-pane>
         </el-tabs>
@@ -966,16 +945,6 @@ export default {
           nClick: false
         },
         {
-          cnt: "上一条",
-          icon: "bf-beforeItem",
-          ent: this.test
-        },
-        {
-          cnt: "下一条",
-          icon: "bf-nextItem",
-          ent: this.test
-        },
-        {
           cnt: "转赠品",
           icon: "bf-gift",
           ent: this.test
@@ -1009,29 +978,44 @@ export default {
         order_transMEnd: "",
         order_company: "",
         orderCompanys: [{ label: "ceshi", value: 0 }],
-        order_shipDate:"",
-        order_payDate:"",
-        order_status:"",
-        orderStatus:[{ label: "新增订单", value: 10 },{ label: "待财审", value: 20 },{ label: "待货审", value: 30 }],
-        order_fdAuditDate:"",
-        order_logisticFeeType:"",
-        orderLogisticFeeTypes: [{ label: "运费类型1", value: 0 },{ label: "运费类型2", value: 1 }],
+        order_shipDate: "",
+        order_payDate: "",
+        order_status: "",
+        orderStatus: [
+          { label: "新增订单", value: 10 },
+          { label: "待财审", value: 20 },
+          { label: "待货审", value: 30 }
+        ],
+        order_fdAuditDate: "",
+        order_logisticFeeType: "",
+        orderLogisticFeeTypes: [
+          { label: "运费类型1", value: 0 },
+          { label: "运费类型2", value: 1 }
+        ],
         order_flag: "",
-        ordertbFlag: [{ label: "淘宝旗帜1", value: 1 },{ label: "淘宝旗帜2", value: 2 },{ label: "淘宝旗帜3", value: 3 }],
+        ordertbFlag: [
+          { label: "淘宝旗帜1", value: 1 },
+          { label: "淘宝旗帜2", value: 2 },
+          { label: "淘宝旗帜3", value: 3 }
+        ],
         order_LogisticNo: "",
-        order_outerNo:"",
-        order_buyerNote:"",
-        order_supplier:"",
-        orderSuppliers:[{ label: "供应商1", value: 0 },{ label: "供应商2", value: 1 }],
-        order_warehouse:"",
-        orderWarehouse:[{ label: "仓库1", value: 0 },{ label: "仓库2", value: 1 }],
-        order_elecNo:"",
-        order_auditDate:"",
-        order_auditorId:"",
+        order_outerNo: "",
+        order_buyerNote: "",
+        order_supplier: "",
+        orderSuppliers: [
+          { label: "供应商1", value: 0 },
+          { label: "供应商2", value: 1 }
+        ],
+        order_warehouse: "",
+        orderWarehouse: [
+          { label: "仓库1", value: 0 },
+          { label: "仓库2", value: 1 }
+        ],
+        order_elecNo: "",
+        order_auditDate: "",
+        order_auditorId: "",
 
-        orderLock: [{ label: "ceshi", value: 0 }],
-        
-        
+        orderLock: [{ label: "ceshi", value: 0 }]
       },
       /*获取数据*/
       activeName: "0",
@@ -1811,6 +1795,444 @@ export default {
           label: "买家留言",
           prop: "buyer_message",
           type: "textarea"
+        }
+      ],
+      /**底部Tab 货审明细 */
+      cargoAuditHead: [
+        {
+          label: "商品编码",
+          prop: "commodity_code",
+          type: "text"
+        },
+        {
+          label: "规格编码",
+          prop: "productComponents",
+          inProp: "spec",
+          type: "text"
+        },
+        {
+          label: "仓库名称",
+          prop: "warehouses",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "供应商",
+          prop: "suppliers",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "已货审数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "库存数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "订单数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "总货审数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "订单数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "总货审数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "采购数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "采购数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "不完整数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "借出数量",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "已打印数量",
+          prop: "newData",
+          type: "text"
+        },
+      ],
+      /**内部便签 */
+      innerNoteHead:[
+        {
+          label: "主题",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "用户",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "内容",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "提出时间",
+          prop: "newData",
+          type: "text"
+        },
+      ],
+      /**底部tab 操作记录 */
+      operationLogHead:[
+        {
+          label: "用户",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "操作",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "操作描述",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "创建时间",
+          prop: "newData",
+          type: "text"
+        },
+      ],
+      /**底部Tab 结算明细 */
+      checkDelHead:[
+        {
+          label: "所属部门",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "所属结构",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "结算金额",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "备注",
+          prop: "newData",
+          type: "text"
+        },
+      ],
+      /**底部tab 物流公司 */
+      logisticsHead:[
+        {
+          label: "物流单号",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "物流公司",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "物流电话",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "物流成本",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "运费类型",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "配送商",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "配送费用",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "体积单价",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "总体积",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "总包件数",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "收货人",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "发货时间",
+          prop: "newData",
+          type: "text"
+        },
+        {
+          label: "备注",
+          prop: "newData",
+          type: "text"
+        },
+      ],
+      /**补件明细 */
+      reSupplyHead:[
+        {
+          label: "补件单号",
+          width: "220",
+          prop: "resupply_order_no",
+          type: "text"
+        },
+        {
+          label: "系统单号",
+          width: "220",
+          prop: "system_order_no",
+          type: "text"
+        },
+        {
+          label: "补件类别",
+          width: "140",
+          prop: "resupplieCategory",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "补件金额",
+          width: "130",
+          prop: "resupply_money",
+          type: "number"
+        },
+        {
+          label: "补件原因",
+          width: "300",
+          prop: "resupply_reason",
+          type: "text"
+        },
+        {
+          label: "补件责任方",
+          width: "160",
+          prop: "resupplieResponsible",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "店铺昵称",
+          width: "130",
+          prop: "shop_nick",
+          type: "text"
+        },
+        {
+          label: "买家昵称",
+          width: "130",
+          prop: "member_nick",
+          type: "text"
+        },
+        {
+          label: "店铺分组",
+          width: "140",
+          prop: "shop_group",
+          type: "text"
+        },
+        {
+          label: "买家姓名",
+          width: "130",
+          prop: "member_name",
+          type: "text"
+        },
+        {
+          label: "买家电话",
+          width: "160",
+          prop: "member_phone",
+          type: "number"
+        },
+        {
+          label: "物流公司",
+          width: "140",
+          prop: "logistic",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "预计运费",
+          width: "130",
+          prop: "estimated_fee",
+          type: "number"
+        },
+        {
+          label: "物流赔偿费用",
+          width: "130",
+          prop: "compensate_fee",
+          type: "number"
+        },
+        {
+          label: "运费类型",
+          width: "140",
+          prop: "freightType",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "供应商",
+          width: "130",
+          prop: "supplier",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "配送方式",
+          width: "160",
+          prop: "distributionMethod",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "送装费",
+          width: "130",
+          prop: "load_fee",
+          type: "number"
+        },
+        {
+          label: "承诺时间",
+          width: "140",
+          prop: "promise_time",
+          type: "text"
+        },
+        {
+          label: "补款方式",
+          width: "140",
+          prop: "refundMethod",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "补款账号",
+          width: "160",
+          prop: "refund_account",
+          type: "text"
+        },
+        {
+          label: "开户银行",
+          width: "140",
+          prop: "bank",
+          type: "text"
+        },
+        {
+          label: "省",
+          width: "120",
+          prop: "supplier",
+          inProp: "province",
+          type: "text"
+        },
+        {
+          label: "市",
+          width: "120",
+          prop: "supplier",
+          inProp: "city",
+          type: "text"
+        },
+        {
+          label: "区",
+          width: "120",
+          prop: "supplier",
+          inProp: "district",
+          type: "text"
+        },
+        {
+          label: "创建人",
+          width: "140",
+          prop: "creator",
+          type: "text"
+        },
+        {
+          label: "创建时间",
+          width: "140",
+          prop: "created_at",
+          type: "text"
+        },
+        {
+          label: "备注",
+          width: "300",
+          prop: "remark",
+          type: "text"
+        },
+        {
+          label: "标记名称",
+          width: "140",
+          prop: "mark_name",
+          type: "text"
+        },
+        {
+          label: "标记人",
+          width: "140",
+          prop: "marker",
+          type: "text"
+        },
+        {
+          label: "标记时间",
+          width: "140",
+          prop: "mark_time",
+          type: "text"
+        }
+      ],
+      /**底部Tab 优惠列表 */
+      offerListHead:[
+        {
+          label: "单号",
+          width: "140",
+          prop: "mark_time",
+          type: "text"
+        },
+        {
+          label: "优惠标题",
+          width: "140",
+          prop: "mark_time",
+          type: "text"
+        },
+        {
+          label: "优惠金额",
+          width: "140",
+          prop: "mark_time",
+          type: "text"
         }
       ],
       proDtlData: [],
@@ -3202,9 +3624,11 @@ export default {
         (formVal["move_upstairs_fee"] - 0) +
         (formVal["installation_fee"] - 0);
       if (this.addCustomerMask) {
-        this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+        this.addCustomerFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
       } else {
-        this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+        this.updateCustomerFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
       }
     },
     confirmAddProDtl() {
@@ -3754,9 +4178,9 @@ export default {
       });
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$message({
-            message: "加载成功",
-            type: "success"
-          });
+        message: "加载成功",
+        type: "success"
+      });
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(
         () => {
           this.updateCustomerMask = false;

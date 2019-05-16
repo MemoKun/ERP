@@ -35617,7 +35617,10 @@ var render = function() {
                 [
                   _c(
                     "el-form",
-                    { attrs: { model: _vm.detailRefundOrderData } },
+                    {
+                      staticClass: "quarter_turn",
+                      attrs: { model: _vm.detailRefundOrderData }
+                    },
                     _vm._l(_vm.detailRefundOrderHead, function(item, index) {
                       return _c(
                         "el-form-item",

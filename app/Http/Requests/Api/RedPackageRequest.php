@@ -21,19 +21,17 @@ class RedPackageRequest extends FormRequest
                 break;
             case 'POST':
                 return [
-                    'commodity_code' => 'required|string|max:255|unique:products',
+                    'commodity_code' => 'required|string|max:255',
                     'short_name' => 'required|string|max:255',
                     'remark' => 'string|max:255',
-                    'img' => 'img|max:255',
                     'status' => 'boolean',
                 ];
                 break;
             case 'PATCH':
                 return [
-                    'commodity_code' => 'required|string|max:255|unique:products',
+                    'commodity_code' => 'required|string|max:255',
                     'short_name' => 'required|string|max:255',
                     'remark' => 'string|max:255',
-                    'img' => 'img|max:255',
                     'status' => 'boolean',
                 ];
                 break;
@@ -55,9 +53,6 @@ class RedPackageRequest extends FormRequest
             'remark.nullable' => '备注可为null',
             'remark.max' => '备注最大长度为255',
 
-            'img.required' => '商品网址必填',
-            'img.max' => '商品网址最大长度为255',
-
             'status.boolean' => '状态必须布尔类型',
             'status.required' => '状态必填',
         ];
@@ -69,7 +64,6 @@ class RedPackageRequest extends FormRequest
             'commodity_code' => '产品编码',
             'short_name' => '商品简称',
             'remark' => '备注',
-            'img' => '商品网址',
             'status' => '状态：0=停用，1=启用',
         ];
     }

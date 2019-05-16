@@ -513,9 +513,9 @@ class RedPackageController extends Controller
      *     })
      * })
      */
-    public function show(RedPackage $product)
+    public function show(RedPackage $mag)
     {
-        return $this->traitShow($product, self::TRANSFORMER);
+        return $this->traitShow($mag, self::TRANSFORMER);
     }
 
     /**

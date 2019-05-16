@@ -970,7 +970,7 @@ export default {
           cnt: "转送款",
           icon: "bf-giveMoney",
           ent: this.test,
-          nClick:false
+          nClick: false
         },
         {
           cnt: "刷新",
@@ -1192,7 +1192,7 @@ export default {
           label: "客审时间",
           width: "180",
           prop: "audit_at",
-          inProp:"date",
+          inProp: "date",
           type: "text"
         },
         {
@@ -3179,9 +3179,11 @@ export default {
         (formVal["move_upstairs_fee"] - 0) +
         (formVal["installation_fee"] - 0);
       if (this.addCustomerMask) {
-        this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+        this.addCustomerFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
       } else {
-        this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+        this.updateCustomerFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
       }
     },
     confirmAddProDtl() {
@@ -3731,9 +3733,9 @@ export default {
       });
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$message({
-            message: "加载成功",
-            type: "success"
-          });
+        message: "加载成功",
+        type: "success"
+      });
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(
         () => {
           this.updateCustomerMask = false;

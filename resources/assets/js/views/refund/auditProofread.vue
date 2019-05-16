@@ -141,7 +141,7 @@
             <!--底部Tab-->
             <el-tabs>
                 <el-tab-pane label="详细信息" name="0">
-                    <el-form :model="detailRefundOrderData">
+                    <el-form :model="detailRefundOrderData"  class="quarter_turn">
                         <el-form-item v-for="(item,index) in detailRefundOrderHead" :label="item.label" align="center" :prop="item.prop" :key="index">
                             <span v-if="item.type=='text'">
                                 <span v-if="item.inProp">
