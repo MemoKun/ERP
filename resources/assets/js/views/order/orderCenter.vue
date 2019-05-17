@@ -280,10 +280,73 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="订单信息" name="1">
-
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="addDelExpense(scope.$index)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
-          <el-tab-pane label="货审" name="2">
-
+          <el-tab-pane label="货审明细" name="2">
+            <el-table :data="cargoAuditData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in cargoAuditHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="支付明细" name="3">
             <el-table :data="payDtlData" fit>
@@ -301,54 +364,460 @@
                   </span>
                 </template>
               </el-table-column>
-              <el-table-column label="操作" width="90" align="center">
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="内部便签" name="4">
+            <el-table :data="innerNoteDate" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in innerNoteHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
-                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
                 </template>
               </el-table-column>
             </el-table>
           </el-tab-pane>
-          <el-tab-pane label="内部便签" name="4">
-
-          </el-tab-pane>
           <el-tab-pane label="操作记录" name="5">
-
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="结算明细" name="6">
-
+            <el-table :data="checkDelData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in checkDelHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="跟单图片" name="7">
-
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="物流信息" name="8">
-
+            <el-table :data="logisticsData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in logisticsHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="补件明细" name="9">
+            <el-table :data="reSupplyData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in reSupplyHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
 
           </el-tab-pane>
           <el-tab-pane label="优惠列表" name="10">
+            <el-table :data="offerListData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in offerListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
 
           </el-tab-pane>
           <el-tab-pane label="订单图片" name="11">
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
 
           </el-tab-pane>
           <el-tab-pane label="门店收款明细" name="12">
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
 
           </el-tab-pane>
           <el-tab-pane label="电子面单" name="13">
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
 
           </el-tab-pane>
           <el-tab-pane label="其他费用" name="14">
-
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="库存占比" name="15">
-
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="备注" name="16">
-
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="驳回记录" name="17">
-
+            <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+              <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="expenseRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='select'">
+                      <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
+                        <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                        <span v-if="list.id==scope.row[item.prop]">
+                          {{list.name}}
+                        </span>
+                      </span>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
@@ -1798,6 +2267,7 @@ export default {
         }
       ],
       /**底部Tab 货审明细 */
+      cargoAuditData:{},
       cargoAuditHead: [
         {
           label: "商品编码",
@@ -1876,10 +2346,10 @@ export default {
           label: "已打印数量",
           prop: "newData",
           type: "text"
-        },
+        }
       ],
       /**内部便签 */
-      innerNoteHead:[
+      innerNoteHead: [
         {
           label: "主题",
           prop: "newData",
@@ -1899,10 +2369,11 @@ export default {
           label: "提出时间",
           prop: "newData",
           type: "text"
-        },
+        }
       ],
+      innerNoteData:{},
       /**底部tab 操作记录 */
-      operationLogHead:[
+      operationLogHead: [
         {
           label: "用户",
           prop: "newData",
@@ -1922,10 +2393,11 @@ export default {
           label: "创建时间",
           prop: "newData",
           type: "text"
-        },
+        }
       ],
       /**底部Tab 结算明细 */
-      checkDelHead:[
+      checkDtlData:{},
+      checkDelHead: [
         {
           label: "所属部门",
           prop: "newData",
@@ -1945,10 +2417,11 @@ export default {
           label: "备注",
           prop: "newData",
           type: "text"
-        },
+        }
       ],
-      /**底部tab 物流公司 */
-      logisticsHead:[
+      /**底部tab 物流信息 */
+      logisticsData:{},
+      logisticsHead: [
         {
           label: "物流单号",
           prop: "newData",
@@ -2013,10 +2486,11 @@ export default {
           label: "备注",
           prop: "newData",
           type: "text"
-        },
+        }
       ],
       /**补件明细 */
-      reSupplyHead:[
+      reSupplyData:{},
+      reSupplyHead: [
         {
           label: "补件单号",
           width: "220",
@@ -2215,7 +2689,8 @@ export default {
         }
       ],
       /**底部Tab 优惠列表 */
-      offerListHead:[
+      offerListData:{},
+      offerListHead: [
         {
           label: "单号",
           width: "140",
