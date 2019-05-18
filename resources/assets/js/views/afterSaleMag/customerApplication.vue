@@ -5,7 +5,11 @@
       <div class="searchBox">
         <span>
           <label>系统单号</label>
-          <el-input v-model="searchBox.after_sale_order_no" clearable @keyup.enter.native="handleQuery"></el-input>
+          <el-input
+            v-model="searchBox.after_sale_order_no"
+            clearable
+            @keyup.enter.native="handleQuery"
+          ></el-input>
         </span>
         <span>
           <label>订单号</label>
@@ -17,14 +21,34 @@
         </span>
         <span>
           <label>业务员</label>
-          <el-select v-model="searchBox.user_id" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
-            <el-option v-for="item in searchBox.orderStaff" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          <el-select
+            v-model="searchBox.user_id"
+            clearable
+            placeholder="请选择"
+            @keyup.enter.native="handleQuery"
+          >
+            <el-option
+              v-for="item in searchBox.orderStaff"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
           </el-select>
         </span>
         <span v-if="filterBox">
           <label>售后状态</label>
-          <el-select v-model="searchBox.after_sale_status" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
-            <el-option v-for="item in resData.aftersalestate" :key="item.value" :label="item.name" :value="item.id"></el-option>
+          <el-select
+            v-model="searchBox.after_sale_status"
+            clearable
+            placeholder="请选择"
+            @keyup.enter.native="handleQuery"
+          >
+            <el-option
+              v-for="item in resData.aftersalestate"
+              :key="item.value"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
           </el-select>
         </span>
         <span v-else>
@@ -39,8 +63,18 @@
       <div v-if="filterBox" class="searchBox">
         <span>
           <label>售后类型</label>
-          <el-select v-model="searchBox.after_sale_sort" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
-            <el-option v-for="item in searchBox.afterSaleSort" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          <el-select
+            v-model="searchBox.after_sale_sort"
+            clearable
+            placeholder="请选择"
+            @keyup.enter.native="handleQuery"
+          >
+            <el-option
+              v-for="item in searchBox.afterSaleSort"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
           </el-select>
         </span>
         <span>
@@ -49,12 +83,28 @@
         </span>
         <span>
           <label>创建时间</label>
-          <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+          <el-date-picker
+            v-model="searchBox.created_at"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          ></el-date-picker>
         </span>
         <span>
           <label>售后分类</label>
-          <el-select v-model="searchBox.after_sale_type" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
-            <el-option v-for="item in resData.aftersaletype" :key="item.value" :label="item.name" :value="item.id"></el-option>
+          <el-select
+            v-model="searchBox.after_sale_type"
+            clearable
+            placeholder="请选择"
+            @keyup.enter.native="handleQuery"
+          >
+            <el-option
+              v-for="item in resData.aftersaletype"
+              :key="item.value"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
           </el-select>
         </span>
       </div>
@@ -71,15 +121,33 @@
     <!-- 数据 -->
     <el-tabs v-model="topActiveName" @tab-click="clickTopTabs">
       <el-tab-pane label="新增" name="0">
-        <el-table :data="newData" fit ref="newTable" @selection-change="handleSelectionChange" v-loading="newLoading" height="300" :row-class-name="afterSaleRCName" @row-click="afterSaleRowClick">
+        <el-table
+          :data="newData"
+          fit
+          ref="newTable"
+          @selection-change="handleSelectionChange"
+          v-loading="newLoading"
+          height="300"
+          :row-class-name="afterSaleRCName"
+          :row-style="rowStyle"
+          @row-click="afterSaleRowClick"
+        >
           <!-- 左侧选择框 -->
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
           <!-- 中间表格 -->
-          <el-table-column align="center" v-for="item in tableHead" :label="item.label" :width="item.width" :key="item.prop">
+          <el-table-column
+            align="center"
+            v-for="item in tableHead"
+            :label="item.label"
+            :width="item.width"
+            :key="item.prop"
+          >
             <template slot-scope="scope">
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
-                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp">{{ scope.row[item.prop][item.inProp] }}</span>
+                <span
+                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
+                >{{ scope.row[item.prop][item.inProp] }}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -103,15 +171,33 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="已提交" name="1">
-        <el-table :data="submitData" fit ref="submitTable" @selection-change="handleSelectionChange" v-loading="submitLoading" height="300" :row-class-name="afterSaleRCName" @row-click="afterSaleRowClick">
+        <el-table
+          :data="submitData"
+          fit
+          ref="submitTable"
+          @selection-change="handleSelectionChange"
+          v-loading="submitLoading"
+          height="300"
+          :row-class-name="afterSaleRCName"
+          :row-style="rowStyle"
+          @row-click="afterSaleRowClick"
+        >
           <!-- 左侧选择框 -->
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
           <!-- 中间表格 -->
-          <el-table-column align="center" v-for="item in tableHead" :label="item.label" :width="item.width" :key="item.prop">
+          <el-table-column
+            align="center"
+            v-for="item in tableHead"
+            :label="item.label"
+            :width="item.width"
+            :key="item.prop"
+          >
             <template slot-scope="scope">
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
-                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp">{{ scope.row[item.prop][item.inProp] }}</span>
+                <span
+                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
+                >{{ scope.row[item.prop][item.inProp] }}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -143,9 +229,17 @@
     <el-tabs v-model="bottomActiveName">
       <el-tab-pane label="售后进度" name="0">
         <el-table :data="scheduleData">
-          <el-table-column v-for="item in btmTableHead[this.bottomActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+          <el-table-column
+            v-for="item in btmTableHead[this.bottomActiveName]"
+            :label="item.label"
+            align="center"
+            :width="item.width"
+            :key="item.label"
+          >
             <template slot-scope="scope">
-              <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              <span
+                v-if="scope.row[item.prop]"
+              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
           <!-- 右侧删除键 -->
@@ -159,16 +253,30 @@
       </el-tab-pane>
       <el-tab-pane label="售后产品问题" name="1">
         <el-table :data="defProData">
-          <el-table-column v-for="item in btmTableHead[this.bottomActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+          <el-table-column
+            v-for="item in btmTableHead[this.bottomActiveName]"
+            :label="item.label"
+            align="center"
+            :width="item.width"
+            :key="item.label"
+          >
             <template slot-scope="scope">
-              <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              <span
+                v-if="scope.row[item.prop]"
+              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="售后图片" name="2">
         <el-table :data="defProData">
-          <el-table-column v-for="item in btmTableHead[this.bottomActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+          <el-table-column
+            v-for="item in btmTableHead[this.bottomActiveName]"
+            :label="item.label"
+            align="center"
+            :width="item.width"
+            :key="item.label"
+          >
             <template slot-scope="scope">
               <span v-if="item.type=='img'">
                 <el-popover placement="right" trigger="hover" popper-class="picture_detail">
@@ -181,12 +289,20 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="内部便签" name="3">
-        <el-table>
-          <el-table-column v-for="item in btmTableHead[this.bottomActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+        <el-table :data="Data">
+          <el-table-column
+            v-for="item in btmTableHead[this.bottomActiveName]"
+            :label="item.label"
+            align="center"
+            :width="item.width"
+            :key="item.label"
+          >
             <template slot-scope="scope">
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
-                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp">{{scope.row[item.prop][item.inProp]}}</span>
+                <span
+                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
+                >{{scope.row[item.prop][item.inProp]}}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -198,19 +314,29 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span
+                  v-if="scope.row[item.prop]"
+                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="操作记录" name="4">
-        <el-table>
-          <el-table-column v-for="item in btmTableHead[this.bottomActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+        <el-table :data="Data">
+          <el-table-column
+            v-for="item in btmTableHead[this.bottomActiveName]"
+            :label="item.label"
+            align="center"
+            :width="item.width"
+            :key="item.label"
+          >
             <template slot-scope="scope">
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
-                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp">{{scope.row[item.prop][item.inProp]}}</span>
+                <span
+                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
+                >{{scope.row[item.prop][item.inProp]}}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -222,7 +348,9 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span
+                  v-if="scope.row[item.prop]"
+                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -233,23 +361,50 @@
     <!-- 新建售后单 -->
     <el-dialog titie="新建售后单" :visible.sync="addAfterSaleMask" :class="{'more-forms':moreForms}">
       <el-button type="text">编辑</el-button>
-      <el-form :model="addAfterSaleForm" :rules="addAfterSaleRules" ref="addNew" label-width="100px">
-        <el-form-item v-for="(item,index) in addAfterSaleHead" :key="index" :label="item.label" :prop="item.prop">
+      <el-form
+        :model="addAfterSaleForm"
+        :rules="addAfterSaleRules"
+        ref="addNew"
+        label-width="100px"
+      >
+        <el-form-item
+          v-for="(item,index) in addAfterSaleHead"
+          :key="index"
+          :label="item.label"
+          :prop="item.prop"
+        >
           <span v-if="item.type=='text'">
-            <el-input v-model.trim="addAfterSaleForm[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+            <el-input
+              v-model.trim="addAfterSaleForm[item.prop]"
+              :placeholder="item.holder"
+              :disabled="item.addChgAble"
+            ></el-input>
           </span>
           <span v-else-if="item.type=='select'">
-            <el-select v-model="addAfterSaleForm[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+            <el-select
+              v-model="addAfterSaleForm[item.prop]"
+              :placeholder="item.holder"
+              :disabled="item.addChgAble"
+            >
               <span v-for="list in resData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
           </span>
           <span v-else-if="item.type=='textarea'" :disabled="item.addChgAble">
-            <el-input type="textarea" v-model.trim="addAfterSaleForm[item.prop]" :placehoder="item.holder"></el-input>
+            <el-input
+              type="textarea"
+              v-model.trim="addAfterSaleForm[item.prop]"
+              :placehoder="item.holder"
+            ></el-input>
           </span>
           <span v-else-if="item.type=='number'">
-            <el-input type="number" v-model.trim="addAfterSaleForm[item.prop]" :placehoder="item.holder" :disabled="item.addChgAble"></el-input>
+            <el-input
+              type="number"
+              v-model.trim="addAfterSaleForm[item.prop]"
+              :placehoder="item.holder"
+              :disabled="item.addChgAble"
+            ></el-input>
           </span>
           <span v-else-if="item.type=='img'" :disabled="item.addChgAble">
             <span v-if="noUpload">
@@ -260,7 +415,13 @@
             <span v-else>
               <img :src="addAfterSaleForm[item.prop]" :disabled="item.addChgAble">
               <el-upload class="chgDiv" action :before-upload="beforeUpload">
-                <el-button type="primary" icon="el-icon-edit" size="mini" class="chg" v-show="showChgBtn"></el-button>
+                <el-button
+                  type="primary"
+                  icon="el-icon-edit"
+                  size="mini"
+                  class="chg"
+                  v-show="showChgBtn"
+                ></el-button>
               </el-upload>
             </span>
           </span>
@@ -268,10 +429,24 @@
       </el-form>
       <div class="clearfix">
         <el-button type="text">售后问题产品</el-button>
-        <el-table :data="addAfterSaleForm.after_sale_def_pro" fit height="180">
-          <el-table-column v-for="item in defProHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+        <el-table
+          :data="addAfterSaleForm.after_sale_def_pro"
+          fit
+          height="180"
+          :row-class-name="defRowCName"
+          @row-click="defRowClick"
+        >
+          <el-table-column
+            v-for="item in defProHead"
+            :label="item.label"
+            align="center"
+            :width="item.width"
+            :key="item.label"
+          >
             <template slot-scope="scope">
-              <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              <span
+                v-if="scope.row[item.prop]"
+              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="90" align="center" fixed="right">
@@ -296,8 +471,20 @@
     <!-- 新增售后产品 -->
     <el-dialog title="选择订单" :visible.sync="addAfterSProMask" :class="{'more-forms':moreForms}">
       <el-button type="text">订单列表</el-button>
-      <el-table :data="orderDtlVal" fit height="180" :row-class-name="addOrderRowCName" @row-click="addOrderRowClick">
-        <el-table-column v-for="item in addOrderProHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+      <el-table
+        :data="orderDtlVal"
+        fit
+        height="180"
+        :row-class-name="addOrderRowCName"
+        @row-click="addOrderRowClick"
+      >
+        <el-table-column
+          v-for="item in addOrderProHead"
+          :label="item.label"
+          align="center"
+          :width="item.width"
+          :key="item.label"
+        >
           <template slot-scope="scope">
             <span v-if="item.type=='img'">
               <el-popover placement="right" trigger="hover" popper-class="picture_detail">
@@ -310,10 +497,24 @@
         </el-table-column>
       </el-table>
       <el-button type="text">产品列表</el-button>
-      <el-table :data="proDtlVal" fit height="180" :row-class-name="addAfterSProRowCName" @row-click="addAfterSProRowClick">
-        <el-table-column v-for="item in addAfterSProHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+      <el-table
+        :data="proDtlVal"
+        fit
+        height="180"
+        :row-class-name="addAfterSProRowCName"
+        @row-click="addAfterSProRowClick"
+      >
+        <el-table-column
+          v-for="item in addAfterSProHead"
+          :label="item.label"
+          align="center"
+          :width="item.width"
+          :key="item.label"
+        >
           <template slot-scope="scope">
-            <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+            <span
+              v-if="scope.row[item.prop]"
+            >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -331,23 +532,51 @@
     <!-- 修改 -->
     <el-dialog titie="修改售后单" :visible.sync="updateMask" :class="{'more-forms':moreForms}">
       <el-button type="text">编辑</el-button>
-      <el-form :model="updateForm" :rules="addAfterSaleRules" ref="updateForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item v-for="(item,index) in addAfterSaleHead" :key="index" :label="item.label" :prop="item.prop">
+      <el-form
+        :model="updateForm"
+        :rules="addAfterSaleRules"
+        ref="updateForm"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
+        <el-form-item
+          v-for="(item,index) in addAfterSaleHead"
+          :key="index"
+          :label="item.label"
+          :prop="item.prop"
+        >
           <span v-if="item.type=='text'">
-            <el-input v-model.trim="updateForm[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+            <el-input
+              v-model.trim="updateForm[item.prop]"
+              :placeholder="item.holder"
+              :disabled="item.addChgAble"
+            ></el-input>
           </span>
           <span v-else-if="item.type=='select'">
-            <el-select v-model="updateForm[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+            <el-select
+              v-model="updateForm[item.prop]"
+              :placeholder="item.holder"
+              :disabled="item.addChgAble"
+            >
               <span v-for="list in resData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
           </span>
           <span v-else-if="item.type=='textarea'" :disabled="item.addChgAble">
-            <el-input type="textarea" v-model.trim="updateForm[item.prop]" :placehoder="item.holder"></el-input>
+            <el-input
+              type="textarea"
+              v-model.trim="updateForm[item.prop]"
+              :placehoder="item.holder"
+            ></el-input>
           </span>
           <span v-else-if="item.type=='number'">
-            <el-input type="number" v-model.trim="updateForm[item.prop]" :placehoder="item.holder" :disabled="item.addChgAble"></el-input>
+            <el-input
+              type="number"
+              v-model.trim="updateForm[item.prop]"
+              :placehoder="item.holder"
+              :disabled="item.addChgAble"
+            ></el-input>
           </span>
           <span v-else-if="item.type=='img'" :disabled="item.addChgAble">
             <span v-if="noUpload">
@@ -358,7 +587,13 @@
             <span v-else>
               <img :src="updateForm.after_sale_def_pro[item.prop]" :disabled="item.addChgAble">
               <el-upload class="chgDiv" action :before-upload="beforeUpload">
-                <el-button type="primary" icon="el-icon-edit" size="mini" class="chg" v-show="showChgBtn"></el-button>
+                <el-button
+                  type="primary"
+                  icon="el-icon-edit"
+                  size="mini"
+                  class="chg"
+                  v-show="showChgBtn"
+                ></el-button>
               </el-upload>
             </span>
           </span>
@@ -366,15 +601,29 @@
       </el-form>
       <div class="clearfix">
         <el-button type="text">售后问题产品</el-button>
-        <el-table :data="updateForm.afterSaleDefPros" fit height="180">
-          <el-table-column v-for="item in defProHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+        <el-table
+          :data="updateForm.after_sale_def_pro"
+          fit
+          height="180"
+          :row-class-name="defRowCName"
+          @row-click="defRowClick"
+        >
+          <el-table-column
+            v-for="item in defProHead"
+            :label="item.label"
+            align="center"
+            :width="item.width"
+            :key="item.label"
+          >
             <template slot-scope="scope">
-              <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              <span
+                v-if="scope.row[item.prop]"
+              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="90" align="center" fixed="right">
             <template slot-scope="scope">
-              <el-button size="mini" type="danger" @click="delAddDefPro(scope.row,$event)">删除</el-button>
+              <el-button size="mini" type="danger" @click="delUpdateDefPro(scope.row,$event)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -411,12 +660,27 @@
     <!-- 新增进度 -->
     <el-dialog title="新增售后进度" :visible.sync="addScheduleMask">
       <el-form :model="scheduleRuleFormVal" :rules="scheduleRules" id="form">
-        <el-form-item v-for="(item,index) in scheduleRuleFormHead" :key="index" :label="item.label" :prop="item.prop">
+        <el-form-item
+          v-for="(item,index) in scheduleRuleFormHead"
+          :key="index"
+          :label="item.label"
+          :prop="item.prop"
+        >
           <span v-if="item.type=='textarea'">
-            <el-input type="textarea" v-model.trim="scheduleRuleFormVal[item.prop]" :placehode="item.holder"></el-input>
+            <el-input
+              type="textarea"
+              v-model.trim="scheduleRuleFormVal[item.prop]"
+              :placehode="item.holder"
+            ></el-input>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker v-model="scheduleRuleFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+            <el-date-picker
+              v-model="scheduleRuleFormVal[item.prop]"
+              type="date"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期"
+            ></el-date-picker>
           </span>
         </el-form-item>
       </el-form>
@@ -431,12 +695,27 @@
     <!-- 修改进度 -->
     <el-dialog title="修改售后进度" :visible.sync="updateScheduleMask">
       <el-form :model="updateScheduleRuleFormVal" :rules="scheduleRules" id="form">
-        <el-form-item v-for="(item,index) in scheduleRuleFormHead" :key="index" :label="item.label" :prop="item.prop">
+        <el-form-item
+          v-for="(item,index) in scheduleRuleFormHead"
+          :key="index"
+          :label="item.label"
+          :prop="item.prop"
+        >
           <span v-if="item.type=='textarea'">
-            <el-input type="textarea" v-model.trim="updateScheduleRuleFormVal[item.prop]" :placehode="item.holder"></el-input>
+            <el-input
+              type="textarea"
+              v-model.trim="updateScheduleRuleFormVal[item.prop]"
+              :placehode="item.holder"
+            ></el-input>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker v-model="updateScheduleRuleFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+            <el-date-picker
+              v-model="updateScheduleRuleFormVal[item.prop]"
+              type="date"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期"
+            ></el-date-picker>
           </span>
         </el-form-item>
       </el-form>
@@ -508,7 +787,10 @@ export default {
         order_phone: "",
         created_at: "",
         after_sale_sort: "",
-        afterSaleSort: [{ label: "售后", value: 0 }, { label: "售中", value: 1 }]
+        afterSaleSort: [
+          { label: "售后", value: 0 },
+          { label: "售中", value: 1 }
+        ]
       },
       topActiveName: "0",
       tableHead: [
@@ -857,7 +1139,7 @@ export default {
             type: "text"
           },
           {
-            label: "提出时间",
+            label: "主题",
             width: "150",
             prop: "proposed_at",
             type: "text"
@@ -1083,8 +1365,12 @@ export default {
         ]
       },
       addAfterSaleRules: {
-        order_no: [{ required: true, message: "订单编号必选", trigger: "blur" }],
-        shop_name: [{ required: true, message: "店铺昵称必选", trigger: "blur" }],
+        order_no: [
+          { required: true, message: "订单编号必选", trigger: "blur" }
+        ],
+        shop_name: [
+          { required: true, message: "店铺昵称必选", trigger: "blur" }
+        ],
         vip_name: [{ required: true, message: "会员ID必选", trigger: "blur" }]
       },
       // 上传图片
@@ -1283,7 +1569,10 @@ export default {
         order_phone: "",
         created_at: "",
         after_sale_sort: "",
-        afterSaleSort: [{ label: "售后", value: 0 }, { label: "售中", value: 1 }]
+        afterSaleSort: [
+          { label: "售后", value: 0 },
+          { label: "售中", value: 1 }
+        ]
       };
     },
     // 获取售后订单数据
@@ -1303,7 +1592,7 @@ export default {
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 10,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.newLoading = false;
@@ -1313,6 +1602,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
@@ -1346,7 +1644,7 @@ export default {
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 20,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.submitLoading = false;
@@ -1356,6 +1654,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
@@ -1523,7 +1830,7 @@ export default {
           this.scheduleRuleFormVal = {
             schedule_description: "",
             subscribed_at: ""
-          };
+          }
           this.refresh();
         },
         err => {
@@ -1546,31 +1853,28 @@ export default {
       this.updateScheduleMask = true;
       this.updateSchIndex = row.id;
       this.$fetch(this.urls.aftersaleschedule + "/" + this.updateSchIndex).then(
-        res => {
-          this.updateScheduleRuleFormVal = {
-            after_sale_id: res.after_sale_id,
-            schedule_description: res.schedule_description,
-            subscribed_at: res.subscribed_at
-          };
-        },
-        err => {
-          if (err.response) {
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
+          res => {
+            this.updateScheduleRuleFormVal = {
+              after_sale_id: res.after_sale_id,
+              schedule_description: res.schedule_description,
+              subscribed_at: res.subscribed_at,
+            };
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
             }
-            let str = arr1.join(",");
-            this.$message.error(str);
           }
-        }
-      );
+        );
     },
     updateScheduleFrom(row) {
-      this.$patch(
-        this.urls.aftersaleschedule + "/" + this.updateSchIndex,
-        this.updateScheduleRuleFormVal
-      ).then(
+      this.$patch(this.urls.aftersaleschedule + "/" + this.updateSchIndex, this.updateScheduleRuleFormVal).then(
         () => {
           this.$message({
             message: "修改售后进度成功",
@@ -1693,8 +1997,8 @@ export default {
           let imageInfo = res.data.meta;
           if (imageInfo.status_code == 201) {
             this.compUpload = "";
-            this.tableChgBtn = "show" + this.compIndexNum;
-            this.proForm.product_components[this.compIndexNum].img_url =
+            this.tableChgBtn = "show" + this.updateRwIndex;
+            this.updateForm.after_sale_def_pro[0].img_url =
               res.data.path;
           }
         })
@@ -1712,7 +2016,7 @@ export default {
           if (imageInfo.status_code == 201) {
             this.updateCompUpload = "";
             this.updateChgBtn = "show" + this.updateRwIndex;
-            this.updateForm.product_components[this.updateRwIndex].img_url =
+            this.updateForm.after_sale_def_pro[0].img_url =
               res.data.path;
           }
         })
@@ -1733,41 +2037,23 @@ export default {
       this.addAfterSProDtlVal.push(row);
     },
     addOrderRowClick(row) {
+      this.proDtlVal = [];
       this.addOrderDtlVal = row;
-      this.$fetch(this.urls.products, {
-        include:
-          "productComponents,shop,supplier,goodsCategory,combinations.productComponents"
-      }).then(
-        res => {
-          let resData = res.data;
-          resData.map(item => {
-            let defPro = {
-              commodity_code: item.commodity_code,
-              spec_code: "",
-              short_name: item.short_name,
-              spec: item.productComponents["data"][0].spec,
-              color: item.productComponents["data"][0].color,
-              materials: item.productComponents["data"][0].materials,
-              buy_number: 1,
-              supplier_id: item.supplier.name
-            };
-            this.proDtlVal.push(defPro);
-          });
-        },
-        err => {
-          if (err.response) {
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error({
-              message: str
-            });
-          }
-        }
-      );
+      this.addOrderDtlVal.orderItems["data"].map(list => {
+        list.combination.productComponents["data"].map(item => {
+          let defPro = {
+          commodity_code: list.product.commodity_code,
+          spec_code: "",
+          short_name: list.product.short_name,
+          spec: item.spec,
+          color: item.color,
+          materials: item.materials,
+          buy_number: list.quantity,
+          supplier_id: list.supplier_id,
+          };
+          this.proDtlVal.push(defPro);
+        })
+      });
     },
     addAfterSProClick() {
       this.addAfterSProMask = true;
@@ -1778,9 +2064,12 @@ export default {
       this.proDtlVal = [];
       this.addOrderDtlVal = [];
       this.addAfterSProDtlVal = [];
-      this.$fetch(this.urls.customerservicedepts).then(
-        res => {
-          this.orderDtlVal = res.data;
+      this.$fetch(this.urls.customerservicedepts,{
+        include:
+          "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        }).then(
+          res => {
+            this.orderDtlVal = res.data;
         },
         err => {
           if (err.response) {
@@ -1876,6 +2165,9 @@ export default {
         }
       }
     },
+    delUpdateDefPro(index) {
+      this.updateForm.after_sale_def_pro.splice(index, 1);
+    },
     confirmUpdate() {
       this.$patch(
         this.urls.aftersale + "/" + this.updateId,
@@ -1914,7 +2206,7 @@ export default {
       if (this.newOpt[2].nClick) {
         return;
       } else {
-        if (this.delArr.length === 0) {
+          if (this.delArr.length === 0) {
           this.$message({
             message: "没有选中数据",
             type: "warning"
@@ -1955,6 +2247,7 @@ export default {
             });
         }
       }
+      
     },
     // 审核
     handleAudit() {

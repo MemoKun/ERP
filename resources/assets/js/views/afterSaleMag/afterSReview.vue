@@ -406,7 +406,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退款责任方" name="6">
-        <el-table :data="Data">
+        <el-table :data="refundData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -423,12 +423,6 @@
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
-                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                  <img :src="scope.row[item.prop]">
-                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                </el-popover>
               </span>
               <span v-else>
                 <span
@@ -440,7 +434,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退货责任方" name="7">
-        <el-table :data="Data">
+        <el-table :data="returnData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -457,12 +451,6 @@
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
-                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                  <img :src="scope.row[item.prop]">
-                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                </el-popover>
               </span>
               <span v-else>
                 <span
@@ -474,7 +462,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="补件责任方" name="8">
-        <el-table :data="Data">
+        <el-table :data="patchData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -491,12 +479,6 @@
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
-                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                  <img :src="scope.row[item.prop]">
-                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                </el-popover>
               </span>
               <span v-else>
                 <span
@@ -1146,6 +1128,9 @@ export default {
       showBtmDel: false,
       scheduleData: [],
       defProData: [],
+      refundData: [],
+      returnData: [],
+      patchData: [],
       scheduleRuleFormVal: {
         schedule_description: "",
         subscribed_at: ""
@@ -1216,19 +1201,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "refund_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "refund_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "refund_amount",
             width: "180",
             type: "number"
           }
@@ -1236,19 +1221,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "return_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "return_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "return_amount",
             width: "180",
             type: "number"
           }
@@ -1256,19 +1241,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "patch_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "patch_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "patch_amount",
             width: "180",
             type: "number"
           }
@@ -1412,20 +1397,20 @@ export default {
         {
           label: "责任方",
           width: "200",
-          prop: "refund_duty",
+          prop: "refund_party",
           stateVal: "responsible_party",
           type: "text"
         },
         {
           label: "责任方姓名",
           width: "200",
-          prop: "refund_duty_name",
+          prop: "refund_party_name",
           type: "text"
         },
         {
           label: "责任金额",
           width: "200",
-          prop: "refund_price",
+          prop: "refund_amount",
           type: "number"
         }
       ],
@@ -1433,20 +1418,20 @@ export default {
         {
           label: "责任方",
           width: "200",
-          prop: "after_responsible_party",
+          prop: "return_party",
           stateVal: "responsible_party",
           type: "text"
         },
         {
           label: "责任方姓名",
           width: "200",
-          prop: "after_responsible_party_name",
+          prop: "return_party_name",
           type: "text"
         },
         {
           label: "责任金额",
           width: "200",
-          prop: "return_price",
+          prop: "return_amount",
           type: "number"
         }
       ],
@@ -1454,20 +1439,20 @@ export default {
         {
           label: "责任方",
           width: "200",
-          prop: "patch_duty",
+          prop: "patch_party",
           stateVal: "responsible_party",
           type: "text"
         },
         {
           label: "责任方姓名",
           width: "200",
-          prop: "patch_duty_name",
+          prop: "patch_party_name",
           type: "text"
         },
         {
           label: "责任金额",
           width: "200",
-          prop: "patch_price",
+          prop: "patch_amount",
           type: "number"
         }
       ],
@@ -1567,7 +1552,7 @@ export default {
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.unsubmitLoading = false;
@@ -1577,6 +1562,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
@@ -1609,7 +1603,7 @@ export default {
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 40,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.submitLoading = false;
@@ -1619,6 +1613,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
@@ -1652,6 +1655,9 @@ export default {
       this.curRowId = row.id;
       this.curRowData = row;
       this.scheduleData = row["afterSaleSchedules"].data;
+      this.refundData = row["afterSaleRefunds"].data;
+      this.returnData = row["afterSaleReturns"].data;
+      this.patchData = row["afterSalePatchs"].data;
       this.defProData = row["afterSaleDefPros"].data;
     },
     handleSelectionChange(val) {
@@ -1761,7 +1767,7 @@ export default {
         }
       );
     },
-        // 修改售后进度
+    // 修改售后进度
     updateSchedule(row) {
       this.updateScheduleMask = true;
       this.updateSchIndex = row.id;
@@ -1828,15 +1834,16 @@ export default {
         case 0:
           if (this.ruleForm.is_refund == true) {
             let refundCombKey = {
-              refund_duty: "",
-              refund_duty_name: "",
-              refund_price: ""
+              after_sale_id: this.updateId,
+              refund_party: "",
+              refund_party_name: "",
+              refund_amount: ""
             };
             if (
               this.updateForm.refund_data.length > 0 &&
               !this.updateForm.refund_data[
                 this.updateForm.refund_data.length - 1
-              ].refund_duty
+              ].refund_party
             ) {
               this.$message({
                 message: "责任方为空时不能添加新责任方",
@@ -1858,15 +1865,16 @@ export default {
         case 1:
           if (this.ruleForm.is_return == true) {
             let returnCombKey = {
-              after_responsible_party: "",
-              after_responsible_party_name: "",
-              return_price: ""
+              after_sale_id: this.updateId,
+              return_party: "",
+              return_party_name: "",
+              return_amount: ""
             };
             if (
               this.updateForm.return_data.length > 0 &&
               !this.updateForm.return_data[
                 this.updateForm.return_data.length - 1
-              ].after_responsible_party
+              ].return_party
             ) {
               this.$message({
                 message: "责任方为空时不能添加新责任方",
@@ -1884,19 +1892,19 @@ export default {
               type: "info"
             });
           }
-
           break;
         case 2:
           if (this.ruleForm.is_patch == true) {
             let patchCombKey = {
-              patch_duty: "",
-              patch_duty_name: "",
-              patch_price: ""
+              after_sale_id: this.updateId,
+              patch_party: "",
+              patch_party_name: "",
+              patch_amount: ""
             };
             if (
               this.updateForm.patch_data.length > 0 &&
               !this.updateForm.patch_data[this.updateForm.patch_data.length - 1]
-                .patch_duty
+                .patch_party
             ) {
               this.$message({
                 message: "责任方为空时不能添加新责任方",
@@ -1934,11 +1942,81 @@ export default {
       });
     },
     confirmAdd() {
-      this.updateMask = false;
-      this.$message({
-        message: "添加成功",
-        type: "success"
-      });
+      if (this.ruleForm.is_refund) {
+        this.updateForm.refund_data.map(item => {
+          this.$post(this.urls.aftersalerefund, item).then(
+            () => {},
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error({
+                  message: str
+                });
+              }
+            }
+          );
+        });
+        this.updateMask = false;
+        this.updateForm.refund_data = [];
+        this.refresh();
+      };
+      if (this.ruleForm.is_return) {
+        this.updateForm.return_data.map(item => {
+          this.$post(this.urls.aftersalereturn, item).then(
+            () => {},
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error({
+                  message: str
+                });
+              }
+            }
+          );
+        });
+        this.updateMask = false;
+        this.updateForm.return_data = [];
+        this.refresh();
+      };
+      if (this.ruleForm.is_patch) {
+        this.updateForm.patch_data.map(item => {
+          this.$post(this.urls.aftersalepatch, item).then(
+            () => {},
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error({
+                  message: str
+                });
+              }
+            }
+          );
+        });
+        this.updateMask = false;
+        this.refresh();
+      };
+      if(!this.ruleForm.is_refund && !this.ruleForm.is_return && !this.ruleForm.is_patch) {
+        this.$message({
+          message: "没有选中责任方",
+          type: "warning"
+        });
+      };
+      this.updateForm.patch_data = [];
     },
     edit() {
       if (this.newOpt[0].nClick) {
