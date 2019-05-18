@@ -760,6 +760,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //跟单部
         $api->get('merchandiserdepts', 'MerchandiserDepartmentsController@index')
             ->name('api.merchandiserdepts.index');
+            $api->get('merchandiserdepts/searchstockout', 'MerchandiserDepartmentsController@searchStockOut')
+            ->name('api.merchandiserdepts.searchstockout');
         $api->get('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@show')
             ->name('api.merchandiserdepts.show');
         $api->get('merchandiserdepts/{order}/stock', 'MerchandiserDepartmentsController@getStockByWarehouses')
@@ -810,6 +812,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.warehousingdepts.isstockoutunaudit');
         $api->put('warehousingdepts/{order}/stockouttocs', 'WarehousingDepartmentsController@isStockOutToCS')
             ->name('api.warehousingdepts.isstockouttocs');
+        $api->put('warehousingdepts/{order}/isprintdispatchbill', 'WarehousingDepartmentsController@isPrintDispatchBill')
+            ->name('api.warehousingdepts.isprintdispatchbill');
 
         //客服退款申请
         $api->get('customerservicerefunds', 'CustomerServiceRefundsController@index')

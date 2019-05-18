@@ -133,9 +133,12 @@ class MerchandiserDepartmentsController extends Controller
      *       }
      * })
      */
+
+    
     public function index(MerchandiserDepartmentRequest $request)
     {
         $warehouses_id = $order_status = $status =  null;
+        $order_status = $request->input("");
 
         extract($request->validated());
 
@@ -150,8 +153,20 @@ class MerchandiserDepartmentsController extends Controller
 
             })->when($order_status, function ($query) use ($order_status) {
 
-                if($order_status == Order::ORDER_STATUS_CS_AUDIT){
-                    return $query->whereIn('order_status', [Order::ORDER_STATUS_FD_AUDIT, Order::ORDER_STATUS_CS_AUDIT]);
+                if($order_status == Order::ORDER_STATUS_CS_AUDIT){//待跟单一审,待货审 30 
+                    return $query->whereIn('order_status', [Order::ORDER_STATUS_CS_AUDIT,Order::ORDER_STATUS_FD_AUDIT]);
+                }
+
+                if($order_status == Order::ORDER_STATUS_CARGO_AUDIT){//已货审 60
+                    return $query->whereIn('order_status', [Order::ORDER_STATUS_CARGO_AUDIT]);
+                }
+
+                if($order_status == Order::ORDER_STATUS_READY_STOCK_OUT){//待货审 70
+                    return $query->whereIn('order_status', [Order::ORDER_STATUS_READY_STOCK_OUT]);
+                }
+
+                if($order_status == Order::ORDER_STATUS_STOCK_OUT){//已发货 80
+                    return $query->whereIn('order_status', [Order::ORDER_STATUS_STOCK_OUT]);
                 }
 
                 return $query->where('order_status', $order_status);

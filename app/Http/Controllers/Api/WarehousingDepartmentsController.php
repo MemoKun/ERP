@@ -350,4 +350,15 @@ class WarehousingDepartmentsController extends Controller
         );
     }
 
+    /**打印发货单*/
+    public function isPrintDispatchBill(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '打印发货单出错',
+            'printDispatchBill'
+        );
+    }
+
 }

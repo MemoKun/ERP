@@ -223,9 +223,6 @@
               </el-table-column>
             </el-table>
           </el-tab-pane>
-          <!--<el-tab-pane label="等通知发货" name="2">
-
-                    </el-tab-pane>-->
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="订单明细" name="1">
@@ -789,6 +786,7 @@ export default {
           nClick: false
         }
       ],
+      
       filterBox: false,
       searchBox: {
         vip_name: "",
@@ -2478,32 +2476,7 @@ export default {
             }
           );
           break;
-        case 2:
-          this.$fetch(this.urls.warehousingdepts, {
-            order_status: "等通知发货",
-            include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
-          }).then(
-            res => {
-              this.loading = false;
-              this.orderListData = res.data;
-              let pg = res.meta.pagination;
-              this.$store.dispatch("currentPage", pg.current_page);
-              this.$store.commit("PER_PAGE", pg.per_page);
-              this.$store.commit("PAGE_TOTAL", pg.total);
-            },
-            err => {
-              if (err.response) {
-                let arr = err.response.data.errors;
-                let arr1 = [];
-                for (let i in arr) {
-                  arr1.push(arr[i]);
-                }
-                this.$message.error(arr1.join(","));
-              }
-            }
-          );
-          break;
+        
       }
     },
     leftHandleClick() {
@@ -3655,10 +3628,45 @@ export default {
       });
     },
     dispatchBill() {
-      this.$message({
-        message: "请先配置打印机",
-        type: "success"
-      });
+      if (this.newOpt[5].nClick) {
+        return;
+      } else {
+        this.$message({
+          message: "请先配置打印机",
+          type: "success"
+        });
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(
+          this.urls.warehousingdepts + "/" + id + "/isprintdispatchbill"
+        ).then(
+          () => {
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.refresh();
+            this.$message({
+              message: "打印发货单成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
     },
     pickGoodsBill() {
       this.$message({

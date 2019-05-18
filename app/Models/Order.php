@@ -16,7 +16,8 @@ class Order extends Model
     const ORDER_STATUS_ONE_AUDIT = 40;
     const ORDER_STATUS_FD_AUDIT = 50;
     const ORDER_STATUS_CARGO_AUDIT = 60;
-    const ORDER_STATUS_STOCK_OUT = 70;
+    const ORDER_STATUS_READY_STOCK_OUT = 70;
+    const ORDER_STATUS_STOCK_OUT = 80;//已发货
     const ORDER_STATUS_BRUSH_ORDER = 110;
 
     //退回
@@ -26,8 +27,8 @@ class Order extends Model
     const ORDER_RETURN_FD_TO_ONE_AUDIT = 51; //财务驳回跟单一审
     const ORDER_RETURN_FD_AUDIT = 52; //退回财审
     const ORDER_RETURN_CARGO_AUDIT = 61;
-    const ORDER_RETURN_STOCK_OUT_AUDIT = 71; //发货退审
-    const ORDER_RETURN_STOCK_OUT_TO_CS = 72; //打印退回客审
+    const ORDER_RETURN_STOCK_OUT_AUDIT = 81; //发货退审
+    const ORDER_RETURN_STOCK_OUT_TO_CS = 82; //打印退回客审
 
     //订单来源
     const ORDER_SOURCE_SYSTEM = 'system';
@@ -45,6 +46,7 @@ class Order extends Model
         self::ORDER_STATUS_ONE_AUDIT => '已跟单一审',
         self::ORDER_STATUS_FD_AUDIT => '已财审',
         self::ORDER_STATUS_CARGO_AUDIT => '已货审',
+        self::ORDER_STATUS_READY_STOCK_OUT=> '已打发货单',
         self::ORDER_STATUS_STOCK_OUT => '已出库'
     ];
 
@@ -56,7 +58,8 @@ class Order extends Model
         self::ORDER_STATUS_ONE_AUDIT => '跟单一审',
         self::ORDER_STATUS_FD_AUDIT => '财审',
         self::ORDER_STATUS_CARGO_AUDIT => '货审',
-        self::ORDER_STATUS_STOCK_OUT => '出货',
+        self::ORDER_STATUS_READY_STOCK_OUT => '可以发货',
+        self::ORDER_STATUS_STOCK_OUT => '发货',
 
         self::ORDER_RETURN_LOCK => '解锁',
         self::ORDER_RETURN_CS_AUDIT => '退回客审',
@@ -76,7 +79,8 @@ class Order extends Model
         self::ORDER_STATUS_ONE_AUDIT => '跟单一次审核',
         self::ORDER_STATUS_FD_AUDIT => '财务审核',
         self::ORDER_STATUS_CARGO_AUDIT => '货物审核',
-        self::ORDER_STATUS_STOCK_OUT => '打印出货单',
+        self::ORDER_STATUS_READY_STOCK_OUT => '打印发货单',
+        self::ORDER_STATUS_STOCK_OUT => '通知发货',
 
         self::ORDER_RETURN_LOCK => '解锁订单',
         self::ORDER_RETURN_CS_AUDIT => '客服退回客审',
@@ -240,6 +244,15 @@ class Order extends Model
         $this->locker_id = 0;
         $this->order_status = self::ORDER_STATUS_CS_AUDIT;
         $this->audit_at = date("Y-m-d h:i:s");
+        $this->save();
+    }
+    /**
+     * 打印发货单
+     * @return bool
+     */
+    public function printDispatchBill()
+    {
+        $this->order_status = self::ORDER_STATUS_READY_STOCK_OUT;
         $this->save();
     }
 

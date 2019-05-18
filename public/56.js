@@ -771,9 +771,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -831,6 +828,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh,
         nClick: false
       }],
+
       filterBox: false,
       searchBox: {
         vip_name: "",
@@ -2309,28 +2307,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
           });
           break;
-        case 2:
-          this.$fetch(this.urls.warehousingdepts, {
-            order_status: "等通知发货",
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
-          }).then(function (res) {
-            _this.loading = false;
-            _this.orderListData = res.data;
-            var pg = res.meta.pagination;
-            _this.$store.dispatch("currentPage", pg.current_page);
-            _this.$store.commit("PER_PAGE", pg.per_page);
-            _this.$store.commit("PAGE_TOTAL", pg.total);
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              _this.$message.error(arr1.join(","));
-            }
-          });
-          break;
+
       }
     },
     leftHandleClick: function leftHandleClick() {
@@ -3470,10 +3447,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     dispatchBill: function dispatchBill() {
-      this.$message({
-        message: "请先配置打印机",
-        type: "success"
-      });
+      var _this21 = this;
+
+      if (this.newOpt[5].nClick) {
+        return;
+      } else {
+        this.$message({
+          message: "请先配置打印机",
+          type: "success"
+        });
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.warehousingdepts + "/" + id + "/isprintdispatchbill").then(function () {
+          _this21.newOpt[1].nClick = true;
+          _this21.newOpt[2].nClick = true;
+          _this21.newOpt[3].nClick = true;
+          _this21.newOpt[4].nClick = true;
+          _this21.newOpt[5].nClick = true;
+          _this21.newOpt[6].nClick = true;
+          _this21.newOpt[8].nClick = true;
+          _this21.newOpt[9].nClick = true;
+          _this21.refresh();
+          _this21.$message({
+            message: "打印发货单成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this21.$message.error(str);
+          }
+        });
+      }
     },
     pickGoodsBill: function pickGoodsBill() {
       this.$message({
