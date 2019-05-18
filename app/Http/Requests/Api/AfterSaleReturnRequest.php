@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Validation\Rule;
 
-class AfterSaleRefundRequest extends FormRequest
+class AfterSaleReturnRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -22,9 +22,9 @@ class AfterSaleRefundRequest extends FormRequest
             case 'POST':
                 return [
                     'after_sale_id' => 'required|string|max:255',
-                    'refund_party' => 'required|string|max:255',
-                    'refund_party_name' => 'string',
-                    'refund_amount' => 'integer',
+                    'return_party' => 'required|string|max:255',
+                    'return_party_name' => 'string',
+                    'return_amount' => 'integer',
                     'status' => 'boolean',
                 ];
                 break;
@@ -32,12 +32,12 @@ class AfterSaleRefundRequest extends FormRequest
                 return [
                     'id' => [
                         'integer',
-                        Rule::exists('after_sale_refund', 'id'),
+                        Rule::exists('after_sale_return', 'id'),
                     ],
                     'after_sale_id' => 'string|max:255',
-                    'refund_party' => 'string|max:255',
-                    'refund_party_name' => 'string',
-                    'refund_amount' => 'integer',
+                    'return_party' => 'string|max:255',
+                    'return_party_name' => 'string',
+                    'return_amount' => 'integer',
                     'status' => 'boolean',
                 ];
             break;
@@ -47,12 +47,12 @@ class AfterSaleRefundRequest extends FormRequest
     public function messages()
     {
         return [
-            'refund_party.required' => '责任方必填',
-            'refund_party.string' => '责任方必须string类型',
+            'return_party.required' => '责任方必填',
+            'return_party.string' => '责任方必须string类型',
 
-            'refund_party_name.string' => '责任方姓名必须string类型',
+            'return_party_name.string' => '责任方姓名必须string类型',
 
-            'refund_amount.integer' => '责任金额必须integer类型',
+            'return_amount.integer' => '责任金额必须integer类型',
 
             'status.boolean' => '状态必须布尔类型',
             'status.required' => '状态必填',
@@ -62,9 +62,9 @@ class AfterSaleRefundRequest extends FormRequest
     public function attributes()
     {
         return [
-            'refund_party' => '责任方',
-            'refund_party_name' => '责任方姓名',
-            'refund_amount' => '责任金额',
+            'return_party' => '责任方',
+            'return_party_name' => '责任方姓名',
+            'return_amount' => '责任金额',
         ];
     }
 }
