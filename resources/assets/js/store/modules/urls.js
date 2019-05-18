@@ -1,6 +1,6 @@
 const urls= {
   state: {
-    testUrl: 'http://bferp.test/#/api',//bferp.test
+    testUrl: 'http://bferp.test/#/api',
     captchas:'/captchas',
     markcolors:'/markcolors',
     acctypes:'/acctypes',
@@ -49,7 +49,6 @@ const urls= {
     paymentdetails:'/paymentdetails',
     warehousingdepts:'/warehousingdepts',
     returnreasons:'/returnreasons',
-    changeorders:'/changeorders',
     //add by xuejunhao
     shopgatheringmag:'/shopgatheringmag',
     aftercompensation: '/aftercompensation',
@@ -63,12 +62,6 @@ const urls= {
     problemproduct:'/problemproduct',
     roles:'/roles',
     problemProduct:'problemProduct',
-    redpackagemag:'/redpackagemag',
-
-    me:'/me',
-    current:'/current',
-    uploadimages:'/uploadimages',
-
     //Add by Xyzhao
     purchaseFabric: '/purchaseFabric',
     otherStorage: '/otherStorage',
@@ -88,23 +81,13 @@ const urls= {
     proBom:'/proBom',
     proBomMaterial:'/proBomMaterial',
     resupplieApplication:'/resupplieApplication',
-    resupplieReview:'/resupplieReview',
-    resupplieShip:'/resupplieShip',
-    resupplieCenter:'/resupplieCenter',
     packageType:'/packageType',
     refundMethod:'/refundMethod',
     resupplieCategory:'/resupplieCategory',
     resupplieResponsible:'/resupplieResponsible',
     resupplieOrderItem:'/resupplieOrderItem',
     resupplieProblemProduct:'/resupplieProblemProduct',
-    resupplieImage:'/resupplieImage',
-    resupplieRejectReason:'/resupplieRejectReason',
-    resupplieOperationRecord:'/resupplieOperationRecord',
-    resupplieProgress:'/resupplieProgress',
-    resuppliePurchase:'/resuppliePurchase',
-    resupplieEsheet:'/resupplieEsheet',
-    resupplieInnerNote:'/resupplieInnerNote',
-    
+
     // 薛涛
     offlineaccountconf:'/offlineaccountconf',
     aftersale:'/aftersale',
@@ -115,6 +98,16 @@ const urls= {
     promap:'/promap',
     aftersaleschedule:'/aftersaleschedule',
     aftersaledefpro:'/aftersaledefpro',
+    aftersalerefund:'/aftersalerefund',
+    aftersalereturn:'/aftersalereturn',
+    aftersalepatch:'/aftersalepatch',
+    // 薛涛
+
+
+    me:'/me',
+    current:'/current',
+    uploadimages:'/uploadimages',
+
   }
 };
 
