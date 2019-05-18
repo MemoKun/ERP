@@ -903,24 +903,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1146,7 +1128,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         prop: "is_solve",
         type: "checkbox"
       }]
-    }, _defineProperty(_ref, "submitData", []), _defineProperty(_ref, "unsubmitData", []), _defineProperty(_ref, "submitLoading", true), _defineProperty(_ref, "unsubmitLoading", true), _defineProperty(_ref, "addScheduleMask", false), _defineProperty(_ref, "updateScheduleMask", false), _defineProperty(_ref, "scheduleFrom", {}), _defineProperty(_ref, "addId", ""), _defineProperty(_ref, "bottomActiveName", "0"), _defineProperty(_ref, "showBtmDel", false), _defineProperty(_ref, "scheduleData", []), _defineProperty(_ref, "defProData", []), _defineProperty(_ref, "scheduleRuleFormVal", {
+    }, _defineProperty(_ref, "submitData", []), _defineProperty(_ref, "unsubmitData", []), _defineProperty(_ref, "submitLoading", true), _defineProperty(_ref, "unsubmitLoading", true), _defineProperty(_ref, "addScheduleMask", false), _defineProperty(_ref, "updateScheduleMask", false), _defineProperty(_ref, "scheduleFrom", {}), _defineProperty(_ref, "addId", ""), _defineProperty(_ref, "bottomActiveName", "0"), _defineProperty(_ref, "showBtmDel", false), _defineProperty(_ref, "scheduleData", []), _defineProperty(_ref, "defProData", []), _defineProperty(_ref, "refundData", []), _defineProperty(_ref, "returnData", []), _defineProperty(_ref, "patchData", []), _defineProperty(_ref, "scheduleRuleFormVal", {
       schedule_description: "",
       subscribed_at: ""
     }), _defineProperty(_ref, "updateScheduleRuleFormVal", {
@@ -1192,47 +1174,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: "img"
     }], [], [], [], [], [{
       label: "责任方",
-      prop: "responsible_party",
+      prop: "refund_party",
       width: "180",
       type: "text"
     }, {
       label: "责任方姓名",
-      prop: "responsible_party_name",
+      prop: "refund_party_name",
       width: "180",
       type: "text"
     }, {
       label: "责任金额",
-      prop: "responsible_money",
+      prop: "refund_amount",
       width: "180",
       type: "number"
     }], [{
       label: "责任方",
-      prop: "responsible_party",
+      prop: "return_party",
       width: "180",
       type: "text"
     }, {
       label: "责任方姓名",
-      prop: "responsible_party_name",
+      prop: "return_party_name",
       width: "180",
       type: "text"
     }, {
       label: "责任金额",
-      prop: "responsible_money",
+      prop: "return_amount",
       width: "180",
       type: "number"
     }], [{
       label: "责任方",
-      prop: "responsible_party",
+      prop: "patch_party",
       width: "180",
       type: "text"
     }, {
       label: "责任方姓名",
-      prop: "responsible_party_name",
+      prop: "patch_party_name",
       width: "180",
       type: "text"
     }, {
       label: "责任金额",
-      prop: "responsible_money",
+      prop: "patch_amount",
       width: "180",
       type: "number"
     }], [{
@@ -1337,50 +1319,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }), _defineProperty(_ref, "refundHead", [{
       label: "责任方",
       width: "200",
-      prop: "refund_duty",
+      prop: "refund_party",
       stateVal: "responsible_party",
       type: "text"
     }, {
       label: "责任方姓名",
       width: "200",
-      prop: "refund_duty_name",
+      prop: "refund_party_name",
       type: "text"
     }, {
       label: "责任金额",
       width: "200",
-      prop: "refund_price",
+      prop: "refund_amount",
       type: "number"
     }]), _defineProperty(_ref, "returnHead", [{
       label: "责任方",
       width: "200",
-      prop: "after_responsible_party",
+      prop: "return_party",
       stateVal: "responsible_party",
       type: "text"
     }, {
       label: "责任方姓名",
       width: "200",
-      prop: "after_responsible_party_name",
+      prop: "return_party_name",
       type: "text"
     }, {
       label: "责任金额",
       width: "200",
-      prop: "return_price",
+      prop: "return_amount",
       type: "number"
     }]), _defineProperty(_ref, "patchHead", [{
       label: "责任方",
       width: "200",
-      prop: "patch_duty",
+      prop: "patch_party",
       stateVal: "responsible_party",
       type: "text"
     }, {
       label: "责任方姓名",
       width: "200",
-      prop: "patch_duty_name",
+      prop: "patch_party_name",
       type: "text"
     }, {
       label: "责任金额",
       width: "200",
-      prop: "patch_price",
+      prop: "patch_amount",
       type: "number"
     }]), _defineProperty(_ref, "componentShowChg", true), _defineProperty(_ref, "updateCompUpload", "upload0"), _defineProperty(_ref, "updateRwIndex", "0"), _defineProperty(_ref, "ruleForm", {
       is_refund: false,
@@ -1470,12 +1452,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.unsubmitLoading = false;
             _this.unsubmitData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1505,12 +1490,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 40,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.submitLoading = false;
             _this.submitData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1544,6 +1532,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.curRowId = row.id;
       this.curRowData = row;
       this.scheduleData = row["afterSaleSchedules"].data;
+      this.refundData = row["afterSaleRefunds"].data;
+      this.returnData = row["afterSaleReturns"].data;
+      this.patchData = row["afterSalePatchs"].data;
       this.defProData = row["afterSaleDefPros"].data;
     },
     handleSelectionChange: function handleSelectionChange(val) {
@@ -1723,11 +1714,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 0:
           if (this.ruleForm.is_refund == true) {
             var refundCombKey = {
-              refund_duty: "",
-              refund_duty_name: "",
-              refund_price: ""
+              after_sale_id: this.updateId,
+              refund_party: "",
+              refund_party_name: "",
+              refund_amount: ""
             };
-            if (this.updateForm.refund_data.length > 0 && !this.updateForm.refund_data[this.updateForm.refund_data.length - 1].refund_duty) {
+            if (this.updateForm.refund_data.length > 0 && !this.updateForm.refund_data[this.updateForm.refund_data.length - 1].refund_party) {
               this.$message({
                 message: "责任方为空时不能添加新责任方",
                 type: "info"
@@ -1748,11 +1740,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 1:
           if (this.ruleForm.is_return == true) {
             var returnCombKey = {
-              after_responsible_party: "",
-              after_responsible_party_name: "",
-              return_price: ""
+              after_sale_id: this.updateId,
+              return_party: "",
+              return_party_name: "",
+              return_amount: ""
             };
-            if (this.updateForm.return_data.length > 0 && !this.updateForm.return_data[this.updateForm.return_data.length - 1].after_responsible_party) {
+            if (this.updateForm.return_data.length > 0 && !this.updateForm.return_data[this.updateForm.return_data.length - 1].return_party) {
               this.$message({
                 message: "责任方为空时不能添加新责任方",
                 type: "info"
@@ -1769,16 +1762,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               type: "info"
             });
           }
-
           break;
         case 2:
           if (this.ruleForm.is_patch == true) {
             var patchCombKey = {
-              patch_duty: "",
-              patch_duty_name: "",
-              patch_price: ""
+              after_sale_id: this.updateId,
+              patch_party: "",
+              patch_party_name: "",
+              patch_amount: ""
             };
-            if (this.updateForm.patch_data.length > 0 && !this.updateForm.patch_data[this.updateForm.patch_data.length - 1].patch_duty) {
+            if (this.updateForm.patch_data.length > 0 && !this.updateForm.patch_data[this.updateForm.patch_data.length - 1].patch_party) {
               this.$message({
                 message: "责任方为空时不能添加新责任方",
                 type: "info"
@@ -1815,14 +1808,77 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     confirmAdd: function confirmAdd() {
-      this.updateMask = false;
-      this.$message({
-        message: "添加成功",
-        type: "success"
-      });
+      var _this6 = this;
+
+      if (this.ruleForm.is_refund) {
+        this.updateForm.refund_data.map(function (item) {
+          _this6.$post(_this6.urls.aftersalerefund, item).then(function () {}, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this6.$message.error({
+                message: str
+              });
+            }
+          });
+        });
+        this.updateMask = false;
+        this.updateForm.refund_data = [];
+        this.refresh();
+      };
+      if (this.ruleForm.is_return) {
+        this.updateForm.return_data.map(function (item) {
+          _this6.$post(_this6.urls.aftersalereturn, item).then(function () {}, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this6.$message.error({
+                message: str
+              });
+            }
+          });
+        });
+        this.updateMask = false;
+        this.updateForm.return_data = [];
+        this.refresh();
+      };
+      if (this.ruleForm.is_patch) {
+        this.updateForm.patch_data.map(function (item) {
+          _this6.$post(_this6.urls.aftersalepatch, item).then(function () {}, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this6.$message.error({
+                message: str
+              });
+            }
+          });
+        });
+        this.updateMask = false;
+        this.refresh();
+      };
+      if (!this.ruleForm.is_refund && !this.ruleForm.is_return && !this.ruleForm.is_patch) {
+        this.$message({
+          message: "没有选中责任方",
+          type: "warning"
+        });
+      };
+      this.updateForm.patch_data = [];
     },
     edit: function edit() {
-      var _this6 = this;
+      var _this7 = this;
 
       if (this.newOpt[0].nClick) {
         return;
@@ -1850,7 +1906,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 arr1.push(arr[i]);
               }
               var str = arr1.join(",");
-              _this6.$message.error(str);
+              _this7.$message.error(str);
             }
           });
         }
@@ -1859,44 +1915,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     // 审核
     handleAudit: function handleAudit() {
-      var _this7 = this;
+      var _this8 = this;
 
       if (this.newOpt[2].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.aftersale + "/" + id + "/twoaudit").then(function () {
-          _this7.refresh();
-          _this7.$message({
-            message: "审核成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this7.$message.error(str);
-          }
-        });
-      }
-    },
-
-    // 退审
-    unAudit: function unAudit() {
-      var _this8 = this;
-
-      if (this.newOpt[3].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/untwoaudit").then(function () {
           _this8.refresh();
           _this8.$message({
-            message: "退审成功",
+            message: "审核成功",
             type: "success"
           });
         }, function (err) {
@@ -1913,18 +1941,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
 
-    // 驳回
-    reject: function reject() {
+    // 退审
+    unAudit: function unAudit() {
       var _this9 = this;
 
-      if (this.newOpt[1].nClick) {
+      if (this.newOpt[3].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/reject").then(function () {
+        this.$put(this.urls.aftersale + "/" + id + "/untwoaudit").then(function () {
           _this9.refresh();
           _this9.$message({
-            message: "驳回成功",
+            message: "退审成功",
             type: "success"
           });
         }, function (err) {
@@ -1941,18 +1969,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
 
-    // 结算
-    finish: function finish() {
+    // 驳回
+    reject: function reject() {
       var _this10 = this;
 
-      if (this.newOpt[4].nClick) {
+      if (this.newOpt[1].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/finish").then(function () {
+        this.$put(this.urls.aftersale + "/" + id + "/reject").then(function () {
           _this10.refresh();
           _this10.$message({
-            message: "结算成功",
+            message: "驳回成功",
             type: "success"
           });
         }, function (err) {
@@ -1964,6 +1992,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
             var str = arr1.join(",");
             _this10.$message.error(str);
+          }
+        });
+      }
+    },
+
+    // 结算
+    finish: function finish() {
+      var _this11 = this;
+
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/finish").then(function () {
+          _this11.refresh();
+          _this11.$message({
+            message: "结算成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this11.$message.error(str);
           }
         });
       }
@@ -3514,7 +3570,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.refundData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3558,37 +3614,6 @@ var render = function() {
                                           expression: "scope.row[item.prop]"
                                         }
                                       })
-                                    ],
-                                    1
-                                  )
-                                : item.type == "img"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c(
-                                        "el-popover",
-                                        {
-                                          attrs: {
-                                            placement: "right",
-                                            trigger: "hover",
-                                            "popper-class": "picture_detail"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: { src: scope.row[item.prop] }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("img", {
-                                            attrs: {
-                                              slot: "reference",
-                                              src: scope.row[item.prop],
-                                              alt: scope.row[item.alt]
-                                            },
-                                            slot: "reference"
-                                          })
-                                        ]
-                                      )
                                     ],
                                     1
                                   )
@@ -3628,7 +3653,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.returnData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3672,37 +3697,6 @@ var render = function() {
                                           expression: "scope.row[item.prop]"
                                         }
                                       })
-                                    ],
-                                    1
-                                  )
-                                : item.type == "img"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c(
-                                        "el-popover",
-                                        {
-                                          attrs: {
-                                            placement: "right",
-                                            trigger: "hover",
-                                            "popper-class": "picture_detail"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: { src: scope.row[item.prop] }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("img", {
-                                            attrs: {
-                                              slot: "reference",
-                                              src: scope.row[item.prop],
-                                              alt: scope.row[item.alt]
-                                            },
-                                            slot: "reference"
-                                          })
-                                        ]
-                                      )
                                     ],
                                     1
                                   )
@@ -3742,7 +3736,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.patchData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3786,37 +3780,6 @@ var render = function() {
                                           expression: "scope.row[item.prop]"
                                         }
                                       })
-                                    ],
-                                    1
-                                  )
-                                : item.type == "img"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c(
-                                        "el-popover",
-                                        {
-                                          attrs: {
-                                            placement: "right",
-                                            trigger: "hover",
-                                            "popper-class": "picture_detail"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: { src: scope.row[item.prop] }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("img", {
-                                            attrs: {
-                                              slot: "reference",
-                                              src: scope.row[item.prop],
-                                              alt: scope.row[item.alt]
-                                            },
-                                            slot: "reference"
-                                          })
-                                        ]
-                                      )
                                     ],
                                     1
                                   )

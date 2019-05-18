@@ -130,7 +130,7 @@ class AfterSale extends Model
             // 如果模型的 user_id 字段为空
             if (!$model->user_id) {
 
-                $model->user_id = Auth::guard('api')->id();
+                $model->user_id = Auth::guard('api')->id();;
                 // 如果生成失败，则终止创建订单
                 if (!$model->user_id) {
                     return false;
@@ -320,5 +320,20 @@ class AfterSale extends Model
     public function afterSaleDefPros()
     {
         return $this->hasMany(AfterSaleDefPro::class, 'after_sale_id');
+    }
+
+    public function afterSaleRefunds()
+    {
+        return $this->hasMany(AfterSaleRefund::class, 'after_sale_id');
+    }
+
+    public function afterSaleReturns()
+    {
+        return $this->hasMany(AfterSaleReturn::class, 'after_sale_id');
+    }
+
+    public function afterSalePatchs()
+    {
+        return $this->hasMany(AfterSalePatch::class, 'after_sale_id');
     }
 }

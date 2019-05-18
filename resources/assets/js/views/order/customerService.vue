@@ -3,8 +3,9 @@
     <el-tabs v-model="activeName" @tab-click="outerHandleClick">
       <el-tab-pane label="订单列表" name="0">
         <div>
+          <label>{{this.searchBox.promise_ship_time}}</label>
           <div class="searchBox">
-            <span>
+            <span>  
               <label>会员名称</label>
               <el-input v-model="searchBox.member_nick" clearable></el-input>
             </span>
@@ -36,38 +37,37 @@
             </span>
             <span>
               <label>所属店铺</label>
-              <el-select v-model="searchBox.order_shop" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.orderShops" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
+              <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['shop']" :key="list.id">
+                  <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                </span>
               </el-select>
             </span>
             <span>
               <label>包含商品</label>
-              <el-input v-model="searchBox.order_goods" clearable></el-input>
+              <el-input v-model="searchBox.products_id" clearable></el-input>
             </span>
             <span>
               <label>业务员</label>
-              <el-input v-model="searchBox.order_staff" clearable></el-input>
+              <el-input v-model="searchBox.business_personnel_id" clearable></el-input>
             </span>
           </div>
           <div class="searchBox">
             <span>
               <label>卖家备注</label>
-              <el-input v-model="searchBox.order_mark" clearable></el-input>
+              <el-input v-model="searchBox.seller_remark" clearable></el-input>
             </span>
             <span>
               <label>物流公司</label>
-              <el-select v-model="searchBox.order_company" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
+              <el-select v-model="searchBox.logistics_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['logistics']" :key="list.id">
+                  <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                </span>
               </el-select>
             </span>
             <span>
               <label>淘宝旗帜</label>
-              <el-select v-model="searchBox.order_flag" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.ordertbFlag" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
+              <el-input v-model="searchBox.seller_flag" clearable></el-input>
             </span>
             <span>
               <label>锁定状态</label>
@@ -80,17 +80,17 @@
           <div class="searchBox">
             <span>
               <label>承诺日期</label>
-              <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              <el-date-picker v-model="searchBox.promise_ship_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
             <span>
               <label>业务日期</label>
-              <el-date-picker v-model="searchBox.order_workDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
             <span>
               <label>客审日期</label>
-              <el-date-picker v-model="searchBox.order_customerInves" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
             <span class="transMoney">
@@ -986,22 +986,18 @@ export default {
         receiver_phone: "",
         order_money: "",
         order_address: "",
-        order_goods: "",
-        order_staff: "",
-        order_promiseDate: "",
-        order_workDate: "",
+        products_id: "",
+        business_personnel_id: "",
+        promise_ship_time: "",
+        created_at: "",
         order_transMStart: "",
         order_transMEnd: "",
-        orderCompany: [{ label: "ceshi", value: 0 }],
-        order_customerInves: "",
-        order_mark: "",
-        order_flag: "",
-        ordertbFlag: [{ label: "ceshi", value: 0 }],
+        logistics_id: "",
+        audit_at: "",
+        seller_remark: "",
+        seller_flag: "",
         order_lock: "",
-        orderLock: [{ label: "ceshi", value: 0 }],
-        order_company: "",
-        order_shop: "",
-        orderShops: [{ label: "ceshi", value: 0 }]
+        shops_id: "",
       },
       /*获取数据*/
       activeName: "0",
@@ -2754,6 +2750,11 @@ export default {
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
             receiver_phone: this.searchBox.receiver_phone,
+            
+            promise_ship_time:this.searchBox.promise_ship_time,
+            created_at:this.searchBox.created_at,
+            audit_at:this.searchBox.audit_at,
+
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(

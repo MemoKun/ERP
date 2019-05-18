@@ -934,6 +934,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1237,6 +1242,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       showBtmDel: false,
       scheduleData: [],
       defProData: [],
+      refundData: [],
+      returnData: [],
+      patchData: [],
       btmTableHead: [[{
         label: "进度描述",
         width: "180",
@@ -1265,47 +1273,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "img"
       }], [], [], [], [], [{
         label: "责任方",
-        prop: "responsible_party",
+        prop: "refund_party",
         width: "180",
         type: "text"
       }, {
         label: "责任方姓名",
-        prop: "responsible_party_name",
+        prop: "refund_party_name",
         width: "180",
         type: "text"
       }, {
         label: "责任金额",
-        prop: "responsible_money",
+        prop: "refund_amount",
         width: "180",
         type: "number"
       }], [{
         label: "责任方",
-        prop: "responsible_party",
+        prop: "return_party",
         width: "180",
         type: "text"
       }, {
         label: "责任方姓名",
-        prop: "responsible_party_name",
+        prop: "return_party_name",
         width: "180",
         type: "text"
       }, {
         label: "责任金额",
-        prop: "responsible_money",
+        prop: "return_amount",
         width: "180",
         type: "number"
       }], [{
         label: "责任方",
-        prop: "responsible_party",
+        prop: "patch_party",
         width: "180",
         type: "text"
       }, {
         label: "责任方姓名",
-        prop: "responsible_party_name",
+        prop: "patch_party_name",
         width: "180",
         type: "text"
       }, {
         label: "责任金额",
-        prop: "responsible_money",
+        prop: "patch_amount",
         width: "180",
         type: "number"
       }], [{
@@ -1758,12 +1766,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 20,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.unsubmitLoading = false;
             _this.unsubmitData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1793,12 +1804,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.submitLoading = false;
             _this.submitData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1930,6 +1944,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         }
       }
+    },
+    delUpdateDefPro: function delUpdateDefPro(index) {
+      this.updateForm.after_sale_def_pro.splice(index, 1);
     },
     confirmUpdate: function confirmUpdate() {
       var _this3 = this;
@@ -2124,54 +2141,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addOrderRowClick: function addOrderRowClick(row) {
       var _this8 = this;
 
+      this.proDtlVal = [];
       this.addOrderDtlVal = row;
-      console.log(this.addOrderDtlVal);
-      this.$fetch(this.urls.products, {
-        include: "productComponents,shop,supplier,combinations.productComponents"
-      }).then(function (res) {
-        _this8.proDtlVal = res.data;
-        _this8.proDtlVal.map(function (item) {
-          // let product_component = [];
-          // console.log(item.productComponents["data"][0]["spec"]);
-          // console.log(item.productComponents["data"][0]["spec"]);
-          // item.productComponents.map(list => {
-          //   let comp = {
-          //     spec: list.spec,
-          //     color: list.color,
-          //     materials: list.materials
-          //   };
-          // });
-          // if (item.productComponents["data"].length > 0) {
-          //   console.log(666);
-          //   let comp = {
-          //     spec: item.productComponents["data"][0]["spec"],
-          //     color: item.productComponents["data"][0]["color"],
-          //     materials: item.productComponents["data"][0]["materials"]
-          //   };
-          // } else {
-          //   let comp = {
-          //     spec: '',
-          //     color: '',
-          //     materials: ''
-          //   };
-          // };
-          //   product_component.push(comp);
+      this.addOrderDtlVal.orderItems["data"].map(function (list) {
+        list.combination.productComponents["data"].map(function (item) {
+          var defPro = {
+            commodity_code: list.product.commodity_code,
+            spec_code: "",
+            short_name: list.product.short_name,
+            spec: item.spec,
+            color: item.color,
+            materials: item.materials,
+            buy_number: list.quantity,
+            supplier_id: list.supplier_id
+          };
+          _this8.proDtlVal.push(defPro);
         });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(",");
-          _this8.$message.error({
-            message: str
-          });
-        }
       });
     },
-    addAfterSProClick: function addAfterSProClick() {
+    updateAfterSProClick: function updateAfterSProClick() {
       this.addAfterSProMask = true;
       this.proQueryClick();
     },
@@ -2182,7 +2170,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proDtlVal = [];
       this.addOrderDtlVal = [];
       this.addAfterSProDtlVal = [];
-      this.$fetch(this.urls.customerservicedepts).then(function (res) {
+      this.$fetch(this.urls.customerservicedepts, {
+        include: "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      }).then(function (res) {
         _this9.orderDtlVal = res.data;
       }, function (err) {
         if (err.response) {
@@ -2212,7 +2202,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     confirmAddAfterSPro: function confirmAddAfterSPro() {
       this.addAfterSProMask = false;
       this.defProDtlVal = this.addAfterSProDtlVal;
-      console.log(this.addOrderDtlVal);
       this.addAfterSaleForm.order_no = this.addOrderDtlVal.system_order_no;
       this.addAfterSaleForm.shop_name = this.addOrderDtlVal.shops_id;
       this.addAfterSaleForm.after_sale_type = "";
@@ -3859,7 +3848,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.refundData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3973,7 +3962,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.returnData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -4087,7 +4076,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.patchData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -4831,41 +4820,76 @@ var render = function() {
                   },
                   on: { "row-click": _vm.defRowClick }
                 },
-                _vm._l(_vm.defProHead, function(item) {
-                  return _c("el-table-column", {
-                    key: item.label,
-                    attrs: {
-                      label: item.label,
-                      align: "center",
-                      width: item.width
-                    },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              scope.row[item.prop]
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        item.inProp
-                                          ? scope.row[item.prop][item.inProp]
-                                          : scope.row[item.prop]
+                [
+                  _vm._l(_vm.defProHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.label,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                scope.row[item.prop]
+                                  ? _c("span", [
+                                      _vm._v(
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        )
                                       )
-                                    )
-                                  ])
-                                : _vm._e()
-                            ]
+                                    ])
+                                  : _vm._e()
+                              ]
+                            }
                           }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      label: "操作",
+                      width: "90",
+                      align: "center",
+                      fixed: "right"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.delUpdateDefPro(
+                                      scope.row,
+                                      $event
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("删除")]
+                            )
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
-                }),
-                1
+                ],
+                2
               )
             ],
             1
@@ -4887,7 +4911,7 @@ var render = function() {
                     "el-button",
                     {
                       attrs: { type: "primary" },
-                      on: { click: _vm.addAfterSProClick }
+                      on: { click: _vm.updateAfterSProClick }
                     },
                     [_vm._v("新增售后产品")]
                   )

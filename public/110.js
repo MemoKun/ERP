@@ -1188,7 +1188,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         prop: "close_date",
         type: "text"
       }]
-    }, _defineProperty(_ref, "allData", []), _defineProperty(_ref, "finishData", []), _defineProperty(_ref, "unfinishData", []), _defineProperty(_ref, "allLoading", true), _defineProperty(_ref, "finishLoading", true), _defineProperty(_ref, "unfinishLoading", true), _defineProperty(_ref, "addId", ""), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "delArr", []), _defineProperty(_ref, "selection", ""), _defineProperty(_ref, "updateMask", false), _defineProperty(_ref, "updateId", ""), _defineProperty(_ref, "updateIndex", ""), _defineProperty(_ref, "updateSchIndex", ""), _defineProperty(_ref, "updateForm", {}), _defineProperty(_ref, "componentShowChg", true), _defineProperty(_ref, "updateCompUpload", "upload0"), _defineProperty(_ref, "updateRwIndex", "0"), _defineProperty(_ref, "addScheduleMask", false), _defineProperty(_ref, "updateScheduleMask", false), _defineProperty(_ref, "scheduleFrom", {}), _defineProperty(_ref, "addId", ""), _defineProperty(_ref, "bottomActiveName", "0"), _defineProperty(_ref, "showBtmDel", false), _defineProperty(_ref, "scheduleData", []), _defineProperty(_ref, "defProData", []), _defineProperty(_ref, "scheduleRuleFormVal", {
+    }, _defineProperty(_ref, "allData", []), _defineProperty(_ref, "finishData", []), _defineProperty(_ref, "unfinishData", []), _defineProperty(_ref, "allLoading", true), _defineProperty(_ref, "finishLoading", true), _defineProperty(_ref, "unfinishLoading", true), _defineProperty(_ref, "addId", ""), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "delArr", []), _defineProperty(_ref, "selection", ""), _defineProperty(_ref, "updateMask", false), _defineProperty(_ref, "updateId", ""), _defineProperty(_ref, "updateIndex", ""), _defineProperty(_ref, "updateSchIndex", ""), _defineProperty(_ref, "updateForm", {}), _defineProperty(_ref, "componentShowChg", true), _defineProperty(_ref, "updateCompUpload", "upload0"), _defineProperty(_ref, "updateRwIndex", "0"), _defineProperty(_ref, "addScheduleMask", false), _defineProperty(_ref, "updateScheduleMask", false), _defineProperty(_ref, "scheduleFrom", {}), _defineProperty(_ref, "addId", ""), _defineProperty(_ref, "bottomActiveName", "0"), _defineProperty(_ref, "showBtmDel", false), _defineProperty(_ref, "scheduleData", []), _defineProperty(_ref, "defProData", []), _defineProperty(_ref, "refundData", []), _defineProperty(_ref, "returnData", []), _defineProperty(_ref, "patchData", []), _defineProperty(_ref, "scheduleRuleFormVal", {
       schedule_description: "",
       subscribed_at: ""
     }), _defineProperty(_ref, "updateScheduleRuleFormVal", {
@@ -1234,47 +1234,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: "img"
     }], [], [], [], [], [{
       label: "责任方",
-      prop: "responsible_party",
+      prop: "refund_party",
       width: "180",
       type: "text"
     }, {
       label: "责任方姓名",
-      prop: "responsible_party_name",
+      prop: "refund_party_name",
       width: "180",
       type: "text"
     }, {
       label: "责任金额",
-      prop: "responsible_money",
+      prop: "refund_amount",
       width: "180",
       type: "number"
     }], [{
       label: "责任方",
-      prop: "responsible_party",
+      prop: "return_party",
       width: "180",
       type: "text"
     }, {
       label: "责任方姓名",
-      prop: "responsible_party_name",
+      prop: "return_party_name",
       width: "180",
       type: "text"
     }, {
       label: "责任金额",
-      prop: "responsible_money",
+      prop: "return_amount",
       width: "180",
       type: "number"
     }], [{
       label: "责任方",
-      prop: "responsible_party",
+      prop: "patch_party",
       width: "180",
       type: "text"
     }, {
       label: "责任方姓名",
-      prop: "responsible_party_name",
+      prop: "patch_party_name",
       width: "180",
       type: "text"
     }, {
       label: "责任金额",
-      prop: "responsible_money",
+      prop: "patch_amount",
       width: "180",
       type: "number"
     }], [{
@@ -1439,13 +1439,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       switch (index) {
         case 0:
           this.$fetch(this.urls.aftersale, {
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.allLoading = false;
             _this.allData = res.data;
             _this.checkboxInit = false;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -1470,12 +1473,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 1:
           this.$fetch(this.urls.aftersale, {
             is_finish: 0,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.unfinishLoading = false;
             _this.unfinishData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1500,12 +1506,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 2:
           this.$fetch(this.urls.aftersale, {
             order_status: 50,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.finishLoading = false;
             _this.finishData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -3642,7 +3651,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.refundData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3756,7 +3765,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.returnData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3870,7 +3879,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.patchData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,

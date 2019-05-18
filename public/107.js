@@ -507,6 +507,285 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -843,7 +1122,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "content",
         type: "text"
       }, {
-        label: "提出时间",
+        label: "主题",
         width: "150",
         prop: "proposed_at",
         type: "text"
@@ -1237,12 +1516,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 10,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.newLoading = false;
             _this.newData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1273,12 +1555,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 20,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.submitLoading = false;
             _this.submitData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
+            _this.refundData = res.data[0] ? res.data[0]["afterSaleRefunds"].data : [];
+            _this.returnData = res.data[0] ? res.data[0]["afterSaleReturns"].data : [];
+            _this.patchData = res.data[0] ? res.data[0]["afterSalePatchs"].data : [];
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -1609,8 +1894,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
           _this9.compUpload = "";
-          _this9.tableChgBtn = "show" + _this9.compIndexNum;
-          _this9.proForm.product_components[_this9.compIndexNum].img_url = res.data.path;
+          _this9.tableChgBtn = "show" + _this9.updateRwIndex;
+          _this9.updateForm.after_sale_def_pro[0].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
@@ -1626,7 +1911,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (imageInfo.status_code == 201) {
           _this10.updateCompUpload = "";
           _this10.updateChgBtn = "show" + _this10.updateRwIndex;
-          _this10.updateForm.product_components[_this10.updateRwIndex].img_url = res.data.path;
+          _this10.updateForm.after_sale_def_pro[0].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
@@ -1655,36 +1940,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addOrderRowClick: function addOrderRowClick(row) {
       var _this11 = this;
 
+      this.proDtlVal = [];
       this.addOrderDtlVal = row;
-      this.$fetch(this.urls.products, {
-        include: "productComponents,shop,supplier,goodsCategory,combinations.productComponents"
-      }).then(function (res) {
-        var resData = res.data;
-        resData.map(function (item) {
+      this.addOrderDtlVal.orderItems["data"].map(function (list) {
+        list.combination.productComponents["data"].map(function (item) {
           var defPro = {
-            commodity_code: item.commodity_code,
+            commodity_code: list.product.commodity_code,
             spec_code: "",
-            short_name: item.short_name,
-            spec: item.productComponents["data"][0].spec,
-            color: item.productComponents["data"][0].color,
-            materials: item.productComponents["data"][0].materials,
-            buy_number: 1,
-            supplier_id: item.supplier.name
+            short_name: list.product.short_name,
+            spec: item.spec,
+            color: item.color,
+            materials: item.materials,
+            buy_number: list.quantity,
+            supplier_id: list.supplier_id
           };
           _this11.proDtlVal.push(defPro);
         });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(",");
-          _this11.$message.error({
-            message: str
-          });
-        }
       });
     },
     addAfterSProClick: function addAfterSProClick() {
@@ -1698,7 +1969,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proDtlVal = [];
       this.addOrderDtlVal = [];
       this.addAfterSProDtlVal = [];
-      this.$fetch(this.urls.customerservicedepts).then(function (res) {
+      this.$fetch(this.urls.customerservicedepts, {
+        include: "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      }).then(function (res) {
         _this12.orderDtlVal = res.data;
       }, function (err) {
         if (err.response) {
@@ -1791,6 +2064,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         }
       }
+    },
+    delUpdateDefPro: function delUpdateDefPro(index) {
+      this.updateForm.after_sale_def_pro.splice(index, 1);
     },
     confirmUpdate: function confirmUpdate() {
       var _this14 = this;
@@ -2408,7 +2684,8 @@ var render = function() {
                     data: _vm.newData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName
+                    "row-class-name": _vm.afterSaleRCName,
+                    "row-style": _vm.rowStyle
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -2598,7 +2875,8 @@ var render = function() {
                     data: _vm.submitData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName
+                    "row-class-name": _vm.afterSaleRCName,
+                    "row-style": _vm.rowStyle
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -3000,6 +3278,7 @@ var render = function() {
             [
               _c(
                 "el-table",
+                { attrs: { data: _vm.Data } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3113,6 +3392,7 @@ var render = function() {
             [
               _c(
                 "el-table",
+                { attrs: { data: _vm.Data } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
@@ -3461,8 +3741,10 @@ var render = function() {
                   attrs: {
                     data: _vm.addAfterSaleForm.after_sale_def_pro,
                     fit: "",
-                    height: "180"
-                  }
+                    height: "180",
+                    "row-class-name": _vm.defRowCName
+                  },
+                  on: { "row-click": _vm.defRowClick }
                 },
                 [
                   _vm._l(_vm.defProHead, function(item) {
@@ -4034,10 +4316,12 @@ var render = function() {
                 "el-table",
                 {
                   attrs: {
-                    data: _vm.updateForm.afterSaleDefPros,
+                    data: _vm.updateForm.after_sale_def_pro,
                     fit: "",
-                    height: "180"
-                  }
+                    height: "180",
+                    "row-class-name": _vm.defRowCName
+                  },
+                  on: { "row-click": _vm.defRowClick }
                 },
                 [
                   _vm._l(_vm.defProHead, function(item) {
@@ -4093,7 +4377,10 @@ var render = function() {
                                 attrs: { size: "mini", type: "danger" },
                                 on: {
                                   click: function($event) {
-                                    return _vm.delAddDefPro(scope.row, $event)
+                                    return _vm.delUpdateDefPro(
+                                      scope.row,
+                                      $event
+                                    )
                                   }
                                 }
                               },
