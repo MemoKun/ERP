@@ -609,6 +609,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1843,6 +1891,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         package_quantity: [{ required: true, message: "包件总数必选", trigger: "blur" }],
         stockout_at: [{ required: true, message: "发货时间", trigger: "blur" }]
       },
+      stockOutDtlBottomHead: [{
+        label: "淘宝单号",
+        width: "220",
+        prop: "taobao_oid",
+        type: "text"
+      }, {
+        label: "淘宝状态",
+        width: "220",
+        prop: "taobao_status",
+        type: "text"
+      }, {
+        label: "服务车",
+        width: "90",
+        prop: "service_car",
+        type: "checkbox"
+      }, {
+        label: "验证通过",
+        width: "90",
+        prop: "is_validated",
+        type: "checkbox"
+      }],
       addSubData: [],
       apiData: {}
     };
@@ -1941,12 +2010,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
-            /**this.$fetch(this.urls.customerservicedepts + "/create").then(
-              res => {
-                this.addSubData = res;
-              },
-              err => {}
-            );*/
+            _this.$fetch(_this.urls.customerservicedepts + "/create").then(function (res) {
+              _this.addSubData = res;
+            }, function (err) {});
           }, function (err) {
             console.log(err);
           });
@@ -2266,17 +2332,79 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     stockOut: function stockOut() {
       this.stockOutMask = true;
+      if (this.checkboxId == "") {
+        this.$message({
+          type: "info",
+          message: "请先选择订单"
+        });
+      } else {
+        this.stockOutDtlData.system_order_no = this.curRowData.system_order_no;
+        this.stockOutDtlData.receiver_name = this.curRowData.receiver_name;
+        this.stockOutDtlData.receiver_mobile = this.curRowData.receiver_mobile;
+        this.stockOutDtlData.receiver_address = this.curRowData.receiver_address;
+        this.stockOutDtlData.logistics_id = this.curRowData.logistics_id;
+        this.stockOutDtlData.logistics_sn = this.curRowData.logistics_sn;
+        this.stockOutDtlData.actual_freight = this.curRowData.actual_freight;
+        this.stockOutDtlData.freight_types_id = this.curRowData.freight_types_id;
+        this.stockOutDtlData.expected_freight = this.curRowData.expected_freight;
+        this.stockOutDtlData.total_volume = this.curRowData.total_volume;
+        this.stockOutDtlData.distribution_phone = this.curRowData.distribution_phone;
+        this.stockOutDtlData.distributions_id = this.curRowData.distributions_id;
+        this.stockOutDtlData.distribution_no = this.curRowData.distribution_no;
+        this.stockOutDtlData.distribution_types_id = this.curRowData.distribution_types_id;
+        this.stockOutDtlData.move_upstairs_fee = this.curRowData.move_upstairs_fee;
+        this.stockOutDtlData.deliver_goods_fee = this.curRowData.deliver_goods_fee;
+        this.stockOutDtlData.total_distribution_fee = this.curRowData.total_distribution_fee;
+        this.stockOutDtlData.installation_fee = this.curRowData.installation_fee;
+        this.stockOutDtlData.package_quantity = this.curRowData.package_quantity;
+        this.stockOutDtlData.wooden_frame_costs = this.curRowData.wooden_frame_costs;
+        this.stockOutDtlData.supplier_id = this.curRowData.supplier_id;
+        this.stockOutDtlData.favorable_cashback = this.curRowData.favorable_cashback;
+        this.stockOutDtlData.preferential_cashback = this.curRowData.preferential_cashback;
+        this.stockOutDtlData.warehouses_id = this.curRowData.warehouses_id;
+        this.stockOutDtlData.taobao_oid = this.curRowData.taobao_oid;
+      }
+    },
+    stockOutConfirm: function stockOutConfirm() {
+      var _this10 = this;
+
+      var id = this.checkboxId ? this.checkboxId : curRowId;
+      var submitData = {
+        logistics_id: this.stockOutDtlData.logistics_id,
+        logistics_sn: this.stockOutDtlData.logistics_sn,
+        actual_freight: this.stockOutDtlData.actual_freight
+      };
+      this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(function () {
+        _this10.stockOutMask = false;
+        _this10.$message({
+          message: "发货成功",
+          type: "success"
+        });
+      });
+    },
+    handleSelectionChange: function handleSelectionChange(val) {
+      console.log(val);
+      /*拿到id集合*/
+      var delArr = [];
+      val.forEach(function (selectedItem) {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
     }
   }, "handlePagChg", function handlePagChg(page) {
-    var _this10 = this;
+    var _this11 = this;
 
     this.$fetch(this.urls.merchandiserdepts + "?page=" + page, {
       include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
     }).then(function (res) {
-      if (_this10.leftTopActiveName == "0") {
-        _this10.orderListData = res.data;
+      if (_this11.leftTopActiveName == "0") {
+        _this11.orderListData = res.data;
       } else {
-        _this10.alreadyHandle = res.data;
+        _this11.alreadyHandle = res.data;
       }
     });
   }),
@@ -2845,6 +2973,7 @@ var render = function() {
                             height: "350"
                           },
                           on: {
+                            "selection-change": _vm.handleSelectionChange,
                             "row-click": _vm.orderListRClick,
                             "row-dblclick": _vm.orderDbClick
                           }
@@ -3048,6 +3177,7 @@ var render = function() {
                             height: "350"
                           },
                           on: {
+                            "selection-change": _vm.handleSelectionChange,
                             "row-click": _vm.orderListRClick,
                             "row-dblclick": _vm.orderDbClick
                           }
@@ -3251,6 +3381,7 @@ var render = function() {
                             height: "350"
                           },
                           on: {
+                            "selection-change": _vm.handleSelectionChange,
                             "row-click": _vm.orderListRClick,
                             "row-dblclick": _vm.orderDbClick
                           }
@@ -3454,6 +3585,7 @@ var render = function() {
                             height: "350"
                           },
                           on: {
+                            "selection-change": _vm.handleSelectionChange,
                             "row-click": _vm.orderListRClick,
                             "row-dblclick": _vm.orderDbClick
                           }
@@ -4563,321 +4695,619 @@ var render = function() {
         },
         [
           _c(
-            "el-tab-pane",
-            { attrs: { label: "发货明细", name: "0" } },
+            "el-tabs",
             [
               _c(
-                "el-form",
-                {
-                  staticClass: "storageUpdateForm",
-                  attrs: {
-                    model: _vm.stockOutDtlData,
-                    rules: _vm.addStockOutDtlRules,
-                    id: "form"
-                  }
-                },
-                _vm._l(_vm.stockOutDtlHead, function(item, index) {
-                  return _c(
-                    "el-form-item",
+                "el-tab-pane",
+                { attrs: { label: "发货明细", name: "0" } },
+                [
+                  _c(
+                    "el-form",
                     {
-                      key: index,
-                      attrs: { label: item.label, prop: item.prop }
+                      staticClass: "storageUpdateForm",
+                      attrs: {
+                        model: _vm.stockOutDtlData,
+                        rules: _vm.addStockOutDtlRules,
+                        id: "form"
+                      }
                     },
-                    [
-                      item.type == "text"
-                        ? _c("span", [
-                            item.inProp
-                              ? _c(
-                                  "span",
-                                  [
-                                    _c("el-input", {
+                    _vm._l(_vm.stockOutDtlHead, function(item, index) {
+                      return _c(
+                        "el-form-item",
+                        {
+                          key: index,
+                          attrs: { label: item.label, prop: item.prop }
+                        },
+                        [
+                          item.type == "text"
+                            ? _c("span", [
+                                item.inProp
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-input", {
+                                          attrs: {
+                                            placeholder: item.holder,
+                                            disabled: item.addChgAble
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.stockOutDtlData[item.prop][
+                                                item.inProp
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.stockOutDtlData[item.prop],
+                                                item.inProp,
+                                                typeof $$v === "string"
+                                                  ? $$v.trim()
+                                                  : $$v
+                                              )
+                                            },
+                                            expression:
+                                              "stockOutDtlData[item.prop][item.inProp]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c(
+                                      "span",
+                                      [
+                                        _c("el-input", {
+                                          attrs: {
+                                            placeholder: item.holder,
+                                            disabled: item.addChgAble
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.stockOutDtlData[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.stockOutDtlData,
+                                                item.prop,
+                                                typeof $$v === "string"
+                                                  ? $$v.trim()
+                                                  : $$v
+                                              )
+                                            },
+                                            expression:
+                                              "stockOutDtlData[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                              ])
+                            : item.type == "number"
+                            ? _c("span", [
+                                item.prop == "deliver_goods_fee" ||
+                                item.prop == "move_upstairs_fee" ||
+                                item.prop == "installation_fee"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-input", {
+                                          attrs: {
+                                            type: "number",
+                                            placeholder: item.holder,
+                                            disabled: item.addChgAble
+                                          },
+                                          on: { input: _vm.formChg },
+                                          model: {
+                                            value:
+                                              _vm.stockOutDtlData[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.stockOutDtlData,
+                                                item.prop,
+                                                typeof $$v === "string"
+                                                  ? $$v.trim()
+                                                  : $$v
+                                              )
+                                            },
+                                            expression:
+                                              "stockOutDtlData[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c(
+                                      "span",
+                                      [
+                                        _c("el-input", {
+                                          attrs: {
+                                            type: "number",
+                                            placeholder: item.holder,
+                                            disabled: item.addChgAble
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.stockOutDtlData[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.stockOutDtlData,
+                                                item.prop,
+                                                typeof $$v === "string"
+                                                  ? $$v.trim()
+                                                  : $$v
+                                              )
+                                            },
+                                            expression:
+                                              "stockOutDtlData[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                              ])
+                            : item.type == "select"
+                            ? _c(
+                                "span",
+                                [
+                                  _c(
+                                    "el-select",
+                                    {
                                       attrs: {
                                         placeholder: item.holder,
                                         disabled: item.addChgAble
                                       },
                                       model: {
-                                        value:
-                                          _vm.stockOutDtlData[item.prop][
-                                            item.inProp
+                                        value: _vm.stockOutDtlData[item.prop],
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.stockOutDtlData,
+                                            item.prop,
+                                            $$v
+                                          )
+                                        },
+                                        expression: "stockOutDtlData[item.prop]"
+                                      }
+                                    },
+                                    _vm._l(
+                                      _vm.addSubData[item.stateVal],
+                                      function(list) {
+                                        return _c(
+                                          "span",
+                                          { key: list.id },
+                                          [
+                                            _c("el-option", {
+                                              attrs: {
+                                                label: list.name
+                                                  ? list.name
+                                                  : list.nick,
+                                                value: list.id
+                                              }
+                                            })
                                           ],
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.stockOutDtlData[item.prop],
-                                            item.inProp,
-                                            typeof $$v === "string"
-                                              ? $$v.trim()
-                                              : $$v
-                                          )
-                                        },
-                                        expression:
-                                          "stockOutDtlData[item.prop][item.inProp]"
+                                          1
+                                        )
                                       }
-                                    })
-                                  ],
-                                  1
-                                )
-                              : _c(
-                                  "span",
-                                  [
-                                    _c("el-input", {
-                                      attrs: {
-                                        placeholder: item.holder,
-                                        disabled: item.addChgAble
-                                      },
-                                      model: {
-                                        value: _vm.stockOutDtlData[item.prop],
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.stockOutDtlData,
-                                            item.prop,
-                                            typeof $$v === "string"
-                                              ? $$v.trim()
-                                              : $$v
-                                          )
-                                        },
-                                        expression: "stockOutDtlData[item.prop]"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                          ])
-                        : item.type == "number"
-                        ? _c("span", [
-                            item.prop == "deliver_goods_fee" ||
-                            item.prop == "move_upstairs_fee" ||
-                            item.prop == "installation_fee"
-                              ? _c(
-                                  "span",
-                                  [
-                                    _c("el-input", {
-                                      attrs: {
-                                        type: "number",
-                                        placeholder: item.holder,
-                                        disabled: item.addChgAble
-                                      },
-                                      on: { input: _vm.formChg },
-                                      model: {
-                                        value: _vm.stockOutDtlData[item.prop],
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.stockOutDtlData,
-                                            item.prop,
-                                            typeof $$v === "string"
-                                              ? $$v.trim()
-                                              : $$v
-                                          )
-                                        },
-                                        expression: "stockOutDtlData[item.prop]"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              : _c(
-                                  "span",
-                                  [
-                                    _c("el-input", {
-                                      attrs: {
-                                        type: "number",
-                                        placeholder: item.holder,
-                                        disabled: item.addChgAble
-                                      },
-                                      model: {
-                                        value: _vm.stockOutDtlData[item.prop],
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.stockOutDtlData,
-                                            item.prop,
-                                            typeof $$v === "string"
-                                              ? $$v.trim()
-                                              : $$v
-                                          )
-                                        },
-                                        expression: "stockOutDtlData[item.prop]"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                          ])
-                        : item.type == "select"
-                        ? _c(
-                            "span",
-                            [
-                              _c(
-                                "el-select",
-                                {
-                                  attrs: {
-                                    placeholder: item.holder,
-                                    disabled: item.addChgAble
-                                  },
-                                  model: {
-                                    value: _vm.stockOutDtlData[item.prop],
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.stockOutDtlData,
-                                        item.prop,
-                                        $$v
-                                      )
-                                    },
-                                    expression: "stockOutDtlData[item.prop]"
-                                  }
-                                },
-                                _vm._l(_vm.addSubData[item.stateVal], function(
-                                  list
-                                ) {
-                                  return _c(
-                                    "span",
-                                    { key: list.id },
-                                    [
-                                      _c("el-option", {
-                                        attrs: {
-                                          label: list.name
-                                            ? list.name
-                                            : list.nick,
-                                          value: list.id
-                                        }
-                                      })
-                                    ],
-                                    1
+                                    ),
+                                    0
                                   )
-                                }),
-                                0
+                                ],
+                                1
                               )
-                            ],
-                            1
-                          )
-                        : item.type == "textarea"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-input", {
-                                attrs: {
-                                  type: "textarea",
-                                  placehode: item.holder
-                                },
-                                model: {
-                                  value: _vm.stockOutDtlData[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.stockOutDtlData,
-                                      item.prop,
-                                      typeof $$v === "string" ? $$v.trim() : $$v
-                                    )
-                                  },
-                                  expression: "stockOutDtlData[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : item.type == "checkbox"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-checkbox", {
-                                attrs: { disabled: item.chgAble },
-                                model: {
-                                  value: _vm.stockOutDtlData[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.stockOutDtlData,
-                                      item.prop,
-                                      $$v
-                                    )
-                                  },
-                                  expression: "stockOutDtlData[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : item.type == "radio"
-                        ? _c(
-                            "span",
-                            [
-                              _c(
-                                "el-radio",
-                                {
-                                  attrs: { label: "volume" },
-                                  model: {
-                                    value: _vm.stockOutDtlData[item.prop],
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.stockOutDtlData,
-                                        item.prop,
-                                        $$v
-                                      )
+                            : item.type == "textarea"
+                            ? _c(
+                                "span",
+                                [
+                                  _c("el-input", {
+                                    attrs: {
+                                      type: "textarea",
+                                      placehode: item.holder
                                     },
-                                    expression: "stockOutDtlData[item.prop]"
-                                  }
-                                },
-                                [_vm._v(_vm._s(item.choiceName[0]))]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "el-radio",
-                                {
-                                  attrs: { label: "weight" },
-                                  model: {
-                                    value: _vm.stockOutDtlData[item.prop],
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.stockOutDtlData,
-                                        item.prop,
-                                        $$v
-                                      )
-                                    },
-                                    expression: "stockOutDtlData[item.prop]"
-                                  }
-                                },
-                                [_vm._v(_vm._s(item.choiceName[1]))]
+                                    model: {
+                                      value: _vm.stockOutDtlData[item.prop],
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.stockOutDtlData,
+                                          item.prop,
+                                          typeof $$v === "string"
+                                            ? $$v.trim()
+                                            : $$v
+                                        )
+                                      },
+                                      expression: "stockOutDtlData[item.prop]"
+                                    }
+                                  })
+                                ],
+                                1
                               )
-                            ],
-                            1
-                          )
-                        : item.type == "DatePicker"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-date-picker", {
-                                attrs: {
-                                  type: "date",
-                                  format: "yyyy-MM-dd",
-                                  "value-format": "yyyy-MM-dd",
-                                  placeholder: "选择日期"
-                                },
-                                model: {
-                                  value: _vm.stockOutDtlData[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.stockOutDtlData,
-                                      item.prop,
-                                      $$v
-                                    )
-                                  },
-                                  expression: "stockOutDtlData[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e()
-                    ]
+                            : item.type == "checkbox"
+                            ? _c(
+                                "span",
+                                [
+                                  _c("el-checkbox", {
+                                    attrs: { disabled: item.chgAble },
+                                    model: {
+                                      value: _vm.stockOutDtlData[item.prop],
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.stockOutDtlData,
+                                          item.prop,
+                                          $$v
+                                        )
+                                      },
+                                      expression: "stockOutDtlData[item.prop]"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : item.type == "radio"
+                            ? _c(
+                                "span",
+                                [
+                                  _c(
+                                    "el-radio",
+                                    {
+                                      attrs: { label: "volume" },
+                                      model: {
+                                        value: _vm.stockOutDtlData[item.prop],
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.stockOutDtlData,
+                                            item.prop,
+                                            $$v
+                                          )
+                                        },
+                                        expression: "stockOutDtlData[item.prop]"
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(item.choiceName[0]))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "el-radio",
+                                    {
+                                      attrs: { label: "weight" },
+                                      model: {
+                                        value: _vm.stockOutDtlData[item.prop],
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.stockOutDtlData,
+                                            item.prop,
+                                            $$v
+                                          )
+                                        },
+                                        expression: "stockOutDtlData[item.prop]"
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(item.choiceName[1]))]
+                                  )
+                                ],
+                                1
+                              )
+                            : item.type == "DatePicker"
+                            ? _c(
+                                "span",
+                                [
+                                  _c("el-date-picker", {
+                                    attrs: {
+                                      type: "date",
+                                      format: "yyyy-MM-dd",
+                                      "value-format": "yyyy-MM-dd",
+                                      placeholder: "选择日期"
+                                    },
+                                    model: {
+                                      value: _vm.stockOutDtlData[item.prop],
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.stockOutDtlData,
+                                          item.prop,
+                                          $$v
+                                        )
+                                      },
+                                      expression: "stockOutDtlData[item.prop]"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    }),
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-table",
+                    {
+                      attrs: {
+                        data: _vm.stockOutDtlData,
+                        fit: "",
+                        "row-class-name": _vm.addProRCName
+                      },
+                      on: { "row-click": _vm.addProRowClick }
+                    },
+                    _vm._l(_vm.stockOutDtlBottomHead, function(item) {
+                      return _c("el-table-column", {
+                        key: item.label,
+                        attrs: {
+                          label: item.label,
+                          align: "center",
+                          width: item.width
+                        },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "default",
+                              fn: function(scope) {
+                                return [
+                                  item.prop == "newData"
+                                    ? _c("span", [
+                                        _vm.proRIndex == "index" + scope.$index
+                                          ? _c("span", [
+                                              item.type == "number"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-input", {
+                                                        attrs: {
+                                                          size: "small",
+                                                          type: "number",
+                                                          placeholder:
+                                                            item.holder
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ][item.inProp],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row[
+                                                                item.prop
+                                                              ],
+                                                              item.inProp,
+                                                              typeof $$v ===
+                                                                "string"
+                                                                ? $$v.trim()
+                                                                : $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop][item.inProp]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : item.type == "checkbox"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-checkbox", {
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ][item.inProp],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row[
+                                                                item.prop
+                                                              ],
+                                                              item.inProp,
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop][item.inProp]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-input", {
+                                                        attrs: {
+                                                          size: "small",
+                                                          placeholder:
+                                                            item.holder
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ][item.inProp],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row[
+                                                                item.prop
+                                                              ],
+                                                              item.inProp,
+                                                              typeof $$v ===
+                                                                "string"
+                                                                ? $$v.trim()
+                                                                : $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop][item.inProp]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                            ])
+                                          : _c("span", [
+                                              item.type == "checkbox"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-checkbox", {
+                                                        attrs: { disabled: "" },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ][item.inProp],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row[
+                                                                item.prop
+                                                              ],
+                                                              item.inProp,
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop][item.inProp]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : _c("span", [
+                                                    _vm._v(
+                                                      "\n                    " +
+                                                        _vm._s(
+                                                          scope.row[item.prop][
+                                                            item.inProp
+                                                          ]
+                                                        ) +
+                                                        "\n                  "
+                                                    )
+                                                  ])
+                                            ])
+                                      ])
+                                    : item.prop
+                                    ? _c("span", [
+                                        item.type == "checkbox"
+                                          ? _c(
+                                              "span",
+                                              [
+                                                _c("el-checkbox", {
+                                                  attrs: { disabled: "" },
+                                                  model: {
+                                                    value: scope.row[item.prop],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row,
+                                                        item.prop,
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          : item.type == "img"
+                                          ? _c(
+                                              "span",
+                                              [
+                                                _c(
+                                                  "el-popover",
+                                                  {
+                                                    attrs: {
+                                                      placement: "right",
+                                                      trigger: "hover",
+                                                      "popper-class":
+                                                        "picture_detail"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("img", {
+                                                      attrs: {
+                                                        src:
+                                                          scope.row[item.prop]
+                                                      }
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c("img", {
+                                                      attrs: {
+                                                        slot: "reference",
+                                                        src:
+                                                          scope.row[item.prop],
+                                                        alt: scope.row[item.alt]
+                                                      },
+                                                      slot: "reference"
+                                                    })
+                                                  ]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          : _c("span", [
+                                              _vm._v(
+                                                "\n                  " +
+                                                  _vm._s(
+                                                    item.inProp
+                                                      ? scope.row[item.prop][
+                                                          item.inProp
+                                                        ]
+                                                      : scope.row[item.prop]
+                                                  ) +
+                                                  "\n                "
+                                              )
+                                            ])
+                                      ])
+                                    : _vm._e()
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          true
+                        )
+                      })
+                    }),
+                    1
                   )
-                }),
+                ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _c("el-tab-pane", { attrs: { label: "分拣明细", name: "1" } }),
+              _vm._v(" "),
+              _c("el-tab-pane", { attrs: { label: "高拍仪", name: "2" } }),
+              _vm._v(" "),
+              _c("el-tab-pane", { attrs: { label: "订单图片", name: "3" } })
             ],
             1
           ),
           _vm._v(" "),
-          _c("el-tab-pane", { attrs: { label: "分拣明细", name: "1" } }),
-          _vm._v(" "),
-          _c("el-tab-pane", { attrs: { label: "高拍仪", name: "2" } }),
-          _vm._v(" "),
-          _c("el-tab-pane", { attrs: { label: "订单图片", name: "3" } })
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.stockOutConfirm }
+                },
+                [_vm._v("确定")]
+              ),
+              _vm._v(" "),
+              _c("el-button", { on: { click: _vm.stockOutCancel } }, [
+                _vm._v("取消")
+              ])
+            ],
+            1
+          )
         ],
         1
       ),

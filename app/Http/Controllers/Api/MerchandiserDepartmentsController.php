@@ -176,6 +176,51 @@ class MerchandiserDepartmentsController extends Controller
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
+    public function update1(MerchandiserDepartmentRequest $request, Order $order)
+    {
+        return $this->traitUpdate($request, $order, self::TRANSFORMER);
+    }
+    public function update(
+        MerchandiserDepartmentRequest $merchandiserDepartmentRequest,
+        Order $order,
+        \App\Handlers\ValidatedHandler $validatedHandler
+    ) {
+    
+        //锁定才能修改
+        if ($order->unlock()) {
+            throw new UpdateResourceFailedException('订单未锁定无法修改');
+        }
+
+        $data[] = $merchandiserDepartmentRequest->validated();
+        $data[] = $merchandiserDepartmentRequest->input('order_items');
+
+        $order = DB::transaction(function () use (
+            $data,
+            $merchandiserDepartmentRequest,
+            $order,
+            $validatedHandler
+        ) {
+            $order->update($data[0]);
+
+            if ($data[1]??null) {
+                foreach ($data[1] as $item) {
+                    //计算要通过的字段
+                    $validatedData = $validatedHandler->getValidatedData($merchandiserDepartmentRequest->rules(), $item);
+                    //存在id则更新,否则插入
+                    if (isset($item['id'])) {
+                        $order->orderItems()->findOrFail($item['id'])->update($validatedData);
+                    } else {
+                        $order->orderItems()->create($validatedData);
+                    }
+                }
+            }
+            return $order;
+        });
+
+        return $this->response
+            ->item($order, new OrderTransformer())
+            ->setStatusCode(201);
+    }
     /**
      * 跟单驳回
      *

@@ -760,7 +760,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //跟单部
         $api->get('merchandiserdepts', 'MerchandiserDepartmentsController@index')
             ->name('api.merchandiserdepts.index');
-            $api->get('merchandiserdepts/searchstockout', 'MerchandiserDepartmentsController@searchStockOut')
+        $api->get('merchandiserdepts/searchstockout', 'MerchandiserDepartmentsController@searchStockOut')
             ->name('api.merchandiserdepts.searchstockout');
         $api->get('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@show')
             ->name('api.merchandiserdepts.show');
@@ -774,6 +774,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.merchandiserdepts.isunoneaudit');
         $api->put('merchandiserdepts/{order}/cargoaudit', 'MerchandiserDepartmentsController@isCargoAudit')
             ->name('api.merchandiserdepts.iscargoaudit');
+        $api->patch('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@update')
+            ->name('api.merchandiserdepts.update');
         // $api->put('merchandiserdepts/{order}/splitorder', 'MerchandiserDepartmentsController@isSplitOrder')
         //     ->name('api.merchandiserdepts.issplitorder');
         // $api->put('merchandiserdepts/mergerorder', 'MerchandiserDepartmentsController@isMergerOrder')

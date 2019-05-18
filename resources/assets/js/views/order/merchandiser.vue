@@ -111,7 +111,7 @@
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未货审" name="0">
-            <el-table :data="orderListData" fit v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="orderListData" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -159,7 +159,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="已货审" name="1">
-            <el-table :data="alreadyHandle" fit  v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="alreadyHandle" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -207,7 +207,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="可发货" name="2">
-            <el-table :data="waitingStockOut" fit v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="waitingStockOut" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -255,7 +255,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="已发货" name="3">
-            <el-table :data="alreadyStockOut" fit v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="alreadyStockOut" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -493,59 +493,107 @@
       </div>
     </el-dialog>
 
+    <!--发货-->
     <el-dialog title="订单发货" :visible.sync="stockOutMask" :class="{'more-forms':moreForms}">
-      <el-tab-pane label="发货明细" name="0">
-        <el-form :model="stockOutDtlData" :rules="addStockOutDtlRules" class="storageUpdateForm" id="form">
-          <el-form-item v-for="(item,index) in stockOutDtlHead" :key="index" :label="item.label" :prop="item.prop">
-            <span v-if="item.type=='text'">
-              <span v-if="item.inProp">
-                <el-input v-model.trim="stockOutDtlData[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-              </span>
-              <span v-else>
-                <el-input v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-              </span>
-            </span>
-            <span v-else-if="item.type=='number'">
-              <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                <el-input type="number" v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
-              </span>
-              <span v-else>
-                <el-input type="number" v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-              </span>
-            </span>
-            <span v-else-if="item.type=='select'">
-              <el-select v-model="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-                <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                  <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+      <el-tabs>
+        <el-tab-pane label="发货明细" name="0">
+          <el-form :model="stockOutDtlData" :rules="addStockOutDtlRules" class="storageUpdateForm" id="form">
+            <el-form-item v-for="(item,index) in stockOutDtlHead" :key="index" :label="item.label" :prop="item.prop">
+              <span v-if="item.type=='text'">
+                <span v-if="item.inProp">
+                  <el-input v-model.trim="stockOutDtlData[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
-              </el-select>
-            </span>
-            <span v-else-if="item.type=='textarea'">
-              <el-input type="textarea" v-model.trim="stockOutDtlData[item.prop]" :placehode="item.holder"></el-input>
-            </span>
-            <span v-else-if="item.type=='checkbox'">
-              <el-checkbox v-model="stockOutDtlData[item.prop]" :disabled="item.chgAble"></el-checkbox>
-            </span>
-            <span v-else-if="item.type=='radio'">
-              <el-radio v-model="stockOutDtlData[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-              <el-radio v-model="stockOutDtlData[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
-            </span>
-            <span v-else-if="item.type=='DatePicker'">
-              <el-date-picker v-model="stockOutDtlData[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
-              </el-date-picker>
-            </span>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
-      <el-tab-pane label="分拣明细" name="1">
-        
-      </el-tab-pane>
-      <el-tab-pane label="高拍仪" name="2">
-        
-      </el-tab-pane>
-      <el-tab-pane label="订单图片" name="3">
-       
-      </el-tab-pane>
+                <span v-else>
+                  <el-input v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+              </span>
+              <span v-else-if="item.type=='number'">
+                <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+                  <el-input type="number" v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+                </span>
+                <span v-else>
+                  <el-input type="number" v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+              </span>
+              <span v-else-if="item.type=='select'">
+                <el-select v-model="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+                  <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                    <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                  </span>
+                </el-select>
+              </span>
+              <span v-else-if="item.type=='textarea'">
+                <el-input type="textarea" v-model.trim="stockOutDtlData[item.prop]" :placehode="item.holder"></el-input>
+              </span>
+              <span v-else-if="item.type=='checkbox'">
+                <el-checkbox v-model="stockOutDtlData[item.prop]" :disabled="item.chgAble"></el-checkbox>
+              </span>
+              <span v-else-if="item.type=='radio'">
+                <el-radio v-model="stockOutDtlData[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="stockOutDtlData[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+              </span>
+              <span v-else-if="item.type=='DatePicker'">
+                <el-date-picker v-model="stockOutDtlData[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
+                </el-date-picker>
+              </span>
+            </el-form-item>
+          </el-form>
+          <el-table :data="stockOutDtlData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
+            <el-table-column v-for="item in stockOutDtlBottomHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.prop=='newData'">
+                  <span v-if="proRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='number'">
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                    </span>
+                    <span v-else-if="item.type == 'checkbox'">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='checkbox'">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop][item.inProp]}}
+                    </span>
+                  </span>
+                </span>
+                <span v-else-if="item.prop">
+                  <span v-if="item.type=='checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                  <span v-else-if="item.type=='img'">
+                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                      <img :src="scope.row[item.prop]">
+                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                    </el-popover>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="分拣明细" name="1">
+
+        </el-tab-pane>
+        <el-tab-pane label="高拍仪" name="2">
+
+        </el-tab-pane>
+        <el-tab-pane label="订单图片" name="3">
+
+        </el-tab-pane>
+      </el-tabs>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="stockOutConfirm">确定</el-button>
+        <el-button @click="stockOutCancel">取消</el-button>
+      </div>
     </el-dialog>
 
     <!--页码-->
@@ -1765,33 +1813,33 @@ export default {
         }
       ],
       stockOutMask: false,
-      stockOutDtlData:{
-        system_order_no:"",
-        receiver_name:"",
-        receiver_mobile:"",
-        receiver_address:"",
-        logistics_id:"",
-        logistics_sn:"",
-        actual_freight:"",
-        freight_types_id:"",
-        expected_freight:"",
-        total_volume:"",
-        distribution_phone:"",
-        distributions_id:"",
-        distribution_no:"",
-        distribution_types_id:"",
-        move_upstairs_fee:"",
-        deliver_goods_fee:"",
-        total_distribution_fee:"",
-        installation_fee:"",
-        package_quantity:"",
-        wooden_frame_costs:"",
-        supplier_id:"",
-        favorable_cashback:"",
-        stockout_at:"",
-        preferential_cashback:"",
-        stockout_remark:"",
-        warehouses_id:"",
+      stockOutDtlData: {
+        system_order_no: "",
+        receiver_name: "",
+        receiver_mobile: "",
+        receiver_address: "",
+        logistics_id: "",
+        logistics_sn: "",
+        actual_freight: "",
+        freight_types_id: "",
+        expected_freight: "",
+        total_volume: "",
+        distribution_phone: "",
+        distributions_id: "",
+        distribution_no: "",
+        distribution_types_id: "",
+        move_upstairs_fee: "",
+        deliver_goods_fee: "",
+        total_distribution_fee: "",
+        installation_fee: "",
+        package_quantity: "",
+        wooden_frame_costs: "",
+        supplier_id: "",
+        favorable_cashback: "",
+        stockout_at: "",
+        preferential_cashback: "",
+        stockout_remark: "",
+        warehouses_id: ""
       },
       stockOutDtlHead: [
         {
@@ -1892,7 +1940,7 @@ export default {
           label: "配送总计",
           prop: "total_distribution_fee",
           holder: "请输入配送总计",
-          type: "number",
+          type: "number"
         },
         {
           label: "安装费用",
@@ -1948,10 +1996,12 @@ export default {
           prop: "warehouses_id",
           type: "select",
           stateVal: "warehouse"
-        },
+        }
       ],
       addStockOutDtlRules: {
-        system_order_no: [{ required: true, message: "系统单号必选", trigger: "blur" }],
+        system_order_no: [
+          { required: true, message: "系统单号必选", trigger: "blur" }
+        ],
         logistics_id: [{ required: true, message: "物流公司必选", trigger: "blur" }],
         actual_freight: [
           { required: true, message: "物流运费必选", trigger: "blur" }
@@ -1962,15 +2012,39 @@ export default {
         freight_types_id: [
           { required: true, message: "运费类型必选", trigger: "blur" }
         ],
-        total_volume: [
-          { required: true, message: "总体积必选", trigger: "blur" }
-        ],
+        total_volume: [{ required: true, message: "总体积必选", trigger: "blur" }],
         package_quantity: [
           { required: true, message: "包件总数必选", trigger: "blur" }
         ],
         stockout_at: [{ required: true, message: "发货时间", trigger: "blur" }]
       },
-      addSubData:[],
+      stockOutDtlBottomHead: [
+        {
+          label: "淘宝单号",
+          width: "220",
+          prop: "taobao_oid",
+          type: "text"
+        },
+        {
+          label: "淘宝状态",
+          width: "220",
+          prop: "taobao_status",
+          type: "text"
+        },
+        {
+          label: "服务车",
+          width: "90",
+          prop: "service_car",
+          type: "checkbox"
+        },
+        {
+          label: "验证通过",
+          width: "90",
+          prop: "is_validated",
+          type: "checkbox"
+        }
+      ],
+      addSubData: [],
       apiData: {}
     };
   },
@@ -2069,12 +2143,12 @@ export default {
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
-              /**this.$fetch(this.urls.customerservicedepts + "/create").then(
+              this.$fetch(this.urls.customerservicedepts + "/create").then(
                 res => {
                   this.addSubData = res;
                 },
                 err => {}
-              );*/
+              );
             },
             err => {
               console.log(err);
@@ -2423,7 +2497,71 @@ export default {
     },
     stockOut() {
       this.stockOutMask = true;
+      if (this.checkboxId == "") {
+        this.$message({
+          type: "info",
+          message: "请先选择订单"
+        });
+      } else {
+        this.stockOutDtlData.system_order_no = this.curRowData.system_order_no;
+        this.stockOutDtlData.receiver_name = this.curRowData.receiver_name;
+        this.stockOutDtlData.receiver_mobile = this.curRowData.receiver_mobile;
+        this.stockOutDtlData.receiver_address = this.curRowData.receiver_address;
+        this.stockOutDtlData.logistics_id = this.curRowData.logistics_id;
+        this.stockOutDtlData.logistics_sn = this.curRowData.logistics_sn;
+        this.stockOutDtlData.actual_freight = this.curRowData.actual_freight;
+        this.stockOutDtlData.freight_types_id = this.curRowData.freight_types_id;
+        this.stockOutDtlData.expected_freight = this.curRowData.expected_freight;
+        this.stockOutDtlData.total_volume = this.curRowData.total_volume;
+        this.stockOutDtlData.distribution_phone = this.curRowData.distribution_phone;
+        this.stockOutDtlData.distributions_id = this.curRowData.distributions_id;
+        this.stockOutDtlData.distribution_no = this.curRowData.distribution_no;
+        this.stockOutDtlData.distribution_types_id = this.curRowData.distribution_types_id;
+        this.stockOutDtlData.move_upstairs_fee = this.curRowData.move_upstairs_fee;
+        this.stockOutDtlData.deliver_goods_fee = this.curRowData.deliver_goods_fee;
+        this.stockOutDtlData.total_distribution_fee = this.curRowData.total_distribution_fee;
+        this.stockOutDtlData.installation_fee = this.curRowData.installation_fee;
+        this.stockOutDtlData.package_quantity = this.curRowData.package_quantity;
+        this.stockOutDtlData.wooden_frame_costs = this.curRowData.wooden_frame_costs;
+        this.stockOutDtlData.supplier_id = this.curRowData.supplier_id;
+        this.stockOutDtlData.favorable_cashback = this.curRowData.favorable_cashback;
+        this.stockOutDtlData.preferential_cashback = this.curRowData.preferential_cashback;
+        this.stockOutDtlData.warehouses_id = this.curRowData.warehouses_id;
+        this.stockOutDtlData.taobao_oid = this.curRowData.taobao_oid;
+      }
     },
+    stockOutConfirm() {
+      let id = this.checkboxId ? this.checkboxId : curRowId;
+      let submitData = {
+        logistics_id: this.stockOutDtlData.logistics_id,
+        logistics_sn: this.stockOutDtlData.logistics_sn,
+        actual_freight: this.stockOutDtlData.actual_freight
+      };
+      this.$patch(
+        this.urls.customerservicedepts + "/" + id,
+        submitData
+      ).then(() => {
+        this.stockOutMask = false;
+        this.$message({
+          message: "发货成功",
+          type: "success"
+        });
+      });
+    },
+    handleSelectionChange(val) {
+      console.log(val);
+      /*拿到id集合*/
+      let delArr = [];
+      val.forEach(selectedItem => {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
+    },
+
     /*页码*/
     handlePagChg(page) {
       this.$fetch(this.urls.merchandiserdepts + "?page=" + page, {
