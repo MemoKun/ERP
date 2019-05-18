@@ -55,8 +55,133 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
+var _methods;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -501,9 +626,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       newOpt: [{
         cnt: "增加",
         icon: "bf-add",
@@ -544,7 +667,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         icon: "bf-refresh",
         ent: this.refresh
       }],
+      addTabActiveName: "0",
+      middleActiveName: "0",
+      bottomActiveName: "0",
+      filterBox: false,
+      loading: true, //loading标识
+      checkBoxInit: false, //checked 属性l
+
+      /**选择订单界面Dialog 订单列表*/
       chooseOrderMask: false,
+      chooseOrderData: {},
       chooseOrderHead: [{
         label: "订单编号",
         width: "220",
@@ -584,7 +716,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         prop: "suppliers_id",
         type: "text"
       }],
-      chooseOrderData: {},
+      /**选择订单界面Dialog 产品列表*/
       chooseOrderProListData: {},
       chooseOrderProListHead: [{
         label: "sku名称",
@@ -640,52 +772,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         inProp: "under_line_preferential",
         type: "number"
       }],
-      addTabActiveName: "0",
 
-      filterBox: false,
-      loading: true, //loading标识
       searchBox: {
         change_order_no: "",
         vip_name: "",
         order_num: "",
         order_man: "",
-        // order_phone: '',
-        // order_money: '',
-        // order_address: '',
-        // order_goods: '',
-        // order_staff: '',
-        // order_promiseDate: '',
-        // order_workDate: '',
-        // order_transMStart: '',
-        // order_transMEnd: '',
-        // orderCompany: [
-        //     {label: 'ceshi', value: 0}
-        // ],
-        // order_customerInves: '',
-        // order_mark: '',
-        // order_flag: '',
-        // ordertbFlag: [
-        //     {label: 'ceshi', value: 0}
-        // ],
-        // order_lock: '',
-        // orderLock: [
-        //     {label: 'ceshi', value: 0}
-        // ],
-        // order_company: '',
-        // order_shop: '',
-        // orderShops: [
-        //     {label: 'ceshi', value: 0}
-        // ],
         apply_man: ""
       },
 
-      activeName: "0",
-      activeName2: "0",
-
-      orderListData: [],
-
-      checkBoxInit: false, //checked 属性l
-      changeOrderListHead: [
+      /**首页中间主要table 新建 */
+      newOrderListData: [],
+      untreatedOrderListData: [],
+      treatedOrderListData: [],
+      canceledOrderListData: [],
+      middleTableHead: [
       // 后端再改inprop
       {
         label: "变更单号",
@@ -749,847 +850,913 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         width: "95",
         prop: "cancel_all",
         type: "checkBox"
+      }],
+
+      curRowId: "",
+      curRowData: {},
+      payDtlData: [],
+      addChangeOrderFormVal: {
+        change_order_no: null,
+        order_id: null,
+        applier_id: null,
+        submitter_id: null,
+        auditor_id: null,
+        is_canceled: false,
+        cancel_order_no: "",
+        change_remark: "",
+        change_status: 10,
+
+        system_order_no: "",
+        shops_id: null,
+        member_nick: "",
+        logistics_id: "",
+        billing_way: "",
+        promise_ship_time: "",
+        freight_types_id: "",
+        expected_freight: "",
+        distributions_id: "",
+        distribution_methods_id: "",
+        deliver_goods_fee: "",
+        move_upstairs_fee: "",
+        installation_fee: "",
+        total_distribution_fee: "",
+        distribution_phone: "",
+        distribution_no: "",
+        distribution_types_id: "",
+        service_car_info: "",
+        take_delivery_goods_fee: "",
+        take_delivery_goods_ways_id: "",
+        express_fee: "",
+        service_car_fee: "",
+        cancel_after_verification_code: "",
+        wooden_frame_costs: "",
+        preferential_cashback: "",
+        favorable_cashback: "",
+        customer_types_id: "",
+        is_invoice: false,
+        invoice_express_fee: "",
+        express_invoice_title: "",
+        contract_no: "",
+        payment_methods_id: "",
+        deposit: "",
+        document_title: "",
+        warehouses_id: "",
+        payment_date: "",
+        interest_concessions: "",
+        is_notice: false,
+        is_cancel_after_verification: false,
+        accept_order_user: "",
+        tax_number: "",
+        receipt: "",
+        logistics_remark: "",
+        seller_remark: "",
+        customer_service_remark: "",
+        buyer_message: "",
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_mobile: "",
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        receiver_address: "",
+        receiver_zip: "",
+        status: true
+      },
+      addDialogOrderDtlFormHead: [
+      //新增会话框 下部订单信息formhead
+      {
+        label: "店铺名称",
+        prop: "shops_id",
+        holder: "请选择店铺",
+        type: "select",
+        stateVal: "shop",
+        editChgAble: true
+      }, {
+        label: "买家姓名",
+        width: "130",
+        prop: "receiver_name",
+        type: "text"
+      }, {
+        label: "会员昵称",
+        width: "130",
+        prop: "member_nick",
+        type: "text"
+      }, {
+        label: "省",
+        width: "120",
+        prop: "receiver_state",
+        type: "text"
+      }, {
+        label: "市",
+        width: "120",
+        prop: "receiver_city",
+        type: "text"
+      }, {
+        label: "区",
+        width: "120",
+        prop: "receiver_district",
+        type: "text"
+      }, {
+        label: "收货地址",
+        width: "180",
+        prop: "receiver_address",
+        type: "text"
+      }, {
+        label: "固定电话",
+        width: "180",
+        prop: "receiver_phone",
+        type: "text"
+      }, {
+        label: "手机号码",
+        width: "180",
+        prop: "receiver_mobile",
+        type: "text"
+      }, {
+        label: "邮政编码",
+        width: "180",
+        prop: "receiver_zip",
+        type: "text"
+      }, {
+        label: "接单用户",
+        prop: "accept_order_user",
+        holder: "请输入接单用户",
+        type: "text"
+      }, {
+        label: "物流公司",
+        prop: "logistics_id",
+        holder: "请选择物流公司",
+        type: "select",
+        stateVal: "logistics"
+      }, {
+        label: "运费类型",
+        prop: "freight_types_id",
+        holder: "请选择运费类型",
+        type: "select",
+        stateVal: "freight_type"
+      }, {
+        label: "预计运费",
+        prop: "expected_freight",
+        holder: "请输入预计运费",
+        type: "number"
+      }, {
+        label: "承诺日期",
+        prop: "promise_ship_time",
+        type: "DatePicker"
+      }, {
+        label: "配送公司",
+        prop: "distributions_id",
+        holder: "请选择配送公司",
+        type: "select",
+        stateVal: "distribution"
+      }, {
+        label: "配送方式",
+        prop: "distribution_methods_id",
+        holder: "请选择配送方式",
+        type: "select",
+        stateVal: "distribution_method"
+      }, {
+        label: "配送类型",
+        prop: "distribution_types_id",
+        holder: "请选择配送类型",
+        type: "select",
+        stateVal: "distribution_type"
+      }, {
+        label: "配送单号",
+        width: "180",
+        prop: "distribution_no",
+        type: "text"
+      }, {
+        label: "送货费用",
+        width: "120",
+        prop: "deliver_goods_fee",
+        type: "number"
+      }, {
+        label: "搬楼费用",
+        width: "120",
+        prop: "move_upstairs_fee",
+        type: "number"
+      }, {
+        label: "安装费用",
+        width: "120",
+        prop: "installation_fee",
+        type: "number"
+      }, {
+        label: "配送总计",
+        width: "130",
+        prop: "total_distribution_fee",
+        type: "number"
+      }, {
+        label: "发货仓库",
+        holder: "请选择发货仓库",
+        prop: "warehouses_id",
+        type: "select",
+        stateVal: "warehouse"
+      }, {
+        label: "代发工厂",
+        holder: "请选择代发工厂",
+        prop: "warehouses_id",
+        type: "select",
+        stateVal: "warehouse"
+      }, {
+        label: "买家留言",
+        width: "150",
+        prop: "buyer_message",
+        type: "textarea"
+      }, {
+        label: "客服备注",
+        width: "150",
+        prop: "customer_service_remark",
+        type: "textarea"
+      }, {
+        label: "卖家备注",
+        width: "150",
+        prop: "customer_service_remark",
+        type: "textarea"
+      }],
+      proSkuVal: [],
+      /*新增*/
+      addOrderChangesMask: false,
+      moreForms: true,
+      threeParts: true,
+      addCustomerFormVal: {
+        //作用未知
+        shops_id: "",
+        member_nick: "",
+        logistics_id: "",
+        billing_way: "",
+        promise_ship_time: "",
+        freight_types_id: "",
+        expected_freight: "",
+        distributions_id: "",
+        distribution_methods_id: "",
+        deliver_goods_fee: "",
+        move_upstairs_fee: "",
+        installation_fee: "",
+        total_distribution_fee: 0,
+        distribution_phone: "",
+        distribution_no: "",
+        distribution_types_id: "",
+        service_car_info: "",
+        take_delivery_goods_fee: "",
+        take_delivery_goods_ways_id: "",
+        express_fee: "",
+        service_car_fee: "",
+        cancel_after_verification_code: "",
+        wooden_frame_costs: "",
+        preferential_cashback: "",
+        favorable_cashback: "",
+        customer_types_id: "",
+        is_invoice: false,
+        invoice_express_fee: "",
+        express_invoice_title: "",
+        contract_no: "",
+        payment_methods_id: "",
+        deposit: "",
+        document_title: "",
+        warehouses_id: "",
+        payment_date: "",
+        interest_concessions: "",
+        is_notice: false,
+        is_cancel_after_verification: false,
+        accept_order_user: "",
+        tax_number: "",
+        receipt: "",
+        logistics_remark: "",
+        seller_remark: "",
+        customer_service_remark: "",
+        buyer_message: "",
+        status: true
+      },
+      addCustomerFormRules: {
+        //新建订单的要求格式
+        shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
+        logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
+        billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
+        freight_types_id: [{ required: true, message: "运费类型必选", trigger: "blur" }],
+        distributions_id: [{ required: true, message: "配送方式必选", trigger: "blur" }],
+        take_delivery_goods_fee: [{ required: true, message: "提货费用必填", trigger: "blur" }],
+        customer_types_id: [{ required: true, message: "客户类型必选", trigger: "blur" }],
+        payment_methods_id: [{ required: true, message: "付款方式必选", trigger: "blur" }],
+        warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
+      },
+
+      addChangeOrderFormHead: [{
+        label: "变更单号",
+        holder: "系统自动生成",
+        prop: "change_order_no",
+        type: "text",
+        editChgAble: true,
+        addChgAble: true
+      }, {
+        label: "订单编码",
+        holder: "系统自动填写订单编码",
+        prop: "system_order_no",
+        type: "text",
+        editChgAble: true,
+        addChgAble: true
+      }, {
+        label: "申请人",
+        holder: "系统自动填写申请人",
+        prop: "business_personnel_id",
+        type: "text",
+        editChgAble: true,
+        addChgAble: true
+      }, {
+        label: "全单取消",
+        prop: "is_canceled",
+        type: "checkbox"
+      }, {
+        label: "备注",
+        holder: "请输入备注",
+        prop: "remark",
+        type: "textarea"
+      }, {
+        label: "作废",
+        prop: "is_trashed",
+        type: "checkbox"
+      }],
+      addChangeOrderFormRules: {
+        //新建订单的要求格式
+        system_order_no: [{ required: true, message: "系统单号必选", trigger: "blur" }]
+      },
+      proDtlHead: [{
+        label: "sku名称",
+        width: "120",
+        prop: "name",
+        type: "text"
+      }, {
+        label: "数量",
+        width: "120",
+        prop: "newData",
+        inProp: "quantity",
+        type: "number"
+      }, {
+        label: "油漆",
+        width: "120",
+        prop: "newData",
+        inProp: "paint",
+        type: "text"
+      }, {
+        label: "总体积",
+        width: "120",
+        prop: "newData",
+        inProp: "total_volume",
+        type: "number"
+      }, {
+        label: "需要印刷",
+        width: "90",
+        prop: "newData",
+        inProp: "is_printing",
+        type: "checkbox"
+      }, {
+        label: "印刷费用",
+        width: "120",
+        prop: "newData",
+        inProp: "printing_fee",
+        type: "number"
+      }, {
+        label: "现货",
+        width: "90",
+        prop: "newData",
+        inProp: "is_spot_goods",
+        type: "checkbox"
+      }, {
+        label: "单价(线下)",
+        width: "130",
+        prop: "newData",
+        inProp: "under_line_univalent",
+        type: "number"
+      }, {
+        label: "优惠(线下)",
+        width: "130",
+        prop: "newData",
+        inProp: "under_line_preferential",
+        type: "number"
+      }],
+      addActiveName: "0",
+      proData: [],
+      options: __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["regionDataPlus"],
+      addHead: [[{
+        label: "sku名称",
+        width: "160",
+        prop: "name",
+        type: "text"
+      }, {
+        label: "数量",
+        width: "130",
+        prop: "newData",
+        inProp: "quantity",
+        type: "number"
+      }, {
+        label: "油漆",
+        width: "120",
+        prop: "newData",
+        inProp: "paint",
+        type: "text"
+      }, {
+        label: "需要印刷",
+        width: "120",
+        prop: "newData",
+        inProp: "is_printing",
+        type: "checkbox"
+      }, {
+        label: "总体积",
+        width: "120",
+        prop: "newData",
+        inProp: "total_volume",
+        type: "number"
+      }, {
+        label: "印刷费用",
+        width: "140",
+        prop: "newData",
+        inProp: "printing_fee",
+        type: "number"
+      }, {
+        label: "现货",
+        width: "120",
+        prop: "newData",
+        inProp: "is_spot_goods",
+        type: "checkbox"
+      }, {
+        label: "单价(线下)",
+        width: "150",
+        prop: "newData",
+        inProp: "under_line_univalent",
+        type: "number"
+      }, {
+        label: "优惠(线下)",
+        width: "150",
+        prop: "newData",
+        inProp: "under_line_preferential",
+        type: "number"
+      }], [{
+        label: "姓名",
+        prop: "receiver_name",
+        holder: "请输入姓名",
+        type: "text"
+      }, {
+        label: "固定电话",
+        prop: "receiver_phone",
+        holder: "请输入固定电话",
+        type: "number"
+      }, {
+        label: "手机",
+        prop: "receiver_mobile",
+        holder: "请输入手机号码",
+        type: "number"
+      }, {
+        label: "省市区",
+        prop: "provinces",
+        type: "cascader"
+      }, {
+        label: "地址",
+        prop: "receiver_address",
+        type: "text"
+      }, {
+        label: "邮编",
+        prop: "receiver_zip",
+        holder: "请输入邮编",
+        type: "text"
+      }], [{
+        label: "类型名称",
+        prop: "payment_methods_id",
+        type: "select",
+        stateVal: "fee_type"
+      }, {
+        label: "金额",
+        prop: "payment",
+        type: "number"
+      }]],
+      expenseHead: [{
+        label: "类型名称",
+        prop: "payment_methods_id",
+        type: "select",
+        stateVal: "fee_type"
+      }, {
+        label: "金额",
+        prop: "payment",
+        type: "number"
+      }],
+      proMask: false,
+      proQuery: {
+        commodity_code: "",
+        component_code: "",
+        shops_id: "",
+        short_name: ""
+      },
+      proHead: [{
+        label: "产品图片",
+        prop: "img",
+        type: "img"
+      }, {
+        label: "商品编码",
+        prop: "commodity_code",
+        type: "text"
+      }, {
+        label: "工厂型号",
+        prop: "factory_model",
+        type: "text"
+      }, {
+        label: "商品简称",
+        prop: "short_name",
+        type: "text"
+      }, {
+        label: "类别名称",
+        prop: "goodsCategory",
+        inProp: "name",
+        type: "text"
+      }, {
+        label: "商品备注",
+        prop: "remark",
+        type: "text"
+      }],
+      proVal: [],
+      toggleText: false,
+      toggleHeight: true,
+      clickFlag: false,
+      proSkuHead: [{
+        label: "sku名称",
+        width: "120",
+        prop: "name",
+        type: "text"
+      }, {
+        label: "数量",
+        width: "120",
+        prop: "newData",
+        inProp: "quantity",
+        type: "number"
+      }, {
+        label: "油漆",
+        width: "120",
+        prop: "newData",
+        inProp: "paint",
+        type: "text"
+      }, {
+        label: "总体积",
+        width: "120",
+        prop: "newData",
+        inProp: "total_volume",
+        type: "number"
+      }, {
+        label: "需要印刷",
+        width: "90",
+        prop: "newData",
+        inProp: "is_printing",
+        type: "checkbox"
+      }, {
+        label: "印刷费用",
+        width: "120",
+        prop: "newData",
+        inProp: "printing_fee",
+        type: "number"
+      }, {
+        label: "现货",
+        width: "90",
+        prop: "newData",
+        inProp: "is_spot_goods",
+        type: "checkbox"
+      }, {
+        label: "单价(线下)",
+        width: "130",
+        prop: "newData",
+        inProp: "under_line_univalent",
+        type: "number"
+      }, {
+        label: "优惠(线下)",
+        width: "130",
+        prop: "newData",
+        inProp: "under_line_preferential",
+        type: "number"
+      }],
+      proCompVal: [],
+      proCompHead: [{
+        label: "组合",
+        width: "90",
+        prop: "is_common",
+        type: "checkbox"
+      }, {
+        label: "子件图片",
+        width: "120",
+        prop: "img_url",
+        type: "img"
+      }, {
+        label: "子件编码",
+        width: "140",
+        prop: "component_code",
+        type: "text"
+      }, {
+        label: "子件名称",
+        width: "120",
+        prop: "spec",
+        type: "text"
+      }, {
+        label: "颜色",
+        width: "120",
+        prop: "color",
+        type: "text"
+      }, {
+        label: "材质",
+        width: "120",
+        prop: "materials",
+        type: "text"
+      }, {
+        label: "功能",
+        width: "120",
+        prop: "function",
+        type: "text"
+      }, {
+        label: "特殊",
+        width: "120",
+        prop: "special",
+        type: "text"
+      }, {
+        label: "其他",
+        width: "120",
+        prop: "other",
+        type: "text"
+      }, {
+        label: "淘宝售价",
+        width: "130",
+        prop: "tb_price",
+        type: "number"
+      }, {
+        label: "标准售价",
+        width: "130",
+        prop: "price",
+        type: "number"
+      }, {
+        label: "最低销售价格",
+        width: "140",
+        prop: "lowest_price",
+        type: "number"
+      }, {
+        label: "最高销售价格",
+        width: "140",
+        prop: "highest_price",
+        type: "number"
+      }, {
+        label: "体积",
+        width: "120",
+        prop: "volume",
+        type: "number"
+      }, {
+        label: "包件数",
+        width: "130",
+        prop: "package_quantity",
+        type: "number"
+      }, {
+        label: "停产",
+        width: "90",
+        prop: "is_stop_pro",
+        type: "checkbox"
+      }],
+      proDtlVal: {},
+      proCompRowIndex: "",
+      proSubmitData: [],
+      proIds: [],
+      addIds: [],
+      proCompRow: {},
+      proRIndex: "",
+      receiveInfo: {
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_mobile: "",
+        provinces: [],
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        receiver_address: "",
+        receiver_zip: ""
+      },
+      halfForm: true,
+      expenseData: [],
+      expenseRIndex: "",
+      addSubData: [],
+      /*修改*/
+      updateCustomerMask: false,
+      updateCustomerFormVal: {},
+      updateActiveName: "0",
+      updateProData: [],
+      updateReceiveInfo: {},
+      updateExpenseData: [],
+      addChangeOrderProIds: [],
+      /*删除单条*/
+      showDel: false,
+      delUrl: "",
+      delId: "",
+
+      /**底部变更明细*/
+      changeDetails: {},
+      changeDetailsHead: [{
+        label: "组合商品",
+        prop: "combinations",
+        type: "checkbox"
+      }, {
+        label: "规格图片",
+        prop: "spec_img",
+        type: "img"
+      }, {
+        label: "商品编码",
+        prop: "commodity_code",
+        type: "text"
+      }, {
+        label: "商品简称",
+        prop: "short_name",
+        type: "text"
+      }, {
+        label: "规格名称",
+        prop: "spec",
+        type: "text"
+      }, {
+        label: "数量",
+        prop: "quantity",
+        type: "number"
+      }, {
+        label: "销售价格",
+        prop: "price",
+        type: "number"
+      }, {
+        label: "实际价格",
+        prop: "actual_price",
+        type: "number"
+      }, {
+        label: "类型",
+        prop: "type",
+        type: "text"
+      }],
+      changeOrdersMainInfo: {},
+      changeOrdersMainInfoHead: [{
+        label: "单据来源",
+        prop: "order_source",
+        width: "200",
+        type: "text",
+        editChgAble: true,
+        addChgAble: true
+      }, {
+        label: "单据编号",
+        prop: "taobao_oid",
+        type: "text",
+        editChgAble: true,
+        addChgAble: true
+      }, {
+        label: "店铺名称",
+        prop: "shops_id",
+        holder: "请选择店铺",
+        type: "text",
+        editChgAble: true
+      }, {
+        label: "会员昵称",
+        prop: "member_nick",
+        holder: "请输入会员昵称",
+        type: "text"
+      }, {
+        label: "业务员",
+        prop: "business_personnel_name",
+        type: "text"
+      }, {
+        label: "物流公司",
+        prop: "logistics_id",
+        holder: "请选择物流公司",
+        type: "text"
+      }, {
+        label: "承诺日期",
+        prop: "promise_ship_time",
+        type: "text"
+      }, {
+        label: "预计运费",
+        prop: "expected_freight",
+        holder: "请输入预计运费",
+        type: "number"
+      }, {
+        label: "运费类型",
+        prop: "freight_types_id",
+        holder: "请选择运费类型",
+        type: "text"
+      }, {
+        label: "三包服务",
+        prop: "sanbao_service",
+        holder: "请选择运费类型",
+        type: "text"
+      }, {
+        label: "三包类型",
+        prop: "sanbao_type",
+        holder: "请选择运费类型",
+        type: "text"
+      }, {
+        label: "姓名",
+        prop: "receiver_name",
+        holder: "请输入姓名",
+        type: "text"
+      }, {
+        label: "固定电话",
+        prop: "receiver_phone",
+        holder: "请输入固定电话",
+        type: "number"
+      }, {
+        label: "手机",
+        prop: "receiver_mobile",
+        holder: "请输入手机号码",
+        type: "number"
+      }, {
+        label: "省市区",
+        prop: "provinces",
+        type: "text"
+      }, {
+        label: "邮编",
+        prop: "receiver_zip",
+        holder: "请输入邮编",
+        type: "text"
+      }, {
+        label: "地址",
+        prop: "receiver_address",
+        type: "text"
+      }, {
+        label: "配送方式",
+        prop: "distribution_methods_id",
+        type: "text"
+      }, {
+        label: "配送信息",
+        prop: "service_car_info",
+        type: "text"
+      }, {
+        label: "买家留言",
+        prop: "buyer_message",
+        type: "textarea",
+        editChgAble: false,
+        addChgAble: false
+      }, {
+        label: "卖家备注",
+        prop: "seller_remark",
+        type: "textarea",
+        editChgAble: false,
+        addChgAble: false
+      }],
+      operationData: {},
+      operationHead: [{
+        label: "用户",
+        prop: "user",
+        type: "text"
+      }, {
+        label: "操作",
+        prop: "operation",
+        type: "text"
+      }, {
+        label: "操作描述",
+        prop: "operation_description",
+        type: "text"
+      }, {
+        label: "创建时间",
+        prop: "created_at",
+        type: "text"
+      }],
+      //批量选择 批量删除
+      ids: [],
+      splitMask: false,
+      splitVal: [],
+      splitHead: [{
+        label: "商品编码",
+        prop: "commodity_code",
+        type: "text"
+      }, {
+        label: "商品简称",
+        prop: "short_name",
+        type: "text"
+      }, {
+        label: "数量",
+        prop: "quantity",
+        type: "number"
+      }, {
+        label: "实际拆分数量",
+        prop: "newData",
+        inProp: "quantity",
+        type: "number"
+      }],
+      chooseOrderRowIndex: "",
+      chooseOrderRowId: "",
+      mergerIds: [],
+      orderItemListData: [],
+      orderItemListHead: [{
+        label: "系统单号",
+        prop: "system_order_no",
+        width: "220",
+        type: "text"
+      }, {
+        label: "店铺名称",
+        prop: "shops_id",
+        width: "200",
+        type: "text"
+      }, {
+        label: "订单金额",
+        prop: "deposit",
+        width: "200",
+        type: "text"
+      }, {
+        label: "会员ID",
+        prop: "member_nick",
+        width: "200",
+        type: "text"
       }]
-    }, _defineProperty(_ref, "orderListData", []), _defineProperty(_ref, "untreatedOrderListData", []), _defineProperty(_ref, "treatedOrderListData", []), _defineProperty(_ref, "canceledOrderListData", []), _defineProperty(_ref, "curRowId", ""), _defineProperty(_ref, "curRowData", {}), _defineProperty(_ref, "orderDtlHead", [
-    //新建订单的商品信息的表头
-    [{
-      label: "sku名称",
-      width: "160",
-      prop: "name",
-      type: "text"
-    }, {
-      label: "数量",
-      width: "130",
-      prop: "quantity",
-      type: "number"
-    }, {
-      label: "油漆",
-      width: "120",
-      prop: "paint",
-      type: "text"
-    }, {
-      label: "需要印刷",
-      width: "120",
-      prop: "is_printing",
-      type: "checkbox"
-    }, {
-      label: "总体积",
-      width: "120",
-      prop: "total_volume",
-      type: "number"
-    }, {
-      label: "印刷费用",
-      width: "140",
-      prop: "printing_fee",
-      type: "number"
-    }, {
-      label: "现货",
-      width: "120",
-      prop: "is_spot_goods",
-      type: "checkbox"
-    }, {
-      label: "单价(线下)",
-      width: "150",
-      prop: "under_line_univalent",
-      type: "number"
-    }, {
-      label: "优惠(线下)",
-      width: "150",
-      prop: "under_line_preferential",
-      type: "number"
-    }], [{
-      label: "支付金额",
-      prop: "payment",
-      type: "number"
-    }, {
-      label: "支付方式",
-      prop: "payment_methods_id",
-      type: "select",
-      stateVal: "paymentmethods"
-    }, {
-      label: "交易号",
-      prop: "taobao_tid",
-      type: "text"
-    }, {
-      label: "来源单号",
-      prop: "taobao_oid",
-      type: "text"
-    }], [], []]), _defineProperty(_ref, "payDtlData", []), _defineProperty(_ref, "orderDtlFormVal", {}), _defineProperty(_ref, "orderDtlFormHead", [{
-      label: "店铺昵称",
-      width: "150",
-      prop: "shop",
-      //inProp: "title",
-      type: "text"
-    }, {
-      label: "买家姓名",
-      width: "130",
-      prop: "buyer_name",
-      type: "text"
-    }, {
-      label: "会员昵称",
-      width: "130",
-      prop: "member_nick",
-      type: "text"
-    }, {
-      label: "业务员姓名",
-      width: "140",
-      prop: "user",
-      //inProp: "username",
-      type: "text"
-    }, {
-      label: "省",
-      width: "120",
-      prop: "receiver_state",
-      type: "text"
-    }, {
-      label: "市",
-      width: "120",
-      prop: "receiver_city",
-      type: "text"
-    }, {
-      label: "区",
-      width: "120",
-      prop: "receiver_district",
-      type: "text"
-    }, {
-      label: "收货地址",
-      width: "180",
-      prop: "receiver_address",
-      type: "text"
-    }, {
-      label: "固定电话",
-      width: "180",
-      prop: "receiver_phone",
-      type: "text"
-    }, {
-      label: "手机号码",
-      width: "180",
-      prop: "receiver_mobile",
-      type: "text"
-    }, {
-      label: "邮政编码",
-      width: "180",
-      prop: "receiver_zip",
-      type: "text"
-    }, {
-      label: "接单用户",
-      prop: "accept_order_user",
-      holder: "请输入接单用户",
-      type: "text"
-    }, {
-      label: "物流公司",
-      prop: "logistics_id",
-      holder: "请选择物流公司",
-      type: "select",
-      stateVal: "logistics"
-    }, {
-      label: "运费类型",
-      prop: "freight_types_id",
-      holder: "请选择运费类型",
-      type: "select",
-      stateVal: "freight_type"
-    }, {
-      label: "预计运费",
-      prop: "expected_freight",
-      holder: "请输入预计运费",
-      type: "number"
-    }, {
-      label: "承诺日期",
-      prop: "promise_ship_time",
-      type: "DatePicker"
-    }, {
-      label: "配送公司",
-      width: "130",
-      prop: "distribution",
-      //inProp: "name",
-      type: "text"
-    }, {
-      label: "配送方式",
-      width: "130",
-      prop: "distributionMethod",
-      //inProp: "name",
-      type: "text"
-    }, {
-      label: "配送类型",
-      width: "130",
-      prop: "distributionType",
-      //inProp: "name",
-      type: "text"
-    }, {
-      label: "配送单号",
-      width: "180",
-      prop: "distribution_no",
-      type: "text"
-    }, {
-      label: "送货费用",
-      width: "120",
-      prop: "deliver_goods_fee",
-      type: "number"
-    }, {
-      label: "搬楼费用",
-      width: "120",
-      prop: "move_upstairs_fee",
-      type: "number"
-    }, {
-      label: "安装费用",
-      width: "120",
-      prop: "installation_fee",
-      type: "number"
-    }, {
-      label: "配送总计",
-      width: "130",
-      prop: "total_distribution_fee",
-      type: "number"
-    }, {
-      label: "发货仓库",
-      width: "130",
-      prop: "warehouses",
-      //inProp: "name",
-      type: "text"
-    }, {
-      label: "代发工厂",
-      width: "130",
-      prop: "warehouses",
-      //inProp: "name",
-      type: "text"
-    }, {
-      label: "买家留言",
-      width: "150",
-      prop: "buyer_message",
-      type: "textarea"
-    }, {
-      label: "客服备注",
-      width: "150",
-      prop: "customer_service_remark",
-      type: "textarea"
-    }, {
-      label: "卖家备注",
-      width: "150",
-      prop: "customer_service_remark",
-      type: "textarea"
-    }]), _defineProperty(_ref, "addOrderChangesMask", false), _defineProperty(_ref, "moreForms", true), _defineProperty(_ref, "threeParts", true), _defineProperty(_ref, "addCustomerFormVal", {
-      //作用未知
-      shops_id: "",
-      member_nick: "",
-      logistics_id: "",
-      billing_way: "",
-      promise_ship_time: "",
-      freight_types_id: "",
-      expected_freight: "",
-      distributions_id: "",
-      distribution_methods_id: "",
-      deliver_goods_fee: "",
-      move_upstairs_fee: "",
-      installation_fee: "",
-      total_distribution_fee: 0,
-      distribution_phone: "",
-      distribution_no: "",
-      distribution_types_id: "",
-      service_car_info: "",
-      take_delivery_goods_fee: "",
-      take_delivery_goods_ways_id: "",
-      express_fee: "",
-      service_car_fee: "",
-      cancel_after_verification_code: "",
-      wooden_frame_costs: "",
-      preferential_cashback: "",
-      favorable_cashback: "",
-      customer_types_id: "",
-      is_invoice: false,
-      invoice_express_fee: "",
-      express_invoice_title: "",
-      contract_no: "",
-      payment_methods_id: "",
-      deposit: "",
-      document_title: "",
-      warehouses_id: "",
-      payment_date: "",
-      interest_concessions: "",
-      is_notice: false,
-      is_cancel_after_verification: false,
-      accept_order_user: "",
-      tax_number: "",
-      receipt: "",
-      logistics_remark: "",
-      seller_remark: "",
-      customer_service_remark: "",
-      buyer_message: "",
-      status: true
-    }), _defineProperty(_ref, "addCustomerFormRules", {
-      //新建订单的要求格式
-      shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
-      logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
-      billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
-      freight_types_id: [{ required: true, message: "运费类型必选", trigger: "blur" }],
-      distributions_id: [{ required: true, message: "配送方式必选", trigger: "blur" }],
-      take_delivery_goods_fee: [{ required: true, message: "提货费用必填", trigger: "blur" }],
-      customer_types_id: [{ required: true, message: "客户类型必选", trigger: "blur" }],
-      payment_methods_id: [{ required: true, message: "付款方式必选", trigger: "blur" }],
-      warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
-    }), _defineProperty(_ref, "addChangeOrderFormHead", [{
-      label: "变更单号",
-      holder: "系统自动生成",
-      prop: "change_order_no",
-      type: "text",
-      editChgAble: true,
-      addChgAble: true
-    }, {
-      label: "订单编码",
-      holder: "系统自动填写订单编码",
-      prop: "system_order_no",
-      type: "text",
-      editChgAble: true,
-      addChgAble: true
-    }, {
-      label: "申请人",
-      holder: "系统自动填写申请人",
-      prop: "business_personnel_id",
-      type: "text",
-      editChgAble: true,
-      addChgAble: true
-    }, {
-      label: "全单取消",
-      prop: "is_canceled",
-      type: "checkbox"
-    }, {
-      label: "备注",
-      holder: "请输入备注",
-      prop: "remark",
-      type: "textarea"
-    }, {
-      label: "作废",
-      prop: "is_trashed",
-      type: "checkbox"
-    }]), _defineProperty(_ref, "addChangeOrderFormVal", {
-      change_order_no: "",
-      system_order_no: "",
-      business_personnel_id: "",
-      is_canceled: "",
-      remark: "",
-      is_trashed: ""
-    }), _defineProperty(_ref, "addChangeOrderFormRules", {
-      //新建订单的要求格式
-      system_order_no: [{ required: true, message: "系统单号必选", trigger: "blur" }]
-    }), _defineProperty(_ref, "proDtlHead", [{
-      label: "sku名称",
-      width: "120",
-      prop: "name",
-      type: "text"
-    }, {
-      label: "数量",
-      width: "120",
-      prop: "newData",
-      inProp: "quantity",
-      type: "number"
-    }, {
-      label: "油漆",
-      width: "120",
-      prop: "newData",
-      inProp: "paint",
-      type: "text"
-    }, {
-      label: "总体积",
-      width: "120",
-      prop: "newData",
-      inProp: "total_volume",
-      type: "number"
-    }, {
-      label: "需要印刷",
-      width: "90",
-      prop: "newData",
-      inProp: "is_printing",
-      type: "checkbox"
-    }, {
-      label: "印刷费用",
-      width: "120",
-      prop: "newData",
-      inProp: "printing_fee",
-      type: "number"
-    }, {
-      label: "现货",
-      width: "90",
-      prop: "newData",
-      inProp: "is_spot_goods",
-      type: "checkbox"
-    }, {
-      label: "单价(线下)",
-      width: "130",
-      prop: "newData",
-      inProp: "under_line_univalent",
-      type: "number"
-    }, {
-      label: "优惠(线下)",
-      width: "130",
-      prop: "newData",
-      inProp: "under_line_preferential",
-      type: "number"
-    }]), _defineProperty(_ref, "addActiveName", "0"), _defineProperty(_ref, "proData", []), _defineProperty(_ref, "options", __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["regionDataPlus"]), _defineProperty(_ref, "addHead", [[{
-      label: "sku名称",
-      width: "160",
-      prop: "name",
-      type: "text"
-    }, {
-      label: "数量",
-      width: "130",
-      prop: "newData",
-      inProp: "quantity",
-      type: "number"
-    }, {
-      label: "油漆",
-      width: "120",
-      prop: "newData",
-      inProp: "paint",
-      type: "text"
-    }, {
-      label: "需要印刷",
-      width: "120",
-      prop: "newData",
-      inProp: "is_printing",
-      type: "checkbox"
-    }, {
-      label: "总体积",
-      width: "120",
-      prop: "newData",
-      inProp: "total_volume",
-      type: "number"
-    }, {
-      label: "印刷费用",
-      width: "140",
-      prop: "newData",
-      inProp: "printing_fee",
-      type: "number"
-    }, {
-      label: "现货",
-      width: "120",
-      prop: "newData",
-      inProp: "is_spot_goods",
-      type: "checkbox"
-    }, {
-      label: "单价(线下)",
-      width: "150",
-      prop: "newData",
-      inProp: "under_line_univalent",
-      type: "number"
-    }, {
-      label: "优惠(线下)",
-      width: "150",
-      prop: "newData",
-      inProp: "under_line_preferential",
-      type: "number"
-    }], [{
-      label: "姓名",
-      prop: "receiver_name",
-      holder: "请输入姓名",
-      type: "text"
-    }, {
-      label: "固定电话",
-      prop: "receiver_phone",
-      holder: "请输入固定电话",
-      type: "number"
-    }, {
-      label: "手机",
-      prop: "receiver_mobile",
-      holder: "请输入手机号码",
-      type: "number"
-    }, {
-      label: "省市区",
-      prop: "provinces",
-      type: "cascader"
-    }, {
-      label: "地址",
-      prop: "receiver_address",
-      type: "text"
-    }, {
-      label: "邮编",
-      prop: "receiver_zip",
-      holder: "请输入邮编",
-      type: "text"
-    }], [{
-      label: "类型名称",
-      prop: "payment_methods_id",
-      type: "select",
-      stateVal: "fee_type"
-    }, {
-      label: "金额",
-      prop: "payment",
-      type: "number"
-    }]]), _defineProperty(_ref, "expenseHead", [{
-      label: "类型名称",
-      prop: "payment_methods_id",
-      type: "select",
-      stateVal: "paymentmethods"
-    }, {
-      label: "金额",
-      prop: "payment",
-      type: "number"
-    }]), _defineProperty(_ref, "proMask", false), _defineProperty(_ref, "proQuery", {
-      commodity_code: "",
-      component_code: "",
-      shops_id: "",
-      short_name: ""
-    }), _defineProperty(_ref, "proHead", [{
-      label: "产品图片",
-      prop: "img",
-      type: "img"
-    }, {
-      label: "商品编码",
-      prop: "commodity_code",
-      type: "text"
-    }, {
-      label: "工厂型号",
-      prop: "factory_model",
-      type: "text"
-    }, {
-      label: "商品简称",
-      prop: "short_name",
-      type: "text"
-    }, {
-      label: "类别名称",
-      prop: "goodsCategory",
-      inProp: "name",
-      type: "text"
-    }, {
-      label: "商品备注",
-      prop: "remark",
-      type: "text"
-    }]), _defineProperty(_ref, "proVal", []), _defineProperty(_ref, "toggleText", false), _defineProperty(_ref, "toggleHeight", true), _defineProperty(_ref, "clickFlag", false), _defineProperty(_ref, "proCurSkuData", {}), _defineProperty(_ref, "chooseOrderProListData", []), _defineProperty(_ref, "proSkuHead", [{
-      label: "sku名称",
-      width: "120",
-      prop: "name",
-      type: "text"
-    }, {
-      label: "数量",
-      width: "120",
-      prop: "newData",
-      inProp: "quantity",
-      type: "number"
-    }, {
-      label: "油漆",
-      width: "120",
-      prop: "newData",
-      inProp: "paint",
-      type: "text"
-    }, {
-      label: "总体积",
-      width: "120",
-      prop: "newData",
-      inProp: "total_volume",
-      type: "number"
-    }, {
-      label: "需要印刷",
-      width: "90",
-      prop: "newData",
-      inProp: "is_printing",
-      type: "checkbox"
-    }, {
-      label: "印刷费用",
-      width: "120",
-      prop: "newData",
-      inProp: "printing_fee",
-      type: "number"
-    }, {
-      label: "现货",
-      width: "90",
-      prop: "newData",
-      inProp: "is_spot_goods",
-      type: "checkbox"
-    }, {
-      label: "单价(线下)",
-      width: "130",
-      prop: "newData",
-      inProp: "under_line_univalent",
-      type: "number"
-    }, {
-      label: "优惠(线下)",
-      width: "130",
-      prop: "newData",
-      inProp: "under_line_preferential",
-      type: "number"
-    }]), _defineProperty(_ref, "proCompVal", []), _defineProperty(_ref, "proCompHead", [{
-      label: "组合",
-      width: "90",
-      prop: "is_common",
-      type: "checkbox"
-    }, {
-      label: "子件图片",
-      width: "120",
-      prop: "img_url",
-      type: "img"
-    }, {
-      label: "子件编码",
-      width: "140",
-      prop: "component_code",
-      type: "text"
-    }, {
-      label: "子件名称",
-      width: "120",
-      prop: "spec",
-      type: "text"
-    }, {
-      label: "颜色",
-      width: "120",
-      prop: "color",
-      type: "text"
-    }, {
-      label: "材质",
-      width: "120",
-      prop: "materials",
-      type: "text"
-    }, {
-      label: "功能",
-      width: "120",
-      prop: "function",
-      type: "text"
-    }, {
-      label: "特殊",
-      width: "120",
-      prop: "special",
-      type: "text"
-    }, {
-      label: "其他",
-      width: "120",
-      prop: "other",
-      type: "text"
-    }, {
-      label: "淘宝售价",
-      width: "130",
-      prop: "tb_price",
-      type: "number"
-    }, {
-      label: "标准售价",
-      width: "130",
-      prop: "price",
-      type: "number"
-    }, {
-      label: "最低销售价格",
-      width: "140",
-      prop: "lowest_price",
-      type: "number"
-    }, {
-      label: "最高销售价格",
-      width: "140",
-      prop: "highest_price",
-      type: "number"
-    }, {
-      label: "体积",
-      width: "120",
-      prop: "volume",
-      type: "number"
-    }, {
-      label: "包件数",
-      width: "130",
-      prop: "package_quantity",
-      type: "number"
-    }, {
-      label: "停产",
-      width: "90",
-      prop: "is_stop_pro",
-      type: "checkbox"
-    }]), _defineProperty(_ref, "proDtlVal", {}), _defineProperty(_ref, "proCompRowIndex", ""), _defineProperty(_ref, "proSubmitData", []), _defineProperty(_ref, "proIds", []), _defineProperty(_ref, "addIds", []), _defineProperty(_ref, "proCompRow", {}), _defineProperty(_ref, "proRIndex", ""), _defineProperty(_ref, "receiveInfo", {
-      receiver_name: "",
-      receiver_phone: "",
-      receiver_mobile: "",
-      provinces: [],
-      receiver_state: "",
-      receiver_city: "",
-      receiver_district: "",
-      receiver_address: "",
-      receiver_zip: ""
-    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "updateCustomerMask", false), _defineProperty(_ref, "updateCustomerFormVal", {}), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "updateProIds", []), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delUrl", ""), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "changeDetails", {}), _defineProperty(_ref, "changeDetailsHead", [{
-      label: "组合商品",
-      prop: "combinations",
-      type: "checkbox"
-    }, {
-      label: "规格图片",
-      prop: "spec_img",
-      type: "img"
-    }, {
-      label: "商品编码",
-      prop: "commodity_code",
-      type: "text"
-    }, {
-      label: "商品简称",
-      prop: "short_name",
-      type: "text"
-    }, {
-      label: "规格名称",
-      prop: "spec",
-      type: "text"
-    }, {
-      label: "数量",
-      prop: "quantity",
-      type: "number"
-    }, {
-      label: "销售价格",
-      prop: "price",
-      type: "number"
-    }, {
-      label: "实际价格",
-      prop: "actual_price",
-      type: "number"
-    }, {
-      label: "类型",
-      prop: "type",
-      type: "text"
-    }]), _defineProperty(_ref, "changeOrdersMainInfo", {}), _defineProperty(_ref, "changeOrdersMainInfoHead", [{
-      label: "单据来源",
-      prop: "order_source",
-      width: "200",
-      type: "text",
-      editChgAble: true,
-      addChgAble: true
-    }, {
-      label: "单据编号",
-      prop: "taobao_oid",
-      type: "text",
-      editChgAble: true,
-      addChgAble: true
-    }, {
-      label: "店铺名称",
-      prop: "shops_id",
-      holder: "请选择店铺",
-      type: "text",
-      editChgAble: true
-    }, {
-      label: "会员昵称",
-      prop: "member_nick",
-      holder: "请输入会员昵称",
-      type: "text"
-    }, {
-      label: "业务员",
-      prop: "business_personnel_name",
-      type: "text"
-    }, {
-      label: "物流公司",
-      prop: "logistics_id",
-      holder: "请选择物流公司",
-      type: "text"
-    }, {
-      label: "承诺日期",
-      prop: "promise_ship_time",
-      type: "text"
-    }, {
-      label: "预计运费",
-      prop: "expected_freight",
-      holder: "请输入预计运费",
-      type: "number"
-    }, {
-      label: "运费类型",
-      prop: "freight_types_id",
-      holder: "请选择运费类型",
-      type: "text"
-    }, {
-      label: "三包服务",
-      prop: "sanbao_service",
-      holder: "请选择运费类型",
-      type: "text"
-    }, {
-      label: "三包类型",
-      prop: "sanbao_type",
-      holder: "请选择运费类型",
-      type: "text"
-    }, {
-      label: "姓名",
-      prop: "receiver_name",
-      holder: "请输入姓名",
-      type: "text"
-    }, {
-      label: "固定电话",
-      prop: "receiver_phone",
-      holder: "请输入固定电话",
-      type: "number"
-    }, {
-      label: "手机",
-      prop: "receiver_mobile",
-      holder: "请输入手机号码",
-      type: "number"
-    }, {
-      label: "省市区",
-      prop: "provinces",
-      type: "text"
-    }, {
-      label: "邮编",
-      prop: "receiver_zip",
-      holder: "请输入邮编",
-      type: "text"
-    }, {
-      label: "地址",
-      prop: "receiver_address",
-      type: "text"
-    }, {
-      label: "配送方式",
-      prop: "distribution_methods_id",
-      type: "text"
-    }, {
-      label: "配送信息",
-      prop: "service_car_info",
-      type: "text"
-    }, {
-      label: "买家留言",
-      prop: "buyer_message",
-      type: "textarea",
-      editChgAble: false,
-      addChgAble: false
-    }, {
-      label: "卖家备注",
-      prop: "seller_remark",
-      type: "textarea",
-      editChgAble: false,
-      addChgAble: false
-    }]), _defineProperty(_ref, "operationData", {}), _defineProperty(_ref, "operationHead", [{
-      label: "用户",
-      prop: "user",
-      type: "text"
-    }, {
-      label: "操作",
-      prop: "operation",
-      type: "text"
-    }, {
-      label: "操作描述",
-      prop: "operation_description",
-      type: "text"
-    }, {
-      label: "创建时间",
-      prop: "created_at",
-      type: "text"
-    }]), _defineProperty(_ref, "ids", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "splitHead", [{
-      label: "商品编码",
-      prop: "commodity_code",
-      type: "text"
-    }, {
-      label: "商品简称",
-      prop: "short_name",
-      type: "text"
-    }, {
-      label: "数量",
-      prop: "quantity",
-      type: "number"
-    }, {
-      label: "实际拆分数量",
-      prop: "newData",
-      inProp: "quantity",
-      type: "number"
-    }]), _defineProperty(_ref, "chooseOrderRowIndex", ""), _defineProperty(_ref, "chooseOrderRowId", {}), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "orderItemListData", []), _defineProperty(_ref, "orderItemListHead", [{
-      label: "系统单号",
-      prop: "system_order_no",
-      width: "220",
-      type: "text"
-    }, {
-      label: "店铺名称",
-      prop: "shops_id",
-      width: "200",
-      type: "text"
-    }, {
-      label: "订单金额",
-      prop: "deposit",
-      width: "200",
-      type: "text"
-    }, {
-      label: "会员ID",
-      prop: "member_nick",
-      width: "200",
-      type: "text"
-    }]), _ref;
+    };
   },
 
   computed: {
@@ -1624,22 +1791,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     */
   },
-  methods: {
+  methods: (_methods = {
     toogleShow: function toogleShow() {
       this.filterBox = !this.filterBox;
     },
     fetchData: function fetchData() {
       var _this = this;
 
-      var index = this.activeName - 0;
+      var index = this.middleActiveName - 0;
       switch (index) {
         case 0:
           this.$fetch(this.urls.changeorders + "/searchnew", {
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
-            _this.orderListData = res.data;
-            //this.orderDtlFormVal = res.data[0];
+            _this.newOrderListData = res.data;
+            //this.addChangeOrderFormVal = res.data[0];
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -1764,9 +1931,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     test: function test() {
       console.log(1);
     },
-    addProRCName: function addProRCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
+    confirmAddProDtl: function confirmAddProDtl() {
+      var _this3 = this;
+
+      if (this.addOrderChangesMask) {
+        this.proSubmitData.map(function (item) {
+          if (_this3.addIds.indexOf(item.id) == -1) {
+            _this3.proData.push(item);
+            _this3.addIds.push(item.id);
+            _this3.$message({
+              message: "添加商品信息成功",
+              type: "success"
+            });
+            _this3.proMask = false;
+          } else {
+            _this3.proData.map(function (list, index) {
+              if (list.id == item.id) {
+                _this3.proData.splice(index, 1);
+                _this3.proData.push(item);
+                _this3.$message({
+                  message: "添加商品信息成功",
+                  type: "success"
+                });
+                _this3.proMask = false;
+              }
+            });
+          }
+        });
+      } else {
+        this.proSubmitData.map(function (item) {
+          if (_this3.updateProIds.indexOf(item.id) == -1) {
+            _this3.updateProData.push(item);
+            _this3.updateProIds.push(item.id);
+            _this3.$message({
+              message: "添加商品信息成功",
+              type: "success"
+            });
+          } else {
+            _this3.updateProData.map(function (list, index) {
+              if (list.combinations_id == item.id) {
+                _this3.$set(item, "originalId", list.id);
+                _this3.updateProData.splice(index, 1);
+                _this3.updateProData.push(item);
+                _this3.$message({
+                  message: "添加商品信息成功",
+                  type: "success"
+                });
+              }
+            });
+          }
+        });
+      }
+    },
+    addProRCName: function addProRCName(_ref) {
+      var row = _ref.row,
+          rowIndex = _ref.rowIndex;
 
       row.index = rowIndex;
     },
@@ -1777,62 +1996,153 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addProRowClick: function addProRowClick(row) {
       this.proRIndex = "index" + row.index;
     },
-    addAfterSProRowCName: function addAfterSProRowCName(_ref3) {
+    addAfterSProRowCName: function addAfterSProRowCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
+
+      row.index = rowIndex;
+    },
+    addOrderRowCName: function addOrderRowCName(_ref3) {
       var row = _ref3.row,
           rowIndex = _ref3.rowIndex;
 
       row.index = rowIndex;
     },
-    addOrderRowCName: function addOrderRowCName(_ref4) {
-      var row = _ref4.row,
-          rowIndex = _ref4.rowIndex;
+    quantityChg: function quantityChg(value) {
+      var _this4 = this;
 
-      row.index = rowIndex;
+      if (value > 0) {
+        var proCRow = this.proCompRow;
+        if (this.proIds.indexOf(proCRow.id) == -1) {
+          this.proIds.push(proCRow.id);
+          this.proSubmitData.push(proCRow);
+        } else {
+          this.proSubmitData.map(function (list, index) {
+            if (list.id == proCRow.id) {
+              _this4.proSubmitData.splice(index, 1);
+              _this4.proSubmitData.push(proCRow);
+            }
+          });
+        }
+      }
     },
     chooseOrderRowClick: function chooseOrderRowClick(row) {
-      var _this3 = this;
+      var _this5 = this;
 
       this.chooseOrderRowIndex = "index" + row.index;
       this.chooseOrderRowId = row.id;
       this.chooseOrderProListData = [];
       this.proCompRowIndex = "";
+      this.addChangeOrderProIds = [];
 
-      var comb = row["orderItems"]["data"];
-      if (comb.length > 0) {
-        var total_volume = 0;
-        comb.map(function (item) {
-          item["productComp"] = item["productComponents"]["data"];
-          if (item["productComponents"]["data"].length > 0) {
-            item["productComponents"]["data"].map(function (list) {
-              total_volume += list.volume;
+      this.$fetch(this.urls.customerservicedepts + "/" + this.chooseOrderRowId, {
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+      }).then(function (res) {
+        _this5.addChangeOrderFormVal.order_id = Number(_this5.chooseOrderRowId);
+        _this5.addChangeOrderFormVal.system_order_no = res["system_order_no"];
+        _this5.addChangeOrderFormVal.shops_id = res["shops_id"];
+        _this5.addChangeOrderFormVal.member_nick = res["member_nick"];
+        _this5.addChangeOrderFormVal.logistics_id = res["logistics_id"];
+        _this5.addChangeOrderFormVal.billing_way = res["billing_way"];
+        _this5.addChangeOrderFormVal.promise_ship_time = res["promise_ship_time"];
+        _this5.addChangeOrderFormVal.freight_types_id = res["freight_types_id"];
+        _this5.addChangeOrderFormVal.expected_freight = res["expected_freight"];
+        _this5.addChangeOrderFormVal.distributions_id = res["distributions_id"];
+        _this5.addChangeOrderFormVal.distribution_methods_id = res["distribution_methods_id"];
+        _this5.addChangeOrderFormVal.deliver_goods_fee = res["deliver_goods_fee"];
+        _this5.addChangeOrderFormVal.move_upstairs_fee = res["move_upstairs_fee"];
+        _this5.addChangeOrderFormVal.installation_fee = res["installation_fee"];
+        _this5.addChangeOrderFormVal.total_distribution_fee = res["total_distribution_fee"];
+        _this5.addChangeOrderFormVal.distribution_phone = res["distribution_phone"];
+        _this5.addChangeOrderFormVal.distribution_no = res["distribution_no"];
+        _this5.addChangeOrderFormVal.distribution_types_id = res["distribution_types_id"];
+        _this5.addChangeOrderFormVal.service_car_info = res["service_car_info"];
+        _this5.addChangeOrderFormVal.take_delivery_goods_fee = res["take_delivery_goods_fee"];
+        _this5.addChangeOrderFormVal.take_delivery_goods_ways_id = res["take_delivery_goods_ways_id"];
+        _this5.addChangeOrderFormVal.express_fee = res["express_fee"];
+        _this5.addChangeOrderFormVal.service_car_fee = res["service_car_fee"];
+        _this5.addChangeOrderFormVal.cancel_after_verification_code = res["cancel_after_verification_code"];
+        _this5.addChangeOrderFormVal.wooden_frame_costs = res["wooden_frame_costs"];
+        _this5.addChangeOrderFormVal.preferential_cashback = res["preferential_cashback"];
+        _this5.addChangeOrderFormVal.favorable_cashback = res["favorable_cashback"];
+        _this5.addChangeOrderFormVal.customer_types_id = res["customer_types_id"];
+        _this5.addChangeOrderFormVal.is_invoice = res["is_invoice"];
+        _this5.addChangeOrderFormVal.invoice_express_fee = res["invoice_express_fee"];
+        _this5.addChangeOrderFormVal.express_invoice_title = res["express_invoice_title"];
+        _this5.addChangeOrderFormVal.contract_no = res["contract_no"];
+        _this5.addChangeOrderFormVal.payment_methods_id = res["payment_methods_id"];
+        _this5.addChangeOrderFormVal.deposit = res["deposit"];
+        _this5.addChangeOrderFormVal.document_title = res["document_title"];
+        _this5.addChangeOrderFormVal.warehouses_id = res["warehouses_id"];
+        _this5.addChangeOrderFormVal.payment_date = res["payment_date"];
+        _this5.addChangeOrderFormVal.interest_concessions = res["interest_concessions"];
+        _this5.addChangeOrderFormVal.is_notice = res["is_notice"];
+        _this5.addChangeOrderFormVal.is_cancel_after_verification = res["is_cancel_after_verification"];
+        _this5.addChangeOrderFormVal.accept_order_user = res["accept_order_user"];
+        _this5.addChangeOrderFormVal.tax_number = res["tax_number"];
+        _this5.addChangeOrderFormVal.receipt = res["receipt"];
+        _this5.addChangeOrderFormVal.logistics_remark = res["logistics_remark"];
+        _this5.addChangeOrderFormVal.seller_remark = res["seller_remark"];
+        _this5.addChangeOrderFormVal.customer_service_remark = res["customer_service_remark"];
+        _this5.addChangeOrderFormVal.buyer_message = res["buyer_message"];
+        _this5.addChangeOrderFormVal.receiver_name = res["receiver_name"];
+        _this5.addChangeOrderFormVal.receiver_phone = res["receiver_phone"];
+        _this5.addChangeOrderFormVal.receiver_mobile = res["receiver_mobile"];
+        _this5.addChangeOrderFormVal.receiver_state = res["receiver_state"];
+        _this5.addChangeOrderFormVal.receiver_city = res["receiver_city"];
+        _this5.addChangeOrderFormVal.receiver_district = res["receiver_district"];
+        _this5.addChangeOrderFormVal.receiver_address = res["receiver_address"];
+        _this5.addChangeOrderFormVal.receiver_zip = res["receiver_zip"];
+        _this5.addChangeOrderFormVal.status = res["status"];
+
+        if (res["orderItems"]["data"].length > 0) {
+          res["orderItems"]["data"].map(function (item) {
+            _this5.addChangeOrderProIds.push(item["combination"].id);
+            item["name"] = item["combination"]["name"];
+            item["id"] = item.id;
+            item["products_id"] = item.products_id;
+            item["combinations_id"] = item.combinations_id;
+            item["productComp"] = item["combination"]["productComponents"]["data"];
+            _this5.$set(item, "newData", {
+              quantity: item.quantity,
+              paint: item.paint,
+              is_printing: item.is_printing,
+              printing_fee: item.printing_fee,
+              is_spot_goods: item.is_spot_goods,
+              under_line_univalent: item.under_line_univalent,
+              under_line_preferential: item.under_line_preferential,
+              total_volume: item.total_volume
             });
-          } else {
-            total_volume = 0;
-          }
-          _this3.$set(item, "newData", {
-            quantity: "",
-            paint: "",
-            is_printing: false,
-            printing_fee: "0.0",
-            is_spot_goods: false,
-            under_line_univalent: "0.0",
-            under_line_preferential: "0.0",
-            total_volume: total_volume
           });
-        });
-      } else {
-        comb["productComp"] = [];
-      }
-      this.chooseOrderProListData = comb;
+        }
+
+        _this5.proData = res["orderItems"]["data"];
+        _this5.chooseOrderProListData = res["orderItems"]["data"];
+        _this5.expenseData = res["paymentDetails"]["data"];
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this5.$message.error(str);
+        }
+      });
     },
     addExpenseRClick: function addExpenseRClick(row) {
       this.expenseRIndex = "index" + row.index;
     },
-    addExpenseRCName: function addExpenseRCName(_ref5) {
-      var row = _ref5.row,
-          rowIndex = _ref5.rowIndex;
+    addExpenseRCName: function addExpenseRCName(_ref4) {
+      var row = _ref4.row,
+          rowIndex = _ref4.rowIndex;
 
       row.index = rowIndex;
+    },
+    proSkuRowClick: function proSkuRowClick(row) {
+      this.proCompRowIndex = "index" + row.index;
+      this.proCompRow = row;
     },
 
     /*新增行*/
@@ -1856,225 +2166,395 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "success"
       });
     },
-
-
-    /** */
-    chooseOrders: function chooseOrders() {
-      this.chooseOrderMask = true;
-    },
-    addAfterSProRowClick: function addAfterSProRowClick(row) {
-      this.addAfterSProDtlVal.push(row);
-    },
-
-    /*页码*/
-    handlePagChg: function handlePagChg(page) {
-      var _this4 = this;
-
-      this.$fetch(this.urls.changeorders + "?page=" + page, {
-        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-      }).then(function (res) {
-        var index = _this4.activeName - 0;
-        switch (index) {
-          case 0:
-            _this4.orderListData = res.data;
-            break;
-          case 1:
-            _this4.untreatedOrderListData = res.data;
-            break;
-          case 2:
-            _this4.treatedOrderListData = res.data;
-            break;
-          case 3:
-            _this4.canceledOrderListData = rew.data;
-            break;
-        }
-      });
-    },
-    firstHandleClick: function firstHandleClick() {
-      this.loading = true;
-      this.fetchData();
-    },
-    secondHandleClick: function secondHandleClick() {
-      var index = this.activeName2 - 0;
-      switch (index) {
-        case 0:
-          this.loading = true;
-          this.fetchData();
-          break;
-        case 1:
-          console.log(index);
-          break;
-        case 2:
-          console.log(index);
-          break;
-        case 3:
-          console.log(index);
-          break;
-      }
-    },
-    orderListRClick: function orderListRClick(row) {
-      console.log("orderListRClic");
-      /**if (row["locker_id"] == 0) {
-        this.newOpt[1].nClick = true;
-        this.newOpt[2].nClick = true;
-        this.newOpt[3].nClick = false;
-        this.newOpt[4].nClick = true;
-        this.newOpt[8].nClick = true;
-        this.newOpt[9].nClick = true;
-        this.newOpt[14].nClick = true;
-        if (row["order_status"] == "已客审") {
-          this.newOpt[5].nClick = true;
-          this.newOpt[6].nClick = false;
-        } else {
-          this.newOpt[5].nClick = false;
-          this.newOpt[6].nClick = true;
-        }
-      } else {
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = false;
-        this.newOpt[3].nClick = true;
-        this.newOpt[4].nClick = false;
-        this.newOpt[5].nClick = false;
-        this.newOpt[6].nClick = true;
-        this.newOpt[8].nClick = false;
-        this.newOpt[9].nClick = false;
-        this.newOpt[14].nClick = false;
-      }**/
-      this.curRowId = row.id;
-      this.curRowData = row;
-    },
-    addChanges: function addChanges() {
-      console.log("addChanges");
-      this.addOrderChangesMask = true;
-      this.addIds = [];
-      this.proData = [];
-      this.proRIndex = "";
-    },
-    updateChanges: function updateChanges() {
-      console.log("updateChanges");
-    },
-    deleteChanges: function deleteChanges() {
-      console.log("deleteChanges");
-    },
-    submitChanges: function submitChanges() {
-      var _this5 = this;
-
-      if (this.newOpt[4].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.changeorders + "/" + id + "/submit").then(function () {
-          // this.newOpt[1].nClick = true;
-          _this5.refresh();
-          _this5.$message({
-            message: "提交成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this5.$message.error(str);
-          }
-        });
-      }
-    },
-    handleAudit: function handleAudit() {
+    proRowClick: function proRowClick(row) {
       var _this6 = this;
 
-      console.log("handleAudit");
-      if (this.newOpt[4].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.changeorders + "/" + id + "/audit").then(function () {
-          // this.newOpt[1].nClick = true;
-          _this6.refresh();
-          _this6.$message({
-            message: "审核成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this6.$message.error(str);
+      this.proSkuVal = [];
+      this.proCompRowIndex = "";
+      var comb = row["combinations"]["data"];
+      if (comb.length > 0) {
+        var total_volume = 0;
+        comb.map(function (item) {
+          item["productComp"] = item["productComponents"]["data"];
+          if (item["productComponents"]["data"].length > 0) {
+            item["productComponents"]["data"].map(function (list) {
+              total_volume += list.volume;
+            });
+          } else {
+            total_volume = 0;
           }
-        });
-      }
-    },
-    handleUnAudit: function handleUnAudit() {
-      var _this7 = this;
-
-      if (this.newOpt[6].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.changeorders + "/" + id + "/unaudit").then(function () {
-          _this7.refresh();
-          _this7.$message({
-            message: "退回提交成功",
-            type: "success"
+          _this6.$set(item, "newData", {
+            quantity: "",
+            paint: "",
+            is_printing: false,
+            printing_fee: "0.0",
+            is_spot_goods: false,
+            under_line_univalent: "0.0",
+            under_line_preferential: "0.0",
+            total_volume: total_volume
           });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this7.$message.error(str);
-          }
         });
-      }
-    },
-    formChg: function formChg() {
-      var formVal = void 0;
-      if (this.addCustomerMask) {
-        formVal = this.addCustomerFormVal;
       } else {
-        formVal = this.updateCustomerFormVal;
+        comb["productComp"] = [];
       }
-      formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
-      if (this.addCustomerMask) {
-        this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
-      } else {
-        this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
-      }
+      this.proSkuVal = comb;
     },
-    addChangeOrderCancel: function addChangeOrderCancel() {
-      this.addOrderChangesMask = false;
-    },
+    proSkuCName: function proSkuCName(_ref5) {
+      var row = _ref5.row,
+          rowIndex = _ref5.rowIndex;
 
-    //批量删除操作
-    handleSelectionChange: function handleSelectionChange(val) {
-      console.log(val);
-      //拿到当前id集合
-      var delArr = [];
-      val.forEach(function (seletedIem) {
-        delArr.push(selecteItem.id);
-      });
-      console.log(+delArr);
-      this.ids = delArr.join(",");
-      console.log(delArr);
-      //拿到当前id
-      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-      this.mergerIds = val;
-    },
-    resets: function resets() {
-      this.searchBox = {};
+      row.index = rowIndex;
     }
-  },
+  }, _defineProperty(_methods, "proSkuRowClick", function proSkuRowClick(row) {
+    this.proCompRowIndex = "index" + row.index;
+    this.proCompRow = row;
+  }), _defineProperty(_methods, "addProRowClick", function addProRowClick(row) {
+    this.proRIndex = "index" + row.index;
+  }), _defineProperty(_methods, "addProRCName", function addProRCName(_ref6) {
+    var row = _ref6.row,
+        rowIndex = _ref6.rowIndex;
+
+    row.index = rowIndex;
+  }), _defineProperty(_methods, "addDelPro", function addDelPro(index) {
+    this.proData.splice(index, 1);
+  }), _defineProperty(_methods, "cancelAddProDtl", function cancelAddProDtl() {
+    this.proMask = false;
+  }), _defineProperty(_methods, "chooseOrders", function chooseOrders() {
+    this.chooseOrderMask = true;
+  }), _defineProperty(_methods, "addAfterSProRowClick", function addAfterSProRowClick(row) {
+    this.addAfterSProDtlVal.push(row);
+  }), _defineProperty(_methods, "proQueryClick", function proQueryClick() {
+    var _this7 = this;
+
+    this.proSkuVal = [];
+    this.$fetch(this.urls.products, {
+      status: true,
+      commodity_code: this.proQuery.commodity_code,
+      component_code: this.proQuery.component_code,
+      shops_id: this.proQuery.shops_id,
+      short_name: this.proQuery.short_name,
+      include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+    }).then(function (res) {
+      _this7.proVal = res.data;
+      var comb = res.data[0]["combinations"]["data"];
+      if (comb.length > 0) {
+        var total_volume = 0;
+        comb.map(function (item) {
+          item["productComp"] = item["productComponents"]["data"];
+          if (item["productComponents"]["data"].length > 0) {
+            item["productComponents"]["data"].map(function (list) {
+              total_volume += list.volume;
+            });
+          } else {
+            total_volume = 0;
+          }
+          _this7.$set(item, "newData", {
+            quantity: "",
+            paint: "",
+            is_printing: false,
+            printing_fee: "",
+            is_spot_goods: true,
+            under_line_univalent: "",
+            under_line_preferential: "",
+            total_volume: total_volume
+          });
+        });
+      } else {
+        comb["productComp"] = [];
+      }
+      _this7.proSkuVal = comb;
+    }, function (err) {});
+  }), _defineProperty(_methods, "handlePagChg", function handlePagChg(page) {
+    var _this8 = this;
+
+    this.$fetch(this.urls.changeorders + "?page=" + page, {
+      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+    }).then(function (res) {
+      var index = _this8.middleActiveName - 0;
+      switch (index) {
+        case 0:
+          _this8.newOrderListData = res.data;
+          break;
+        case 1:
+          _this8.untreatedOrderListData = res.data;
+          break;
+        case 2:
+          _this8.treatedOrderListData = res.data;
+          break;
+        case 3:
+          _this8.canceledOrderListData = rew.data;
+          break;
+      }
+    });
+  }), _defineProperty(_methods, "firstHandleClick", function firstHandleClick() {
+    this.loading = true;
+    this.fetchData();
+  }), _defineProperty(_methods, "secondHandleClick", function secondHandleClick() {
+    var index = this.bottomActiveName - 0;
+    switch (index) {
+      case 0:
+        this.loading = true;
+        this.fetchData();
+        break;
+      case 1:
+        console.log(index);
+        break;
+      case 2:
+        console.log(index);
+        break;
+      case 3:
+        console.log(index);
+        break;
+    }
+  }), _defineProperty(_methods, "orderListRClick", function orderListRClick(row) {
+    console.log("orderListRClic");
+    /**if (row["locker_id"] == 0) {
+      this.newOpt[1].nClick = true;
+      this.newOpt[2].nClick = true;
+      this.newOpt[3].nClick = false;
+      this.newOpt[4].nClick = true;
+      this.newOpt[8].nClick = true;
+      this.newOpt[9].nClick = true;
+      this.newOpt[14].nClick = true;
+      if (row["order_status"] == "已客审") {
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+      } else {
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = true;
+      }
+    } else {
+      this.newOpt[1].nClick = false;
+      this.newOpt[2].nClick = false;
+      this.newOpt[3].nClick = true;
+      this.newOpt[4].nClick = false;
+      this.newOpt[5].nClick = false;
+      this.newOpt[6].nClick = true;
+      this.newOpt[8].nClick = false;
+      this.newOpt[9].nClick = false;
+      this.newOpt[14].nClick = false;
+    }**/
+    this.curRowId = row.id;
+    this.curRowData = row;
+  }), _defineProperty(_methods, "addChanges", function addChanges() {
+    console.log("addChanges");
+    this.addOrderChangesMask = true;
+    this.addIds = [];
+    this.proData = [];
+    this.proRIndex = "";
+  }), _defineProperty(_methods, "updateChanges", function updateChanges() {
+    console.log("updateChanges");
+  }), _defineProperty(_methods, "deleteChanges", function deleteChanges() {
+    console.log("deleteChanges");
+  }), _defineProperty(_methods, "submitChanges", function submitChanges() {
+    var _this9 = this;
+
+    if (this.newOpt[4].nClick) {
+      return;
+    } else {
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$put(this.urls.changeorders + "/" + id + "/submit").then(function () {
+        // this.newOpt[1].nClick = true;
+        _this9.refresh();
+        _this9.$message({
+          message: "提交成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this9.$message.error(str);
+        }
+      });
+    }
+  }), _defineProperty(_methods, "handleAudit", function handleAudit() {
+    var _this10 = this;
+
+    console.log("handleAudit");
+    if (this.newOpt[4].nClick) {
+      return;
+    } else {
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$put(this.urls.changeorders + "/" + id + "/audit").then(function () {
+        // this.newOpt[1].nClick = true;
+        _this10.refresh();
+        _this10.$message({
+          message: "审核成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this10.$message.error(str);
+        }
+      });
+    }
+  }), _defineProperty(_methods, "handleUnAudit", function handleUnAudit() {
+    var _this11 = this;
+
+    if (this.newOpt[6].nClick) {
+      return;
+    } else {
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$put(this.urls.changeorders + "/" + id + "/unaudit").then(function () {
+        _this11.refresh();
+        _this11.$message({
+          message: "退回提交成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this11.$message.error(str);
+        }
+      });
+    }
+  }), _defineProperty(_methods, "addProDtl", function addProDtl() {
+    this.proMask = true;
+    Object.assign(this.proQuery, this.$options.data().proQuery);
+    this.proVal = [];
+    this.proSkuVal = [];
+    this.proIds = [];
+  }), _defineProperty(_methods, "formChg", function formChg() {
+    var formVal = void 0;
+    if (this.addOrderChangesMask) {
+      formVal = this.addCustomerFormVal;
+    } else {
+      formVal = this.updateCustomerFormVal;
+    }
+    formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
+    if (this.addOrderChangesMask) {
+      this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+    } else {
+      this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+    }
+  }), _defineProperty(_methods, "addChangeOrderCancel", function addChangeOrderCancel() {
+    this.addOrderChangesMask = false;
+  }), _defineProperty(_methods, "handleSelectionChange", function handleSelectionChange(val) {
+    console.log(val);
+    //拿到当前id集合
+    var delArr = [];
+    val.forEach(function (seletedIem) {
+      delArr.push(selecteItem.id);
+    });
+    console.log(+delArr);
+    this.ids = delArr.join(",");
+    console.log(delArr);
+    //拿到当前id
+    this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+    this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+    this.mergerIds = val;
+  }), _defineProperty(_methods, "chooseOrderConfirm", function chooseOrderConfirm() {
+    this.chooseOrderMask = false;
+    this.$message({
+      message: "选择订单成功",
+      type: "success"
+    });
+  }), _defineProperty(_methods, "addChangeOrdersConfirm", function addChangeOrdersConfirm() {
+    var _submitData,
+        _this12 = this;
+
+    var tempData = this.addChangeOrderFormVal;
+    var submitData = (_submitData = {
+      change_order_no: tempData.change_order_no,
+      order_id: tempData.order_id,
+      applier_id: tempData.applier_id,
+      submitter_id: tempData.submitter_id,
+      auditor_id: tempData.auditor_id,
+      is_canceled: tempData.is_canceled,
+      cancel_order_no: tempData.cancel_order_no,
+      change_remark: tempData.change_remark,
+      change_status: tempData.change_status,
+      system_order_no: tempData.system_order_no,
+      shops_id: tempData.shops_id,
+      member_nick: tempData.member_nick,
+      logistics_id: tempData.logistics_id,
+      billing_way: tempData.billing_way,
+      promise_ship_time: tempData.promise_ship_time,
+      freight_types_id: tempData.freight_types_id,
+      expected_freight: tempData.expected_freight,
+      distributions_id: tempData.distributions_id,
+      distribution_methods_id: tempData.distribution_methods_id,
+      deliver_goods_fee: tempData.deliver_goods_fee,
+      move_upstairs_fee: tempData.move_upstairs_fee,
+      installation_fee: tempData.installation_fee,
+      total_distribution_fee: tempData.total_distribution_fee,
+      distribution_phone: tempData.distribution_phone,
+      distribution_types_id: tempData.distribution_types_id,
+      service_car_info: tempData.service_car_info,
+      take_delivery_goods_fee: tempData.take_delivery_goods_fee,
+      take_delivery_goods_ways_id: tempData.take_delivery_goods_ways_id,
+      express_fee: tempData.express_fee,
+      service_car_fee: tempData.service_car_fee,
+      cancel_after_verification_code: tempData.cancel_after_verification_code
+    }, _defineProperty(_submitData, "order_id", tempData.wooden_frame_costs), _defineProperty(_submitData, "preferential_cashback", tempData.preferential_cashback), _defineProperty(_submitData, "favorable_cashback", tempData.favorable_cashback), _defineProperty(_submitData, "customer_types_id", tempData.customer_types_id), _defineProperty(_submitData, "is_invoice", tempData.is_invoice), _defineProperty(_submitData, "invoice_express_fee", tempData.invoice_express_fee), _defineProperty(_submitData, "express_invoice_title", tempData.express_invoice_title), _defineProperty(_submitData, "contract_no", tempData.contract_no), _defineProperty(_submitData, "payment_methods_id", tempData.payment_methods_id), _defineProperty(_submitData, "deposit", tempData.deposit), _defineProperty(_submitData, "document_title", tempData.document_title), _defineProperty(_submitData, "warehouses_id", tempData.warehouses_id), _defineProperty(_submitData, "payment_date", tempData.payment_date), _defineProperty(_submitData, "interest_concessions", tempData.interest_concessions), _defineProperty(_submitData, "is_notice", tempData.is_notice), _defineProperty(_submitData, "is_cancel_after_verification", tempData.is_cancel_after_verification), _defineProperty(_submitData, "accept_order_user", tempData.accept_order_user), _defineProperty(_submitData, "tax_number", tempData.tax_number), _defineProperty(_submitData, "receipt", tempData.receipt), _defineProperty(_submitData, "logistics_remark", tempData.logistics_remark), _defineProperty(_submitData, "seller_remark", tempData.seller_remark), _defineProperty(_submitData, "customer_service_remark", tempData.customer_service_remark), _defineProperty(_submitData, "buyer_message", tempData.buyer_message), _defineProperty(_submitData, "receiver_name", tempData.receiver_name), _defineProperty(_submitData, "receiver_phone", tempData.receiver_phone), _defineProperty(_submitData, "receiver_mobile", tempData.receiver_mobile), _defineProperty(_submitData, "receiver_state", tempData.receiver_state), _defineProperty(_submitData, "receiver_city", tempData.receiver_city), _defineProperty(_submitData, "receiver_district", tempData.receiver_district), _defineProperty(_submitData, "receiver_address", tempData.receiver_address), _defineProperty(_submitData, "receiver_zip", tempData.receiver_zip), _defineProperty(_submitData, "status", tempData.status), _defineProperty(_submitData, "order_items", []), _defineProperty(_submitData, "payment_details", []), _submitData);
+    this.proData.map(function (item) {
+      var proD = {
+        id: item.id,
+        products_id: item.products_id,
+        combinations_id: item.combinations_id,
+        quantity: item["newData"].quantity,
+        total_volume: item["newData"].total_volume,
+        paint: item["newData"].paint,
+        is_printing: item["newData"].is_printing,
+        printing_fee: item["newData"].printing_fee,
+        is_spot_goods: item["newData"].is_spot_goods,
+        under_line_univalent: item["newData"].under_line_univalent,
+        under_line_total_amount: item["newData"].under_line_total_amount,
+        under_line_preferential: item["newData"].under_line_preferential
+      };
+      submitData.order_items.push(proD);
+    });
+    this.expenseData.map(function (list) {
+      var expenseD = {
+        payment: list.payment,
+        payment_methods_id: list.payment_methods_id
+      };
+      submitData.payment_details.push(expenseD);
+    });
+    this.$post(this.urls.changeorders, submitData).then(function () {
+      _this12.addOrderChangesMask = false;
+      _this12.refresh();
+      _this12.$message({
+        message: "添加成功",
+        type: "success"
+      });
+    }, function (err) {
+      if (err.response) {
+        _this12.showDel = false;
+        var arr = err.response.data.errors;
+        var arr1 = [];
+        for (var i in arr) {
+          arr1.push(arr[i]);
+        }
+        var str = arr1.join(",");
+        _this12.$message.error(str);
+      }
+    });
+  }), _defineProperty(_methods, "chooseOrderCancel", function chooseOrderCancel() {
+    this.chooseOrderMask = false;
+    this.$message({
+      message: "取消选择订单",
+      type: "success"
+    });
+  }), _defineProperty(_methods, "resets", function resets() {
+    this.searchBox = {};
+  }), _methods),
   mounted: function mounted() {
     this.fetchData();
     // this.$store.state.opt.opts = this.newOpt;
@@ -2195,11 +2675,11 @@ var render = function() {
           staticStyle: { height: "250px" },
           on: { "tab-click": _vm.firstHandleClick },
           model: {
-            value: _vm.activeName,
+            value: _vm.middleActiveName,
             callback: function($$v) {
-              _vm.activeName = $$v
+              _vm.middleActiveName = $$v
             },
-            expression: "activeName"
+            expression: "middleActiveName"
           }
         },
         [
@@ -2218,7 +2698,7 @@ var render = function() {
                       expression: "loading"
                     }
                   ],
-                  attrs: { data: _vm.orderListData, fit: "", height: "200" },
+                  attrs: { data: _vm.newOrderListData, fit: "", height: "200" },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
                     "row-click": _vm.orderListRClick,
@@ -2235,7 +2715,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.changeOrderListHead, function(item) {
+                  _vm._l(_vm.middleTableHead, function(item) {
                     return _c("el-table-column", {
                       key: item.label,
                       attrs: { label: item.label, width: item.width },
@@ -2363,7 +2843,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.changeOrderListHead, function(item) {
+                  _vm._l(_vm.middleTableHead, function(item) {
                     return _c("el-table-column", {
                       key: item.label,
                       attrs: { label: item.label, width: item.width },
@@ -2491,7 +2971,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.changeOrderListHead, function(item) {
+                  _vm._l(_vm.middleTableHead, function(item) {
                     return _c("el-table-column", {
                       key: item.label,
                       attrs: { label: item.label, width: item.width },
@@ -2619,7 +3099,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.changeOrderListHead, function(item) {
+                  _vm._l(_vm.middleTableHead, function(item) {
                     return _c("el-table-column", {
                       key: item.label,
                       attrs: { label: item.label, width: item.width },
@@ -2714,7 +3194,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.activeName == "0"
+      _vm.middleActiveName == "0"
         ? _c("Pagination", {
             attrs: { "page-url": this.urls.changeorders },
             on: { handlePagChg: _vm.handlePagChg }
@@ -2726,11 +3206,11 @@ var render = function() {
         {
           on: { "tab-click": _vm.secondHandleClick },
           model: {
-            value: _vm.activeName2,
+            value: _vm.bottomActiveName,
             callback: function($$v) {
-              _vm.activeName2 = $$v
+              _vm.bottomActiveName = $$v
             },
-            expression: "activeName2"
+            expression: "bottomActiveName"
           }
         },
         [
@@ -3085,6 +3565,8 @@ var render = function() {
         [
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("基础信息")]),
           _vm._v(" "),
+          _c("label", [_vm._v(_vm._s(_vm.proData))]),
+          _vm._v(" "),
           _c(
             "div",
             { staticStyle: { float: "right" } },
@@ -3414,7 +3896,7 @@ var render = function() {
             [
               _c(
                 "el-tab-pane",
-                { attrs: { label: "产品明细" } },
+                { attrs: { label: "产品明细", name: "0" } },
                 [
                   _c(
                     "el-table",
@@ -3879,8 +4361,11 @@ var render = function() {
                 [
                   _c(
                     "el-form",
-                    { attrs: { model: _vm.orderDtlFormVal } },
-                    _vm._l(_vm.orderDtlFormHead, function(item, index) {
+                    { attrs: { model: _vm.addChangeOrderFormVal } },
+                    _vm._l(_vm.addDialogOrderDtlFormHead, function(
+                      item,
+                      index
+                    ) {
                       return _c(
                         "el-form-item",
                         {
@@ -3888,67 +4373,7 @@ var render = function() {
                           attrs: { label: item.label, prop: item.prop }
                         },
                         [
-                          item.type == "text"
-                            ? _c("span", [
-                                item.inProp
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            placeholder: item.holder,
-                                            disabled: item.addChgAble
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.orderDtlFormVal[item.prop][
-                                                item.inProp
-                                              ],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.orderDtlFormVal[item.prop],
-                                                item.inProp,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
-                                            },
-                                            expression:
-                                              "orderDtlFormVal[item.prop][item.inProp]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            placeholder: item.holder,
-                                            disabled: item.addChgAble
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.orderDtlFormVal[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.orderDtlFormVal,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
-                                            },
-                                            expression:
-                                              "orderDtlFormVal[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                              ])
-                            : item.type == "number"
+                          item.type == "number"
                             ? _c("span", [
                                 item.prop == "deliver_goods_fee" ||
                                 item.prop == "move_upstairs_fee" ||
@@ -3965,10 +4390,12 @@ var render = function() {
                                           on: { input: _vm.formChg },
                                           model: {
                                             value:
-                                              _vm.orderDtlFormVal[item.prop],
+                                              _vm.addChangeOrderFormVal[
+                                                item.prop
+                                              ],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.orderDtlFormVal,
+                                                _vm.addChangeOrderFormVal,
                                                 item.prop,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -3976,13 +4403,14 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "orderDtlFormVal[item.prop]"
+                                              "addChangeOrderFormVal[item.prop]"
                                           }
                                         })
                                       ],
                                       1
                                     )
-                                  : _c(
+                                  : item.type == "number"
+                                  ? _c(
                                       "span",
                                       [
                                         _c("el-input", {
@@ -3993,10 +4421,12 @@ var render = function() {
                                           },
                                           model: {
                                             value:
-                                              _vm.orderDtlFormVal[item.prop],
+                                              _vm.addChangeOrderFormVal[
+                                                item.prop
+                                              ],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.orderDtlFormVal,
+                                                _vm.addChangeOrderFormVal,
                                                 item.prop,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -4004,12 +4434,13 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "orderDtlFormVal[item.prop]"
+                                              "addChangeOrderFormVal[item.prop]"
                                           }
                                         })
                                       ],
                                       1
                                     )
+                                  : _vm._e()
                               ])
                             : item.type == "select"
                             ? _c(
@@ -4023,15 +4454,17 @@ var render = function() {
                                         disabled: item.addChgAble
                                       },
                                       model: {
-                                        value: _vm.orderDtlFormVal[item.prop],
+                                        value:
+                                          _vm.addChangeOrderFormVal[item.prop],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.orderDtlFormVal,
+                                            _vm.addChangeOrderFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
-                                        expression: "orderDtlFormVal[item.prop]"
+                                        expression:
+                                          "addChangeOrderFormVal[item.prop]"
                                       }
                                     },
                                     _vm._l(
@@ -4069,17 +4502,19 @@ var render = function() {
                                       placehode: item.holder
                                     },
                                     model: {
-                                      value: _vm.orderDtlFormVal[item.prop],
+                                      value:
+                                        _vm.addChangeOrderFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.orderDtlFormVal,
+                                          _vm.addChangeOrderFormVal,
                                           item.prop,
                                           typeof $$v === "string"
                                             ? $$v.trim()
                                             : $$v
                                         )
                                       },
-                                      expression: "orderDtlFormVal[item.prop]"
+                                      expression:
+                                        "addChangeOrderFormVal[item.prop]"
                                     }
                                   })
                                 ],
@@ -4092,15 +4527,17 @@ var render = function() {
                                   _c("el-checkbox", {
                                     attrs: { disabled: item.chgAble },
                                     model: {
-                                      value: _vm.orderDtlFormVal[item.prop],
+                                      value:
+                                        _vm.addChangeOrderFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.orderDtlFormVal,
+                                          _vm.addChangeOrderFormVal,
                                           item.prop,
                                           $$v
                                         )
                                       },
-                                      expression: "orderDtlFormVal[item.prop]"
+                                      expression:
+                                        "addChangeOrderFormVal[item.prop]"
                                     }
                                   })
                                 ],
@@ -4115,15 +4552,17 @@ var render = function() {
                                     {
                                       attrs: { label: "volume" },
                                       model: {
-                                        value: _vm.orderDtlFormVal[item.prop],
+                                        value:
+                                          _vm.addChangeOrderFormVal[item.prop],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.orderDtlFormVal,
+                                            _vm.addChangeOrderFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
-                                        expression: "orderDtlFormVal[item.prop]"
+                                        expression:
+                                          "addChangeOrderFormVal[item.prop]"
                                       }
                                     },
                                     [_vm._v(_vm._s(item.choiceName[0]))]
@@ -4134,15 +4573,17 @@ var render = function() {
                                     {
                                       attrs: { label: "weight" },
                                       model: {
-                                        value: _vm.orderDtlFormVal[item.prop],
+                                        value:
+                                          _vm.addChangeOrderFormVal[item.prop],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.orderDtlFormVal,
+                                            _vm.addChangeOrderFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
-                                        expression: "orderDtlFormVal[item.prop]"
+                                        expression:
+                                          "addChangeOrderFormVal[item.prop]"
                                       }
                                     },
                                     [_vm._v(_vm._s(item.choiceName[1]))]
@@ -4162,20 +4603,88 @@ var render = function() {
                                       placeholder: "选择日期"
                                     },
                                     model: {
-                                      value: _vm.orderDtlFormVal[item.prop],
+                                      value:
+                                        _vm.addChangeOrderFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.orderDtlFormVal,
+                                          _vm.addChangeOrderFormVal,
                                           item.prop,
                                           $$v
                                         )
                                       },
-                                      expression: "orderDtlFormVal[item.prop]"
+                                      expression:
+                                        "addChangeOrderFormVal[item.prop]"
                                     }
                                   })
                                 ],
                                 1
                               )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          item.type == "text"
+                            ? _c("span", [
+                                item.inProp
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-input", {
+                                          attrs: {
+                                            placeholder: item.holder,
+                                            disabled: item.addChgAble
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.addChangeOrderFormVal[
+                                                item.prop
+                                              ][item.inProp],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.addChangeOrderFormVal[
+                                                  item.prop
+                                                ],
+                                                item.inProp,
+                                                typeof $$v === "string"
+                                                  ? $$v.trim()
+                                                  : $$v
+                                              )
+                                            },
+                                            expression:
+                                              "addChangeOrderFormVal[item.prop][item.inProp]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c(
+                                      "span",
+                                      [
+                                        _c("el-input", {
+                                          attrs: {
+                                            placeholder: item.holder,
+                                            disabled: item.addChgAble
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.addChangeOrderFormVal[
+                                                item.prop
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.addChangeOrderFormVal,
+                                                item.prop,
+                                                typeof $$v === "string"
+                                                  ? $$v.trim()
+                                                  : $$v
+                                              )
+                                            },
+                                            expression:
+                                              "addChangeOrderFormVal[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                              ])
                             : _vm._e()
                         ]
                       )
@@ -4399,6 +4908,17 @@ var render = function() {
                 "div",
                 { staticStyle: { float: "left" } },
                 [
+                  _vm.addTabActiveName == "0"
+                    ? _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary" },
+                          on: { click: _vm.addProDtl }
+                        },
+                        [_vm._v("添加商品")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
                   _vm.addTabActiveName == "2"
                     ? _c(
                         "el-button",
@@ -4419,7 +4939,10 @@ var render = function() {
                 [
                   _c(
                     "el-button",
-                    { attrs: { type: "primary" }, on: { click: _vm.test } },
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.addChangeOrdersConfirm }
+                    },
                     [_vm._v("确定")]
                   ),
                   _vm._v(" "),
@@ -4448,10 +4971,6 @@ var render = function() {
         },
         [
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("订单列表")]),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.chooseOrderProListData))]),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.chooseOrderRowId))]),
           _vm._v(" "),
           _c("div", { staticStyle: { float: "right" } }, [
             _c(
@@ -4606,39 +5125,834 @@ var render = function() {
             [
               _c(
                 "div",
-                { staticStyle: { float: "left" } },
+                { staticStyle: { float: "right" } },
                 [
                   _c(
                     "el-button",
                     {
                       attrs: { type: "primary" },
-                      on: { click: _vm.proQueryRefresh }
+                      on: { click: _vm.chooseOrderConfirm }
                     },
-                    [_vm._v("刷新")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticStyle: { float: "right" } },
-                [
-                  _c(
-                    "el-button",
-                    { attrs: { type: "primary" }, on: { click: _vm.test } },
                     [_vm._v("确定")]
                   ),
                   _vm._v(" "),
                   _c(
                     "el-button",
-                    { attrs: { type: "warning" }, on: { click: _vm.test } },
+                    {
+                      attrs: { type: "warning" },
+                      on: { click: _vm.chooseOrderCancel }
+                    },
                     [_vm._v("取消")]
                   )
                 ],
                 1
               )
             ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          class: { "more-forms": _vm.moreForms, threeParts: _vm.threeParts },
+          attrs: { title: "商品明细", visible: _vm.proMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.proMask = $event
+            }
+          }
+        },
+        [
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("选择商品")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "searchBox" },
+            [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("商品编码")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { clearable: "", placeholder: "请输入商品编码" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.proQueryClick($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.proQuery.commodity_code,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.proQuery,
+                          "commodity_code",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "proQuery.commodity_code"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("子件编码")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { clearable: "", placeholder: "请输入子件编码" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.proQueryClick($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.proQuery.component_code,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.proQuery,
+                          "component_code",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "proQuery.component_code"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("商品类别")]),
+                  _vm._v(" "),
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择商品类别" },
+                      nativeOn: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.proQueryClick($event)
+                        }
+                      },
+                      model: {
+                        value: _vm.proQuery.shops_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.proQuery, "shops_id", $$v)
+                        },
+                        expression: "proQuery.shops_id"
+                      }
+                    },
+                    _vm._l(_vm.resData.shops, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.nick, value: item.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("商品简称")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { clearable: "", placeholder: "请输入子件编码" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.proQueryClick($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.proQuery.short_name,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.proQuery,
+                          "short_name",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "proQuery.short_name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("组合筛选")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { clearable: "", placeholder: "请输入子件编码" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.proQueryClick($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.proQuery.component_code,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.proQuery,
+                          "component_code",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "proQuery.component_code"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("成品筛选")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { clearable: "", placeholder: "请输入子件编码" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.proQueryClick($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.proQuery.component_code,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.proQuery,
+                          "component_code",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "proQuery.component_code"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.proQueryClick }
+                },
+                [_vm._v("查询")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: { data: _vm.proVal, fit: "", height: "250" },
+              on: { "row-click": _vm.proRowClick }
+            },
+            _vm._l(_vm.proHead, function(item) {
+              return _c("el-table-column", {
+                key: item.label,
+                attrs: {
+                  label: item.label,
+                  align: "center",
+                  width: item.width
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          item.prop
+                            ? _c("span", [
+                                item.type == "img"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c(
+                                          "el-popover",
+                                          {
+                                            attrs: {
+                                              placement: "right",
+                                              trigger: "hover",
+                                              "popper-class": "picture_detail"
+                                            }
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src: scope.row[item.prop]
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("img", {
+                                              attrs: {
+                                                slot: "reference",
+                                                src: scope.row[item.prop],
+                                                alt: scope.row[item.alt]
+                                              },
+                                              slot: "reference"
+                                            })
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      _vm._v(
+                                        "\n              " +
+                                          _vm._s(
+                                            item.inProp
+                                              ? scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              : scope.row[item.prop]
+                                          ) +
+                                          "\n            "
+                                      )
+                                    ])
+                              ])
+                            : _vm._e()
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("sku信息")]),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: {
+                data: _vm.proSkuVal,
+                fit: "",
+                height: "230",
+                "row-class-name": _vm.proSkuCName
+              },
+              on: { "row-click": _vm.proSkuRowClick }
+            },
+            [
+              _vm._l(_vm.proSkuHead, function(item) {
+                return _c("el-table-column", {
+                  key: item.label,
+                  attrs: {
+                    label: item.label,
+                    align: "center",
+                    width: item.width
+                  },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.prop == "newData"
+                              ? _c("span", [
+                                  _vm.proCompRowIndex == "index" + scope.$index
+                                    ? _c("span", [
+                                        item.type == "number"
+                                          ? _c("span", [
+                                              item.inProp == "quantity"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-input", {
+                                                        attrs: {
+                                                          size: "small",
+                                                          type: "number",
+                                                          placeholder:
+                                                            item.holder
+                                                        },
+                                                        on: {
+                                                          input: _vm.quantityChg
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ][item.inProp],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row[
+                                                                item.prop
+                                                              ],
+                                                              item.inProp,
+                                                              typeof $$v ===
+                                                                "string"
+                                                                ? $$v.trim()
+                                                                : $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop][item.inProp]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-input", {
+                                                        attrs: {
+                                                          size: "small",
+                                                          type: "number",
+                                                          placeholder:
+                                                            item.holder
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ][item.inProp],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row[
+                                                                item.prop
+                                                              ],
+                                                              item.inProp,
+                                                              typeof $$v ===
+                                                                "string"
+                                                                ? $$v.trim()
+                                                                : $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop][item.inProp]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                            ])
+                                          : item.type == "checkbox"
+                                          ? _c(
+                                              "span",
+                                              [
+                                                _c("el-checkbox", {
+                                                  model: {
+                                                    value:
+                                                      scope.row[item.prop][
+                                                        item.inProp
+                                                      ],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row[item.prop],
+                                                        item.inProp,
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop][item.inProp]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          : _c(
+                                              "span",
+                                              [
+                                                _c("el-input", {
+                                                  attrs: {
+                                                    size: "small",
+                                                    placeholder: item.holder
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      scope.row[item.prop][
+                                                        item.inProp
+                                                      ],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row[item.prop],
+                                                        item.inProp,
+                                                        typeof $$v === "string"
+                                                          ? $$v.trim()
+                                                          : $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop][item.inProp]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                      ])
+                                    : _c("span", [
+                                        item.type == "checkbox"
+                                          ? _c(
+                                              "span",
+                                              [
+                                                _c("el-checkbox", {
+                                                  attrs: { disabled: "" },
+                                                  model: {
+                                                    value:
+                                                      scope.row[item.prop][
+                                                        item.inProp
+                                                      ],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row[item.prop],
+                                                        item.inProp,
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop][item.inProp]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          : _c("span", [
+                                              _vm._v(
+                                                "\n                " +
+                                                  _vm._s(
+                                                    scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  ) +
+                                                  "\n              "
+                                              )
+                                            ])
+                                      ])
+                                ])
+                              : item.prop
+                              ? _c("span", [
+                                  item.type == "checkbox"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "img"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c(
+                                            "el-popover",
+                                            {
+                                              attrs: {
+                                                placement: "right",
+                                                trigger: "hover",
+                                                "popper-class": "picture_detail"
+                                              }
+                                            },
+                                            [
+                                              _c("img", {
+                                                attrs: {
+                                                  src: scope.row[item.prop]
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("img", {
+                                                attrs: {
+                                                  slot: "reference",
+                                                  src: scope.row[item.prop],
+                                                  alt: scope.row[item.alt]
+                                                },
+                                                slot: "reference"
+                                              })
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n              " +
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
+                                                    item.inProp
+                                                  ]
+                                                : scope.row[item.prop]
+                                            ) +
+                                            "\n            "
+                                        )
+                                      ])
+                                ])
+                              : _vm._e()
+                          ]
+                        }
+                      }
+                    ],
+                    null,
+                    true
+                  )
+                })
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { type: "expand", fixed: "left" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        _c(
+                          "el-table",
+                          {
+                            attrs: { data: scope.row["productComp"], fit: "" }
+                          },
+                          _vm._l(_vm.proCompHead, function(item) {
+                            return _c("el-table-column", {
+                              key: item.label,
+                              attrs: {
+                                label: item.label,
+                                align: "center",
+                                width: item.width
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "default",
+                                    fn: function(scope) {
+                                      return [
+                                        item.prop
+                                          ? _c("span", [
+                                              item.type == "checkbox"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-checkbox", {
+                                                        attrs: { disabled: "" },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row,
+                                                              item.prop,
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : item.type == "img"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c(
+                                                        "el-popover",
+                                                        {
+                                                          attrs: {
+                                                            placement: "right",
+                                                            trigger: "hover",
+                                                            "popper-class":
+                                                              "picture_detail"
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("img", {
+                                                            attrs: {
+                                                              src:
+                                                                scope.row[
+                                                                  item.prop
+                                                                ]
+                                                            }
+                                                          }),
+                                                          _vm._v(" "),
+                                                          _c("img", {
+                                                            attrs: {
+                                                              slot: "reference",
+                                                              src:
+                                                                scope.row[
+                                                                  item.prop
+                                                                ],
+                                                              alt:
+                                                                scope.row[
+                                                                  item.alt
+                                                                ]
+                                                            },
+                                                            slot: "reference"
+                                                          })
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                : _c("span", [
+                                                    _vm._v(
+                                                      "\n                    " +
+                                                        _vm._s(
+                                                          item.inProp
+                                                            ? scope.row[
+                                                                item.prop
+                                                              ][item.inProp]
+                                                            : scope.row[
+                                                                item.prop
+                                                              ]
+                                                        ) +
+                                                        "\n                  "
+                                                    )
+                                                  ])
+                                            ])
+                                          : _vm._e()
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
+                              )
+                            })
+                          }),
+                          1
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary" },
+                  on: { click: _vm.confirmAddProDtl }
+                },
+                [_vm._v("确定")]
+              ),
+              _vm._v(" "),
+              _c("el-button", { on: { click: _vm.cancelAddProDtl } }, [
+                _vm._v("关闭")
+              ])
+            ],
+            1
           )
         ],
         1

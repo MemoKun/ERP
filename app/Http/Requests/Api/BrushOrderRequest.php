@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Validation\Rule;
 
-class CustomerServiceChangeOrderRequset extends FormRequest
+class BrushOrderRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -22,14 +22,6 @@ class CustomerServiceChangeOrderRequset extends FormRequest
                 break;
             case 'POST':
                 return [
-                    'order_id'=> 'integer|max:255',
-                    'applier_id'=> 'integer|max:255',
-                    'auditor_id'=> 'integer|max:255',
-                    'is_canceled'=> 'boolean',
-                    'cancel_order_no'=> 'string|max:255',
-                    'change_remark'=> 'string|max:255',
-                    'change_status'=> 'integer|max:255',
-                    
                     'shops_id' => [
                         'required', 'integer',
                         Rule::exists('shops', 'id')->where(function ($query) {

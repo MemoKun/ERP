@@ -803,37 +803,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "物流单",
         icon: "bf-logCode",
-        ent: this.test,
+        ent: this.logisticsBill,
         nClick: false
       }, {
         cnt: "发货单",
         icon: "bf-bill",
-        ent: this.test,
-        nClick: false
-      }, {
-        cnt: "上一条",
-        icon: "bf-beforeItem",
-        ent: this.test,
-        nClick: false
-      }, {
-        cnt: "下一条",
-        icon: "bf-nextItem",
-        ent: this.test,
+        ent: this.dispatchBill,
         nClick: false
       }, {
         cnt: "捡货单",
         icon: "bf-secSort",
-        ent: this.test,
+        ent: this.pickGoodsBill,
         nClick: false
       }, {
         cnt: "打印",
         icon: "bf-printer",
-        ent: this.test,
+        ent: this.print,
         nClick: false
       }, {
         cnt: "电子面单",
         icon: "bf-salesinvoice",
-        ent: this.test,
+        ent: this.elecBill,
         nClick: false
       }, {
         cnt: "刷新",
@@ -3323,7 +3313,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.warehousingdepts + '/' + id + "/stockouttocs").then(function () {
+        this.$put(this.urls.warehousingdepts + "/" + id + "/stockouttocs").then(function () {
           _this17.newOpt[1].nClick = true;
           _this17.newOpt[2].nClick = true;
           _this17.newOpt[3].nClick = false;
@@ -3472,6 +3462,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         }
       }
+    },
+    logisticsBill: function logisticsBill() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    dispatchBill: function dispatchBill() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    pickGoodsBill: function pickGoodsBill() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    print: function print() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    elecBill: function elecBill() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
     },
     resets: function resets() {
       this.searchBox = {};
@@ -3846,9 +3866,7 @@ var render = function() {
                             expression: "searchBox.order_transMStart"
                           }
                         }),
-                        _vm._v(
-                          "\n                        至\n                        "
-                        ),
+                        _vm._v("\n            至\n            "),
                         _c("el-input", {
                           attrs: { type: "number", clearable: "" },
                           model: {
@@ -4201,7 +4219,7 @@ var render = function() {
                                               scope.row[item.prop]
                                                 ? _c("span", [
                                                     _vm._v(
-                                                      "\n                                        " +
+                                                      "\n                    " +
                                                         _vm._s(
                                                           item.inProp
                                                             ? scope.row[
@@ -4211,7 +4229,7 @@ var render = function() {
                                                                 item.prop
                                                               ]
                                                         ) +
-                                                        "\n                                    "
+                                                        "\n                  "
                                                     )
                                                   ])
                                                 : _vm._e()
@@ -4251,11 +4269,7 @@ var render = function() {
                                           }
                                         }
                                       },
-                                      [
-                                        _vm._v(
-                                          "删除\n                                "
-                                        )
-                                      ]
+                                      [_vm._v("删除\n                ")]
                                     )
                                   ]
                                 }
@@ -4442,7 +4456,7 @@ var render = function() {
                                               scope.row[item.prop]
                                                 ? _c("span", [
                                                     _vm._v(
-                                                      "\n                                        " +
+                                                      "\n                    " +
                                                         _vm._s(
                                                           item.inProp
                                                             ? scope.row[
@@ -4452,7 +4466,7 @@ var render = function() {
                                                                 item.prop
                                                               ]
                                                         ) +
-                                                        "\n                                    "
+                                                        "\n                  "
                                                     )
                                                   ])
                                                 : _vm._e()
@@ -4492,11 +4506,7 @@ var render = function() {
                                           }
                                         }
                                       },
-                                      [
-                                        _vm._v(
-                                          "删除\n                                "
-                                        )
-                                      ]
+                                      [_vm._v("删除\n                ")]
                                     )
                                   ]
                                 }
@@ -4710,7 +4720,7 @@ var render = function() {
                                               )
                                             : _c("span", [
                                                 _vm._v(
-                                                  "\n                                    " +
+                                                  "\n                  " +
                                                     _vm._s(
                                                       item.inProp
                                                         ? scope.row[item.prop][
@@ -4718,7 +4728,7 @@ var render = function() {
                                                           ]
                                                         : scope.row[item.prop]
                                                     ) +
-                                                    "\n                                "
+                                                    "\n                "
                                                 )
                                               ])
                                         ]
@@ -4862,7 +4872,7 @@ var render = function() {
                                                               )
                                                             : _c("span", [
                                                                 _vm._v(
-                                                                  "\n                                                    " +
+                                                                  "\n                          " +
                                                                     _vm._s(
                                                                       item.inProp
                                                                         ? scope
@@ -4879,7 +4889,7 @@ var render = function() {
                                                                               .prop
                                                                           ]
                                                                     ) +
-                                                                    "\n                                                "
+                                                                    "\n                        "
                                                                 )
                                                               ])
                                                         ])
@@ -4925,11 +4935,7 @@ var render = function() {
                                           }
                                         }
                                       },
-                                      [
-                                        _vm._v(
-                                          "删除\n                                "
-                                        )
-                                      ]
+                                      [_vm._v("删除\n                ")]
                                     )
                                   ]
                                 }
@@ -4981,13 +4987,13 @@ var render = function() {
                                                         scope.row[item.prop]
                                                           ? _c("span", [
                                                               _vm._v(
-                                                                "\n                                            " +
+                                                                "\n                      " +
                                                                   _vm._s(
                                                                     list.name
                                                                       ? list.name
                                                                       : ""
                                                                   ) +
-                                                                  "\n                                        "
+                                                                  "\n                    "
                                                               )
                                                             ])
                                                           : _vm._e()
@@ -4999,7 +5005,7 @@ var render = function() {
                                               )
                                             : _c("span", [
                                                 _vm._v(
-                                                  "\n                                    " +
+                                                  "\n                  " +
                                                     _vm._s(
                                                       item.inProp
                                                         ? scope.row[item.prop][
@@ -5007,7 +5013,7 @@ var render = function() {
                                                           ]
                                                         : scope.row[item.prop]
                                                     ) +
-                                                    "\n                                "
+                                                    "\n                "
                                                 )
                                               ])
                                         ]
@@ -5045,11 +5051,7 @@ var render = function() {
                                           }
                                         }
                                       },
-                                      [
-                                        _vm._v(
-                                          "删除\n                                "
-                                        )
-                                      ]
+                                      [_vm._v("删除\n                ")]
                                     )
                                   ]
                                 }
@@ -5436,7 +5438,7 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                            " +
+                                        "\n              " +
                                           _vm._s(
                                             item.inProp
                                               ? scope.row[item.prop][
@@ -5444,7 +5446,7 @@ var render = function() {
                                                 ]
                                               : scope.row[item.prop]
                                           ) +
-                                          "\n                        "
+                                          "\n            "
                                       )
                                     ])
                               ])
@@ -5654,13 +5656,13 @@ var render = function() {
                                             )
                                           : _c("span", [
                                               _vm._v(
-                                                "\n                                " +
+                                                "\n                " +
                                                   _vm._s(
                                                     scope.row[item.prop][
                                                       item.inProp
                                                     ]
                                                   ) +
-                                                  "\n                            "
+                                                  "\n              "
                                               )
                                             ])
                                       ])
@@ -5723,7 +5725,7 @@ var render = function() {
                                       )
                                     : _c("span", [
                                         _vm._v(
-                                          "\n                            " +
+                                          "\n              " +
                                             _vm._s(
                                               item.inProp
                                                 ? scope.row[item.prop][
@@ -5731,7 +5733,7 @@ var render = function() {
                                                   ]
                                                 : scope.row[item.prop]
                                             ) +
-                                            "\n                        "
+                                            "\n            "
                                         )
                                       ])
                                 ])
@@ -5846,7 +5848,7 @@ var render = function() {
                                                   )
                                                 : _c("span", [
                                                     _vm._v(
-                                                      "\n                                        " +
+                                                      "\n                    " +
                                                         _vm._s(
                                                           item.inProp
                                                             ? scope.row[
@@ -5856,7 +5858,7 @@ var render = function() {
                                                                 item.prop
                                                               ]
                                                         ) +
-                                                        "\n                                    "
+                                                        "\n                  "
                                                     )
                                                   ])
                                             ])
@@ -6382,11 +6384,11 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                            " +
+                                        "\n              " +
                                           _vm._s(
                                             scope.row[item.prop][item.inProp]
                                           ) +
-                                          "\n                        "
+                                          "\n            "
                                       )
                                     ])
                               ])
@@ -6415,7 +6417,7 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                            " +
+                                        "\n              " +
                                           _vm._s(
                                             item.inProp
                                               ? scope.row[item.prop][
@@ -6423,7 +6425,7 @@ var render = function() {
                                                 ]
                                               : scope.row[item.prop]
                                           ) +
-                                          "\n                        "
+                                          "\n            "
                                       )
                                     ])
                               ])

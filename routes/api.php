@@ -704,6 +704,29 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.changeorders.issubmit');
         $api->get('changeorders/create', 'CustomerServiceChangeOrdersController@create')
             ->name('api.changeorders.create');
+        $api->get('changeorders/{order}', 'CustomerServiceChangeOrdersController@show')
+            ->name('api.changeorders.show');
+        $api->post('changeorders', 'CustomerServiceChangeOrdersController@store')
+            ->name('api.changeorders.store');
+        $api->patch('changeorders/{order}', 'CustomerServiceChangeOrdersController@update')
+            ->name('api.changeorders.update');
+        $api->delete('changeorders/{order}', 'CustomerServiceChangeOrdersController@destroy')
+            ->name('api.changeorders.destroy');
+        $api->delete('changeorders', 'CustomerServiceChangeOrdersController@destroybyids')
+            ->name('api.changeorders.destroybyids');
+        $api->put('changeorders/editstatus', 'CustomerServiceChangeOrdersController@editStatusByIds')
+            ->name('api.changeorders.editstatusbyids');
+        $api->put('changeorders/{order}/lockorunlock', 'CustomerServiceChangeOrdersController@isLockOrUnlock')
+            ->name('api.changeorders.islockorunlock');
+        $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')
+            ->name('api.changeorders.isaudit');
+        $api->put('changeorders/{order}/unaudit', 'CustomerServiceChangeOrdersController@isUnAudit')
+            ->name('api.changeorders.isunaudit');
+        $api->put('changeorders/{order}/splitorder', 'CustomerServiceChangeOrdersController@isSplitOrder')
+            ->name('api.changeorders.issplitorder');
+        $api->put('changeorders/mergerorder', 'CustomerServiceChangeOrdersController@isMergerOrder')
+            ->name('api.changeorders.ismergerorder');
+        
         //红包商品配置
         $api->get('redpackagemag', 'RedPackageController@index')
             ->name('api.redpackagemag.index');

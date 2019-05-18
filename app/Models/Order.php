@@ -17,6 +17,7 @@ class Order extends Model
     const ORDER_STATUS_FD_AUDIT = 50;
     const ORDER_STATUS_CARGO_AUDIT = 60;
     const ORDER_STATUS_STOCK_OUT = 70;
+    const ORDER_STATUS_BRUSH_ORDER = 110;
 
     //退回
     const ORDER_RETURN_LOCK = 21;

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\ChangeOrder;
 
-use App\Http\Requests\Api\CustomerServiceChangeOrdersRequset;
+use App\Http\Requests\Api\CustomerServiceChangeOrdersRequest;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\MergerOrderRequest;
@@ -63,6 +63,7 @@ class CustomerServiceChangeOrdersController extends Controller
         $order = ChangeOrder::query()->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_CANCEL]);
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
+
 
     /**
      * 获取所有客服部
@@ -164,7 +165,7 @@ class CustomerServiceChangeOrdersController extends Controller
      *      }
      * })
      */
-    public function index(CustomerServiceChangeOrdersRequset $requset)
+    public function index(CustomerServiceChangeOrdersRequest $requset)
     {
         return $this->allOrPage($requset, self::MODEL, self::TRANSFORMER, self::PerPage);
     }
@@ -733,17 +734,17 @@ class CustomerServiceChangeOrdersController extends Controller
      * })
      */
     public function store(
-        CustomerServiceChangeOrdersRequset $customerServiceDepartmentRequset,
+        CustomerServiceChangeOrdersRequest $customerServiceChangeOrdersRequest,
         PaymentDetailRequest $paymentDetailRequest,
         \App\Handlers\ValidatedHandler $validatedHandler
     ){
-        $data[] = $customerServiceDepartmentRequset->validated();
-        $data[] = $customerServiceDepartmentRequset->input('order_items');
+        $data[] = $customerServiceChangeOrdersRequest->validated();
+        $data[] = $customerServiceChangeOrdersRequest->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'] ?? null;
 
         $id = DB::transaction(function () use (
             $data,
-            $customerServiceDepartmentRequset,
+            $customerServiceChangeOrdersRequest,
             $paymentDetailRequest,
             $validatedHandler
         ) {
@@ -751,7 +752,7 @@ class CustomerServiceChangeOrdersController extends Controller
             if ($data[1]) {
                 foreach ($data[1] as $item) {
                     $model->orderItems()->create(
-                        $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item)
+                        $validatedHandler->getValidatedData($customerServiceChangeOrdersRequest->rules(), $item)
                     );
                 }
             }
@@ -1115,7 +1116,7 @@ class CustomerServiceChangeOrdersController extends Controller
      * })
      */
     public function update(
-        CustomerServiceChangeOrdersRequset $customerServiceDepartmentRequset,
+        CustomerServiceChangeOrdersRequest $customerServiceChangeOrdersRequest,
         PaymentDetailRequest $paymentDetailRequest,
         ChangeOrder $order,
         \App\Handlers\ValidatedHandler $validatedHandler)
@@ -1124,13 +1125,13 @@ class CustomerServiceChangeOrdersController extends Controller
         if ($order->unlock())
             throw new UpdateResourceFailedException('订单未锁定无法修改');
 
-        $data[] = $customerServiceDepartmentRequset->validated();
-        $data[] = $customerServiceDepartmentRequset->input('order_items');
+        $data[] = $customerServiceChangeOrdersRequest->validated();
+        $data[] = $customerServiceChangeOrdersRequest->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'];
 
         $order = DB::transaction(function() use (
             $data,
-            $customerServiceDepartmentRequset,
+            $customerServiceChangeOrdersRequest,
             $paymentDetailRequest,
             $order,
             $validatedHandler
@@ -1140,7 +1141,7 @@ class CustomerServiceChangeOrdersController extends Controller
             if ($data[1]??null) {
                 foreach ($data[1] as $item) {
                     //计算要通过的字段
-                    $validatedData = $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item);
+                    $validatedData = $validatedHandler->getValidatedData($customerServiceChangeOrdersRequest->rules(), $item);
                     //存在id则更新,否则插入
                     if (isset($item['id'])) {
                         $order->orderItems()->findOrFail($item['id'])->update($validatedData);
@@ -1408,4 +1409,6 @@ class CustomerServiceChangeOrdersController extends Controller
             $mergerOrderRequest->validated()
         );
     }
+
+    
 }

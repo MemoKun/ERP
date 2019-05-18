@@ -22,12 +22,12 @@
         <el-button @click="resets">重置</el-button>
       </div>
     </div>
-    <el-tabs v-model="activeName" @tab-click="firstHandleClick" style="height: 250px;">
+    <el-tabs v-model="middleActiveName" @tab-click="firstHandleClick" style="height: 250px;">
       <el-tab-pane label="新建" name="0">
-        <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
+        <el-table :data="newOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit">
           </el-table-column>
-          <el-table-column v-for="item in changeOrderListHead" :label="item.label" :width="item.width" :key="item.label">
+          <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -50,7 +50,7 @@
         <el-table :data="untreatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit">
           </el-table-column>
-          <el-table-column v-for="item in changeOrderListHead" :label="item.label" :width="item.width" :key="item.label">
+          <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -73,7 +73,7 @@
         <el-table :data="treatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit">
           </el-table-column>
-          <el-table-column v-for="item in changeOrderListHead" :label="item.label" :width="item.width" :key="item.label">
+          <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -96,7 +96,7 @@
         <el-table :data="canceledOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit">
           </el-table-column>
-          <el-table-column v-for="item in changeOrderListHead" :label="item.label" :width="item.width" :key="item.label">
+          <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -117,10 +117,10 @@
       </el-tab-pane>
     </el-tabs>
 
-    <Pagination :page-url="this.urls.changeorders" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
+    <Pagination :page-url="this.urls.changeorders" @handlePagChg="handlePagChg" v-if="middleActiveName=='0'"></Pagination>
 
     <!--底部tab-->
-    <el-tabs v-model="activeName2" @tab-click="secondHandleClick">
+    <el-tabs v-model="bottomActiveName" @tab-click="secondHandleClick">
       <el-tab-pane label="变更明细" name="0">
         <el-table :data="changeDetails" fit @selection-change="handleSelectionChange" v-loading="loading" height="200">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit">
@@ -184,6 +184,7 @@
     <!--新增订单变更-->
     <el-dialog title="订单明细变更" :visible.sync="addOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <el-button type="text">基础信息</el-button>
+      <label>{{proData}}</label>
       <div style="float: right">
         <el-button size="mini" type="primary" @click="chooseOrders">选择订单</el-button>
       </div>
@@ -229,7 +230,7 @@
         </el-form-item>
       </el-form>
       <el-tabs v-model="addTabActiveName">
-        <el-tab-pane label="产品明细">
+        <el-tab-pane label="产品明细" name="0">
           <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
             <el-table-column v-for="item in addHead[0]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
@@ -302,44 +303,44 @@
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="订单信息">
-          <el-form :model="orderDtlFormVal">
-            <el-form-item v-for="(item,index) in orderDtlFormHead" :key="index" :label="item.label" :prop="item.prop">
-              <span v-if="item.type=='text'">
-                <span v-if="item.inProp">
-                  <el-input v-model.trim="orderDtlFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                </span>
-                <span v-else>
-                  <el-input v-model.trim="orderDtlFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                </span>
-              </span>
-              <span v-else-if="item.type=='number'">
+          <el-form :model="addChangeOrderFormVal">
+            <el-form-item v-for="(item,index) in addDialogOrderDtlFormHead" :key="index" :label="item.label" :prop="item.prop">
+              <span v-if="item.type=='number'">
                 <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                  <el-input type="number" v-model.trim="orderDtlFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+                  <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
                 </span>
-                <span v-else>
-                  <el-input type="number" v-model.trim="orderDtlFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                <span v-else-if="item.type=='number'">
+                  <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
               <span v-else-if="item.type=='select'">
-                <el-select v-model="orderDtlFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+                <el-select v-model="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
                   <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                     <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
                   </span>
                 </el-select>
               </span>
               <span v-else-if="item.type=='textarea'">
-                <el-input type="textarea" v-model.trim="orderDtlFormVal[item.prop]" :placehode="item.holder"></el-input>
+                <el-input type="textarea" v-model.trim="addChangeOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
               </span>
               <span v-else-if="item.type=='checkbox'">
-                <el-checkbox v-model="orderDtlFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
+                <el-checkbox v-model="addChangeOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
               </span>
               <span v-else-if="item.type=='radio'">
-                <el-radio v-model="orderDtlFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-                <el-radio v-model="orderDtlFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+                <el-radio v-model="addChangeOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="addChangeOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
               </span>
               <span v-else-if="item.type=='DatePicker'">
-                <el-date-picker v-model="orderDtlFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
+                <el-date-picker v-model="addChangeOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
                 </el-date-picker>
+              </span>
+              <span v-if="item.type=='text'">
+                <span v-if="item.inProp">
+                  <el-input v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+                <span v-else>
+                  <el-input v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
               </span>
             </el-form-item>
           </el-form>
@@ -384,10 +385,11 @@
       </el-tabs>
       <div slot="footer" class="dialog-footer clearfix">
         <div style="float: left">
+          <el-button type="primary" @click="addProDtl" v-if="addTabActiveName=='0'">添加商品</el-button>
           <el-button type="primary" @click="addExpenseLine" v-if="addTabActiveName=='2'">新增费用类型</el-button>
         </div>
         <div style="float: right">
-          <el-button type="primary" @click="test">确定</el-button>
+          <el-button type="primary" @click="addChangeOrdersConfirm">确定</el-button>
           <el-button @click="addChangeOrderCancel">关闭</el-button>
         </div>
       </div>
@@ -396,8 +398,6 @@
     <!-- 选择订单 -->
     <el-dialog title="选择订单" :visible.sync="chooseOrderMask" :class="{'more-forms':moreForms}">
       <el-button type="text">订单列表</el-button>
-      <label>{{this.chooseOrderProListData}}</label>
-      <label>{{this.chooseOrderRowId}}</label>
       <div style="float: right">
         <div style="float: right">
           <el-button type="primary" @click="chooseOrderFetchData">刷新</el-button>
@@ -425,13 +425,136 @@
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer clearfix">
-        <div style="float: left">
-          <el-button type="primary" @click="proQueryRefresh">刷新</el-button>
-        </div>
         <div style="float: right">
-          <el-button type="primary" @click="test">确定</el-button>
-          <el-button @click="test" type="warning">取消</el-button>
+          <el-button type="primary" @click="chooseOrderConfirm">确定</el-button>
+          <el-button @click="chooseOrderCancel" type="warning">取消</el-button>
         </div>
+      </div>
+    </el-dialog>
+
+    <!--商品明细-->
+    <el-dialog title="商品明细" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
+      <el-button type="text">选择商品</el-button>
+      <div class="searchBox">
+        <span>
+          <label>商品编码</label>
+          <el-input v-model.trim="proQuery.commodity_code" clearable placeholder="请输入商品编码" @keyup.enter.native="proQueryClick"></el-input>
+        </span>
+        <span>
+          <label>子件编码</label>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
+        </span>
+        <span>
+          <label>商品类别</label>
+          <el-select v-model="proQuery.shops_id" clearable placeholder="请选择商品类别" @keyup.enter.native="proQueryClick">
+            <el-option v-for="item in resData.shops" :key="item.value" :label="item.nick" :value="item.id"></el-option>
+          </el-select>
+        </span>
+        <span>
+          <label>商品简称</label>
+          <el-input v-model.trim="proQuery.short_name" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
+        </span>
+        <span>
+          <label>组合筛选</label>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
+        </span>
+        <span>
+          <label>成品筛选</label>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
+        </span>
+        <el-button type="primary" @click="proQueryClick">查询</el-button>
+      </div>
+      <el-table :data="proVal" fit height="250" @row-click="proRowClick">
+        <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+          <template slot-scope="scope">
+            <span v-if="item.prop">
+              <span v-if="item.type=='img'">
+                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                  <img :src="scope.row[item.prop]">
+                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                </el-popover>
+              </span>
+              <span v-else>
+                {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+              </span>
+            </span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-button type="text">sku信息</el-button>
+      <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
+        <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+          <template slot-scope="scope">
+            <span v-if="item.prop=='newData'">
+              <span v-if="proCompRowIndex == 'index'+scope.$index">
+                <span v-if="item.type=='number'">
+                  <span v-if="item.inProp=='quantity'">
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="quantityChg"></el-input>
+                  </span>
+                  <span v-else>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='checkbox'">
+                  <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
+                </span>
+                <span v-else>
+                  <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                </span>
+              </span>
+              <span v-else>
+                <span v-if="item.type=='checkbox'">
+                  <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                </span>
+                <span v-else>
+                  {{scope.row[item.prop][item.inProp]}}
+                </span>
+              </span>
+            </span>
+            <span v-else-if="item.prop">
+              <span v-if="item.type=='checkbox'">
+                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+              </span>
+              <span v-else-if="item.type=='img'">
+                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                  <img :src="scope.row[item.prop]">
+                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                </el-popover>
+              </span>
+              <span v-else>
+                {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+              </span>
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column type="expand" fixed="left">
+          <template slot-scope="scope">
+            <el-table :data="scope.row['productComp']" fit>
+              <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.prop">
+                    <span v-if="item.type=='checkbox'">
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                    <span v-else-if="item.type=='img'">
+                      <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                        <img :src="scope.row[item.prop]">
+                        <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                      </el-popover>
+                    </span>
+                    <span v-else>
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="confirmAddProDtl">确定</el-button>
+        <el-button @click="cancelAddProDtl">关闭</el-button>
       </div>
     </el-dialog>
 
@@ -496,7 +619,16 @@ export default {
           ent: this.refresh
         }
       ],
+      addTabActiveName: "0",
+      middleActiveName: "0",
+      bottomActiveName: "0",
+      filterBox: false,
+      loading: true, //loading标识
+      checkBoxInit: false, //checked 属性l
+
+      /**选择订单界面Dialog 订单列表*/
       chooseOrderMask: false,
+      chooseOrderData: {},
       chooseOrderHead: [
         {
           label: "订单编号",
@@ -546,118 +678,87 @@ export default {
           type: "text"
         }
       ],
-      chooseOrderData: {},
+      /**选择订单界面Dialog 产品列表*/
       chooseOrderProListData: {},
       chooseOrderProListHead: [
         {
-            label: "sku名称",
-            width: "160",
-            prop: "name",
-            type: "text"
-          },
-          {
-            label: "数量",
-            width: "130",
-            prop: "newData",
-            inProp: "quantity",
-            type: "number"
-          },
-          {
-            label: "油漆",
-            width: "120",
-            prop: "newData",
-            inProp: "paint",
-            type: "text"
-          },
-          {
-            label: "需要印刷",
-            width: "120",
-            prop: "newData",
-            inProp: "is_printing",
-            type: "checkbox"
-          },
-          {
-            label: "总体积",
-            width: "120",
-            prop: "newData",
-            inProp: "total_volume",
-            type: "number"
-          },
-          {
-            label: "印刷费用",
-            width: "140",
-            prop: "newData",
-            inProp: "printing_fee",
-            type: "number"
-          },
-          {
-            label: "现货",
-            width: "120",
-            prop: "newData",
-            inProp: "is_spot_goods",
-            type: "checkbox"
-          },
-          {
-            label: "单价(线下)",
-            width: "150",
-            prop: "newData",
-            inProp: "under_line_univalent",
-            type: "number"
-          },
-          {
-            label: "优惠(线下)",
-            width: "150",
-            prop: "newData",
-            inProp: "under_line_preferential",
-            type: "number"
-          }
+          label: "sku名称",
+          width: "160",
+          prop: "name",
+          type: "text"
+        },
+        {
+          label: "数量",
+          width: "130",
+          prop: "newData",
+          inProp: "quantity",
+          type: "number"
+        },
+        {
+          label: "油漆",
+          width: "120",
+          prop: "newData",
+          inProp: "paint",
+          type: "text"
+        },
+        {
+          label: "需要印刷",
+          width: "120",
+          prop: "newData",
+          inProp: "is_printing",
+          type: "checkbox"
+        },
+        {
+          label: "总体积",
+          width: "120",
+          prop: "newData",
+          inProp: "total_volume",
+          type: "number"
+        },
+        {
+          label: "印刷费用",
+          width: "140",
+          prop: "newData",
+          inProp: "printing_fee",
+          type: "number"
+        },
+        {
+          label: "现货",
+          width: "120",
+          prop: "newData",
+          inProp: "is_spot_goods",
+          type: "checkbox"
+        },
+        {
+          label: "单价(线下)",
+          width: "150",
+          prop: "newData",
+          inProp: "under_line_univalent",
+          type: "number"
+        },
+        {
+          label: "优惠(线下)",
+          width: "150",
+          prop: "newData",
+          inProp: "under_line_preferential",
+          type: "number"
+        }
       ],
-      addTabActiveName: "0",
 
-      filterBox: false,
-      loading: true, //loading标识
       searchBox: {
         change_order_no: "",
         vip_name: "",
         order_num: "",
         order_man: "",
-        // order_phone: '',
-        // order_money: '',
-        // order_address: '',
-        // order_goods: '',
-        // order_staff: '',
-        // order_promiseDate: '',
-        // order_workDate: '',
-        // order_transMStart: '',
-        // order_transMEnd: '',
-        // orderCompany: [
-        //     {label: 'ceshi', value: 0}
-        // ],
-        // order_customerInves: '',
-        // order_mark: '',
-        // order_flag: '',
-        // ordertbFlag: [
-        //     {label: 'ceshi', value: 0}
-        // ],
-        // order_lock: '',
-        // orderLock: [
-        //     {label: 'ceshi', value: 0}
-        // ],
-        // order_company: '',
-        // order_shop: '',
-        // orderShops: [
-        //     {label: 'ceshi', value: 0}
-        // ],
         apply_man: ""
       },
 
-      activeName: "0",
-      activeName2: "0",
-
-      orderListData: [],
-
-      checkBoxInit: false, //checked 属性l
-      changeOrderListHead: [
+      /**首页中间主要table 新建 */
+      newOrderListData: [],
+      untreatedOrderListData: [],
+      treatedOrderListData: [],
+      canceledOrderListData: [],
+      middleTableHead: [
         // 后端再改inprop
         {
           label: "变更单号",
@@ -733,125 +834,97 @@ export default {
           type: "checkBox"
         }
       ],
-      orderListData: [],
-      untreatedOrderListData: [],
-      treatedOrderListData: [],
-      canceledOrderListData: [],
 
       curRowId: "",
       curRowData: {},
-
-      orderDtlHead: [
-        //新建订单的商品信息的表头
-        [
-          {
-            label: "sku名称",
-            width: "160",
-            prop: "name",
-            type: "text"
-          },
-          {
-            label: "数量",
-            width: "130",
-            prop: "quantity",
-            type: "number"
-          },
-          {
-            label: "油漆",
-            width: "120",
-            prop: "paint",
-            type: "text"
-          },
-          {
-            label: "需要印刷",
-            width: "120",
-            prop: "is_printing",
-            type: "checkbox"
-          },
-          {
-            label: "总体积",
-            width: "120",
-            prop: "total_volume",
-            type: "number"
-          },
-          {
-            label: "印刷费用",
-            width: "140",
-            prop: "printing_fee",
-            type: "number"
-          },
-          {
-            label: "现货",
-            width: "120",
-            prop: "is_spot_goods",
-            type: "checkbox"
-          },
-          {
-            label: "单价(线下)",
-            width: "150",
-            prop: "under_line_univalent",
-            type: "number"
-          },
-          {
-            label: "优惠(线下)",
-            width: "150",
-            prop: "under_line_preferential",
-            type: "number"
-          }
-        ],
-        [
-          {
-            label: "支付金额",
-            prop: "payment",
-            type: "number"
-          },
-          {
-            label: "支付方式",
-            prop: "payment_methods_id",
-            type: "select",
-            stateVal: "paymentmethods"
-          },
-          {
-            label: "交易号",
-            prop: "taobao_tid",
-            type: "text"
-          },
-          {
-            label: "来源单号",
-            prop: "taobao_oid",
-            type: "text"
-          }
-        ],
-        [],
-        []
-      ],
       payDtlData: [],
-      orderDtlFormVal: {},
-      orderDtlFormHead: [
+      addChangeOrderFormVal: {
+        change_order_no: null,
+        order_id: null,
+        applier_id: null,
+        submitter_id: null,
+        auditor_id: null,
+        is_canceled: false,
+        cancel_order_no: "",
+        change_remark: "",
+        change_status: 10,
+
+        system_order_no: "",
+        shops_id: null,
+        member_nick: "",
+        logistics_id: "",
+        billing_way: "",
+        promise_ship_time: "",
+        freight_types_id: "",
+        expected_freight: "",
+        distributions_id: "",
+        distribution_methods_id: "",
+        deliver_goods_fee: "",
+        move_upstairs_fee: "",
+        installation_fee: "",
+        total_distribution_fee: "",
+        distribution_phone: "",
+        distribution_no: "",
+        distribution_types_id: "",
+        service_car_info: "",
+        take_delivery_goods_fee: "",
+        take_delivery_goods_ways_id: "",
+        express_fee: "",
+        service_car_fee: "",
+        cancel_after_verification_code: "",
+        wooden_frame_costs: "",
+        preferential_cashback: "",
+        favorable_cashback: "",
+        customer_types_id: "",
+        is_invoice: false,
+        invoice_express_fee: "",
+        express_invoice_title: "",
+        contract_no: "",
+        payment_methods_id: "",
+        deposit: "",
+        document_title: "",
+        warehouses_id: "",
+        payment_date: "",
+        interest_concessions: "",
+        is_notice: false,
+        is_cancel_after_verification: false,
+        accept_order_user: "",
+        tax_number: "",
+        receipt: "",
+        logistics_remark: "",
+        seller_remark: "",
+        customer_service_remark: "",
+        buyer_message: "",
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_mobile: "",
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        receiver_address: "",
+        receiver_zip: "",
+        status: true
+      },
+      addDialogOrderDtlFormHead: [
+        //新增会话框 下部订单信息formhead
         {
-          label: "店铺昵称",
-          width: "150",
-          prop: "shop",
-          //inProp: "title",
-          type: "text"
+          label: "店铺名称",
+          prop: "shops_id",
+          holder: "请选择店铺",
+          type: "select",
+          stateVal: "shop",
+          editChgAble: true
         },
         {
           label: "买家姓名",
           width: "130",
-          prop: "buyer_name",
+          prop: "receiver_name",
           type: "text"
         },
         {
           label: "会员昵称",
           width: "130",
           prop: "member_nick",
-          type: "text"
-        },
-        {
-          label: "业务员姓名",
-          width: "140",
-          prop: "user",
-          //inProp: "username",
           type: "text"
         },
         {
@@ -929,24 +1002,24 @@ export default {
         },
         {
           label: "配送公司",
-          width: "130",
-          prop: "distribution",
-          //inProp: "name",
-          type: "text"
+          prop: "distributions_id",
+          holder: "请选择配送公司",
+          type: "select",
+          stateVal: "distribution"
         },
         {
           label: "配送方式",
-          width: "130",
-          prop: "distributionMethod",
-          //inProp: "name",
-          type: "text"
+          prop: "distribution_methods_id",
+          holder: "请选择配送方式",
+          type: "select",
+          stateVal: "distribution_method"
         },
         {
           label: "配送类型",
-          width: "130",
-          prop: "distributionType",
-          //inProp: "name",
-          type: "text"
+          prop: "distribution_types_id",
+          holder: "请选择配送类型",
+          type: "select",
+          stateVal: "distribution_type"
         },
         {
           label: "配送单号",
@@ -980,17 +1053,17 @@ export default {
         },
         {
           label: "发货仓库",
-          width: "130",
-          prop: "warehouses",
-          //inProp: "name",
-          type: "text"
+          holder: "请选择发货仓库",
+          prop: "warehouses_id",
+          type: "select",
+          stateVal: "warehouse"
         },
         {
           label: "代发工厂",
-          width: "130",
-          prop: "warehouses",
-          //inProp: "name",
-          type: "text"
+          holder: "请选择代发工厂",
+          prop: "warehouses_id",
+          type: "select",
+          stateVal: "warehouse"
         },
         {
           label: "买家留言",
@@ -1011,6 +1084,7 @@ export default {
           type: "textarea"
         }
       ],
+      proSkuVal: [],
       /*新增*/
       addOrderChangesMask: false,
       moreForms: true,
@@ -1129,14 +1203,6 @@ export default {
           type: "checkbox"
         }
       ],
-      addChangeOrderFormVal: {
-        change_order_no: "",
-        system_order_no: "",
-        business_personnel_id: "",
-        is_canceled: "",
-        remark: "",
-        is_trashed: ""
-      },
       addChangeOrderFormRules: {
         //新建订单的要求格式
         system_order_no: [
@@ -1330,7 +1396,7 @@ export default {
           label: "类型名称",
           prop: "payment_methods_id",
           type: "select",
-          stateVal: "paymentmethods"
+          stateVal: "fee_type"
         },
         {
           label: "金额",
@@ -1382,8 +1448,6 @@ export default {
       toggleText: false,
       toggleHeight: true,
       clickFlag: false,
-      proCurSkuData: {},
-      chooseOrderProListData: [],
       proSkuHead: [
         {
           label: "sku名称",
@@ -1576,7 +1640,7 @@ export default {
       updateProData: [],
       updateReceiveInfo: {},
       updateExpenseData: [],
-      updateProIds: [],
+      addChangeOrderProIds: [],
       /*删除单条*/
       showDel: false,
       delUrl: "",
@@ -1811,7 +1875,7 @@ export default {
         }
       ],
       chooseOrderRowIndex: "",
-      chooseOrderRowId: {},
+      chooseOrderRowId: "",
       mergerIds: [],
       orderItemListData: [],
       orderItemListHead: [
@@ -1879,7 +1943,7 @@ export default {
       this.filterBox = !this.filterBox;
     },
     fetchData() {
-      let index = this.activeName - 0;
+      let index = this.middleActiveName - 0;
       switch (index) {
         case 0:
           this.$fetch(this.urls.changeorders + "/searchnew", {
@@ -1888,8 +1952,8 @@ export default {
           }).then(
             res => {
               this.loading = false;
-              this.orderListData = res.data;
-              //this.orderDtlFormVal = res.data[0];
+              this.newOrderListData = res.data;
+              //this.addChangeOrderFormVal = res.data[0];
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2045,6 +2109,56 @@ export default {
     test() {
       console.log(1);
     },
+    confirmAddProDtl() {
+      if (this.addOrderChangesMask) {
+        this.proSubmitData.map(item => {
+          if (this.addIds.indexOf(item.id) == -1) {
+            this.proData.push(item);
+            this.addIds.push(item.id);
+            this.$message({
+              message: "添加商品信息成功",
+              type: "success"
+            });
+            this.proMask = false;
+          } else {
+            this.proData.map((list, index) => {
+              if (list.id == item.id) {
+                this.proData.splice(index, 1);
+                this.proData.push(item);
+                this.$message({
+                  message: "添加商品信息成功",
+                  type: "success"
+                });
+                this.proMask = false;
+              }
+            });
+          }
+        });
+      } else {
+        this.proSubmitData.map(item => {
+          if (this.updateProIds.indexOf(item.id) == -1) {
+            this.updateProData.push(item);
+            this.updateProIds.push(item.id);
+            this.$message({
+              message: "添加商品信息成功",
+              type: "success"
+            });
+          } else {
+            this.updateProData.map((list, index) => {
+              if (list.combinations_id == item.id) {
+                this.$set(item, "originalId", list.id);
+                this.updateProData.splice(index, 1);
+                this.updateProData.push(item);
+                this.$message({
+                  message: "添加商品信息成功",
+                  type: "success"
+                });
+              }
+            });
+          }
+        });
+      }
+    },
     addProRCName({ row, rowIndex }) {
       row.index = rowIndex;
     },
@@ -2061,13 +2175,190 @@ export default {
     addOrderRowCName({ row, rowIndex }) {
       row.index = rowIndex;
     },
+    quantityChg(value) {
+      if (value > 0) {
+        let proCRow = this.proCompRow;
+        if (this.proIds.indexOf(proCRow.id) == -1) {
+          this.proIds.push(proCRow.id);
+          this.proSubmitData.push(proCRow);
+        } else {
+          this.proSubmitData.map((list, index) => {
+            if (list.id == proCRow.id) {
+              this.proSubmitData.splice(index, 1);
+              this.proSubmitData.push(proCRow);
+            }
+          });
+        }
+      }
+    },
     chooseOrderRowClick(row) {
       this.chooseOrderRowIndex = `index${row.index}`;
       this.chooseOrderRowId = row.id;
       this.chooseOrderProListData = [];
       this.proCompRowIndex = "";
+      this.addChangeOrderProIds = [];
 
-      let comb = row["orderItems"]["data"];
+      this.$fetch(
+        this.urls.customerservicedepts + "/" + this.chooseOrderRowId,
+        {
+          include:
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+        }
+      ).then(
+        res => {
+          this.addChangeOrderFormVal.order_id = Number(this.chooseOrderRowId);
+          this.addChangeOrderFormVal.system_order_no = res["system_order_no"];
+          this.addChangeOrderFormVal.shops_id = res["shops_id"];
+          this.addChangeOrderFormVal.member_nick = res["member_nick"];
+          this.addChangeOrderFormVal.logistics_id = res["logistics_id"];
+          this.addChangeOrderFormVal.billing_way = res["billing_way"];
+          this.addChangeOrderFormVal.promise_ship_time =
+            res["promise_ship_time"];
+          this.addChangeOrderFormVal.freight_types_id = res["freight_types_id"];
+          this.addChangeOrderFormVal.expected_freight = res["expected_freight"];
+          this.addChangeOrderFormVal.distributions_id = res["distributions_id"];
+          this.addChangeOrderFormVal.distribution_methods_id =
+            res["distribution_methods_id"];
+          this.addChangeOrderFormVal.deliver_goods_fee =
+            res["deliver_goods_fee"];
+          this.addChangeOrderFormVal.move_upstairs_fee =
+            res["move_upstairs_fee"];
+          this.addChangeOrderFormVal.installation_fee = res["installation_fee"];
+          this.addChangeOrderFormVal.total_distribution_fee =
+            res["total_distribution_fee"];
+          this.addChangeOrderFormVal.distribution_phone =
+            res["distribution_phone"];
+          this.addChangeOrderFormVal.distribution_no = res["distribution_no"];
+          this.addChangeOrderFormVal.distribution_types_id =
+            res["distribution_types_id"];
+          this.addChangeOrderFormVal.service_car_info = res["service_car_info"];
+          this.addChangeOrderFormVal.take_delivery_goods_fee =
+            res["take_delivery_goods_fee"];
+          this.addChangeOrderFormVal.take_delivery_goods_ways_id =
+            res["take_delivery_goods_ways_id"];
+          this.addChangeOrderFormVal.express_fee = res["express_fee"];
+          this.addChangeOrderFormVal.service_car_fee = res["service_car_fee"];
+          this.addChangeOrderFormVal.cancel_after_verification_code =
+            res["cancel_after_verification_code"];
+          this.addChangeOrderFormVal.wooden_frame_costs =
+            res["wooden_frame_costs"];
+          this.addChangeOrderFormVal.preferential_cashback =
+            res["preferential_cashback"];
+          this.addChangeOrderFormVal.favorable_cashback =
+            res["favorable_cashback"];
+          this.addChangeOrderFormVal.customer_types_id =
+            res["customer_types_id"];
+          this.addChangeOrderFormVal.is_invoice = res["is_invoice"];
+          this.addChangeOrderFormVal.invoice_express_fee =
+            res["invoice_express_fee"];
+          this.addChangeOrderFormVal.express_invoice_title =
+            res["express_invoice_title"];
+          this.addChangeOrderFormVal.contract_no = res["contract_no"];
+          this.addChangeOrderFormVal.payment_methods_id =
+            res["payment_methods_id"];
+          this.addChangeOrderFormVal.deposit = res["deposit"];
+          this.addChangeOrderFormVal.document_title = res["document_title"];
+          this.addChangeOrderFormVal.warehouses_id = res["warehouses_id"];
+          this.addChangeOrderFormVal.payment_date = res["payment_date"];
+          this.addChangeOrderFormVal.interest_concessions =
+            res["interest_concessions"];
+          this.addChangeOrderFormVal.is_notice = res["is_notice"];
+          this.addChangeOrderFormVal.is_cancel_after_verification =
+            res["is_cancel_after_verification"];
+          this.addChangeOrderFormVal.accept_order_user =
+            res["accept_order_user"];
+          this.addChangeOrderFormVal.tax_number = res["tax_number"];
+          this.addChangeOrderFormVal.receipt = res["receipt"];
+          this.addChangeOrderFormVal.logistics_remark = res["logistics_remark"];
+          this.addChangeOrderFormVal.seller_remark = res["seller_remark"];
+          this.addChangeOrderFormVal.customer_service_remark =
+            res["customer_service_remark"];
+          this.addChangeOrderFormVal.buyer_message = res["buyer_message"];
+          this.addChangeOrderFormVal.receiver_name = res["receiver_name"];
+          this.addChangeOrderFormVal.receiver_phone = res["receiver_phone"];
+          this.addChangeOrderFormVal.receiver_mobile = res["receiver_mobile"];
+          this.addChangeOrderFormVal.receiver_state = res["receiver_state"];
+          this.addChangeOrderFormVal.receiver_city = res["receiver_city"];
+          this.addChangeOrderFormVal.receiver_district =
+            res["receiver_district"];
+          this.addChangeOrderFormVal.receiver_address = res["receiver_address"];
+          this.addChangeOrderFormVal.receiver_zip = res["receiver_zip"];
+          this.addChangeOrderFormVal.status = res["status"];
+
+          if (res["orderItems"]["data"].length > 0) {
+            res["orderItems"]["data"].map(item => {
+              this.addChangeOrderProIds.push(item["combination"].id);
+              item["name"] = item["combination"]["name"];
+              item["id"] = item.id;
+              item["products_id"] = item.products_id;
+              item["combinations_id"] = item.combinations_id;
+              item["productComp"] =
+                item["combination"]["productComponents"]["data"];
+              this.$set(item, "newData", {
+                quantity: item.quantity,
+                paint: item.paint,
+                is_printing: item.is_printing,
+                printing_fee: item.printing_fee,
+                is_spot_goods: item.is_spot_goods,
+                under_line_univalent: item.under_line_univalent,
+                under_line_preferential: item.under_line_preferential,
+                total_volume: item.total_volume
+              });
+            });
+          }
+
+          this.proData = res["orderItems"]["data"];
+          this.chooseOrderProListData = res["orderItems"]["data"];
+          this.expenseData = res["paymentDetails"]["data"];
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error(str);
+          }
+        }
+      );
+    },
+    addExpenseRClick(row) {
+      this.expenseRIndex = `index${row.index}`;
+    },
+    addExpenseRCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    proSkuRowClick(row) {
+      this.proCompRowIndex = `index${row.index}`;
+      this.proCompRow = row;
+    },
+    /*新增行*/
+    addExpenseLine() {
+      if (this.chooseOrderMask) {
+        this.expenseData.push({
+          payment_methods_id: "",
+          payment: ""
+        });
+      } else {
+        this.updateExpenseData.push({
+          payment_methods_id: "",
+          payment: ""
+        });
+      }
+    },
+    addDelExpense(index) {
+      this.expenseData.splice(index, 1);
+      this.$message({
+        message: "删除成功",
+        type: "success"
+      });
+    },
+    proRowClick(row) {
+      this.proSkuVal = [];
+      this.proCompRowIndex = "";
+      let comb = row["combinations"]["data"];
       if (comb.length > 0) {
         let total_volume = 0;
         comb.map(item => {
@@ -2093,34 +2384,26 @@ export default {
       } else {
         comb["productComp"] = [];
       }
-      this.chooseOrderProListData = comb;
+      this.proSkuVal = comb;
     },
-    addExpenseRClick(row) {
-      this.expenseRIndex = `index${row.index}`;
-    },
-    addExpenseRCName({ row, rowIndex }) {
+    proSkuCName({ row, rowIndex }) {
       row.index = rowIndex;
     },
-    /*新增行*/
-    addExpenseLine() {
-      if (this.chooseOrderMask) {
-        this.expenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      } else {
-        this.updateExpenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      }
+    proSkuRowClick(row) {
+      this.proCompRowIndex = `index${row.index}`;
+      this.proCompRow = row;
     },
-    addDelExpense(index) {
-      this.expenseData.splice(index, 1);
-      this.$message({
-        message: "删除成功",
-        type: "success"
-      });
+    addProRowClick(row) {
+      this.proRIndex = `index${row.index}`;
+    },
+    addProRCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    addDelPro(index) {
+      this.proData.splice(index, 1);
+    },
+    cancelAddProDtl() {
+      this.proMask = false;
     },
 
     /** */
@@ -2130,16 +2413,60 @@ export default {
     addAfterSProRowClick(row) {
       this.addAfterSProDtlVal.push(row);
     },
+    proQueryClick() {
+      this.proSkuVal = [];
+      this.$fetch(this.urls.products, {
+        status: true,
+        commodity_code: this.proQuery.commodity_code,
+        component_code: this.proQuery.component_code,
+        shops_id: this.proQuery.shops_id,
+        short_name: this.proQuery.short_name,
+        include:
+          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+      }).then(
+        res => {
+          this.proVal = res.data;
+          let comb = res.data[0]["combinations"]["data"];
+          if (comb.length > 0) {
+            let total_volume = 0;
+            comb.map(item => {
+              item["productComp"] = item["productComponents"]["data"];
+              if (item["productComponents"]["data"].length > 0) {
+                item["productComponents"]["data"].map(list => {
+                  total_volume += list.volume;
+                });
+              } else {
+                total_volume = 0;
+              }
+              this.$set(item, "newData", {
+                quantity: "",
+                paint: "",
+                is_printing: false,
+                printing_fee: "",
+                is_spot_goods: true,
+                under_line_univalent: "",
+                under_line_preferential: "",
+                total_volume: total_volume
+              });
+            });
+          } else {
+            comb["productComp"] = [];
+          }
+          this.proSkuVal = comb;
+        },
+        err => {}
+      );
+    },
     /*页码*/
     handlePagChg(page) {
       this.$fetch(this.urls.changeorders + "?page=" + page, {
         include:
           "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(res => {
-        let index = this.activeName - 0;
+        let index = this.middleActiveName - 0;
         switch (index) {
           case 0:
-            this.orderListData = res.data;
+            this.newOrderListData = res.data;
             break;
           case 1:
             this.untreatedOrderListData = res.data;
@@ -2158,7 +2485,7 @@ export default {
       this.fetchData();
     },
     secondHandleClick() {
-      let index = this.activeName2 - 0;
+      let index = this.bottomActiveName - 0;
       switch (index) {
         case 0:
           this.loading = true;
@@ -2303,9 +2630,16 @@ export default {
         );
       }
     },
+    addProDtl() {
+      this.proMask = true;
+      Object.assign(this.proQuery, this.$options.data().proQuery);
+      this.proVal = [];
+      this.proSkuVal = [];
+      this.proIds = [];
+    },
     formChg() {
       let formVal;
-      if (this.addCustomerMask) {
+      if (this.addOrderChangesMask) {
         formVal = this.addCustomerFormVal;
       } else {
         formVal = this.updateCustomerFormVal;
@@ -2315,7 +2649,7 @@ export default {
         0 +
         (formVal["move_upstairs_fee"] - 0) +
         (formVal["installation_fee"] - 0);
-      if (this.addCustomerMask) {
+      if (this.addOrderChangesMask) {
         this.addCustomerFormVal.total_distribution_fee =
           formVal["total_distribution_fee"];
       } else {
@@ -2341,6 +2675,136 @@ export default {
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
+    },
+    chooseOrderConfirm() {
+      this.chooseOrderMask = false;
+      this.$message({
+        message: "选择订单成功",
+        type: "success"
+      });
+    },
+    addChangeOrdersConfirm() {
+      let tempData = this.addChangeOrderFormVal;
+      let submitData = {
+        change_order_no: tempData.change_order_no,
+        order_id: tempData.order_id,
+        applier_id: tempData.applier_id,
+        submitter_id: tempData.submitter_id,
+        auditor_id: tempData.auditor_id,
+        is_canceled: tempData.is_canceled,
+        cancel_order_no: tempData.cancel_order_no,
+        change_remark: tempData.change_remark,
+        change_status: tempData.change_status,
+        system_order_no: tempData.system_order_no,
+        shops_id: tempData.shops_id,
+        member_nick: tempData.member_nick,
+        logistics_id: tempData.logistics_id,
+        billing_way: tempData.billing_way,
+        promise_ship_time: tempData.promise_ship_time,
+        freight_types_id: tempData.freight_types_id,
+        expected_freight: tempData.expected_freight,
+        distributions_id: tempData.distributions_id,
+        distribution_methods_id: tempData.distribution_methods_id,
+        deliver_goods_fee: tempData.deliver_goods_fee,
+        move_upstairs_fee: tempData.move_upstairs_fee,
+        installation_fee: tempData.installation_fee,
+        total_distribution_fee: tempData.total_distribution_fee,
+        distribution_phone: tempData.distribution_phone,
+        distribution_types_id: tempData.distribution_types_id,
+        service_car_info: tempData.service_car_info,
+        take_delivery_goods_fee: tempData.take_delivery_goods_fee,
+        take_delivery_goods_ways_id: tempData.take_delivery_goods_ways_id,
+        express_fee: tempData.express_fee,
+        service_car_fee: tempData.service_car_fee,
+        cancel_after_verification_code: tempData.cancel_after_verification_code,
+        order_id: tempData.wooden_frame_costs,
+        preferential_cashback: tempData.preferential_cashback,
+        favorable_cashback: tempData.favorable_cashback,
+        customer_types_id: tempData.customer_types_id,
+        is_invoice: tempData.is_invoice,
+        invoice_express_fee: tempData.invoice_express_fee,
+        express_invoice_title: tempData.express_invoice_title,
+        contract_no: tempData.contract_no,
+        payment_methods_id: tempData.payment_methods_id,
+        deposit: tempData.deposit,
+        document_title: tempData.document_title,
+        warehouses_id: tempData.warehouses_id,
+        payment_date: tempData.payment_date,
+        interest_concessions: tempData.interest_concessions,
+        is_notice: tempData.is_notice,
+        is_cancel_after_verification: tempData.is_cancel_after_verification,
+        accept_order_user: tempData.accept_order_user,
+        tax_number: tempData.tax_number,
+        receipt: tempData.receipt,
+        logistics_remark: tempData.logistics_remark,
+        seller_remark: tempData.seller_remark,
+        customer_service_remark: tempData.customer_service_remark,
+        buyer_message: tempData.buyer_message,
+        receiver_name: tempData.receiver_name,
+        receiver_phone: tempData.receiver_phone,
+        receiver_mobile: tempData.receiver_mobile,
+        receiver_state: tempData.receiver_state,
+        receiver_city: tempData.receiver_city,
+        receiver_district: tempData.receiver_district,
+        receiver_address: tempData.receiver_address,
+        receiver_zip: tempData.receiver_zip,
+        status: tempData.status,
+        order_items: [],
+        payment_details: []
+      };
+      this.proData.map(item => {
+        let proD = {
+          id: item.id,
+          products_id: item.products_id,
+          combinations_id: item.combinations_id,
+          quantity: item["newData"].quantity,
+          total_volume: item["newData"].total_volume,
+          paint: item["newData"].paint,
+          is_printing: item["newData"].is_printing,
+          printing_fee: item["newData"].printing_fee,
+          is_spot_goods: item["newData"].is_spot_goods,
+          under_line_univalent: item["newData"].under_line_univalent,
+          under_line_total_amount: item["newData"].under_line_total_amount,
+          under_line_preferential: item["newData"].under_line_preferential
+        };
+        submitData.order_items.push(proD);
+      });
+      this.expenseData.map(list => {
+        let expenseD = {
+          payment: list.payment,
+          payment_methods_id: list.payment_methods_id
+        };
+        submitData.payment_details.push(expenseD);
+      });
+      this.$post(this.urls.changeorders, submitData).then(
+        () => {
+          this.addOrderChangesMask = false;
+          this.refresh();
+          this.$message({
+            message: "添加成功",
+            type: "success"
+          });
+        },
+        err => {
+          if (err.response) {
+            this.showDel = false;
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error(str);
+          }
+        }
+      );
+    },
+    chooseOrderCancel() {
+      this.chooseOrderMask = false;
+      this.$message({
+        message: "取消选择订单",
+        type: "success"
+      });
     },
     resets() {
       this.searchBox = {};

@@ -1894,7 +1894,7 @@ export default {
         deliver_goods_fee: "",
         move_upstairs_fee: "",
         installation_fee: "",
-        total_distribution_fee: 20,
+        total_distribution_fee: "",
         distribution_phone: "",
         distribution_no: "",
         distribution_types_id: "",
@@ -2750,6 +2750,12 @@ export default {
       switch (index) {
         case 0:
           this.$fetch(this.urls.customerservicedepts + "/searchuntreated", {
+            member_nick: this.searchBox.member_nick,
+            vip_name: this.searchBox.vip_name,
+            order_num: this.searchBox.order_num,
+            order_man: this.searchBox.order_man,
+            order_phone: this.searchBox.order_phone,
+            order_money: this.searchBox.order_money,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(
@@ -3178,6 +3184,7 @@ export default {
         0 +
         (formVal["move_upstairs_fee"] - 0) +
         (formVal["installation_fee"] - 0);
+
       if (this.addCustomerMask) {
         this.addCustomerFormVal.total_distribution_fee =
           formVal["total_distribution_fee"];

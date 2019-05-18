@@ -1834,7 +1834,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deliver_goods_fee: "",
         move_upstairs_fee: "",
         installation_fee: "",
-        total_distribution_fee: 20,
+        total_distribution_fee: "",
         distribution_phone: "",
         distribution_no: "",
         distribution_types_id: "",
@@ -2569,6 +2569,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       switch (index) {
         case 0:
           this.$fetch(this.urls.customerservicedepts + "/searchuntreated", {
+            member_nick: "",
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -2984,6 +2985,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         formVal = this.updateCustomerFormVal;
       }
       formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
+
       if (this.addCustomerMask) {
         this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
       } else {
