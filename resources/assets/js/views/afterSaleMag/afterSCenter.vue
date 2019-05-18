@@ -490,7 +490,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退款责任方" name="6">
-        <el-table :data="Data">
+        <el-table :data="refundData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -524,7 +524,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退货责任方" name="7">
-        <el-table :data="Data">
+        <el-table :data="returnData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -558,7 +558,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="补件责任方" name="8">
-        <el-table :data="Data">
+        <el-table :data="patchData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -1217,6 +1217,9 @@ export default {
       showBtmDel: false,
       scheduleData: [],
       defProData: [],
+      refundData: [],
+      returnData: [],
+      patchData: [],
       scheduleRuleFormVal: {
         schedule_description: "",
         subscribed_at: ""
@@ -1287,19 +1290,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "refund_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "refund_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "refund_amount",
             width: "180",
             type: "number"
           }
@@ -1307,19 +1310,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "return_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "return_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "return_amount",
             width: "180",
             type: "number"
           }
@@ -1327,19 +1330,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "patch_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "patch_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "patch_amount",
             width: "180",
             type: "number"
           }
@@ -1532,7 +1535,7 @@ export default {
       switch (index) {
         case 0:
           this.$fetch(this.urls.aftersale, {
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.allLoading = false;
@@ -1543,6 +1546,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
@@ -1570,7 +1582,7 @@ export default {
         case 1:
           this.$fetch(this.urls.aftersale, {
             is_finish: 0,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.unfinishLoading = false;
@@ -1580,6 +1592,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
@@ -1607,7 +1628,7 @@ export default {
         case 2:
           this.$fetch(this.urls.aftersale, {
             order_status: 50,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.finishLoading = false;
@@ -1617,6 +1638,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;

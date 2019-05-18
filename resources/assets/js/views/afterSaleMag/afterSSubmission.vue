@@ -410,7 +410,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退款责任方" name="6">
-        <el-table :data="Data">
+        <el-table :data="refundData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -444,7 +444,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="退货责任方" name="7">
-        <el-table :data="Data">
+        <el-table :data="returnData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -478,7 +478,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="补件责任方" name="8">
-        <el-table :data="Data">
+        <el-table :data="patchData">
           <el-table-column
             v-for="item in btmTableHead[this.bottomActiveName]"
             :label="item.label"
@@ -724,11 +724,16 @@
               >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
+          <el-table-column label="操作" width="90" align="center" fixed="right">
+            <template slot-scope="scope">
+              <el-button size="mini" type="danger" @click="delUpdateDefPro(scope.row,$event)">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
       <div slot="footer" class="dialog-footer clearfix">
         <div style="float: left">
-          <el-button type="primary" @click="addAfterSProClick">新增售后产品</el-button>
+          <el-button type="primary" @click="updateAfterSProClick">新增售后产品</el-button>
         </div>
         <div style="float: right">
           <el-button type="primary" @click="confirmUpdate(updateIndex)">确定</el-button>
@@ -1246,6 +1251,9 @@ export default {
       showBtmDel: false,
       scheduleData: [],
       defProData: [],
+      refundData: [],
+      returnData: [],
+      patchData: [],
       btmTableHead: [
         [
           {
@@ -1289,19 +1297,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "refund_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "refund_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "refund_amount",
             width: "180",
             type: "number"
           }
@@ -1309,19 +1317,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "return_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "return_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "return_amount",
             width: "180",
             type: "number"
           }
@@ -1329,19 +1337,19 @@ export default {
         [
           {
             label: "责任方",
-            prop: "responsible_party",
+            prop: "patch_party",
             width: "180",
             type: "text"
           },
           {
             label: "责任方姓名",
-            prop: "responsible_party_name",
+            prop: "patch_party_name",
             width: "180",
             type: "text"
           },
           {
             label: "责任金额",
-            prop: "responsible_money",
+            prop: "patch_amount",
             width: "180",
             type: "number"
           }
@@ -1878,7 +1886,7 @@ export default {
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 20,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.unsubmitLoading = false;
@@ -1888,6 +1896,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
@@ -1920,7 +1937,7 @@ export default {
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.submitLoading = false;
@@ -1930,6 +1947,15 @@ export default {
                 : [];
               this.defProData = res.data[0]
                 ? res.data[0]["afterSaleDefPros"].data
+                : [];
+              this.refundData = res.data[0]
+                ? res.data[0]["afterSaleRefunds"].data
+                : [];
+              this.returnData = res.data[0]
+                ? res.data[0]["afterSaleReturns"].data
+                : [];
+              this.patchData = res.data[0]
+                ? res.data[0]["afterSalePatchs"].data
                 : [];
               this.checkboxInit = false;
               let pg = res.meta.pagination;
@@ -2059,7 +2085,9 @@ export default {
           );
         }
       }
-
+    },
+    delUpdateDefPro(index) {
+      this.updateForm.after_sale_def_pro.splice(index, 1);
     },
     confirmUpdate() {
       this.$patch(
@@ -2182,7 +2210,7 @@ export default {
         }
       );
     },
-        // 修改售后进度
+    // 修改售后进度
     updateSchedule(row) {
       this.updateScheduleMask = true;
       this.updateSchIndex = row.id;
@@ -2250,58 +2278,25 @@ export default {
       this.addAfterSProDtlVal.push(row);
     },
     addOrderRowClick(row) {
+      this.proDtlVal = [];
       this.addOrderDtlVal = row;
-      console.log(this.addOrderDtlVal);
-      this.$fetch(this.urls.products, {
-        include:
-          "productComponents,shop,supplier,combinations.productComponents"
-      }).then(
-        res => {
-          this.proDtlVal = res.data;
-          this.proDtlVal.map(item => {
-            // let product_component = [];
-            // console.log(item.productComponents["data"][0]["spec"]);
-            // console.log(item.productComponents["data"][0]["spec"]);
-            // item.productComponents.map(list => {
-            //   let comp = {
-            //     spec: list.spec,
-            //     color: list.color,
-            //     materials: list.materials
-            //   };
-            // });
-            // if (item.productComponents["data"].length > 0) {
-            //   console.log(666);
-            //   let comp = {
-            //     spec: item.productComponents["data"][0]["spec"],
-            //     color: item.productComponents["data"][0]["color"],
-            //     materials: item.productComponents["data"][0]["materials"]
-            //   };
-            // } else {
-            //   let comp = {
-            //     spec: '',
-            //     color: '',
-            //     materials: ''
-            //   };
-            // };
-            //   product_component.push(comp);
-          });
-        },
-        err => {
-          if (err.response) {
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error({
-              message: str
-            });
-          }
-        }
-      );
+      this.addOrderDtlVal.orderItems["data"].map(list => {
+        list.combination.productComponents["data"].map(item => {
+          let defPro = {
+          commodity_code: list.product.commodity_code,
+          spec_code: "",
+          short_name: list.product.short_name,
+          spec: item.spec,
+          color: item.color,
+          materials: item.materials,
+          buy_number: list.quantity,
+          supplier_id: list.supplier_id,
+          };
+          this.proDtlVal.push(defPro);
+        })
+      });
     },
-    addAfterSProClick() {
+    updateAfterSProClick() {
       this.addAfterSProMask = true;
       this.proQueryClick();
     },
@@ -2310,7 +2305,10 @@ export default {
       this.proDtlVal = [];
       this.addOrderDtlVal = [];
       this.addAfterSProDtlVal = [];
-      this.$fetch(this.urls.customerservicedepts).then(
+      this.$fetch(this.urls.customerservicedepts,{
+        include:
+          "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        }).then(
         res => {
           this.orderDtlVal = res.data;
         },
@@ -2343,7 +2341,6 @@ export default {
     confirmAddAfterSPro() {
       this.addAfterSProMask = false;
       this.defProDtlVal = this.addAfterSProDtlVal;
-      console.log(this.addOrderDtlVal);
       this.addAfterSaleForm.order_no = this.addOrderDtlVal.system_order_no;
       this.addAfterSaleForm.shop_name = this.addOrderDtlVal.shops_id;
       this.addAfterSaleForm.after_sale_type = "";
