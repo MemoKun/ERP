@@ -7,7 +7,7 @@ class DownLoadConf extends Model
     protected $table = 'download_conf';
 
     protected $fillable = [
-        'is_covered', 'is_merged', 'status',
+        'is_covered', 'is_merged',
     ];
     //设置类型
     protected $casts = [

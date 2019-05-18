@@ -66,6 +66,9 @@ class ResupplieApplicationRequest extends FormRequest
                     ],
                     'promise_time' => 'date',
                     'remark' => 'string|max:255',
+                    'receiver_state' => 'string|max:255',
+                    'receiver_city' => 'string|max:255',
+                    'receiver_district' => 'string|max:255',
                     'address' => 'string|max:255',
                     're_supplie_responsibles_id' => [
                         'required','integer',
@@ -80,13 +83,13 @@ class ResupplieApplicationRequest extends FormRequest
                         }),
                     ],
                     're_supplie_order_items.*.products_id' => [
-                        'required','integer',
+                        'integer',
                         Rule::exists('products', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     're_supplie_order_items.*.product_components_id' => [
-                        'required','integer',
+                        'integer',
                         Rule::exists('product_components', 'id'),
                     ],
                     're_supplie_order_items.*.quantity' => 'numeric',
@@ -148,6 +151,9 @@ class ResupplieApplicationRequest extends FormRequest
                     ],
                     'promise_time' => 'date',
                     'remark' => 'string|max:255',
+                    'receiver_state' => 'string|max:255',
+                    'receiver_city' => 'string|max:255',
+                    'receiver_district' => 'string|max:255',
                     'address' => 'string|max:255',
                     're_supplie_responsibles_id' => [
                         'integer',
@@ -297,6 +303,10 @@ class ResupplieApplicationRequest extends FormRequest
             'refund_methods_id' => '补款方式id',
             'refund_account' => '补款账号',
             'bank' => '开户银行',
+            'receiver_state' => '收货人省',
+            'receiver_city' => '收货人市',
+            'receiver_district' => '收货人区',
+            'address' => '收货地址',
             'creator' => '创建人',
             'remark' => '备注',
             'mark_name' => '标记名称',

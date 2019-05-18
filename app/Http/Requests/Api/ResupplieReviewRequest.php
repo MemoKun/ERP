@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 //use Illuminate\Validation\Rule;
 
-class ResupplieReviewRequset extends FormRequest
+class ResupplieReviewRequest extends FormRequest
 {
     public function rules()
     {

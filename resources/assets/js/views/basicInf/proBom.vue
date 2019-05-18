@@ -3,18 +3,14 @@
     <div class="searchBox" v-if="currentPage">
       <span>
         <label>商品简称</label>
-        <el-input v-model="searchBox.shortName" clearable class="half" @keyup.enter.native="getData"></el-input>
+        <el-input v-model="searchBox.short_name" clearable class="half"></el-input>
       </span>
       <span>
         <label>规格名称</label>
-        <el-input v-model="searchBox.spec" clearable class="half" @keyup.enter.native="getData"></el-input>
+        <el-input v-model="searchBox.spec" clearable class="half"></el-input>
       </span>
-      <span>
-        <label>包含材料</label>
-        <el-input clearable class="half" @keyup.enter.native="getData"></el-input>
-      </span>
-      <el-button type="primary">筛选</el-button>
-      <el-button type="info" @click="resetAddPro">重置</el-button>
+        <el-button type="primary" @click="getData">筛选</el-button>
+        <el-button type="info" @click="resetAddPro">重置</el-button>
     </div>
     <!--产品信息-->
     <el-tabs>
@@ -193,7 +189,7 @@ export default {
       ],
       //筛选信息输入
       searchBox: {
-        shortName: '', //商品简称
+        short_name: '', //商品简称
         spec: '' //规格名称
         //包含材料
       },
@@ -558,9 +554,36 @@ export default {
     test() {
       console.log(1);
     },
+    //筛选
     getData() {
-      alert(this.searchBox);
-      console.log(this.searchBox);
+      this.productsLoading = true;
+      this.$fetch(this.urls.proBom, { 
+        short_name:this.searchBox.short_name,
+        spec:this.searchBox.spec,
+        include: 'proBomMaterial.proBom' }).then(
+        res => {
+          this.productsLoading = false;
+          this.productsData = res.data;
+          this.materialData = res.data[0]
+            ? res.data[0]['proBomMaterial'].data
+            : [];
+          let pg = res.meta.pagination;
+          this.$store.dispatch('currentPage',pg.current_page);
+          this.$store.commit('PER_PAGE', pg.per_page);
+          this.$store.commit('PAGE_TOTAL', pg.total);
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(',');
+            this.$message.error({ $message: str });
+          }
+        }
+      );
     },
     //新增
     addPro() {
@@ -848,10 +871,10 @@ export default {
           this.materialData = res.data[0]
             ? res.data[0]['proBomMaterial'].data
             : [];
-          //let pg = res.meta.pagination;
-          //this.$store.dispatch('currentPage',pg.current_page);
-          //this.$store.commit('PER_PAGE', pg.per_page);
-          //this.$store.commit('PAGE_TOTAL', pg.total);
+          let pg = res.meta.pagination;
+          this.$store.dispatch('currentPage',pg.current_page);
+          this.$store.commit('PER_PAGE', pg.per_page);
+          this.$store.commit('PAGE_TOTAL', pg.total);
         },
         err => {
           if (err.response) {

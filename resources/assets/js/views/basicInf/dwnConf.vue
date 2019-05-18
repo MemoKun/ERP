@@ -25,7 +25,7 @@
       </el-tab-pane>
     </el-tabs>
     <!--页码-->
-    <Pagination :page-url="this.urls.dwnConf" @handlePagChg="handlePagChg"></Pagination>
+    <Pagination :page-url="this.urls.downLoadConf" @handlePagChg="handlePagChg"></Pagination>
     <!--新增-->
     <el-dialog title="下载配置" :visible.sync="addConfMask" :class="{'more-forms':moreForms}">
       <el-form :data="addForm" ref="addNew">
@@ -101,12 +101,10 @@ export default {
       },
       //新增
       addConfMask: false,
-      addForm: [
-        {
-          is_covered: false,
-          is_merged: false
-        }
-      ],
+      addForm: {
+        is_covered: false,
+        is_merged: false
+      },
       addConfHead: [
         {
           label: '启用覆盖',
@@ -177,7 +175,7 @@ export default {
     },
     //获取数据
     fetchData() {
-      this.$fetch(this.urls.dwnConf).then(
+      this.$fetch(this.urls.downLoadConf).then(
         res => {
           this.confData = res.data;
           this.confLoading = false;
@@ -197,7 +195,7 @@ export default {
     },
     //分页
     handlePagChg(page) {
-      this.$fetch(this.urls.dwnConf + '?page=' + page).then(res => {
+      this.$fetch(this.urls.downLoadConf + '?page=' + page).then(res => {
         this.confData = res.data;
       });
     },
@@ -208,10 +206,10 @@ export default {
     },
     addConfirm() {
       let obj = {
-        is_covered: this.addForm[0].is_covered,
-        is_merged: this.addForm[0].is_merged
+        is_covered: this.addForm.is_covered,
+        is_merged: this.addForm.is_merged
       };
-      this.$post(this.urls.dwnConf, obj).then(
+      this.$post(this.urls.downLoadConf, obj).then(
         () => {
           this.$message({
             message: '添加成功',
@@ -254,7 +252,7 @@ export default {
         return;
       } else {
         this.updateConfMask = true;
-        this.$fetch(this.urls.dwnConf + '/' + this.currentId).then(
+        this.$fetch(this.urls.downLoadConf + '/' + this.currentId).then(
           res => {
             this.updateForm = {
               is_covered: res.is_covered,
@@ -277,7 +275,7 @@ export default {
     },
     updateConfirm() {
       this.$patch(
-        this.urls.dwnConf + '/' + this.currentId,
+        this.urls.downLoadConf + '/' + this.currentId,
         this.updateForm
       ).then(
         () => {
@@ -334,7 +332,7 @@ export default {
           type: 'warning'
         })
           .then(() => {
-            this.$del(this.urls.dwnConf, { ids: this.delIds }).then(
+            this.$del(this.urls.downLoadConf, { ids: this.delIds }).then(
               () => {
                 this.$message({
                   message: '删除成功',
@@ -367,7 +365,7 @@ export default {
       this.showDel = true;
       $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
       this.delId = row.id;
-      this.delUrl = this.urls.dwnConf;
+      this.delUrl = this.urls.downLoadConf;
     },
     cancelD() {
       this.showDel = false;

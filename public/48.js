@@ -55,6 +55,14 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -412,8 +420,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       activeName: '0',
       bottomActiveName: '0',
       searchBox: {
-        buyNick: '',
-        shopTitle: ''
+        resupply_order_no: '',
+        member_nick: '',
+        member_name: '',
+        re_supplie_categories_id: '',
+        receiver_state: '',
+        receiver_city: '',
+        receiver_district: '',
+        mark_name: '',
+        suppliers_id: '',
+        is_invalid: ''
       },
       orderId: '',
       orderRow: {},
@@ -584,20 +600,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '省',
         width: '120',
-        prop: 'supplier',
-        inProp: 'province',
+        prop: 'receiver_state',
         type: 'text'
       }, {
         label: '市',
         width: '120',
-        prop: 'supplier',
-        inProp: 'city',
+        prop: 'receiver_city',
         type: 'text'
       }, {
         label: '区',
         width: '120',
-        prop: 'supplier',
-        inProp: 'district',
+        prop: 'receiver_district',
         type: 'text'
       }, {
         label: '收货地址',
@@ -769,7 +782,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         inProp: 'commodity_code',
         type: 'text'
       }, {
-        label: '规格编码',
+        label: '子件编码',
         width: '160',
         prop: 'productComponent',
         inProp: 'component_code',
@@ -813,26 +826,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       {
         label: '商品编码',
         width: '160',
-        prop: 'product',
-        inProp: 'commodity_code',
+        prop: 'commodity_code',
         type: 'text'
       }, {
-        label: '规格编码',
+        label: '子件编码',
         width: '160',
-        prop: 'productComponent',
-        inProp: 'component_code',
+        prop: 'spec_code',
         type: 'text'
       }, {
         label: '商品简称',
         width: '160',
-        prop: 'product',
-        inProp: 'short_name',
+        prop: 'short_name',
         type: 'text'
       }, {
         label: '规格名称',
         width: '160',
-        prop: 'productComponent',
-        inProp: 'spec',
+        prop: 'spec',
         type: 'text'
       }, {
         label: '供应商',
@@ -879,7 +888,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         inProp: 'commodity_code',
         type: 'text'
       }, {
-        label: '规格编码',
+        label: '子件编码',
         width: '160',
         prop: 'productComponent',
         inProp: 'component_code',
@@ -1000,12 +1009,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: 'description',
         type: 'textarea'
       }],
+      updateProgressMask: false,
+      updateProgressFrom: {},
       //分页
       pagination: {
         current_page: 1,
         per_page: 0,
         page_total: 0
       }
+
     };
   },
 
@@ -1038,17 +1050,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.searchBox = {};
     },
     fetchData: function fetchData() {
-      var _this = this;
+      var _$fetch,
+          _this = this;
 
-      this.$fetch(this.urls.resupplieCenter, {
-        include: 'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.product,resupplieProblemProduct.productComponent,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
-      }).then(function (res) {
+      this.$fetch(this.urls.resupplieCenter, (_$fetch = {
+        resupply_order_no: this.searchBox.resupply_order_no,
+        member_nick: this.searchBox.member_nick,
+        member_name: this.searchBox.member_name,
+        re_supplie_categories_id: this.searchBox.re_supplie_categories_id
+      }, _defineProperty(_$fetch, 'resupply_order_no', this.searchBox.resupply_order_no), _defineProperty(_$fetch, 'receiver_state', this.searchBox.receiver_state), _defineProperty(_$fetch, 'receiver_city', this.searchBox.receiver_city), _defineProperty(_$fetch, 'receiver_district', this.searchBox.receiver_district), _defineProperty(_$fetch, 'mark_name', this.searchBox.mark_name), _defineProperty(_$fetch, 'suppliers_id', this.searchBox.suppliers_id), _defineProperty(_$fetch, 'is_invalid', this.searchBox.is_invalid), _defineProperty(_$fetch, 'include', 'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'), _$fetch)).then(function (res) {
         _this.orderLoading = false;
         _this.orderData = res.data;
         var pg = res.meta.pagination;
         _this.$store.dispatch('currentPage', pg.current_page);
         _this.$store.commit('PER_PAGE', pg.per_page);
         _this.$store.commit('PAGE_TOTAL', pg.total);
+        _this.$store.dispatch('resupplieCategory', '/resupplieCategory');
+        _this.$store.dispatch('suppliers', '/suppliers');
         _this.resupplyInfoData = res.data[0] ? res.data[0]['resupplieOrderItem'].data : [];
         _this.problemProData = res.data[0] ? res.data[0]['resupplieProblemProduct'].data : [];
         _this.imageData = res.data[0] ? res.data[0]['resupplieImage'].data : [];
@@ -1068,6 +1086,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this.$message.error(arr1.join(','));
         }
       });
+    },
+
+    //筛选
+    searchData: function searchData() {
+      this.orderLoading = true;
+      this.fetchData();
     },
 
     //批量选择
@@ -1276,7 +1300,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this8 = this;
 
       this.$fetch(this.urls.resupplieCenter + '?page=' + page, {
-        include: 'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.product,resupplieProblemProduct.productComponent,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
+        include: 'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
       }).then(function (res) {
         _this8.orderData = res.data;
       });
@@ -1285,6 +1309,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //刷新
     refresh: function refresh() {
       this.orderLoading = true;
+      this.resets();
       this.fetchData();
     }
   },
@@ -1325,29 +1350,12 @@ var render = function() {
                   _c("el-input", {
                     staticClass: "half",
                     attrs: { clearable: "" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.getData($event)
-                      }
-                    },
                     model: {
-                      value: _vm.searchBox.shopTitle,
+                      value: _vm.searchBox.resupply_order_no,
                       callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                        _vm.$set(_vm.searchBox, "resupply_order_no", $$v)
                       },
-                      expression: "searchBox.shopTitle"
+                      expression: "searchBox.resupply_order_no"
                     }
                   })
                 ],
@@ -1362,29 +1370,12 @@ var render = function() {
                   _c("el-input", {
                     staticClass: "half",
                     attrs: { clearable: "" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.getData($event)
-                      }
-                    },
                     model: {
-                      value: _vm.searchBox.shopTitle,
+                      value: _vm.searchBox.member_nick,
                       callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                        _vm.$set(_vm.searchBox, "member_nick", $$v)
                       },
-                      expression: "searchBox.shopTitle"
+                      expression: "searchBox.member_nick"
                     }
                   })
                 ],
@@ -1399,29 +1390,12 @@ var render = function() {
                   _c("el-input", {
                     staticClass: "half",
                     attrs: { clearable: "" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.getData($event)
-                      }
-                    },
                     model: {
-                      value: _vm.searchBox.shopTitle,
+                      value: _vm.searchBox.member_name,
                       callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                        _vm.$set(_vm.searchBox, "member_name", $$v)
                       },
-                      expression: "searchBox.shopTitle"
+                      expression: "searchBox.member_name"
                     }
                   })
                 ],
@@ -1439,20 +1413,35 @@ var render = function() {
                         {
                           attrs: { clearable: "", placeholder: "请选择" },
                           model: {
-                            value: _vm.searchBox.shopTitle,
+                            value: _vm.searchBox.re_supplie_categories_id,
                             callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                              _vm.$set(
+                                _vm.searchBox,
+                                "re_supplie_categories_id",
+                                $$v
+                              )
                             },
-                            expression: "searchBox.shopTitle"
+                            expression: "searchBox.re_supplie_categories_id"
                           }
                         },
-                        _vm._l(_vm.searchBox.shopTitle, function(item) {
-                          return _c("el-option", {
-                            key: item.value,
-                            attrs: { label: item.label, value: item.value }
-                          })
+                        _vm._l(_vm.resData["resupplieCategory"], function(
+                          list
+                        ) {
+                          return _c(
+                            "span",
+                            { key: list.id },
+                            [
+                              _c("el-option", {
+                                attrs: {
+                                  label: list.name ? list.name : list.nick,
+                                  value: list.id
+                                }
+                              })
+                            ],
+                            1
+                          )
                         }),
-                        1
+                        0
                       )
                     ],
                     1
@@ -1460,11 +1449,18 @@ var render = function() {
                 : _c(
                     "span",
                     [
-                      _c("el-button", { attrs: { type: "primary" } }, [
-                        _vm._v("筛选")
-                      ]),
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary" },
+                          on: { click: _vm.searchData }
+                        },
+                        [_vm._v("筛选")]
+                      ),
                       _vm._v(" "),
-                      _c("el-button", [_vm._v("重置")]),
+                      _c("el-button", { on: { click: _vm.resets } }, [
+                        _vm._v("重置")
+                      ]),
                       _vm._v(" "),
                       _c(
                         "span",
@@ -1504,28 +1500,17 @@ var render = function() {
             _c(
               "span",
               [
-                _c("label", [_vm._v("包含产品")]),
+                _c("label", [_vm._v("省")]),
                 _vm._v(" "),
                 _c("el-input", {
                   staticClass: "half",
                   attrs: { clearable: "" },
-                  nativeOn: {
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.getData($event)
-                    }
-                  },
                   model: {
-                    value: _vm.searchBox.shopTitle,
+                    value: _vm.searchBox.receiver_state,
                     callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                      _vm.$set(_vm.searchBox, "receiver_state", $$v)
                     },
-                    expression: "searchBox.shopTitle"
+                    expression: "searchBox.receiver_state"
                   }
                 })
               ],
@@ -1535,28 +1520,19 @@ var render = function() {
             _c(
               "span",
               [
-                _c("label", [_vm._v("店铺昵称")]),
+                _c("label", [_vm._v("市")]),
                 _vm._v(" "),
-                _c(
-                  "el-select",
-                  {
-                    attrs: { clearable: "", placeholder: "请选择" },
-                    model: {
-                      value: _vm.searchBox.shopTitle,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                      },
-                      expression: "searchBox.shopTitle"
-                    }
-                  },
-                  _vm._l(_vm.searchBox.shopTitle, function(item) {
-                    return _c("el-option", {
-                      key: item.value,
-                      attrs: { label: item.label, value: item.value }
-                    })
-                  }),
-                  1
-                )
+                _c("el-input", {
+                  staticClass: "half",
+                  attrs: { clearable: "" },
+                  model: {
+                    value: _vm.searchBox.receiver_city,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "receiver_city", $$v)
+                    },
+                    expression: "searchBox.receiver_city"
+                  }
+                })
               ],
               1
             ),
@@ -1564,16 +1540,17 @@ var render = function() {
             _c(
               "span",
               [
-                _c("label", [_vm._v("省市区")]),
+                _c("label", [_vm._v("区")]),
                 _vm._v(" "),
-                _c("el-cascader", {
-                  attrs: { size: "middle", options: _vm.options },
+                _c("el-input", {
+                  staticClass: "half",
+                  attrs: { clearable: "" },
                   model: {
-                    value: _vm.searchBox.shopTitle,
+                    value: _vm.searchBox.receiver_district,
                     callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                      _vm.$set(_vm.searchBox, "receiver_district", $$v)
                     },
-                    expression: "searchBox.shopTitle"
+                    expression: "searchBox.receiver_district"
                   }
                 })
               ],
@@ -1582,96 +1559,17 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.filterBox,
-                expression: "filterBox"
-              }
-            ],
-            staticClass: "searchBox"
-          },
-          [
-            _c(
-              "span",
-              { staticStyle: { "text-align": "left" } },
-              [
-                _c("label", [_vm._v("审核时间")]),
-                _vm._v(" "),
-                _c("el-date-picker", {
-                  attrs: {
-                    type: "daterange",
-                    "range-separator": "至",
-                    "start-placeholder": "开始日期",
-                    "end-placeholder": "结束日期"
-                  },
-                  model: {
-                    value: _vm.searchBox.shopTitle,
-                    callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                    },
-                    expression: "searchBox.shopTitle"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              { staticStyle: { "text-align": "left" } },
-              [
-                _c("label", [_vm._v("承诺时间")]),
-                _vm._v(" "),
-                _c("el-date-picker", {
-                  attrs: {
-                    type: "daterange",
-                    "range-separator": "至",
-                    "start-placeholder": "开始日期",
-                    "end-placeholder": "结束日期"
-                  },
-                  model: {
-                    value: _vm.searchBox.shopTitle,
-                    callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                    },
-                    expression: "searchBox.shopTitle"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              { staticStyle: { "text-align": "left" } },
-              [
-                _c("label", [_vm._v("结算时间")]),
-                _vm._v(" "),
-                _c("el-date-picker", {
-                  attrs: {
-                    type: "daterange",
-                    "range-separator": "至",
-                    "start-placeholder": "开始日期",
-                    "end-placeholder": "结束日期"
-                  },
-                  model: {
-                    value: _vm.searchBox.shopTitle,
-                    callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                    },
-                    expression: "searchBox.shopTitle"
-                  }
-                })
-              ],
-              1
-            )
-          ]
-        ),
+        _c("div", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.filterBox,
+              expression: "filterBox"
+            }
+          ],
+          staticClass: "searchBox"
+        }),
         _vm._v(" "),
         _c(
           "div",
@@ -1695,23 +1593,12 @@ var render = function() {
                 _c("el-input", {
                   staticClass: "half",
                   attrs: { clearable: "" },
-                  nativeOn: {
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.getData($event)
-                    }
-                  },
                   model: {
-                    value: _vm.searchBox.shopTitle,
+                    value: _vm.searchBox.mark_name,
                     callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "shopTitle", $$v)
+                      _vm.$set(_vm.searchBox, "mark_name", $$v)
                     },
-                    expression: "searchBox.shopTitle"
+                    expression: "searchBox.mark_name"
                   }
                 })
               ],
@@ -1721,9 +1608,55 @@ var render = function() {
             _c(
               "span",
               [
+                _c("label", [_vm._v("供应商")]),
+                _vm._v(" "),
+                _c(
+                  "el-select",
+                  {
+                    attrs: { clearable: "", placeholder: "请选择" },
+                    model: {
+                      value: _vm.searchBox.suppliers_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.searchBox, "suppliers_id", $$v)
+                      },
+                      expression: "searchBox.suppliers_id"
+                    }
+                  },
+                  _vm._l(_vm.resData["suppliers"], function(list) {
+                    return _c(
+                      "span",
+                      { key: list.id },
+                      [
+                        _c("el-option", {
+                          attrs: {
+                            label: list.name ? list.name : list.nick,
+                            value: list.id
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  }),
+                  0
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
                 _c("label", [_vm._v("不显示作废")]),
                 _vm._v(" "),
-                _c("el-checkbox")
+                _c("el-checkbox", {
+                  model: {
+                    value: _vm.searchBox.is_invalid,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "is_invalid", $$v)
+                    },
+                    expression: "searchBox.is_invalid"
+                  }
+                })
               ],
               1
             ),
@@ -1733,9 +1666,14 @@ var render = function() {
                   "div",
                   { staticStyle: { "text-align": "right" } },
                   [
-                    _c("el-button", { attrs: { type: "primary" } }, [
-                      _vm._v("筛选")
-                    ]),
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "primary" },
+                        on: { click: _vm.searchData }
+                      },
+                      [_vm._v("筛选")]
+                    ),
                     _vm._v(" "),
                     _c("el-button", { on: { click: _vm.resets } }, [
                       _vm._v("重置")
@@ -1809,85 +1747,81 @@ var render = function() {
                         width: item.width,
                         align: "center"
                       },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(scope) {
-                              return [
-                                item.type == "checkbox"
-                                  ? _c("span", [
-                                      item.inProp
-                                        ? _c(
-                                            "span",
-                                            [
-                                              _c("el-checkbox", {
-                                                attrs: { disabled: "" },
-                                                model: {
-                                                  value:
-                                                    scope.row[item.prop][
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              item.type == "checkbox"
+                                ? _c("span", [
+                                    item.inProp
+                                      ? _c(
+                                          "span",
+                                          [
+                                            _c("el-checkbox", {
+                                              attrs: { disabled: "" },
+                                              model: {
+                                                value:
+                                                  scope.row[item.prop][
+                                                    item.inProp
+                                                  ],
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    scope.row[item.prop],
+                                                    item.inProp,
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "scope.row[item.prop][item.inProp]"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _c(
+                                          "span",
+                                          [
+                                            _c("el-checkbox", {
+                                              attrs: { disabled: "" },
+                                              model: {
+                                                value: scope.row[item.prop],
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    scope.row,
+                                                    item.prop,
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "scope.row[item.prop]"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                  ])
+                                : _c("span", [
+                                    scope.row[item.prop]
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                " +
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
                                                       item.inProp
-                                                    ],
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      scope.row[item.prop],
-                                                      item.inProp,
-                                                      $$v
-                                                    )
-                                                  },
-                                                  expression:
-                                                    "scope.row[item.prop][item.inProp]"
-                                                }
-                                              })
-                                            ],
-                                            1
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              ) +
+                                              "\n              "
                                           )
-                                        : _c(
-                                            "span",
-                                            [
-                                              _c("el-checkbox", {
-                                                attrs: { disabled: "" },
-                                                model: {
-                                                  value: scope.row[item.prop],
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      scope.row,
-                                                      item.prop,
-                                                      $$v
-                                                    )
-                                                  },
-                                                  expression:
-                                                    "scope.row[item.prop]"
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          )
-                                    ])
-                                  : _c("span", [
-                                      scope.row[item.prop]
-                                        ? _c("span", [
-                                            _vm._v(
-                                              "\n                " +
-                                                _vm._s(
-                                                  item.inProp
-                                                    ? scope.row[item.prop][
-                                                        item.inProp
-                                                      ]
-                                                    : scope.row[item.prop]
-                                                ) +
-                                                "\n              "
-                                            )
-                                          ])
-                                        : _vm._e()
-                                    ])
-                              ]
-                            }
+                                        ])
+                                      : _vm._e()
+                                  ])
+                            ]
                           }
-                        ],
-                        null,
-                        true
-                      )
+                        }
+                      ])
                     })
                   })
                 ],
@@ -1943,85 +1877,80 @@ var render = function() {
                       width: item.width,
                       align: "center"
                     },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c("span", [
-                                    item.inProp
-                                      ? _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value:
-                                                  scope.row[item.prop][
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "checkbox"
+                              ? _c("span", [
+                                  item.inProp
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value:
+                                                scope.row[item.prop][
+                                                  item.inProp
+                                                ],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row[item.prop],
+                                                  item.inProp,
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "scope.row[item.prop][item.inProp]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
                                                     item.inProp
-                                                  ],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row[item.prop],
-                                                    item.inProp,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop][item.inProp]"
-                                              }
-                                            })
-                                          ],
-                                          1
+                                                  ]
+                                                : scope.row[item.prop]
+                                            ) +
+                                            "\n              "
                                         )
-                                      : _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value: scope.row[item.prop],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row,
-                                                    item.prop,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop]"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                  ])
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n              "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
-                          }
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
                 }),
                 1
@@ -2055,85 +1984,80 @@ var render = function() {
                       width: item.width,
                       align: "center"
                     },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c("span", [
-                                    item.inProp
-                                      ? _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value:
-                                                  scope.row[item.prop][
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "checkbox"
+                              ? _c("span", [
+                                  item.inProp
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value:
+                                                scope.row[item.prop][
+                                                  item.inProp
+                                                ],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row[item.prop],
+                                                  item.inProp,
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "scope.row[item.prop][item.inProp]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
                                                     item.inProp
-                                                  ],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row[item.prop],
-                                                    item.inProp,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop][item.inProp]"
-                                              }
-                                            })
-                                          ],
-                                          1
+                                                  ]
+                                                : scope.row[item.prop]
+                                            ) +
+                                            "\n              "
                                         )
-                                      : _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value: scope.row[item.prop],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row,
-                                                    item.prop,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop]"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                  ])
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n              "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
-                          }
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
                 }),
                 1
@@ -2218,85 +2142,80 @@ var render = function() {
                       width: item.width,
                       align: "center"
                     },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c("span", [
-                                    item.inProp
-                                      ? _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value:
-                                                  scope.row[item.prop][
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "checkbox"
+                              ? _c("span", [
+                                  item.inProp
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value:
+                                                scope.row[item.prop][
+                                                  item.inProp
+                                                ],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row[item.prop],
+                                                  item.inProp,
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "scope.row[item.prop][item.inProp]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
                                                     item.inProp
-                                                  ],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row[item.prop],
-                                                    item.inProp,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop][item.inProp]"
-                                              }
-                                            })
-                                          ],
-                                          1
+                                                  ]
+                                                : scope.row[item.prop]
+                                            ) +
+                                            "\n              "
                                         )
-                                      : _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value: scope.row[item.prop],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row,
-                                                    item.prop,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop]"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                  ])
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n              "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
-                          }
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
                 }),
                 1
@@ -2330,85 +2249,80 @@ var render = function() {
                       width: item.width,
                       align: "center"
                     },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c("span", [
-                                    item.inProp
-                                      ? _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value:
-                                                  scope.row[item.prop][
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "checkbox"
+                              ? _c("span", [
+                                  item.inProp
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value:
+                                                scope.row[item.prop][
+                                                  item.inProp
+                                                ],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row[item.prop],
+                                                  item.inProp,
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "scope.row[item.prop][item.inProp]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
                                                     item.inProp
-                                                  ],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row[item.prop],
-                                                    item.inProp,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop][item.inProp]"
-                                              }
-                                            })
-                                          ],
-                                          1
+                                                  ]
+                                                : scope.row[item.prop]
+                                            ) +
+                                            "\n              "
                                         )
-                                      : _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value: scope.row[item.prop],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row,
-                                                    item.prop,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop]"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                  ])
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n              "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
-                          }
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
                 }),
                 1
@@ -2442,85 +2356,80 @@ var render = function() {
                       width: item.width,
                       align: "center"
                     },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c("span", [
-                                    item.inProp
-                                      ? _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value:
-                                                  scope.row[item.prop][
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "checkbox"
+                              ? _c("span", [
+                                  item.inProp
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value:
+                                                scope.row[item.prop][
+                                                  item.inProp
+                                                ],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row[item.prop],
+                                                  item.inProp,
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "scope.row[item.prop][item.inProp]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
                                                     item.inProp
-                                                  ],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row[item.prop],
-                                                    item.inProp,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop][item.inProp]"
-                                              }
-                                            })
-                                          ],
-                                          1
+                                                  ]
+                                                : scope.row[item.prop]
+                                            ) +
+                                            "\n              "
                                         )
-                                      : _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value: scope.row[item.prop],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row,
-                                                    item.prop,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop]"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                  ])
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n              "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
-                          }
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
                 }),
                 1
@@ -2564,85 +2473,81 @@ var render = function() {
                         width: item.width,
                         align: "center"
                       },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(scope) {
-                              return [
-                                item.type == "checkbox"
-                                  ? _c("span", [
-                                      item.inProp
-                                        ? _c(
-                                            "span",
-                                            [
-                                              _c("el-checkbox", {
-                                                attrs: { disabled: "" },
-                                                model: {
-                                                  value:
-                                                    scope.row[item.prop][
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              item.type == "checkbox"
+                                ? _c("span", [
+                                    item.inProp
+                                      ? _c(
+                                          "span",
+                                          [
+                                            _c("el-checkbox", {
+                                              attrs: { disabled: "" },
+                                              model: {
+                                                value:
+                                                  scope.row[item.prop][
+                                                    item.inProp
+                                                  ],
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    scope.row[item.prop],
+                                                    item.inProp,
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "scope.row[item.prop][item.inProp]"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _c(
+                                          "span",
+                                          [
+                                            _c("el-checkbox", {
+                                              attrs: { disabled: "" },
+                                              model: {
+                                                value: scope.row[item.prop],
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    scope.row,
+                                                    item.prop,
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "scope.row[item.prop]"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                  ])
+                                : _c("span", [
+                                    scope.row[item.prop]
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                " +
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
                                                       item.inProp
-                                                    ],
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      scope.row[item.prop],
-                                                      item.inProp,
-                                                      $$v
-                                                    )
-                                                  },
-                                                  expression:
-                                                    "scope.row[item.prop][item.inProp]"
-                                                }
-                                              })
-                                            ],
-                                            1
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              ) +
+                                              "\n              "
                                           )
-                                        : _c(
-                                            "span",
-                                            [
-                                              _c("el-checkbox", {
-                                                attrs: { disabled: "" },
-                                                model: {
-                                                  value: scope.row[item.prop],
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      scope.row,
-                                                      item.prop,
-                                                      $$v
-                                                    )
-                                                  },
-                                                  expression:
-                                                    "scope.row[item.prop]"
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          )
-                                    ])
-                                  : _c("span", [
-                                      scope.row[item.prop]
-                                        ? _c("span", [
-                                            _vm._v(
-                                              "\n                " +
-                                                _vm._s(
-                                                  item.inProp
-                                                    ? scope.row[item.prop][
-                                                        item.inProp
-                                                      ]
-                                                    : scope.row[item.prop]
-                                                ) +
-                                                "\n              "
-                                            )
-                                          ])
-                                        : _vm._e()
-                                    ])
-                              ]
-                            }
+                                        ])
+                                      : _vm._e()
+                                  ])
+                            ]
                           }
-                        ],
-                        null,
-                        true
-                      )
+                        }
+                      ])
                     })
                   })
                 ],
@@ -2696,85 +2601,80 @@ var render = function() {
                       width: item.width,
                       align: "center"
                     },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c("span", [
-                                    item.inProp
-                                      ? _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value:
-                                                  scope.row[item.prop][
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "checkbox"
+                              ? _c("span", [
+                                  item.inProp
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value:
+                                                scope.row[item.prop][
+                                                  item.inProp
+                                                ],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row[item.prop],
+                                                  item.inProp,
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "scope.row[item.prop][item.inProp]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
                                                     item.inProp
-                                                  ],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row[item.prop],
-                                                    item.inProp,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop][item.inProp]"
-                                              }
-                                            })
-                                          ],
-                                          1
+                                                  ]
+                                                : scope.row[item.prop]
+                                            ) +
+                                            "\n              "
                                         )
-                                      : _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value: scope.row[item.prop],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row,
-                                                    item.prop,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop]"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                  ])
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n              "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
-                          }
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
                 }),
                 1
@@ -2808,85 +2708,80 @@ var render = function() {
                       width: item.width,
                       align: "center"
                     },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c("span", [
-                                    item.inProp
-                                      ? _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value:
-                                                  scope.row[item.prop][
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "checkbox"
+                              ? _c("span", [
+                                  item.inProp
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value:
+                                                scope.row[item.prop][
+                                                  item.inProp
+                                                ],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row[item.prop],
+                                                  item.inProp,
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "scope.row[item.prop][item.inProp]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              item.inProp
+                                                ? scope.row[item.prop][
                                                     item.inProp
-                                                  ],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row[item.prop],
-                                                    item.inProp,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop][item.inProp]"
-                                              }
-                                            })
-                                          ],
-                                          1
+                                                  ]
+                                                : scope.row[item.prop]
+                                            ) +
+                                            "\n              "
                                         )
-                                      : _c(
-                                          "span",
-                                          [
-                                            _c("el-checkbox", {
-                                              attrs: { disabled: "" },
-                                              model: {
-                                                value: scope.row[item.prop],
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    scope.row,
-                                                    item.prop,
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "scope.row[item.prop]"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                  ])
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n              "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
-                          }
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
                         }
-                      ],
-                      null,
-                      true
-                    )
+                      }
+                    ])
                   })
                 }),
                 1

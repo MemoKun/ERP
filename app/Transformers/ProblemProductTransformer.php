@@ -7,9 +7,8 @@ use League\Fractal\TransformerAbstract;
 
 class ProblemProductTransformer extends TransformerAbstract
 {
-
     protected $availableIncludes = [
-        'afterCompensationOrder'
+        'afterCompensationOrder',
     ];
 
     public function transform(ProblemProduct $problemProduct)
@@ -28,6 +27,7 @@ class ProblemProductTransformer extends TransformerAbstract
             'other' => $problemProduct->other,
             'buy_number' => $problemProduct->buy_number,
             'img_url' => $problemProduct->img_url,
+            'supplier_id' => $problemProduct->supplier_id,
             'status' => $problemProduct->status,
             'created_at' => $problemProduct->created_at
                                     ->toDateTimeString(),
@@ -35,10 +35,9 @@ class ProblemProductTransformer extends TransformerAbstract
                                     ->toDateTimeString(),
         ];
     }
+
     public function includeAfterCompensationOrder(ProblemProduct $problemProduct)
     {
-        return $this->item($problemProduct->afterCompensationOrder,new AfterCompensationTransformer());
+        return $this->item($problemProduct->afterCompensationOrder, new AfterCompensationTransformer());
     }
-
-
 }

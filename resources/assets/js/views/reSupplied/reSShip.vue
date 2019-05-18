@@ -5,26 +5,27 @@
       <div class="searchBox" v-if="currentPage">
         <span>
           <label>单号</label>
-          <el-input v-model="searchBox.shopTitle" clearable class="half"></el-input>
+          <el-input v-model="searchBox.resupply_order_no" clearable class="half"></el-input>
         </span>
         <span>
           <label>买家昵称</label>
-          <el-input v-model="searchBox.shopTitle" clearable class="half"></el-input>
+          <el-input v-model="searchBox.member_nick" clearable class="half"></el-input>
         </span>
         <span>
           <label>买家姓名</label>
-          <el-input v-model="searchBox.shopTitle" clearable class="half"></el-input>
+          <el-input v-model="searchBox.member_name" clearable class="half"></el-input>
         </span>
         <span v-if="filterBox">
           <label>补件类别</label>
-          <el-select v-model="searchBox.shopTitle" clearable placeholder="请选择">
-            <el-option v-for="item in searchBox.shopTitle" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
+          <el-select v-model="searchBox.re_supplie_categories_id" clearable placeholder="请选择">
+            <span v-for="list in resData['resupplieCategory']" :key="list.id">
+              <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+            </span>
           </el-select>
         </span>
         <span v-else>
-          <el-button type="primary">筛选</el-button>
-          <el-button>重置</el-button>
+          <el-button type="primary" @click="searchData">筛选</el-button>
+          <el-button @click="resets">重置</el-button>
           <span @click="toggleShow">
             <el-button type="text">展开</el-button>
             <i class="el-icon-arrow-down" style="color:#409EFF"></i>
@@ -33,28 +34,27 @@
       </div>
       <div class="searchBox" v-show="filterBox">
         <span>
-          <label>包含产品</label>
-          <el-input v-model="searchBox.shopTitle" clearable class="half"></el-input>
+          <label>省</label>
+          <el-input v-model="searchBox.receiver_state" clearable class="half"></el-input>
         </span>
         <span>
-          <label>店铺昵称</label>
-          <el-select v-model="searchBox.shopTitle" clearable placeholder="请选择">
-            <el-option v-for="item in searchBox.shopTitle" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
+          <label>市</label>
+          <el-input v-model="searchBox.receiver_city" clearable class="half"></el-input>
+        </span>
+        <span>
+          <label>区</label>
+          <el-input v-model="searchBox.receiver_district" clearable class="half"></el-input>
+        </span>
+        <span>
+          <label>供应商</label>
+          <el-select v-model="searchBox.suppliers_id" clearable placeholder="请选择">
+            <span v-for="list in resData['suppliers']" :key="list.id">
+              <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+            </span>
           </el-select>
         </span>
-        <span>
-          <label>省市区</label>
-          <el-cascader size="middle" :options="options" v-model="searchBox.shopTitle"></el-cascader>
-        </span>
-        <span>
-          <label>审核时间</label>
-          <el-date-picker v-model="searchBox.shopTitle" type="daterange" range-separator="至" start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </span>
         <div v-if="filterBox" style="text-align: right">
-          <el-button type="primary">筛选</el-button>
+          <el-button type="primary" @click="searchData">筛选</el-button>
           <el-button @click="resets">重置</el-button>
           <span @click="toggleShow" style="display: inline">
             <el-button type="text">收起</el-button>
@@ -428,8 +428,14 @@ export default {
       activeName: '0',
       bottomActiveName: '0',
       searchBox: {
-        buyNick: '',
-        shopTitle: ''
+        resupply_order_no: '',
+        member_nick: '',
+        member_name: '',
+        re_supplie_categories_id: '',
+        receiver_state: '',
+        receiver_city: '',
+        receiver_district: '',
+        suppliers_id: ''
       },
       //分页
       pagination: {
@@ -622,22 +628,19 @@ export default {
         {
           label: '省',
           width: '120',
-          prop: 'supplier',
-          inProp: 'province',
+          prop: 'receiver_state',
           type: 'text'
         },
         {
           label: '市',
           width: '120',
-          prop: 'supplier',
-          inProp: 'city',
+          prop: 'receiver_city',
           type: 'text'
         },
         {
           label: '区',
           width: '120',
-          prop: 'supplier',
-          inProp: 'district',
+          prop: 'receiver_district',
           type: 'text'
         },
         {
@@ -733,7 +736,7 @@ export default {
           type: 'text'
         },
         {
-          label: '规格编码',
+          label: '子件编码',
           width: '160',
           prop: 'productComponent',
           inProp: 'component_code',
@@ -784,29 +787,25 @@ export default {
         {
           label: '商品编码',
           width: '160',
-          prop: 'product',
-          inProp: 'commodity_code',
+          prop: 'commodity_code',
           type: 'text'
         },
         {
-          label: '规格编码',
+          label: '子件编码',
           width: '160',
-          prop: 'productComponent',
-          inProp: 'component_code',
+          prop: 'spec_code',
           type: 'text'
         },
         {
           label: '商品简称',
           width: '160',
-          prop: 'product',
-          inProp: 'short_name',
+          prop: 'short_name',
           type: 'text'
         },
         {
           label: '规格名称',
           width: '160',
-          prop: 'productComponent',
-          inProp: 'spec',
+          prop: 'spec',
           type: 'text'
         },
         {
@@ -861,7 +860,7 @@ export default {
           type: 'text'
         },
         {
-          label: '规格编码',
+          label: '子件编码',
           width: '160',
           prop: 'productComponent',
           inProp: 'component_code',
@@ -1003,7 +1002,9 @@ export default {
           prop: 'description',
           type: 'textarea'
         }
-      ]
+      ],
+      updateProgressMask: false,
+      updateProgressFrom: {}
     };
   },
   computed: {
@@ -1038,8 +1039,16 @@ export default {
       switch (index) {
         case 0:
           this.$fetch(this.urls.resupplieShip + '/searchUnprint', {
+            resupply_order_no: this.searchBox.resupply_order_no,
+            member_nick: this.searchBox.member_nick,
+            member_name: this.searchBox.member_name,
+            re_supplie_categories_id: this.searchBox.re_supplie_categories_id,
+            receiver_state: this.searchBox.receiver_state,
+            receiver_city: this.searchBox.receiver_city,
+            receiver_district: this.searchBox.receiver_district,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.product,resupplieProblemProduct.productComponent,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
+              'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
           }).then(
             res => {
               this.orderLoading = false;
@@ -1048,6 +1057,8 @@ export default {
               this.$store.dispatch('currentPage', pg.current_page);
               this.$store.commit('PER_PAGE', pg.per_page);
               this.$store.commit('PAGE_TOTAL', pg.total);
+              this.$store.dispatch('resupplieCategory', '/resupplieCategory');
+              this.$store.dispatch('suppliers', '/suppliers');
               this.resupplyInfoData = res.data[0]
                 ? res.data[0]['resupplieOrderItem'].data
                 : [];
@@ -1090,8 +1101,16 @@ export default {
           break;
         case 1:
           this.$fetch(this.urls.resupplieShip + '/searchPrint', {
+            resupply_order_no: this.searchBox.resupply_order_no,
+            member_nick: this.searchBox.member_nick,
+            member_name: this.searchBox.member_name,
+            re_supplie_categories_id: this.searchBox.re_supplie_categories_id,
+            receiver_state: this.searchBox.receiver_state,
+            receiver_city: this.searchBox.receiver_city,
+            receiver_district: this.searchBox.receiver_district,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.product,resupplieProblemProduct.productComponent,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
+              'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
           }).then(
             res => {
               this.orderLoading = false;
@@ -1142,8 +1161,16 @@ export default {
           break;
         case 2:
           this.$fetch(this.urls.resupplieShip + '/searchUnconsign', {
+            resupply_order_no: this.searchBox.resupply_order_no,
+            member_nick: this.searchBox.member_nick,
+            member_name: this.searchBox.member_name,
+            re_supplie_categories_id: this.searchBox.re_supplie_categories_id,
+            receiver_state: this.searchBox.receiver_state,
+            receiver_city: this.searchBox.receiver_city,
+            receiver_district: this.searchBox.receiver_district,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.product,resupplieProblemProduct.productComponent,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
+              'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
           }).then(
             res => {
               this.orderLoading = false;
@@ -1194,8 +1221,16 @@ export default {
           break;
         case 3:
           this.$fetch(this.urls.resupplieShip + '/searchConsign', {
+            resupply_order_no: this.searchBox.resupply_order_no,
+            member_nick: this.searchBox.member_nick,
+            member_name: this.searchBox.member_name,
+            re_supplie_categories_id: this.searchBox.re_supplie_categories_id,
+            receiver_state: this.searchBox.receiver_state,
+            receiver_city: this.searchBox.receiver_city,
+            receiver_district: this.searchBox.receiver_district,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.product,resupplieProblemProduct.productComponent,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
+              'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
           }).then(
             res => {
               this.orderLoading = false;
@@ -1245,6 +1280,11 @@ export default {
           );
           break;
       }
+    },
+    //筛选信息
+    searchData() {
+      this.orderLoading = true;
+      this.fetchData();
     },
     //订单信息tab切换
     handleTabsClick() {
@@ -1538,13 +1578,14 @@ export default {
     //刷新
     refresh() {
       this.orderLoading = true;
+      this.resets();
       this.fetchData();
     },
     /*分页*/
     handlePagChg(page) {
       this.$fetch(this.urls.resupplieShip + '?page=' + page, {
         include:
-          'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.product,resupplieProblemProduct.productComponent,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
+          'resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote'
       }).then(res => {
         this.orderData = res.data;
       });

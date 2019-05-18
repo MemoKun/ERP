@@ -151,10 +151,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       //新增
       addConfMask: false,
-      addForm: [{
+      addForm: {
         is_covered: false,
         is_merged: false
-      }],
+      },
       addConfHead: [{
         label: '启用覆盖',
         width: '160',
@@ -222,7 +222,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.dwnConf).then(function (res) {
+      this.$fetch(this.urls.downLoadConf).then(function (res) {
         _this.confData = res.data;
         _this.confLoading = false;
       }, function (err) {
@@ -242,7 +242,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handlePagChg: function handlePagChg(page) {
       var _this2 = this;
 
-      this.$fetch(this.urls.dwnConf + '?page=' + page).then(function (res) {
+      this.$fetch(this.urls.downLoadConf + '?page=' + page).then(function (res) {
         _this2.confData = res.data;
       });
     },
@@ -256,10 +256,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this3 = this;
 
       var obj = {
-        is_covered: this.addForm[0].is_covered,
-        is_merged: this.addForm[0].is_merged
+        is_covered: this.addForm.is_covered,
+        is_merged: this.addForm.is_merged
       };
-      this.$post(this.urls.dwnConf, obj).then(function () {
+      this.$post(this.urls.downLoadConf, obj).then(function () {
         _this3.$message({
           message: '添加成功',
           type: 'success'
@@ -302,7 +302,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return;
       } else {
         this.updateConfMask = true;
-        this.$fetch(this.urls.dwnConf + '/' + this.currentId).then(function (res) {
+        this.$fetch(this.urls.downLoadConf + '/' + this.currentId).then(function (res) {
           _this4.updateForm = {
             is_covered: res.is_covered,
             is_merged: res.is_merged
@@ -323,7 +323,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateConfirm: function updateConfirm() {
       var _this5 = this;
 
-      this.$patch(this.urls.dwnConf + '/' + this.currentId, this.updateForm).then(function () {
+      this.$patch(this.urls.downLoadConf + '/' + this.currentId, this.updateForm).then(function () {
         _this5.updateConfMask = false;
         _this5.$message({
           message: '商品修改成功',
@@ -378,7 +378,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function () {
-          _this6.$del(_this6.urls.dwnConf, { ids: _this6.delIds }).then(function () {
+          _this6.$del(_this6.urls.downLoadConf, { ids: _this6.delIds }).then(function () {
             _this6.$message({
               message: '删除成功',
               type: 'success'
@@ -407,7 +407,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.showDel = true;
       $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
       this.delId = row.id;
-      this.delUrl = this.urls.dwnConf;
+      this.delUrl = this.urls.downLoadConf;
     },
     cancelD: function cancelD() {
       this.showDel = false;
@@ -518,53 +518,43 @@ var render = function() {
                         width: item.width,
                         align: "center"
                       },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(scope) {
-                              return [
-                                item.type == "checkbox"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-checkbox", {
-                                          attrs: { disabled: "" },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              item.type == "checkbox"
+                                ? _c(
+                                    "span",
+                                    [
+                                      _c("el-checkbox", {
+                                        attrs: { disabled: "" },
+                                        model: {
+                                          value: scope.row[item.prop],
+                                          callback: function($$v) {
+                                            _vm.$set(scope.row, item.prop, $$v)
+                                          },
+                                          expression: "scope.row[item.prop]"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                : _c("span", [
+                                    _vm._v(
+                                      "\n              " +
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        ) +
+                                        "\n            "
                                     )
-                                  : _c("span", [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(
-                                            item.inProp
-                                              ? scope.row[item.prop][
-                                                  item.inProp
-                                                ]
-                                              : scope.row[item.prop]
-                                          ) +
-                                          "\n            "
-                                      )
-                                    ])
-                              ]
-                            }
+                                  ])
+                            ]
                           }
-                        ],
-                        null,
-                        true
-                      )
+                        }
+                      ])
                     })
                   }),
                   _vm._v(" "),
@@ -603,7 +593,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("Pagination", {
-        attrs: { "page-url": this.urls.dwnConf },
+        attrs: { "page-url": this.urls.downLoadConf },
         on: { handlePagChg: _vm.handlePagChg }
       }),
       _vm._v(" "),

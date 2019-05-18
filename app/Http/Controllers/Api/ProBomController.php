@@ -7,7 +7,6 @@ use App\Http\Requests\Api\ProBomRequest;
 use App\Http\Requests\Api\ProBomMaterialRequest;
 use App\Http\Requests\Api\EditStatuRequest;
 use App\Http\Requests\Api\DestroyRequest;
-use App\Http\Requests\Api\SearchProductRequest;
 use App\Transformers\ProBomTransformer;
 use App\Http\Controllers\Traits\CURDTrait;
 
@@ -21,12 +20,15 @@ class ProBomController extends Controller
     //获取数据
     public function index(ProBomRequest $request)
     {
-        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
-    }
+        $short_name = $request->input('short_name');
+        $spec = $request->input('spec');
 
-    //筛选数据
-    public function searchProducts(SearchProductRequest $request)
-    {
+        $proBom = ProBom::query()
+        ->where('short_name', 'like', '%'.$short_name.'%')
+        ->where('spec', 'like', '%'.$spec.'%')
+        ->orderBy('updated_at', 'desc');
+
+        return $this->response->paginator($proBom->paginate(10), self::TRANSFORMER);
     }
 
     //添加产品
