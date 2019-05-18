@@ -6,19 +6,19 @@
           <div class="searchBox">
             <span>
               <label>会员名称</label>
-              <el-input v-model="searchBox.vip_name" clearable></el-input>
+              <el-input v-model="searchBox.member_nick" clearable></el-input>
             </span>
             <span>
               <label>订单编号</label>
-              <el-input v-model="searchBox.order_num" clearable></el-input>
+              <el-input v-model="searchBox.system_order_no" clearable></el-input>
             </span>
             <span>
               <label>收货人</label>
-              <el-input v-model="searchBox.order_man" clearable></el-input>
+              <el-input v-model="searchBox.receiver_name" clearable></el-input>
             </span>
             <span>
               <label>收货手机</label>
-              <el-input v-model="searchBox.order_phone" clearable></el-input>
+              <el-input v-model="searchBox.receiver_phone" clearable></el-input>
             </span>
             <!--<span v-else>
               <el-button type="primary">筛选</el-button>
@@ -980,10 +980,10 @@ export default {
       ],
       filterBox: false,
       searchBox: {
-        vip_name: "",
-        order_num: "",
-        order_man: "",
-        order_phone: "",
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
         order_money: "",
         order_address: "",
         order_goods: "",
@@ -2665,7 +2665,7 @@ export default {
   },
   filters: {
     /*conditions: function(items){
-        let searchRegex = new RegExp(this.searchBox.vip_name, 'i');
+        let searchRegex = new RegExp(this.searchBox.member_nick, 'i');
         let arr=[];
         for(let i= 0, j = items.length; i < j; i++){
           arr[i] = {};
@@ -2751,11 +2751,9 @@ export default {
         case 0:
           this.$fetch(this.urls.customerservicedepts + "/searchuntreated", {
             member_nick: this.searchBox.member_nick,
-            vip_name: this.searchBox.vip_name,
-            order_num: this.searchBox.order_num,
-            order_man: this.searchBox.order_man,
-            order_phone: this.searchBox.order_phone,
-            order_money: this.searchBox.order_money,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(

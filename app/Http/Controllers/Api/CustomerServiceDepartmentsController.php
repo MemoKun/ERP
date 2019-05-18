@@ -44,25 +44,16 @@ class CustomerServiceDepartmentsController extends Controller
     {
 
         $member_nick=$requset->input("member_nick");
+        $system_order_no=$requset->input("system_order_no");
+        $receiver_name=$requset->input("receiver_name");
+        $receiver_phone=$requset->input("receiver_phone");
+
         $order = Order::query()->whereIn('order_status', [Order::ORDER_STATUS_NEW,Order::ORDER_STATUS_LOCK])
         ->where('member_nick', 'like', '%'.$member_nick.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%')
-        ->where('member_nick', 'like', '%'.$keywords.'%');
+        ->where('system_order_no', 'like', '%'.$system_order_no.'%')
+        ->where('receiver_name', 'like', '%'.$receiver_name.'%')
+        ->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+        ->orderBy('created_at', 'desc');
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 

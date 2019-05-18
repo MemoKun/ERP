@@ -1014,10 +1014,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       filterBox: false,
       searchBox: {
-        vip_name: "",
-        order_num: "",
-        order_man: "",
-        order_phone: "",
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
         order_money: "",
         order_address: "",
         order_goods: "",
@@ -2484,7 +2484,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   filters: {
     /*conditions: function(items){
-        let searchRegex = new RegExp(this.searchBox.vip_name, 'i');
+        let searchRegex = new RegExp(this.searchBox.member_nick, 'i');
         let arr=[];
         for(let i= 0, j = items.length; i < j; i++){
           arr[i] = {};
@@ -2569,7 +2569,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       switch (index) {
         case 0:
           this.$fetch(this.urls.customerservicedepts + "/searchuntreated", {
-            member_nick: "",
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -3812,11 +3815,11 @@ var render = function() {
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
-                          value: _vm.searchBox.vip_name,
+                          value: _vm.searchBox.member_nick,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "vip_name", $$v)
+                            _vm.$set(_vm.searchBox, "member_nick", $$v)
                           },
-                          expression: "searchBox.vip_name"
+                          expression: "searchBox.member_nick"
                         }
                       })
                     ],
@@ -3831,11 +3834,11 @@ var render = function() {
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
-                          value: _vm.searchBox.order_num,
+                          value: _vm.searchBox.system_order_no,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_num", $$v)
+                            _vm.$set(_vm.searchBox, "system_order_no", $$v)
                           },
-                          expression: "searchBox.order_num"
+                          expression: "searchBox.system_order_no"
                         }
                       })
                     ],
@@ -3850,11 +3853,11 @@ var render = function() {
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
-                          value: _vm.searchBox.order_man,
+                          value: _vm.searchBox.receiver_name,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_man", $$v)
+                            _vm.$set(_vm.searchBox, "receiver_name", $$v)
                           },
-                          expression: "searchBox.order_man"
+                          expression: "searchBox.receiver_name"
                         }
                       })
                     ],
@@ -3869,11 +3872,11 @@ var render = function() {
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
-                          value: _vm.searchBox.order_phone,
+                          value: _vm.searchBox.receiver_phone,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_phone", $$v)
+                            _vm.$set(_vm.searchBox, "receiver_phone", $$v)
                           },
-                          expression: "searchBox.order_phone"
+                          expression: "searchBox.receiver_phone"
                         }
                       })
                     ],
