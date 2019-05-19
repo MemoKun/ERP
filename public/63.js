@@ -951,7 +951,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
          prop: '',
          type: 'checkbox'
        },
-        {
+         {
          label: '分阶段',
          width: '90',
          prop: '',
@@ -2464,128 +2464,64 @@ var render = function() {
                                 align: "center",
                                 width: item.width
                               },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "default",
-                                    fn: function(scope) {
-                                      return [
-                                        item.type == "checkbox"
-                                          ? _c("span", [
-                                              item.inProp
-                                                ? _c(
-                                                    "span",
-                                                    [
-                                                      _c("el-checkbox", {
-                                                        attrs: { disabled: "" },
-                                                        model: {
-                                                          value:
-                                                            scope.row[
-                                                              item.prop
-                                                            ][item.inProp],
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              scope.row[
-                                                                item.prop
-                                                              ],
-                                                              item.inProp,
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "scope.row[item.prop][item.inProp]"
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                                : _c(
-                                                    "span",
-                                                    [
-                                                      _c("el-checkbox", {
-                                                        attrs: { disabled: "" },
-                                                        model: {
-                                                          value:
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      item.type == "checkbox"
+                                        ? _c("span", [
+                                            item.inProp
+                                              ? _c(
+                                                  "span",
+                                                  [
+                                                    _c("el-checkbox", {
+                                                      attrs: { disabled: "" },
+                                                      model: {
+                                                        value:
+                                                          scope.row[item.prop][
+                                                            item.inProp
+                                                          ],
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
                                                             scope.row[
                                                               item.prop
                                                             ],
-                                                          callback: function(
+                                                            item.inProp,
                                                             $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              scope.row,
-                                                              item.prop,
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "scope.row[item.prop]"
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                            ])
-                                          : item.type == "flag"
-                                          ? _c("span", [
-                                              scope.row[item.prop] == 0
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag"
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 1
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "red"
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "scope.row[item.prop][item.inProp]"
                                                       }
                                                     })
-                                                  ])
-                                                : scope.row[item.prop] == 2
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "yellow"
+                                                  ],
+                                                  1
+                                                )
+                                              : _c(
+                                                  "span",
+                                                  [
+                                                    _c("el-checkbox", {
+                                                      attrs: { disabled: "" },
+                                                      model: {
+                                                        value:
+                                                          scope.row[item.prop],
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
+                                                            scope.row,
+                                                            item.prop,
+                                                            $$v
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "scope.row[item.prop]"
                                                       }
                                                     })
-                                                  ])
-                                                : scope.row[item.prop] == 3
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "green"
-                                                      }
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 4
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "blue"
-                                                      }
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 5
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "purple"
-                                                      }
-                                                    })
+<<<<<<< HEAD
                                                   ])
                                                 : _vm._e()
                                             ])
@@ -2610,11 +2546,94 @@ var render = function() {
                                             ])
                                       ]
                                     }
+=======
+                                                  ],
+                                                  1
+                                                )
+                                          ])
+                                        : item.type == "flag"
+                                        ? _c("span", [
+                                            scope.row[item.prop] == 0
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag"
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 1
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "red"
+                                                    }
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 2
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "yellow"
+                                                    }
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 3
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "green"
+                                                    }
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 4
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "blue"
+                                                    }
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 5
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "purple"
+                                                    }
+                                                  })
+                                                ])
+                                              : _vm._e()
+                                          ])
+                                        : _c("span", [
+                                            scope.row[item.prop]
+                                              ? _c("span", [
+                                                  _vm._v(
+                                                    "\n                                  " +
+                                                      _vm._s(
+                                                        item.inProp
+                                                          ? scope.row[
+                                                              item.prop
+                                                            ][item.inProp]
+                                                          : scope.row[item.prop]
+                                                      ) +
+                                                      "\n                             "
+                                                  )
+                                                ])
+                                              : _vm._e()
+                                          ])
+                                    ]
+>>>>>>> a09a868089a10b910034c35eb2f618aa4e3a2bc4
                                   }
-                                ],
-                                null,
-                                true
-                              )
+                                }
+                              ])
                             })
                           })
                         ],
@@ -2668,128 +2687,64 @@ var render = function() {
                                 align: "center",
                                 width: item.width
                               },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "default",
-                                    fn: function(scope) {
-                                      return [
-                                        item.type == "checkbox"
-                                          ? _c("span", [
-                                              item.inProp
-                                                ? _c(
-                                                    "span",
-                                                    [
-                                                      _c("el-checkbox", {
-                                                        attrs: { disabled: "" },
-                                                        model: {
-                                                          value:
-                                                            scope.row[
-                                                              item.prop
-                                                            ][item.inProp],
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              scope.row[
-                                                                item.prop
-                                                              ],
-                                                              item.inProp,
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "scope.row[item.prop][item.inProp]"
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                                : _c(
-                                                    "span",
-                                                    [
-                                                      _c("el-checkbox", {
-                                                        attrs: { disabled: "" },
-                                                        model: {
-                                                          value:
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      item.type == "checkbox"
+                                        ? _c("span", [
+                                            item.inProp
+                                              ? _c(
+                                                  "span",
+                                                  [
+                                                    _c("el-checkbox", {
+                                                      attrs: { disabled: "" },
+                                                      model: {
+                                                        value:
+                                                          scope.row[item.prop][
+                                                            item.inProp
+                                                          ],
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
                                                             scope.row[
                                                               item.prop
                                                             ],
-                                                          callback: function(
+                                                            item.inProp,
                                                             $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              scope.row,
-                                                              item.prop,
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "scope.row[item.prop]"
-                                                        }
-                                                      })
-                                                    ],
-                                                    1
-                                                  )
-                                            ])
-                                          : item.type == "flag"
-                                          ? _c("span", [
-                                              scope.row[item.prop] == 0
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag"
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 1
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "red"
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "scope.row[item.prop][item.inProp]"
                                                       }
                                                     })
-                                                  ])
-                                                : scope.row[item.prop] == 2
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "yellow"
+                                                  ],
+                                                  1
+                                                )
+                                              : _c(
+                                                  "span",
+                                                  [
+                                                    _c("el-checkbox", {
+                                                      attrs: { disabled: "" },
+                                                      model: {
+                                                        value:
+                                                          scope.row[item.prop],
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
+                                                            scope.row,
+                                                            item.prop,
+                                                            $$v
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "scope.row[item.prop]"
                                                       }
                                                     })
-                                                  ])
-                                                : scope.row[item.prop] == 3
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "green"
-                                                      }
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 4
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "blue"
-                                                      }
-                                                    })
-                                                  ])
-                                                : scope.row[item.prop] == 5
-                                                ? _c("span", [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "iconfont bf-flag",
-                                                      staticStyle: {
-                                                        color: "purple"
-                                                      }
-                                                    })
+<<<<<<< HEAD
                                                   ])
                                                 : _vm._e()
                                             ])
@@ -2814,11 +2769,94 @@ var render = function() {
                                             ])
                                       ]
                                     }
+=======
+                                                  ],
+                                                  1
+                                                )
+                                          ])
+                                        : item.type == "flag"
+                                        ? _c("span", [
+                                            scope.row[item.prop] == 0
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag"
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 1
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "red"
+                                                    }
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 2
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "yellow"
+                                                    }
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 3
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "green"
+                                                    }
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 4
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "blue"
+                                                    }
+                                                  })
+                                                ])
+                                              : scope.row[item.prop] == 5
+                                              ? _c("span", [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "iconfont bf-flag",
+                                                    staticStyle: {
+                                                      color: "purple"
+                                                    }
+                                                  })
+                                                ])
+                                              : _vm._e()
+                                          ])
+                                        : _c("span", [
+                                            scope.row[item.prop]
+                                              ? _c("span", [
+                                                  _vm._v(
+                                                    "\n                                  " +
+                                                      _vm._s(
+                                                        item.inProp
+                                                          ? scope.row[
+                                                              item.prop
+                                                            ][item.inProp]
+                                                          : scope.row[item.prop]
+                                                      ) +
+                                                      "\n                             "
+                                                  )
+                                                ])
+                                              : _vm._e()
+                                          ])
+                                    ]
+>>>>>>> a09a868089a10b910034c35eb2f618aa4e3a2bc4
                                   }
-                                ],
-                                null,
-                                true
-                              )
+                                }
+                              ])
                             })
                           })
                         ],
@@ -2997,35 +3035,46 @@ var render = function() {
                                   align: "center",
                                   width: item.width
                                 },
-                                scopedSlots: _vm._u(
-                                  [
-                                    {
-                                      key: "default",
-                                      fn: function(scope) {
-                                        return [
-                                          item.type == "checkbox"
-                                            ? _c(
-                                                "span",
-                                                [
-                                                  _c("el-checkbox", {
-                                                    attrs: { disabled: "" },
-                                                    model: {
-                                                      value:
-                                                        scope.row[item.prop],
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          scope.row,
-                                                          item.prop,
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression:
-                                                        "scope.row[item.prop]"
-                                                    }
-                                                  })
-                                                ],
-                                                1
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "default",
+                                    fn: function(scope) {
+                                      return [
+                                        item.type == "checkbox"
+                                          ? _c(
+                                              "span",
+                                              [
+                                                _c("el-checkbox", {
+                                                  attrs: { disabled: "" },
+                                                  model: {
+                                                    value: scope.row[item.prop],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row,
+                                                        item.prop,
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          : _c("span", [
+                                              _vm._v(
+                                                "\n                                     " +
+                                                  _vm._s(
+                                                    item.inProp
+                                                      ? scope.row[item.prop][
+                                                          item.inProp
+                                                        ]
+                                                      : scope.row[item.prop]
+                                                  ) +
+                                                  "\n                                 "
                                               )
+<<<<<<< HEAD
                                             : _c("span", [
                                                 _vm._v(
                                                   "\n                  " +
@@ -3041,11 +3090,13 @@ var render = function() {
                                               ])
                                         ]
                                       }
+=======
+                                            ])
+                                      ]
+>>>>>>> a09a868089a10b910034c35eb2f618aa4e3a2bc4
                                     }
-                                  ],
-                                  null,
-                                  true
-                                )
+                                  }
+                                ])
                               })
                             }
                           ),
@@ -3206,7 +3257,6 @@ var render = function() {
                                                 }
                                               }
                                             ],
-                                            null,
                                             true
                                           )
                                         })
@@ -3250,159 +3300,94 @@ var render = function() {
                                   align: "center",
                                   width: item.width
                                 },
-                                scopedSlots: _vm._u(
-                                  [
-                                    {
-                                      key: "default",
-                                      fn: function(scope) {
-                                        return [
-                                          _vm.payDtlIndex ==
-                                          "index" + scope.$index
-                                            ? _c("span", [
-                                                item.type == "number"
-                                                  ? _c(
-                                                      "span",
-                                                      [
-                                                        _c("el-input", {
-                                                          attrs: {
-                                                            size: "small",
-                                                            type: "number",
-                                                            placeholder:
-                                                              item.holder
-                                                          },
-                                                          model: {
-                                                            value:
-                                                              scope.row[
-                                                                item.prop
-                                                              ],
-                                                            callback: function(
-                                                              $$v
-                                                            ) {
-                                                              _vm.$set(
-                                                                scope.row,
-                                                                item.prop,
-                                                                typeof $$v ===
-                                                                  "string"
-                                                                  ? $$v.trim()
-                                                                  : $$v
-                                                              )
-                                                            },
-                                                            expression:
-                                                              "scope.row[item.prop]"
-                                                          }
-                                                        })
-                                                      ],
-                                                      1
-                                                    )
-                                                  : item.type == "textarea"
-                                                  ? _c(
-                                                      "span",
-                                                      [
-                                                        _c("el-input", {
-                                                          attrs: {
-                                                            type: "textarea",
-                                                            size: "small",
-                                                            placeholder:
-                                                              item.holder
-                                                          },
-                                                          model: {
-                                                            value:
-                                                              scope.row[
-                                                                item.prop
-                                                              ],
-                                                            callback: function(
-                                                              $$v
-                                                            ) {
-                                                              _vm.$set(
-                                                                scope.row,
-                                                                item.prop,
-                                                                typeof $$v ===
-                                                                  "string"
-                                                                  ? $$v.trim()
-                                                                  : $$v
-                                                              )
-                                                            },
-                                                            expression:
-                                                              "scope.row[item.prop]"
-                                                          }
-                                                        })
-                                                      ],
-                                                      1
-                                                    )
-                                                  : item.type == "select"
-                                                  ? _c(
-                                                      "span",
-                                                      [
-                                                        _c(
-                                                          "el-select",
-                                                          {
-                                                            attrs: {
-                                                              placeholder:
-                                                                item.holder
-                                                            },
-                                                            model: {
-                                                              value:
-                                                                scope.row[
-                                                                  item.prop
-                                                                ],
-                                                              callback: function(
-                                                                $$v
-                                                              ) {
-                                                                _vm.$set(
-                                                                  scope.row,
-                                                                  item.prop,
-                                                                  $$v
-                                                                )
-                                                              },
-                                                              expression:
-                                                                "scope.row[item.prop]"
-                                                            }
-                                                          },
-                                                          _vm._l(
-                                                            _vm.resData[
-                                                              item.stateVal
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "default",
+                                    fn: function(scope) {
+                                      return [
+                                        _vm.payDtlIndex ==
+                                        "index" + scope.$index
+                                          ? _c("span", [
+                                              item.type == "number"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-input", {
+                                                        attrs: {
+                                                          size: "small",
+                                                          type: "number",
+                                                          placeholder:
+                                                            item.holder
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
                                                             ],
-                                                            function(list) {
-                                                              return _c(
-                                                                "span",
-                                                                {
-                                                                  key: list.id
-                                                                },
-                                                                [
-                                                                  _c(
-                                                                    "el-option",
-                                                                    {
-                                                                      attrs: {
-                                                                        label:
-                                                                          list.name,
-                                                                        value:
-                                                                          list.id
-                                                                      }
-                                                                    }
-                                                                  )
-                                                                ],
-                                                                1
-                                                              )
-                                                            }
-                                                          ),
-                                                          0
-                                                        )
-                                                      ],
-                                                      1
-                                                    )
-                                                  : item.type == "DatePicker"
-                                                  ? _c(
-                                                      "span",
-                                                      [
-                                                        _c("el-date-picker", {
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row,
+                                                              item.prop,
+                                                              typeof $$v ===
+                                                                "string"
+                                                                ? $$v.trim()
+                                                                : $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : item.type == "textarea"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-input", {
+                                                        attrs: {
+                                                          type: "textarea",
+                                                          size: "small",
+                                                          placeholder:
+                                                            item.holder
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row,
+                                                              item.prop,
+                                                              typeof $$v ===
+                                                                "string"
+                                                                ? $$v.trim()
+                                                                : $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : item.type == "select"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c(
+                                                        "el-select",
+                                                        {
                                                           attrs: {
-                                                            type: "date",
-                                                            format:
-                                                              "yyyy-MM-dd",
-                                                            "value-format":
-                                                              "yyyy-MM-dd",
                                                             placeholder:
-                                                              "选择日期"
+                                                              item.holder
                                                           },
                                                           model: {
                                                             value:
@@ -3421,61 +3406,150 @@ var render = function() {
                                                             expression:
                                                               "scope.row[item.prop]"
                                                           }
-                                                        })
-                                                      ],
-                                                      1
-                                                    )
-                                                  : _c(
-                                                      "span",
-                                                      [
-                                                        _c("el-input", {
-                                                          attrs: {
-                                                            size: "small",
-                                                            disabled:
-                                                              item.editChgAble
-                                                          },
-                                                          model: {
-                                                            value:
-                                                              scope.row[
-                                                                item.prop
+                                                        },
+                                                        _vm._l(
+                                                          _vm.resData[
+                                                            item.stateVal
+                                                          ],
+                                                          function(list) {
+                                                            return _c(
+                                                              "span",
+                                                              { key: list.id },
+                                                              [
+                                                                _c(
+                                                                  "el-option",
+                                                                  {
+                                                                    attrs: {
+                                                                      label:
+                                                                        list.name,
+                                                                      value:
+                                                                        list.id
+                                                                    }
+                                                                  }
+                                                                )
                                                               ],
-                                                            callback: function(
-                                                              $$v
-                                                            ) {
-                                                              _vm.$set(
-                                                                scope.row,
-                                                                item.prop,
-                                                                typeof $$v ===
-                                                                  "string"
-                                                                  ? $$v.trim()
-                                                                  : $$v
-                                                              )
-                                                            },
-                                                            expression:
-                                                              "scope.row[item.prop]"
+                                                              1
+                                                            )
                                                           }
-                                                        })
+                                                        ),
+                                                        0
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                : item.type == "DatePicker"
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-date-picker", {
+                                                        attrs: {
+                                                          type: "date",
+                                                          format: "yyyy-MM-dd",
+                                                          "value-format":
+                                                            "yyyy-MM-dd",
+                                                          placeholder:
+                                                            "选择日期"
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row,
+                                                              item.prop,
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-input", {
+                                                        attrs: {
+                                                          size: "small",
+                                                          disabled:
+                                                            item.editChgAble
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row,
+                                                              item.prop,
+                                                              typeof $$v ===
+                                                                "string"
+                                                                ? $$v.trim()
+                                                                : $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                            ])
+                                          : _c("span", [
+                                              item.type == "select"
+                                                ? _c(
+                                                    "span",
+                                                    _vm._l(
+                                                      _vm.resData[
+                                                        item.stateVal
                                                       ],
-                                                      1
-                                                    )
-                                              ])
-                                            : _c("span", [
-                                                item.type == "select"
-                                                  ? _c(
-                                                      "span",
-                                                      _vm._l(
-                                                        _vm.resData[
-                                                          item.stateVal
-                                                        ],
-                                                        function(list, index) {
-                                                          return _c(
-                                                            "span",
-                                                            { key: index },
-                                                            [
-                                                              list.id ==
-                                                              scope.row[
+                                                      function(list, index) {
+                                                        return _c(
+                                                          "span",
+                                                          { key: index },
+                                                          [
+                                                            list.id ==
+                                                            scope.row[item.prop]
+                                                              ? _c("span", [
+                                                                  _vm._v(
+                                                                    "\n                                            " +
+                                                                      _vm._s(
+                                                                        list.name
+                                                                          ? list.name
+                                                                          : ""
+                                                                      ) +
+                                                                      "\n                                        "
+                                                                  )
+                                                                ])
+                                                              : _vm._e()
+                                                          ]
+                                                        )
+                                                      }
+                                                    ),
+                                                    0
+                                                  )
+                                                : _c("span", [
+                                                    _vm._v(
+                                                      "\n                                     " +
+                                                        _vm._s(
+                                                          item.inProp
+                                                            ? scope.row[
+                                                                item.prop
+                                                              ][item.inProp]
+                                                            : scope.row[
                                                                 item.prop
                                                               ]
+<<<<<<< HEAD
                                                                 ? _c("span", [
                                                                     _vm._v(
                                                                       "\n                        " +
@@ -3512,11 +3586,17 @@ var render = function() {
                                               ])
                                         ]
                                       }
+=======
+                                                        ) +
+                                                        "\n                                 "
+                                                    )
+                                                  ])
+                                            ])
+                                      ]
+>>>>>>> a09a868089a10b910034c35eb2f618aa4e3a2bc4
                                     }
-                                  ],
-                                  null,
-                                  true
-                                )
+                                  }
+                                ])
                               })
                             }
                           ),

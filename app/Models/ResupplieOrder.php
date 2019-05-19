@@ -170,6 +170,11 @@ class ResupplieOrder extends Model
         $this->save();
     }
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'orders_id');
+    }
+
     public function packageType()
     {
         return $this->belongsTo(PackageType::class, 'package_types_id');

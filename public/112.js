@@ -725,94 +725,90 @@ var render = function() {
           return _c("el-table-column", {
             key: index,
             attrs: { label: item.label, align: "center", width: item.width },
-            scopedSlots: _vm._u(
-              [
-                {
-                  key: "default",
-                  fn: function(scope) {
-                    return [
-                      item.type == "checkbox"
-                        ? _c("span", [
-                            scope.$index == 0
-                              ? _c(
-                                  "span",
-                                  [
-                                    _c("el-checkbox", {
-                                      on: { change: _vm.selectComb },
-                                      model: {
-                                        value: _vm.doSelect,
-                                        callback: function($$v) {
-                                          _vm.doSelect = $$v
-                                        },
-                                        expression: "doSelect"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              : _c("span", [
-                                  scope.row.is_comb == 1
-                                    ? _c(
-                                        "span",
-                                        [
-                                          _c(
-                                            "el-checkbox",
-                                            {
-                                              attrs: {
-                                                checked: true,
-                                                disabled: ""
-                                              }
-                                            },
-                                            [_vm._v(_vm._s(scope.row.is_comb))]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    : _c(
-                                        "span",
-                                        [
-                                          _c(
-                                            "el-checkbox",
-                                            {
-                                              attrs: {
-                                                checked: false,
-                                                disabled: ""
-                                              }
-                                            },
-                                            [_vm._v(_vm._s(scope.row.is_comb))]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                ])
-                          ])
-                        : _c(
-                            "span",
-                            [
-                              _c("el-input", {
-                                attrs: {
-                                  size: "small",
-                                  placeholder: item.holder
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    item.type == "checkbox"
+                      ? _c("span", [
+                          scope.$index == 0
+                            ? _c(
+                                "span",
+                                [
+                                  _c("el-checkbox", {
+                                    on: { change: _vm.selectComb },
+                                    model: {
+                                      value: _vm.doSelect,
+                                      callback: function($$v) {
+                                        _vm.doSelect = $$v
+                                      },
+                                      expression: "doSelect"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _c("span", [
+                                scope.row.is_comb == 1
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c(
+                                          "el-checkbox",
+                                          {
+                                            attrs: {
+                                              checked: true,
+                                              disabled: ""
+                                            }
+                                          },
+                                          [_vm._v(_vm._s(scope.row.is_comb))]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _c(
+                                      "span",
+                                      [
+                                        _c(
+                                          "el-checkbox",
+                                          {
+                                            attrs: {
+                                              checked: false,
+                                              disabled: ""
+                                            }
+                                          },
+                                          [_vm._v(_vm._s(scope.row.is_comb))]
+                                        )
+                                      ],
+                                      1
+                                    )
+                              ])
+                        ])
+                      : _c(
+                          "span",
+                          [
+                            _c("el-input", {
+                              attrs: {
+                                size: "small",
+                                placeholder: item.holder
+                              },
+                              on: { change: _vm.valChg },
+                              model: {
+                                value: scope.row[item.prop],
+                                callback: function($$v) {
+                                  _vm.$set(scope.row, item.prop, $$v)
                                 },
-                                on: { change: _vm.valChg },
-                                model: {
-                                  value: scope.row[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(scope.row, item.prop, $$v)
-                                  },
-                                  expression: "scope.row[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                    ]
-                  }
+                                expression: "scope.row[item.prop]"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                  ]
                 }
-              ],
-              null,
-              true
-            )
+              }
+            ])
           })
         }),
         1

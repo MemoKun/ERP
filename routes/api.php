@@ -1215,20 +1215,20 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('relateLogisticsCompany/editstatus', 'RelateLogisticsCompanyController@editStatusByIds')
         ->name('api.relateLogisticsCompany.editstatusbyids');
     //下载配置
-        $api->get('dwnConf', 'DownLoadConfController@index')
-        ->name('api.dwnConf.index');
-        $api->post('dwnConf', 'DownLoadConfController@store')
-        ->name('api.dwnConf.store');
-        $api->delete('dwnConf/{downLoadConf}', 'DownLoadConfController@destroy')
-        ->name('api.dwnConf.destroy');
-        $api->delete('dwnConf', 'DownLoadConfController@destroybyIds')
-        ->name('api.dwnConf.destroybyIds');
-        $api->get('dwnConf/{downLoadConf}', 'DownLoadConfController@show')
-        ->name('api.dwnConf.show');
-        $api->patch('dwnConf/{downLoadConf}', 'DownLoadConfController@update')
-        ->name('api.dwnConf.update');
-        $api->put('dwnConf/editstatus', 'DownLoadConfController@editStatusByIds')
-        ->name('api.dwnConf.editstatusbyids');
+        $api->get('downLoadConf', 'DownLoadConfController@index')
+        ->name('api.downLoadConf.index');
+        $api->post('downLoadConf', 'DownLoadConfController@store')
+        ->name('api.downLoadConf.store');
+        $api->delete('downLoadConf/{downLoadConf}', 'DownLoadConfController@destroy')
+        ->name('api.downLoadConf.destroy');
+        $api->delete('downLoadConf', 'DownLoadConfController@destroybyIds')
+        ->name('api.downLoadConf.destroybyIds');
+        $api->get('downLoadConf/{downLoadConf}', 'DownLoadConfController@show')
+        ->name('api.downLoadConf.show');
+        $api->patch('downLoadConf/{downLoadConf}', 'DownLoadConfController@update')
+        ->name('api.downLoadConf.update');
+        $api->put('downLoadConf/editstatus', 'DownLoadConfController@editStatusByIds')
+        ->name('api.downLoadConf.editstatusbyids');
     //买就送商品
         $api->get('buyAndSendPro', 'BuyAndSendProController@index')
         ->name('api.buyAndSendPro.index');

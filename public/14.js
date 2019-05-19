@@ -1190,20 +1190,16 @@ var render = function() {
                                 return _c("el-table-column", {
                                   key: item.id,
                                   attrs: { label: item.label, width: "120" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "default",
-                                        fn: function(scope) {
-                                          return [
-                                            _vm._v(_vm._s(scope.row[item.prop]))
-                                          ]
-                                        }
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "default",
+                                      fn: function(scope) {
+                                        return [
+                                          _vm._v(_vm._s(scope.row[item.prop]))
+                                        ]
                                       }
-                                    ],
-                                    null,
-                                    true
-                                  )
+                                    }
+                                  ])
                                 })
                               })
                             ],

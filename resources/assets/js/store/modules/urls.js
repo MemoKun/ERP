@@ -80,7 +80,7 @@ const urls= {
     auditProofread: '/auditProofread',
     
     //add by MemoKun
-    dwnConf:'/dwnConf',
+    downLoadConf:'/downLoadConf',
     relateLogistics:'/relateLogistics',
     relateLogisticsCompany:'/relateLogisticsCompany',
     buyAndSendPro:'/buyAndSendPro',

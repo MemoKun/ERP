@@ -162,7 +162,7 @@ var render = function() {
                 nativeOn: {
                   keyup: function($event) {
                     if (
-                      !$event.type.indexOf("key") &&
+                      "keyCode" in $event &&
                       _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                     ) {
                       return null
@@ -193,7 +193,7 @@ var render = function() {
                 nativeOn: {
                   keyup: function($event) {
                     if (
-                      !$event.type.indexOf("key") &&
+                      "keyCode" in $event &&
                       _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                     ) {
                       return null
@@ -224,7 +224,7 @@ var render = function() {
                 nativeOn: {
                   keyup: function($event) {
                     if (
-                      !$event.type.indexOf("key") &&
+                      "keyCode" in $event &&
                       _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                     ) {
                       return null
@@ -255,7 +255,7 @@ var render = function() {
                 nativeOn: {
                   keyup: function($event) {
                     if (
-                      !$event.type.indexOf("key") &&
+                      "keyCode" in $event &&
                       _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                     ) {
                       return null

@@ -367,7 +367,7 @@
                         </el-table-column>
                         <el-table-column label="状态" width="90">
                             <template slot-scope="scope">
-                                {{"新建"}}
+                                {{scope.row[item.prop]+"新建"}}
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="90" align="center" fixed="right">
@@ -644,7 +644,7 @@
                         </el-table-column>
                         <el-table-column label="状态" width="90">
                             <template slot-scope="scope">
-                                {{"新建"}}
+                                {{scope.row[item.prop]+ "新建"}}
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="90" align="center" fixed="right">
