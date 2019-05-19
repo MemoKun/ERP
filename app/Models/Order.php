@@ -17,7 +17,7 @@ class Order extends Model
     const ORDER_STATUS_FD_AUDIT = 50;
     const ORDER_STATUS_CARGO_AUDIT = 60;
     const ORDER_STATUS_READY_STOCK_OUT = 70;
-    const ORDER_STATUS_STOCK_OUT = 80;//已发货
+    const ORDER_STATUS_STOCK_OUT = 80; //已发货
     const ORDER_STATUS_BRUSH_ORDER = 110;
 
     //退回
@@ -46,8 +46,8 @@ class Order extends Model
         self::ORDER_STATUS_ONE_AUDIT => '已跟单一审',
         self::ORDER_STATUS_FD_AUDIT => '已财审',
         self::ORDER_STATUS_CARGO_AUDIT => '已货审',
-        self::ORDER_STATUS_READY_STOCK_OUT=> '已打发货单',
-        self::ORDER_STATUS_STOCK_OUT => '已出库'
+        self::ORDER_STATUS_READY_STOCK_OUT => '已打发货单',
+        self::ORDER_STATUS_STOCK_OUT => '已出库',
     ];
 
     //订单操作
@@ -106,7 +106,7 @@ class Order extends Model
 
     protected $fillable = [
         'shops_id', 'member_nick', 'logistics_id', 'logistics_sn', 'billing_way', 'promise_ship_time',
-        'freight_types_id', 'expected_freight', 'actual_freight','distributions_id',
+        'freight_types_id', 'expected_freight', 'actual_freight', 'distributions_id',
         'distribution_methods_id', 'deliver_goods_fee', 'move_upstairs_fee', 'installation_fee',
         'total_distribution_fee', 'distribution_phone', 'distribution_no', 'distribution_types_id',
         'service_car_info', 'take_delivery_goods_fee', 'take_delivery_goods_ways_id', 'express_fee',
@@ -114,9 +114,9 @@ class Order extends Model
         'favorable_cashback', 'customer_types_id', 'is_invoice', 'invoice_express_fee', 'express_invoice_title',
         'contract_no', 'payment_methods_id', 'deposit', 'document_title', 'warehouses_id', 'payment_date',
         'interest_concessions', 'is_notice', 'is_cancel_after_verification', 'accept_order_user', 'tax_number',
-        'receipt', 'logistics_remark', 'seller_remark', 'customer_service_remark', 'buyer_message','status',
+        'receipt', 'logistics_remark', 'seller_remark', 'customer_service_remark', 'buyer_message', 'status',
         'receiver_name', 'receiver_phone', 'receiver_mobile', 'receiver_state', 'receiver_city', 'receiver_district',
-        'receiver_address', 'receiver_zip'
+        'receiver_address', 'receiver_zip',
     ];
 
     protected $dates = [
@@ -124,7 +124,7 @@ class Order extends Model
         'audit_at',
         'est_con_time',
         'payment_date',
-        'promise_ship_time'
+        'promise_ship_time',
     ];
 
     //设置类型
@@ -136,7 +136,7 @@ class Order extends Model
         'is_split' => 'boolean',
         'is_association' => 'boolean',
         'business_personnel_id' => 'integer',
-        'locker_id' => 'integer'
+        'locker_id' => 'integer',
     ];
 
     //观察者
@@ -176,8 +176,8 @@ class Order extends Model
 
             // 如果模型的 user_id 字段为空
             if (!$model->business_personnel_id) {
-                    $model->business_personnel_id = Auth::guard('api')->id();
-                    // 如果生成失败，则终止创建订单
+                $model->business_personnel_id = Auth::guard('api')->id();
+                // 如果生成失败，则终止创建订单
                 if (!$model->business_personnel_id) {
                     return false;
                 }
@@ -191,24 +191,26 @@ class Order extends Model
     }
 
     /**
-     * 生成订单流水号
+     * 生成订单流水号.
      *
      * @param $prefix       订单流水号前缀
      * @param $index        字段名
+     *
      * @return string
      */
-    public static function findAvailableNo(String $prefix, String $index) :String
+    public static function findAvailableNo(String $prefix, String $index): String
     {
         do {
             // 随机生成订单号
-            $no = $prefix . date('YmdHis') . str_pad(mt_rand(1, 99999), 5, 0, STR_PAD_LEFT);
+            $no = $prefix.date('YmdHis').str_pad(mt_rand(1, 99999), 5, 0, STR_PAD_LEFT);
         } while (static::query()->where($index, $no)->exists());
 
         return $no;
     }
 
     /**
-     * 订单未锁定
+     * 订单未锁定.
+     *
      * @return bool
      */
     public function unlock()
@@ -217,7 +219,8 @@ class Order extends Model
     }
 
     /**
-     * 订单锁定或释放
+     * 订单锁定或释放.
+     *
      * @return bool
      */
     public function lockOrUnlock()
@@ -237,17 +240,20 @@ class Order extends Model
 
     /**
      * 客审
+     *
      * @return bool
      */
     public function audit()
     {
         $this->locker_id = 0;
         $this->order_status = self::ORDER_STATUS_CS_AUDIT;
-        $this->audit_at = date("Y-m-d h:i:s");
+        $this->audit_at = date('Y-m-d h:i:s');
         $this->save();
     }
+
     /**
-     * 打印发货单
+     * 打印发货单.
+     *
      * @return bool
      */
     public function printDispatchBill()
@@ -258,6 +264,7 @@ class Order extends Model
 
     /**
      * 退审
+     *
      * @return bool
      */
     public function unAudit()
@@ -271,6 +278,7 @@ class Order extends Model
 
     /**
      * 跟单一审
+     *
      * @return bool
      */
     public function oneAudit()
@@ -281,6 +289,7 @@ class Order extends Model
 
     /**
      * 退回跟单一审
+     *
      * @return bool
      */
     public function unOneAudit()
@@ -291,6 +300,7 @@ class Order extends Model
 
     /**
      * 财审
+     *
      * @return bool
      */
     public function financialAudit()
@@ -301,6 +311,7 @@ class Order extends Model
 
     /**
      * 退回财审
+     *
      * @return bool
      */
     public function unFinancialAudit()
@@ -311,6 +322,7 @@ class Order extends Model
 
     /**
      * 跟单货审
+     *
      * @return bool
      */
     public function cargoAudit()
@@ -321,6 +333,7 @@ class Order extends Model
 
     /**
      * 仓储退回客审
+     *
      * @return bool
      */
     public function stockOutToCS()
@@ -329,9 +342,9 @@ class Order extends Model
         $this->save();
     }
 
-
     /**
      * 仓储发货退审
+     *
      * @return bool
      */
     public function stockOutUnAudit()
@@ -340,9 +353,9 @@ class Order extends Model
         $this->save();
     }
 
-
     /**
-     * 是否缺货
+     * 是否缺货.
+     *
      * @return bool
      */
     public function isOOS()
@@ -363,9 +376,9 @@ class Order extends Model
         return false;
     }
 
-
     /**
-     * 仓储发货
+     * 仓储发货.
+     *
      * @return bool
      */
     public function stockOut()
@@ -383,10 +396,10 @@ class Order extends Model
                 $item->combination->productComponents->map(function ($item) use ($warehouseId, $amount, $orderNo) {
                     $item->stockOutByWarehouseId($warehouseId, $amount);
                     StockOut::create([
-                        'warehouse_id'=>$warehouseId,
-                        'product_components_id'=>$item->id,
-                        'stock_out_quantity'=>$amount,
-                        'remark'=>'订单号:'.$orderNo
+                        'warehouse_id' => $warehouseId,
+                        'product_components_id' => $item->id,
+                        'stock_out_quantity' => $amount,
+                        'remark' => '订单号:'.$orderNo,
                     ]);
                 });
             });
@@ -396,8 +409,10 @@ class Order extends Model
     }
 
     /**
-     * 拆单
+     * 拆单.
+     *
      * @param $data       数据
+     *
      * @return bool
      */
     public function splitOrder($data)
@@ -417,6 +432,7 @@ class Order extends Model
                     throw new UpdateResourceFailedException('拆分出错');
                 }
             }
+
             return $item;
         })->toArray();
 
@@ -427,6 +443,7 @@ class Order extends Model
             } else {
                 $item = null;
             }
+
             return $item;
         })->toArray();
 
@@ -438,14 +455,14 @@ class Order extends Model
             //新增子单
             collect($orderItemOne)->map(function ($item) use ($newOrderOne) {
                 if (is_null($item)) {
-                    return ;
+                    return;
                 }
                 $newOrderOne->orderItems()->create($item);
             });
 
             collect($orderItemTwo)->map(function ($item) use ($newOrderTwo) {
                 if (is_null($item)) {
-                    return ;
+                    return;
                 }
                 $newOrderTwo->orderItems()->create($item);
             });
@@ -462,8 +479,10 @@ class Order extends Model
     }
 
     /**
-     * 合并订单
+     * 合并订单.
+     *
      * @param $data       数据
+     *
      * @return bool
      */
     public function mergerOrder($data)
@@ -571,5 +590,8 @@ class Order extends Model
         return $this->hasMany(PaymentDetail::class, 'orders_id');
     }
 
-
+    public function resupplieOrder()
+    {
+        return $this->hasMany(ResupplieOrder::class, 'orders_id');
+    }
 }

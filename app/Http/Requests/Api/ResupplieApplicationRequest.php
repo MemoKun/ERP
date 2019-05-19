@@ -18,6 +18,12 @@ class ResupplieApplicationRequest extends FormRequest
             case 'POST':
                 return [
                     'system_order_no' => 'string|max:255',
+                    'orders_id' => [
+                        'required','integer',
+                          Rule::exists('orders', 'id')->where(function ($query) {
+                              $query->where('status', 1);
+                          }),
+                      ],
                     'member_name' => 'string|max:255',
                     'member_phone' => 'string|max:255',
                     're_supplie_categories_id' => [
@@ -26,7 +32,6 @@ class ResupplieApplicationRequest extends FormRequest
                             $query->where('status', 1);
                         }),
                     ],
-                    'resupply_money' => 'numeric',
                     'refund_methods_id' => [
                         'required','integer',
                         Rule::exists('refund_methods', 'id')->where(function ($query) {
@@ -120,7 +125,6 @@ class ResupplieApplicationRequest extends FormRequest
                     ],
                     'refund_account' => 'string|max:255',
                     'bank' => 'string|max:255',
-                    'resupply_money' => 'numeric',
                     'logistics_id' => [
                         'integer',
                         Rule::exists('logistics', 'id')->where(function ($query) {
@@ -282,6 +286,7 @@ class ResupplieApplicationRequest extends FormRequest
     {
         return [
             'resupply_order_no' => '补件单号',
+            'orders_id' => '订单id',
             'system_order_no' => '系统单号',
             're_supplie_categories_id' => '补件类别id',
             'resupply_money' => '补件金额',

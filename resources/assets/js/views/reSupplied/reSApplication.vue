@@ -972,11 +972,12 @@ export default {
       problemProIndex: '',
       //resData:[],
       addOrderForm: {
+        orders_id:'',
         system_order_no: '',
         member_name: '',
         member_phone: '',
         re_supplie_categories_id: '',
-        resupply_money: '',
+        resupply_money: 0,
         refund_methods_id: '',
         refund_account: '',
         bank: '',
@@ -984,9 +985,9 @@ export default {
         receiver_city: '',
         receiver_district: '',
         logistics_id: '',
-        estimated_fee: '',
-        compensate_fee: '',
-        load_fee: '',
+        estimated_fee: 0,
+        compensate_fee: 0,
+        load_fee: 0,
         suppliers_id: '',
         resupply_reason: '',
         distribution_methods_id: '',
@@ -1826,6 +1827,7 @@ export default {
     },
     addConfirm() {
       let orderData = {
+        orders_id: this.addOrderForm.orders_id,
         system_order_no: this.addOrderForm.system_order_no,
         member_name: this.addOrderForm.member_name,
         member_phone: this.addOrderForm.member_phone,
@@ -1953,7 +1955,8 @@ export default {
     },
     addProblemProConfirm() {
       this.addProblemProMask = false;
-      if (addMask) {
+      if (this.addMask) {
+        this.addOrderForm.orders_id = this.problemOrderRow.id;
         this.addOrderForm.system_order_no = this.problemOrderRow.system_order_no;
         this.addOrderForm.member_nick = this.problemOrderRow.member_nick;
         this.addOrderForm.receiver_state = this.problemOrderRow.receiver_state;
@@ -2014,7 +2017,7 @@ export default {
     },
     addResupplyProConfirm() {
       this.addResupplyProMask = false;
-      if (addMask) {
+      if (this.addMask) {
         this.addResupplyInfoArr.forEach(item => {
           this.addResupplyInfoVal.push(item);
         });
@@ -2055,6 +2058,7 @@ export default {
     orderRClick(row) {
       this.problemOrderRow = row;
       //this.problemProductVal = row['problemProduct'].data;
+      console.log(this.problemOrderRow);
     },
     problemProSelectionChange(val) {
       this.addProblemProArr = [];

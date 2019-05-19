@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class ResupplieOrderTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'packageType', 'resupplieCategory', 'resupplieResponsible',
+        'order','packageType', 'resupplieCategory', 'resupplieResponsible',
         'freightType', 'supplier', 'logistic', 'distributionMethod',
         'refundMethod', 'resupplieOrderItem', 'resupplieProblemProduct',
         'resupplieImage', 'resupplieRejectReason', 'resupplieOperationRecord',
@@ -21,6 +21,7 @@ class ResupplieOrderTransformer extends TransformerAbstract
         return [
             'id' => $resupplieOrder->id,
             'resupply_order_no' => $resupplieOrder->resupply_order_no,
+            'orders_id' => $resupplieOrder->orders_id,
             'system_order_no' => $resupplieOrder->system_order_no,
             'package_types_id' => $resupplieOrder->package_types_id,
             're_supplie_categories_id' => $resupplieOrder->re_supplie_categories_id,
@@ -85,6 +86,11 @@ class ResupplieOrderTransformer extends TransformerAbstract
                                   ->toDateTimeString(),
             'remark' => $resupplieOrder->remark,
         ];
+    }
+
+    public function includeOrder(ResupplieOrder $resupplieOrder)
+    {
+        return $this->item($resupplieOrder->order, new OrderTransformer());
     }
 
     public function includePackageType(ResupplieOrder $resupplieOrder)

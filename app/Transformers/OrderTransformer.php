@@ -11,7 +11,7 @@ class OrderTransformer extends TransformerAbstract
         'shop', 'logistic', 'freightType', 'distribution',
         'distributionMethod', 'distributionType', 'takeDeliveryGoodsWay',
         'customerType', 'paymentMethod', 'warehouses', 'orderItems', 'businessPersonnel',
-        'locker', 'paymentDetails'
+        'locker', 'paymentDetails','resupplieOrder'
     ];
 
     public function transform(Order $order)
@@ -172,7 +172,11 @@ class OrderTransformer extends TransformerAbstract
     {
         return $this->item($order->user, new UserTransformer());
     }
-
+    
+    public function includeResupplieOrder(Order $order)
+    {
+        return $this->collection($order->resupplieOrder, new ResupplieOrderTransformer());
+    }
 
 
 
