@@ -78,12 +78,12 @@ const constantRouterMap = [
         component: resolve => void(require(['../views/order/orderCenter.vue'], resolve)),
         meta: {title: '订单中心', icon: 'ordCenter',requireAuth: true}
       },
-      {
+      /*{
         path: 'redPackageDelivery',
         name: 'RedPackageDelivery',
         component: resolve => void(require(['../views/order/redPackageDelivery.vue'], resolve)),
         meta: {title: '红包商品配送', icon: 'reddeli',requireAuth: true}
-      },
+      },*/
       {
         path: 'audit',
         name: 'Audit',
@@ -96,12 +96,12 @@ const constantRouterMap = [
         component: resolve => void(require(['../views/order/auditOfFinancialBrushes.vue'], resolve)),
         meta: {title: '财务刷单审核', icon: 'fiRea',requireAuth: true}
       },
-      {
+      /*{
         path: 'logisticsQueryOrder',
         name: 'LogisticsQueryOrder',
         component: resolve => void(require(['../views/order/logisticsQueryOrder.vue'], resolve)),
         meta: {title: '物流查询订单', icon: 'query',requireAuth: true}
-      },
+      },*/
       {
         path: 'orderTracking',
         name: 'OrderTracking',
@@ -682,7 +682,7 @@ const constantRouterMap = [
       }
     ]
   },
- {
+ /*{
     name: 'ReportStatistics',
     path: '/reportStatistics',
     component: Layout,
@@ -869,7 +869,7 @@ const constantRouterMap = [
         meta: {title: '运费管理报表', icon: 'typeP',requireAuth: true}
       }
     ]
-  },
+  },*/
  {
     name: 'ReSupplied',
     path: '/reSupplied',
