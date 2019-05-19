@@ -41,7 +41,6 @@ class RefundOrder extends Model
         'refund_order_status',
         'order_source',
         'payment_amount',
-        'payment_methods_id',
         'refund_amount',
         'refund_payment_methods_id',
         'refund_account',
@@ -56,6 +55,7 @@ class RefundOrder extends Model
         'is_delivered',
         'receipt_type',
         'transaction_sn',
+        'paipai_sn',
         'responsible_party',
         'responsible_person',
         'responsible_amount',
@@ -81,7 +81,8 @@ class RefundOrder extends Model
 
     //设置类型
     protected $casts = [
-     
+        'is_delivered' => 'boolean',
+        'status' => 'boolean',
     ];
 
     protected $dates = [
