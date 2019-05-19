@@ -678,26 +678,30 @@ var render = function() {
                         width: item.width,
                         align: "center"
                       },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              _c("span", [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(
-                                      item.inProp
-                                        ? scope.row[item.prop][item.inProp]
-                                        : scope.row[item.prop]
-                                    ) +
-                                    "\n            "
-                                )
-                              ])
-                            ]
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                _c("span", [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
+                                      ) +
+                                      "\n            "
+                                  )
+                                ])
+                              ]
+                            }
                           }
-                        }
-                      ])
+                        ],
+                        null,
+                        true
+                      )
                     })
                   }),
                   _vm._v(" "),
@@ -778,26 +782,30 @@ var render = function() {
                         width: item.width,
                         align: "center"
                       },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              _c("span", [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(
-                                      item.inProp
-                                        ? scope.row[item.prop][item.inProp]
-                                        : scope.row[item.prop]
-                                    ) +
-                                    "\n            "
-                                )
-                              ])
-                            ]
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                _c("span", [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
+                                      ) +
+                                      "\n            "
+                                  )
+                                ])
+                              ]
+                            }
                           }
-                        }
-                      ])
+                        ],
+                        null,
+                        true
+                      )
                     })
                   }),
                   _vm._v(" "),
@@ -880,57 +888,61 @@ var render = function() {
                     align: "center",
                     width: item.width
                   },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _vm.addLogisticsIndex == "index" + scope.$index
-                            ? _c("span", [
-                                item.type == "text"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            size: "small",
-                                            type: "text",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _vm.addLogisticsIndex == "index" + scope.$index
+                              ? _c("span", [
+                                  item.type == "text"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            attrs: {
+                                              size: "small",
+                                              type: "text",
+                                              placeholder: item.holder
                                             },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _vm._e()
-                              ])
-                            : _c("span", [
-                                item.type == "text"
-                                  ? _c("span", [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n            "
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
                                       )
-                                    ])
-                                  : _vm._e()
-                              ])
-                        ]
+                                    : _vm._e()
+                                ])
+                              : _c("span", [
+                                  item.type == "text"
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n              " +
+                                            _vm._s(scope.row[item.prop]) +
+                                            "\n            "
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
+                        }
                       }
-                    }
-                  ])
+                    ],
+                    null,
+                    true
+                  )
                 })
               }),
               _vm._v(" "),
@@ -1063,57 +1075,61 @@ var render = function() {
                     align: "center",
                     width: item.width
                   },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _vm.addLogisticsIndex == "index" + scope.$index
-                            ? _c("span", [
-                                item.type == "text"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            size: "small",
-                                            type: "text",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _vm.addLogisticsIndex == "index" + scope.$index
+                              ? _c("span", [
+                                  item.type == "text"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            attrs: {
+                                              size: "small",
+                                              type: "text",
+                                              placeholder: item.holder
                                             },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _vm._e()
-                              ])
-                            : _c("span", [
-                                item.type == "text"
-                                  ? _c("span", [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n            "
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
                                       )
-                                    ])
-                                  : _vm._e()
-                              ])
-                        ]
+                                    : _vm._e()
+                                ])
+                              : _c("span", [
+                                  item.type == "text"
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n              " +
+                                            _vm._s(scope.row[item.prop]) +
+                                            "\n            "
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
+                        }
                       }
-                    }
-                  ])
+                    ],
+                    null,
+                    true
+                  )
                 })
               }),
               _vm._v(" "),
