@@ -540,7 +540,7 @@
               </span>
             </el-form-item>
           </el-form>
-          <el-table :data="updateCustomerFormVal" fit @row-click="addProRowClick" :row-class-name="addProRCName">
+          <el-table :data="updateCustomerFormVal" fit @row-click="addProRowClick">
             <el-table-column v-for="item in stockOutDtlBottomHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='newData'">
@@ -608,16 +608,22 @@ export default {
     return {
       newOpt: [
         {
+          cnt: "修改",
+          icon: "bf-change",
+          ent: this.test,
+          nClick: true
+        },
+        {
           cnt: "驳回",
           icon: "bf-reject",
-          ent: this.handleUnAudit,
-          nClick: false
+          ent: this.handleUnOneAudit,
+          nClick: true
         },
         {
           cnt: "审核",
           icon: "bf-audit",
           ent: this.handleOneAudit,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "货审",
@@ -626,9 +632,10 @@ export default {
           nClick: true
         },
         {
-          cnt: "退审",
+          cnt: "退回货审",
           icon: "bf-auditfaild",
-          ent: this.handleUnOneAudit
+          ent: this.handleunCargoAudit,
+          nClick: true
         },
         {
           cnt: "发货",
@@ -643,15 +650,10 @@ export default {
           nClick: true
         },
         {
-          cnt: "批量处理",
-          icon: "bf-node",
-          ent: this.test,
-          nClick: true
-        },
-        {
           cnt: "导出",
           icon: "bf-out",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "合并",
@@ -662,32 +664,26 @@ export default {
         {
           cnt: "拆分",
           icon: "bf-node",
-          ent: this.test
-        },
-        {
-          cnt: "上一条",
-          icon: "bf-beforeItem",
-          ent: this.test
-        },
-        {
-          cnt: "下一条",
-          icon: "bf-nextItem",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "订单采购",
           icon: "bf-purchase",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "生产排单",
           icon: "bf-machie",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.refresh
+          ent: this.refresh,
+          nClick: false
         }
       ],
       waitingStockOut: {},
@@ -2254,10 +2250,95 @@ export default {
     orderListRClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
-      if (row["order_status"] == "已财审") {
+      if (row["order_status"] == "已客审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = false;
-      } else {
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已跟单一审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已财审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已货审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = false;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "准备出库") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已出库") {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
       }
     },
     orderDbClick(row) {
@@ -2391,7 +2472,7 @@ export default {
     },
     /*跟单一审*/
     handleOneAudit() {
-      if (this.newOpt[1].nClick) {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -2402,6 +2483,19 @@ export default {
               message: "跟单一审成功",
               type: "success"
             });
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = false;
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = false;
           },
           err => {
             this.$message.error(err.response.data.message);
@@ -2424,7 +2518,7 @@ export default {
       );
     },
     handleCargoAudit() {
-      if (this.newOpt[2].nClick) {
+      if (this.newOpt[3].nClick) {
         return;
       } else {
         this.cargoAuditMask = true;
@@ -2437,6 +2531,19 @@ export default {
               res => {
                 this.cargoAuditFormVal = res;
                 this.cargoAuditTableVal = res.order_items;
+                this.newOpt[0].nClick = true;
+                this.newOpt[1].nClick = true;
+                this.newOpt[2].nClick = true;
+                this.newOpt[3].nClick = true;
+                this.newOpt[4].nClick = false;
+                this.newOpt[5].nClick = true;
+                this.newOpt[6].nClick = true;
+                this.newOpt[7].nClick = false;
+                this.newOpt[8].nClick = true;
+                this.newOpt[9].nClick = true;
+                this.newOpt[10].nClick = true;
+                this.newOpt[11].nClick = false;
+                this.newOpt[12].nClick = false;
               },
               err => {
                 if (err.response) {
@@ -2456,6 +2563,21 @@ export default {
           }
         );
       }
+    },
+    handleunCargoAudit() {
+      this.newOpt[0].nClick = true;
+      this.newOpt[1].nClick = false;
+      this.newOpt[2].nClick = true;
+      this.newOpt[3].nClick = false;
+      this.newOpt[4].nClick = true;
+      this.newOpt[5].nClick = true;
+      this.newOpt[6].nClick = true;
+      this.newOpt[7].nClick = false;
+      this.newOpt[8].nClick = false;
+      this.newOpt[9].nClick = false;
+      this.newOpt[10].nClick = false;
+      this.newOpt[11].nClick = false;
+      this.newOpt[12].nClick = false;
     },
     cargoAuditConfirm() {
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -2509,7 +2631,7 @@ export default {
     },
     /*退审*/
     handleUnOneAudit() {
-      if (this.newOpt[3].nClick) {
+      if (this.newOpt[1].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -2517,9 +2639,22 @@ export default {
           () => {
             this.refresh();
             this.$message({
-              message: "跟单一审退审成功",
+              message: "驳回跟单一审成功",
               type: "success"
             });
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = false;
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = false;
           },
           err => {
             this.$message.error(err.response.data.message);
@@ -2528,74 +2663,81 @@ export default {
       }
     },
     stockOut() {
-      this.stockOutMask = true;
-      if (this.checkboxId == "") {
+      if (this.newOpt[5].nClick) {
         this.$message({
-          type: "info",
-          message: "请先选择订单"
+          message:"请点击要选择的订单并重试",
+          type:"info"
         });
       } else {
-        this.proIds = [];
-        this.updateProIds = [];
-        this.expenseRIndex = "";
-        this.updateCustomerFormVal = {};
-        this.updateProData = [];
-        this.updateReceiveInfo = {};
-        this.updateExpenseData = [];
-        this.proRIndex = "";
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$fetch(this.urls.customerservicedepts + "/" + id, {
-          include:
-            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
-        }).then(
-          res => {
-            this.updateCustomerFormVal = res;
-            if (res["orderItems"]["data"].length > 0) {
-              res["orderItems"]["data"].map(item => {
-                this.updateProIds.push(item["combination"].id);
-                item["name"] = item["combination"]["name"];
-                item["id"] = item.id;
-                item["products_id"] = item.products_id;
-                item["combinations_id"] = item.combinations_id;
-                item["productComp"] =
-                  item["combination"]["productComponents"]["data"];
-                this.$set(item, "newData", {
-                  quantity: item.quantity,
-                  paint: item.paint,
-                  is_printing: item.is_printing,
-                  printing_fee: item.printing_fee,
-                  is_spot_goods: item.is_spot_goods,
-                  under_line_univalent: item.under_line_univalent,
-                  under_line_preferential: item.under_line_preferential,
-                  total_volume: item.total_volume
+        this.stockOutMask = true;
+        if (this.checkboxId == "") {
+          this.$message({
+            type: "info",
+            message: "请先选择订单"
+          });
+        } else {
+          this.proIds = [];
+          this.updateProIds = [];
+          this.expenseRIndex = "";
+          this.updateCustomerFormVal = {};
+          this.updateProData = [];
+          this.updateReceiveInfo = {};
+          this.updateExpenseData = [];
+          this.proRIndex = "";
+          let id = this.checkboxId ? this.checkboxId : this.curRowId;
+          this.$fetch(this.urls.customerservicedepts + "/" + id, {
+            include:
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+          }).then(
+            res => {
+              this.updateCustomerFormVal = res;
+              if (res["orderItems"]["data"].length > 0) {
+                res["orderItems"]["data"].map(item => {
+                  this.updateProIds.push(item["combination"].id);
+                  item["name"] = item["combination"]["name"];
+                  item["id"] = item.id;
+                  item["products_id"] = item.products_id;
+                  item["combinations_id"] = item.combinations_id;
+                  item["productComp"] =
+                    item["combination"]["productComponents"]["data"];
+                  this.$set(item, "newData", {
+                    quantity: item.quantity,
+                    paint: item.paint,
+                    is_printing: item.is_printing,
+                    printing_fee: item.printing_fee,
+                    is_spot_goods: item.is_spot_goods,
+                    under_line_univalent: item.under_line_univalent,
+                    under_line_preferential: item.under_line_preferential,
+                    total_volume: item.total_volume
+                  });
                 });
-              });
-            }
-            this.updateProData = res["orderItems"]["data"];
-            this.updateReceiveInfo = {
-              receiver_name: res.receiver_name,
-              receiver_phone: res.receiver_phone,
-              receiver_mobile: res.receiver_mobile,
-              receiver_state:res.receiver_state,
-              receiver_state:res.receiver_city,
-              receiver_district:res.receiver_district,
-              receiver_address: res.receiver_address,
-              receiver_zip: res.receiver_zip
-            };
-            this.updateExpenseData = res["paymentDetails"]["data"];
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
               }
-              let str = arr1.join(",");
-              this.$message.error(str);
+              this.updateProData = res["orderItems"]["data"];
+              this.updateReceiveInfo = {
+                receiver_name: res.receiver_name,
+                receiver_phone: res.receiver_phone,
+                receiver_mobile: res.receiver_mobile,
+                receiver_state: res.receiver_state,
+                receiver_state: res.receiver_city,
+                receiver_district: res.receiver_district,
+                receiver_address: res.receiver_address,
+                receiver_zip: res.receiver_zip
+              };
+              this.updateExpenseData = res["paymentDetails"]["data"];
+            },
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error(str);
+              }
             }
-          }
-        );
+          );
+        }
       }
     },
     stockOutConfirm() {
@@ -2738,6 +2880,19 @@ export default {
             message: "发货成功",
             type: "success"
           });
+          this.newOpt[0].nClick = false;
+          this.newOpt[1].nClick = true;
+          this.newOpt[2].nClick = true;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = true;
+          this.newOpt[5].nClick = true;
+          this.newOpt[6].nClick = false;
+          this.newOpt[7].nClick = false;
+          this.newOpt[8].nClick = true;
+          this.newOpt[9].nClick = true;
+          this.newOpt[10].nClick = true;
+          this.newOpt[11].nClick = false;
+          this.newOpt[12].nClick = false;
         },
         err => {
           if (err.response) {

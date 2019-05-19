@@ -666,24 +666,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     return _ref = {
       newOpt: [{
+        cnt: "修改",
+        icon: "bf-change",
+        ent: this.test,
+        nClick: true
+      }, {
         cnt: "驳回",
         icon: "bf-reject",
-        ent: this.handleUnAudit,
-        nClick: false
+        ent: this.handleUnOneAudit,
+        nClick: true
       }, {
         cnt: "审核",
         icon: "bf-audit",
         ent: this.handleOneAudit,
-        nClick: false
+        nClick: true
       }, {
         cnt: "货审",
         icon: "bf-change",
         ent: this.handleCargoAudit,
         nClick: true
       }, {
-        cnt: "退审",
+        cnt: "退回货审",
         icon: "bf-auditfaild",
-        ent: this.handleUnOneAudit
+        ent: this.handleunCargoAudit,
+        nClick: true
       }, {
         cnt: "发货",
         icon: "bf-deliver",
@@ -695,14 +701,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ent: this.test,
         nClick: true
       }, {
-        cnt: "批量处理",
-        icon: "bf-node",
-        ent: this.test,
-        nClick: true
-      }, {
         cnt: "导出",
         icon: "bf-out",
-        ent: this.test
+        ent: this.test,
+        nClick: true
       }, {
         cnt: "合并",
         icon: "bf-merge",
@@ -711,27 +713,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: "拆分",
         icon: "bf-node",
-        ent: this.test
-      }, {
-        cnt: "上一条",
-        icon: "bf-beforeItem",
-        ent: this.test
-      }, {
-        cnt: "下一条",
-        icon: "bf-nextItem",
-        ent: this.test
+        ent: this.test,
+        nClick: true
       }, {
         cnt: "订单采购",
         icon: "bf-purchase",
-        ent: this.test
+        ent: this.test,
+        nClick: true
       }, {
         cnt: "生产排单",
         icon: "bf-machie",
-        ent: this.test
+        ent: this.test,
+        nClick: true
       }, {
         cnt: "刷新",
         icon: "bf-refresh",
-        ent: this.refresh
+        ent: this.refresh,
+        nClick: false
       }],
       waitingStockOut: {},
       alreadyStockOut: {},
@@ -2086,10 +2084,95 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     orderListRClick: function orderListRClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
-      if (row["order_status"] == "已财审") {
+      if (row["order_status"] == "已客审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = false;
-      } else {
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已跟单一审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已财审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已货审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = false;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "准备出库") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已出库") {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
       }
     },
     orderDbClick: function orderDbClick(row) {
@@ -2223,7 +2306,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleOneAudit: function handleOneAudit() {
       var _this5 = this;
 
-      if (this.newOpt[1].nClick) {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -2233,6 +2316,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             message: "跟单一审成功",
             type: "success"
           });
+          _this5.newOpt[0].nClick = true;
+          _this5.newOpt[1].nClick = false;
+          _this5.newOpt[2].nClick = false;
+          _this5.newOpt[3].nClick = true;
+          _this5.newOpt[4].nClick = true;
+          _this5.newOpt[5].nClick = true;
+          _this5.newOpt[6].nClick = true;
+          _this5.newOpt[7].nClick = false;
+          _this5.newOpt[8].nClick = false;
+          _this5.newOpt[9].nClick = false;
+          _this5.newOpt[10].nClick = false;
+          _this5.newOpt[11].nClick = false;
+          _this5.newOpt[12].nClick = false;
         }, function (err) {
           _this5.$message.error(err.response.data.message);
         });
@@ -2255,7 +2351,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleCargoAudit: function handleCargoAudit() {
       var _this7 = this;
 
-      if (this.newOpt[2].nClick) {
+      if (this.newOpt[3].nClick) {
         return;
       } else {
         this.cargoAuditMask = true;
@@ -2266,6 +2362,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this7.$fetch(_this7.urls.merchandiserdepts + "/" + id).then(function (res) {
             _this7.cargoAuditFormVal = res;
             _this7.cargoAuditTableVal = res.order_items;
+            _this7.newOpt[0].nClick = true;
+            _this7.newOpt[1].nClick = true;
+            _this7.newOpt[2].nClick = true;
+            _this7.newOpt[3].nClick = true;
+            _this7.newOpt[4].nClick = false;
+            _this7.newOpt[5].nClick = true;
+            _this7.newOpt[6].nClick = true;
+            _this7.newOpt[7].nClick = false;
+            _this7.newOpt[8].nClick = true;
+            _this7.newOpt[9].nClick = true;
+            _this7.newOpt[10].nClick = true;
+            _this7.newOpt[11].nClick = false;
+            _this7.newOpt[12].nClick = false;
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -2281,6 +2390,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           console.log(err);
         });
       }
+    },
+    handleunCargoAudit: function handleunCargoAudit() {
+      this.newOpt[0].nClick = true;
+      this.newOpt[1].nClick = false;
+      this.newOpt[2].nClick = true;
+      this.newOpt[3].nClick = false;
+      this.newOpt[4].nClick = true;
+      this.newOpt[5].nClick = true;
+      this.newOpt[6].nClick = true;
+      this.newOpt[7].nClick = false;
+      this.newOpt[8].nClick = false;
+      this.newOpt[9].nClick = false;
+      this.newOpt[10].nClick = false;
+      this.newOpt[11].nClick = false;
+      this.newOpt[12].nClick = false;
     },
     cargoAuditConfirm: function cargoAuditConfirm() {
       var _this8 = this;
@@ -2329,16 +2453,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleUnOneAudit: function handleUnOneAudit() {
       var _this9 = this;
 
-      if (this.newOpt[3].nClick) {
+      if (this.newOpt[1].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.merchandiserdepts + "/" + id + "/unoneaudit").then(function () {
           _this9.refresh();
           _this9.$message({
-            message: "跟单一审退审成功",
+            message: "驳回跟单一审成功",
             type: "success"
           });
+          _this9.newOpt[0].nClick = true;
+          _this9.newOpt[1].nClick = false;
+          _this9.newOpt[2].nClick = false;
+          _this9.newOpt[3].nClick = true;
+          _this9.newOpt[4].nClick = true;
+          _this9.newOpt[5].nClick = true;
+          _this9.newOpt[6].nClick = true;
+          _this9.newOpt[7].nClick = false;
+          _this9.newOpt[8].nClick = false;
+          _this9.newOpt[9].nClick = false;
+          _this9.newOpt[10].nClick = false;
+          _this9.newOpt[11].nClick = false;
+          _this9.newOpt[12].nClick = false;
         }, function (err) {
           _this9.$message.error(err.response.data.message);
         });
@@ -2347,67 +2484,74 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     stockOut: function stockOut() {
       var _this10 = this;
 
-      this.stockOutMask = true;
-      if (this.checkboxId == "") {
+      if (this.newOpt[5].nClick) {
         this.$message({
-          type: "info",
-          message: "请先选择订单"
+          message: "请点击要选择的订单并重试",
+          type: "info"
         });
       } else {
-        this.proIds = [];
-        this.updateProIds = [];
-        this.expenseRIndex = "";
-        this.updateCustomerFormVal = {};
-        this.updateProData = [];
-        this.updateReceiveInfo = {};
-        this.updateExpenseData = [];
-        this.proRIndex = "";
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$fetch(this.urls.customerservicedepts + "/" + id, {
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
-        }).then(function (res) {
-          var _this10$updateReceive;
+        this.stockOutMask = true;
+        if (this.checkboxId == "") {
+          this.$message({
+            type: "info",
+            message: "请先选择订单"
+          });
+        } else {
+          this.proIds = [];
+          this.updateProIds = [];
+          this.expenseRIndex = "";
+          this.updateCustomerFormVal = {};
+          this.updateProData = [];
+          this.updateReceiveInfo = {};
+          this.updateExpenseData = [];
+          this.proRIndex = "";
+          var id = this.checkboxId ? this.checkboxId : this.curRowId;
+          this.$fetch(this.urls.customerservicedepts + "/" + id, {
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+          }).then(function (res) {
+            var _this10$updateReceive;
 
-          _this10.updateCustomerFormVal = res;
-          if (res["orderItems"]["data"].length > 0) {
-            res["orderItems"]["data"].map(function (item) {
-              _this10.updateProIds.push(item["combination"].id);
-              item["name"] = item["combination"]["name"];
-              item["id"] = item.id;
-              item["products_id"] = item.products_id;
-              item["combinations_id"] = item.combinations_id;
-              item["productComp"] = item["combination"]["productComponents"]["data"];
-              _this10.$set(item, "newData", {
-                quantity: item.quantity,
-                paint: item.paint,
-                is_printing: item.is_printing,
-                printing_fee: item.printing_fee,
-                is_spot_goods: item.is_spot_goods,
-                under_line_univalent: item.under_line_univalent,
-                under_line_preferential: item.under_line_preferential,
-                total_volume: item.total_volume
+            _this10.updateCustomerFormVal = res;
+            if (res["orderItems"]["data"].length > 0) {
+              res["orderItems"]["data"].map(function (item) {
+                _this10.updateProIds.push(item["combination"].id);
+                item["name"] = item["combination"]["name"];
+                item["id"] = item.id;
+                item["products_id"] = item.products_id;
+                item["combinations_id"] = item.combinations_id;
+                item["productComp"] = item["combination"]["productComponents"]["data"];
+                _this10.$set(item, "newData", {
+                  quantity: item.quantity,
+                  paint: item.paint,
+                  is_printing: item.is_printing,
+                  printing_fee: item.printing_fee,
+                  is_spot_goods: item.is_spot_goods,
+                  under_line_univalent: item.under_line_univalent,
+                  under_line_preferential: item.under_line_preferential,
+                  total_volume: item.total_volume
+                });
               });
-            });
-          }
-          _this10.updateProData = res["orderItems"]["data"];
-          _this10.updateReceiveInfo = (_this10$updateReceive = {
-            receiver_name: res.receiver_name,
-            receiver_phone: res.receiver_phone,
-            receiver_mobile: res.receiver_mobile,
-            receiver_state: res.receiver_state
-          }, _defineProperty(_this10$updateReceive, "receiver_state", res.receiver_city), _defineProperty(_this10$updateReceive, "receiver_district", res.receiver_district), _defineProperty(_this10$updateReceive, "receiver_address", res.receiver_address), _defineProperty(_this10$updateReceive, "receiver_zip", res.receiver_zip), _this10$updateReceive);
-          _this10.updateExpenseData = res["paymentDetails"]["data"];
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
             }
-            var str = arr1.join(",");
-            _this10.$message.error(str);
-          }
-        });
+            _this10.updateProData = res["orderItems"]["data"];
+            _this10.updateReceiveInfo = (_this10$updateReceive = {
+              receiver_name: res.receiver_name,
+              receiver_phone: res.receiver_phone,
+              receiver_mobile: res.receiver_mobile,
+              receiver_state: res.receiver_state
+            }, _defineProperty(_this10$updateReceive, "receiver_state", res.receiver_city), _defineProperty(_this10$updateReceive, "receiver_district", res.receiver_district), _defineProperty(_this10$updateReceive, "receiver_address", res.receiver_address), _defineProperty(_this10$updateReceive, "receiver_zip", res.receiver_zip), _this10$updateReceive);
+            _this10.updateExpenseData = res["paymentDetails"]["data"];
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this10.$message.error(str);
+            }
+          });
+        }
       }
     },
     stockOutConfirm: function stockOutConfirm() {
@@ -2551,6 +2695,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           message: "发货成功",
           type: "success"
         });
+        _this11.newOpt[0].nClick = false;
+        _this11.newOpt[1].nClick = true;
+        _this11.newOpt[2].nClick = true;
+        _this11.newOpt[3].nClick = true;
+        _this11.newOpt[4].nClick = true;
+        _this11.newOpt[5].nClick = true;
+        _this11.newOpt[6].nClick = false;
+        _this11.newOpt[7].nClick = false;
+        _this11.newOpt[8].nClick = true;
+        _this11.newOpt[9].nClick = true;
+        _this11.newOpt[10].nClick = true;
+        _this11.newOpt[11].nClick = false;
+        _this11.newOpt[12].nClick = false;
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -5222,11 +5379,7 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: {
-                        data: _vm.updateCustomerFormVal,
-                        fit: "",
-                        "row-class-name": _vm.addProRCName
-                      },
+                      attrs: { data: _vm.updateCustomerFormVal, fit: "" },
                       on: { "row-click": _vm.addProRowClick }
                     },
                     _vm._l(_vm.stockOutDtlBottomHead, function(item) {

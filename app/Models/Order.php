@@ -46,7 +46,7 @@ class Order extends Model
         self::ORDER_STATUS_ONE_AUDIT => '已跟单一审',
         self::ORDER_STATUS_FD_AUDIT => '已财审',
         self::ORDER_STATUS_CARGO_AUDIT => '已货审',
-        self::ORDER_STATUS_READY_STOCK_OUT=> '已打发货单',
+        self::ORDER_STATUS_READY_STOCK_OUT=> '准备出库',
         self::ORDER_STATUS_STOCK_OUT => '已出库'
     ];
 
