@@ -16,8 +16,8 @@ class PermissionTransformer extends TransformerAbstract
 {
     public function transform(Permission $permission){
         return [
-            'id' => $permission->id,
-            'name' => $permission->name,
+            'key' => $permission->id,
+            'label' => $permission->name,
             'description' => $permission->description,
             'type' => $permission->type,
             'checked' => false

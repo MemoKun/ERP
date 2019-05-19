@@ -380,33 +380,33 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 //        $api->put('goods/editstatus', 'GoodsController@editStatusByIds')
 //            ->name('api.goods.editstatusbyids');
 
-         //商品资源
-         $api->get('products', 'ProductsController@index')
-             ->name('api.products.index');
-         $api->get('products/search', 'ProductsController@searchProducts')
-             ->name('api.products.searchproducts');
-         $api->get('products/{product}', 'ProductsController@show')
-             ->name('api.products.show');
-         $api->post('products', 'ProductsController@store')
-             ->name('api.products.store');
-         $api->patch('products/{product}', 'ProductsController@update')
-             ->name('api.products.update');
-         $api->delete('products/{product}', 'ProductsController@destroy')
-             ->name('api.products.destroy');
-         $api->delete('products', 'ProductsController@destroybyids')
-             ->name('api.products.destroybyids');
-         $api->put('products/editstatus', 'ProductsController@editStatusByIds')
-             ->name('api.products.editstatusbyids');
+        //商品资源
+        $api->get('products', 'ProductsController@index')
+            ->name('api.products.index');
+        $api->get('products/search', 'ProductsController@searchProducts')
+            ->name('api.products.searchproducts');
+        $api->get('products/{product}', 'ProductsController@show')
+            ->name('api.products.show');
+        $api->post('products', 'ProductsController@store')
+            ->name('api.products.store');
+        $api->patch('products/{product}', 'ProductsController@update')
+            ->name('api.products.update');
+        $api->delete('products/{product}', 'ProductsController@destroy')
+            ->name('api.products.destroy');
+        $api->delete('products', 'ProductsController@destroybyids')
+            ->name('api.products.destroybyids');
+        $api->put('products/editstatus', 'ProductsController@editStatusByIds')
+            ->name('api.products.editstatusbyids');
 
         //产品子件资源
-         $api->get('productcomponents', 'ProductComponentsController@index')
-             ->name('api.productcomponents.index');
-         $api->get('productcomponents/{productcomponent}', 'ProductComponentsController@show')
-             ->name('api.productcomponents.show');
-         $api->delete('productcomponents/{productcomponent}', 'ProductComponentsController@destroy')
-             ->name('api.productcomponents.destroy');
-         $api->delete('productcomponents', 'ProductComponentsController@destroybyids')
-             ->name('api.goproductcomponentsods.destroybyids');
+        $api->get('productcomponents', 'ProductComponentsController@index')
+            ->name('api.productcomponents.index');
+        $api->get('productcomponents/{productcomponent}', 'ProductComponentsController@show')
+            ->name('api.productcomponents.show');
+        $api->delete('productcomponents/{productcomponent}', 'ProductComponentsController@destroy')
+            ->name('api.productcomponents.destroy');
+        $api->delete('productcomponents', 'ProductComponentsController@destroybyids')
+            ->name('api.goproductcomponentsods.destroybyids');
 
         //组合资源
         $api->get('combinations', 'CombinationsController@index')
@@ -907,10 +907,19 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //角色管理
         $api->get('roles', 'RolesController@index')
             ->name('api.roles.index');
+        $api->post('roles', 'RolesController@insertRole')
+            ->name('api.roles.insertRole');
+//        $api->patch('roles/{roleid}', 'RolesController@update')
+//            ->name('api.roles.update');
 
-        $api->delete('roles','RolesController@destroyByIds')
+        $api->get('rolegroup', 'RoleGroupController@index')
+            ->name('api.roles.index');
+
+        $api->delete('roles', 'RolesController@destroyByIds')
             ->name('api.roles.destroybyids');
-
+//获取权限
+        $api->get('permissions','PermissionsController@index')
+            ->name('api.permissions.index');
     });
 
     $api->group([
