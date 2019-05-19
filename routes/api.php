@@ -755,8 +755,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('redpackagemag/mergerorder', 'RedPackageController@isMergerOrder')
             ->name('api.redpackagemag.ismergerorder');
         
-
-
         //跟单部
         $api->get('merchandiserdepts', 'MerchandiserDepartmentsController@index')
             ->name('api.merchandiserdepts.index');
@@ -1672,7 +1670,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('roles', 'RolesController@destroyByIds')
             ->name('api.roles.destroybyids');
 //获取权限
-        $api->get('permissions','PermissionsController@index')
+        $api->get('permissions', 'PermissionsController@index')
             ->name('api.permissions.index');
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
