@@ -1669,7 +1669,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 
         $api->delete('roles', 'RolesController@destroyByIds')
             ->name('api.roles.destroybyids');
-//获取权限
+        //获取权限
         $api->get('permissions', 'PermissionsController@index')
             ->name('api.permissions.index');
         //上传图片
