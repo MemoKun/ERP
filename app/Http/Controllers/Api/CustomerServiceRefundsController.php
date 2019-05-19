@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\RefundOrder;
 use App\Models\RefundReason;
 
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\Api\CustomerServiceRefundRequest;
 use App\Http\Requests\Api\RefundReasonRequest;
@@ -380,7 +381,24 @@ class CustomerServiceRefundsController extends Controller
      */
     public function destroy(RefundOrder $refundorder)
     {
-        $this->traitDestroy($refundorder);
+        DB::transaction(function () use ($refundorder) {
+            // 删除退货原因
+            $refundreason = RefundReason::where('refund_order_id', $refundorder->id);
+            $delrefundreason = $refundreason->delete();
+            $refundreason->get()->map(function($item){
+                $item->refundReasonType()->delete();
+            });
+            
+            //删除退货单
+            $delorder = RefundOrder::where('id', $refundorder->id);
+            $delRefundOrder = $delorder->delete();
+
+            if ($delrefundreason === false || $delRefundOrder === false) {
+                throw new DeleteResourceFailedException('The given data was invalid.');
+            }
+        });
+
+        return $this->noContent();
     }
 
     /**
@@ -406,7 +424,26 @@ class CustomerServiceRefundsController extends Controller
      */
     public function destroybyIds(DestroyRequest $request)
     {
-        $this->traitDestroybyIds($request, self::MODEL);
+        $ids = explode(',', $request->input('ids'));
+
+        DB::transaction(function () use ($ids) {
+            // 删除退货原因
+            $refundreason = RefundReason::whereIn('refund_order_id', $ids);
+            $delrefundreason = $refundreason->delete();
+            $refundreason->get()->map(function($item){
+                $item->refundReasonType()->delete();
+            });
+            
+            //删除退货单
+            $delorder = RefundOrder::whereIn('id', $ids);
+            $delRefundOrder = $delorder->delete();
+
+            if ($delrefundreason === false || $delRefundOrder === false) {
+                throw new DeleteResourceFailedException('The given data was invalid.');
+            }
+        });
+
+        return $this->noContent();
     }
 
     /**
@@ -483,7 +520,7 @@ class CustomerServiceRefundsController extends Controller
             $refundorder,
             !$refundorder->status
             ||
-            $refundorder->getOriginal('refund_order_status') != $refundorder::REFUND_STATUS_LOCK,
+            $refundorder->getOriginal('refund_order_status') == $refundorder::REFUND_STATUS_LOCK,
             '客审出错',
             'audit'
         );
