@@ -213,8 +213,14 @@ class Order extends Model
      */
     public function unlock()
     {
-        return $this->getOriginal('order_status') != self::ORDER_STATUS_LOCK;
+        return ($this->getOriginal('order_status') != self::ORDER_STATUS_LOCK);
     }
+
+    public function unReadyStockOut()
+    {
+        return ($this->getOriginal('order_status') != self::ORDER_STATUS_READY_STOCK_OUT);
+    }
+    
 
     /**
      * 订单锁定或释放

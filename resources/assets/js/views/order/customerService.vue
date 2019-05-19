@@ -4,7 +4,7 @@
       <el-tab-pane label="订单列表" name="0">
         <div>
           <div class="searchBox">
-            <span>  
+            <span>
               <label>买家昵称</label>
               <el-input v-model="searchBox.member_nick" clearable></el-input>
             </span>
@@ -867,10 +867,11 @@ export default {
     return {
       newOpt: [
         {
-          cnt: "增加",
+          cnt: "新增",
           icon: "bf-add",
           ent: this.addCustomer,
-          ref: "add"
+          ref: "add",
+          nClick: false
         },
         {
           cnt: "修改",
@@ -888,31 +889,31 @@ export default {
           cnt: "锁定",
           icon: "bf-lock",
           ent: this.lockOrder,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "解锁",
           icon: "bf-delock",
           ent: this.debLock,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "审核",
           icon: "bf-audit",
           ent: this.handleAudit,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "退审",
           icon: "bf-auditfaild",
           ent: this.handleUnAudit,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "导出",
           icon: "bf-out",
           ent: this.test,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "合并",
@@ -927,15 +928,16 @@ export default {
           nClick: true
         },
         {
-          cnt: "转刷单",
+          cnt: "转补单",
           icon: "bf-transa",
           ent: this.test,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "转补款",
           icon: "bf-transferAcc",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "订单关联",
@@ -946,29 +948,32 @@ export default {
         {
           cnt: "取消关联",
           icon: "bf-cancelAsso",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "通知发货",
           icon: "bf-deliNotice",
           ent: this.test,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "打印",
           icon: "bf-printer",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "转送款",
           icon: "bf-giveMoney",
           ent: this.test,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.refresh
+          ent: this.refresh,
+          nClick: false
         }
       ],
       filterBox: false,
@@ -981,16 +986,19 @@ export default {
         receiver_address: "",
         products_id: "",
         business_personnel_id: "",
-        promise_ship_time: [ "2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z" ],
-        created_at: [ "2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z" ],
+        promise_ship_time: [
+          "2018-12-31T16:00:00.000Z",
+          "2099-12-31T16:00:00.000Z"
+        ],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         order_transMStart: "",
         order_transMEnd: "",
         logistics_id: "",
-        audit_at: [ "0000-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z" ],
+        audit_at: ["0000-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         seller_remark: "",
         seller_flag: "",
         order_lock: "",
-        shops_id: "",
+        shops_id: ""
       },
       /*获取数据*/
       activeName: "0",
@@ -2241,7 +2249,7 @@ export default {
         }
       ],
       addActiveName: "0",
-      proData: [],  
+      proData: [],
       options: regionDataPlus,
       addHead: [
         [
@@ -2743,13 +2751,13 @@ export default {
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
             receiver_phone: this.searchBox.receiver_phone,
-            receiver_address:this.searchBox.receiver_address,
-            shops_id:this.searchBox.shops_id,
-            logistics_id:this.searchBox.logistics_id,
-            seller_remark:this.searchBox.seller_remark,
-            promise_ship_time:this.searchBox.promise_ship_time,
-            created_at:this.searchBox.created_at,
-            audit_at:this.searchBox.audit_at,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            logistics_id: this.searchBox.logistics_id,
+            seller_remark: this.searchBox.seller_remark,
+            promise_ship_time: this.searchBox.promise_ship_time,
+            created_at: this.searchBox.created_at,
+            audit_at: this.searchBox.audit_at,
 
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
@@ -2841,31 +2849,65 @@ export default {
     },
     rightHandleClick() {},
     orderListRClick(row) {
-      if (row["locker_id"] == 0) {
+      if (row["order_status"] == "未处理") {
+        this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
         this.newOpt[2].nClick = true;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
         this.newOpt[8].nClick = true;
         this.newOpt[9].nClick = true;
-        this.newOpt[14].nClick = true;
-        if (row["order_status"] == "已客审") {
-          this.newOpt[5].nClick = true;
-          this.newOpt[6].nClick = false;
-        } else {
-          this.newOpt[5].nClick = false;
-          this.newOpt[6].nClick = true;
-        }
-      } else {
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = true;
+        this.newOpt[13].nClick = false;
+        this.newOpt[14].nClick = false;
+        this.newOpt[15].nClick = false;
+        this.newOpt[16].nClick = false;
+        this.newOpt[17].nClick = false;
+      }
+      if (row["order_status"] == "已客审") {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+        this.newOpt[13].nClick = false;
+        this.newOpt[14].nClick = false;
+        this.newOpt[15].nClick = false;
+        this.newOpt[16].nClick = true;
+        this.newOpt[17].nClick = false;
+      }
+      if (row["order_status"] == "订单锁定") {
+        this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = false;
         this.newOpt[3].nClick = true;
         this.newOpt[4].nClick = false;
         this.newOpt[5].nClick = false;
         this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
         this.newOpt[8].nClick = false;
         this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = true;
+        this.newOpt[13].nClick = false;
         this.newOpt[14].nClick = false;
+        this.newOpt[15].nClick = false;
+        this.newOpt[16].nClick = false;
+        this.newOpt[17].nClick = false;
       }
       this.curRowId = row.id;
       this.curRowData = row;
@@ -3389,15 +3431,24 @@ export default {
           this.urls.customerservicedepts + "/" + id + "/lockorunlock"
         ).then(
           () => {
+            this.newOpt[0].nClick = false;
             this.newOpt[1].nClick = false;
             this.newOpt[2].nClick = false;
             this.newOpt[3].nClick = true;
             this.newOpt[4].nClick = false;
             this.newOpt[5].nClick = false;
             this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
             this.newOpt[8].nClick = false;
             this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = true;
+            this.newOpt[13].nClick = false;
             this.newOpt[14].nClick = false;
+            this.newOpt[15].nClick = false;
+            this.newOpt[16].nClick = false;
+            this.newOpt[17].nClick = false;
             this.refresh();
             this.$message({
               message: "锁定成功",
@@ -3428,15 +3479,24 @@ export default {
           this.urls.customerservicedepts + "/" + id + "/lockorunlock"
         ).then(
           () => {
+            this.newOpt[0].nClick = false;
             this.newOpt[1].nClick = true;
             this.newOpt[2].nClick = true;
             this.newOpt[3].nClick = false;
             this.newOpt[4].nClick = true;
             this.newOpt[5].nClick = true;
             this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
             this.newOpt[8].nClick = true;
             this.newOpt[9].nClick = true;
-            this.newOpt[14].nClick = true;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = true;
+            this.newOpt[13].nClick = false;
+            this.newOpt[14].nClick = false;
+            this.newOpt[15].nClick = false;
+            this.newOpt[16].nClick = false;
+            this.newOpt[17].nClick = false;
             this.refresh();
             this.$message({
               message: "解锁成功",
@@ -3770,23 +3830,30 @@ export default {
     },
     /*审核*/
     handleAudit() {
-      if (this.newOpt[6].nClick) {
+      if (this.newOpt[5].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(
           () => {
+            this.newOpt[0].nClick = false;
             this.newOpt[1].nClick = true;
             this.newOpt[2].nClick = true;
             this.newOpt[3].nClick = true;
             this.newOpt[4].nClick = true;
             this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = true;
-            this.newOpt[9].nClick = true;
-            this.newOpt[13].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = true;
+            this.newOpt[6].nClick = false;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = true;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = false;
+            this.newOpt[13].nClick = false;
+            this.newOpt[14].nClick = false;
+            this.newOpt[15].nClick = false;
+            this.newOpt[16].nClick = true;
+            this.newOpt[17].nClick = false;
             this.refresh();
             this.$message({
               message: "审核成功",
@@ -3814,18 +3881,24 @@ export default {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(
           () => {
+            this.newOpt[0].nClick = false;
             this.newOpt[1].nClick = true;
             this.newOpt[2].nClick = true;
             this.newOpt[3].nClick = false;
             this.newOpt[4].nClick = true;
             this.newOpt[5].nClick = true;
             this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
             this.newOpt[8].nClick = true;
             this.newOpt[9].nClick = true;
-            this.newOpt[13].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = true;
-            this.newOpt[18].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = true;
+            this.newOpt[13].nClick = false;
+            this.newOpt[14].nClick = false;
+            this.newOpt[15].nClick = false;
+            this.newOpt[16].nClick = false;
+            this.newOpt[17].nClick = false;
             this.refresh();
             this.$message({
               message: "退审成功",

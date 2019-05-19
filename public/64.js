@@ -913,17 +913,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       newOpt: [{
-        cnt: "增加",
+        cnt: "新增",
         icon: "bf-add",
         ent: this.addCustomer,
-        ref: "add"
+        ref: "add",
+        nClick: false
       }, {
         cnt: "修改",
         icon: "bf-change",
@@ -938,27 +938,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         cnt: "锁定",
         icon: "bf-lock",
         ent: this.lockOrder,
-        nClick: false
+        nClick: true
       }, {
         cnt: "解锁",
         icon: "bf-delock",
         ent: this.debLock,
-        nClick: false
+        nClick: true
       }, {
         cnt: "审核",
         icon: "bf-audit",
         ent: this.handleAudit,
-        nClick: false
+        nClick: true
       }, {
         cnt: "退审",
         icon: "bf-auditfaild",
         ent: this.handleUnAudit,
-        nClick: false
+        nClick: true
       }, {
         cnt: "导出",
         icon: "bf-out",
         ent: this.test,
-        nClick: false
+        nClick: true
       }, {
         cnt: "合并",
         icon: "bf-merge",
@@ -970,14 +970,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.handleSplitOrder,
         nClick: true
       }, {
-        cnt: "转刷单",
+        cnt: "转补单",
         icon: "bf-transa",
         ent: this.test,
-        nClick: false
+        nClick: true
       }, {
         cnt: "转补款",
         icon: "bf-transferAcc",
-        ent: this.test
+        ent: this.test,
+        nClick: true
       }, {
         cnt: "订单关联",
         icon: "bf-asso",
@@ -986,25 +987,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "取消关联",
         icon: "bf-cancelAsso",
-        ent: this.test
+        ent: this.test,
+        nClick: true
       }, {
         cnt: "通知发货",
         icon: "bf-deliNotice",
         ent: this.test,
-        nClick: false
+        nClick: true
       }, {
         cnt: "打印",
         icon: "bf-printer",
-        ent: this.test
+        ent: this.test,
+        nClick: true
       }, {
         cnt: "转送款",
         icon: "bf-giveMoney",
         ent: this.test,
-        nClick: false
+        nClick: true
       }, {
         cnt: "刷新",
         icon: "bf-refresh",
-        ent: this.refresh
+        ent: this.refresh,
+        nClick: false
       }],
       filterBox: false,
       searchBox: {
@@ -2646,31 +2650,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     rightHandleClick: function rightHandleClick() {},
     orderListRClick: function orderListRClick(row) {
-      if (row["locker_id"] == 0) {
+      if (row["order_status"] == "未处理") {
+        this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
         this.newOpt[2].nClick = true;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
         this.newOpt[8].nClick = true;
         this.newOpt[9].nClick = true;
-        this.newOpt[14].nClick = true;
-        if (row["order_status"] == "已客审") {
-          this.newOpt[5].nClick = true;
-          this.newOpt[6].nClick = false;
-        } else {
-          this.newOpt[5].nClick = false;
-          this.newOpt[6].nClick = true;
-        }
-      } else {
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = true;
+        this.newOpt[13].nClick = false;
+        this.newOpt[14].nClick = false;
+        this.newOpt[15].nClick = false;
+        this.newOpt[16].nClick = false;
+        this.newOpt[17].nClick = false;
+      }
+      if (row["order_status"] == "已客审") {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+        this.newOpt[13].nClick = false;
+        this.newOpt[14].nClick = false;
+        this.newOpt[15].nClick = false;
+        this.newOpt[16].nClick = true;
+        this.newOpt[17].nClick = false;
+      }
+      if (row["order_status"] == "订单锁定") {
+        this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = false;
         this.newOpt[3].nClick = true;
         this.newOpt[4].nClick = false;
         this.newOpt[5].nClick = false;
         this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
         this.newOpt[8].nClick = false;
         this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = true;
+        this.newOpt[13].nClick = false;
         this.newOpt[14].nClick = false;
+        this.newOpt[15].nClick = false;
+        this.newOpt[16].nClick = false;
+        this.newOpt[17].nClick = false;
       }
       this.curRowId = row.id;
       this.curRowData = row;
@@ -3198,15 +3236,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
+          _this10.newOpt[0].nClick = false;
           _this10.newOpt[1].nClick = false;
           _this10.newOpt[2].nClick = false;
           _this10.newOpt[3].nClick = true;
           _this10.newOpt[4].nClick = false;
           _this10.newOpt[5].nClick = false;
           _this10.newOpt[6].nClick = true;
+          _this10.newOpt[7].nClick = false;
           _this10.newOpt[8].nClick = false;
           _this10.newOpt[9].nClick = false;
+          _this10.newOpt[10].nClick = false;
+          _this10.newOpt[11].nClick = false;
+          _this10.newOpt[12].nClick = true;
+          _this10.newOpt[13].nClick = false;
           _this10.newOpt[14].nClick = false;
+          _this10.newOpt[15].nClick = false;
+          _this10.newOpt[16].nClick = false;
+          _this10.newOpt[17].nClick = false;
           _this10.refresh();
           _this10.$message({
             message: "锁定成功",
@@ -3235,15 +3282,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
+          _this11.newOpt[0].nClick = false;
           _this11.newOpt[1].nClick = true;
           _this11.newOpt[2].nClick = true;
           _this11.newOpt[3].nClick = false;
           _this11.newOpt[4].nClick = true;
           _this11.newOpt[5].nClick = true;
           _this11.newOpt[6].nClick = true;
+          _this11.newOpt[7].nClick = false;
           _this11.newOpt[8].nClick = true;
           _this11.newOpt[9].nClick = true;
-          _this11.newOpt[14].nClick = true;
+          _this11.newOpt[10].nClick = false;
+          _this11.newOpt[11].nClick = false;
+          _this11.newOpt[12].nClick = true;
+          _this11.newOpt[13].nClick = false;
+          _this11.newOpt[14].nClick = false;
+          _this11.newOpt[15].nClick = false;
+          _this11.newOpt[16].nClick = false;
+          _this11.newOpt[17].nClick = false;
           _this11.refresh();
           _this11.$message({
             message: "解锁成功",
@@ -3564,22 +3620,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handleAudit: function handleAudit() {
       var _this16 = this;
 
-      if (this.newOpt[6].nClick) {
+      if (this.newOpt[5].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(function () {
+          _this16.newOpt[0].nClick = false;
           _this16.newOpt[1].nClick = true;
           _this16.newOpt[2].nClick = true;
           _this16.newOpt[3].nClick = true;
           _this16.newOpt[4].nClick = true;
           _this16.newOpt[5].nClick = true;
-          _this16.newOpt[6].nClick = true;
-          _this16.newOpt[8].nClick = true;
-          _this16.newOpt[9].nClick = true;
-          _this16.newOpt[13].nClick = true;
-          _this16.newOpt[14].nClick = true;
-          _this16.newOpt[15].nClick = true;
+          _this16.newOpt[6].nClick = false;
+          _this16.newOpt[7].nClick = false;
+          _this16.newOpt[8].nClick = false;
+          _this16.newOpt[9].nClick = false;
+          _this16.newOpt[10].nClick = true;
+          _this16.newOpt[11].nClick = false;
+          _this16.newOpt[12].nClick = false;
+          _this16.newOpt[13].nClick = false;
+          _this16.newOpt[14].nClick = false;
+          _this16.newOpt[15].nClick = false;
+          _this16.newOpt[16].nClick = true;
+          _this16.newOpt[17].nClick = false;
           _this16.refresh();
           _this16.$message({
             message: "审核成功",
@@ -3606,18 +3669,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(function () {
+          _this17.newOpt[0].nClick = false;
           _this17.newOpt[1].nClick = true;
           _this17.newOpt[2].nClick = true;
           _this17.newOpt[3].nClick = false;
           _this17.newOpt[4].nClick = true;
           _this17.newOpt[5].nClick = true;
           _this17.newOpt[6].nClick = true;
+          _this17.newOpt[7].nClick = false;
           _this17.newOpt[8].nClick = true;
           _this17.newOpt[9].nClick = true;
-          _this17.newOpt[13].nClick = true;
-          _this17.newOpt[14].nClick = true;
-          _this17.newOpt[15].nClick = true;
-          _this17.newOpt[18].nClick = false;
+          _this17.newOpt[10].nClick = false;
+          _this17.newOpt[11].nClick = false;
+          _this17.newOpt[12].nClick = true;
+          _this17.newOpt[13].nClick = false;
+          _this17.newOpt[14].nClick = false;
+          _this17.newOpt[15].nClick = false;
+          _this17.newOpt[16].nClick = false;
+          _this17.newOpt[17].nClick = false;
           _this17.refresh();
           _this17.$message({
             message: "退审成功",
@@ -3803,8 +3872,6 @@ var render = function() {
             { attrs: { label: "订单列表", name: "0" } },
             [
               _c("div", [
-                _c("label", [_vm._v(_vm._s(this.searchBox.shops_id))]),
-                _vm._v(" "),
                 _c("div", { staticClass: "searchBox" }, [
                   _c(
                     "span",

@@ -639,270 +639,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1829,7 +1565,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.updateMask = false;
         this.updateForm.refund_data = [];
         this.refresh();
-      };
+      }
       if (this.ruleForm.is_return) {
         this.updateForm.return_data.map(function (item) {
           _this6.$post(_this6.urls.aftersalereturn, item).then(function () {}, function (err) {
@@ -1849,7 +1585,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.updateMask = false;
         this.updateForm.return_data = [];
         this.refresh();
-      };
+      }
       if (this.ruleForm.is_patch) {
         this.updateForm.patch_data.map(function (item) {
           _this6.$post(_this6.urls.aftersalepatch, item).then(function () {}, function (err) {
@@ -1868,13 +1604,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
         this.updateMask = false;
         this.refresh();
-      };
+      }
       if (!this.ruleForm.is_refund && !this.ruleForm.is_return && !this.ruleForm.is_patch) {
         this.$message({
           message: "没有选中责任方",
           type: "warning"
         });
-      };
+      }
       this.updateForm.patch_data = [];
     },
     edit: function edit() {

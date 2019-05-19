@@ -67,7 +67,7 @@ class CustomerServiceDepartmentsController extends Controller
         ->where('seller_flag', 'like', '%'.$seller_flag.'%')
         ->whereBetween('promise_ship_time', [$promise_ship_time[0], $promise_ship_time[1]])
         ->whereBetween('created_at', [$created_at[0], $created_at[1]])
-        ->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
+        //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
         ->orderBy('created_at', 'desc');
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }

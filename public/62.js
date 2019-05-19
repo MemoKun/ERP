@@ -657,10 +657,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       newOpt: [{
         cnt: "驳回",
         icon: "bf-reject",
@@ -1723,7 +1727,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "number"
       }],
       stockOutMask: false,
-      stockOutDtlData: {
+      updateCustomerFormVal: {
         system_order_no: "",
         receiver_name: "",
         receiver_mobile: "",
@@ -1913,8 +1917,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "checkbox"
       }],
       addSubData: [],
-      apiData: {}
-    };
+      updateCustomerMask: false
+    }, _defineProperty(_ref, "updateCustomerFormVal", {}), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "updateProIds", []), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "proRIndex", ""), _defineProperty(_ref, "proCompRowIndex", ""), _defineProperty(_ref, "proSubmitData", []), _defineProperty(_ref, "proIds", []), _defineProperty(_ref, "addIds", []), _defineProperty(_ref, "proCompRow", {}), _defineProperty(_ref, "proRIndex", ""), _defineProperty(_ref, "receiveInfo", {
+      receiver_name: "",
+      receiver_phone: "",
+      receiver_mobile: "",
+      provinces: [],
+      receiver_state: "",
+      receiver_city: "",
+      receiver_district: "",
+      receiver_address: "",
+      receiver_zip: ""
+    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "apiData", {}), _ref;
   },
 
   computed: {
@@ -2331,6 +2345,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     stockOut: function stockOut() {
+      var _this10 = this;
+
       this.stockOutMask = true;
       if (this.checkboxId == "") {
         this.$message({
@@ -2338,48 +2354,213 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           message: "请先选择订单"
         });
       } else {
-        this.stockOutDtlData.system_order_no = this.curRowData.system_order_no;
-        this.stockOutDtlData.receiver_name = this.curRowData.receiver_name;
-        this.stockOutDtlData.receiver_mobile = this.curRowData.receiver_mobile;
-        this.stockOutDtlData.receiver_address = this.curRowData.receiver_address;
-        this.stockOutDtlData.logistics_id = this.curRowData.logistics_id;
-        this.stockOutDtlData.logistics_sn = this.curRowData.logistics_sn;
-        this.stockOutDtlData.actual_freight = this.curRowData.actual_freight;
-        this.stockOutDtlData.freight_types_id = this.curRowData.freight_types_id;
-        this.stockOutDtlData.expected_freight = this.curRowData.expected_freight;
-        this.stockOutDtlData.total_volume = this.curRowData.total_volume;
-        this.stockOutDtlData.distribution_phone = this.curRowData.distribution_phone;
-        this.stockOutDtlData.distributions_id = this.curRowData.distributions_id;
-        this.stockOutDtlData.distribution_no = this.curRowData.distribution_no;
-        this.stockOutDtlData.distribution_types_id = this.curRowData.distribution_types_id;
-        this.stockOutDtlData.move_upstairs_fee = this.curRowData.move_upstairs_fee;
-        this.stockOutDtlData.deliver_goods_fee = this.curRowData.deliver_goods_fee;
-        this.stockOutDtlData.total_distribution_fee = this.curRowData.total_distribution_fee;
-        this.stockOutDtlData.installation_fee = this.curRowData.installation_fee;
-        this.stockOutDtlData.package_quantity = this.curRowData.package_quantity;
-        this.stockOutDtlData.wooden_frame_costs = this.curRowData.wooden_frame_costs;
-        this.stockOutDtlData.supplier_id = this.curRowData.supplier_id;
-        this.stockOutDtlData.favorable_cashback = this.curRowData.favorable_cashback;
-        this.stockOutDtlData.preferential_cashback = this.curRowData.preferential_cashback;
-        this.stockOutDtlData.warehouses_id = this.curRowData.warehouses_id;
-        this.stockOutDtlData.taobao_oid = this.curRowData.taobao_oid;
+        this.proIds = [];
+        this.updateProIds = [];
+        this.expenseRIndex = "";
+        this.updateCustomerFormVal = {};
+        this.updateProData = [];
+        this.updateReceiveInfo = {};
+        this.updateExpenseData = [];
+        this.proRIndex = "";
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$fetch(this.urls.customerservicedepts + "/" + id, {
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+        }).then(function (res) {
+          var _this10$updateReceive;
+
+          _this10.updateCustomerFormVal = res;
+          if (res["orderItems"]["data"].length > 0) {
+            res["orderItems"]["data"].map(function (item) {
+              _this10.updateProIds.push(item["combination"].id);
+              item["name"] = item["combination"]["name"];
+              item["id"] = item.id;
+              item["products_id"] = item.products_id;
+              item["combinations_id"] = item.combinations_id;
+              item["productComp"] = item["combination"]["productComponents"]["data"];
+              _this10.$set(item, "newData", {
+                quantity: item.quantity,
+                paint: item.paint,
+                is_printing: item.is_printing,
+                printing_fee: item.printing_fee,
+                is_spot_goods: item.is_spot_goods,
+                under_line_univalent: item.under_line_univalent,
+                under_line_preferential: item.under_line_preferential,
+                total_volume: item.total_volume
+              });
+            });
+          }
+          _this10.updateProData = res["orderItems"]["data"];
+          _this10.updateReceiveInfo = (_this10$updateReceive = {
+            receiver_name: res.receiver_name,
+            receiver_phone: res.receiver_phone,
+            receiver_mobile: res.receiver_mobile,
+            receiver_state: res.receiver_state
+          }, _defineProperty(_this10$updateReceive, "receiver_state", res.receiver_city), _defineProperty(_this10$updateReceive, "receiver_district", res.receiver_district), _defineProperty(_this10$updateReceive, "receiver_address", res.receiver_address), _defineProperty(_this10$updateReceive, "receiver_zip", res.receiver_zip), _this10$updateReceive);
+          _this10.updateExpenseData = res["paymentDetails"]["data"];
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this10.$message.error(str);
+          }
+        });
       }
     },
     stockOutConfirm: function stockOutConfirm() {
-      var _this10 = this;
+      var _this11 = this;
 
-      var id = this.checkboxId ? this.checkboxId : curRowId;
+      var forData = this.updateCustomerFormVal;
       var submitData = {
-        logistics_id: this.stockOutDtlData.logistics_id,
-        logistics_sn: this.stockOutDtlData.logistics_sn,
-        actual_freight: this.stockOutDtlData.actual_freight
+        shops_id: forData.shops_id,
+        member_nick: forData.member_nick,
+        logistics_id: forData.logistics_id,
+        logistics_sn: forData.logistics_sn,
+        billing_way: forData.billing_way,
+        promise_ship_time: forData.promise_ship_time,
+        freight_types_id: forData.freight_types_id,
+        expected_freight: forData.expected_freight,
+        distributions_id: forData.distributions_id,
+        distribution_methods_id: forData.distribution_methods_id,
+        deliver_goods_fee: forData.deliver_goods_fee,
+        move_upstairs_fee: forData.move_upstairs_fee,
+        installation_fee: forData.installation_fee,
+        total_distribution_fee: forData.total_distribution_fee,
+        distribution_phone: forData.distribution_phone,
+        distribution_no: forData.distribution_no,
+        distribution_types_id: forData.distribution_types_id,
+        service_car_info: forData.service_car_info,
+        take_delivery_goods_fee: forData.take_delivery_goods_fee,
+        take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
+        express_fee: forData.express_fee,
+        service_car_fee: forData.service_car_fee,
+        cancel_after_verification_code: forData.cancel_after_verification_code,
+        wooden_frame_costs: forData.wooden_frame_costs,
+        preferential_cashback: forData.preferential_cashback,
+        favorable_cashback: forData.favorable_cashback,
+        customer_types_id: forData.customer_types_id,
+        is_invoice: forData.is_invoice,
+        invoice_express_fee: forData.invoice_express_fee,
+        express_invoice_title: forData.express_invoice_title,
+        contract_no: forData.contract_no,
+        payment_methods_id: forData.payment_methods_id,
+        deposit: forData.deposit,
+        document_title: forData.document_title,
+        warehouses_id: forData.warehouses_id,
+        payment_date: forData.payment_date,
+        interest_concessions: forData.interest_concessions,
+        is_notice: forData.is_notice,
+        is_cancel_after_verification: forData.is_cancel_after_verification,
+        accept_order_user: forData.accept_order_user,
+        tax_number: forData.tax_number,
+        receipt: forData.receipt,
+        logistics_remark: forData.logistics_remark,
+        seller_remark: forData.seller_remark,
+        customer_service_remark: forData.customer_service_remark,
+        buyer_message: forData.buyer_message,
+        status: forData.status,
+        receiver_name: this.updateReceiveInfo.receiver_name,
+        receiver_phone: this.updateReceiveInfo.receiver_phone,
+        receiver_mobile: this.updateReceiveInfo.receiver_mobile,
+        receiver_state: this.updateReceiveInfo.receiver_state,
+        receiver_city: this.updateReceiveInfo.receiver_city,
+        receiver_district: this.updateReceiveInfo.receiver_district,
+        receiver_address: this.updateReceiveInfo.receiver_address,
+        receiver_zip: this.updateReceiveInfo.receiver_zip,
+        order_items: [],
+        payment_details: []
       };
-      this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(function () {
-        _this10.stockOutMask = false;
-        _this10.$message({
+      this.updateProData.map(function (item) {
+        if (item.combinations_id) {
+          var proD = {
+            id: item.id,
+            products_id: item.products_id,
+            combinations_id: item.combinations_id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(proD);
+        } else if (item["originalId"]) {
+          var _proD = {
+            id: item["originalId"],
+            products_id: item.pid,
+            combinations_id: item.id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(_proD);
+        } else {
+          var _proD2 = {
+            products_id: item.pid,
+            combinations_id: item.id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(_proD2);
+        }
+      });
+      this.updateExpenseData.map(function (list) {
+        if (list.id) {
+          var expenseD = {
+            id: list.id,
+            payment: list.payment,
+            payment_methods_id: list.payment_methods_id
+          };
+          submitData.payment_details.push(expenseD);
+        } else {
+          var _expenseD = {
+            payment: list.payment,
+            payment_methods_id: list.payment_methods_id
+          };
+          submitData.payment_details.push(_expenseD);
+        }
+      });
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$message({
+        message: "加载成功",
+        type: "success"
+      });
+      this.$patch(this.urls.merchandiserdepts + "/" + id, submitData).then(function () {
+        _this11.stockOutMask = false;
+        _this11.refresh();
+        _this11.$message({
           message: "发货成功",
           type: "success"
         });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this11.$message.error(str);
+        }
       });
     },
     handleSelectionChange: function handleSelectionChange(val) {
@@ -2396,15 +2577,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.mergerIds = val;
     }
   }, "handlePagChg", function handlePagChg(page) {
-    var _this11 = this;
+    var _this12 = this;
 
     this.$fetch(this.urls.merchandiserdepts + "?page=" + page, {
       include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
     }).then(function (res) {
-      if (_this11.leftTopActiveName == "0") {
-        _this11.orderListData = res.data;
+      if (_this12.leftTopActiveName == "0") {
+        _this12.orderListData = res.data;
       } else {
-        _this11.alreadyHandle = res.data;
+        _this12.alreadyHandle = res.data;
       }
     });
   }),
@@ -4697,6 +4878,10 @@ var render = function() {
           _c(
             "el-tabs",
             [
+              _c("label", [_vm._v(_vm._s(this.updateReceiveInfo))]),
+              _vm._v(" "),
+              _c("label", [_vm._v(_vm._s(this.updateExpenseData))]),
+              _vm._v(" "),
               _c(
                 "el-tab-pane",
                 { attrs: { label: "发货明细", name: "0" } },
@@ -4706,7 +4891,7 @@ var render = function() {
                     {
                       staticClass: "storageUpdateForm",
                       attrs: {
-                        model: _vm.stockOutDtlData,
+                        model: _vm.updateCustomerFormVal,
                         rules: _vm.addStockOutDtlRules,
                         id: "form"
                       }
@@ -4732,12 +4917,14 @@ var render = function() {
                                           },
                                           model: {
                                             value:
-                                              _vm.stockOutDtlData[item.prop][
-                                                item.inProp
-                                              ],
+                                              _vm.updateCustomerFormVal[
+                                                item.prop
+                                              ][item.inProp],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.stockOutDtlData[item.prop],
+                                                _vm.updateCustomerFormVal[
+                                                  item.prop
+                                                ],
                                                 item.inProp,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -4745,7 +4932,7 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "stockOutDtlData[item.prop][item.inProp]"
+                                              "updateCustomerFormVal[item.prop][item.inProp]"
                                           }
                                         })
                                       ],
@@ -4761,10 +4948,12 @@ var render = function() {
                                           },
                                           model: {
                                             value:
-                                              _vm.stockOutDtlData[item.prop],
+                                              _vm.updateCustomerFormVal[
+                                                item.prop
+                                              ],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.stockOutDtlData,
+                                                _vm.updateCustomerFormVal,
                                                 item.prop,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -4772,7 +4961,7 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "stockOutDtlData[item.prop]"
+                                              "updateCustomerFormVal[item.prop]"
                                           }
                                         })
                                       ],
@@ -4796,10 +4985,12 @@ var render = function() {
                                           on: { input: _vm.formChg },
                                           model: {
                                             value:
-                                              _vm.stockOutDtlData[item.prop],
+                                              _vm.updateCustomerFormVal[
+                                                item.prop
+                                              ],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.stockOutDtlData,
+                                                _vm.updateCustomerFormVal,
                                                 item.prop,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -4807,7 +4998,7 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "stockOutDtlData[item.prop]"
+                                              "updateCustomerFormVal[item.prop]"
                                           }
                                         })
                                       ],
@@ -4824,10 +5015,12 @@ var render = function() {
                                           },
                                           model: {
                                             value:
-                                              _vm.stockOutDtlData[item.prop],
+                                              _vm.updateCustomerFormVal[
+                                                item.prop
+                                              ],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.stockOutDtlData,
+                                                _vm.updateCustomerFormVal,
                                                 item.prop,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -4835,7 +5028,7 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "stockOutDtlData[item.prop]"
+                                              "updateCustomerFormVal[item.prop]"
                                           }
                                         })
                                       ],
@@ -4854,15 +5047,17 @@ var render = function() {
                                         disabled: item.addChgAble
                                       },
                                       model: {
-                                        value: _vm.stockOutDtlData[item.prop],
+                                        value:
+                                          _vm.updateCustomerFormVal[item.prop],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.stockOutDtlData,
+                                            _vm.updateCustomerFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
-                                        expression: "stockOutDtlData[item.prop]"
+                                        expression:
+                                          "updateCustomerFormVal[item.prop]"
                                       }
                                     },
                                     _vm._l(
@@ -4900,17 +5095,19 @@ var render = function() {
                                       placehode: item.holder
                                     },
                                     model: {
-                                      value: _vm.stockOutDtlData[item.prop],
+                                      value:
+                                        _vm.updateCustomerFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.stockOutDtlData,
+                                          _vm.updateCustomerFormVal,
                                           item.prop,
                                           typeof $$v === "string"
                                             ? $$v.trim()
                                             : $$v
                                         )
                                       },
-                                      expression: "stockOutDtlData[item.prop]"
+                                      expression:
+                                        "updateCustomerFormVal[item.prop]"
                                     }
                                   })
                                 ],
@@ -4923,15 +5120,17 @@ var render = function() {
                                   _c("el-checkbox", {
                                     attrs: { disabled: item.chgAble },
                                     model: {
-                                      value: _vm.stockOutDtlData[item.prop],
+                                      value:
+                                        _vm.updateCustomerFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.stockOutDtlData,
+                                          _vm.updateCustomerFormVal,
                                           item.prop,
                                           $$v
                                         )
                                       },
-                                      expression: "stockOutDtlData[item.prop]"
+                                      expression:
+                                        "updateCustomerFormVal[item.prop]"
                                     }
                                   })
                                 ],
@@ -4946,15 +5145,17 @@ var render = function() {
                                     {
                                       attrs: { label: "volume" },
                                       model: {
-                                        value: _vm.stockOutDtlData[item.prop],
+                                        value:
+                                          _vm.updateCustomerFormVal[item.prop],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.stockOutDtlData,
+                                            _vm.updateCustomerFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
-                                        expression: "stockOutDtlData[item.prop]"
+                                        expression:
+                                          "updateCustomerFormVal[item.prop]"
                                       }
                                     },
                                     [_vm._v(_vm._s(item.choiceName[0]))]
@@ -4965,15 +5166,17 @@ var render = function() {
                                     {
                                       attrs: { label: "weight" },
                                       model: {
-                                        value: _vm.stockOutDtlData[item.prop],
+                                        value:
+                                          _vm.updateCustomerFormVal[item.prop],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.stockOutDtlData,
+                                            _vm.updateCustomerFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
-                                        expression: "stockOutDtlData[item.prop]"
+                                        expression:
+                                          "updateCustomerFormVal[item.prop]"
                                       }
                                     },
                                     [_vm._v(_vm._s(item.choiceName[1]))]
@@ -4993,15 +5196,17 @@ var render = function() {
                                       placeholder: "选择日期"
                                     },
                                     model: {
-                                      value: _vm.stockOutDtlData[item.prop],
+                                      value:
+                                        _vm.updateCustomerFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.stockOutDtlData,
+                                          _vm.updateCustomerFormVal,
                                           item.prop,
                                           $$v
                                         )
                                       },
-                                      expression: "stockOutDtlData[item.prop]"
+                                      expression:
+                                        "updateCustomerFormVal[item.prop]"
                                     }
                                   })
                                 ],
@@ -5018,7 +5223,7 @@ var render = function() {
                     "el-table",
                     {
                       attrs: {
-                        data: _vm.stockOutDtlData,
+                        data: _vm.updateCustomerFormVal,
                         fit: "",
                         "row-class-name": _vm.addProRCName
                       },
