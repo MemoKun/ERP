@@ -868,6 +868,22 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicerefunds.isfdaudit');
         $api->put('customerservicerefunds/{refundorder}/fdunaudit', 'CustomerServiceRefundsController@isFdUnAudit')
             ->name('api.customerservicerefunds.isfdunaudit');
+        
+        // 退款类型
+        $api->get('refundreasontype', 'RefundReasonTypeController@index')
+            ->name('api.refundreasontype.index');
+        $api->get('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@show')
+            ->name('api.refundreasontype.show');
+        $api->post('refundreasontype', 'RefundReasonTypeController@store')
+            ->name('api.refundreasontype.store');
+        $api->patch('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@update')
+            ->name('api.refundreasontype.update');
+        $api->delete('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@destroy')
+            ->name('api.refundreasontype.destroy');
+        $api->delete('refundreasontype', 'RefundReasonTypeController@destroybyids')
+            ->name('api.refundreasontype.destroybyids');
+        $api->put('refundreasontype/editstatus', 'RefundReasonTypeController@editStatusByIds')
+            ->name('api.refundreasontype.editstatusbyids');
 
         //退款原因
         $api->get('refundreasons', 'RefundReasonsController@index')

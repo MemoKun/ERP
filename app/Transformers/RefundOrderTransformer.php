@@ -9,7 +9,7 @@ class RefundOrderTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'paymentMethod', 'shop', 'refundPaymentMethod', 'refundReason', 'businessPersonnel',
-        'locker', 'afterSale', 'financial', 'creator'
+        'locker', 'afterSale', 'financial', 'creator',
 
     ];
 

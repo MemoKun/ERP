@@ -4588,7 +4588,7 @@ var render = function() {
                             return [
                               _vm._v(
                                 "\n                             " +
-                                  _vm._s("新建") +
+                                  _vm._s(scope.row[_vm.item.prop] + "新建") +
                                   "\n                         "
                               )
                             ]
@@ -5954,7 +5954,7 @@ var render = function() {
                             return [
                               _vm._v(
                                 "\n                             " +
-                                  _vm._s("新建") +
+                                  _vm._s(scope.row[_vm.item.prop] + "新建") +
                                   "\n                         "
                               )
                             ]

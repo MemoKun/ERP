@@ -914,12 +914,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1019,15 +1013,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         receiver_name: "",
         receiver_phone: "",
         order_money: "",
-        order_address: "",
+        receiver_address: "",
         products_id: "",
         business_personnel_id: "",
-        promise_ship_time: "",
-        created_at: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         order_transMStart: "",
         order_transMEnd: "",
         logistics_id: "",
-        audit_at: "",
+        audit_at: ["0000-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         seller_remark: "",
         seller_flag: "",
         order_lock: "",
@@ -2569,7 +2563,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
             receiver_phone: this.searchBox.receiver_phone,
-
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            logistics_id: this.searchBox.logistics_id,
+            seller_remark: this.searchBox.seller_remark,
             promise_ship_time: this.searchBox.promise_ship_time,
             created_at: this.searchBox.created_at,
             audit_at: this.searchBox.audit_at,
@@ -3567,7 +3564,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handleAudit: function handleAudit() {
       var _this16 = this;
 
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[6].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -3583,7 +3580,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this16.newOpt[13].nClick = true;
           _this16.newOpt[14].nClick = true;
           _this16.newOpt[15].nClick = true;
-          _this16.newOpt[18].nClick = true;
           _this16.refresh();
           _this16.$message({
             message: "审核成功",
@@ -3807,13 +3803,13 @@ var render = function() {
             { attrs: { label: "订单列表", name: "0" } },
             [
               _c("div", [
-                _c("label", [_vm._v(_vm._s(this.searchBox.promise_ship_time))]),
+                _c("label", [_vm._v(_vm._s(this.searchBox.shops_id))]),
                 _vm._v(" "),
                 _c("div", { staticClass: "searchBox" }, [
                   _c(
                     "span",
                     [
-                      _c("label", [_vm._v("会员名称")]),
+                      _c("label", [_vm._v("买家昵称")]),
                       _vm._v(" "),
                       _c("el-input", {
                         attrs: { clearable: "" },
@@ -3896,11 +3892,11 @@ var render = function() {
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
-                          value: _vm.searchBox.order_address,
+                          value: _vm.searchBox.receiver_address,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_address", $$v)
+                            _vm.$set(_vm.searchBox, "receiver_address", $$v)
                           },
-                          expression: "searchBox.order_address"
+                          expression: "searchBox.receiver_address"
                         }
                       })
                     ],
@@ -4162,37 +4158,6 @@ var render = function() {
                             _vm.$set(_vm.searchBox, "audit_at", $$v)
                           },
                           expression: "searchBox.audit_at"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    { staticClass: "transMoney" },
-                    [
-                      _c("label", [_vm._v("交易金额")]),
-                      _vm._v(" "),
-                      _c("el-input", {
-                        attrs: { type: "number", clearable: "" },
-                        model: {
-                          value: _vm.searchBox.order_transMStart,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_transMStart", $$v)
-                          },
-                          expression: "searchBox.order_transMStart"
-                        }
-                      }),
-                      _vm._v("\n            至\n            "),
-                      _c("el-input", {
-                        attrs: { type: "number", clearable: "" },
-                        model: {
-                          value: _vm.searchBox.order_transMEnd,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_transMEnd", $$v)
-                          },
-                          expression: "searchBox.order_transMEnd"
                         }
                       })
                     ],

@@ -2,26 +2,26 @@
 
 namespace App\Transformers;
 
-use App\Models\RefundReason;
+use App\Models\RefundReasonType;
 use League\Fractal\TransformerAbstract;
 
 class RefundReasonTypeTransformer extends TransformerAbstract
 {
-    public function transform(RefundReasonType $refundReasonType)
+    public function transform(RefundReasonType $refundreasontype)
     {
         return [
-            'id' => $refundReasonType->id,
-            'name' => $refundReasonType->name,
-            'status' => $refundReasonType->status,
-            'created_at' => $refundReasonType->created_at
+            'id' => $refundreasontype->id,
+            'name' => $refundreasontype->name,
+            'status' => $refundreasontype->status,
+            'created_at' => $refundreasontype->created_at
                                     ->toDateTimeString(),
-            'updated_at' => $refundReasonType->updated_at
+            'updated_at' => $refundreasontype->updated_at
                                     ->toDateTimeString(),
         ];
     }
 
-    public function includeRefundOrder(RefundReasonType $refundReasonType)
+    public function includeRefundOrder(RefundReasonType $refundreasontype)
     {
-        return $this->collection($refundReasonType->refundOrder,new RefundOrderTransformer());
+        return $this->collection($refundreasontype->refundOrder,new RefundOrderTransformer());
     }
 }

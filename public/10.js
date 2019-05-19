@@ -33686,6 +33686,265 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33746,23 +34005,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         cnt: "增加",
         icon: "bf-add",
         ent: this.addCmptnOrder,
-        ref: "add"
+        ref: "add",
+        nClick: false
       }, {
         cnt: "修改",
         icon: "bf-change",
-        ent: this.updateData
+        ent: this.updateData,
+        nClick: false
       }, {
         cnt: "删除",
         icon: "bf-del",
-        ent: this.delBatch
+        ent: this.delBatch,
+        nClick: false
       }, {
         cnt: "审核",
         icon: "bf-audit",
-        ent: this.handleAudit
+        ent: this.handleAudit,
+        nClick: false
       }, {
         cnt: "退审",
         icon: "bf-auditfaild",
-        ent: this.handleUnAudit
+        ent: this.handleUnAudit,
+        nClick: true
       }, {
         cnt: "导出",
         icon: "bf-out",
@@ -33974,7 +34238,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           function: "",
           special: "",
           other: "",
-          buy_number: "1",
+          buy_number: "",
           img_url: ""
         }]
       },
@@ -34001,7 +34265,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       //新建订单的文本框表头
       {
         label: "系统单号",
-        prop: "system_order_no",
+        prop: "order_number",
         holder: "系统自动生成",
         width: "200",
         type: "text",
@@ -34183,7 +34447,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       function: "",
       special: "",
       other: "",
-      buy_number: "1",
+      buy_number: "",
       img_url: ""
     }), _defineProperty(_ref, "proMask", false), _defineProperty(_ref, "showChgBtn", ""), _defineProperty(_ref, "proQuery", {
       commodity_code: "",
@@ -34403,7 +34667,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         function: "",
         special: "",
         other: "",
-        buy_number: "1",
+        buy_number: "",
         img_url: ""
       }]
     }), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "updateProIds", []), _defineProperty(_ref, "updateProblemProCurIndexNum", 0), _defineProperty(_ref, "updateProblemProCurIndex", "index0"), _defineProperty(_ref, "tableChgBtn", ""), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delUrl", ""), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "ids", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "splitHead", [{
@@ -34480,9 +34744,89 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       width: "120"
     }]), _defineProperty(_ref, "inputChange", false), _defineProperty(_ref, "addProblemProCurIndex", ""), _defineProperty(_ref, "problemProData", []), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "addProblemProUpload", "upload0"), _defineProperty(_ref, "updateProblemProUpload", ""), _defineProperty(_ref, "updateCompUpload", "upload0"), _defineProperty(_ref, "updateRwIndex", "0"), _defineProperty(_ref, "updateChgBtn", false), _defineProperty(_ref, "selectVal", {
       payment_method: [{ label: "支付宝", value: "支付宝" }, { label: "微信", value: "微信" }, { label: "银行卡", value: "银行卡" }],
-      cmptn_direction: [{ label: "我们赔偿", value: "我们赔偿" }, { label: "赔偿我们", value: "赔偿我们" }],
+      cmptn_direction: [{ label: "我们赔偿", value: "我们赔偿" }, { label: "赔偿我们", value: "赔偿我们" }],
       responsible_party: [{ label: "顾客", value: "顾客" }, { label: "我们", value: "我们" }, { label: "仓库", value: "仓库" }, { label: "供应商", value: "供应商" }]
-    }), _ref;
+    }), _defineProperty(_ref, "addProMask", false), _defineProperty(_ref, "addProDtlVal", []), _defineProperty(_ref, "proDtlVal", []), _defineProperty(_ref, "addOrderDtlVal", []), _defineProperty(_ref, "orderDtlVal", []), _defineProperty(_ref, "addProHead", [{
+      label: "商品编码",
+      prop: "commodity_code",
+      width: "180",
+      type: "text"
+    }, {
+      label: "规格编码",
+      prop: "spec_code",
+      width: "180",
+      type: "text"
+    }, {
+      label: "商品简称",
+      prop: "short_name",
+      width: "150",
+      type: "text"
+    }, {
+      label: "规格",
+      prop: "spec",
+      width: "180",
+      type: "text"
+    }, {
+      label: "颜色",
+      prop: "color",
+      width: "120",
+      type: "text"
+    }, {
+      label: "材质",
+      prop: "materials",
+      width: "120",
+      type: "text"
+    }, {
+      label: "功能",
+      prop: "function",
+      width: "120",
+      type: "text"
+    }, {
+      label: "特殊",
+      prop: "special",
+      width: "120",
+      type: "text"
+    }, {
+      label: "其他",
+      prop: "other",
+      width: "120",
+      type: "text"
+    }, {
+      label: "购买数量",
+      prop: "buy_number",
+      width: "120",
+      type: "text"
+    }]), _defineProperty(_ref, "addOrderProHead", [{
+      label: "系统单号",
+      prop: "system_order_no",
+      width: "200",
+      type: "text"
+    }, {
+      label: "淘宝单号",
+      prop: "taobao_oid",
+      width: "200",
+      type: "text"
+    }, {
+      label: "买家昵称",
+      prop: "receiver_name",
+      width: "150",
+      type: "text"
+    }, {
+      label: "买家电话",
+      prop: "receiver_phone",
+      width: "150",
+      type: "text"
+    }, {
+      label: "收货地址",
+      prop: "receiver_address",
+      width: "200",
+      type: "text"
+    }, {
+      label: "店铺昵称",
+      prop: "shop_name",
+      width: "150",
+      type: "text"
+    }]), _ref;
   },
 
   computed: {
@@ -34591,6 +34935,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
+          this.newOpt[0].nClick = false;
+          this.newOpt[1].nClick = false;
+          this.newOpt[2].nClick = false;
+          this.newOpt[3].nClick = false;
+          this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftercompensation + "/searchuntreated", {
             include: "problemProduct.afterCompensationOrder,feeType"
           }).then(function (res) {
@@ -34616,6 +34965,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
           break;
         case 1:
+          this.newOpt[0].nClick = true;
+          this.newOpt[1].nClick = true;
+          this.newOpt[2].nClick = true;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftercompensation + "/searchtreated", {
             include: "problemProduct.afterCompensationOrder"
           }).then(function (res) {
@@ -34772,78 +35126,187 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addProblemProCurIndex = "index0";
       this.addProblemProUpload = "upload0";
     },
-    addMoreProblemPro: function addMoreProblemPro() {
-      var problemProKey = {
-        commodity_code: "",
-        spec_code: "",
-        short_name: "",
-        spec: "",
-        color: "",
-        materials: "",
-        function: "",
-        special: "",
-        other: "",
-        buy_number: "1",
-        img_url: ""
-      };
-      if (this.addCmptnOrderFormVal.problem_product.length > 0 && !this.addCmptnOrderFormVal.problem_product[this.addCmptnOrderFormVal.problem_product.length - 1].commodity_code) {
-        this.$message({
-          message: "商品编码为空时不能添加新规格",
-          type: "info"
-        });
-      } else {
-        this.addCmptnOrderFormVal.problem_product.push(problemProKey);
-        this.problemProListIndexNum = this.addCmptnOrderFormVal.problem_product.length - 1;
-        this.addProblemProUpload = "upload" + this.problemProListIndexNum;
-        this.addProblemProCurIndex = "index" + this.problemProListIndexNum;
-      }
-    },
-    proQueryClick: function proQueryClick() {
-      var _this2 = this;
 
-      this.proSkuVal = [];
-      this.$fetch(this.urls.products, {
-        status: true,
-        commodity_code: this.proQuery.commodity_code,
-        component_code: this.proQuery.component_code,
-        shops_id: this.proQuery.shops_id,
-        short_name: this.proQuery.short_name,
-        include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
-      }).then(function (res) {
-        _this2.proVal = res.data;
-        var comb = res.data[0]["combinations"]["data"];
-        if (comb.length > 0) {
-          var total_volume = 0;
-          comb.map(function (item) {
-            item["productComp"] = item["productComponents"]["data"];
-            if (item["productComponents"]["data"].length > 0) {
-              item["productComponents"]["data"].map(function (list) {
-                total_volume += list.volume;
-              });
-            } else {
-              total_volume = 0;
-            }
-            _this2.$set(item, "newData", {
-              quantity: "",
-              paint: "",
-              is_printing: false,
-              printing_fee: "",
-              is_spot_goods: true,
-              under_line_univalent: "",
-              under_line_preferential: "",
-              total_volume: total_volume
-            });
-          });
-        } else {
-          comb["productComp"] = [];
-        }
-        _this2.proSkuVal = comb;
-      }, function (err) {});
+    // 新增问题产品
+    addMoreProblemPro: function addMoreProblemPro() {
+      this.addProMask = true;
+      this.proQueryClick();
+      // let problemProKey = {
+      //   commodity_code: "",
+      //   spec_code: "",
+      //   short_name: "",
+      //   spec: "",
+      //   color: "",
+      //   materials: "",
+      //   function: "",
+      //   special: "",
+      //   other: "",
+      //   buy_number: "1",
+      //   img_url: ""
+      // };
+      // if (
+      //   this.addCmptnOrderFormVal.problem_product.length > 0 &&
+      //   !this.addCmptnOrderFormVal.problem_product[
+      //     this.addCmptnOrderFormVal.problem_product.length - 1
+      //   ].commodity_code
+      // ) {
+      //   this.$message({
+      //     message: "商品编码为空时不能添加新规格",
+      //     type: "info"
+      //   });
+      // } else {
+      //   this.addCmptnOrderFormVal.problem_product.push(problemProKey);
+      //   this.problemProListIndexNum =
+      //     this.addCmptnOrderFormVal.problem_product.length - 1;
+      //   this.addProblemProUpload = "upload" + this.problemProListIndexNum;
+      //   this.addProblemProCurIndex = "index" + this.problemProListIndexNum;
+      // }
     },
-    addHandleClick: function addHandleClick() {},
-    addProRCName: function addProRCName(_ref2) {
+    addOrderRowCName: function addOrderRowCName(_ref2) {
       var row = _ref2.row,
           rowIndex = _ref2.rowIndex;
+
+      row.index = rowIndex;
+    },
+    addDefProRowCName: function addDefProRowCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
+
+      row.index = rowIndex;
+    },
+    addDefProRowClick: function addDefProRowClick(row) {
+      this.addCmptnOrderFormVal.problem_product.push(row);
+    },
+    addOrderRowClick: function addOrderRowClick(row) {
+      var _this2 = this;
+
+      this.proDtlVal = [];
+      this.addOrderDtlVal = row;
+      this.addOrderDtlVal.orderItems["data"].map(function (list) {
+        list.combination.productComponents["data"].map(function (item) {
+          var defPro = {
+            commodity_code: list.product.commodity_code,
+            spec_code: item.component_code,
+            short_name: list.product.short_name,
+            spec: item.spec,
+            color: item.color,
+            materials: item.materials,
+            function: item.function,
+            special: item.special,
+            other: item.other,
+            buy_number: list.quantity,
+            img_url: ""
+          };
+          _this2.proDtlVal.push(defPro);
+        });
+      });
+    },
+    proQueryClick: function proQueryClick() {
+      var _this3 = this;
+
+      this.orderDtlVal = [];
+      this.proDtlVal = [];
+      this.addOrderDtlVal = [];
+      this.addCmptnOrderFormVal.problem_product = [];
+      this.$fetch(this.urls.customerservicedepts, {
+        include: "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      }).then(function (res) {
+        _this3.orderDtlVal = res.data;
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          _this3.$message.error(arr1.join(","));
+        }
+      });
+      // this.proSkuVal = [];
+      // this.$fetch(this.urls.products, {
+      //   status: true,
+      //   commodity_code: this.proQuery.commodity_code,
+      //   component_code: this.proQuery.component_code,
+      //   shops_id: this.proQuery.shops_id,
+      //   short_name: this.proQuery.short_name,
+      //   include:
+      //     "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+      // }).then(
+      //   res => {
+      //     this.proVal = res.data;
+      //     let comb = res.data[0]["combinations"]["data"];
+      //     if (comb.length > 0) {
+      //       let total_volume = 0;
+      //       comb.map(item => {
+      //         item["productComp"] = item["productComponents"]["data"];
+      //         if (item["productComponents"]["data"].length > 0) {
+      //           item["productComponents"]["data"].map(list => {
+      //             total_volume += list.volume;
+      //           });
+      //         } else {
+      //           total_volume = 0;
+      //         }
+      //         this.$set(item, "newData", {
+      //           quantity: "",
+      //           paint: "",
+      //           is_printing: false,
+      //           printing_fee: "",
+      //           is_spot_goods: true,
+      //           under_line_univalent: "",
+      //           under_line_preferential: "",
+      //           total_volume: total_volume
+      //         });
+      //       });
+      //     } else {
+      //       comb["productComp"] = [];
+      //     }
+      //     this.proSkuVal = comb;
+      //   },
+      //   err => {}
+      // );
+    },
+    proQueryRefresh: function proQueryRefresh() {
+      this.proQueryClick();
+      this.$message({
+        message: "刷新成功",
+        type: "success"
+      });
+    },
+    cancelAddPro: function cancelAddPro() {
+      this.addProMask = false;
+      this.$message({
+        message: "取消问题产品",
+        type: "info"
+      });
+    },
+    confirmAddPro: function confirmAddPro() {
+      this.addProMask = false;
+      this.addCmptnOrderFormVal.order_number = this.addOrderDtlVal.system_order_no;
+      this.addCmptnOrderFormVal.cmptn_shop = this.addOrderDtlVal.shop_name;
+      this.addCmptnOrderFormVal.cmptn_direction = "";
+      this.addCmptnOrderFormVal.responsible_party = "";
+      this.addCmptnOrderFormVal.responsible_person = "";
+      this.addCmptnOrderFormVal.customer_nickname = this.addOrderDtlVal.member_nick;
+      this.addCmptnOrderFormVal.customer_name = this.addOrderDtlVal.receiver_name;
+      this.addCmptnOrderFormVal.customer_phone = this.addOrderDtlVal.receiver_phone;
+      this.addCmptnOrderFormVal.customer_city = this.addOrderDtlVal.receiver_city;
+      this.addCmptnOrderFormVal.customer_address = this.addOrderDtlVal.receiver_address;
+      this.addCmptnOrderFormVal.cmptn_fee = "";
+      this.addCmptnOrderFormVal.logistics_company = this.addOrderDtlVal.logistic.name;
+      this.addCmptnOrderFormVal.logistics_tracking_number = this.addOrderDtlVal.logistics_sn;
+      this.addCmptnOrderFormVal.payment_method = this.addOrderDtlVal.paymentMethod.name;
+      this.addCmptnOrderFormVal.payee = "";
+      this.addCmptnOrderFormVal.payee_account = "";
+      this.addCmptnOrderFormVal.problem_product_id = "";
+      this.addCmptnOrderFormVal.problem_description = "";
+      this.addCmptnOrderFormVal.note = "";
+      this.addCmptnOrderFormVal.refuse_reason = "";
+      this.addCmptnOrderFormVal.problem_description = "";
+    },
+    addHandleClick: function addHandleClick() {},
+    addProRCName: function addProRCName(_ref4) {
+      var row = _ref4.row,
+          rowIndex = _ref4.rowIndex;
 
       row.index = rowIndex;
     },
@@ -34860,7 +35323,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.proData.splice(index, 1);
     },
     addCmptnOrderConfirm: function addCmptnOrderConfirm() {
-      var _this3 = this;
+      var _this4 = this;
 
       var formData = this.addCmptnOrderFormVal;
       formData.problem_product.map(function (item, index) {
@@ -34869,22 +35332,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
       this.$post(this.urls.aftercompensation, formData).then(function () {
-        _this3.addCmptnOrderMask = false;
-        _this3.refresh();
-        _this3.$message({
+        _this4.addCmptnOrderMask = false;
+        _this4.refresh();
+        _this4.$message({
           message: "添加成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this3.showDel = false;
+          _this4.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this3.$message.error(str);
+          _this4.$message.error(str);
         }
       });
     },
@@ -34920,7 +35383,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     toggleForm: function toggleForm() {
       /*展开  partHide
-        * 折叠  没有partHide*/
+       * 折叠  没有partHide*/
       this.clickFlag = !this.clickFlag;
       this.toggleText = !this.toggleText;
       if (this.clickFlag) {
@@ -34932,7 +35395,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     proRowClick: function proRowClick(row) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.proCompRowIndex = "index" + row.index;
       var comb = row["combinations"]["data"];
@@ -34947,7 +35410,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           } else {
             total_volume = 0;
           }
-          _this4.$set(item, "newData", {
+          _this5.$set(item, "newData", {
             quantity: "",
             paint: "",
             is_printing: false,
@@ -34964,9 +35427,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.proSkuVal = comb;
     },
     proCName: function proCName() {},
-    proSkuCName: function proSkuCName(_ref3) {
-      var row = _ref3.row,
-          rowIndex = _ref3.rowIndex;
+    proSkuCName: function proSkuCName(_ref5) {
+      var row = _ref5.row,
+          rowIndex = _ref5.rowIndex;
 
       row.index = rowIndex;
     },
@@ -34975,7 +35438,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.proCompRow = row;
     },
     quantityChg: function quantityChg(value) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (value > 0) {
         var proCRow = this.proCompRow;
@@ -34985,8 +35448,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           this.proSubmitData.map(function (list, index) {
             if (list.id == proCRow.id) {
-              _this5.proSubmitData.splice(index, 1);
-              _this5.proSubmitData.push(proCRow);
+              _this6.proSubmitData.splice(index, 1);
+              _this6.proSubmitData.push(proCRow);
             }
           });
         }
@@ -35011,9 +35474,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "success"
       });
     },
-    addExpenseRCName: function addExpenseRCName(_ref4) {
-      var row = _ref4.row,
-          rowIndex = _ref4.rowIndex;
+    addExpenseRCName: function addExpenseRCName(_ref6) {
+      var row = _ref6.row,
+          rowIndex = _ref6.rowIndex;
 
       row.index = rowIndex;
     },
@@ -35051,25 +35514,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     confirmD: function confirmD(url, id) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.$del(url + "/" + id).then(function () {
-        _this6.showDel = false;
-        _this6.refresh();
-        _this6.$message({
+        _this7.showDel = false;
+        _this7.refresh();
+        _this7.$message({
           message: "删除成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this6.showDel = false;
+          _this7.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this6.$message.error(str);
+          _this7.$message.error(str);
         }
       });
     },
@@ -35088,56 +35551,60 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
     },
     delBatch: function delBatch() {
-      var _this7 = this;
+      var _this8 = this;
 
-      if (this.ids.length === 0) {
-        this.$message({
-          message: "没有选中数据",
-          type: "warning"
-        });
+      if (this.newOpt[2].nClick) {
+        return;
       } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          _this7.$del(_this7.urls.aftercompensation, { ids: _this7.ids }).then(function () {
-            _this7.refresh();
-            _this7.$message({
-              message: "删除成功",
-              type: "success"
-            });
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
+        if (this.ids.length === 0) {
+          this.$message({
+            message: "没有选中数据",
+            type: "warning"
+          });
+        } else {
+          this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(function () {
+            _this8.$del(_this8.urls.aftercompensation, { ids: _this8.ids }).then(function () {
+              _this8.refresh();
+              _this8.$message({
+                message: "删除成功",
+                type: "success"
+              });
+            }, function (err) {
+              if (err.response) {
+                var arr = err.response.data.errors;
+                var arr1 = [];
+                for (var i in arr) {
+                  arr1.push(arr[i]);
+                }
+                var str = arr1.join(",");
+                _this8.$message.error(str);
               }
-              var str = arr1.join(",");
-              _this7.$message.error(str);
-            }
+            });
+          }).catch(function () {
+            _this8.$message({
+              type: "info",
+              message: "已取消删除"
+            });
           });
-        }).catch(function () {
-          _this7.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-      }
+        }
+      };
     },
 
     /*页码*/
     handlePagChg: function handlePagChg(page) {
-      var _this8 = this;
+      var _this9 = this;
 
       this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(function (res) {
-        if (_this8.leftTopActiveName == "0") {
-          _this8.cmptnOrderListTableData = res.data;
+        if (_this9.leftTopActiveName == "0") {
+          _this9.cmptnOrderListTableData = res.data;
         } else {
-          _this8.alreadyHandle = res.data;
+          _this9.alreadyHandle = res.data;
         }
       });
     },
@@ -35148,40 +35615,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     /*修改*/
     updateData: function updateData() {
-      var _this9 = this;
+      var _this10 = this;
 
-      this.proIds = [];
-      this.updateProIds = [];
-      this.expenseRIndex = "";
-      this.updateCmptnOrderFormVal = {};
-      this.updateCmptnOrderMask = true;
-      this.updateProblemProCurIndex = "index0";
-      this.updateProblemProCurIndexNum = 0;
-      var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$fetch(this.urls.aftercompensation + "/" + id, {
-        include: "problemProduct.afterCompensationOrder"
-      }).then(function (res) {
-        _this9.updateCmptnOrderFormVal = res;
-        _this9.updateCmptnOrderFormVal.problem_product = res.problemProduct.data;
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
+      if (this.newOpt[1].nClick) {
+        return;
+      } else {
+        this.proIds = [];
+        this.updateProIds = [];
+        this.expenseRIndex = "";
+        this.updateCmptnOrderFormVal = {};
+        this.updateCmptnOrderMask = true;
+        this.updateProblemProCurIndex = "index0";
+        this.updateProblemProCurIndexNum = 0;
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$fetch(this.urls.aftercompensation + "/" + id, {
+          include: "problemProduct.afterCompensationOrder"
+        }).then(function (res) {
+          _this10.updateCmptnOrderFormVal = res;
+          _this10.updateCmptnOrderFormVal.problem_product = res.problemProduct.data;
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this10.$message.error(str);
           }
-          var str = arr1.join(",");
-          _this9.$message.error(str);
-        }
-      });
+        });
+      };
     },
     updateDelPro: function updateDelPro(row, index) {
-      var _this10 = this;
+      var _this11 = this;
 
       if (row["originalId"]) {
         this.$del(this.urls.orderitems + "/" + row["originalId"]).then(function () {
-          _this10.updateProData.splice(index, 1);
-          _this10.$message({
+          _this11.updateProData.splice(index, 1);
+          _this11.$message({
             message: "删除成功",
             type: "success"
           });
@@ -35193,41 +35664,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this10.$message.error(str);
+            _this11.$message.error(str);
           }
         });
       } else if (row.id) {
         this.$del(this.urls.orderitems + "/" + row.id).then(function () {
-          _this10.updateProData.splice(index, 1);
-          _this10.$message({
-            message: "删除成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this10.$message.error(str);
-          }
-        });
-      } else {
-        this.updateProData.splice(index, 1);
-        this.$message({
-          message: "删除商品信息成功",
-          type: "success"
-        });
-      }
-    },
-    updateDelExpense: function updateDelExpense(row, index) {
-      var _this11 = this;
-
-      if (row.id) {
-        this.$del(this.urls.paymentdetails + "/" + row.id).then(function () {
-          _this11.updateExpenseData.splice(index, 1);
+          _this11.updateProData.splice(index, 1);
           _this11.$message({
             message: "删除成功",
             type: "success"
@@ -35244,6 +35686,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         });
       } else {
+        this.updateProData.splice(index, 1);
+        this.$message({
+          message: "删除商品信息成功",
+          type: "success"
+        });
+      }
+    },
+    updateDelExpense: function updateDelExpense(row, index) {
+      var _this12 = this;
+
+      if (row.id) {
+        this.$del(this.urls.paymentdetails + "/" + row.id).then(function () {
+          _this12.updateExpenseData.splice(index, 1);
+          _this12.$message({
+            message: "删除成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this12.$message.error(str);
+          }
+        });
+      } else {
         this.updateExpenseData.splice(index, 1);
         this.$message({
           message: "删除商品信息成功",
@@ -35252,26 +35723,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     updateCmptnConfirm: function updateCmptnConfirm() {
-      var _this12 = this;
+      var _this13 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$patch(this.urls.aftercompensation + "/" + id, this.updateCmptnOrderFormVal).then(function () {
-        _this12.updateCmptnOrderMask = false;
-        _this12.refresh();
-        _this12.$message({
+        _this13.updateCmptnOrderMask = false;
+        _this13.refresh();
+        _this13.$message({
           message: "修改成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this12.showDel = false;
+          _this13.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this12.$message.error(str);
+          _this13.$message.error(str);
         }
       });
     },
@@ -35285,15 +35756,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     /*审核*/
     handleAudit: function handleAudit() {
-      var _this13 = this;
+      var _this14 = this;
 
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[3].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.aftercompensation + "/" + id + "/audit").then(function () {
-          _this13.refresh();
-          _this13.$message({
+          _this14.refresh();
+          _this14.$message({
             message: "审核成功",
             type: "success"
           });
@@ -35305,7 +35776,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this13.$message.error(str);
+            _this14.$message.error(str);
           }
         });
       }
@@ -35314,29 +35785,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.inputChange = true;
     },
     handleUnAudit: function handleUnAudit() {
-      var _this14 = this;
+      var _this15 = this;
 
-      var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.aftercompensation + "/" + id + "/unaudit").then(function () {
-        _this14.refresh();
-        _this14.$message({
-          message: "退审成功",
-          type: "success"
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftercompensation + "/" + id + "/unaudit").then(function () {
+          _this15.refresh();
+          _this15.$message({
+            message: "退审成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this15.$message.error(str);
           }
-          var str = arr1.join(",");
-          _this14.$message.error(str);
-        }
-      });
+        });
+      };
     },
     handleSplitOrder: function handleSplitOrder() {
-      var _this15 = this;
+      var _this16 = this;
 
       if (this.newOpt[9].nClick) {
         return;
@@ -35356,14 +35831,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 quantity: ""
               }
             };
-            _this15.splitVal.push(list);
+            _this16.splitVal.push(list);
           });
         }
       }
     },
-    splitCName: function splitCName(_ref5) {
-      var row = _ref5.row,
-          rowIndex = _ref5.rowIndex;
+    splitCName: function splitCName(_ref7) {
+      var row = _ref7.row,
+          rowIndex = _ref7.rowIndex;
 
       row.index = rowIndex;
     },
@@ -35377,7 +35852,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     confirmSplit: function confirmSplit() {
-      var _this16 = this;
+      var _this17 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       var confSplit = {
@@ -35395,8 +35870,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
       this.$put(this.urls.customerservicedepts + "/" + id + "/splitorder", confSplit).then(function () {
-        _this16.splitMask = false;
-        _this16.refresh();
+        _this17.splitMask = false;
+        _this17.refresh();
         /*   this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = true;
@@ -35409,7 +35884,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[14].nClick = true;
           this.newOpt[15].nClick = false;
           this.newOpt[18].nClick = false;*/
-        _this16.$message({
+        _this17.$message({
           message: "订单拆分成功",
           type: "success"
         });
@@ -35421,7 +35896,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this16.$message.error(str);
+          _this17.$message.error(str);
         }
       });
     },
@@ -35429,22 +35904,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.splitMask = false;
     },
     beforeAddUploadProblemProImg: function beforeAddUploadProblemProImg(file) {
-      var _this17 = this;
-
-      this.tableChgBtn = "";
-      this.judgeFm(file);
-      var formData = new FormData();
-      formData.append("image", file);
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
-        var imageInfo = res.data.meta;
-        if (imageInfo.status_code == 201) {
-          _this17.addProblemProUpload = "";
-          _this17.tableChgBtn = "show" + _this17.addProblemProCurIndexNum;
-          _this17.addCmptnOrderFormVal.problem_product[_this17.addProblemProCurIndexNum].img_url = res.data.path;
-        }
-      }).catch(function (err) {});
-    },
-    beforeUpdateUploadProblemProImg: function beforeUpdateUploadProblemProImg(file) {
       var _this18 = this;
 
       this.tableChgBtn = "";
@@ -35454,9 +35913,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this18.updateProblemProUpload = "";
-          _this18.tableChgBtn = "show" + _this18.updateProblemProCurIndexNum;
-          _this18.addCmptnOrderFormVal.problem_product[_this18.updateProblemProCurIndexNum].img_url = res.data.path;
+          _this18.addProblemProUpload = "";
+          _this18.tableChgBtn = "show" + _this18.addProblemProCurIndexNum;
+          _this18.addCmptnOrderFormVal.problem_product[_this18.addProblemProCurIndexNum].img_url = res.data.path;
+        }
+      }).catch(function (err) {});
+    },
+    beforeUpdateUploadProblemProImg: function beforeUpdateUploadProblemProImg(file) {
+      var _this19 = this;
+
+      this.tableChgBtn = "";
+      this.judgeFm(file);
+      var formData = new FormData();
+      formData.append("image", file);
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
+        var imageInfo = res.data.meta;
+        if (imageInfo.status_code == 201) {
+          _this19.updateProblemProUpload = "";
+          _this19.tableChgBtn = "show" + _this19.updateProblemProCurIndexNum;
+          _this19.addCmptnOrderFormVal.problem_product[_this19.updateProblemProCurIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
@@ -35470,22 +35945,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     beforeUpload: function beforeUpload(file) {
-      var _this19 = this;
-
-      this.showChgBtn = false;
-      this.judgeFm(file);
-      var formData = new FormData();
-      formData.append("image", file);
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
-        var imageInfo = res.data.meta;
-        if (imageInfo.status_code == 201) {
-          _this19.noUpload = false;
-          _this19.showChgBtn = true;
-          _this19.proForm.img = res.data.path;
-        }
-      }).catch(function (err) {});
-    },
-    beforeUpdateUpload: function beforeUpdateUpload(file) {
       var _this20 = this;
 
       this.showChgBtn = false;
@@ -35497,12 +35956,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (imageInfo.status_code == 201) {
           _this20.noUpload = false;
           _this20.showChgBtn = true;
-          _this20.updateCmptnOrderFormVal.problem_product[_this20.updateProblemProCurIndexNum].img_url = res.data.path;
+          _this20.proForm.img = res.data.path;
+        }
+      }).catch(function (err) {});
+    },
+    beforeUpdateUpload: function beforeUpdateUpload(file) {
+      var _this21 = this;
+
+      this.showChgBtn = false;
+      this.judgeFm(file);
+      var formData = new FormData();
+      formData.append("image", file);
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
+        var imageInfo = res.data.meta;
+        if (imageInfo.status_code == 201) {
+          _this21.noUpload = false;
+          _this21.showChgBtn = true;
+          _this21.updateCmptnOrderFormVal.problem_product[_this21.updateProblemProCurIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
     handleMergerOrder: function handleMergerOrder() {
-      var _this21 = this;
+      var _this22 = this;
 
       if (this.newOpt[8].nClick) {
         return;
@@ -35518,14 +35993,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             ids.push(item.id);
           });
           this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-            _this21.refresh();
-            _this21.$message({
+            _this22.refresh();
+            _this22.$message({
               message: "订单合并成功",
               type: "success"
             });
           }, function (err) {
             if (err.response) {
-              _this21.$message.error("合并订单出错");
+              _this22.$message.error("合并订单出错");
             }
           });
         }
@@ -36124,15 +36599,13 @@ var render = function() {
                                             scope.row[item.prop]
                                               ? _c("span", [
                                                   _vm._v(
-                                                    "\n                    " +
-                                                      _vm._s(
-                                                        item.inProp
-                                                          ? scope.row[
-                                                              item.prop
-                                                            ][item.inProp]
-                                                          : scope.row[item.prop]
-                                                      ) +
-                                                      "\n                  "
+                                                    _vm._s(
+                                                      item.inProp
+                                                        ? scope.row[item.prop][
+                                                            item.inProp
+                                                          ]
+                                                        : scope.row[item.prop]
+                                                    )
                                                   )
                                                 ])
                                               : _vm._e()
@@ -36353,15 +36826,13 @@ var render = function() {
                                             scope.row[item.prop]
                                               ? _c("span", [
                                                   _vm._v(
-                                                    "\n                    " +
-                                                      _vm._s(
-                                                        item.inProp
-                                                          ? scope.row[
-                                                              item.prop
-                                                            ][item.inProp]
-                                                          : scope.row[item.prop]
-                                                      ) +
-                                                      "\n                  "
+                                                    _vm._s(
+                                                      item.inProp
+                                                        ? scope.row[item.prop][
+                                                            item.inProp
+                                                          ]
+                                                        : scope.row[item.prop]
+                                                    )
                                                   )
                                                 ])
                                               : _vm._e()
@@ -36498,15 +36969,13 @@ var render = function() {
                                           scope.row[item.prop]
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                    " +
-                                                    _vm._s(
-                                                      item.inProp
-                                                        ? scope.row[item.prop][
-                                                            item.inProp
-                                                          ]
-                                                        : scope.row[item.prop]
-                                                    ) +
-                                                    "\n                  "
+                                                  _vm._s(
+                                                    item.inProp
+                                                      ? scope.row[item.prop][
+                                                          item.inProp
+                                                        ]
+                                                      : scope.row[item.prop]
+                                                  )
                                                 )
                                               ])
                                             : _vm._e()
@@ -36817,50 +37286,6 @@ var render = function() {
                         ],
                         1
                       )
-                    : item.type == "radio"
-                    ? _c(
-                        "span",
-                        [
-                          _c(
-                            "el-radio",
-                            {
-                              attrs: { label: "volume" },
-                              model: {
-                                value: _vm.addCmptnOrderFormVal[item.prop],
-                                callback: function($$v) {
-                                  _vm.$set(
-                                    _vm.addCmptnOrderFormVal,
-                                    item.prop,
-                                    $$v
-                                  )
-                                },
-                                expression: "addCmptnOrderFormVal[item.prop]"
-                              }
-                            },
-                            [_vm._v(_vm._s(item.choiceName[0]))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-radio",
-                            {
-                              attrs: { label: "weight" },
-                              model: {
-                                value: _vm.addCmptnOrderFormVal[item.prop],
-                                callback: function($$v) {
-                                  _vm.$set(
-                                    _vm.addCmptnOrderFormVal,
-                                    item.prop,
-                                    $$v
-                                  )
-                                },
-                                expression: "addCmptnOrderFormVal[item.prop]"
-                              }
-                            },
-                            [_vm._v(_vm._s(item.choiceName[1]))]
-                          )
-                        ],
-                        1
-                      )
                     : item.type == "DatePicker"
                     ? _c(
                         "span",
@@ -36904,7 +37329,7 @@ var render = function() {
               attrs: {
                 data: _vm.addCmptnOrderFormVal.problem_product,
                 fit: "",
-                height: "300",
+                height: "150",
                 "row-class-name": _vm.addProRCName
               },
               on: { "row-click": _vm.addProRowClick }
@@ -36925,34 +37350,7 @@ var render = function() {
                         return [
                           _vm.addProblemProCurIndex == "index" + scope.$index
                             ? _c("span", [
-                                item.type == "number"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            size: "small",
-                                            type: "number",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "url"
+                                item.type == "url"
                                   ? _c(
                                       "span",
                                       [
@@ -36976,76 +37374,6 @@ var render = function() {
                                             expression: "scope.row[item.prop]"
                                           }
                                         })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "textarea"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            type: "textarea",
-                                            size: "small",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "select"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c(
-                                          "el-select",
-                                          {
-                                            attrs: { placeholder: item.holder },
-                                            model: {
-                                              value: scope.row[item.prop],
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  scope.row,
-                                                  item.prop,
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "scope.row[item.prop]"
-                                            }
-                                          },
-                                          _vm._l(
-                                            _vm.resData[item.stateVal],
-                                            function(list) {
-                                              return _c(
-                                                "span",
-                                                { key: list.id },
-                                                [
-                                                  _c("el-option", {
-                                                    attrs: {
-                                                      label: list.name,
-                                                      value: list.id
-                                                    }
-                                                  })
-                                                ],
-                                                1
-                                              )
-                                            }
-                                          ),
-                                          0
-                                        )
                                       ],
                                       1
                                     )
@@ -37148,31 +37476,17 @@ var render = function() {
                                             1
                                           )
                                     ])
-                                  : _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            size: "small",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                  : scope.row[item.prop]
+                                  ? _c("span", [
+                                      _vm._v(
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        )
+                                      )
+                                    ])
+                                  : _vm._e()
                               ])
                             : _c("span", [
                                 item.type == "select"
@@ -37192,11 +37506,7 @@ var render = function() {
                                                     scope.row[item.prop]
                                                       ? _c("span", [
                                                           _vm._v(
-                                                            "\n                    " +
-                                                              _vm._s(
-                                                                list.name
-                                                              ) +
-                                                              "\n                  "
+                                                            _vm._s(list.name)
                                                           )
                                                         ])
                                                       : _vm._e()
@@ -37238,11 +37548,7 @@ var render = function() {
                                       })
                                     ])
                                   : _c("span", [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n            "
-                                      )
+                                      _vm._v(_vm._s(scope.row[item.prop]))
                                     ])
                               ])
                         ]
@@ -38030,11 +38336,7 @@ var render = function() {
                                                     scope.row[item.prop]
                                                       ? _c("span", [
                                                           _vm._v(
-                                                            "\n                    " +
-                                                              _vm._s(
-                                                                list.name
-                                                              ) +
-                                                              "\n                  "
+                                                            _vm._s(list.name)
                                                           )
                                                         ])
                                                       : _vm._e()
@@ -38076,11 +38378,7 @@ var render = function() {
                                       })
                                     ])
                                   : _c("span", [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n            "
-                                      )
+                                      _vm._v(_vm._s(scope.row[item.prop]))
                                     ])
                               ])
                         ]
@@ -38177,6 +38475,193 @@ var render = function() {
                   _c("el-button", { on: { click: _vm.updateCustomerCancel } }, [
                     _vm._v("取消")
                   ])
+                ],
+                1
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          class: { "more-forms": _vm.moreForms },
+          attrs: { title: "选择订单", visible: _vm.addProMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.addProMask = $event
+            }
+          }
+        },
+        [
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("订单列表")]),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: {
+                data: _vm.orderDtlVal,
+                fit: "",
+                height: "180",
+                "row-class-name": _vm.addOrderRowCName
+              },
+              on: { "row-click": _vm.addOrderRowClick }
+            },
+            _vm._l(_vm.addOrderProHead, function(item) {
+              return _c("el-table-column", {
+                key: item.label,
+                attrs: {
+                  label: item.label,
+                  align: "center",
+                  width: item.width
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        item.type == "img"
+                          ? _c(
+                              "span",
+                              [
+                                _c(
+                                  "el-popover",
+                                  {
+                                    attrs: {
+                                      placement: "right",
+                                      trigger: "hover",
+                                      "popper-class": "picture_detail"
+                                    }
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: { src: scope.row[item.prop] }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("img", {
+                                      attrs: {
+                                        slot: "reference",
+                                        src: scope.row[item.prop],
+                                        alt: scope.row[item.alt]
+                                      },
+                                      slot: "reference"
+                                    })
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          : _c("span", [
+                              _vm._v(
+                                _vm._s(
+                                  item.inProp
+                                    ? scope.row[item.prop][item.inProp]
+                                    : scope.row[item.prop]
+                                )
+                              )
+                            ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("明细列表")]),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: {
+                data: _vm.proDtlVal,
+                fit: "",
+                height: "180",
+                "row-class-name": _vm.addDefProRowCName
+              },
+              on: { "row-click": _vm.addDefProRowClick }
+            },
+            _vm._l(_vm.addProHead, function(item) {
+              return _c("el-table-column", {
+                key: item.label,
+                attrs: {
+                  label: item.label,
+                  align: "center",
+                  width: item.width
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        scope.row[item.prop]
+                          ? _c("span", [
+                              _vm._v(
+                                _vm._s(
+                                  item.inProp
+                                    ? scope.row[item.prop][item.inProp]
+                                    : scope.row[item.prop]
+                                )
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    }
+                  }
+                ])
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "div",
+                { staticStyle: { float: "left" } },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.proQueryRefresh }
+                    },
+                    [_vm._v("刷新")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticStyle: { float: "right" } },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.confirmAddPro }
+                    },
+                    [_vm._v("确定")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "warning" },
+                      on: { click: _vm.cancelAddPro }
+                    },
+                    [_vm._v("取消")]
+                  )
                 ],
                 1
               )

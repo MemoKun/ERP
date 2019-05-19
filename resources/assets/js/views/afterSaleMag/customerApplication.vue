@@ -2043,7 +2043,7 @@ export default {
         list.combination.productComponents["data"].map(item => {
           let defPro = {
           commodity_code: list.product.commodity_code,
-          spec_code: "",
+          spec_code: item.component_code,
           short_name: list.product.short_name,
           spec: item.spec,
           color: item.color,

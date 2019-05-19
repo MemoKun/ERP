@@ -272,7 +272,7 @@ class Order extends Model
         $this->business_personnel_id = 0;
         $this->locker_id = 0;
         $this->order_status = self::ORDER_STATUS_NEW;
-        $this->audit_at = null;
+        $this->audit_at = "2000-01-01 00:00:01";
         $this->save();
     }
 

@@ -3,10 +3,10 @@
     <el-tabs v-model="activeName" @tab-click="outerHandleClick">
       <el-tab-pane label="订单列表" name="0">
         <div>
-          <label>{{this.searchBox.promise_ship_time}}</label>
+          <label>{{this.searchBox.shops_id}}</label>
           <div class="searchBox">
             <span>  
-              <label>会员名称</label>
+              <label>买家昵称</label>
               <el-input v-model="searchBox.member_nick" clearable></el-input>
             </span>
             <span>
@@ -33,7 +33,7 @@
           <div class="searchBox">
             <span>
               <label>收货地址</label>
-              <el-input v-model="searchBox.order_address" clearable></el-input>
+              <el-input v-model="searchBox.receiver_address" clearable></el-input>
             </span>
             <span>
               <label>所属店铺</label>
@@ -92,12 +92,6 @@
               <label>客审日期</label>
               <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
-            </span>
-            <span class="transMoney">
-              <label>交易金额</label>
-              <el-input type="number" v-model="searchBox.order_transMStart" clearable></el-input>
-              至
-              <el-input type="number" v-model="searchBox.order_transMEnd" clearable></el-input>
             </span>
           </div>
           <!--<div v-if="filterBox" style="text-align: right">
@@ -985,15 +979,15 @@ export default {
         receiver_name: "",
         receiver_phone: "",
         order_money: "",
-        order_address: "",
+        receiver_address: "",
         products_id: "",
         business_personnel_id: "",
-        promise_ship_time: "",
-        created_at: "",
+        promise_ship_time: [ "2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z" ],
+        created_at: [ "2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z" ],
         order_transMStart: "",
         order_transMEnd: "",
         logistics_id: "",
-        audit_at: "",
+        audit_at: [ "0000-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z" ],
         seller_remark: "",
         seller_flag: "",
         order_lock: "",
@@ -2248,7 +2242,7 @@ export default {
         }
       ],
       addActiveName: "0",
-      proData: [],
+      proData: [],  
       options: regionDataPlus,
       addHead: [
         [
@@ -2750,7 +2744,10 @@ export default {
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
             receiver_phone: this.searchBox.receiver_phone,
-            
+            receiver_address:this.searchBox.receiver_address,
+            shops_id:this.searchBox.shops_id,
+            logistics_id:this.searchBox.logistics_id,
+            seller_remark:this.searchBox.seller_remark,
             promise_ship_time:this.searchBox.promise_ship_time,
             created_at:this.searchBox.created_at,
             audit_at:this.searchBox.audit_at,
@@ -3774,7 +3771,7 @@ export default {
     },
     /*审核*/
     handleAudit() {
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[6].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -3791,7 +3788,6 @@ export default {
             this.newOpt[13].nClick = true;
             this.newOpt[14].nClick = true;
             this.newOpt[15].nClick = true;
-            this.newOpt[18].nClick = true;
             this.refresh();
             this.$message({
               message: "审核成功",

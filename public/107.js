@@ -1946,7 +1946,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         list.combination.productComponents["data"].map(function (item) {
           var defPro = {
             commodity_code: list.product.commodity_code,
-            spec_code: "",
+            spec_code: item.component_code,
             short_name: list.product.short_name,
             spec: item.spec,
             color: item.color,
