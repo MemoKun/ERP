@@ -2267,7 +2267,7 @@ export default {
         }
       ],
       /**底部Tab 货审明细 */
-      cargoAuditData:{},
+      cargoAuditData: {},
       cargoAuditHead: [
         {
           label: "商品编码",
@@ -2371,7 +2371,7 @@ export default {
           type: "text"
         }
       ],
-      innerNoteData:{},
+      innerNoteData: {},
       /**底部tab 操作记录 */
       operationLogHead: [
         {
@@ -2396,7 +2396,7 @@ export default {
         }
       ],
       /**底部Tab 结算明细 */
-      checkDtlData:{},
+      checkDtlData: {},
       checkDelHead: [
         {
           label: "所属部门",
@@ -2420,7 +2420,7 @@ export default {
         }
       ],
       /**底部tab 物流信息 */
-      logisticsData:{},
+      logisticsData: {},
       logisticsHead: [
         {
           label: "物流单号",
@@ -2489,7 +2489,7 @@ export default {
         }
       ],
       /**补件明细 */
-      reSupplyData:{},
+      reSupplyData: {},
       reSupplyHead: [
         {
           label: "补件单号",
@@ -2689,7 +2689,7 @@ export default {
         }
       ],
       /**底部Tab 优惠列表 */
-      offerListData:{},
+      offerListData: {},
       offerListHead: [
         {
           label: "单号",

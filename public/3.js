@@ -33640,6 +33640,294 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33698,7 +33986,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         cnt: "删除",
         icon: "bf-del",
         ent: this.delBatch,
-        nClick: true
+        nClick: false
       }, {
         cnt: "锁定",
         icon: "bf-lock",
@@ -33731,7 +34019,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       /**SearchBox
        * 搜索框相关参数
-      */
+       */
       filterBox: false,
       searchBox: {
         shop_nick: "",
@@ -33762,7 +34050,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "订单编号",
-        width: "120",
+        width: "200",
         prop: "order_sn",
         type: "text"
       }, {
@@ -33823,7 +34111,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "创建人",
         width: "180",
-        prop: "creator_id",
+        prop: "creator",
+        inProp: "username",
         type: "text"
       }, {
         label: "创建时间",
@@ -33833,7 +34122,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "锁定人",
         width: "180",
-        prop: "locker_id",
+        prop: "locker",
+        inProp: "username",
         type: "text"
       }, {
         label: "锁定时间",
@@ -33843,7 +34133,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "业务审核人",
         width: "180",
-        prop: "business_personnel_id",
+        prop: "businessPersonnel",
+        inProp: "username",
         type: "text"
       }, {
         label: "业务审核时间",
@@ -33853,7 +34144,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "售后审核人",
         width: "180",
-        prop: "after_sales_id",
+        prop: "afterSale",
+        inProp: "username",
         type: "text"
       }, {
         label: "售后审核时间",
@@ -33863,7 +34155,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "财务审核人",
         width: "180",
-        prop: "financial_id",
+        prop: "financial",
+        inProp: "username",
         type: "text"
       }, {
         label: "财务审核时间",
@@ -33930,13 +34223,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         bank_address: "",
         refund_amount: "",
         transaction_sn: "",
+        paipai_sn: "",
         refund_reason_type_id: "",
         buyer_nick: "",
         buyer_name: "",
         payment_amount: "",
         order_price: "",
         order_time: "",
-        is_delivered: "",
+        is_delivered: "0",
         responsible_party: "",
         responsible_person: "",
         responsible_amount: "",
@@ -33971,17 +34265,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "系统单号",
         prop: "order_sn",
         holder: "从已有订单中选择",
-        type: "text"
+        type: "text",
+        addChgAble: true
       }, {
         label: "退款方式",
         prop: "refund_payment_methods_id",
         holder: "请选择退款方式",
         width: "200",
-        type: "text"
+        type: "select",
+        stateVal: "refundMethod"
       }, {
         label: "所属店铺",
         prop: "shops_id",
-        holder: "请选择所属店铺",
+        holder: "请输入所属店铺",
         width: "200",
         type: "text"
       }, {
@@ -34013,7 +34309,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "退款金额",
         prop: "refund_amount",
         width: "200",
-        type: "text"
+        type: "number"
       }, {
         label: "交易单号",
         prop: "transaction_sn",
@@ -34021,11 +34317,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         width: "200",
         type: "text"
       }, {
+        label: "拍拍单号",
+        prop: "paipai_sn",
+        holder: "请输入拍拍单号",
+        width: "200",
+        type: "text"
+      }, {
         label: "退款原因",
         prop: "refund_reason_type_id",
         holder: "请选择退款原因",
         width: "200",
-        type: "text",
+        type: "select",
         stateVal: "refundreasontype"
       }, {
         label: "买家昵称",
@@ -34044,18 +34346,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "payment_amount",
         holder: "买家的付款金额",
         width: "200",
-        type: "text"
+        type: "number"
       }, {
         label: "拍单金额",
         prop: "order_price",
         holder: "输入用户拍单金额",
         width: "200",
-        type: "text"
+        type: "number"
       }, {
         label: "拍单时间",
         prop: "order_time",
         width: "200",
-        type: "DatePicker"
+        type: "text",
+        addChgAble: true
       }, {
         label: "是否发货",
         prop: "is_delivered",
@@ -34075,7 +34378,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "责任金额",
         prop: "responsible_amount",
         width: "200",
-        type: "text"
+        type: "number"
       }, {
         label: "退款说明",
         prop: "refund_description",
@@ -34097,13 +34400,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         bank_address: "",
         refund_amount: "",
         transaction_sn: "",
+        paipai_sn: "",
         refund_reason_type_id: "",
         buyer_nick: "",
         buyer_name: "",
         payment_amount: "",
         order_price: "",
         order_time: "",
-        is_delivered: "",
+        is_delivered: "0",
         responsible_party: "",
         responsible_person: "",
         responsible_amount: "",
@@ -34289,15 +34593,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
        */
       logData: [],
       logTableHead: [{
-        label: '操作',
-        width: '400',
-        prop: 'operation',
-        type: 'text'
+        label: "操作",
+        width: "400",
+        prop: "operation",
+        type: "text"
       }, {
-        label: '操作人',
-        width: '150',
-        prop: 'operator_id',
-        type: 'text'
+        label: "操作人",
+        width: "150",
+        prop: "operator_id",
+        type: "text"
       }],
       refundReasonTabData: [],
       refundReasonTabHead: [{
@@ -34319,6 +34623,95 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "金额",
         width: "150",
         prop: "refund_amount",
+        type: "text"
+      }],
+      selection: "",
+      // 选择订单
+      addProMask: false,
+      addProDtlVal: [],
+      proDtlVal: [],
+      addOrderDtlVal: [],
+      orderDtlVal: [],
+      addProHead: [{
+        label: "商品编码",
+        prop: "commodity_code",
+        width: "180",
+        type: "text"
+      }, {
+        label: "规格编码",
+        prop: "spec_code",
+        width: "180",
+        type: "text"
+      }, {
+        label: "商品简称",
+        prop: "short_name",
+        width: "150",
+        type: "text"
+      }, {
+        label: "规格",
+        prop: "spec",
+        width: "180",
+        type: "text"
+      }, {
+        label: "颜色",
+        prop: "color",
+        width: "120",
+        type: "text"
+      }, {
+        label: "材质",
+        prop: "materials",
+        width: "120",
+        type: "text"
+      }, {
+        label: "功能",
+        prop: "function",
+        width: "120",
+        type: "text"
+      }, {
+        label: "特殊",
+        prop: "special",
+        width: "120",
+        type: "text"
+      }, {
+        label: "其他",
+        prop: "other",
+        width: "120",
+        type: "text"
+      }, {
+        label: "购买数量",
+        prop: "buy_number",
+        width: "120",
+        type: "text"
+      }],
+      addOrderProHead: [{
+        label: "系统单号",
+        prop: "system_order_no",
+        width: "200",
+        type: "text"
+      }, {
+        label: "淘宝单号",
+        prop: "taobao_oid",
+        width: "200",
+        type: "text"
+      }, {
+        label: "买家昵称",
+        prop: "receiver_name",
+        width: "150",
+        type: "text"
+      }, {
+        label: "买家电话",
+        prop: "receiver_phone",
+        width: "150",
+        type: "text"
+      }, {
+        label: "收货地址",
+        prop: "receiver_address",
+        width: "200",
+        type: "text"
+      }, {
+        label: "店铺昵称",
+        prop: "shop_name",
+        width: "150",
         type: "text"
       }]
     };
@@ -34424,16 +34817,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var index = this.orderListActiveName - 0;
       switch (index) {
         case 0:
+          this.newOpt[0].nClick = false;
+          this.newOpt[1].nClick = false;
+          this.newOpt[2].nClick = false;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = false;
+          this.newOpt[5].nClick = false;
+          this.newOpt[6].nClick = true;
           this.$fetch(this.urls.customerservicerefunds + "/searchuntreated", {
-            include: "refundReason,refundReasonType"
+            include: "refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial"
           }).then(function (res) {
             _this.loading = false;
             _this.untreatedOrderListData = res.data;
-            _this.$store.dispatch("refundreasontype", "/refundreasontype");
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("refundreasontype", "/refundreasontype");
+            _this.$store.dispatch("refundMethod", "/refundMethod");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34446,6 +34847,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 1:
+          this.newOpt[0].nClick = false;
+          this.newOpt[1].nClick = true;
+          this.newOpt[2].nClick = true;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = true;
+          this.newOpt[5].nClick = true;
+          this.newOpt[6].nClick = false;
           this.$fetch(this.urls.customerservicerefunds + "/searchtreated").then(function (res) {
             _this.loading = false;
             _this.treatedOrderListData = res.data;
@@ -34453,6 +34861,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("refundreasontype", "/refundreasontype");
+            _this.$store.dispatch("refundMethod", "/refundMethod");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34467,7 +34877,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         case 2:
           this.$fetch(this.urls.customerservicerefunds, {
             order_status: "等通知发货",
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+            include: "shop,creator,businessPersonnel,locker,afterSale,financial,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
             _this.loading = false;
             _this.untreatedOrderListData = res.data;
@@ -34475,6 +34885,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("refundreasontype", "/refundreasontype");
+            _this.$store.dispatch("refundMethod", "/refundMethod");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34498,9 +34910,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.OrderListCurRowData = row;
       this.detailRefundOrderData = row;
       this.refundReasonTabData = row["refundReason"].data;
+      var index = this.orderListActiveName - 0;
+      if (index == 0) {
+        if (row.refund_order_status == "订单锁定") {
+          this.newOpt[1].nClick = false;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = false;
+          this.newOpt[5].nClick = true;
+        } else {
+          this.newOpt[1].nClick = true;
+          this.newOpt[3].nClick = false;
+          this.newOpt[4].nClick = true;
+          this.newOpt[5].nClick = false;
+        }
+      }
     },
     orderDbClick: function orderDbClick(row) {
       this.activeName = "1";
+      var index = this.orderListActiveName - 0;
+      if (index == 0) {
+        if (row.refund_order_status == "订单锁定") {
+          this.newOpt[1].nClick = false;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = false;
+          this.newOpt[5].nClick = true;
+        } else {
+          this.newOpt[1].nClick = true;
+          this.newOpt[3].nClick = false;
+          this.newOpt[4].nClick = true;
+          this.newOpt[5].nClick = false;
+        }
+      }
       var data = row;
       if (data) {
         this.orderDtlFormVal = {
@@ -34566,7 +35006,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.updateRefundReasonCurIndexNum = row.index;
       if (!(this.updateRefundReasonUploadIndex == "") || !(this.addRefundReasonUploadIndex == "")) {
         this.tableChgBtn = "show" + row.index;
-      };
+      }
     },
     addDelPro: function addDelPro(index) {
       this.proData.splice(index, 1);
@@ -34635,6 +35075,108 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
     },
+
+    // 选择订单
+    addMoreProblemPro: function addMoreProblemPro() {
+      this.addProMask = true;
+      this.proQueryClick();
+    },
+    addOrderRowCName: function addOrderRowCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
+
+      row.index = rowIndex;
+    },
+    addDefProRowCName: function addDefProRowCName(_ref3) {
+      // row.index = rowIndex;
+
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
+    },
+    addDefProRowClick: function addDefProRowClick(row) {},
+    addOrderRowClick: function addOrderRowClick(row) {
+      var _this3 = this;
+
+      this.proDtlVal = [];
+      this.addOrderDtlVal = row;
+      this.addOrderDtlVal.orderItems["data"].map(function (list) {
+        list.combination.productComponents["data"].map(function (item) {
+          var defPro = {
+            commodity_code: list.product.commodity_code,
+            spec_code: item.component_code,
+            short_name: list.product.short_name,
+            spec: item.spec,
+            color: item.color,
+            materials: item.materials,
+            function: item.function,
+            special: item.special,
+            other: item.other,
+            buy_number: list.quantity,
+            img_url: ""
+          };
+          _this3.proDtlVal.push(defPro);
+        });
+      });
+    },
+    proQueryClick: function proQueryClick() {
+      var _this4 = this;
+
+      this.orderDtlVal = [];
+      this.proDtlVal = [];
+      this.addOrderDtlVal = [];
+      this.$fetch(this.urls.customerservicedepts, {
+        include: "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      }).then(function (res) {
+        _this4.orderDtlVal = res.data;
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          _this4.$message.error(arr1.join(","));
+        }
+      });
+    },
+    proQueryRefresh: function proQueryRefresh() {
+      this.proQueryClick();
+      this.$message({
+        message: "刷新成功",
+        type: "success"
+      });
+    },
+    cancelAddPro: function cancelAddPro() {
+      this.addProMask = false;
+      this.$message({
+        message: "取消选择订单",
+        type: "info"
+      });
+    },
+    confirmAddPro: function confirmAddPro() {
+      this.addProMask = false;
+      this.addRefundOrderFormVal.order_sn = this.addOrderDtlVal.system_order_no;
+      this.addRefundOrderFormVal.refund_payment_methods_id = "";
+      this.addRefundOrderFormVal.shops_id = this.addOrderDtlVal.shops_id;
+      this.addRefundOrderFormVal.refund_account = "";
+      this.addRefundOrderFormVal.bank = "";
+      this.addRefundOrderFormVal.bank_address = "";
+      this.addRefundOrderFormVal.refund_amount = "";
+      this.addRefundOrderFormVal.transaction_sn = this.addOrderDtlVal.taobao_tid;
+      this.addRefundOrderFormVal.refund_reason_type_id = "";
+      this.addRefundOrderFormVal.buyer_nick = this.addOrderDtlVal.member_nick;
+      this.addRefundOrderFormVal.buyer_name = this.addOrderDtlVal.receiver_name;
+      this.addRefundOrderFormVal.payment_amount = "";
+      this.addRefundOrderFormVal.order_price = "";
+      this.addRefundOrderFormVal.order_time = this.addOrderDtlVal.created_at;
+      this.addRefundOrderFormVal.responsible_party = "";
+      this.addRefundOrderFormVal.responsible_person = "";
+      this.addRefundOrderFormVal.responsible_amount = "";
+      this.addRefundOrderFormVal.refund_description = "";
+      this.addRefundOrderFormVal.business_remark = "";
+    },
+
+    // 新增退款单
     addRefundReasonCancel: function addRefundReasonCancel() {
       this.addRefundOrderMask = false;
       this.$message({
@@ -34652,7 +35194,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
     },
     beforeAddUploadRefundReasonImg: function beforeAddUploadRefundReasonImg(file) {
-      var _this3 = this;
+      var _this5 = this;
 
       this.tableChgBtn = "";
       this.judgeFm(file);
@@ -34661,16 +35203,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this3.addRefundReasonUploadIndex = "";
+          _this5.addRefundReasonUploadIndex = "";
           //显示图片旁边的修改按钮
-          _this3.tableChgBtn = "show" + _this3.addRefundReasonCurIndexNum;
+          _this5.tableChgBtn = "show" + _this5.addRefundReasonCurIndexNum;
           //将上传图片后的地址赋值给变量
-          _this3.addRefundOrderFormVal.refund_reason[_this3.addRefundReasonCurIndexNum].img_url = res.data.path;
+          _this5.addRefundOrderFormVal.refund_reason[_this5.addRefundReasonCurIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
     beforeUpdateUploadRefundReasonImg: function beforeUpdateUploadRefundReasonImg(file) {
-      var _this4 = this;
+      var _this6 = this;
 
       this.tableChgBtn = "";
       this.judgeFm(file);
@@ -34679,9 +35221,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this4.updateRefundReasonUploadIndex = "";
-          _this4.tableChgBtn = "show" + _this4.updateRefundReasonCurIndexNum;
-          _this4.updateRefundOrderFormVal.refund_reason[_this4.updateRefundReasonCurIndexNum].img_url = res.data.path;
+          _this6.updateRefundReasonUploadIndex = "";
+          _this6.tableChgBtn = "show" + _this6.updateRefundReasonCurIndexNum;
+          _this6.updateRefundOrderFormVal.refund_reason[_this6.updateRefundReasonCurIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
@@ -34695,7 +35237,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     beforeAddUpload: function beforeAddUpload(file) {
-      var _this5 = this;
+      var _this7 = this;
 
       this.showChgBtn = false;
       this.judgeFm(file);
@@ -34704,13 +35246,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this5.showChgBtn = true;
-          _this5.addRefundOrderFormVal.refund_reason[_this5.addRefundReasonCurIndexNum].img_url = res.data.path;
+          _this7.showChgBtn = true;
+          _this7.addRefundOrderFormVal.refund_reason[_this7.addRefundReasonCurIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
     beforeUpdateUpload: function beforeUpdateUpload(file) {
-      var _this6 = this;
+      var _this8 = this;
 
       this.showChgBtn = false;
       this.judgeFm(file);
@@ -34719,8 +35261,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.urls.uploadimages, formData).then(function (res) {
         var imageInfo = res.data.meta;
         if (imageInfo.status_code == 201) {
-          _this6.showChgBtn = true;
-          _this6.updateRefundOrderFormVal.refund_reason[_this6.updateRefundReasonCurIndexNum].img_url = res.data.path;
+          _this8.showChgBtn = true;
+          _this8.updateRefundOrderFormVal.refund_reason[_this8.updateRefundReasonCurIndexNum].img_url = res.data.path;
         }
       }).catch(function (err) {});
     },
@@ -34740,32 +35282,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     confirmD: function confirmD(url, id) {
-      var _this7 = this;
+      var _this9 = this;
 
       this.$del(url + "/" + id).then(function () {
-        _this7.showDel = false;
-        _this7.refresh();
-        _this7.$message({
+        _this9.showDel = false;
+        _this9.refresh();
+        _this9.$message({
           message: "删除成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this7.showDel = false;
+          _this9.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this7.$message.error(str);
+          _this9.$message.error(str);
         }
       });
     },
 
     /*批量删除*/
     handleSelectionChange: function handleSelectionChange(val) {
-      console.log(val);
+      this.selection = val;
+      var index = this.orderListActiveName - 0;
+      if (index == 0) {
+        if (this.selection.length == 1) {
+          if (val[0].refund_order_status == "订单锁定") {
+            this.newOpt[1].nClick = false;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = false;
+            this.newOpt[5].nClick = true;
+          } else {
+            this.newOpt[1].nClick = true;
+            this.newOpt[3].nClick = false;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = false;
+          }
+        } else if (this.selection.length >= 2) {
+          this.newOpt[1].nClick = true;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = true;
+          this.newOpt[5].nClick = true;
+        }
+      }
       /*拿到id集合*/
       var delArr = [];
       val.forEach(function (selectedItem) {
@@ -34778,7 +35341,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.mergerIds = val;
     },
     delBatch: function delBatch() {
-      var _this8 = this;
+      var _this10 = this;
 
       if (this.ids.length === 0) {
         this.$message({
@@ -34791,9 +35354,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          _this8.$del(_this8.urls.customerservicerefunds, { ids: _this8.ids }).then(function () {
-            _this8.refresh();
-            _this8.$message({
+          _this10.$del(_this10.urls.customerservicerefunds, { ids: _this10.ids }).then(function () {
+            _this10.refresh();
+            _this10.$message({
               message: "删除成功",
               type: "success"
             });
@@ -34805,11 +35368,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 arr1.push(arr[i]);
               }
               var str = arr1.join(",");
-              _this8.$message.error(str);
+              _this10.$message.error(str);
             }
           });
         }).catch(function () {
-          _this8.$message({
+          _this10.$message({
             type: "info",
             message: "已取消删除"
           });
@@ -34828,13 +35391,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*页码*/
     handlePagChg: function handlePagChg(page) {
-      var _this9 = this;
+      var _this11 = this;
 
       this.$fetch(this.urls.customerservicerefunds + "?page=" + page).then(function (res) {
-        if (_this9.orderListActiveName == "0") {
-          _this9.untreatedOrderListData = res.data;
+        if (_this11.orderListActiveName == "0") {
+          _this11.untreatedOrderListData = res.data;
         } else {
-          _this9.treatedOrderListData = res.data;
+          _this11.treatedOrderListData = res.data;
         }
       });
     },
@@ -34845,112 +35408,124 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*锁定*/
     lockOrder: function lockOrder() {
-      var _this10 = this;
+      var _this12 = this;
 
-      var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
-      this.$put(this.urls.customerservicerefunds + "/" + id + "/lockorunlock").then(function () {
-        _this10.refresh();
-        _this10.$message({
-          message: "锁定成功",
-          type: "success"
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
+      if (this.newOpt[3].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
+        this.$put(this.urls.customerservicerefunds + "/" + id + "/lockorunlock").then(function () {
+          _this12.refresh();
+          _this12.$message({
+            message: "锁定成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this12.$message.error(str);
           }
-          var str = arr1.join(",");
-          _this10.$message.error(str);
-        }
-      });
+        });
+      }
     },
 
     /*解锁*/
     debLock: function debLock() {
-      var _this11 = this;
+      var _this13 = this;
 
-      var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
-      this.$put(this.urls.customerservicerefunds + "/" + id + "/lockorunlock").then(function () {
-        _this11.newOpt[1].nClick = true;
-        _this11.newOpt[2].nClick = true;
-        _this11.newOpt[3].nClick = false;
-        _this11.newOpt[4].nClick = true;
-        _this11.newOpt[5].nClick = true;
-        _this11.newOpt[6].nClick = true;
-        _this11.newOpt[8].nClick = true;
-        _this11.newOpt[9].nClick = true;
-        _this11.newOpt[14].nClick = true;
-        _this11.refresh();
-        _this11.$message({
-          message: "解锁成功",
-          type: "success"
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
+        this.$put(this.urls.customerservicerefunds + "/" + id + "/lockorunlock").then(function () {
+          // this.newOpt[1].nClick = true;
+          // this.newOpt[2].nClick = true;
+          // this.newOpt[3].nClick = false;
+          // this.newOpt[4].nClick = true;
+          // this.newOpt[5].nClick = true;
+          // this.newOpt[6].nClick = true;
+          // this.newOpt[8].nClick = true;
+          // this.newOpt[9].nClick = true;
+          // this.newOpt[14].nClick = true;
+          _this13.refresh();
+          _this13.$message({
+            message: "解锁成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this13.$message.error(str);
           }
-          var str = arr1.join(",");
-          _this11.$message.error(str);
-        }
-      });
+        });
+      }
     },
 
     /*修改*/
     updateData: function updateData() {
-      var _this12 = this;
+      var _this14 = this;
 
-      this.proIds = [];
-      this.updateProIds = [];
-      this.updateRefundOrderFormVal = {};
-      this.updateRefundOrderData = [];
-      this.updateRefundOrderMask = true;
-      this.updateRefundReasonCurIndex = "index0";
-      this.updateRefundReasonUploadIndex = "";
-      var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
-      this.$fetch(this.urls.customerservicerefunds + "/" + id, {
-        include: "refundReason"
-      }).then(function (res) {
-        _this12.updateRefundOrderFormVal = res;
-        _this12.updateRefundOrderFormVal.status = res.status;
-        _this12.updateRefundOrderFormVal.refund_reason = res.refundReason.data;
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
+      if (this.newOpt[1].nClick) {
+        return;
+      } else {
+        this.proIds = [];
+        this.updateProIds = [];
+        this.updateRefundOrderFormVal = {};
+        this.updateRefundOrderData = [];
+        this.updateRefundOrderMask = true;
+        this.updateRefundReasonCurIndex = "index0";
+        this.updateRefundReasonUploadIndex = "";
+        var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
+        this.$fetch(this.urls.customerservicerefunds + "/" + id, {
+          include: "refundReason"
+        }).then(function (res) {
+          _this14.updateRefundOrderFormVal = res;
+          _this14.updateRefundOrderFormVal.status = res.status;
+          _this14.updateRefundOrderFormVal.refund_reason = res.refundReason.data;
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this14.$message.error(str);
           }
-          var str = arr1.join(",");
-          _this12.$message.error(str);
-        }
-      });
+        });
+      }
     },
     updateCustomerConfirm: function updateCustomerConfirm() {
-      var _this13 = this;
+      var _this15 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
       this.$patch(this.urls.customerservicerefunds + "/" + id, this.updateRefundOrderFormVal).then(function () {
-        _this13.updateRefundOrderMask = false;
-        _this13.refresh();
-        _this13.$message({
+        _this15.updateRefundOrderMask = false;
+        _this15.refresh();
+        _this15.$message({
           message: "修改成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this13.showDel = false;
+          _this15.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this13.$message.error(str);
+          _this15.$message.error(str);
         }
       });
     },
@@ -34964,48 +35539,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*审核*/
     handleAudit: function handleAudit() {
-      var _this14 = this;
+      var _this16 = this;
 
-      var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
-      this.$put(this.urls.customerservicerefunds + "/" + id + "/audit").then(function () {
-        _this14.refresh();
-        _this14.$message({
-          message: "审核成功",
-          type: "success"
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
+      if (this.newOpt[5].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
+        this.$put(this.urls.customerservicerefunds + "/" + id + "/audit").then(function () {
+          _this16.refresh();
+          _this16.$message({
+            message: "审核成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this16.$message.error(str);
           }
-          var str = arr1.join(",");
-          _this14.$message.error(str);
-        }
-      });
+        });
+      }
     },
     handleUnAudit: function handleUnAudit() {
-      var _this15 = this;
+      var _this17 = this;
 
-      var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
-      this.$put(this.urls.customerservicerefunds + "/" + id + "/unaudit").then(function () {
-        _this15.refresh();
-        _this15.$message({
-          message: "退审成功",
-          type: "success"
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
+      if (this.newOpt[6].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.orderListTabCurRowId;
+        this.$put(this.urls.customerservicerefunds + "/" + id + "/unaudit").then(function () {
+          _this17.refresh();
+          _this17.$message({
+            message: "退审成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this17.$message.error(str);
           }
-          var str = arr1.join(",");
-          _this15.$message.error(str);
-        }
-      });
+        });
+      }
     },
     resets: function resets() {
       this.searchBox = {};
@@ -35389,15 +35972,13 @@ var render = function() {
                                           scope.row[item.prop]
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                  " +
-                                                    _vm._s(
-                                                      item.inProp
-                                                        ? scope.row[item.prop][
-                                                            item.inProp
-                                                          ]
-                                                        : scope.row[item.prop]
-                                                    ) +
-                                                    "\n                "
+                                                  _vm._s(
+                                                    item.inProp
+                                                      ? scope.row[item.prop][
+                                                          item.inProp
+                                                        ]
+                                                      : scope.row[item.prop]
+                                                  )
                                                 )
                                               ])
                                             : _vm._e()
@@ -35609,15 +36190,13 @@ var render = function() {
                                           scope.row[item.prop]
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                  " +
-                                                    _vm._s(
-                                                      item.inProp
-                                                        ? scope.row[item.prop][
-                                                            item.inProp
-                                                          ]
-                                                        : scope.row[item.prop]
-                                                    ) +
-                                                    "\n                "
+                                                  _vm._s(
+                                                    item.inProp
+                                                      ? scope.row[item.prop][
+                                                          item.inProp
+                                                        ]
+                                                      : scope.row[item.prop]
+                                                  )
                                                 )
                                               ])
                                             : _vm._e()
@@ -36144,15 +36723,13 @@ var render = function() {
                                         scope.row[item.prop]
                                           ? _c("span", [
                                               _vm._v(
-                                                "\n                  " +
-                                                  _vm._s(
-                                                    item.inProp
-                                                      ? scope.row[item.prop][
-                                                          item.inProp
-                                                        ]
-                                                      : scope.row[item.prop]
-                                                  ) +
-                                                  "\n                "
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                )
                                               )
                                             ])
                                           : _vm._e()
@@ -36251,15 +36828,13 @@ var render = function() {
                                         scope.row[item.prop]
                                           ? _c("span", [
                                               _vm._v(
-                                                "\n                  " +
-                                                  _vm._s(
-                                                    item.inProp
-                                                      ? scope.row[item.prop][
-                                                          item.inProp
-                                                        ]
-                                                      : scope.row[item.prop]
-                                                  ) +
-                                                  "\n                "
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                )
                                               )
                                             ])
                                           : _vm._e()
@@ -36306,51 +36881,7 @@ var render = function() {
                 "el-button",
                 { staticStyle: { float: "left" }, attrs: { type: "text" } },
                 [_vm._v("新增退款单信息")]
-              ),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("addRefundOrderFormVal.order_sn:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.addRefundOrderFormVal.order_sn))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("addRefundReasonCurIndex:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.addRefundReasonCurIndex))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("updateRefundReasonCurIndex:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.updateRefundReasonCurIndex))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("addRefundReasonCurIndexNum:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.addRefundReasonCurIndexNum))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("updateRefundReasonCurIndexNum:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.updateRefundReasonCurIndexNum))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("addRefundReasonUploadIndex:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.addRefundReasonUploadIndex))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("updateRefundReasonUploadIndex:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.updateRefundReasonUploadIndex))]),
-              _vm._v(" "),
-              _c("br")
+              )
             ],
             1
           ),
@@ -36947,11 +37478,7 @@ var render = function() {
                                                     scope.row[item.prop]
                                                       ? _c("span", [
                                                           _vm._v(
-                                                            "\n                    " +
-                                                              _vm._s(
-                                                                list.name
-                                                              ) +
-                                                              "\n                  "
+                                                            _vm._s(list.name)
                                                           )
                                                         ])
                                                       : _vm._e()
@@ -36993,11 +37520,7 @@ var render = function() {
                                       })
                                     ])
                                   : _c("span", [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n            "
-                                      )
+                                      _vm._v(_vm._s(scope.row[item.prop]))
                                     ])
                               ])
                         ]
@@ -37028,6 +37551,15 @@ var render = function() {
                     "el-button",
                     {
                       attrs: { type: "primary" },
+                      on: { click: _vm.addMoreProblemPro }
+                    },
+                    [_vm._v("选择订单")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
                       on: { click: _vm.addTabAddMoreRefundReason }
                     },
                     [_vm._v("添加退款原因")]
@@ -37049,13 +37581,21 @@ var render = function() {
                     [_vm._v("确定")]
                   ),
                   _vm._v(" "),
-                  _c("el-button", { on: { click: _vm.resetAddInfo } }, [
-                    _vm._v("重置")
-                  ]),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "info" },
+                      on: { click: _vm.resetAddInfo }
+                    },
+                    [_vm._v("重置")]
+                  ),
                   _vm._v(" "),
                   _c(
                     "el-button",
-                    { on: { click: _vm.addRefundReasonCancel } },
+                    {
+                      attrs: { type: "warning" },
+                      on: { click: _vm.addRefundReasonCancel }
+                    },
                     [_vm._v("取消")]
                   )
                 ],
@@ -37088,49 +37628,7 @@ var render = function() {
                 "el-button",
                 { staticStyle: { float: "left" }, attrs: { type: "text" } },
                 [_vm._v("退款单信息")]
-              ),
-              _vm._v(" "),
-              _c("label", [_vm._v("addRefundOrderFormVal.order_sn:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.addRefundOrderFormVal.order_sn))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("addRefundReasonCurIndex:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.addRefundReasonCurIndex))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("updateRefundReasonCurIndex:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.updateRefundReasonCurIndex))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("addRefundReasonCurIndexNum:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.addRefundReasonCurIndexNum))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("updateRefundReasonCurIndexNum:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.updateRefundReasonCurIndexNum))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("addRefundReasonUploadIndex:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.addRefundReasonUploadIndex))]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("label", [_vm._v("updateRefundReasonUploadIndex:")]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(_vm.updateRefundReasonUploadIndex))]),
-              _vm._v(" "),
-              _c("br")
+              )
             ],
             1
           ),
@@ -37734,11 +38232,7 @@ var render = function() {
                                                     scope.row[item.prop]
                                                       ? _c("span", [
                                                           _vm._v(
-                                                            "\n                    " +
-                                                              _vm._s(
-                                                                list.name
-                                                              ) +
-                                                              "\n                  "
+                                                            _vm._s(list.name)
                                                           )
                                                         ])
                                                       : _vm._e()
@@ -37780,11 +38274,7 @@ var render = function() {
                                       })
                                     ])
                                   : _c("span", [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n            "
-                                      )
+                                      _vm._v(_vm._s(scope.row[item.prop]))
                                     ])
                               ])
                         ]
@@ -37815,6 +38305,15 @@ var render = function() {
                     "el-button",
                     {
                       attrs: { type: "primary" },
+                      on: { click: _vm.addMoreProblemPro }
+                    },
+                    [_vm._v("选择订单")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
                       on: { click: _vm.updateTabAddMoreRefundReason }
                     },
                     [_vm._v("添加退款原因")]
@@ -37839,6 +38338,201 @@ var render = function() {
                   _c("el-button", { on: { click: _vm.updateCustomerCancel } }, [
                     _vm._v("取消")
                   ])
+                ],
+                1
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          class: { "more-forms": _vm.moreForms },
+          attrs: { title: "选择订单", visible: _vm.addProMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.addProMask = $event
+            }
+          }
+        },
+        [
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("订单列表")]),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: {
+                data: _vm.orderDtlVal,
+                fit: "",
+                height: "180",
+                "row-class-name": _vm.addOrderRowCName
+              },
+              on: { "row-click": _vm.addOrderRowClick }
+            },
+            _vm._l(_vm.addOrderProHead, function(item) {
+              return _c("el-table-column", {
+                key: item.label,
+                attrs: {
+                  label: item.label,
+                  align: "center",
+                  width: item.width
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          item.type == "img"
+                            ? _c(
+                                "span",
+                                [
+                                  _c(
+                                    "el-popover",
+                                    {
+                                      attrs: {
+                                        placement: "right",
+                                        trigger: "hover",
+                                        "popper-class": "picture_detail"
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: { src: scope.row[item.prop] }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("img", {
+                                        attrs: {
+                                          slot: "reference",
+                                          src: scope.row[item.prop],
+                                          alt: scope.row[item.alt]
+                                        },
+                                        slot: "reference"
+                                      })
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            : _c("span", [
+                                _vm._v(
+                                  _vm._s(
+                                    item.inProp
+                                      ? scope.row[item.prop][item.inProp]
+                                      : scope.row[item.prop]
+                                  )
+                                )
+                              ])
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("明细列表")]),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: {
+                data: _vm.proDtlVal,
+                fit: "",
+                height: "180",
+                "row-class-name": _vm.addDefProRowCName
+              },
+              on: { "row-click": _vm.addDefProRowClick }
+            },
+            _vm._l(_vm.addProHead, function(item) {
+              return _c("el-table-column", {
+                key: item.label,
+                attrs: {
+                  label: item.label,
+                  align: "center",
+                  width: item.width
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          scope.row[item.prop]
+                            ? _c("span", [
+                                _vm._v(
+                                  _vm._s(
+                                    item.inProp
+                                      ? scope.row[item.prop][item.inProp]
+                                      : scope.row[item.prop]
+                                  )
+                                )
+                              ])
+                            : _vm._e()
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "div",
+                { staticStyle: { float: "left" } },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.proQueryRefresh }
+                    },
+                    [_vm._v("刷新")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticStyle: { float: "right" } },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.confirmAddPro }
+                    },
+                    [_vm._v("确定")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "warning" },
+                      on: { click: _vm.cancelAddPro }
+                    },
+                    [_vm._v("取消")]
+                  )
                 ],
                 1
               )

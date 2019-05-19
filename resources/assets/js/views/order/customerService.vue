@@ -3,7 +3,6 @@
     <el-tabs v-model="activeName" @tab-click="outerHandleClick">
       <el-tab-pane label="订单列表" name="0">
         <div>
-          <label>{{this.searchBox.shops_id}}</label>
           <div class="searchBox">
             <span>  
               <label>买家昵称</label>

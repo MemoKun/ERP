@@ -3809,7 +3809,7 @@ var render = function() {
                   _c(
                     "span",
                     [
-                      _c("label", [_vm._v("会员名称")]),
+                      _c("label", [_vm._v("买家昵称")]),
                       _vm._v(" "),
                       _c("el-input", {
                         attrs: { clearable: "" },
