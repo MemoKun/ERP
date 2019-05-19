@@ -69,11 +69,11 @@
                     <template slot-scope="scope">
                         <span v-if="cityIndex == 'index'+scope.$index">
                             <span v-if="item.type=='number'">
-                                        <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                              <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                             </span>
                             <span v-else-if="item.type == 'textarea'">
-                                      <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                                </span>
+                              <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
+                            </span>
                             <span v-else-if="item.type == 'selects'">
                                     <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
                                        <span v-for="list in transfers" :key="list.value">

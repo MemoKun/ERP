@@ -8,7 +8,8 @@ use League\Fractal\TransformerAbstract;
 class CombinationTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'productComponents','product','orderItems'
+        'productComponents','product','orderItems','resupplieOrderItem',
+        'resupplieProblemProduct'
     ];
 
     public function transform(Combination $combination)
@@ -39,5 +40,14 @@ class CombinationTransformer extends TransformerAbstract
         return $this->collection($combination->orderItems, new OrderItemTransformer());
     }
 
+    public function includeResupplieOrderItem(Combination $combination)
+    {
+        return $this->collection($combination->resupplieOrderItem, new ResupplieOrderItemTransformer());
+    }
+
+    public function includeResupplieProblemProduct(Combination $combination)
+    {
+        return $this->collection($combination->resupplieProblemProduct, new ResupplieProblemProductTransformer());
+    }
 
 }

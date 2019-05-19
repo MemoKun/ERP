@@ -25,4 +25,14 @@ class Combination extends Model
         return $this->hasMany(OrderItem::class, 'combinations_id');
     }
 
+    public function resupplieOrderItem()
+    {
+        return $this->hasMany(ResupplieOrderItem::class, 'combinations_id');
+    }
+
+    public function resupplieProblemProduct()
+    {
+        return $this->hasMany(ResupplieProblemProduct::class, 'combinations_id');
+    }
+
 }

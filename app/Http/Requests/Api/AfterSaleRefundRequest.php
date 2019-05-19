@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api;
 
+use Illuminate\Validation\Rule;
+
 class AfterSaleRefundRequest extends FormRequest
 {
     /**
@@ -17,33 +19,40 @@ class AfterSaleRefundRequest extends FormRequest
                     'status' => 'boolean',
                 ];
                 break;
-            case 'PATCH':
+            case 'POST':
                 return [
-                    'person_liable' => 'string|max:255',
-                    'liable_fee' => 'numeric',
-                    'freight' => 'numeric',
-                    'undertaker' => 'string|max:255',
-                    'as_remark' => 'string|max:255',
+                    'after_sale_id' => 'required|string|max:255',
+                    'refund_party' => 'required|string|max:255',
+                    'refund_party_name' => 'string',
+                    'refund_amount' => 'integer',
+                    'status' => 'boolean',
                 ];
                 break;
+            case 'PATCH':
+                return [
+                    'id' => [
+                        'integer',
+                        Rule::exists('after_sale_refund', 'id'),
+                    ],
+                    'after_sale_id' => 'string|max:255',
+                    'refund_party' => 'string|max:255',
+                    'refund_party_name' => 'string',
+                    'refund_amount' => 'integer',
+                    'status' => 'boolean',
+                ];
+            break;
         }
     }
 
     public function messages()
     {
         return [
-            'person_liable.string' => '责任人必须string类型',
-            'person_liable.max' => '责任人最大长度为255',
+            'refund_party.required' => '责任方必填',
+            'refund_party.string' => '责任方必须string类型',
 
-            'liable_fee.numeric' => '责任金额必须是数字',
+            'refund_party_name.string' => '责任方姓名必须string类型',
 
-            'freight.numeric' => '运费必须是数字',
-
-            'undertaker.string' => '承担人必须string类型',
-            'undertaker.max' => '承担人最大长度为255',
-
-            'as_remark.string' => '售后备注必须string类型',
-            'as_remark.max' => '售后备注最大长度为255',
+            'refund_amount.integer' => '责任金额必须integer类型',
 
             'status.boolean' => '状态必须布尔类型',
             'status.required' => '状态必填',
@@ -53,12 +62,9 @@ class AfterSaleRefundRequest extends FormRequest
     public function attributes()
     {
         return [
-            'person_liable' => '责任人',
-            'liable_fee' => '责任金额',
-            'freight' => '运费',
-            'undertaker' => '承担人',
-            'as_remark' => '售后备注',
-            'status' => '状态',
+            'refund_party' => '责任方',
+            'refund_party_name' => '责任方姓名',
+            'refund_amount' => '责任金额',
         ];
     }
 }

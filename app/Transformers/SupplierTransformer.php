@@ -7,6 +7,11 @@ use League\Fractal\TransformerAbstract;
 
 class SupplierTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = [
+        'series','products','purchaseDetails','purchaseReturnDetails',
+        'resupplieOrder'
+    ];
+
     public function transform(Supplier $supplier)
     {
         return [
@@ -33,5 +38,30 @@ class SupplierTransformer extends TransformerAbstract
             'updated_at' => $supplier->updated_at
                                     ->toDateTimeString(),
         ];
+    }
+
+    public function includeSeries(Supplier $supplier)
+    {
+        return $this->collection($supplier->series, new SeriesTransformer());
+    }
+
+    public function includeProducts(Supplier $supplier)
+    {
+        return $this->collection($supplier->products, new ProductTransformer());
+    }
+
+    public function includePurchaseDetails(Supplier $supplier)
+    {
+        return $this->collection($supplier->purchaseDetails, new PurchaseDetailTransformer());
+    }
+
+    public function includePurchaseReturnDetails(Supplier $supplier)
+    {
+        return $this->collection($supplier->purchaseReturnDetails, new PurchaseReturnDetailTransformer());
+    }
+
+    public function includeResuppliedOrder(Supplier $supplier)
+    {
+        return $this->collection($supplier->resupplieOrder, new ResupplieOrderTransformer());
     }
 }

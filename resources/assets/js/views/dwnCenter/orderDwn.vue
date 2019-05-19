@@ -1,19 +1,17 @@
 <template>
     <div>
-        <h2>订单下载</h2>
-        <div class="box">
+      <el-tabs>
+        <div class="searchBox">
+            <span><label>店铺名称</label><el-select v-model="searchBox.shop_name" clearable placeholder="请选择"><el-option v-for="item in searchBox.shopNames" :key="item.value" :label="item.label" :value="item.value"></el-option></el-select></span>
             <span>
-                <label>店铺名称</label>
-                <el-select v-model="searchBox.shop_name" clearable placeholder="请选择"><el-option v-for="item in searchBox.shopNames" :key="item.value" :label="item.label" :value="item.value"></el-option></el-select>
-            </span>
-            <span>
-               <label>业务日期</label>
-                 <el-date-picker
+              <label>业务日期</label>
+              <el-date-picker
                          v-model="searchBox.work_date"
                          type="daterange"
                          range-separator="至"
                          start-placeholder="开始日期"
-                         end-placeholder="结束日期"></el-date-picker>
+                         end-placeholder="结束日期">
+              </el-date-picker>
             </span>
             <span>
                 <label>买家昵称</label>
@@ -24,7 +22,10 @@
                 <el-input v-model="searchBox.order_num" clearable></el-input>
             </span>
         </div>
-        <el-table
+        </el-tabs>
+        <el-tabs>
+          <el-tab-pane label="订单信息" name="0">
+            <el-table
                 ref="multipleTable"
                 :data="tableData3"
                 tooltip-effect="dark"
@@ -71,6 +72,8 @@
                     show-overflow-tooltip>
             </el-table-column>
         </el-table>
+          </el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 <script>
@@ -90,8 +93,8 @@
           pro_num:'',
           order_num:'',
           shopNames:[
-            {label: '店铺1', value: 0},
-            {label: '店铺2', value: 1},
+            {label: '简艺家具旗舰店', value: 0},
+            {label: '迪洛家具旗舰店', value: 1},
           ],
           work_date:''
         },

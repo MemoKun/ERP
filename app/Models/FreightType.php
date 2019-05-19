@@ -23,4 +23,8 @@ class FreightType extends Model
         return $this->hasMany(Order::class,'freight_types_id');
     }
 
+    public function resupplieOrder()
+    {
+        return $this->hasMany(ResupplieOrder::class,'freight_types_id');
+    }
 }

@@ -146,6 +146,7 @@ class WarehousingDepartmentsController extends Controller
         return $this->response->paginator($order->paginate(self::PerPage), new OrderTransformer());
     }
 
+    
 
 
     /**
@@ -346,6 +347,17 @@ class WarehousingDepartmentsController extends Controller
             !$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_STOCK_OUT,
             '仓储出库退回出错',
             'stockOutUnAudit'
+        );
+    }
+
+    /**打印发货单*/
+    public function isPrintDispatchBill(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '打印发货单出错',
+            'printDispatchBill'
         );
     }
 

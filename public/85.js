@@ -1,14 +1,14 @@
 webpackJsonp([85],{
 
-/***/ 471:
+/***/ 516:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(580)
+var __vue_script__ = __webpack_require__(718)
 /* template */
-var __vue_template__ = __webpack_require__(581)
+var __vue_template__ = __webpack_require__(719)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,18 +25,18 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\views\\basicInf\\warehouseMag.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/orderManageSubData.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3a269c48", Component.options)
+    hotAPI.createRecord("data-v-a76e2be0", Component.options)
   } else {
-    hotAPI.reload("data-v-3a269c48", Component.options)
+    hotAPI.reload("data-v-a76e2be0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,13 +48,11 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 580:
+/***/ 718:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
 //
 //
 //
@@ -92,41 +90,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -138,104 +101,118 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: '删除',
         icon: 'bf-del',
-        ent: this.delMore
+        ent: this.delBatch
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
         ent: this.refresh
       }],
-      tableHead: [{
-        label: '仓库名称',
+      tabHead: [[{
+        label: '提货方式',
         prop: "name",
-        width: '130',
-        holder: '请输入标记名称',
+        holder: '请输入提货方式',
         type: 'text'
       }, {
-        label: '仓库地(省市区)',
-        prop: "provinces",
-        width: '220',
-        holder: '请输入仓库地(省市区)',
-        type: 'cascader'
-      }, {
-        label: '仓库地址',
-        prop: "address",
-        width: '180',
-        holder: '请输入仓库地址',
-        type: 'text'
-      }, {
-        label: '默认仓库',
-        width: '100',
-        prop: "is_default",
-        type: 'checkbox'
-      }, {
-        label: '是否可用',
-        width: '130',
+        label: '状态',
         prop: "status",
-        type: 'checkbox',
-        doSort: true
-      }],
-      loading: true,
-      currentIndex: '',
-      showMaskArr: false,
-      checkboxInit: false,
-      title: '新建仓库',
-      getsInfo: [],
-      ruleForm: {
-        name: '',
-        provinces: [],
-        province: '',
-        city: '',
-        district: '',
-        address: '',
-        is_default: false,
-        status: true
-      },
-      rules: {
-        name: [{ required: true, message: '请输入仓库名称', trigger: 'blur' }],
-        address: [{ required: true, message: '请输入仓库详细地址', trigger: 'blur' }]
-      },
-      addArr: [{
-        label: '仓库名称',
-        prop: 'name',
-        holder: '请输入仓库名称',
-        type: 'text'
-      }, {
-        label: '地区',
-        prop: '',
-        holder: '请输入仓库所在省市区',
-        type: 'cascader'
-      }, {
-        label: '地址',
-        prop: 'address',
-        holder: '请输入详细地址',
-        type: 'text'
-      }, {
-        label: '是否默认',
-        prop: 'is_default',
-        holder: '请选择是否默认',
         type: 'checkbox'
+      }], [{
+        label: '付款方式',
+        prop: "name",
+        holder: '请输入付款方式',
+        type: 'text'
       }, {
-        label: '是否可用',
+        label: '状态',
+        prop: "status",
+        type: 'checkbox'
+      }], [{
+        label: '客户类型',
+        prop: "name",
+        holder: '请输入客户类型',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: "status",
+        type: 'checkbox'
+      }]],
+      title: ['新增提货方式', '新增付款方式', '新增客户类型'],
+      ruleForm: [{
+        name: '',
+        status: true
+      }, {
+        name: '',
+        status: true
+      }, {
+        name: '',
+        status: true
+      }],
+      rules: [{
+        name: [{ required: true, message: '请输入提货方式', trigger: 'blur' }]
+      }, {
+        name: [{ required: true, message: '请输入付款方式', trigger: 'blur' }]
+      }, {
+        name: [{ required: true, message: '请输入客户类型', trigger: 'blur' }]
+      }],
+      addArr: [[{
+        label: '提货方式',
+        prop: 'name',
+        holder: '请输入提货方式',
+        type: 'text'
+      }, {
+        label: '状态',
         prop: 'status',
         type: 'checkbox'
-      }],
-      refArr: 'ruleWare',
-      showDel: false,
-      delId: '',
+      }], [{
+        label: '付款方式',
+        prop: 'name',
+        holder: '请输入付款方式',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        type: 'checkbox'
+      }], [{
+        label: '客户类型',
+        prop: 'name',
+        holder: '请输入客户类型',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        type: 'checkbox'
+      }]],
+      activeName: '0',
+      getsData: [],
+      loading: true,
+      currentIndex: '',
+      /*新增*/
+      showMask: false,
+      editId: '',
       inputChange: false,
-      multipleSelection: [],
       delArr: [],
-      pagination: {
-        current_page: 1,
-        per_page: 0,
-        page_total: 0
-      },
-      areaArr: [],
-      options: __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["regionDataPlus"]
+      multipleSelection: [],
+      refArr: ['goodsWays', 'paymentmethods', 'customertypes'],
+      takeDelGoodsData: [],
+      payMethodsData: [],
+      customerTypesData: [],
+      /*删除*/
+      showDel: false,
+      delUrl: '',
+      delId: '',
+      /*批量*/
+      ids: [],
+      checkboxId: ''
+
     };
   },
 
   computed: {
+    resData: {
+      get: function get() {
+        return this.$store.state.responseData;
+      },
+      set: function set() {}
+    },
     urls: {
       get: function get() {
         return this.$store.state.urls;
@@ -244,73 +221,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   methods: {
-    addNew: function addNew() {
-      this.ruleForm.name = '';
-      this.showMaskArr = true;
+    /*获取数据*/
+    tabsClick: function tabsClick() {
+      this.loading = true;
+      this.fetchStockData();
     },
-    CB_dialog: function CB_dialog(val) {
-      this.showMaskArr = val;
-    },
-    submitForm: function submitForm() {
+    fetchStockData: function fetchStockData() {
       var _this = this;
 
-      var obj = {
-        name: this.ruleForm.name,
-        province: __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["CodeToText"][this.areaArr[0]],
-        city: __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["CodeToText"][this.areaArr[1]],
-        district: __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["CodeToText"][this.areaArr[2]],
-        address: this.ruleForm.address,
-        is_default: this.ruleForm.is_default,
-        status: this.ruleForm.status
-      };
-      this.$post(this.urls.warehouses, obj).then(function () {
-        _this.$message({
-          message: '添加成功',
-          type: 'success'
-        });
-        _this.showMaskArr = false;
-        _this.refresh();
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          _this.$message.error(arr1.join(','));
-        }
-      });
-    },
-
-    /*处理批量删除*/
-    handleSelectionChange: function handleSelectionChange(val) {
-      this.multipleSelection = val;
-      var del = [];
-      this.multipleSelection.forEach(function (selectedItem) {
-        del.push(selectedItem.id);
-      });
-      this.delArr = del.join(',');
-    },
-    delMore: function delMore() {
-      var _this2 = this;
-
-      if (this.delArr.length === 0) {
-        this.$message({
-          message: '没有选中数据',
-          type: 'warning'
-        });
-      } else {
-        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(function () {
-          _this2.$del(_this2.urls.warehouses, { ids: _this2.delArr }).then(function () {
-            _this2.$message({
-              message: '删除成功',
-              type: 'success'
-            });
-            _this2.refresh();
+      var index = this.activeName - 0;
+      switch (index) {
+        case 0:
+          this.$fetch(this.urls.takedeliverygoodsways).then(function (res) {
+            _this.stockDtlData = [];
+            _this.loading = false;
+            _this.takeDelGoodsData = res.data;
+            var pg = res.meta.pagination;
+            _this.$store.dispatch('currentPage', pg.current_page);
+            _this.$store.commit('PER_PAGE', pg.per_page);
+            _this.$store.commit('PAGE_TOTAL', pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -318,22 +247,87 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this2.$message.error(arr1.join(','));
+              _this.$message.error(arr1.join(','));
             }
           });
-        }).catch(function () {
-          _this2.$message({
-            type: 'info',
-            message: '已取消删除'
+          break;
+        case 1:
+          this.$fetch(this.urls.paymentmethods).then(function (res) {
+            _this.loading = false;
+            _this.payMethodsData = res.data;
+            var pg = res.meta.pagination;
+            _this.$store.dispatch('currentPage', pg.current_page);
+            _this.$store.commit('PER_PAGE', pg.per_page);
+            _this.$store.commit('PAGE_TOTAL', pg.total);
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              _this.$message.error(arr1.join(','));
+            }
           });
-        });
+          break;
+        case 2:
+          this.$fetch(this.urls.customertypes).then(function (res) {
+            _this.loading = false;
+            _this.customerTypesData = res.data;
+            var pg = res.meta.pagination;
+            _this.$store.dispatch('currentPage', pg.current_page);
+            _this.$store.commit('PER_PAGE', pg.per_page);
+            _this.$store.commit('PAGE_TOTAL', pg.total);
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              _this.$message.error(arr1.join(','));
+            }
+          });
+          break;
       }
     },
 
-    /*修改保存*/
-    edit: function edit(index, row) {
+    /*新增*/
+    addNew: function addNew() {
+      this.showMask = true;
+    },
+    CB_dialog: function CB_dialog(val) {
+      this.showMask = val;
+    },
+    submitForm: function submitForm() {
+      var _this2 = this;
+
+      var url = this.activeName == '0' ? this.urls.takedeliverygoodsways : this.activeName == '1' ? this.urls.paymentmethods : this.urls.customertypes;
+      this.$post(url, this.ruleForm[this.activeName]).then(function () {
+        _this2.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+        _this2.showMask = false;
+        _this2.refresh();
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          _this2.$message.error(arr1.join(','));
+        }
+      });
+    },
+
+    /*修改*/
+    edit: function edit(index) {
       this.currentIndex = 'index' + index;
-      this.$set(row, 'provinces', [__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["TextToCode"][row.province].code, __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["TextToCode"][row.province][row.city].code, __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["TextToCode"][row.province][row.city][row.district].code]);
+    },
+    handleEdit: function handleEdit() {
+      this.inputChange = true;
     },
     editCancel: function editCancel() {
       this.$message({
@@ -345,59 +339,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     editSave: function editSave(row) {
       var _this3 = this;
 
-      var obj = {
-        name: row.name,
-        address: row.address,
-        province: __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["CodeToText"][row.provinces[0]],
-        city: __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["CodeToText"][row.provinces[1]],
-        district: __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__["CodeToText"][row.provinces[2]],
-        is_default: row.is_default,
-        status: row.status
-      };
-      if (this.inputChange) {
-        this.$patch(this.urls.warehouses + '/' + row.id, obj).then(function () {
-          _this3.refresh();
-          _this3.currentIndex = '';
-          _this3.inputChange = false;
-          _this3.$message({
-            message: '修改成功',
-            type: 'success'
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            _this3.$message.error(arr1.join(','));
-          }
+      var url = this.activeName == '0' ? this.urls.takedeliverygoodsways : this.activeName == '1' ? this.urls.paymentmethods : this.urls.customertypes;
+      this.$patch(url + '/' + row.id, row).then(function () {
+        _this3.$message({
+          message: '修改成功',
+          type: 'success'
         });
-      } else {
-        this.$message({
-          message: '数据未改动',
-          type: 'info'
-        });
-      }
-    },
-    handleEdit: function handleEdit() {
-      this.inputChange = true;
-    },
-    getInfo: function getInfo() {
-      var _this4 = this;
-
-      this.$fetch(this.urls.warehouses).then(function (res) {
-        res.data.map(function (item) {
-          _this4.$set(item, 'provinces', [item.province] + '' + [item.city] + '' + [item.district]);
-        });
-        _this4.getsInfo = res.data;
-        _this4.loading = false;
-        var pg = res.meta.pagination;
-        _this4.$store.dispatch('currentPage', pg.current_page);
-        _this4.$store.commit('PER_PAGE', pg.per_page);
-        _this4.$store.commit('PAGE_TOTAL', pg.total);
+        _this3.currentIndex = '';
+        _this3.inputChange = false;
+        _this3.refresh();
       }, function (err) {
         if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          _this3.$message.error(arr1.join(','));
+        }
+      });
+    },
+
+    /*删除单条*/
+    delSingle: function delSingle(row, e) {
+      this.showDel = true;
+      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
+      this.delId = row.id;
+      this.delUrl = this.activeName == '0' ? this.urls.takedeliverygoodsways : this.activeName == '1' ? this.urls.paymentmethods : this.urls.customertypes;
+    },
+    cancelD: function cancelD() {
+      this.showDel = false;
+      this.$message({
+        message: '取消删除',
+        type: 'info'
+      });
+    },
+    confirmD: function confirmD(url, id) {
+      var _this4 = this;
+
+      this.$del(url + '/' + id).then(function () {
+        _this4.$message({
+          message: '删除成功',
+          type: 'success'
+        });
+        _this4.showDel = false;
+        _this4.refresh();
+      }, function (err) {
+        if (err.response) {
+          _this4.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
@@ -407,55 +396,81 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
     },
-    del: function del(row, e) {
-      this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
-      this.delId = row.id;
-    },
-    cancelD: function cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: '取消删除',
-        type: 'info'
+
+    /*批量删除*/
+    handleSelectionChange: function handleSelectionChange(val) {
+      /*拿到id集合*/
+      var delArr = [];
+      val.forEach(function (selectedItem) {
+        delArr.push(selectedItem.id);
       });
+      this.ids = delArr.join(',');
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : '';
     },
-    confirmD: function confirmD(id) {
+    delBatch: function delBatch() {
       var _this5 = this;
 
-      this.$del(this.urls.warehouses + '/' + id).then(function () {
-        _this5.$message({
-          message: '删除成功',
-          type: 'success'
+      if (this.ids.length === 0) {
+        this.$message({
+          message: '没有选中数据',
+          type: 'warning'
         });
-        _this5.showDel = false;
-        _this5.refresh();
-      }, function (err) {
-        if (err.response) {
-          _this5.showDel = false;
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          _this5.$message.error(arr1.join(','));
-        }
-      });
+      } else {
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function () {
+          _this5.$del(_this5.delUrl, { ids: _this5.ids }).then(function () {
+            _this5.$message({
+              message: '删除成功',
+              type: 'success'
+            });
+            _this5.refresh();
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              _this5.$message.error(arr1.join(','));
+            }
+          });
+        }).catch(function () {
+          _this5.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      }
     },
+
+    /*页面刷新*/
     refresh: function refresh() {
+      this.loading = true;
+      this.fetchStockData();
+    },
+
+    /*分页*/
+    handlePagChg: function handlePagChg(page) {
       var _this6 = this;
 
-      this.loading = true;
-      this.getInfo();
-      setTimeout(function () {
-        _this6.loading = false;
-      }, 2000);
-    },
-    handleArea: function handleArea(value) {
-      this.areaArr = value;
+      var url = this.activeName == '0' ? this.urls.takedeliverygoodsways : this.activeName == '1' ? this.urls.paymentmethods : this.urls.customertypes;
+      this.$fetch(url + '?page=' + page).then(function (res) {
+        if (_this6.activeName == '0') {
+          _this6.takeDelGoodsData = res.data;
+        } else if (_this6.activeName == '1') {
+          _this6.payMethodsData = res.data;
+        } else {
+          _this6.customerTypesData = res.data;
+        }
+      });
     }
   },
   mounted: function mounted() {
-    this.getInfo();
+    this.fetchStockData();
     this.$store.dispatch('setOpt', this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -466,7 +481,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 581:
+/***/ 719:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -477,244 +492,109 @@ var render = function() {
     "div",
     [
       _c(
-        "el-table",
+        "el-tabs",
         {
-          directives: [
-            {
-              name: "loading",
-              rawName: "v-loading",
-              value: _vm.loading,
-              expression: "loading"
-            }
-          ],
-          ref: "multipleTable",
-          attrs: { data: _vm.getsInfo, fit: "", height: "400" },
-          on: { "selection-change": _vm.handleSelectionChange }
+          on: { "tab-click": _vm.tabsClick },
+          model: {
+            value: _vm.activeName,
+            callback: function($$v) {
+              _vm.activeName = $$v
+            },
+            expression: "activeName"
+          }
         },
         [
-          _c("el-table-column", {
-            attrs: {
-              type: "selection",
-              width: "95",
-              align: "center",
-              checked: _vm.checkboxInit
-            }
-          }),
-          _vm._v(" "),
-          _vm._l(_vm.tableHead, function(item, index) {
-            return _c("el-table-column", {
-              key: index,
-              attrs: {
-                label: item.label,
-                align: "center",
-                width: item.width,
-                sortable: item.doSort,
-                prop: item.prop
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(scope) {
-                    return [
-                      _vm.currentIndex == "index" + scope.$index
-                        ? _c("span", [
-                            item.type == "checkbox"
-                              ? _c(
-                                  "span",
-                                  [
-                                    _c("el-checkbox", {
-                                      on: { change: _vm.handleEdit },
-                                      model: {
-                                        value: scope.row[item.prop],
-                                        callback: function($$v) {
-                                          _vm.$set(scope.row, item.prop, $$v)
-                                        },
-                                        expression: "scope.row[item.prop]"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              : item.type == "cascader"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-cascader", {
-                                        attrs: {
-                                          size: "middle",
-                                          options: _vm.options
-                                        },
-                                        on: { change: _vm.handleEdit },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _c(
-                                    "span",
-                                    [
-                                      _c("el-input", {
-                                        attrs: {
-                                          size: "small",
-                                          placeholder: item.holder
-                                        },
-                                        on: { change: _vm.handleEdit },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              scope.row,
-                                              item.prop,
-                                              typeof $$v === "string"
-                                                ? $$v.trim()
-                                                : $$v
-                                            )
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                          ])
-                        : _c("span", [
-                            item.type == "checkbox"
-                              ? _c(
-                                  "span",
-                                  [
-                                    _c("el-checkbox", {
-                                      attrs: { disabled: "" },
-                                      model: {
-                                        value: scope.row[item.prop],
-                                        callback: function($$v) {
-                                          _vm.$set(scope.row, item.prop, $$v)
-                                        },
-                                        expression: "scope.row[item.prop]"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              : _c("span", [
-                                  _vm._v(
-                                    "\n                    " +
-                                      _vm._s(
-                                        item.inProp
-                                          ? scope.row[item.prop][item.inProp]
-                                          : scope.row[item.prop]
-                                      ) +
-                                      "\n        "
-                                  )
-                                ])
-                          ])
-                    ]
-                  }
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "提货方式管理", name: "0" } },
+            [
+              _c("light-table", {
+                attrs: {
+                  listData: _vm.takeDelGoodsData,
+                  tableHead: _vm.tabHead[_vm.activeName],
+                  loading: _vm.loading,
+                  currentIndex: _vm.currentIndex
+                },
+                on: {
+                  editSave: _vm.editSave,
+                  handleEdit: _vm.handleEdit,
+                  del: _vm.delSingle,
+                  edit: _vm.edit,
+                  editCancel: _vm.editCancel,
+                  handleSelect: _vm.handleSelectionChange
                 }
-              ])
-            })
-          }),
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("el-table-column", {
-            attrs: {
-              label: "操作",
-              width: "160",
-              align: "center",
-              fixed: "right"
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(scope) {
-                  return [
-                    _vm.currentIndex == "index" + scope.$index
-                      ? _c(
-                          "span",
-                          [
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { size: "mini" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.editSave(scope.row)
-                                  }
-                                }
-                              },
-                              [_vm._v("保存")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { size: "mini" },
-                                on: { click: _vm.editCancel }
-                              },
-                              [_vm._v("取消\n                            ")]
-                            )
-                          ],
-                          1
-                        )
-                      : _c(
-                          "span",
-                          [
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { size: "mini" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.edit(scope.$index, scope.row)
-                                  }
-                                }
-                              },
-                              [_vm._v("编辑")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { size: "mini", type: "danger" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.del(scope.row, $event)
-                                  }
-                                }
-                              },
-                              [_vm._v("删除")]
-                            )
-                          ],
-                          1
-                        )
-                  ]
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "付款方式管理", name: "1" } },
+            [
+              _c("light-table", {
+                attrs: {
+                  listData: _vm.payMethodsData,
+                  tableHead: _vm.tabHead[_vm.activeName],
+                  loading: _vm.loading,
+                  currentIndex: _vm.currentIndex
+                },
+                on: {
+                  editSave: _vm.editSave,
+                  handleEdit: _vm.handleEdit,
+                  del: _vm.delSingle,
+                  edit: _vm.edit,
+                  editCancel: _vm.editCancel,
+                  handleSelect: _vm.handleSelectionChange
                 }
-              }
-            ])
-          })
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "客户类型管理", name: "2" } },
+            [
+              _c("light-table", {
+                attrs: {
+                  listData: _vm.customerTypesData,
+                  tableHead: _vm.tabHead[_vm.activeName],
+                  loading: _vm.loading,
+                  currentIndex: _vm.currentIndex
+                },
+                on: {
+                  editSave: _vm.editSave,
+                  handleEdit: _vm.handleEdit,
+                  del: _vm.delSingle,
+                  edit: _vm.edit,
+                  editCancel: _vm.editCancel,
+                  handleSelect: _vm.handleSelectionChange
+                }
+              })
+            ],
+            1
+          )
         ],
-        2
+        1
       ),
       _vm._v(" "),
       _c("add-new", {
         attrs: {
-          "visible-add": _vm.showMaskArr,
-          title: _vm.title,
-          "rule-form": _vm.ruleForm,
-          rules: _vm.rules,
-          "add-arr": _vm.addArr,
-          url: _vm.urls.purchasereturntypes,
-          "new-ref": _vm.refArr
+          "visible-add": _vm.showMask,
+          title: _vm.title[_vm.activeName],
+          "rule-form": _vm.ruleForm[_vm.activeName],
+          rules: _vm.rules[_vm.activeName],
+          "add-arr": _vm.addArr[_vm.activeName],
+          url:
+            _vm.activeName == "0"
+              ? _vm.urls.takedeliverygoodsways
+              : _vm.activeName == "1"
+              ? _vm.urls.paymentmethods
+              : _vm.urls.customertypes,
+          "new-ref": _vm.refArr[_vm.activeName]
         },
-        on: {
-          submitEvent: _vm.submitForm,
-          "CB-dialog": _vm.CB_dialog,
-          handleArea: _vm.handleArea
-        }
+        on: { submitEvent: _vm.submitForm, "CB-dialog": _vm.CB_dialog }
       }),
       _vm._v(" "),
       _c(
@@ -752,7 +632,7 @@ var render = function() {
                   attrs: { type: "primary", size: "mini" },
                   on: {
                     click: function($event) {
-                      _vm.confirmD(_vm.delId)
+                      return _vm.confirmD(_vm.delUrl, _vm.delId)
                     }
                   }
                 },
@@ -764,7 +644,17 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("Pagination", { attrs: { "page-url": _vm.urls.purchasereturntypes } })
+      _c("Pagination", {
+        attrs: {
+          "page-url":
+            _vm.activeName == "0"
+              ? _vm.urls.takedeliverygoodsways
+              : _vm.activeName == "1"
+              ? _vm.urls.paymentmethods
+              : _vm.urls.customertypes
+        },
+        on: { handlePagChg: _vm.handlePagChg }
+      })
     ],
     1
   )
@@ -775,7 +665,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-3a269c48", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-a76e2be0", module.exports)
   }
 }
 

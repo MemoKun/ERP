@@ -33,28 +33,65 @@ class RefundOrder extends Model
     ];
 
     protected $fillable = [
-        'order_sn', 'payment_methods_id', 'time_out_at', 'shops_id', 'account',
-        'refund_payment_methods_id', 'bank', 'address', 'refund_amount', 'transaction_sn',
-        'refund_reasons_id', 'buyer_nick', 'buyer_name', 'payment', 'person_liable',
-        'liable_fee', 'undertaker', 'business_remark', 'as_remark', 'f_remark',
-        'refund_description', 'taobao_refund_status', 'status',
+        'id',
+        'refund_sn',
+        'order_sn',
+        'order_no',
+        'shops_id',
+        'refund_order_status',
+        'order_source',
+        'payment_amount',
+        'refund_amount',
+        'refund_payment_methods_id',
+        'refund_account',
+        'bank',
+        'bank_address',
+        'refund_reason_type_id',
+        'refund_reason',
+        'buyer_nick',
+        'buyer_name',
+        'order_time',
+        'order_price',
+        'is_delivered',
+        'receipt_type',
+        'transaction_sn',
+        'paipai_sn',
+        'responsible_party',
+        'responsible_person',
+        'responsible_amount',
+        'freight_fee',
+        'business_remark',
+        'as_remark',
+        'f_remark',
+        'refund_description',
+        'taobao_refund_status',
+        'creator_id',
+        'business_personnel_id',
+        'locker_id',
+        'after_sales_id',
+        'financial_id',
+        'locked_at',
+        'cs_audit_at',
+        'as_audit_at',
+        'f_audit_at',
+        'status',
+        'created_at',
+        'updated_at'
     ];
 
     //设置类型
     protected $casts = [
+        'is_delivered' => 'boolean',
         'status' => 'boolean',
-        'locker_id' => 'integer',
-        'shops_id' => 'integer',
-        'payment_methods_id' => 'integer',
-        'refund_payment_methods_id' => 'integer',
-        'refund_reasons_id' => 'integer',
-        'business_personnel_id' => 'integer',
-        'after_sales_id' => 'integer',
-        'financial_id' => 'integer',
     ];
 
     protected $dates = [
-        'f_audit_at', 'as_audit_at', 'cs_audit_at'
+        'locked_at',
+        'cs_audit_at',
+        'as_audit_at',
+        'f_audit_at',
+        'created_at',
+        'updated_at'
     ];
 
     //观察者
@@ -110,7 +147,7 @@ class RefundOrder extends Model
      */
     public function unlock()
     {
-        return $this->getOriginal('refund_order_status') != self::REFUND_STATUS_LOCK;
+        return !(($this->getOriginal('refund_order_status') == self::REFUND_STATUS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_AS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_FD_LOCK));
     }
 
     /**
@@ -144,6 +181,15 @@ class RefundOrder extends Model
         $this->save();
     }
 
+    public function asDoRefuse()
+    {
+        $this->locker_id = 0;
+        $this->refund_order_status = self::REFUND_STATUS_NEW;
+        $this->locked_at = null;
+        $this->save();
+    }
+
+    
     /**
      * 退审
      * @return bool
@@ -162,7 +208,7 @@ class RefundOrder extends Model
      */
     public function asUnlock()
     {
-        return $this->getOriginal('refund_order_status') != self::REFUND_STATUS_AS_LOCK;
+        return !(($this->getOriginal('refund_order_status') == self::REFUND_STATUS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_AS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_FD_LOCK));
     }
 
     /**
@@ -214,7 +260,7 @@ class RefundOrder extends Model
      */
     public function fdUnlock()
     {
-        return $this->getOriginal('refund_order_status') != self::REFUND_STATUS_FD_LOCK;
+        return !(($this->getOriginal('refund_order_status') == self::REFUND_STATUS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_AS_LOCK)||($this->getOriginal('refund_order_status') == self::REFUND_STATUS_FD_LOCK));
     }
 
     /**
@@ -276,7 +322,6 @@ class RefundOrder extends Model
         return $no;
     }
 
-
     public function getRefundOrderStatusAttribute($value)
     {
         return self::$refundStatusMap[$value] ?? $value;
@@ -300,9 +345,13 @@ class RefundOrder extends Model
 
     public function refundReason()
     {
-        return $this->belongsTo(RefundReason::class, 'refund_reasons_id');
+        return $this->hasMany(RefundReason::class);
     }
 
+    public function refundReasonType()
+    {
+        return $this->belongsTo(RefundReasonType::class,'refund_reason_type_id');
+    }
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');

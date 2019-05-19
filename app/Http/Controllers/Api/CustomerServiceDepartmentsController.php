@@ -3,26 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\DB;
-
 use App\Models\Order;
-
 use App\Http\Requests\Api\CustomerServiceDepartmentRequset;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\MergerOrderRequest;
 use App\Http\Requests\Api\EditStatuRequest;
 use App\Http\Requests\Api\DestroyRequest;
-
 use App\Transformers\OrderTransformer;
-
 use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Controllers\Traits\ProcedureTrait;
-
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 
 /**
- * 客服部资源
+ * 客服部资源.
+ *
  * @Resource("customerservicedepts",uri="/api")
  */
 class CustomerServiceDepartmentsController extends Controller
@@ -35,19 +31,46 @@ class CustomerServiceDepartmentsController extends Controller
     const PerPage = 8;
 
     /**
-     * 获取所有未处理的订单
+     * 获取所有未处理的订单.
      *
      * @Get("/customerservicedepts/searchuntreated[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
      * */
-    public function searchUntreated()
+    public function searchUntreated(CustomerServiceDepartmentRequset $request)
     {
-        $order = Order::query()->whereIn('order_status',[Order::ORDER_STATUS_NEW,Order::ORDER_STATUS_LOCK]);
+        $member_nick=$request->input("member_nick");
+        $system_order_no=$request->input("system_order_no");
+        $receiver_name=$request->input("receiver_name");
+        $receiver_phone=$request->input("receiver_phone");
+        $receiver_address=$request->input("receiver_address");
+        $promise_ship_time=$request->input("promise_ship_time");
+        $created_at=$request->input("created_at");
+        $audit_at=$request->input("audit_at");
+        $shops_id=$request->input("shops_id");
+        $logistics_id=$request->input("logistics_id");
+        $seller_remark=$request->input("seller_remark");
+        $seller_flag=$request->input("seller_flag");
+
+        $order = Order::query()->whereIn('order_status', [Order::ORDER_STATUS_NEW, Order::ORDER_STATUS_LOCK])
+        ->where('member_nick', 'like', '%'.$member_nick.'%')
+        ->where('system_order_no', 'like', '%'.$system_order_no.'%')
+        ->where('receiver_name', 'like', '%'.$receiver_name.'%')
+        ->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+        ->where('receiver_address', 'like', '%'.$receiver_address.'%')
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('logistics_id', 'like', '%'.$logistics_id.'%')
+        ->where('seller_remark', 'like', '%'.$seller_remark.'%')
+        ->where('seller_flag', 'like', '%'.$seller_flag.'%')
+        ->whereBetween('promise_ship_time', [$promise_ship_time[0], $promise_ship_time[1]])
+        ->whereBetween('created_at', [$created_at[0], $created_at[1]])
+        //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
     /**
-     * 获取所有客服部
+     * 获取所有客服部.
      *
      * @Get("/customerservicedepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -146,18 +169,31 @@ class CustomerServiceDepartmentsController extends Controller
      *      }
      * })
      */
-    public function index(CustomerServiceDepartmentRequset $requset)
+    public function index(CustomerServiceDepartmentRequset $request)
     {
-        return $this->allOrPage($requset, self::MODEL, self::TRANSFORMER, self::PerPage);
+        $member_nick = $request->input('member_nick');
+        $system_order_no = $request->input('system_order_no');
+        $receiver_name = $request->input('receiver_name');
+        $receiver_mobile = $request->input('receiver_mobile');
+        $receiver_address = $request->input('receiver_address');
+
+        $order = Order::query()
+        ->where('member_nick', 'like', '%'.$member_nick.'%')
+        ->where('system_order_no', 'like', '%'.$system_order_no.'%')
+        ->where('receiver_name', 'like', '%'.$receiver_name.'%')
+        ->where('receiver_mobile', 'like', '%'.$receiver_mobile.'%')
+        ->where('receiver_address', 'like', '%'.$receiver_address.'%')
+        ->orderBy('created_at', 'desc');
+
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-
     /**
-     * 获取创建订单数据
+     * 获取创建订单数据.
      *
      * @GET("/customerservicedepts/create")
      * @Versions({"v1"})
-     * 
+     *
      * @Response(200, body={
      *       "data": {
      *          "warehouse": {
@@ -469,9 +505,8 @@ class CustomerServiceDepartmentsController extends Controller
             ->addMeta('status_code', '200');
     }
 
-
     /**
-     * 新增客服部(可选参数：include)
+     * 新增客服部(可选参数：include).
      *
      * @Post("/customerservicedepts[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -718,7 +753,7 @@ class CustomerServiceDepartmentsController extends Controller
         CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
         PaymentDetailRequest $paymentDetailRequest,
         \App\Handlers\ValidatedHandler $validatedHandler
-    ){
+    ) {
         $data[] = $customerServiceDepartmentRequset->validated();
         $data[] = $customerServiceDepartmentRequset->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'] ?? null;
@@ -737,13 +772,14 @@ class CustomerServiceDepartmentsController extends Controller
                     );
                 }
             }
-            if($data[2]){
+            if ($data[2]) {
                 foreach ($data[2] as $item) {
                     $model->paymentDetails()->create(
                         $validatedHandler->getValidatedData($paymentDetailRequest->rules(), $item)
                     );
                 }
             }
+
             return $model->id;
         });
 
@@ -754,7 +790,7 @@ class CustomerServiceDepartmentsController extends Controller
     }
 
     /**
-     * 显示单条客服部
+     * 显示单条客服部.
      *
      * @Get("/customerservicedepts/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -847,7 +883,7 @@ class CustomerServiceDepartmentsController extends Controller
     }
 
     /**
-     * 修改客服部
+     * 修改客服部.
      *
      * @Patch("/customerservicedepts/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -1100,17 +1136,18 @@ class CustomerServiceDepartmentsController extends Controller
         CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
         PaymentDetailRequest $paymentDetailRequest,
         Order $order,
-        \App\Handlers\ValidatedHandler $validatedHandler)
-    {
+        \App\Handlers\ValidatedHandler $validatedHandler
+    ) {
         //锁定才能修改
-        if ($order->unlock())
+        if ($order->unlock()) {
             throw new UpdateResourceFailedException('订单未锁定无法修改');
+        }
 
         $data[] = $customerServiceDepartmentRequset->validated();
         $data[] = $customerServiceDepartmentRequset->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'];
 
-        $order = DB::transaction(function() use (
+        $order = DB::transaction(function () use (
             $data,
             $customerServiceDepartmentRequset,
             $paymentDetailRequest,
@@ -1119,7 +1156,7 @@ class CustomerServiceDepartmentsController extends Controller
         ) {
             $order->update($data[0]);
 
-            if ($data[1]??null) {
+            if ($data[1] ?? null) {
                 foreach ($data[1] as $item) {
                     //计算要通过的字段
                     $validatedData = $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item);
@@ -1132,7 +1169,7 @@ class CustomerServiceDepartmentsController extends Controller
                 }
             }
 
-            if ($data[2]??null) {
+            if ($data[2] ?? null) {
                 foreach ($data[2] as $item) {
                     //计算要通过的字段
                     $validatedData = $validatedHandler->getValidatedData($paymentDetailRequest->rules(), $item);
@@ -1144,6 +1181,7 @@ class CustomerServiceDepartmentsController extends Controller
                     }
                 }
             }
+
             return $order;
         });
 
@@ -1152,9 +1190,8 @@ class CustomerServiceDepartmentsController extends Controller
             ->setStatusCode(201);
     }
 
-
     /**
-     * 删除客服部
+     * 删除客服部.
      *
      * @Delete("/customerservicedepts/:id")
      * @Versions({"v1"})
@@ -1168,8 +1205,7 @@ class CustomerServiceDepartmentsController extends Controller
      */
     public function destroy(Order $order)
     {
-        DB::transaction(function() use ($order) {
-
+        DB::transaction(function () use ($order) {
             $orderItems = $order->orderItems()->delete();
             $paymentDetails = $order->paymentDetails()->delete();
             $order = $order->delete();
@@ -1183,7 +1219,7 @@ class CustomerServiceDepartmentsController extends Controller
     }
 
     /**
-     * 删除一组客服部
+     * 删除一组客服部.
      *
      * @Delete("/customerservicedepts")
      * @Versions({"v1"})
@@ -1207,10 +1243,9 @@ class CustomerServiceDepartmentsController extends Controller
     {
         $ids = explode(',', $request->input('ids'));
 
-        DB::transaction(function() use ($ids) {
-
+        DB::transaction(function () use ($ids) {
             $orderItems = \App\Models\OrderItem::whereIn('orders_id', $ids)->delete();
-            $paymentDetails = \App\Models\PaymentDetail::whereIn('orders_id',$ids)->delete();
+            $paymentDetails = \App\Models\PaymentDetail::whereIn('orders_id', $ids)->delete();
             $order = Order::destroy($ids);
 
             if ($orderItems === false || $paymentDetails === false || $order === false) {
@@ -1257,7 +1292,7 @@ class CustomerServiceDepartmentsController extends Controller
     }
 
     /**
-     * 锁定或释放
+     * 锁定或释放.
      *
      * @PUT("/customerservicedepts/:id/lockorunlock")
      * @Versions({"v1"})
@@ -1326,7 +1361,7 @@ class CustomerServiceDepartmentsController extends Controller
     }
 
     /**
-     * 拆单(要及时修改新订单的价格数据)
+     * 拆单(要及时修改新订单的价格数据).
      *
      * @PUT("/customerservicedepts/:id/splitorder")
      * @Versions({"v1"})
@@ -1354,7 +1389,7 @@ class CustomerServiceDepartmentsController extends Controller
     }
 
     /**
-     * 合并订单
+     * 合并订单.
      *
      * @PUT("/customerservicedepts/mergerorder?order_id_one=1&order_id_two=2")
      * @Versions({"v1"})
@@ -1380,5 +1415,4 @@ class CustomerServiceDepartmentsController extends Controller
             $mergerOrderRequest->validated()
         );
     }
-
 }

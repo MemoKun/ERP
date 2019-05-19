@@ -1,3 +1,11 @@
+**/vendor/
+vendor/
+storage/
+/storage
+**/node_modules/
+node_modules/
+storage/
+/storage
 /node_modules
 /public/hot
 /public/storage

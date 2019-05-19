@@ -17,10 +17,13 @@ class FeeType extends Model
         'status' => 'boolean'
     ];
 
-
     public function feeCategory()
     {
         return $this->belongsTo(FeeCategory::class);
     }
 
+    public function afterCompensationOrder()
+    {
+        return $this->hasMany(AfterCompensationOrder::class);
+    }
 }

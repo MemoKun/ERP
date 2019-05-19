@@ -9,7 +9,7 @@ class RefundOrderTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'paymentMethod', 'shop', 'refundPaymentMethod', 'refundReason', 'businessPersonnel',
-        'locker', 'afterSale', 'financial', 'creator'
+        'locker', 'afterSale', 'financial', 'creator',
 
     ];
 
@@ -19,24 +19,29 @@ class RefundOrderTransformer extends TransformerAbstract
             'id' => $refundOrder->id,
             'refund_sn' => $refundOrder->refund_sn,
             'order_sn' => $refundOrder->order_sn,
+            'order_no' => $refundOrder->order_no,
+            'shops_id' => $refundOrder->shops_id,
             'refund_order_status' => $refundOrder->refund_order_status,
             'order_source' => $refundOrder->order_source,
+            'payment_amount' => $refundOrder->payment_amount,
             'payment_methods_id' => $refundOrder->payment_methods_id,
-            'time_out_at' => $refundOrder->time_out_at,
-            'shops_id' => $refundOrder->shops_id,
-            'account' => $refundOrder->account,
-            'refund_payment_methods_id' => $refundOrder->refund_payment_methods_id,
-            'bank' => $refundOrder->bank,
-            'address' => $refundOrder->address,
             'refund_amount' => $refundOrder->refund_amount,
-            'transaction_sn' => $refundOrder->transaction_sn,
-            'refund_reasons_id' => $refundOrder->refund_reasons_id,
+            'refund_payment_methods_id' => $refundOrder->refund_payment_methods_id,
+            'refund_account' => $refundOrder->refund_account,
+            'bank' => $refundOrder->bank,
+            'bank_address' => $refundOrder->bank_address,
+            'refund_reason_type_id' => $refundOrder->refund_reason_type_id,
             'buyer_nick' => $refundOrder->buyer_nick,
             'buyer_name' => $refundOrder->buyer_name,
-            'payment' => $refundOrder->payment,
-            'person_liable' => $refundOrder->person_liable,
-            'liable_fee' => $refundOrder->liable_fee,
-            'undertaker' => $refundOrder->undertaker,
+            'order_time' => optional($refundOrder->order_time)->toDateString(),
+            'order_price' => $refundOrder->order_price,
+            'is_delivered' => $refundOrder->is_delivered,
+            'receipt_type' => $refundOrder->receipt_type,
+            'transaction_sn' => $refundOrder->transaction_sn,
+            'responsible_party' => $refundOrder->responsible_party,
+            'responsible_person' => $refundOrder->responsible_person,
+            'responsible_amount' => $refundOrder->responsible_amount,
+            'freight_fee' => $refundOrder->freight_fee,
             'business_remark' => $refundOrder->business_remark,
             'as_remark' => $refundOrder->as_remark,
             'f_remark' => $refundOrder->f_remark,
@@ -44,17 +49,16 @@ class RefundOrderTransformer extends TransformerAbstract
             'taobao_refund_status' => $refundOrder->taobao_refund_status,
             'creator_id' => $refundOrder->creator_id,
             'business_personnel_id' => $refundOrder->business_personnel_id,
-            'cs_audit_at' => optional($refundOrder->cs_audit_at)->toDateTimeString(),
             'locker_id' => $refundOrder->locker_id,
             'after_sales_id' => $refundOrder->after_sales_id,
-            'as_audit_at' => optional($refundOrder->as_audit_at)->toDateTimeString(),
-            'financial_id' => $refundOrder->financial_id,
-            'f_audit_at' => optional($refundOrder->f_audit_at)->toDateTimeString(),
+            'financial_id'=> $refundOrder->financial_id,
+            'locked_at' => optional($refundOrder->locked_at)->toDateString(),
+            'cs_audit_at' => optional($refundOrder->cs_audit_at)->toDateString(),
+            'as_audit_at' => optional($refundOrder->as_audit_at)->toDateString(),
+            'f_audit_at'=> optional($refundOrder->f_audit_at)->toDateString(),
             'status' => $refundOrder->status,
-            'created_at' => $refundOrder->created_at
-                                  ->toDateTimeString(),
-            'updated_at' => $refundOrder->updated_at
-                                  ->toDateTimeString()
+            'created_at' => optional($refundOrder->created_at)->toDateString(),
+            'updated_at' => optional($refundOrder->updated_at)->toDateString(),
         ];
     }
 
@@ -75,7 +79,12 @@ class RefundOrderTransformer extends TransformerAbstract
 
     public function includeRefundReason(RefundOrder $refundOrder)
     {
-        return $this->item($refundOrder->refundReason, new RefundReasonTransformer());
+        return $this->collection($refundOrder->refundReason, new RefundReasonTransformer());
+    }
+
+    public function includeRefundReasonType(RefundOrder $refundOrder)
+    {
+        return $this->item($refundOrder->refundReasonType, new RefundReasonTypeTransformer());
     }
 
     public function includeCreator(RefundOrder $refundOrder)

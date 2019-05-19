@@ -1,7 +1,8 @@
 <template>
     <div>
-        <h2>商品下载</h2>
-        <div class="box">
+        <el-tabs>
+          <el-tab-pane label="商品下载" name="0">
+            <div class="searchBox">
             <span>
                 <label>店铺名称</label>
                 <el-select v-model="searchBox.shop_name" clearable placeholder="请选择"><el-option v-for="item in searchBox.shopNames" :key="item.value" :label="item.label" :value="item.value"></el-option></el-select>
@@ -15,7 +16,11 @@
                 <el-input v-model="searchBox.pro_num" clearable></el-input>
             </span>
         </div>
-        <el-table
+          </el-tab-pane>
+        </el-tabs>
+        <el-tabs>
+          <el-tab-pane label="商品信息" name="0">
+            <el-table
                 ref="multipleTable"
                 :data="tableData3"
                 tooltip-effect="dark"
@@ -41,6 +46,8 @@
                     show-overflow-tooltip>
             </el-table-column>
         </el-table>
+          </el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 <script>

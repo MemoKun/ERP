@@ -4,10 +4,18 @@ namespace App\Models;
 
 class RefundReason extends Model
 {
-    protected $table = 'refund_reasons';
+    protected $table = 'refund_reason';
 
     protected $fillable = [
-        'name', 'status'
+        'id',
+        'refund_order_id',
+        'refund_reason',
+        'refund_description',
+        'refund_amount',
+        'img_url',
+        'status',
+        'created_at',
+        'updated_at'
     ];
 
     //设置类型
@@ -15,9 +23,9 @@ class RefundReason extends Model
         'status' => 'boolean',
     ];
 
-    public function refundOrders()
+    public function refundOrder()
     {
-        return $this->hasMany(RefundOrder::class, 'payment_methods_id');
+        return $this->belongsTo(RefundOrder::class);
     }
 
 }

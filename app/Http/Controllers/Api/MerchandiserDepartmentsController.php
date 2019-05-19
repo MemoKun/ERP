@@ -3,8 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\Api\MerchandiserDepartmentRequest;
+use App\Http\Requests\Api\CustomerServiceDepartmentRequset;
+use App\Http\Requests\Api\PaymentDetailRequest;
+use App\Http\Requests\Api\SplitOrderRequest;
+use App\Http\Requests\Api\MergerOrderRequest;
+use App\Http\Requests\Api\EditStatuRequest;
+use App\Http\Requests\Api\DestroyRequest;
 
 use App\Transformers\CargoAuditTransformer;
 use App\Transformers\OrderTransformer;
@@ -14,6 +21,7 @@ use App\Http\Controllers\Traits\ProcedureTrait;
 
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\ResourceException;
+use Dingo\Api\Exception\DeleteResourceFailedException;
 
 
 /**
@@ -133,9 +141,12 @@ class MerchandiserDepartmentsController extends Controller
      *       }
      * })
      */
+
+    
     public function index(MerchandiserDepartmentRequest $request)
     {
         $warehouses_id = $order_status = $status =  null;
+        $order_status = $request->input("");
 
         extract($request->validated());
 
@@ -150,8 +161,20 @@ class MerchandiserDepartmentsController extends Controller
 
             })->when($order_status, function ($query) use ($order_status) {
 
-                if($order_status == Order::ORDER_STATUS_CS_AUDIT){
-                    return $query->whereIn('order_status', [Order::ORDER_STATUS_FD_AUDIT, Order::ORDER_STATUS_CS_AUDIT]);
+                if($order_status == Order::ORDER_STATUS_CS_AUDIT){//待跟单一审,待货审 30 
+                    return $query->whereIn('order_status', [Order::ORDER_STATUS_CS_AUDIT,Order::ORDER_STATUS_FD_AUDIT]);
+                }
+
+                if($order_status == Order::ORDER_STATUS_CARGO_AUDIT){//已货审 60
+                    return $query->whereIn('order_status', [Order::ORDER_STATUS_CARGO_AUDIT]);
+                }
+
+                if($order_status == Order::ORDER_STATUS_READY_STOCK_OUT){//待货审 70
+                    return $query->whereIn('order_status', [Order::ORDER_STATUS_READY_STOCK_OUT]);
+                }
+
+                if($order_status == Order::ORDER_STATUS_STOCK_OUT){//已发货 80
+                    return $query->whereIn('order_status', [Order::ORDER_STATUS_STOCK_OUT]);
                 }
 
                 return $query->where('order_status', $order_status);
@@ -161,6 +184,64 @@ class MerchandiserDepartmentsController extends Controller
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
+    public function update(
+        CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
+        PaymentDetailRequest $paymentDetailRequest,
+        Order $order,
+        \App\Handlers\ValidatedHandler $validatedHandler
+    ) {
+        //锁定才能修改
+        if ($order->unReadyStockOut()) {
+            throw new UpdateResourceFailedException('订单未锁定无法修改');
+        }
+
+        $data[] = $customerServiceDepartmentRequset->validated();
+        $data[] = $customerServiceDepartmentRequset->input('order_items');
+        $data[] = $paymentDetailRequest->validated()['payment_details'];
+
+        $order = DB::transaction(function () use (
+            $data,
+            $customerServiceDepartmentRequset,
+            $paymentDetailRequest,
+            $order,
+            $validatedHandler
+        ) {
+            $order->update($data[0]);
+
+            if ($data[1]??null) {
+                foreach ($data[1] as $item) {
+                    //计算要通过的字段
+                    $validatedData = $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item);
+                    //存在id则更新,否则插入
+                    if (isset($item['id'])) {
+                        $order->orderItems()->findOrFail($item['id'])->update($validatedData);
+                    } else {
+                        $order->orderItems()->create($validatedData);
+                    }
+                }
+            }
+
+            if ($data[2]??null) {
+                foreach ($data[2] as $item) {
+                    //计算要通过的字段
+                    $validatedData = $validatedHandler->getValidatedData($paymentDetailRequest->rules(), $item);
+                    //存在id则更新,否则插入
+                    if (isset($item['id'])) {
+                        $order->paymentDetails()->findOrFail($item['id'])->update($validatedData);
+                    } else {
+                        $order->paymentDetails()->create($validatedData);
+                    }
+                }
+            }
+            $order->stockOut();
+
+            return $order;
+        });
+
+        return $this->response
+            ->item($order, new OrderTransformer())
+            ->setStatusCode(201);
+    }
     /**
      * 跟单驳回
      *
