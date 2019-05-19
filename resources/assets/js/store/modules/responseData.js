@@ -20,9 +20,11 @@ const responseData = {
     customertypes: [],
     paymentmethods: [],
     feetypes: [],
-    // 薛涛
+    // add by xuetao
     aftersalestate: [],
     aftersaletype: [],
+    refundreasontype: [],
+    refundMethod: [],
     //add by memokun
     packageType: [],
     refundMethod: [],
@@ -89,12 +91,18 @@ const responseData = {
     FEETYPES: (state, arr) => {
       state.feetypes = arr;
     },
-    // 薛涛
+    // add by xuetao
     AFTERSALESTATE: (state, arr) => {
       state.aftersalestate = arr;
     },
     AFTERSALETYPE: (state, arr) => {
       state.aftersaletype = arr;
+    },
+    REFUNDREASONTYPE:(state, arr)=>{
+      state.refundreasontype = arr;
+    },
+    REFUNDMETHOD:(state, arr)=>{
+      state.refundMethod = arr;
     },
     //add by memokun
     PACKAGETYPE: (state, arr) => {
@@ -361,7 +369,7 @@ const responseData = {
           return res.data.data
         })
     },
-    // 薛涛
+    // add by xuetao
     aftersalestate({
       commit
     }, url) {
@@ -385,6 +393,20 @@ const responseData = {
         })
         .then(res => {
           commit('AFTERSALETYPE', res.data.data);
+          return res.data.data
+        })
+    },
+    refundreasontype({commit}, url) {
+      axios.get(url,{params:{ 'status': true}})
+        .then(res=>{
+          commit('REFUNDREASONTYPE', res.data.data);
+          return res.data.data
+        })
+    },
+    refundMethod({commit}, url) {
+      axios.get(url,{params:{ 'status': true}})
+        .then(res=>{
+          commit('REFUNDMETHOD', res.data.data);
           return res.data.data
         })
     },
