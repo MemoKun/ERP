@@ -1,14 +1,14 @@
 webpackJsonp([15],{
 
-/***/ 517:
+/***/ 515:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(689)
+var __vue_script__ = __webpack_require__(687)
 /* template */
-var __vue_template__ = __webpack_require__(690)
+var __vue_template__ = __webpack_require__(688)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 689:
+/***/ 687:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -131,7 +131,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 690:
+/***/ 688:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -168,47 +168,43 @@ var render = function() {
             return _c("el-table-column", {
               key: item.prop,
               attrs: { label: item.label, align: "center", width: item.width },
-              scopedSlots: _vm._u(
-                [
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        item.type === "checkbox"
-                          ? _c(
-                              "span",
-                              [
-                                _c("el-checkbox", {
-                                  attrs: { disabled: "" },
-                                  model: {
-                                    value: scope.row[item.prop],
-                                    callback: function($$v) {
-                                      _vm.$set(scope.row, item.prop, $$v)
-                                    },
-                                    expression: "scope.row[item.prop]"
-                                  }
-                                })
-                              ],
-                              1
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(scope) {
+                    return [
+                      item.type === "checkbox"
+                        ? _c(
+                            "span",
+                            [
+                              _c("el-checkbox", {
+                                attrs: { disabled: "" },
+                                model: {
+                                  value: scope.row[item.prop],
+                                  callback: function($$v) {
+                                    _vm.$set(scope.row, item.prop, $$v)
+                                  },
+                                  expression: "scope.row[item.prop]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _c("span", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  item.inProp
+                                    ? scope.row[item.prop][item.inProp]
+                                    : scope.row[item.prop]
+                                ) +
+                                "\n                    "
                             )
-                          : _c("span", [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(
-                                    item.inProp
-                                      ? scope.row[item.prop][item.inProp]
-                                      : scope.row[item.prop]
-                                  ) +
-                                  "\n                    "
-                              )
-                            ])
-                      ]
-                    }
+                          ])
+                    ]
                   }
-                ],
-                null,
-                true
-              )
+                }
+              ])
             })
           })
         ],

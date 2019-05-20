@@ -132,7 +132,11 @@ class Order extends Model
         'stockout_at',
         'stockout_remark',
         'locked_at',
-        'auditor_id'
+        'auditor_id',
+        'fd_auditor_id',
+        'fd_audited_at',
+        'cs_auditor_id',
+        'cs_audited_at',
     ];
 
     protected $dates = [
@@ -451,6 +455,35 @@ class Order extends Model
         $this->distribution_checked_at =null;
         $this->save();
     }
+
+    /**
+     *审计部-审核驳回
+     *
+     * @return bool
+     */
+    public function rejectDeptsAudit()
+    {
+        $this->auditor_id = 0;
+        $this->audit_at =null;
+        $this->order_status = xxx;//填入驳回后的订单状态
+        $this->save();
+    }
+
+    
+    /**
+     *审计部-审核
+     *
+     * @return bool
+     */
+    public function auditDeptsAudit()
+    {
+        $this->auditor_id = Auth::guard('api')->id();
+        $this->audit_at = date('Y-m-d h:i:s');
+        $this->order_status = xxx;//填入审核后的订单状态
+        $this->save();
+    }
+
+
 
     /**
      * 是否缺货.

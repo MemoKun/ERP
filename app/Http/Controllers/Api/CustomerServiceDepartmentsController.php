@@ -170,6 +170,16 @@ class CustomerServiceDepartmentsController extends Controller
      *      }
      * })
      */
+    public function searchAudit(CustomerServiceDepartmentRequset $request)
+    {
+        $order_status=$request->input("order_status");
+        $order = Order::query()
+        ->where('order_status','=',$order_status)
+        ->orderBy('created_at', 'desc');
+
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
 
      public function searchAll(CustomerServiceDepartmentRequset $request)
      {
@@ -1523,4 +1533,28 @@ class CustomerServiceDepartmentsController extends Controller
             'goodsUncheck'
         );
     }
+
+    //审计部-驳回审核
+    public function isAuditDeptsRejectAudit(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '审核驳回出错',
+            'rejectDeptsAudit'
+        );
+    }
+
+    //审计部-审核
+    public function isAuditDeptsAudit(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '审核出错',
+            'auditDeptsAudit'
+        );
+    }
+
+
 }

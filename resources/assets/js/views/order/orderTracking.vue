@@ -1,287 +1,346 @@
 <template>
-    <div>
-        <el-tabs v-model="activeName" @tab-click="outerHandleClick">
-            <el-tab-pane label="订单" name="0">
-                <div>
-                    <div class="searchBox">
-                        <span>
-                            <label>订单姓名</label>
-                            <el-input v-model="searchBox.order_num" clearable></el-input>
-                        </span>
-                        <span>
-                            <label>会员昵称</label>
-                            <el-input v-model="searchBox.order_man" clearable></el-input>
-                        </span>
-                        <span>
-                            <label>订单编号</label>
-                            <el-input v-model="searchBox.order_no" clearable></el-input>
-                        </span>
-                        <span v-if="filterBox">
-                            <label>提交人</label>
-                            <el-input v-model="searchBox.order_submitPerson" clearable></el-input>
-                        </span>
-                        <span v-else>
-                            <el-button type="primary">筛选</el-button>
-                            <el-button>重置</el-button>
-                            <span @click="toggleShow">
-                                <el-button type="text">展开</el-button>
-                                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-                            </span>
-                        </span>
-                    </div>
-                    <div class="searchBox" v-show="filterBox">
-                        <span>
-                            <label>审核人</label>
-                            <el-input v-model="searchBox.order_auditPerson" clearable></el-input>
-                        </span>
-                        <span>
-                            <label>完结人</label>
-                            <el-input v-model="searchBox.order_finishPerson" clearable></el-input>
-                        </span>
-                        <span>
-                            <label>店铺名称</label>
-                            <el-select v-model="searchBox.order_shop" clearable clearable placeholder="请选择">
-                                <el-option v-for="item in searchBox.orderShops" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span>
-                            <label>创建日期</label>
-                            <el-date-picker v-model="searchBox.order_createDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-                            </el-date-picker>
-                        </span>
-                    </div>
-                    <div v-if="filterBox" style="text-align: right">
-                        <el-button type="primary">筛选</el-button>
-                        <el-button @click="resets">重置</el-button>
-                        <span @click="toggleShow" style="display: inline">
-                            <el-button type="text">收起</el-button>
-                            <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-                        </span>
-                    </div>
-                </div>
+  <div>
+    <el-tabs v-model="activeName" @tab-click="outerHandleClick">
+      <el-tab-pane label="订单" name="0">
+        <div>
+          <div class="searchBox">
+            <span>
+              <label>订单姓名</label>
+              <el-input v-model="searchBox.order_num" clearable></el-input>
+            </span>
+            <span>
+              <label>会员昵称</label>
+              <el-input v-model="searchBox.order_man" clearable></el-input>
+            </span>
+            <span>
+              <label>订单编号</label>
+              <el-input v-model="searchBox.order_no" clearable></el-input>
+            </span>
+            <span v-if="filterBox">
+              <label>提交人</label>
+              <el-input v-model="searchBox.order_submitPerson" clearable></el-input>
+            </span>
+            <span v-else>
+              <el-button type="primary">筛选</el-button>
+              <el-button>重置</el-button>
+              <span @click="toggleShow">
+                <el-button type="text">展开</el-button>
+                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
+              </span>
+            </span>
+          </div>
+          <div class="searchBox" v-show="filterBox">
+            <span>
+              <label>审核人</label>
+              <el-input v-model="searchBox.order_auditPerson" clearable></el-input>
+            </span>
+            <span>
+              <label>完结人</label>
+              <el-input v-model="searchBox.order_finishPerson" clearable></el-input>
+            </span>
+            <span>
+              <label>店铺名称</label>
+              <el-select v-model="searchBox.order_shop" clearable placeholder="请选择">
+                <el-option
+                  v-for="item in searchBox.orderShops"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </span>
+            <span>
+              <label>创建日期</label>
+              <el-date-picker
+                v-model="searchBox.order_createDate"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+              ></el-date-picker>
+            </span>
+          </div>
+          <div v-if="filterBox" style="text-align: right">
+            <el-button type="primary">筛选</el-button>
+            <el-button @click="resets">重置</el-button>
+            <span @click="toggleShow" style="display: inline">
+              <el-button type="text">收起</el-button>
+              <i class="el-icon-arrow-up" style="color:#409EFF"></i>
+            </span>
+          </div>
+        </div>
 
-                <!--显示列表-未处理-->
-                <el-tabs v-model="firstActiveName" @tab-click="firstHandleClick" style="height: 250px;">
-                    <el-tab-pane label="未处理" name="0">
-                        <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-                            <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                            <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                        </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                            <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                            <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==2">
-                                            <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==3">
-                                            <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==4">
-                                            <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==5">
-                                            <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                            {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                        </span>
-                                    </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <el-tab-pane label="未审核" name="1">
-                        <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-                            <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                            <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                        </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                            <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                            <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==2">
-                                            <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==3">
-                                            <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==4">
-                                            <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==5">
-                                            <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                            {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                        </span>
-                                    </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <el-tab-pane label="未完结" name="2">
-                        <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-                            <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                            <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                        </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                            <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                            <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==2">
-                                            <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==3">
-                                            <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==4">
-                                            <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==5">
-                                            <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                            {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                        </span>
-                                    </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <el-tab-pane label="已完结" name="3">
-                        <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-                            <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                            <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                        </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                            <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                            <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==2">
-                                            <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==3">
-                                            <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==4">
-                                            <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==5">
-                                            <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                            {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                        </span>
-                                    </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <!--<el-tab-pane label="等通知发货" name="2">
+        <!--显示列表-未处理-->
+        <el-tabs v-model="firstActiveName" @tab-click="firstHandleClick" style="height: 250px;">
+          <el-tab-pane label="未处理" name="0">
+            <el-table
+              :data="orderListData"
+              fit
+              @selection-change="handleSelectionChange"
+              v-loading="loading"
+              height="200"
+              @row-click="orderListRClick"
+              @row-dblclick="orderDbClick"
+            >
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
+              <el-table-column
+                v-for="item in orderListHead"
+                :label="item.label"
+                align="center"
+                :width="item.width"
+                :key="item.label"
+              >
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span
+                      v-if="scope.row[item.prop]"
+                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="未审核" name="1">
+            <el-table
+              :data="alreadyHandle"
+              fit
+              @selection-change="handleSelectionChange"
+              v-loading="loading"
+              height="200"
+              @row-click="orderListRClick"
+              @row-dblclick="orderDbClick"
+            >
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
+              <el-table-column
+                v-for="item in orderListHead"
+                :label="item.label"
+                align="center"
+                :width="item.width"
+                :key="item.label"
+              >
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span
+                      v-if="scope.row[item.prop]"
+                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="未完结" name="2">
+            <el-table
+              :data="alreadyHandle"
+              fit
+              @selection-change="handleSelectionChange"
+              v-loading="loading"
+              height="200"
+              @row-click="orderListRClick"
+              @row-dblclick="orderDbClick"
+            >
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
+              <el-table-column
+                v-for="item in orderListHead"
+                :label="item.label"
+                align="center"
+                :width="item.width"
+                :key="item.label"
+              >
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span
+                      v-if="scope.row[item.prop]"
+                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="已完结" name="3">
+            <el-table
+              :data="alreadyHandle"
+              fit
+              @selection-change="handleSelectionChange"
+              v-loading="loading"
+              height="200"
+              @row-click="orderListRClick"
+              @row-dblclick="orderDbClick"
+            >
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
+              <el-table-column
+                v-for="item in orderListHead"
+                :label="item.label"
+                align="center"
+                :width="item.width"
+                :key="item.label"
+              >
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span
+                      v-if="scope.row[item.prop]"
+                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <!--<el-tab-pane label="等通知发货" name="2">
 
-                    </el-tab-pane>-->
-                </el-tabs>
-
-                <Pagination :page-url="this.urls.customerservicedepts" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
-
-                <el-tabs v-model="secondActiveName" @tab-click="secondHandleClick" style="height: 200px;">
-                    <el-tab-pane label="跟踪备注" name="0">
-                        <h2>跟踪备注</h2>
-                    </el-tab-pane>
-                    <el-tab-pane label="产品明细" name="1">
-                        <h2>产品明细</h2>
-                    </el-tab-pane>
-                    <el-tab-pane label="多张图片" name="2">
-                        <h2>多张图片</h2>
-                    </el-tab-pane>
-                </el-tabs>
-            </el-tab-pane>
-
+          </el-tab-pane>-->
         </el-tabs>
 
-    </div>
+        <Pagination
+          :page-url="this.urls.customerservicedepts"
+          @handlePagChg="handlePagChg"
+          v-if="activeName=='0'"
+        ></Pagination>
+
+        <el-tabs v-model="secondActiveName" @tab-click="secondHandleClick" style="height: 200px;">
+          <el-tab-pane label="跟踪备注" name="0">
+            <h2>跟踪备注</h2>
+          </el-tab-pane>
+          <el-tab-pane label="产品明细" name="1">
+            <h2>产品明细</h2>
+          </el-tab-pane>
+          <el-tab-pane label="多张图片" name="2">
+            <h2>多张图片</h2>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 <script>
 import {
@@ -1299,8 +1358,12 @@ export default {
       addCustomerFormRules: {
         //新建订单的要求格式
         shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
-        logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
-        billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
+        logistics_id: [
+          { required: true, message: " 物流必选", trigger: "blur" }
+        ],
+        billing_way: [
+          { required: true, message: "计费方式必选", trigger: "blur" }
+        ],
         freight_types_id: [
           { required: true, message: "运费类型必选", trigger: "blur" }
         ],
@@ -1316,7 +1379,9 @@ export default {
         payment_methods_id: [
           { required: true, message: "付款方式必选", trigger: "blur" }
         ],
-        warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
+        warehouses_id: [
+          { required: true, message: "发货仓库必选", trigger: "blur" }
+        ]
       },
       addCustomerFormHead: [
         //新建订单的文本框表头
@@ -2499,7 +2564,7 @@ export default {
     },
     toggleForm() {
       /*展开  partHide
-        * 折叠  没有partHide*/
+       * 折叠  没有partHide*/
       this.clickFlag = !this.clickFlag;
       this.toggleText = !this.toggleText;
       if (this.clickFlag) {
@@ -2663,7 +2728,9 @@ export default {
       this.delId = row.id;
       this.delUrl = row["orderItems"]
         ? this.urls.customerservicedepts
-        : row["payment"] ? this.urls["paymentdetails"] : this.urls.orderitems;
+        : row["payment"]
+        ? this.urls["paymentdetails"]
+        : this.urls.orderitems;
     },
     cancelD() {
       this.showDel = false;
