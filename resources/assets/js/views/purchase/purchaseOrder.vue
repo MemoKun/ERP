@@ -911,7 +911,7 @@ export default {
         {
           cnt: "退审",
           icon: "bf-auditfaild",
-          ent: this.test
+          ent: this.unAudit
         },
         {
           cnt: "导入",
@@ -3277,6 +3277,22 @@ export default {
           () => {
             this.$message({
               message: "审核成功!",
+              type: "success"
+            });
+            this.refresh();
+          },
+          err => {
+            this.$message.error(err.response.data.message);
+          }
+        );
+      }
+    },
+    unAudit() {
+      if (!this.newOpt[5].nClick) {
+        this.$put(this.urls.purchases + "/" + this.purRow.id + "/unaudit").then(
+          () => {
+            this.$message({
+              message: "退审成功!",
               type: "success"
             });
             this.refresh();

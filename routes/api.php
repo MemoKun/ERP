@@ -469,6 +469,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.purchases.isprint');
         $api->put('purchases/{purchase}/audit', 'PurchasesController@isAudit')
             ->name('api.purchases.isAudit');
+        $api->put('purchases/{purchase}/unaudit', 'PurchasesController@isUnAudit')
+            ->name('api.purchases.isUnAudit');
 
         //采购清单
         $api->get('purchaselists', 'PurchaseListsController@index')
@@ -521,6 +523,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.stockins.isprint');
         $api->put('stockins/{stockin}/audit', 'StockInsContoller@isAudit')
             ->name('api.stockins.isAudit');
+        $api->put('stockins/{stockin}/unaudit', 'StockInsContoller@isUnAudit')
+            ->name('api.stockins.isUnAudit');
         $api->put('stockins/{stockin}/stockin', 'StockInsContoller@stockIn')
             ->name('api.stockins.stockin');
 
