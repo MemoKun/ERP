@@ -22,13 +22,18 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                 break;
             case 'POST':
                 return [
-                    'order_id'=> 'integer',
+                    'order_id'=> 'required|integer',
                     'applier_id'=> 'integer',
+                    'submitter_id' => 'integer',
                     'auditor_id'=> 'integer',
                     'is_canceled'=> 'boolean',
                     'cancel_order_no'=> 'string|max:255',
                     'change_remark'=> 'string|max:255',
                     'change_status'=> 'integer',
+                    
+                    'system_order_no'=> 'string',
+                    'order_status'=> 'integer',
+                    'order_source'=> 'string',
                     
                     'shops_id' => [
                         'required', 'integer',

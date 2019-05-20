@@ -655,6 +655,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customertypes.editstatusbyids');
 
         //客服部
+        $api->get('customerservicedepts/searchall', 'CustomerServiceDepartmentsController@searchAll')
+            ->name('api.customerservicedepts.searchall');
         $api->get('customerservicedepts/searchuntreated', 'CustomerServiceDepartmentsController@searchUntreated')
             ->name('api.customerservicedepts.searchuntreated');
         $api->get('customerservicedepts', 'CustomerServiceDepartmentsController@index')

@@ -170,6 +170,13 @@ class CustomerServiceDepartmentsController extends Controller
      *      }
      * })
      */
+
+     public function searchAll(CustomerServiceDepartmentRequset $request)
+     {
+         $order = Order::query()->orderBy('created_at', 'desc');
+ 
+         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+     }
      public function index(CustomerServiceDepartmentRequset $request)
      {
          $order_status = $request->input("order_status");

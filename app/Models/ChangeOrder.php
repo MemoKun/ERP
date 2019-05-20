@@ -103,6 +103,15 @@ class ChangeOrder extends Model
                     return false;
                 }
             }
+
+            // 如果模型的 user_id 字段为空
+            if (!$model->submitter_id) {
+                $model->submitter_id = Auth::guard('api')->id();
+                // 如果生成失败，则终止创建订单
+            if (!$model->submitter_id) {
+                return false;
+            }
+        }
         });
     }
 

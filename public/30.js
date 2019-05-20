@@ -1903,7 +1903,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     chooseOrderFetchData: function chooseOrderFetchData() {
       var _this2 = this;
 
-      this.$fetch(this.urls.customerservicedepts, {
+      this.$fetch(this.urls.customerservicedepts + '/searchall', {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(function (res) {
         _this2.loading = false;
@@ -2472,15 +2472,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var tempData = this.addChangeOrderFormVal;
     var submitData = (_submitData = {
       change_order_no: tempData.change_order_no,
-      order_id: tempData.order_id,
+      order_id: Number(this.addChangeOrderFormVal.id),
       applier_id: tempData.applier_id,
       submitter_id: tempData.submitter_id,
-      auditor_id: tempData.auditor_id,
+      auditor_id: Number(tempData.auditor_id),
+      order_status: tempData.order_status,
       is_canceled: tempData.is_canceled,
       cancel_order_no: tempData.cancel_order_no,
       change_remark: tempData.change_remark,
       change_status: tempData.change_status,
-      system_order_no: tempData.system_order_no,
+      system_order_no: this.addChangeOrderFormVal.system_order_no,
       shops_id: tempData.shops_id,
       member_nick: tempData.member_nick,
       logistics_id: tempData.logistics_id,
