@@ -147,7 +147,8 @@ class PurchaseListsController extends Controller
      */
     public function index(PurchaseListRequest $request)
     {
-        $commodity_code = $is_audit = '';
+        $commodity_code = '';
+        $is_audit = '1';
 
         extract($request->validated());
 

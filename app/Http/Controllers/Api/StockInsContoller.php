@@ -516,6 +516,11 @@ class StockInsContoller extends Controller
         return $this->traitAction($stockin, !$stockin->status || !$stockin->is_submit || $stockin->is_audit, '审核出错，是否未提交或重复审核', 'audit');
     }
 
+    public function isUnAudit(StockIn $stockin)
+    {
+        return $this->traitAction($stockin, !$stockin->status || !$stockin->is_audit, '退审出错，是否未审核或重复退审', 'unAudit');
+    }
+
     /**
      * 入库
      *
