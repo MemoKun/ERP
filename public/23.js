@@ -734,199 +734,394 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       newOpt: [{
-        cnt: '新增',
-        icon: 'bf-add',
+        cnt: "新增",
+        icon: "bf-add",
         ent: this.addNew
       }, {
-        cnt: '修改',
-        icon: 'bf-change',
+        cnt: "修改",
+        icon: "bf-change",
         ent: this.updatePur,
         nClick: false
       }, {
-        cnt: '删除',
-        icon: 'bf-del',
+        cnt: "删除",
+        icon: "bf-del",
         ent: this.delMore,
         nClick: false
       }, {
-        cnt: '提交',
-        icon: 'bf-submit',
+        cnt: "提交",
+        icon: "bf-submit",
         ent: this.doCommit,
         nClick: false
       }, {
-        cnt: '审核',
-        icon: 'bf-audit',
+        cnt: "审核",
+        icon: "bf-audit",
         ent: this.doAudit,
         nClick: false
       }, {
-        cnt: '退审',
-        icon: 'bf-auditfaild',
+        cnt: "退审",
+        icon: "bf-auditfaild",
         ent: this.test
       }, {
-        cnt: '导入',
-        icon: 'bf-in',
+        cnt: "导入",
+        icon: "bf-in",
         ent: this.test
       }, {
-        cnt: '导出',
-        icon: 'bf-out',
+        cnt: "导出",
+        icon: "bf-out",
         ent: this.test
       }, {
-        cnt: '订单采购',
-        icon: 'bf-purchase',
+        cnt: "订单采购",
+        icon: "bf-purchase",
         ent: this.test
       }, {
-        cnt: '生产排单',
-        icon: 'bf-machie',
+        cnt: "生产排单",
+        icon: "bf-machie",
         ent: this.test
       }, {
-        cnt: '打印',
-        icon: 'bf-printer',
+        cnt: "打印",
+        icon: "bf-printer",
         ent: this.doPrinter,
         nClick: false
       }, {
-        cnt: '刷新',
-        icon: 'bf-refresh',
+        cnt: "刷新",
+        icon: "bf-refresh",
         ent: this.refresh
       }],
       filterBox: false,
       searchBox: {
-        vip_name: '',
-        order_num: '',
-        order_man: '',
-        order_phone: '',
-        order_money: '',
-        order_address: '',
-        order_goods: '',
-        order_staff: '',
-        order_promiseDate: '',
-        order_workDate: '',
-        order_transMStart: '',
-        order_transMEnd: '',
-        orderCompany: [{ label: 'ceshi', value: 0 }],
-        order_customerInves: '',
-        order_mark: '',
-        order_flag: '',
-        ordertbFlag: [{ label: 'ceshi', value: 0 }],
-        order_lock: '',
-        orderLock: [{ label: 'ceshi', value: 0 }],
-        order_company: '',
-        order_shop: '',
-        orderShops: [{ label: 'ceshi', value: 0 }]
+        vip_name: "",
+        order_num: "",
+        order_man: "",
+        order_phone: "",
+        order_money: "",
+        order_address: "",
+        order_goods: "",
+        order_staff: "",
+        order_promiseDate: "",
+        order_workDate: "",
+        order_transMStart: "",
+        order_transMEnd: "",
+        orderCompany: [{ label: "ceshi", value: 0 }],
+        order_customerInves: "",
+        order_mark: "",
+        order_flag: "",
+        ordertbFlag: [{ label: "ceshi", value: 0 }],
+        order_lock: "",
+        orderLock: [{ label: "ceshi", value: 0 }],
+        order_company: "",
+        order_shop: "",
+        orderShops: [{ label: "ceshi", value: 0 }]
       },
-      topActiveName: '0',
+      topActiveName: "0",
       tableHead: [{
-        label: '采购单编号',
-        width: '200',
-        prop: 'purchase_order_no',
-        type: 'text'
+        label: "采购单编号",
+        width: "200",
+        prop: "purchase_order_no",
+        type: "text"
       }, {
-        label: '状态',
-        width: '120',
-        prop: 'purchase_status',
-        type: 'text'
+        label: "状态",
+        width: "120",
+        prop: "purchase_status",
+        type: "text"
       }, {
-        label: '订单编号',
-        width: '180',
-        prop: 'order_no',
-        type: 'text'
+        label: "订单编号",
+        width: "180",
+        prop: "order_no",
+        type: "text"
       }, {
-        label: '创建人',
-        width: '120',
-        prop: 'user',
-        inProp: 'username',
-        type: 'text'
+        label: "创建人",
+        width: "120",
+        prop: "user",
+        inProp: "username",
+        type: "text"
       },
       /* {
-         label: '创建日期',
-         width: '180',
-         // prop: 'created_at',
-         prop: '',
-         type: 'text',
-       },*/
+          label: '创建日期',
+          width: '180',
+          // prop: 'created_at',
+          prop: '',
+          type: 'text',
+        },*/
       {
-        label: '打印时间',
-        width: '200',
-        prop: 'print_at',
-        inProp: 'date',
-        type: 'text'
+        label: "打印时间",
+        width: "200",
+        prop: "print_at",
+        inProp: "date",
+        type: "text"
       },
       /* {
-        label: '审核时间',
-        width: '120',
-        prop: '',
-        type: 'text',
-      },*/
+          label: '审核时间',
+          width: '120',
+          prop: '',
+          type: 'text',
+        },*/
       {
-        label: '承诺发货时间',
-        width: '180',
-        prop: 'promise_ship_time',
-        type: 'text'
+        label: "承诺发货时间",
+        width: "180",
+        prop: "promise_ship_time",
+        type: "text"
       }, {
-        label: '客户名',
-        width: '120',
-        prop: 'client_name',
-        type: 'text'
+        label: "客户名",
+        width: "120",
+        prop: "client_name",
+        type: "text"
       }, {
-        label: '买家昵称',
-        width: '120',
-        prop: 'buyer_nick',
-        type: 'text'
+        label: "买家昵称",
+        width: "120",
+        prop: "buyer_nick",
+        type: "text"
       },
       /*{
-        label: '省市区',
-        width: '150',
-        prop: 'order_address',
-        type: 'text',
-      },*/
+          label: '省市区',
+          width: '150',
+          prop: 'order_address',
+          type: 'text',
+        },*/
       {
-        label: '采购收货人',
-        width: '120',
-        prop: 'receiver',
-        type: 'text'
+        label: "采购收货人",
+        width: "120",
+        prop: "receiver",
+        type: "text"
       }, {
-        label: '采购收货地址',
-        width: '160',
-        prop: 'receiver_address',
-        type: 'text'
+        label: "采购收货地址",
+        width: "160",
+        prop: "receiver_address",
+        type: "text"
       }, {
-        label: '备注',
-        width: '180',
-        prop: 'remark',
-        type: 'text'
+        label: "备注",
+        width: "180",
+        prop: "remark",
+        type: "text"
       }, {
-        label: '采购单来源',
-        width: '140',
-        prop: 'source',
-        type: 'text'
+        label: "采购单来源",
+        width: "140",
+        prop: "source",
+        type: "text"
       }, {
-        label: '原订单业务员',
-        width: '120',
-        prop: 'business_personnel',
-        type: 'text'
+        label: "原订单业务员",
+        width: "120",
+        prop: "business_personnel",
+        type: "text"
       }, {
-        label: '提交',
-        width: '120',
-        prop: 'is_submit',
-        type: 'checkbox'
+        label: "提交",
+        width: "120",
+        prop: "is_submit",
+        type: "checkbox"
       }, {
-        label: '打印',
-        width: '120',
-        prop: 'is_print',
-        type: 'checkbox'
+        label: "打印",
+        width: "120",
+        prop: "is_print",
+        type: "checkbox"
       }, {
-        label: '审核',
-        width: '120',
-        prop: 'is_audit',
-        type: 'checkbox'
+        label: "审核",
+        width: "120",
+        prop: "is_audit",
+        type: "checkbox"
       }, {
-        label: '修改',
-        width: '120',
-        prop: 'is_change',
-        type: 'checkbox'
+        label: "修改",
+        width: "120",
+        prop: "is_change",
+        type: "checkbox"
       }],
       getsInfo: [],
       newData: [],
@@ -936,7 +1131,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       partLoading: true,
       finishLoading: true,
       delArr: [],
-      updateId: '',
+      updateId: "",
       multipleSelection: [],
       addPurchaseMask: false,
       moreForms: true,
@@ -945,450 +1140,500 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       addPurSkuStagId: [],
       /*采购明细*/
       addPurchaseSkuHead: [{
-        label: 'sku名称',
-        prop: 'name',
-        type: 'text'
+        label: "sku名称",
+        prop: "name",
+        type: "text"
       }],
       addPurCurSkuData: {},
       addPurchaseCompHead: [{
-        label: '子件图片',
-        width: '120',
+        label: "子件图片",
+        width: "120",
         prop: "img_url",
-        type: 'img'
+        type: "img"
       }, {
-        label: '子件编码',
-        width: '120',
+        label: "子件编码",
+        width: "120",
         prop: "component_code",
-        type: 'text'
+        type: "text"
       }, {
-        label: '子件名称',
-        width: '120',
+        label: "子件名称",
+        width: "120",
         prop: "spec",
-        type: 'text'
+        type: "text"
       }, {
-        label: '库存数',
-        width: '120',
-        prop: '',
+        label: "库存数",
+        width: "120",
+        prop: "",
         inProp: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '订单数',
-        width: '120',
-        prop: '',
+        label: "订单数",
+        width: "120",
+        prop: "",
         inProp: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '在途数',
-        width: '120',
-        prop: '',
+        label: "在途数",
+        width: "120",
+        prop: "",
         inProp: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '在途数(提交)',
-        width: '120',
-        prop: '',
+        label: "在途数(提交)",
+        width: "120",
+        prop: "",
         inProp: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '可用数',
-        width: '120',
-        prop: '',
+        label: "可用数",
+        width: "120",
+        prop: "",
         inProp: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '已入库数',
-        width: '120',
-        prop: '',
+        label: "已入库数",
+        width: "120",
+        prop: "",
         inProp: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '需采购数',
-        width: '120',
-        prop: '',
+        label: "需采购数",
+        width: "120",
+        prop: "",
         inProp: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '采购数',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "采购数",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "purchase_quantity",
-        type: 'number'
+        type: "number"
       }, {
-        label: '采购店铺',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "采购店铺",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "shops_id",
-        stateVal: 'shops',
-        type: 'select'
+        stateVal: "shops",
+        type: "select"
       }, {
-        label: '供应商',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "供应商",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "suppliers_id",
-        stateVal: 'suppliers',
-        holder: '请选择供应商',
-        type: 'select'
+        stateVal: "suppliers",
+        holder: "请选择供应商",
+        type: "select"
       }, {
-        label: '采购成本',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "采购成本",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "purchase_cost",
-        holder: '请输入采购成本',
-        type: 'number'
+        holder: "请输入采购成本",
+        type: "number"
       }, {
-        label: '仓库成本',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "仓库成本",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "warehouse_cost",
-        holder: '请输入仓库成本',
-        type: 'number'
+        holder: "请输入仓库成本",
+        type: "number"
       }, {
-        label: '佣金点',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "佣金点",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "commission",
-        holder: '请输入佣金点',
-        type: 'number'
+        holder: "请输入佣金点",
+        type: "number"
       }, {
-        label: '采购运费',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "采购运费",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "purchase_freight",
-        holder: '请输入采购运费',
-        type: 'number'
+        holder: "请输入采购运费",
+        type: "number"
       }, {
-        label: '折扣',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "折扣",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "discount",
-        holder: '请输入折扣',
-        type: 'number'
+        holder: "请输入折扣",
+        type: "number"
       }, {
-        label: '木架费',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "木架费",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "wooden_frame_costs",
-        holder: '请输入木架费',
-        type: 'number'
+        holder: "请输入木架费",
+        type: "number"
       }, {
-        label: '到货时间',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "到货时间",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "arrival_time",
-        holder: '请输入到货时间',
-        type: 'datepicker'
+        holder: "请输入到货时间",
+        type: "datepicker"
       }, {
-        label: '备注',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "备注",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "remark",
-        holder: '请输入备注',
-        type: 'textarea'
+        holder: "请输入备注",
+        type: "textarea"
       }],
-      addPurchaseCompIndex: '',
+      addPurchaseCompIndex: "",
       proMask: false,
       specDtlInfo: [],
-      proCompRowIndex: '',
+      proCompRowIndex: "",
       patchData: [],
       idArr: [],
       showDel: false,
-      delDtlIndex: '',
-      combEdit: '',
+      delDtlIndex: "",
+      combEdit: "",
       combEditVal: {},
       combProEditHead: [{
-        label: '采购数',
-        width: '120',
-        prop: 'combEditVal',
+        label: "采购数",
+        width: "120",
+        prop: "combEditVal",
         inProp: "purchase_quantity",
-        holder: '请输入采购数',
-        type: 'number'
+        holder: "请输入采购数",
+        type: "number"
       }, {
-        label: '采购店铺',
-        width: '120',
-        prop: 'combEditVal',
+        label: "采购店铺",
+        width: "120",
+        prop: "combEditVal",
         inProp: "shops_id",
-        holder: '请输入采购店铺',
-        type: 'select',
-        stateVal: 'shops'
+        holder: "请输入采购店铺",
+        type: "select",
+        stateVal: "shops"
       }, {
-        label: '供应商',
-        width: '120',
-        prop: 'combEditVal',
+        label: "供应商",
+        width: "120",
+        prop: "combEditVal",
         inProp: "suppliers_id",
-        holder: '请选择供应商',
-        type: 'select',
-        stateVal: 'suppliers'
+        holder: "请选择供应商",
+        type: "select",
+        stateVal: "suppliers"
       }, {
-        label: '到货时间',
-        width: '120',
-        prop: 'combEditVal',
+        label: "到货时间",
+        width: "120",
+        prop: "combEditVal",
         inProp: "arrival_time",
-        holder: '请输入到货时间',
-        type: 'datepicker'
+        holder: "请输入到货时间",
+        type: "datepicker"
       }, {
-        label: '备注',
-        width: '120',
-        prop: 'combEditVal',
+        label: "备注",
+        width: "120",
+        prop: "combEditVal",
         inProp: "remark",
-        holder: '请输入备注',
-        type: 'textarea'
+        holder: "请输入备注",
+        type: "textarea"
       }],
       /*新增采购*/
       addPurchaseHead: [{
-        label: '采购单号',
-        prop: 'purchase_order_no',
-        holder: '系统自动生成',
-        type: 'text',
+        label: "采购单号",
+        prop: "purchase_order_no",
+        holder: "系统自动生成",
+        type: "text",
         addChgAble: true
       }, {
-        label: '采购状态',
-        prop: 'purchase_status',
-        holder: '新建',
-        type: 'select',
+        label: "采购状态",
+        prop: "purchase_status",
+        holder: "新建",
+        type: "select",
         addChgAble: true
       }, {
-        label: '收货人',
-        prop: 'receiver',
-        holder: '请输入收货人',
-        type: 'text'
+        label: "收货人",
+        prop: "receiver",
+        holder: "请输入收货人",
+        type: "text"
       }, {
-        label: '收货地址',
-        prop: 'receiver_address',
-        holder: '请输入收货地址',
-        type: 'text'
+        label: "收货地址",
+        prop: "receiver_address",
+        holder: "请输入收货地址",
+        type: "text"
       }, {
-        label: '采购备注',
-        prop: 'remark',
-        holder: '请输入采购备注',
-        type: 'textarea'
+        label: "采购备注",
+        prop: "remark",
+        holder: "请输入采购备注",
+        type: "textarea"
       }],
       addPurchaseForm: {
-        receiver: '',
-        receiver_address: '',
-        remark: '',
+        receiver: "",
+        receiver_address: "",
+        remark: "",
         purchase_lists: []
       },
       addPurchaseRules: {
-        receiver: [{ required: true, message: '收货人必填', trigger: 'blur' }],
-        receiver_address: [{ required: true, message: '收货地址必填', trigger: 'blur' }]
+        receiver: [{ required: true, message: "收货人必填", trigger: "blur" }],
+        receiver_address: [{ required: true, message: "收货地址必填", trigger: "blur" }]
       },
       addPurchaseCompVal: [],
       /*商品明细*/
       proQuery: {
-        commodity_code: '',
-        component_code: '',
-        shops_id: ''
+        commodity_code: "",
+        component_code: "",
+        shops_id: ""
       },
       proHead: [{
-        label: '商品图片',
+        label: "商品图片",
         prop: "img",
-        width: '120',
-        type: 'img',
-        alt: '商品图片'
+        width: "120",
+        type: "img",
+        alt: "商品图片"
       }, {
-        label: '店铺',
+        label: "店铺",
         prop: "shop",
-        inProp: 'nick',
-        width: '130',
-        type: 'text'
+        inProp: "nick",
+        width: "130",
+        type: "text"
       }, {
-        label: '商品简称',
+        label: "商品简称",
         prop: "short_name",
-        width: '150',
-        type: 'text'
+        width: "150",
+        type: "text"
       }, {
-        label: '商品编码',
+        label: "商品编码",
         prop: "commodity_code",
-        width: '160',
-        type: 'text'
+        width: "160",
+        type: "text"
       }, {
-        label: '商品名称',
+        label: "商品名称",
         prop: "title",
-        width: '130',
-        type: 'text'
+        width: "130",
+        type: "text"
       }, {
-        label: '供应商',
-        prop: 'supplier',
-        inProp: 'name',
-        width: '130',
-        type: 'text'
+        label: "供应商",
+        prop: "supplier",
+        inProp: "name",
+        width: "130",
+        type: "text"
       }],
-      proRowIndex: '',
+      proRowIndex: "",
       purRow: {},
-      purIndex: '',
-      activeRow: 'index0',
+      purIndex: "",
+      activeRow: "index0",
       proCompVal: [],
       proCompHead: [{
-        label: '通用子件',
-        width: '90',
+        label: "通用子件",
+        width: "90",
         prop: "is_common",
-        type: 'checkbox'
+        type: "checkbox"
       }, {
-        label: '子件图片',
-        width: '120',
+        label: "子件图片",
+        width: "120",
         prop: "img_url",
-        type: 'img'
+        type: "img"
       }, {
-        label: '子件编码',
-        width: '120',
+        label: "子件编码",
+        width: "120",
         prop: "component_code",
-        type: 'text'
+        type: "text"
       }, {
-        label: '子件名称',
-        width: '120',
+        label: "子件名称",
+        width: "120",
         prop: "spec",
-        type: 'text'
+        type: "text"
       }, {
-        label: '库存数',
-        width: '120',
+        label: "库存数",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '库存预警数',
-        width: '120',
+        label: "库存预警数",
+        width: "120",
         prop: "inventory_warning",
-        type: 'number'
+        type: "number"
       }, {
-        label: '订单数',
-        width: '120',
+        label: "订单数",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '在途数',
-        width: '120',
+        label: "在途数",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '在途数(提交)',
-        width: '120',
+        label: "在途数(提交)",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '可用数',
-        width: '120',
+        label: "可用数",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '采购数',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "采购数",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "purchase_quantity",
-        holder: '请输入采购数',
-        type: 'number'
+        holder: "请输入采购数",
+        type: "number"
       }, {
-        label: '采购店铺',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "采购店铺",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "shops_id",
-        holder: '请选择采购店铺',
-        stateVal: 'shops',
-        type: 'select'
+        holder: "请选择采购店铺",
+        stateVal: "shops",
+        type: "select"
       }, {
-        label: '供应商',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "供应商",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "suppliers_id",
-        holder: '请选择供应商',
-        stateVal: 'suppliers',
-        type: 'select'
+        holder: "请选择供应商",
+        stateVal: "suppliers",
+        type: "select"
       }, {
-        label: '采购成本',
-        width: '120',
-        prop: 'proPurchaseData',
-        inProp: 'purchase_cost',
-        type: 'number'
+        label: "采购成本",
+        width: "120",
+        prop: "proPurchaseData",
+        inProp: "purchase_cost",
+        type: "number"
       }, {
-        label: '采购运费',
-        width: '120',
-        prop: 'proPurchaseData',
-        inProp: 'purchase_freight',
-        type: 'number'
+        label: "采购运费",
+        width: "120",
+        prop: "proPurchaseData",
+        inProp: "purchase_freight",
+        type: "number"
       }, {
-        label: '仓库成本',
-        width: '120',
+        label: "仓库成本",
+        width: "120",
         prop: "proPurchaseData",
         inProp: "warehouse_cost",
-        type: 'number'
+        type: "number"
       }, {
-        label: '佣金点',
-        width: '120',
+        label: "佣金点",
+        width: "120",
         prop: "proPurchaseData",
         inProp: "commission",
-        type: 'number'
+        type: "number"
       }, {
-        label: '折扣',
-        width: '120',
+        label: "折扣",
+        width: "120",
         prop: "proPurchaseData",
         inProp: "discount",
-        type: 'number'
+        type: "number"
       }, {
-        label: '木架费',
-        width: '120',
+        label: "木架费",
+        width: "120",
         prop: "proPurchaseData",
         inProp: "wooden_frame_costs",
-        type: 'number'
+        type: "number"
       }, {
-        label: '到货时间',
-        width: '155',
-        prop: 'proPurchaseData',
+        label: "到货时间",
+        width: "155",
+        prop: "proPurchaseData",
         inProp: "arrival_time",
-        holder: '请输入到货时间',
-        type: 'datepicker'
+        holder: "请输入到货时间",
+        type: "datepicker"
       }, {
-        label: '备注',
-        width: '120',
-        prop: 'proPurchaseData',
+        label: "备注",
+        width: "120",
+        prop: "proPurchaseData",
         inProp: "remark",
-        holder: '请输入备注',
-        type: 'textarea'
+        holder: "请输入备注",
+        type: "textarea"
       }],
       proSkuVal: [],
       proSkuHead: [{
-        label: 'sku名称',
-        width: '120',
+        label: "sku名称",
+        width: "120",
         prop: "name",
-        type: 'text'
+        type: "text"
       }, {
-        label: '组合件数',
-        width: '120',
+        label: "组合件数",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '库存数',
-        width: '120',
+        label: "库存数",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '订单数',
-        width: '120',
+        label: "订单数",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '在途数(提交)',
-        width: '120',
+        label: "在途数(提交)",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
       }, {
-        label: '可用数',
-        width: '120',
+        label: "可用数",
+        width: "120",
         prop: "",
-        inProp: '',
-        type: 'number'
+        inProp: "",
+        type: "number"
+        /*
+           {
+            label: 'sku图片',
+            width: '160',
+            prop: 'com_pro_spec',
+            inProp: "img_url",
+            type: 'text'
+          },
+          {
+             label: '规格编码',
+             width: '160',
+             prop: 'com_pro_spec',
+             inProp: "spec_code",
+             type: 'text'
+           },
+          {
+            label: '采购成本',
+            width: '120',
+            prop: '',
+            inProp: "",
+            type: 'number'
+          },
+          {
+            label: '仓库成本',
+            width: '120',
+            prop: '',
+            inProp: "",
+            type: 'number'
+          },
+          {
+            label: '佣金点',
+            width: '120',
+            prop: 'com_pro_spec',
+            inProp: "commission",
+            type: 'number'
+          },
+          {
+            label: '折扣',
+            width: '120',
+            prop: 'com_pro_spec',
+            inProp: "discount",
+            type: 'number'
+          },
+          {
+            label: '木架费',
+            width: '120',
+            prop: 'com_pro_spec',
+            inProp: "wooden_frame_costs",
+            type: 'number'
+          }*/
       }],
       proCurSkuData: {},
-      proIndex: '',
+      proIndex: "",
       proDtlVal: [],
       proCompValChg: false,
-      proCompIndex: '',
+      proCompIndex: "",
       compStagData: [],
       compStagId: [],
       updateCompFlag: false,
@@ -1397,171 +1642,182 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       updatePurForm: {},
       updatePurSkuVal: [],
       updatePurCompVal: [],
-      updatePurCompIndex: '',
+      updatePurCompIndex: "",
       updatePurSkuStagId: [],
-      updatePurSkuIndex: '',
+      updatePurSkuIndex: "",
       updateSkuRow: [],
-      updateSkuIndex: '',
+      updateSkuIndex: "",
       /*底部tabs*/
       checkboxInit: false,
-      leftActiveName: '0',
+      leftActiveName: "0",
       purListVal: [],
       purListHead: [{
-        label: '采购名称',
-        width: '200',
+        label: "采购名称",
+        width: "200",
         prop: "combination",
         inProp: "name",
-        type: 'text'
+        type: "text"
       }],
-      rightActiveName: '0',
+      rightActiveName: "0",
       purDetailsVal: [],
-      delUrl: '',
+      delUrl: "",
       purDetailsHead: [{
-        label: '子件图片',
-        width: '120',
-        prop: 'productComponent',
+        label: "子件图片",
+        width: "120",
+        prop: "productComponent",
         inProp: "img_url",
-        type: 'img'
+        type: "img"
       }, {
-        label: '子件编码',
-        width: '120',
-        prop: 'productComponent',
+        label: "子件编码",
+        width: "120",
+        prop: "productComponent",
         inProp: "component_code",
-        type: 'text'
+        type: "text"
       }, {
-        label: '子件名称',
-        width: '160',
-        prop: 'productComponent',
+        label: "子件名称",
+        width: "160",
+        prop: "productComponent",
         inProp: "spec",
-        type: 'text'
+        type: "text"
       }, {
-        label: '店铺',
-        width: '120',
+        label: "店铺",
+        width: "120",
         prop: "shops_id",
-        type: 'select',
-        stateVal: 'shops'
+        type: "select",
+        stateVal: "shops"
       }, {
-        label: '供应商',
-        width: '120',
+        label: "供应商",
+        width: "120",
         prop: "suppliers_id",
-        type: 'select',
-        stateVal: 'suppliers'
+        type: "select",
+        stateVal: "suppliers"
       }, {
-        label: '采购数',
-        width: '120',
+        label: "采购数",
+        width: "120",
         prop: "purchase_quantity",
-        type: 'number'
+        type: "number"
       }, {
-        label: '采购成本',
-        width: '100',
+        label: "采购成本",
+        width: "100",
         prop: "purchase_cost",
-        type: 'number'
+        type: "number"
       }, {
-        label: '采购运费',
-        width: '120',
+        label: "采购运费",
+        width: "120",
         prop: "purchase_freight",
-        type: 'number'
+        type: "number"
       }, {
-        label: '仓库成本',
-        width: '120',
-        prop: 'warehouse_cost',
-        type: 'number'
+        label: "仓库成本",
+        width: "120",
+        prop: "warehouse_cost",
+        type: "number"
       }, {
-        label: '已入库数',
-        width: '120',
+        label: "已入库数",
+        width: "120",
         prop: "stock_in_count",
-        type: 'number'
+        type: "number"
       }, {
-        label: '佣金点',
-        width: '150',
-        prop: 'commission',
-        type: 'number'
+        label: "佣金点",
+        width: "150",
+        prop: "commission",
+        type: "number"
       }, {
-        label: '折扣',
-        width: '150',
-        prop: 'discount',
-        type: 'number'
+        label: "折扣",
+        width: "150",
+        prop: "discount",
+        type: "number"
       }, {
-        label: '木架费',
-        width: '120',
+        label: "木架费",
+        width: "120",
         prop: "wooden_frame_costs",
-        type: 'checkbox'
+        type: "checkbox"
       },
       /*{
-        label: '采购总体积',
-        width: '120',
-        prop: "is_common",
-        type: 'checkbox',
-        // chgAble: false,
-        // editChgAble: true,
-      },*/
+          label: '采购总体积',
+          width: '120',
+          prop: "is_common",
+          type: 'checkbox',
+          // chgAble: false,
+          // editChgAble: true,
+        },*/
       {
-        label: '成本价',
-        width: '120',
-        prop: 'productComponent',
+        label: "成本价",
+        width: "120",
+        prop: "productComponent",
         inProp: "cost",
-        type: 'number'
+        type: "number"
       },
       /* {
-         label: '成本总价',
-         width: '150',
-         prop: "inventory_warning",
-         type: 'number'
-       },*/
+          label: '成本总价',
+          width: '150',
+          prop: "inventory_warning",
+          type: 'number'
+        },*/
       {
-        label: '体积',
-        width: '120',
-        prop: 'productComponent',
+        label: "体积",
+        width: "120",
+        prop: "productComponent",
         inProp: "volume",
-        type: 'number'
+        type: "number"
       }, {
-        label: '库存数',
-        width: '120',
+        label: "库存数",
+        width: "120",
         prop: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '订出数',
-        width: '120',
+        label: "订出数",
+        width: "120",
         prop: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '在途数',
-        width: '120',
+        label: "在途数",
+        width: "120",
         prop: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '在途数(提交)',
-        width: '130',
+        label: "在途数(提交)",
+        width: "130",
         prop: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '可用数',
-        width: '120',
+        label: "可用数",
+        width: "120",
         prop: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '需采购数',
-        width: '130',
+        label: "需采购数",
+        width: "130",
         prop: "",
-        type: 'number'
+        type: "number"
       }, {
-        label: '到货时间',
-        width: '150',
+        label: "到货时间",
+        width: "150",
         prop: "arrival_time",
-        type: 'text'
+        type: "text"
       }, {
-        label: '状态',
-        width: '130',
+        label: "状态",
+        width: "130",
         prop: "purchase_item_status",
-        type: 'text'
+        type: "text"
       }, {
-        label: '备注',
-        width: '120',
+        label: "备注",
+        width: "120",
         prop: "remark",
-        type: 'textarea'
+        type: "textarea"
+        /* {
+            label: '商品备注',
+            width: '120',
+            prop: "is_stop_pro",
+            type: 'checkbox'
+          },
+          {
+            label: '面料图片',
+            width: '120',
+            prop: "is_stop_pro",
+            type: 'checkbox'
+          }*/
       }],
       hkey_path: "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\"
-
     };
   },
 
@@ -1608,22 +1864,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.purchases, {
-            purchase_status: 'new',
-            include: 'user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination'
+            purchase_status: "new",
+            include: "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(function (res) {
             _this.newLoading = false;
             _this.newData = res.data;
             _this.checkboxInit = false;
             var pg = res.meta.pagination;
-            if (res.data[0] && res.data[0]['purchaseLists']['data'][0]) {
-              _this.purListVal = res.data[0]['purchaseLists']['data'][0];
-              _this.purDetailsVal = res.data[0].purchase_lists['data'][0]['purchaseDetails']['data'];
+            if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
+              _this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+              _this.purDetailsVal = res.data[0].purchase_lists["data"][0]["purchaseDetails"]["data"];
             }
-            _this.$store.dispatch('currentPage', pg.current_page);
-            _this.$store.commit('PER_PAGE', pg.per_page);
-            _this.$store.commit('PAGE_TOTAL', pg.total);
-            _this.$store.dispatch('suppliers', '/suppliers');
-            _this.$store.dispatch('shops', '/shops');
+            _this.$store.dispatch("currentPage", pg.current_page);
+            _this.$store.commit("PER_PAGE", pg.per_page);
+            _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("suppliers", "/suppliers");
+            _this.$store.dispatch("shops", "/shops");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -1631,7 +1887,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              var str = arr1.join(',');
+              var str = arr1.join(",");
               _this.$message.error({
                 message: str
               });
@@ -1642,18 +1898,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[1].nClick = true;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = false;
-          this.$fetch(this.urls.purchases, { purchase_status: 'section', include: 'user,purchaseLists.purchaseDetails,purchaseLists.combination' }).then(function (res) {
+          this.$fetch(this.urls.purchases, {
+            purchase_status: "section",
+            include: "user,purchaseLists.purchaseDetails,purchaseLists.combination"
+          }).then(function (res) {
             _this.partLoading = false;
             _this.partData = res.data;
             _this.checkboxInit = false;
-            if (res.data[0] && res.data[0]['purchaseLists']['data'][0]) {
-              _this.purListVal = res.data[0]['purchaseLists']['data'][0];
-              _this.purDetailsVal = res.data[0].purchase_lists['data'][0]['purchaseDetails']['data'];
+            if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
+              _this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+              _this.purDetailsVal = res.data[0].purchase_lists["data"][0]["purchaseDetails"]["data"];
             }
             var pg = res.meta.pagination;
-            _this.$store.dispatch('currentPage', pg.current_page);
-            _this.$store.commit('PER_PAGE', pg.per_page);
-            _this.$store.commit('PAGE_TOTAL', pg.total);
+            _this.$store.dispatch("currentPage", pg.current_page);
+            _this.$store.commit("PER_PAGE", pg.per_page);
+            _this.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -1661,7 +1920,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              var str = arr1.join(',');
+              var str = arr1.join(",");
               _this.$message.error({
                 message: str
               });
@@ -1672,18 +1931,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[1].nClick = true;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = true;
-          this.$fetch(this.urls.purchases, { purchase_status: 'finish', include: 'user,purchaseLists.purchaseDetails,purchaseLists.combination' }).then(function (res) {
+          this.$fetch(this.urls.purchases, {
+            purchase_status: "finish",
+            include: "user,purchaseLists.purchaseDetails,purchaseLists.combination"
+          }).then(function (res) {
             _this.finishLoading = false;
             _this.finishData = res.data;
             _this.checkboxInit = false;
-            if (res.data[0] && res.data[0]['purchaseLists']['data'][0]) {
-              _this.purListVal = res.data[0]['purchaseLists']['data'][0];
-              _this.purDetailsVal = res.data[0].purchase_lists['data'][0]['purchaseDetails']['data'];
+            if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
+              _this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+              _this.purDetailsVal = res.data[0].purchase_lists["data"][0]["purchaseDetails"]["data"];
             }
             var pg = res.meta.pagination;
-            _this.$store.dispatch('currentPage', pg.current_page);
-            _this.$store.commit('PER_PAGE', pg.per_page);
-            _this.$store.commit('PAGE_TOTAL', pg.total);
+            _this.$store.dispatch("currentPage", pg.current_page);
+            _this.$store.commit("PER_PAGE", pg.per_page);
+            _this.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -1691,7 +1953,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              var str = arr1.join(',');
+              var str = arr1.join(",");
               _this.$message.error({
                 message: str
               });
@@ -1712,31 +1974,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // this.$refs.newTable.toggleRowSelection(row);
       // this.$refs.partTable.toggleRowSelection(row);
       // this.$refs.finishTable.toggleRowSelection(row);
-      this.purListVal = row['purchaseLists']['data'];
+      this.purListVal = row["purchaseLists"]["data"];
       this.purIndex = row.index;
-      if (row['purchaseLists']['data'][0]) {
-        this.purDetailsVal = row['purchaseLists']['data'][0]['purchaseDetails']['data'];
+      if (row["purchaseLists"]["data"][0]) {
+        this.purDetailsVal = row["purchaseLists"]["data"][0]["purchaseDetails"]["data"];
       } else {
         this.purDetailsVal = [];
       }
-      this.newOpt[1].nClick = row['is_change'] ? true : false;
-      this.newOpt[3].nClick = row['is_submit'] ? true : false;
-      this.newOpt[10].nClick = row['is_print'] ? true : false;
-      this.newOpt[4].nClick = row['is_audit'] ? true : false;
+      this.newOpt[1].nClick = row["is_change"] ? true : false;
+      this.newOpt[3].nClick = row["is_submit"] ? true : false;
+      this.newOpt[10].nClick = row["is_print"] ? true : false;
+      this.newOpt[4].nClick = row["is_audit"] ? true : false;
       // this.rowStyle({row, rowIndex});
     },
     purListRowClick: function purListRowClick(row) {
-      this.purDetailsVal = row['purchaseDetails']['data'];
+      this.purDetailsVal = row["purchaseDetails"]["data"];
     },
     purListDtl: function purListDtl(row, e) {
       this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
       this.delId = row.id;
       if (row.purchase_order_no) {
         this.delUrl = this.urls.purchases;
-      } else if (row['purchases_id']) {
+      } else if (row["purchases_id"]) {
         this.delUrl = this.urls.purchaselists;
-      } else if (row['purchase_lists_id']) {
+      } else if (row["purchase_lists_id"]) {
         this.delUrl = this.urls.purchasedetails;
       }
     },
@@ -1753,9 +2015,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addNew: function addNew() {
       this.addPurchaseMask = true;
       this.addPurchaseForm = {
-        receiver: '',
-        receiver_address: '',
-        remark: '',
+        receiver: "",
+        receiver_address: "",
+        remark: "",
         purchase_lists: []
       };
       this.addPurchaseSkuVal = [];
@@ -1763,23 +2025,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.addPurSkuStagId = [];
     },
     addPurchaseDetail: function addPurchaseDetail() {
-      this.proRowIndex = '0';
+      this.proRowIndex = "0";
       this.specDtlInfo = [];
       this.proDtlVal = [];
       this.proSkuVal = [];
       this.proCompVal = [];
       this.addPurchaseSkuVal = [];
-      this.proCompRowIndex = '';
+      this.proCompRowIndex = "";
       this.proMask = true;
       Object.assign(this.proQuery, this.$options.data().proQuery);
     },
     addCompCName: function addCompCName(_ref2) {
       var row = _ref2.row,
           rowIndex = _ref2.rowIndex;
+
       row.index = rowIndex;
     },
     addCompRowClick: function addCompRowClick(row) {
-      this.addPurchaseCompIndex = 'index' + row.index;
+      this.addPurchaseCompIndex = "index" + row.index;
     },
     addPurSkuRowClick: function addPurSkuRowClick(row) {
       this.addPurchaseCompVal = row.compData;
@@ -1794,21 +2057,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     addPurCompDtl: function addPurCompDtl(index) {
       /* this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-         confirmButtonText: '确定',
-         cancelButtonText: '取消',
-         type: 'warning'
-       }).then(() => {
-         this.addPurchaseSkuVal.splice(index,1);
-         this.$message({
-           message: '删除成功',
-           type: 'success'
-         });
-       }).catch(() => {
-         this.$message({
-           type: 'info',
-           message: '已取消删除'
-         });
-       });*/
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.addPurchaseSkuVal.splice(index,1);
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });*/
       this.addPurchaseCompVal.splice(index, 1);
     },
     confirmAddPur: function confirmAddPur() {
@@ -1822,17 +2085,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         item.compData.map(function (list) {
           var comp = {
             product_components_id: list.id,
-            purchase_quantity: list['proPurchaseData'].purchase_quantity,
-            shops_id: list['proPurchaseData'].shops_id,
-            suppliers_id: list['proPurchaseData'].suppliers_id,
-            purchase_cost: list['proPurchaseData'].purchase_cost,
-            warehouse_cost: list['proPurchaseData'].warehouse_cost,
-            purchase_freight: list['proPurchaseData'].purchase_freight,
-            commission: list['proPurchaseData'].commission,
-            discount: list['proPurchaseData'].discount,
-            wooden_frame_costs: list['proPurchaseData'].wooden_frame_costs,
-            arrival_time: list['proPurchaseData'].arrival_time,
-            remark: list['proPurchaseData'].remark
+            purchase_quantity: list["proPurchaseData"].purchase_quantity,
+            shops_id: list["proPurchaseData"].shops_id,
+            suppliers_id: list["proPurchaseData"].suppliers_id,
+            purchase_cost: list["proPurchaseData"].purchase_cost,
+            warehouse_cost: list["proPurchaseData"].warehouse_cost,
+            purchase_freight: list["proPurchaseData"].purchase_freight,
+            commission: list["proPurchaseData"].commission,
+            discount: list["proPurchaseData"].discount,
+            wooden_frame_costs: list["proPurchaseData"].wooden_frame_costs,
+            arrival_time: list["proPurchaseData"].arrival_time,
+            remark: list["proPurchaseData"].remark
           };
           sku.purchase_details.push(comp);
         });
@@ -1840,8 +2103,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
       this.$post(this.urls.purchases, this.addPurchaseForm).then(function () {
         _this2.$message({
-          message: '新建采购单成功',
-          type: 'success'
+          message: "新建采购单成功",
+          type: "success"
         });
         _this2.addPurchaseMask = false;
         _this2.refresh();
@@ -1852,7 +2115,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this2.$message.error({
             message: str
           });
@@ -1862,8 +2125,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     cancelAddPur: function cancelAddPur() {
       this.addPurchaseMask = false;
       this.$message({
-        message: '取消新建采购单',
-        type: 'info'
+        message: "取消新建采购单",
+        type: "info"
       });
     },
     dateChg: function dateChg(val) {
@@ -1875,19 +2138,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this3 = this;
 
       this.proCompValChg = false;
-      this.proCompIndex = '0';
+      this.proCompIndex = "0";
       this.compStagData = [];
       this.compStagId = [];
-      this.$fetch(this.urls.products + '/search', { commodity_code: this.proQuery.commodity_code, shops_id: this.proQuery.shops_id, component_code: this.proQuery.commodity_code, include: 'productComponents,shop,supplier,goodsCategory,combinations.productComponents' }).then(function (res) {
+      this.$fetch(this.urls.products + "/search", {
+        commodity_code: this.proQuery.commodity_code,
+        shops_id: this.proQuery.shops_id,
+        component_code: this.proQuery.commodity_code,
+        include: "productComponents,shop,supplier,goodsCategory,combinations.productComponents"
+      }).then(function (res) {
         _this3.proDtlVal = res.data;
-        if (res.data[0] && res.data[0].combinations['data'][0]['productComponents']['data'].length > 0) {
-          res.data[0].combinations['data'][0]['productComponents']['data'].map(function (item) {
-            _this3.$set(item, 'proPurchaseData', {
-              purchase_quantity: '',
-              shops_id: '',
-              suppliers_id: '',
-              arrival_time: '',
-              remark: '',
+        if (res.data[0] && res.data[0].combinations["data"][0]["productComponents"]["data"].length > 0) {
+          res.data[0].combinations["data"][0]["productComponents"]["data"].map(function (item) {
+            _this3.$set(item, "proPurchaseData", {
+              purchase_quantity: "",
+              shops_id: "",
+              suppliers_id: "",
+              arrival_time: "",
+              remark: "",
               purchase_cost: item.purchase_cost,
               purchase_freight: item.purchase_freight,
               warehouse_cost: item.warehouse_cost,
@@ -1896,11 +2164,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               wooden_frame_costs: item.wooden_frame_costs
             });
           });
-          _this3.proSkuVal = res.data[0].combinations['data'];
-          if (res.data[0].combinations['data'][0]) {
-            _this3.proCurSkuData = res.data[0].combinations['data'][0];
+          _this3.proSkuVal = res.data[0].combinations["data"];
+          if (res.data[0].combinations["data"][0]) {
+            _this3.proCurSkuData = res.data[0].combinations["data"][0];
           }
-          _this3.proCompVal = res.data[0].combinations['data'][0]['productComponents']['data'];
+          _this3.proCompVal = res.data[0].combinations["data"][0]["productComponents"]["data"];
         }
       }, function (err) {
         if (err.response) {
@@ -1909,7 +2177,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this3.$message.error({
             message: str
           });
@@ -1930,27 +2198,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proCompValChg = false;
       this.compStagData = [];
       this.compStagId = [];
-      this.combEdit = '';
-      this.proCompRowIndex = '';
-      if (row.combinations['data'][0]['productComponents']['data'].length > 0) {
-        row.combinations['data'][0]['productComponents']['data'].map(function (item) {
-          _this4.$set(item, 'proPurchaseData', {
-            purchase_quantity: '',
-            shops_id: '',
-            suppliers_id: '',
-            arrival_time: '',
-            remark: '',
+      this.combEdit = "";
+      this.proCompRowIndex = "";
+      if (row.combinations["data"][0]["productComponents"]["data"].length > 0) {
+        row.combinations["data"][0]["productComponents"]["data"].map(function (item) {
+          _this4.$set(item, "proPurchaseData", {
+            purchase_quantity: "",
+            shops_id: "",
+            suppliers_id: "",
+            arrival_time: "",
+            remark: "",
             purchase_cost: item.purchase_cost,
             purchase_freight: item.purchase_freight,
             warehouse_cost: item.warehouse_cost,
             commission: item.commission,
             discount: item.discount,
-            wooden_frame_costs: item.wooden_frame_costs });
+            wooden_frame_costs: item.wooden_frame_costs
+          });
         });
       }
-      this.proSkuVal = row.combinations['data'];
-      this.proCurSkuData = row.combinations['data'][0];
-      this.proCompVal = row.combinations['data'][0]['productComponents']['data'];
+      this.proSkuVal = row.combinations["data"];
+      this.proCurSkuData = row.combinations["data"][0];
+      this.proCompVal = row.combinations["data"][0]["productComponents"]["data"];
     },
     proCompCName: function proCompCName(_ref4) {
       var row = _ref4.row,
@@ -1964,7 +2233,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     proCompRowClick: function proCompRowClick(row) {
       var _this5 = this;
 
-      this.proCompRowIndex = 'index' + row.index;
+      this.proCompRowIndex = "index" + row.index;
       this.proCompIndex = row.index;
       if (this.proCompValChg) {
         if (this.compStagData.length > 0) {
@@ -1986,7 +2255,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.proCompValChg = false;
       }
       var newStagData = this.compStagData;
-      this.proCurSkuData['compData'] = newStagData;
+      this.proCurSkuData["compData"] = newStagData;
     },
     confirmAddProDtl: function confirmAddProDtl() {
       var _this6 = this;
@@ -1994,8 +2263,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (this.addPurchaseMask) {
         if (this.proCurSkuData.compData.length > 0) {
           this.proCurSkuData.compData.map(function (compItem) {
-            for (var i in compItem['proPurchaseData']) {
-              if (compItem['proPurchaseData'][i] == '') {
+            for (var i in compItem["proPurchaseData"]) {
+              if (compItem["proPurchaseData"][i] == "") {
                 _this6.$message.error("数据不完整不能添加");
               }
             }
@@ -2020,9 +2289,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
         this.addPurchaseCompVal = this.addPurchaseSkuVal[0].compData;
         this.$message({
-          message: '添加商品明细成功',
-          type: 'success'
+          message: "添加商品明细成功",
+          type: "success"
         });
+        this.proMask = false;
       } else {
         /*判断sku和子件是否重复*/
         var updateStagSku = this.proCurSkuData;
@@ -2043,17 +2313,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 is_newAdd: true
               });
               this.$message({
-                message: '添加商品明细成功',
-                type: 'success'
+                message: "添加商品明细成功",
+                type: "success"
               });
-              this.proCompRowIndex = '';
+              this.proMask = false;
+              this.proCompRowIndex = "";
             } else {
               /*子件是否重复*/
               // console.log('this.updatePurForm',this.updatePurForm);
               this.updatePurForm.purchase_lists.map(function (purList) {
                 if (purList.combinations_id == updateStagSku.id) {
                   var is_existId = [];
-                  purList['purchaseDetails']['data'].map(function (item) {
+                  purList["purchaseDetails"]["data"].map(function (item) {
                     /*遍历子件*/
                     is_existId.push({
                       id: item.id,
@@ -2063,28 +2334,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                   /*替换子件id*/
                   updateStagSku.compData.map(function (compItem) {
                     for (var i in is_existId) {
-                      if (is_existId[i]['combId'] == compItem.id) {
-                        compItem['combId'] = is_existId[i]['id'];
+                      if (is_existId[i]["combId"] == compItem.id) {
+                        compItem["combId"] = is_existId[i]["id"];
                       }
                     }
                   });
 
                   var _loop = function _loop(i) {
-                    updateStagSku.compData[i]['is_newAdd'] = true;
+                    updateStagSku.compData[i]["is_newAdd"] = true;
                     /*删除重复的子件*/
-                    if (updateStagSku.compData[i]['combId']) {
-                      purList['purchaseDetails']['data'].map(function (item, index) {
-                        if (item.id == updateStagSku.compData[i]['combId']) {
-                          purList['purchaseDetails']['data'].splice(index, 1);
+                    if (updateStagSku.compData[i]["combId"]) {
+                      purList["purchaseDetails"]["data"].map(function (item, index) {
+                        if (item.id == updateStagSku.compData[i]["combId"]) {
+                          purList["purchaseDetails"]["data"].splice(index, 1);
                         }
                       });
                     }
-                    purList['purchaseDetails']['data'].push(updateStagSku.compData[i]);
+                    purList["purchaseDetails"]["data"].push(updateStagSku.compData[i]);
                     _this6.$message({
-                      message: '添加商品明细成功',
-                      type: 'success'
+                      message: "添加商品明细成功",
+                      type: "success"
                     });
-                    _this6.proCompRowIndex = '';
+                    _this6.proMask = false;
+                    _this6.proCompRowIndex = "";
                   };
 
                   for (var i in updateStagSku.compData) {
@@ -2095,7 +2367,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
           } else {
             updateStagSku.compData.map(function (item) {
-              item['is_newAdd'] = true;
+              item["is_newAdd"] = true;
             });
             this.updatePurForm.purchase_lists.push(updateStagSku);
             this.updatePurSkuStagId.push(updateStagSku.id);
@@ -2107,10 +2379,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.updatePurCompVal = updateStagSku.compData;
             this.$message({
-              message: '添加商品明细成功',
-              type: 'success'
+              message: "添加商品明细成功",
+              type: "success"
             });
-            this.proCompRowIndex = '';
+            this.proMask = false;
+            this.proCompRowIndex = "";
           }
         } else {
           this.$message.error("未添加商品子件");
@@ -2127,18 +2400,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this7 = this;
 
       this.proCompValChg = false;
-      this.proCompIndex = '0';
+      this.proCompIndex = "0";
       this.compStagData = [];
       this.compStagId = [];
-      this.proCompRowIndex = '';
-      if (row['productComponents']['data'].length > 0) {
-        row['productComponents']['data'].map(function (item) {
-          _this7.$set(item, 'proPurchaseData', {
-            purchase_quantity: '',
-            shops_id: '',
-            suppliers_id: '',
-            arrival_time: '',
-            remark: '',
+      this.proCompRowIndex = "";
+      if (row["productComponents"]["data"].length > 0) {
+        row["productComponents"]["data"].map(function (item) {
+          _this7.$set(item, "proPurchaseData", {
+            purchase_quantity: "",
+            shops_id: "",
+            suppliers_id: "",
+            arrival_time: "",
+            remark: "",
             purchase_cost: item.purchase_cost,
             purchase_freight: item.purchase_freight,
             warehouse_cost: item.warehouse_cost,
@@ -2148,8 +2421,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         });
       }
-      this.proCompVal = row['productComponents']['data'];
-      // this.proCompVal = Object.assign({},row['productComponents']['data']);
+      this.proCompVal = row["productComponents"]["data"];
       this.proCurSkuData = row;
     },
     cancelAddProDtl: function cancelAddProDtl() {
@@ -2162,30 +2434,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.updatePurSkuVal = [];
       this.updatePurCompVal = [];
-      this.updatePurCompIndex = '';
+      this.updatePurCompIndex = "";
       if (this.newOpt[1].nClick) {
         return;
       } else {
         if (this.multipleSelection.length == 0) {
           this.$message({
-            message: '没有选择要修改的数据',
-            type: 'warning'
+            message: "没有选择要修改的数据",
+            type: "warning"
           });
           return;
         } else if (this.multipleSelection.length >= 2) {
           this.$message({
-            message: '只能修改单条数据',
-            type: 'warning'
+            message: "只能修改单条数据",
+            type: "warning"
           });
           return;
         } else {
           this.updatePurMask = true;
-          this.updatePurCompIndex = '0';
-          this.updateSkuIndex = '0';
-          this.$fetch(this.urls.purchases + '/' + this.updateId, { include: 'user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination' }).then(function (res) {
-            res['purchaseLists'].data.map(function (item) {
-              item['purchaseDetails'].data.map(function (list) {
-                _this8.$set(list['productComponent'], 'proPurchaseData', {
+          this.updatePurCompIndex = "0";
+          this.updateSkuIndex = "0";
+          this.$fetch(this.urls.purchases + "/" + this.updateId, {
+            include: "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
+          }).then(function (res) {
+            res["purchaseLists"].data.map(function (item) {
+              item["purchaseDetails"].data.map(function (list) {
+                _this8.$set(list["productComponent"], "proPurchaseData", {
                   purchase_quantity: list.purchase_quantity,
                   shops_id: list.shops_id,
                   suppliers_id: list.suppliers_id,
@@ -2205,22 +2479,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               receiver: res.receiver,
               receiver_address: res.receiver_address,
               remark: res.remark,
-              purchase_lists: res['purchaseLists']['data']
+              purchase_lists: res["purchaseLists"]["data"]
             };
-            res['purchaseLists']['data'].map(function (item) {
+            res["purchaseLists"]["data"].map(function (item) {
               _this8.updatePurSkuVal.push({
-                name: item['combination']['name'],
+                name: item["combination"]["name"],
                 id: item.id,
                 combinations_id: item.combinations_id,
-                purchase_details: item['purchaseDetails']['data']
+                purchase_details: item["purchaseDetails"]["data"]
               });
-              item['purchaseDetails']['data'].map(function (list) {
-                list['productComponent']['compId'] = list.id;
+              item["purchaseDetails"]["data"].map(function (list) {
+                list["productComponent"]["compId"] = list.id;
               });
             });
-            if (res['purchaseLists']['data'][0] && res['purchaseLists']['data'][0]['purchaseDetails']['data'].length > 0) {
-              res['purchaseLists']['data'][0]['purchaseDetails']['data'].map(function (list) {
-                _this8.$set(list['productComponent'], 'proPurchaseData', {
+            if (res["purchaseLists"]["data"][0] && res["purchaseLists"]["data"][0]["purchaseDetails"]["data"].length > 0) {
+              res["purchaseLists"]["data"][0]["purchaseDetails"]["data"].map(function (list) {
+                _this8.$set(list["productComponent"], "proPurchaseData", {
                   purchase_quantity: list.purchase_quantity,
                   shops_id: list.shops_id,
                   suppliers_id: list.suppliers_id,
@@ -2233,7 +2507,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                   discount: list.discount,
                   wooden_frame_costs: list.wooden_frame_costs
                 });
-                _this8.updatePurCompVal.push(list['productComponent']);
+                _this8.updatePurCompVal.push(list["productComponent"]);
               });
             }
           }, function (err) {
@@ -2245,6 +2519,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateRowCName: function updateRowCName(_ref6) {
       var row = _ref6.row,
           rowIndex = _ref6.rowIndex;
+
       row.index = rowIndex;
     },
     updatePurSkuRowClick: function updatePurSkuRowClick(row) {
@@ -2255,7 +2530,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // console.log('sku提交的表单数据',this.updatePurForm);
       this.updateSkuRow = row;
       this.updateSkuIndex = row.index;
-      this.updatePurCompIndex = '';
+      this.updatePurCompIndex = "";
       if (row.is_newAdd) {
         this.updatePurCompVal = row.compData;
       } else {
@@ -2265,8 +2540,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           if (item.is_newAdd) {
             _this9.updatePurCompVal.push(item);
           } else {
-            item['productComponent']['compId'] = item.id;
-            _this9.$set(item['productComponent'], 'proPurchaseData', {
+            item["productComponent"]["compId"] = item.id;
+            _this9.$set(item["productComponent"], "proPurchaseData", {
               purchase_quantity: item.purchase_quantity,
               shops_id: item.shops_id,
               suppliers_id: item.suppliers_id,
@@ -2279,7 +2554,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               discount: item.discount,
               wooden_frame_costs: item.wooden_frame_costs
             });
-            _this9.updatePurCompVal.push(item['productComponent']);
+            _this9.updatePurCompVal.push(item["productComponent"]);
           }
         });
       }
@@ -2295,8 +2570,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.updatePurCompVal = this.updatePurSkuVal[0].purchase_details;
         }
         this.$message({
-          message: '删除采购sku成功',
-          type: 'success'
+          message: "删除采购sku成功",
+          type: "success"
         });
         this.updatePurForm.purchase_lists.map(function (item, index) {
           if (item.id == row.combinations_id) {
@@ -2310,23 +2585,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }
         });
       } else {
-        this.$del(this.urls.purchaselists + '/' + row.id).then(function () {
+        this.$del(this.urls.purchaselists + "/" + row.id).then(function () {
           _this10.updatePurSkuVal.splice(index, 1);
           _this10.$message({
-            message: '删除采购sku成功',
-            type: 'success'
+            message: "删除采购sku成功",
+            type: "success"
           });
           /*对应的子件也要删除*/
           _this10.updatePurCompVal = [];
           if (_this10.updatePurSkuVal.length > 0) {
             _this10.updatePurForm.purchase_lists.map(function (item) {
-              if (item.id == _this10.updatePurSkuVal[0]['id']) {
-                item['purchaseDetails']['data'].map(function (compItem) {
+              if (item.id == _this10.updatePurSkuVal[0]["id"]) {
+                item["purchaseDetails"]["data"].map(function (compItem) {
                   /*如果是新增的*/
                   if (compItem.is_newAdd) {
                     _this10.updatePurCompVal.push(compItem);
                   } else {
-                    _this10.$set(compItem['productComponent'], 'proPurchaseData', {
+                    _this10.$set(compItem["productComponent"], "proPurchaseData", {
                       purchase_quantity: compItem.purchase_quantity,
                       shops_id: compItem.shops_id,
                       suppliers_id: compItem.suppliers_id,
@@ -2339,7 +2614,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                       discount: compItem.discount,
                       wooden_frame_costs: compItem.wooden_frame_costs
                     });
-                    _this10.updatePurCompVal.push(compItem['productComponent']);
+                    _this10.updatePurCompVal.push(compItem["productComponent"]);
                   }
                 });
               }
@@ -2362,7 +2637,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             for (var i in arr) {
               arr1.push(arr[i]);
             }
-            var str = arr1.join(',');
+            var str = arr1.join(",");
             _this10.$message.error({
               message: str
             });
@@ -2373,6 +2648,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateCompCName: function updateCompCName(_ref7) {
       var row = _ref7.row,
           rowIndex = _ref7.rowIndex;
+
       row.index = rowIndex;
     },
     updateCompRowClick: function updateCompRowClick(row) {
@@ -2382,7 +2658,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // console.log('子件行数据',row);
       // console.log('子件提交的表单数据',this.updatePurForm);
       // console.log('子件列表',this.updatePurCompVal);
-      this.updatePurCompIndex = 'index' + row.index;
+      this.updatePurCompIndex = "index" + row.index;
       var formData = this.updatePurForm.purchase_lists[this.updateSkuIndex];
       if (this.updateCompFlag) {
         if (formData.compData) {
@@ -2390,16 +2666,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           formData.compData[row.index] = row;
           this.updateCompFlag = false;
         } else {
-          if (formData['purchaseDetails']['data'][row.index].productComponent) {
+          if (formData["purchaseDetails"]["data"][row.index].productComponent) {
             /*修改*/
-            formData['purchaseDetails']['data'][row.index]['productComponent'] = row;
+            formData["purchaseDetails"]["data"][row.index]["productComponent"] = row;
             this.updateCompFlag = false;
           } else {
             /*新增 替换(combId)*/
             var curRow = row;
-            formData['purchaseDetails']['data'].map(function (item, index) {
+            formData["purchaseDetails"]["data"].map(function (item, index) {
               if (item.id == curRow.id) {
-                formData['purchaseDetails']['data'][index] = curRow;
+                formData["purchaseDetails"]["data"][index] = curRow;
                 _this11.updateCompFlag = false;
               }
             });
@@ -2423,8 +2699,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         /*sku新增*/
         this.updatePurCompVal.splice(index, 1);
         this.$message({
-          message: '删除采购子件成功',
-          type: 'success'
+          message: "删除采购子件成功",
+          type: "success"
         });
         /*通过sku id确认唯一性*/
         this.updatePurForm.purchase_lists.map(function (item) {
@@ -2449,16 +2725,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         if (row.is_newAdd && row.combId) {
           /*替换*/
-          this.$del(this.urls.purchasedetails + '/' + row.combId).then(function () {
+          this.$del(this.urls.purchasedetails + "/" + row.combId).then(function () {
             _this12.updatePurCompVal.splice(index, 1);
             _this12.updatePurForm.purchase_lists.map(function (item) {
               if (item.id == _this12.updateSkuRow.id) {
-                item['purchaseDetails']['data'].splice(index, 1);
+                item["purchaseDetails"]["data"].splice(index, 1);
               }
             });
             _this12.$message({
-              message: '删除采购子件成功',
-              type: 'success'
+              message: "删除采购子件成功",
+              type: "success"
             });
             if (_this12.updatePurCompVal.length == 0) {
               _this12.updatePurSkuVal.splice(_this12.updateSkuIndex, 1);
@@ -2467,26 +2743,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                   _this12.updatePurForm.purchase_lists.splice(skuIndex, 1);
                 }
               });
-            };
+            }
             _this12.updatePurSkuStagId.map(function (skuItem, skuIndex) {
               if (skuItem == row.combinations_id) {
                 _this12.updatePurSkuStagId.splice(skuIndex, 1);
               }
             });
           }, function () {
-            _this12.$message.error('未找到该条数据，无法删除');
+            _this12.$message.error("未找到该条数据，无法删除");
           });
         } else if (row.is_newAdd && !row.combId) {
           /*新增*/
           this.updatePurCompVal.splice(index, 1);
           this.updatePurForm.purchase_lists.map(function (item) {
             if (item.id == _this12.updateSkuRow.id) {
-              item['purchaseDetails']['data'].splice(index, 1);
+              item["purchaseDetails"]["data"].splice(index, 1);
             }
           });
           this.$message({
-            message: '删除采购子件成功',
-            type: 'success'
+            message: "删除采购子件成功",
+            type: "success"
           });
           if (this.updatePurCompVal.length == 0) {
             this.updatePurSkuVal.splice(this.updateSkuIndex, 1);
@@ -2495,7 +2771,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this12.updatePurForm.purchase_lists.splice(skuIndex, 1);
               }
             });
-          };
+          }
           this.updatePurSkuStagId.map(function (skuItem, skuIndex) {
             if (skuItem == row.combinations_id) {
               _this12.updatePurSkuStagId.splice(skuIndex, 1);
@@ -2503,17 +2779,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         } else {
           /*删除*/
-          this.$del(this.urls.purchasedetails + '/' + row.compId).then(function () {
+          this.$del(this.urls.purchasedetails + "/" + row.compId).then(function () {
             _this12.updatePurCompVal.splice(index, 1);
             _this12.updatePurForm.purchase_lists.map(function (item) {
               if (item.id == _this12.updateSkuRow.id) {
-                item['purchaseDetails']['data'].splice(index, 1);
+                item["purchaseDetails"]["data"].splice(index, 1);
                 // item['purchaseDetails']['data']['productComponent']=[];
               }
             });
             _this12.$message({
-              message: '删除采购子件成功',
-              type: 'success'
+              message: "删除采购子件成功",
+              type: "success"
             });
             if (_this12.updatePurCompVal.length == 0) {
               _this12.updatePurSkuVal.splice(_this12.updateSkuIndex, 1);
@@ -2529,7 +2805,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               });
             }
           }, function () {
-            _this12.$message.error('未找到该条数据，无法删除');
+            _this12.$message.error("未找到该条数据，无法删除");
           });
         }
       }
@@ -2545,7 +2821,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this13 = this;
 
       if (this.updatePurForm.purchase_lists.length == 0) {
-        this.$message.error('采购单不能为空');
+        this.$message.error("采购单不能为空");
         return;
       } else {
         /*完全新增，部分新增，替换，修改*/
@@ -2560,37 +2836,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // console.log('add updatePurForm',this.updatePurForm.purchase_lists);
             /*新增 sku和子件*/
             var purList = {
-              combinations_id: '',
+              combinations_id: "",
               purchase_details: []
             };
-            purList['combinations_id'] = item.id;
+            purList["combinations_id"] = item.id;
             item.compData.map(function (list) {
               var comp = {
                 product_components_id: list.id,
-                purchase_quantity: list['proPurchaseData'].purchase_quantity,
-                shops_id: list['proPurchaseData'].shops_id,
-                suppliers_id: list['proPurchaseData'].suppliers_id,
-                purchase_cost: list['proPurchaseData'].purchase_cost,
-                warehouse_cost: list['proPurchaseData'].warehouse_cost,
-                purchase_freight: list['proPurchaseData'].purchase_freight,
-                commission: list['proPurchaseData'].commission,
-                discount: list['proPurchaseData'].discount,
-                wooden_frame_costs: list['proPurchaseData'].wooden_frame_costs,
-                arrival_time: list['proPurchaseData'].arrival_time,
-                remark: list['proPurchaseData'].remark
+                purchase_quantity: list["proPurchaseData"].purchase_quantity,
+                shops_id: list["proPurchaseData"].shops_id,
+                suppliers_id: list["proPurchaseData"].suppliers_id,
+                purchase_cost: list["proPurchaseData"].purchase_cost,
+                warehouse_cost: list["proPurchaseData"].warehouse_cost,
+                purchase_freight: list["proPurchaseData"].purchase_freight,
+                commission: list["proPurchaseData"].commission,
+                discount: list["proPurchaseData"].discount,
+                wooden_frame_costs: list["proPurchaseData"].wooden_frame_costs,
+                arrival_time: list["proPurchaseData"].arrival_time,
+                remark: list["proPurchaseData"].remark
               };
-              purList['purchase_details'].push(comp);
+              purList["purchase_details"].push(comp);
             });
             addSku.purchase_lists.push(purList);
           } else {
             var _purList = {
-              id: '',
-              combinations_id: '',
+              id: "",
+              combinations_id: "",
               purchase_details: []
             };
-            _purList['id'] = item.id;
-            _purList['combinations_id'] = item.combinations_id;
-            item['purchaseDetails']['data'].map(function (alreadyList) {
+            _purList["id"] = item.id;
+            _purList["combinations_id"] = item.combinations_id;
+            item["purchaseDetails"]["data"].map(function (alreadyList) {
               /*有新增或者替换的子件*/
               if (alreadyList.is_newAdd) {
                 /*外层有combId 替换子件*/
@@ -2599,66 +2875,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     is_newAdd: true,
                     id: alreadyList.combId,
                     product_components_id: alreadyList.id,
-                    purchase_quantity: alreadyList['proPurchaseData'].purchase_quantity,
-                    shops_id: alreadyList['proPurchaseData'].shops_id,
-                    suppliers_id: alreadyList['proPurchaseData'].suppliers_id,
-                    purchase_cost: alreadyList['proPurchaseData'].purchase_cost,
-                    warehouse_cost: alreadyList['proPurchaseData'].warehouse_cost,
-                    purchase_freight: alreadyList['proPurchaseData'].purchase_freight,
-                    commission: alreadyList['proPurchaseData'].commission,
-                    discount: alreadyList['proPurchaseData'].discount,
-                    wooden_frame_costs: alreadyList['proPurchaseData'].wooden_frame_costs,
-                    arrival_time: alreadyList['proPurchaseData'].arrival_time,
-                    remark: alreadyList['proPurchaseData'].remark
+                    purchase_quantity: alreadyList["proPurchaseData"].purchase_quantity,
+                    shops_id: alreadyList["proPurchaseData"].shops_id,
+                    suppliers_id: alreadyList["proPurchaseData"].suppliers_id,
+                    purchase_cost: alreadyList["proPurchaseData"].purchase_cost,
+                    warehouse_cost: alreadyList["proPurchaseData"].warehouse_cost,
+                    purchase_freight: alreadyList["proPurchaseData"].purchase_freight,
+                    commission: alreadyList["proPurchaseData"].commission,
+                    discount: alreadyList["proPurchaseData"].discount,
+                    wooden_frame_costs: alreadyList["proPurchaseData"].wooden_frame_costs,
+                    arrival_time: alreadyList["proPurchaseData"].arrival_time,
+                    remark: alreadyList["proPurchaseData"].remark
                   };
-                  _purList['purchase_details'].push(newComp);
+                  _purList["purchase_details"].push(newComp);
                 } else {
                   /*没有id 新增子件*/
                   var _newComp = {
                     is_newAdd: true,
                     product_components_id: alreadyList.id,
-                    purchase_quantity: alreadyList['proPurchaseData'].purchase_quantity,
-                    shops_id: alreadyList['proPurchaseData'].shops_id,
-                    suppliers_id: alreadyList['proPurchaseData'].suppliers_id,
-                    purchase_cost: alreadyList['proPurchaseData'].purchase_cost,
-                    warehouse_cost: alreadyList['proPurchaseData'].warehouse_cost,
-                    purchase_freight: alreadyList['proPurchaseData'].purchase_freight,
-                    commission: alreadyList['proPurchaseData'].commission,
-                    discount: alreadyList['proPurchaseData'].discount,
-                    wooden_frame_costs: alreadyList['proPurchaseData'].wooden_frame_costs,
-                    arrival_time: alreadyList['proPurchaseData'].arrival_time,
-                    remark: alreadyList['proPurchaseData'].remark
+                    purchase_quantity: alreadyList["proPurchaseData"].purchase_quantity,
+                    shops_id: alreadyList["proPurchaseData"].shops_id,
+                    suppliers_id: alreadyList["proPurchaseData"].suppliers_id,
+                    purchase_cost: alreadyList["proPurchaseData"].purchase_cost,
+                    warehouse_cost: alreadyList["proPurchaseData"].warehouse_cost,
+                    purchase_freight: alreadyList["proPurchaseData"].purchase_freight,
+                    commission: alreadyList["proPurchaseData"].commission,
+                    discount: alreadyList["proPurchaseData"].discount,
+                    wooden_frame_costs: alreadyList["proPurchaseData"].wooden_frame_costs,
+                    arrival_time: alreadyList["proPurchaseData"].arrival_time,
+                    remark: alreadyList["proPurchaseData"].remark
                   };
-                  _purList['purchase_details'].push(_newComp);
+                  _purList["purchase_details"].push(_newComp);
                 }
               } else {
                 /*修改*/
                 var alreadyComp = {
                   id: alreadyList.id,
                   product_components_id: alreadyList.product_components_id,
-                  purchase_quantity: alreadyList['productComponent']['proPurchaseData'].purchase_quantity,
-                  shops_id: alreadyList['productComponent']['proPurchaseData'].shops_id,
-                  suppliers_id: alreadyList['productComponent']['proPurchaseData'].suppliers_id,
-                  purchase_cost: alreadyList['productComponent']['proPurchaseData'].purchase_cost,
-                  warehouse_cost: alreadyList['productComponent']['proPurchaseData'].warehouse_cost,
-                  purchase_freight: alreadyList['productComponent']['proPurchaseData'].purchase_freight,
-                  commission: alreadyList['productComponent']['proPurchaseData'].commission,
-                  discount: alreadyList['productComponent']['proPurchaseData'].discount,
-                  wooden_frame_costs: alreadyList['productComponent']['proPurchaseData'].wooden_frame_costs,
-                  arrival_time: alreadyList['productComponent']['proPurchaseData'].arrival_time,
-                  remark: alreadyList['productComponent']['proPurchaseData'].remark
+                  purchase_quantity: alreadyList["productComponent"]["proPurchaseData"].purchase_quantity,
+                  shops_id: alreadyList["productComponent"]["proPurchaseData"].shops_id,
+                  suppliers_id: alreadyList["productComponent"]["proPurchaseData"].suppliers_id,
+                  purchase_cost: alreadyList["productComponent"]["proPurchaseData"].purchase_cost,
+                  warehouse_cost: alreadyList["productComponent"]["proPurchaseData"].warehouse_cost,
+                  purchase_freight: alreadyList["productComponent"]["proPurchaseData"].purchase_freight,
+                  commission: alreadyList["productComponent"]["proPurchaseData"].commission,
+                  discount: alreadyList["productComponent"]["proPurchaseData"].discount,
+                  wooden_frame_costs: alreadyList["productComponent"]["proPurchaseData"].wooden_frame_costs,
+                  arrival_time: alreadyList["productComponent"]["proPurchaseData"].arrival_time,
+                  remark: alreadyList["productComponent"]["proPurchaseData"].remark
                 };
                 // console.log('alreadyComp',alreadyComp);
-                _purList['purchase_details'].push(alreadyComp);
+                _purList["purchase_details"].push(alreadyComp);
               }
             });
             addSku.purchase_lists.push(_purList);
           }
         });
-        this.$patch(this.urls.purchases + '/' + id, addSku).then(function () {
+        this.$patch(this.urls.purchases + "/" + id, addSku).then(function () {
           _this13.$message({
-            message: '修改成功',
-            type: 'success'
+            message: "修改成功",
+            type: "success"
           });
           _this13.updatePurMask = false;
           _this13.refresh();
@@ -2671,7 +2947,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             for (var i in arr) {
               arr1.push(arr[i]);
             }
-            var str = arr1.join(',');
+            var str = arr1.join(",");
             _this13.$message.error({
               message: str
             });
@@ -2682,29 +2958,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     cancelUpdate: function cancelUpdate() {
       this.updatePurMask = false;
       this.$message({
-        message: '取消修改采购单',
-        type: 'info'
+        message: "取消修改采购单",
+        type: "info"
       });
     },
 
     /*单条删除*/
     delPur: function delPur(row, e) {
       this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
       this.delId = row.id;
       if (row.purchase_order_no) {
         this.delUrl = this.urls.purchases;
-      } else if (row['purchases_id']) {
+      } else if (row["purchases_id"]) {
         this.delUrl = this.urls.purchaselists;
-      } else if (row['purchase_lists_id']) {
+      } else if (row["purchase_lists_id"]) {
         this.delUrl = this.urls.purchasedetails;
       }
     },
     rowStyle: function rowStyle(_ref8) {
       // console.log((this.purIndex) === rowIndex);
       /* if((this.purIndex) === rowIndex){
-         return { "background-color": "red" }
-       }*/
+          return { "background-color": "red" }
+        }*/
 
       var row = _ref8.row,
           rowIndex = _ref8.rowIndex;
@@ -2712,10 +2988,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     confirmD: function confirmD(url, id) {
       var _this14 = this;
 
-      this.$del(url + '/' + id).then(function () {
+      this.$del(url + "/" + id).then(function () {
         _this14.$message({
-          message: '删除成功',
-          type: 'success'
+          message: "删除成功",
+          type: "success"
         });
         _this14.showDel = false;
         _this14.refresh();
@@ -2731,7 +3007,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(',');
+          var str = arr1.join(",");
           _this14.$message.error({
             message: str
           });
@@ -2741,19 +3017,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     cancelD: function cancelD() {
       this.showDel = false;
       this.$message({
-        message: '取消删除',
-        type: 'info'
+        message: "取消删除",
+        type: "info"
       });
     },
     purDetailsDtl: function purDetailsDtl(row, e) {
       this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
       this.delId = row.id;
       if (row.purchase_order_no) {
         this.delUrl = this.urls.purchases;
-      } else if (row['purchases_id']) {
+      } else if (row["purchases_id"]) {
         this.delUrl = this.urls.purchaselists;
-      } else if (row['purchase_lists_id']) {
+      } else if (row["purchase_lists_id"]) {
         this.delUrl = this.urls.purchasedetails;
       }
     },
@@ -2764,14 +3040,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (val.length != 0) {
         this.updateId = val[0].id;
       } else {
-        this.updateId = '';
+        this.updateId = "";
       }
       this.multipleSelection = val;
       var del = [];
       this.multipleSelection.forEach(function (selectedItem) {
         del.push(selectedItem.id);
       });
-      this.delArr = del.join(',');
+      this.delArr = del.join(",");
     },
     delMore: function delMore() {
       var _this15 = this;
@@ -2781,19 +3057,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         if (this.delArr.length === 0) {
           this.$message({
-            message: '没有选中数据',
-            type: 'warning'
+            message: "没有选中数据",
+            type: "warning"
           });
         } else {
-          this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
+          this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
           }).then(function () {
             _this15.$del(_this15.urls.purchases, { ids: _this15.delArr }).then(function () {
               _this15.$message({
-                message: '删除成功',
-                type: 'success'
+                message: "删除成功",
+                type: "success"
               });
               _this15.refresh();
             }, function (err) {
@@ -2803,7 +3079,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 for (var i in arr) {
                   arr1.push(arr[i]);
                 }
-                var str = arr1.join(',');
+                var str = arr1.join(",");
                 _this15.$message.error({
                   message: str
                 });
@@ -2811,8 +3087,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
           }).catch(function () {
             _this15.$message({
-              type: 'info',
-              message: '已取消删除'
+              type: "info",
+              message: "已取消删除"
             });
           });
         }
@@ -2828,21 +3104,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         if (this.multipleSelection.length == 0) {
           this.$message({
-            message: '没有选择要提交的数据',
-            type: 'warning'
+            message: "没有选择要提交的数据",
+            type: "warning"
           });
           return;
         } else if (this.multipleSelection.length >= 2) {
           this.$message({
-            message: '只能修改单条数据',
-            type: 'warning'
+            message: "只能修改单条数据",
+            type: "warning"
           });
           return;
         } else {
-          this.$put(this.urls.purchases + '/' + this.updateId + '/submit').then(function () {
+          this.$put(this.urls.purchases + "/" + this.updateId + "/submit").then(function () {
             _this16.$message({
-              message: '提交成功!',
-              type: 'success'
+              message: "提交成功!",
+              type: "success"
             });
             _this16.refresh();
           }, function (err) {
@@ -2857,11 +3133,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this17 = this;
 
       if (!this.newOpt[10].nClick) {
-        this.$put(this.urls.purchases + '/' + this.purRow.id + '/print').then(function () {
+        this.$put(this.urls.purchases + "/" + this.purRow.id + "/print").then(function () {
           _this17.printBtn();
           _this17.$message({
-            message: '打印成功!',
-            type: 'success'
+            message: "打印成功!",
+            type: "success"
           });
           _this17.refresh();
         }, function (err) {
@@ -2871,7 +3147,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     printBtn: function printBtn() {
       this.remove_ie_header_and_footer();
-      var subOutputRankPrint = document.getElementById('subOutputRank-print');
+      var subOutputRankPrint = document.getElementById("subOutputRank-print");
       var newContent = subOutputRankPrint.innerHTML;
       var oldContent = document.body.innerHTML;
       document.body.innerHTML = newContent;
@@ -2893,10 +3169,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this18 = this;
 
       if (!this.newOpt[4].nClick) {
-        this.$put(this.urls.purchases + '/' + this.purRow.id + '/audit').then(function () {
+        this.$put(this.urls.purchases + "/" + this.purRow.id + "/audit").then(function () {
           _this18.$message({
-            message: '审核成功!',
-            type: 'success'
+            message: "审核成功!",
+            type: "success"
           });
           _this18.refresh();
         }, function (err) {
@@ -2907,10 +3183,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     this.fetchPurchaseData();
-    this.$store.dispatch('setOpt', this.newOpt);
+    this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
     $(window).resize(function () {
-      that.$store.dispatch('setOpt', that.newOpt);
+      that.$store.dispatch("setOpt", that.newOpt);
     });
   }
 });
@@ -3416,13 +3692,11 @@ var render = function() {
                                             "object" && item.nmProp
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                         " +
-                                                _vm._s(
-                                                  scope.row[item.prop][
-                                                    item.nmProp
-                                                  ]
-                                                ) +
-                                                "\n                     "
+                                              _vm._s(
+                                                scope.row[item.prop][
+                                                  item.nmProp
+                                                ]
+                                              )
                                             )
                                           ])
                                         : _vm._e()
@@ -3485,15 +3759,13 @@ var render = function() {
                                       scope.row[item.prop]
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                 " +
-                                                _vm._s(
-                                                  item.inProp
-                                                    ? scope.row[item.prop][
-                                                        item.inProp
-                                                      ]
-                                                    : scope.row[item.prop]
-                                                ) +
-                                                "\n                             "
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              )
                                             )
                                           ])
                                         : _vm._e()
@@ -3598,13 +3870,11 @@ var render = function() {
                                             "object" && item.nmProp
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                         " +
-                                                _vm._s(
-                                                  scope.row[item.prop][
-                                                    item.nmProp
-                                                  ]
-                                                ) +
-                                                "\n                     "
+                                              _vm._s(
+                                                scope.row[item.prop][
+                                                  item.nmProp
+                                                ]
+                                              )
                                             )
                                           ])
                                         : _vm._e()
@@ -3665,15 +3935,11 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                     " +
-                                          _vm._s(
-                                            item.inProp
-                                              ? scope.row[item.prop][
-                                                  item.inProp
-                                                ]
-                                              : scope.row[item.prop]
-                                          ) +
-                                          "}\n                 "
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        ) + "}"
                                       )
                                     ])
                               ]
@@ -3776,13 +4042,11 @@ var render = function() {
                                             "object" && item.nmProp
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                         " +
-                                                _vm._s(
-                                                  scope.row[item.prop][
-                                                    item.nmProp
-                                                  ]
-                                                ) +
-                                                "\n                     "
+                                              _vm._s(
+                                                scope.row[item.prop][
+                                                  item.nmProp
+                                                ]
+                                              )
                                             )
                                           ])
                                         : _vm._e()
@@ -3843,15 +4107,11 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                     " +
-                                          _vm._s(
-                                            item.inProp
-                                              ? scope.row[item.prop][
-                                                  item.inProp
-                                                ]
-                                              : scope.row[item.prop]
-                                          ) +
-                                          "\n                 "
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        )
                                       )
                                     ])
                               ]
@@ -3945,11 +4205,9 @@ var render = function() {
                                   fn: function(scope) {
                                     return [
                                       _vm._v(
-                                        "\n                                 " +
-                                          _vm._s(
-                                            scope.row[item.prop][item.inProp]
-                                          ) +
-                                          "\n                             "
+                                        _vm._s(
+                                          scope.row[item.prop][item.inProp]
+                                        )
                                       )
                                     ]
                                   }
@@ -4060,13 +4318,11 @@ var render = function() {
                                                           scope.row[item.prop]
                                                             ? _c("span", [
                                                                 _vm._v(
-                                                                  "\n                                                " +
-                                                                    _vm._s(
-                                                                      list.name
-                                                                        ? list.name
-                                                                        : list.title
-                                                                    ) +
-                                                                    "\n                                            "
+                                                                  _vm._s(
+                                                                    list.name
+                                                                      ? list.name
+                                                                      : list.title
+                                                                  )
                                                                 )
                                                               ])
                                                             : _vm._e()
@@ -4117,15 +4373,13 @@ var render = function() {
                                                 )
                                               : _c("span", [
                                                   _vm._v(
-                                                    "\n                                        " +
-                                                      _vm._s(
-                                                        item.inProp
-                                                          ? scope.row[
-                                                              item.prop
-                                                            ][item.inProp]
-                                                          : scope.row[item.prop]
-                                                      ) +
-                                                      "\n                                    "
+                                                    _vm._s(
+                                                      item.inProp
+                                                        ? scope.row[item.prop][
+                                                            item.inProp
+                                                          ]
+                                                        : scope.row[item.prop]
+                                                    )
                                                   )
                                                 ])
                                           ])
@@ -4180,7 +4434,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("el-tab-pane", { attrs: { label: "唯一码", name: "1" } }, [
-                  _vm._v("\n                    唯一码\n                ")
+                  _vm._v("唯一码")
                 ])
               ],
               1
@@ -4245,13 +4499,13 @@ var render = function() {
                               fn: function(scope) {
                                 return [
                                   _vm._v(
-                                    "\n                             " +
+                                    "\n              " +
                                       _vm._s(
                                         scope.row[item.prop] == ""
                                           ? ""
                                           : scope.row[item.prop]
                                       ) +
-                                      "\n                             "
+                                      "\n            "
                                   )
                                 ]
                               }
@@ -4526,13 +4780,11 @@ var render = function() {
                                                             ][item.inProp]
                                                               ? _c("span", [
                                                                   _vm._v(
-                                                                    "\n                                                 " +
-                                                                      _vm._s(
-                                                                        list.name
-                                                                          ? list.name
-                                                                          : list.title
-                                                                      ) +
-                                                                      "\n                                             "
+                                                                    _vm._s(
+                                                                      list.name
+                                                                        ? list.name
+                                                                        : list.title
+                                                                    )
                                                                   )
                                                                 ])
                                                               : _vm._e()
@@ -4544,13 +4796,11 @@ var render = function() {
                                                   )
                                                 : _c("span", [
                                                     _vm._v(
-                                                      "\n                                 " +
-                                                        _vm._s(
-                                                          scope.row[item.prop][
-                                                            item.inProp
-                                                          ]
-                                                        ) +
-                                                        "\n                             "
+                                                      _vm._s(
+                                                        scope.row[item.prop][
+                                                          item.inProp
+                                                        ]
+                                                      )
                                                     )
                                                   ])
                                             ])
@@ -4617,15 +4867,13 @@ var render = function() {
                                             )
                                           : _c("span", [
                                               _vm._v(
-                                                "\n                          " +
-                                                  _vm._s(
-                                                    item.inProp
-                                                      ? scope.row[item.prop][
-                                                          item.inProp
-                                                        ]
-                                                      : scope.row[item.prop]
-                                                  ) +
-                                                  "\n                     "
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                )
                                               )
                                             ])
                                       ])
@@ -4646,13 +4894,7 @@ var render = function() {
                         {
                           key: "default",
                           fn: function(scope) {
-                            return [
-                              _vm._v(
-                                "\n                             " +
-                                  _vm._s(scope.row[_vm.item.prop] + "新建") +
-                                  "\n                         "
-                              )
-                            ]
+                            return [_vm._v(_vm._s("新建"))]
                           }
                         }
                       ])
@@ -4958,13 +5200,11 @@ var render = function() {
                               )
                             : _c("span", [
                                 _vm._v(
-                                  "\n                          " +
-                                    _vm._s(
-                                      item.inProp
-                                        ? scope.row[item.prop][item.inProp]
-                                        : scope.row[item.prop]
-                                    ) +
-                                    "\n                     "
+                                  _vm._s(
+                                    item.inProp
+                                      ? scope.row[item.prop][item.inProp]
+                                      : scope.row[item.prop]
+                                  )
                                 )
                               ])
                         ]
@@ -5010,13 +5250,13 @@ var render = function() {
                             item.prop
                               ? _c("span", [
                                   _vm._v(
-                                    "\n                         " +
+                                    "\n            " +
                                       _vm._s(
                                         item.inProp
                                           ? scope.row[item.prop][item.inProp]
                                           : scope.row[item.prop]
                                       ) +
-                                      "\n                        "
+                                      "\n          "
                                   )
                                 ])
                               : _vm._e()
@@ -5227,11 +5467,7 @@ var render = function() {
                                                       ]
                                                         ? _c("span", [
                                                             _vm._v(
-                                                              "\n                                           " +
-                                                                _vm._s(
-                                                                  list.name
-                                                                ) +
-                                                                "\n                                           "
+                                                              _vm._s(list.name)
                                                             )
                                                           ])
                                                         : _vm._e()
@@ -5245,11 +5481,7 @@ var render = function() {
                                       )
                                     : _c("span", [
                                         _vm._v(
-                                          "\n                              " +
-                                            _vm._s(
-                                              _vm.combEditVal[each.inProp]
-                                            ) +
-                                            "\n                          "
+                                          _vm._s(_vm.combEditVal[each.inProp])
                                         )
                                       ])
                                 ])
@@ -5466,13 +5698,11 @@ var render = function() {
                                                     ]
                                                       ? _c("span", [
                                                           _vm._v(
-                                                            "\n                                     " +
-                                                              _vm._s(
-                                                                list.name
-                                                                  ? list.name
-                                                                  : list.title
-                                                              ) +
-                                                              "\n                                 "
+                                                            _vm._s(
+                                                              list.name
+                                                                ? list.name
+                                                                : list.title
+                                                            )
                                                           )
                                                         ])
                                                       : _vm._e()
@@ -5484,13 +5714,11 @@ var render = function() {
                                           )
                                         : _c("span", [
                                             _vm._v(
-                                              "\n                                 " +
-                                                _vm._s(
-                                                  scope.row[item.prop][
-                                                    item.inProp
-                                                  ]
-                                                ) +
-                                                "\n                             "
+                                              _vm._s(
+                                                scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              )
                                             )
                                           ])
                                     ])
@@ -5553,15 +5781,11 @@ var render = function() {
                                     )
                                   : _c("span", [
                                       _vm._v(
-                                        "\n                          " +
-                                          _vm._s(
-                                            item.inProp
-                                              ? scope.row[item.prop][
-                                                  item.inProp
-                                                ]
-                                              : scope.row[item.prop]
-                                          ) +
-                                          "\n                     "
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        )
                                       )
                                     ])
                               ])
@@ -5659,13 +5883,7 @@ var render = function() {
                             {
                               key: "default",
                               fn: function(scope) {
-                                return [
-                                  _vm._v(
-                                    "\n                             " +
-                                      _vm._s(scope.row[item.prop]) +
-                                      "\n                         "
-                                  )
-                                ]
+                                return [_vm._v(_vm._s(scope.row[item.prop]))]
                               }
                             }
                           ],
@@ -5954,13 +6172,11 @@ var render = function() {
                                                             ][item.inProp]
                                                               ? _c("span", [
                                                                   _vm._v(
-                                                                    "\n                                                 " +
-                                                                      _vm._s(
-                                                                        list.name
-                                                                          ? list.name
-                                                                          : list.title
-                                                                      ) +
-                                                                      "\n                                             "
+                                                                    _vm._s(
+                                                                      list.name
+                                                                        ? list.name
+                                                                        : list.title
+                                                                    )
                                                                   )
                                                                 ])
                                                               : _vm._e()
@@ -5972,13 +6188,11 @@ var render = function() {
                                                   )
                                                 : _c("span", [
                                                     _vm._v(
-                                                      "\n                                 " +
-                                                        _vm._s(
-                                                          scope.row[item.prop][
-                                                            item.inProp
-                                                          ]
-                                                        ) +
-                                                        "\n                             "
+                                                      _vm._s(
+                                                        scope.row[item.prop][
+                                                          item.inProp
+                                                        ]
+                                                      )
                                                     )
                                                   ])
                                             ])
@@ -6045,15 +6259,13 @@ var render = function() {
                                             )
                                           : _c("span", [
                                               _vm._v(
-                                                "\n                          " +
-                                                  _vm._s(
-                                                    item.inProp
-                                                      ? scope.row[item.prop][
-                                                          item.inProp
-                                                        ]
-                                                      : scope.row[item.prop]
-                                                  ) +
-                                                  "\n                     "
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                )
                                               )
                                             ])
                                       ])
@@ -6074,13 +6286,7 @@ var render = function() {
                         {
                           key: "default",
                           fn: function(scope) {
-                            return [
-                              _vm._v(
-                                "\n                             " +
-                                  _vm._s(scope.row[_vm.item.prop] + "新建") +
-                                  "\n                         "
-                              )
-                            ]
+                            return [_vm._v(_vm._s("新建"))]
                           }
                         }
                       ])
