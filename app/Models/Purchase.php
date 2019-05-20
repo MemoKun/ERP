@@ -110,6 +110,16 @@ class Purchase extends Model
     }
 
     /**
+     * 审核
+     */
+    public function unAudit()
+    {
+        $this->is_audit = 0;
+        $this->save();
+    }
+
+
+    /**
      * 打印
      */
     public function print()

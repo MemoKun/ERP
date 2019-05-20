@@ -113,6 +113,16 @@ class StockIn extends Model
     }
 
     /**
+     * 打印
+     */
+    public function print()
+    {
+        $this->print_at = Carbon::now();
+        $this->is_print = 1;
+        $this->save();
+    }
+
+    /**
      * 审核
      */
     public function audit()
@@ -120,16 +130,20 @@ class StockIn extends Model
         $this->audit_at = Carbon::now();
         $this->auditor = Auth::guard('api')->id();
         $this->is_audit = 1;
+        $this->is_stock_in = 1;
+        $this->stock_in_at = Carbon::now();
+        $this->warehouer = Auth::guard('api')->id();
         $this->save();
     }
 
     /**
-     * 打印
+     * 退审
      */
-    public function print()
+    public function unAudit()
     {
-        $this->print_at = Carbon::now();
-        $this->is_print = 1;
+        $this->audit_at = Carbon::now();
+        $this->auditor = Auth::guard('api')->id();
+        $this->is_audit = 0;
         $this->save();
     }
 
@@ -147,8 +161,6 @@ class StockIn extends Model
     public static function findAvailableNo()
     {
         // 订单流水号前缀
-        //PR:Purchase Request Form 采购申请单,公司内部使用;
-        //PO:Purchase Order Form 采购订单,公司对外使用。
         $prefix = 'IS';
 
         for ($i = 0; $i < 10; $i++) {
