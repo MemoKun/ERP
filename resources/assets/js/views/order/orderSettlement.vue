@@ -1,184 +1,353 @@
 <template>
-    <div>
-        <el-tabs v-model="activeName" @tab-click="outerHandleClick">
-            <el-tab-pane label="订单" name="0">
-                <div>
-                    <div class="searchBox">
-                        <span>
-                            <label>订单编号</label>
-                            <el-input v-model="searchBox.order_num" clearable></el-input>
-                        </span>
-                        <span>
-                            <label>收货人</label>
-                            <el-input v-model="searchBox.order_man" clearable></el-input>
-                        </span>
-                        <span>
-                            <label>物流公司</label>
-                            <el-select v-model="searchBox.order_company" clearable clearable placeholder="请选择">
-                                <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span v-if="filterBox">
-                            <label>供应商</label>
-                            <el-select v-model="searchBox.order_company" clearable clearable placeholder="请选择">
-                                <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span v-else>
-                            <el-button type="primary">筛选</el-button>
-                            <el-button>重置</el-button>
-                            <span @click="toggleShow">
-                                <el-button type="text">展开</el-button>
-                                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-                            </span>
-                        </span>
-                    </div>
-                    <div class="searchBox" v-show="filterBox">
-                        <span>
-                            <label>店铺名称</label>
-                            <el-select v-model="searchBox.order_shop" clearable clearable placeholder="请选择">
-                                <el-option v-for="item in searchBox.orderShops" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </span>
-                        <span>
-                            <label>结算日期</label>
-                            <el-date-picker v-model="searchBox.order_accountDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-                            </el-date-picker>
-                        </span>
-                        <span>
-                            <label>发货时间</label>
-                            <el-date-picker v-model="searchBox.order_expressDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-                            </el-date-picker>
-                        </span>
+  <div>
+    <el-tabs v-model="activeName" @tab-click="outerHandleClick">
+      <el-tab-pane label="订单" name="0">
+        <div>
+          <div class="searchBox">
+            <span>
+              <label>订单编号</label>
+              <el-input v-model="searchBox.system_order_no" clearable></el-input>
+            </span>
+            <span>
+              <label>收货人</label>
+              <el-input v-model="searchBox.receiver_name" clearable></el-input>
+            </span>
+            <span>
+              <label>物流公司</label>
+              <el-select v-model="searchBox.logistics_id" clearable clearable placeholder="请选择">
+                <el-option v-for="item in searchBox.logistics_id" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span v-if="filterBox">
+              <label>供应商</label>
+              <el-select v-model="searchBox.supplier_id" clearable clearable placeholder="请选择">
+                <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span v-else>
+              <el-button type="primary">筛选</el-button>
+              <el-button>重置</el-button>
+              <span @click="toggleShow">
+                <el-button type="text">展开</el-button>
+                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
+              </span>
+            </span>
+          </div>
+          <div class="searchBox" v-show="filterBox">
+            <span>
+              <label>店铺名称</label>
+              <el-select v-model="searchBox.shops_id" clearable clearable placeholder="请选择">
+                <el-option v-for="item in searchBox.orderShops" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </span>
+            <span>
+              <label>结算日期</label>
+              <el-date-picker v-model="searchBox.checked_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              </el-date-picker>
+            </span>
+            <span>
+              <label>发货时间</label>
+              <el-date-picker v-model="searchBox.stockout_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              </el-date-picker>
+            </span>
 
-                        <span>
-                            <label>客审日期</label>
-                            <el-date-picker v-model="searchBox.order_customerInves" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-                            </el-date-picker>
-                        </span>
+            <span>
+              <label>客审日期</label>
+              <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              </el-date-picker>
+            </span>
 
-                    </div>
-                    <div v-if="filterBox" style="text-align: right">
-                        <el-button type="primary">筛选</el-button>
-                        <el-button @click="resets">重置</el-button>
-                        <span @click="toggleShow" style="display: inline">
-                            <el-button type="text">收起</el-button>
-                            <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-                        </span>
-                    </div>
-                </div>
+          </div>
+          <div v-if="filterBox" style="text-align: right">
+            <el-button type="primary">筛选</el-button>
+            <el-button @click="resets">重置</el-button>
+            <span @click="toggleShow" style="display: inline">
+              <el-button type="text">收起</el-button>
+              <i class="el-icon-arrow-up" style="color:#409EFF"></i>
+            </span>
+          </div>
+        </div>
 
-                <!--显示列表-未处理-->
-                <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
-                    <el-tab-pane label="未处理" name="0">
-                        <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-                            <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                            <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                        </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                            <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                            <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==2">
-                                            <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==3">
-                                            <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==4">
-                                            <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==5">
-                                            <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                            {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                        </span>
-                                    </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <el-tab-pane label="已处理" name="1">
-                        <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-                            <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-                            </el-table-column>
-                            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                                <template slot-scope="scope">
-                                    <span v-if="item.type=='checkbox'">
-                                        <span v-if="item.inProp">
-                                            <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                        </span>
-                                        <span v-else>
-                                            <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                        </span>
-                                    </span>
-                                    <span v-else-if="item.type=='flag'">
-                                        <span v-if="scope.row[item.prop]==0">
-                                            <i class="iconfont bf-flag"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==1">
-                                            <i class="iconfont bf-flag" style="color:red"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==2">
-                                            <i class="iconfont bf-flag" style="color:yellow"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==3">
-                                            <i class="iconfont bf-flag" style="color:green"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==4">
-                                            <i class="iconfont bf-flag" style="color:blue"></i>
-                                        </span>
-                                        <span v-else-if="scope.row[item.prop]==5">
-                                            <i class="iconfont bf-flag" style="color:purple"></i>
-                                        </span>
-                                    </span>
-                                    <span v-else>
-                                        <span v-if="scope.row[item.prop]">
-                                            {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                        </span>
-                                    </span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                    <!--<el-tab-pane label="等通知发货" name="2">
-
-                    </el-tab-pane>-->
-                </el-tabs>
-            </el-tab-pane>
-
+        <!--显示列表-未处理-->
+        <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
+          <el-tab-pane label="运费未结算" name="0">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in logisticsFeeHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="运费已结算" name="1">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in logisticsFeeHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="货款未结算" name="2">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in goodsFeeHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="货款已结算" name="3">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in goodsFeeHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="配送未结算" name="4">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in distributionFeeHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="配送已结算" name="5">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in distributionFeeHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
         </el-tabs>
-    </div>
+      </el-tab-pane>
+
+    </el-tabs>
+  </div>
 </template>
 <script>
 import {
@@ -194,62 +363,51 @@ export default {
         {
           cnt: "修改",
           icon: "bf-change",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "退审",
           icon: "bf-audit",
-          ent: this.test
+          ent: this.handleUnAudit,
+          nClick: true
         },
         {
           cnt: "结算",
           icon: "bf-finSettle",
-          ent: this.test
+          ent: this.handleAudit,
+          nClick: true
         },
         {
           cnt: "导出",
           icon: "bf-out",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.test
+          ent: this.refresh,
+          nClick: false
         }
       ],
       filterBox: false,
       searchBox: {
-        vip_name: "",
-        order_num: "",
-        order_man: "",
-        order_phone: "",
-        order_money: "",
-        order_address: "",
-        order_goods: "",
-        order_staff: "",
-        order_promiseDate: "",
-        order_expressDate: "",
-        order_accountDate: "",
-        order_workDate: "",
-        order_transMStart: "",
-        order_transMEnd: "",
-        orderCompany: [{ label: "ceshi", value: 0 }],
-        order_customerInves: "",
-        order_mark: "",
-        order_flag: "",
-        ordertbFlag: [{ label: "ceshi", value: 0 }],
-        order_lock: "",
-        orderLock: [{ label: "ceshi", value: 0 }],
-        order_company: "",
-        order_shop: "",
-        orderShops: [{ label: "ceshi", value: 0 }]
+        system_order_no: "",
+        receiver_name: "",
+        logistics_id: "",
+        supplier_id: "",
+        shops_id: "",
+        checked_at: "",
+        stockout_at: "",
+        audit_at: ""
       },
       /*获取数据*/
       activeName: "0",
       leftTopActiveName: "0",
       rightActiveName: "0",
       orderListData: [],
-      orderListHead: [
+      logisticsFeeHead: [
         //订单表头标签
         {
           label: "系统订单号",
@@ -264,31 +422,90 @@ export default {
           type: "text"
         },
         {
-          label: "店铺昵称",
-          width: "150",
-          prop: "shop",
-          inProp: "title",
-          type: "text"
-        },
-        {
-          label: "业务员账号",
-          width: "140",
-          prop: "businessPersonnel",
-          inProp: "username",
-          type: "text"
-        },
-        {
-          label: "业务员姓名",
-          width: "140",
-          prop: "businessPersonnel",
-          inProp: "username",
-          type: "text"
-        },
-        {
-          label: "锁定人姓名",
+          label: "买家昵称",
           width: "130",
-          prop: "businessPersonnel",
-          inProp: "username",
+          prop: "member_nick",
+          type: "text"
+        },
+        {
+          label: "收货人",
+          width: "130",
+          prop: "receiver_name",
+          type: "text"
+        },
+        {
+          label: "实际运费",
+          width: "130",
+          prop: "actual_fright",
+          type: "text"
+        },
+        {
+          label: "实际运费类型",
+          width: "130",
+          prop: "fright_types_id",
+          type: "text"
+        },
+        {
+          label: "省",
+          width: "120",
+          prop: "receiver_state",
+          type: "text"
+        },
+        {
+          label: "市",
+          width: "120",
+          prop: "receiver_city",
+          type: "text"
+        },
+        {
+          label: "区",
+          width: "120",
+          prop: "receiver_district",
+          type: "text"
+        },
+        {
+          label: "详细地址",
+          width: "180",
+          prop: "receiver_address",
+          type: "text"
+        },
+        {
+          label: "实发物流",
+          width: "140",
+          prop: "logistics_id",
+          type: "text"
+        },
+        {
+          label: "运费结算备注",
+          width: "140",
+          prop: "logistics_check_remark",
+          type: "text"
+        },
+        {
+          label: "运费结算时间",
+          width: "140",
+          prop: "logistics_check_at",
+          type: "text"
+        },
+        {
+          label: "发货时间",
+          width: "140",
+          prop: "stockout_at",
+          type: "text"
+        }
+      ],
+      goodsFeeHead: [
+        //订单表头标签
+        {
+          label: "系统订单号",
+          width: "220",
+          prop: "system_order_no",
+          type: "text"
+        },
+        {
+          label: "淘宝单号",
+          width: "220",
+          prop: "taobao_oid",
           type: "text"
         },
         {
@@ -298,37 +515,12 @@ export default {
           type: "text"
         },
         {
-          label: "客户类型",
-          width: "130",
-          prop: "customerType",
-          inProp: "name",
-          type: "text"
-        },
-        {
-          label: "淘宝旗帜",
-          width: "130",
-          prop: "seller_flag",
-          type: "flag"
-        },
-        {
           label: "物流公司",
           width: "140",
           prop: "logistic",
           inProp: "name",
           type: "text"
         },
-        {
-          label: "快递费用",
-          width: "120",
-          prop: "express_fee",
-          type: "number"
-        },
-        /* {
-            label: '其他费用',
-            width: '120',
-            prop: 'is_print',
-            type: 'number',
-          },*/
         {
           label: "收货人",
           width: "130",
@@ -360,80 +552,10 @@ export default {
           type: "text"
         },
         {
-          label: "配送商",
-          width: "130",
-          prop: "distribution",
-          inProp: "name",
-          type: "text"
-        },
-        {
           label: "发货仓库",
           width: "130",
           prop: "warehouses",
           inProp: "name",
-          type: "text"
-        },
-        {
-          label: "配送电话",
-          width: "150",
-          prop: "distribution",
-          inProp: "phone",
-          type: "number"
-        },
-        {
-          label: "配送类型",
-          width: "130",
-          prop: "distributionType",
-          inProp: "name",
-          type: "text"
-        },
-        {
-          label: "配送方式",
-          width: "130",
-          prop: "distributionMethod",
-          inProp: "name",
-          type: "text"
-        },
-        {
-          label: "送货费",
-          width: "120",
-          prop: "deliver_goods_fee",
-          type: "number"
-        },
-        {
-          label: "搬楼费",
-          width: "120",
-          prop: "move_upstairs_fee",
-          type: "number"
-        },
-        {
-          label: "安装费",
-          width: "120",
-          prop: "installation_fee",
-          type: "number"
-        },
-        {
-          label: "配送总计",
-          width: "130",
-          prop: "total_distribution_fee",
-          type: "number"
-        },
-        {
-          label: "配送单号",
-          width: "180",
-          prop: "distribution_no",
-          type: "text"
-        },
-        {
-          label: "客审时间",
-          width: "180",
-          prop: "audit_at",
-          type: "text"
-        },
-        {
-          label: "拍单时间",
-          width: "180",
-          prop: "created",
           type: "text"
         },
         {
@@ -443,118 +565,10 @@ export default {
           type: "text"
         },
         {
-          label: "承诺发货日期",
-          width: "180",
-          prop: "promise_ship_time",
-          type: "text"
-        },
-        /* {
-            label: '商品数量',
-            width: '120',
-            prop: 'is_print',
-            type: 'number',
-          },*/
-        /* {
-            label: '(实际售价+其他费用)',
-            width: '150',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '商家优惠金额',
-            width: '130',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '标记总金额',
-            width: '130',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '支付总金额',
-            width: '130',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '实际总售价',
-            width: '130',
-            prop: '',
-            type: 'number',
-          },*/
-        {
-          label: "木架费",
-          width: "120",
-          prop: "wooden_frame_costs",
-          type: "number"
-        },
-        {
-          label: "优惠返现",
-          width: "120",
-          prop: "preferential_cashback",
-          type: "number"
-        },
-        {
-          label: "好评返现",
-          width: "120",
-          prop: "favorable_cashback",
-          type: "number"
-        },
-        /* {
-            label: '拆分主订单',
-            width: '130',
-            prop: 'is_split',
-            type: 'checkbox'
-          },*/
-        /* {
-            label: '标记人',
-            width: '130',
-            prop: '',
-            type: 'text',
-          },
-          {
-            label: '标记名称',
-            width: '130',
-            prop: '',
-            type: 'text'
-          },
-          {
-            label: '标记时间',
-            width: '160',
-            prop: '',
-            type: 'text',
-          },*/
-        {
-          label: "订单来源",
-          width: "130",
-          prop: "order_source",
-          type: "text"
-        },
-        /* {
-            label: '分阶段金额',
-            width: '130',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '分阶段状态',
-            width: '130',
-            prop: '',
-            type: 'text'
-          },*/
-        {
           label: "服务车金额",
           width: "130",
           prop: "service_car_fee",
           type: "number"
-        },
-        {
-          label: "服务车信息",
-          width: "150",
-          prop: "service_car_info",
-          type: "text"
         },
         {
           label: "门店收款方式",
@@ -569,66 +583,18 @@ export default {
           prop: "deposit",
           type: "number"
         },
-        /* {
-            label: '门店欠款金额',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '线下单价汇总',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '线下金额汇总',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },*/
         {
           label: "发票快递费",
           width: "130",
           prop: "invoice_express_fee",
           type: "number"
         },
-        /* {
-            label: '线下优惠汇总',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },*/
-        /* {
-            label: '送货类型-京东',
-            width: '140',
-            prop: '',
-            type: 'text',
-          },
-          {
-            label: '线下实际金额汇总',
-            width: '140',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '支付方式-京东',
-            width: '140',
-            prop: '',
-            type: 'text',
-          },*/
         {
           label: "需要发票",
           width: "90",
           prop: "is_invoice",
           type: "checkbox"
         },
-        /*  {
-            label: '余额支付金额-京东',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },*/
         {
           label: "订单状态",
           width: "140",
@@ -647,54 +613,6 @@ export default {
           prop: "tax_number",
           type: "text"
         },
-        /* {
-            label: '纳税注册地址',
-            width: '180',
-            prop: '',
-            type: 'text'
-          },
-          {
-            label: '纳税注册电话',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '纳税开户银行',
-            width: '130',
-            prop: '',
-            type: 'text'
-          },
-          {
-            label: '纳税银行账号',
-            width: '180',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '发票信息-唯品会',
-            width: '180',
-            prop: '',
-            type: 'text'
-          },*/
-        /* {
-            label: 'PO单号-唯品会',
-            width: '180',
-            prop: '',
-            type: 'text',
-          },
-          {
-            label: '促销优惠金额-唯品会',
-            width: '150',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '期望收货时间-唯品会',
-            width: '160',
-            prop: '',
-            type: 'text',
-          },*/
         {
           label: "买家留言",
           width: "150",
@@ -713,139 +631,118 @@ export default {
           prop: "customer_service_remark",
           type: "text"
         },
-        /* {
-            label: '补件原因',
-            width: '150',
-            prop: '',
-            type: 'text',
-          },*/
-        /* {
-            label: '已驳回',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },
-
-          {
-            label: '分阶段',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },*/
-        /*{
-            label: '服务车',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },*/
-        /* {
-            label: '赠品',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },
-          {
-            label: '红包',
-            width: '90',
-            prop: '',
-            type: 'checkbox',
-          },
-          {
-            label: '已打印',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },*/
-        /* {
-            label: '锁定',
-            width: '90',
-            prop: '',
-            type: 'checkbox',
-          },*/
+      ],
+      distributionFeeHead: [
+        //订单表头标签
         {
-          label: "合并订单",
-          width: "90",
-          prop: "is_merge",
-          type: "checkbox"
-        },
-        {
-          label: "拆分订单",
-          width: "90",
-          prop: "is_split",
-          type: "checkbox"
-        },
-        {
-          label: "关联订单",
-          width: "90",
-          prop: "is_association",
-          type: "checkbox"
-        },
-        {
-          label: "接单人",
-          width: "120",
-          prop: "accept_order_user",
-          type: "text"
-        },
-        {
-          label: "收据",
-          width: "130",
-          prop: "receipt",
-          type: "text"
-        },
-        /* {
-            label: '(订单总额+服务车金额)',
-            width: '150',
-            prop: '',
-            type: 'number'
-          },*/
-        /* {
-            label: '店铺分组',
-            width: '120',
-            prop: '',
-            type: 'text'
-          },*/
-        {
-          label: "关联单号",
+          label: "系统订单号",
           width: "220",
-          prop: "association_taobao_oid",
+          prop: "system_order_no",
           type: "text"
         },
         {
-          label: "退款信息",
+          label: "淘宝单号",
+          width: "220",
+          prop: "taobao_oid",
+          type: "text"
+        },
+        {
+          label: "店铺昵称",
+          width: "150",
+          prop: "shop",
+          inProp: "title",
+          type: "text"
+        },
+        {
+          label: "买家昵称",
           width: "130",
-          prop: "refund_info",
+          prop: "member_nick",
           type: "text"
         },
         {
-          label: "锁定人账号",
+          label: "收货人",
+          width: "130",
+          prop: "receiver_name",
+          type: "text"
+        },
+        {
+          label: "配送单号",
+          width: "180",
+          prop: "distribution_no",
+          type: "text"
+        },
+        {
+          label: "配送费",
+          width: "130",
+          prop: "total_distribution_fee",
+          type: "number"
+        },
+        {
+          label: "配送类型",
+          width: "130",
+          prop: "distributionType",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "省",
+          width: "120",
+          prop: "receiver_state",
+          type: "text"
+        },
+        {
+          label: "市",
+          width: "120",
+          prop: "receiver_city",
+          type: "text"
+        },
+        {
+          label: "区",
+          width: "120",
+          prop: "receiver_district",
+          type: "text"
+        },
+        {
+          label: "详细地址",
+          width: "180",
+          prop: "receiver_address",
+          type: "text"
+        },
+        {
+          label: "客服备注",
+          width: "150",
+          prop: "customer_service_remark",
+          type: "text"
+        },
+        {
+          label: "实发物流",
           width: "140",
-          prop: "locker",
-          inProp: "username",
+          prop: "logistics_id",
           type: "text"
         },
-        /* {
-            label: '退审',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },
-          {
-            label: '库存占用',
-            width: '90',
-            prop: '',
-            type: 'checkbox',
-          },*/
         {
-          label: "需要核销",
-          width: "90",
-          prop: "is_cancel_after_verification",
-          type: "checkbox"
+          label: "配送结算备注",
+          width: "140",
+          prop: "distribution_check_remark",
+          type: "text"
         },
         {
-          label: "等通知发货",
-          width: "90",
-          prop: "is_notice",
-          type: "checkbox"
+          label: "配送结算时间",
+          width: "140",
+          prop: "distribution_checked_at",
+          type: "text"
+        },
+        {
+          label: "发货时间",
+          width: "180",
+          prop: "stockout_at",
+          type: "text"
+        },
+        {
+          label: "客审时间",
+          width: "150",
+          prop: "audit_at",
+          type: "text"
         }
       ],
       loading: true, //作用未知
@@ -1988,10 +1885,15 @@ export default {
       let index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts + "/searchuntreated", {
-            include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-          }).then(
+          this.orderListData = {};
+          this.$fetch(
+            this.urls.customerservicedepts + "/searchordersettlement",
+            {
+              is_logistics_checked: 0,
+              include:
+                "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            }
+          ).then(
             res => {
               this.loading = false;
               this.orderListData = res.data;
@@ -2020,14 +1922,18 @@ export default {
           );
           break;
         case 1:
-          this.$fetch(this.urls.customerservicedepts, {
-            order_status: 20,
-            include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-          }).then(
+          this.orderListData = {};
+          this.$fetch(
+            this.urls.customerservicedepts + "/searchordersettlement",
+            {
+              is_logistics_checked: 1,
+              include:
+                "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            }
+          ).then(
             res => {
               this.loading = false;
-              this.alreadyHandle = res.data;
+              this.orderListData = res.data;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2046,11 +1952,105 @@ export default {
           );
           break;
         case 2:
-          this.$fetch(this.urls.customerservicedepts, {
-            order_status: "等通知发货",
-            include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
-          }).then(
+          this.orderListData = {};
+          this.$fetch(
+            this.urls.customerservicedepts + "/searchordersettlement",
+            {
+              is_goods_checked:0,
+              include:
+                "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+            }
+          ).then(
+            res => {
+              this.loading = false;
+              this.orderListData = res.data;
+              let pg = res.meta.pagination;
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
+            },
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                this.$message.error(arr1.join(","));
+              }
+            }
+          );
+          break;
+        case 3:
+          this.orderListData = {};
+          this.$fetch(
+            this.urls.customerservicedepts + "/searchordersettlement",
+            {
+              is_goods_checked:1,
+              include:
+                "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+            }
+          ).then(
+            res => {
+              this.loading = false;
+              this.orderListData = res.data;
+              let pg = res.meta.pagination;
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
+            },
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                this.$message.error(arr1.join(","));
+              }
+            }
+          );
+          break;
+        case 4:
+          this.orderListData = {};
+          this.$fetch(
+            this.urls.customerservicedepts + "/searchordersettlement",
+            {
+              is_distribution_checked: 0,
+              include:
+                "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+            }
+          ).then(
+            res => {
+              this.loading = false;
+              this.orderListData = res.data;
+              let pg = res.meta.pagination;
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
+            },
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                this.$message.error(arr1.join(","));
+              }
+            }
+          );
+          break;
+        case 5:
+          this.orderListData = {};
+          this.$fetch(
+            this.urls.customerservicedepts + "/searchordersettlement",
+            {
+              is_distribution_checked: 1,
+              include:
+                "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+            }
+          ).then(
             res => {
               this.loading = false;
               this.orderListData = res.data;
@@ -2079,34 +2079,50 @@ export default {
     },
     rightHandleClick() {},
     orderListRClick(row) {
-      if (row["locker_id"] == 0) {
-        this.newOpt[1].nClick = true;
-        this.newOpt[2].nClick = true;
-        this.newOpt[3].nClick = false;
-        this.newOpt[4].nClick = true;
-        this.newOpt[8].nClick = true;
-        this.newOpt[9].nClick = true;
-        this.newOpt[14].nClick = true;
-        if (row["order_status"] == "已客审") {
-          this.newOpt[5].nClick = true;
-          this.newOpt[6].nClick = false;
-        } else {
-          this.newOpt[5].nClick = false;
-          this.newOpt[6].nClick = true;
-        }
-      } else {
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = false;
-        this.newOpt[3].nClick = true;
-        this.newOpt[4].nClick = false;
-        this.newOpt[5].nClick = false;
-        this.newOpt[6].nClick = true;
-        this.newOpt[8].nClick = false;
-        this.newOpt[9].nClick = false;
-        this.newOpt[14].nClick = false;
-      }
       this.curRowId = row.id;
       this.curRowData = row;
+      if(this.leftTopActiveName==0){
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = false;
+      };
+      if(this.leftTopActiveName==1){
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = false;
+      };
+      if(this.leftTopActiveName==2){
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = false;
+      };
+      if(this.leftTopActiveName==3){
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = false;
+      };
+      if(this.leftTopActiveName==4){
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = false;
+      };
+      if(this.leftTopActiveName==5){
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = false;
+      };
     },
     orderDbClick(row) {
       this.activeName = "1";
@@ -2996,81 +3012,197 @@ export default {
     },
     /*审核*/
     handleAudit() {
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(
-          () => {
-            this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = true;
-            this.newOpt[3].nClick = true;
-            this.newOpt[4].nClick = true;
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = true;
-            this.newOpt[9].nClick = true;
-            this.newOpt[13].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = true;
-            this.newOpt[18].nClick = true;
-            this.refresh();
-            this.$message({
-              message: "审核成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
+        let index = this.leftTopActiveName - 0;
+        switch (index) {
+          case 0:
+            this.$put(
+              this.urls.customerservicedepts + "/" + id + "/logcheck"
+            ).then(
+              () => {
+                this.newOpt[0].nClick = true;
+                this.newOpt[1].nClick = true;
+                this.newOpt[2].nClick = true;
+                this.newOpt[3].nClick = true;
+                this.newOpt[4].nClick = true;
+                this.refresh();
+                this.$message({
+                  message: "运费结算成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
               }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
+            );
+            break;
+          case 2:
+            this.$put(
+              this.urls.customerservicedepts + "/" + id + "/goodscheck"
+            ).then(
+              () => {
+                this.newOpt[0].nClick = true;
+                this.newOpt[1].nClick = true;
+                this.newOpt[2].nClick = true;
+                this.newOpt[3].nClick = true;
+                this.newOpt[4].nClick = true;
+                this.refresh();
+                this.$message({
+                  message: "货款结算成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
+              }
+            );
+            break;
+          case 4:
+            this.$put(
+              this.urls.customerservicedepts + "/" + id + "/discheck"
+            ).then(
+              () => {
+                this.newOpt[0].nClick = true;
+                this.newOpt[1].nClick = true;
+                this.newOpt[2].nClick = true;
+                this.newOpt[3].nClick = true;
+                this.newOpt[4].nClick = true;
+                this.refresh();
+                this.$message({
+                  message: "配送结算成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
+              }
+            );
+            break;
+        }
       }
     },
     handleUnAudit() {
-      if (this.newOpt[6].nClick) {
+      if (this.newOpt[1].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(
-          () => {
-            this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = true;
-            this.newOpt[3].nClick = false;
-            this.newOpt[4].nClick = true;
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = true;
-            this.newOpt[9].nClick = true;
-            this.newOpt[13].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = true;
-            this.newOpt[18].nClick = false;
-            this.refresh();
-            this.$message({
-              message: "退审成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
+        let index = this.leftTopActiveName - 0;
+        switch (index) {
+          case 1:
+            this.$put(
+              this.urls.customerservicedepts + "/" + id + "/loguncheck"
+            ).then(
+              () => {
+                this.newOpt[0].nClick = true;
+                this.newOpt[1].nClick = true;
+                this.newOpt[2].nClick = true;
+                this.newOpt[3].nClick = true;
+                this.newOpt[4].nClick = true;
+                this.refresh();
+                this.$message({
+                  message: "退审成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
               }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
+            );
+            break;
+          case 3:
+            this.$put(
+              this.urls.customerservicedepts + "/" + id + "/goodsuncheck"
+            ).then(
+              () => {
+                this.newOpt[0].nClick = true;
+                this.newOpt[1].nClick = true;
+                this.newOpt[2].nClick = true;
+                this.newOpt[3].nClick = true;
+                this.newOpt[4].nClick = true;
+                this.refresh();
+                this.$message({
+                  message: "退审成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
+              }
+            );
+            break;
+          case 5:
+            this.$put(
+              this.urls.customerservicedepts + "/" + id + "/disuncheck"
+            ).then(
+              () => {
+                this.newOpt[0].nClick = true;
+                this.newOpt[1].nClick = true;
+                this.newOpt[2].nClick = true;
+                this.newOpt[3].nClick = true;
+                this.newOpt[4].nClick = true;
+                this.refresh();
+                this.$message({
+                  message: "退审成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
+              }
+            );
+            break;
+        }
       }
     },
     handleSplitOrder() {

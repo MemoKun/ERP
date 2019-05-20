@@ -755,7 +755,7 @@ export default {
         {
           label: "锁定人姓名",
           width: "130",
-          prop: "businessPersonnel",
+          prop: "locker",
           inProp: "username",
           type: "text"
         },

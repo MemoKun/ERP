@@ -3506,8 +3506,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this21.newOpt[8].nClick = false;
           _this21.newOpt[9].nClick = false;
           _this21.newOpt[10].nClick = false;
-          _this21.newOpt[11].nClick = false;
-          _this21.newOpt[12].nClick = false;
           _this21.refresh();
           _this21.$message({
             message: "打印发货单成功",

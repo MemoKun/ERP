@@ -794,7 +794,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         label: "锁定人姓名",
         width: "130",
-        prop: "businessPersonnel",
+        prop: "locker",
         inProp: "username",
         type: "text"
       }, {

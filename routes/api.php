@@ -659,6 +659,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.searchuntreated');
         $api->get('customerservicedepts', 'CustomerServiceDepartmentsController@index')
             ->name('api.customerservicedepts.index');
+        $api->get('customerservicedepts/searchordersettlement', 'CustomerServiceDepartmentsController@searchOrderSettlement')
+            ->name('api.customerservicedepts.searchordersettlement');
         $api->get('customerservicedepts/create', 'CustomerServiceDepartmentsController@create')
             ->name('api.customerservicedepts.create');
         $api->get('customerservicedepts/{order}', 'CustomerServiceDepartmentsController@show')
@@ -683,6 +685,21 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.issplitorder');
         $api->put('customerservicedepts/mergerorder', 'CustomerServiceDepartmentsController@isMergerOrder')
             ->name('api.customerservicedepts.ismergerorder');
+
+
+        //订单结算
+        $api->put('customerservicedepts/{order}/logcheck', 'CustomerServiceDepartmentsController@isLogCheck')
+            ->name('api.customerservicedepts.islogcheck');
+        $api->put('customerservicedepts/{order}/loguncheck', 'CustomerServiceDepartmentsController@isLogUncheck')
+            ->name('api.customerservicedepts.isloguncheck');
+        $api->put('customerservicedepts/{order}/discheck', 'CustomerServiceDepartmentsController@isDisCheck')
+            ->name('api.customerservicedepts.isdischeck');
+        $api->put('customerservicedepts/{order}/disuncheck', 'CustomerServiceDepartmentsController@isDisUncheck')
+            ->name('api.customerservicedepts.isdisuncheck');
+        $api->put('customerservicedepts/{order}/goodscheck', 'CustomerServiceDepartmentsController@isGoodsCheck')
+            ->name('api.customerservicedepts.isgoodscheck');
+        $api->put('customerservicedepts/{order}/goodsuncheck', 'CustomerServiceDepartmentsController@isGoodsUncheck')
+            ->name('api.customerservicedepts.usgoodsuncheck');
 
         //子订单
         $api->delete('orderitems/{orderitem}', 'OrderItemsController@destroy')

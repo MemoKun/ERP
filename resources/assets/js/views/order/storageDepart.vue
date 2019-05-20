@@ -3689,8 +3689,6 @@ export default {
             this.newOpt[8].nClick = false;
             this.newOpt[9].nClick = false;
             this.newOpt[10].nClick = false;
-            this.newOpt[11].nClick = false;
-            this.newOpt[12].nClick = false;
             this.refresh();
             this.$message({
               message: "打印发货单成功",

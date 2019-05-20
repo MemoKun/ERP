@@ -1548,7 +1548,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "锁定人姓名",
         width: "130",
-        prop: "businessPersonnel",
+        prop: "locker",
         inProp: "username",
         type: "text"
       }, {

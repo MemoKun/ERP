@@ -1034,21 +1034,21 @@ export default {
         {
           label: "业务员账号",
           width: "140",
-          prop: "user",
+          prop: "businessPersonnel",
           inProp: "username",
           type: "text"
         },
         {
           label: "业务员姓名",
           width: "140",
-          prop: "user",
+          prop: "businessPersonnel",
           inProp: "username",
           type: "text"
         },
         {
           label: "锁定人姓名",
           width: "130",
-          prop: "user",
+          prop: "locker",
           inProp: "username",
           type: "text"
         },
@@ -1189,7 +1189,6 @@ export default {
           label: "客审时间",
           width: "180",
           prop: "audit_at",
-          inProp: "date",
           type: "text"
         },
         {
@@ -2746,7 +2745,7 @@ export default {
       let index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts + "/searchuntreated", {
+          this.$fetch(this.urls.customerservicedepts+'/searchuntreated', {
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
@@ -2758,7 +2757,6 @@ export default {
             promise_ship_time: this.searchBox.promise_ship_time,
             created_at: this.searchBox.created_at,
             audit_at: this.searchBox.audit_at,
-
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(
@@ -2792,6 +2790,17 @@ export default {
         case 1:
           this.$fetch(this.urls.customerservicedepts, {
             order_status: 30,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            logistics_id: this.searchBox.logistics_id,
+            seller_remark: this.searchBox.seller_remark,
+            promise_ship_time: this.searchBox.promise_ship_time,
+            created_at: this.searchBox.created_at,
+            audit_at: this.searchBox.audit_at,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(
