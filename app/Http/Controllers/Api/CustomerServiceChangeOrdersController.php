@@ -675,7 +675,7 @@ class CustomerServiceChangeOrdersController extends Controller
         return $this->traitAction(
             $order,
             !$order->status || $order->getOriginal('change_status') != $order::CHANGE_STATUS_NEW,
-            '客审出错',
+            '提交出错',
             'submit'
         );
     }

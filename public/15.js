@@ -1,14 +1,14 @@
 webpackJsonp([15],{
 
-/***/ 515:
+/***/ 512:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(687)
+var __vue_script__ = __webpack_require__(673)
 /* template */
-var __vue_template__ = __webpack_require__(688)
+var __vue_template__ = __webpack_require__(674)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/system/userMag.vue"
+Component.options.__file = "resources/assets/js/views/system/roleAssociateUser.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-bdb8fbca", Component.options)
+    hotAPI.createRecord("data-v-26af46f4", Component.options)
   } else {
-    hotAPI.reload("data-v-bdb8fbca", Component.options)
+    hotAPI.reload("data-v-26af46f4", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,40 +48,11 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 687:
+/***/ 673:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -92,16 +63,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
-        cnt: '新增',
-        icon: 'bf-add',
+        cnt: '角色权限',
+        icon: 'bf-jurisdiction',
         ent: this.test
       }, {
-        cnt: '修改',
-        icon: 'bf-change',
-        ent: this.test
-      }, {
-        cnt: '删除',
-        icon: 'bf-del',
+        cnt: '角色用户',
+        icon: 'bf-juruser',
         ent: this.test
       }, {
         cnt: '刷新',
@@ -131,114 +98,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 688:
+/***/ 674:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "el-table",
-        {
-          directives: [
-            {
-              name: "loading",
-              rawName: "v-loading",
-              value: _vm.loading,
-              expression: "loading"
-            }
-          ],
-          attrs: { data: _vm.rolesList, fit: "", width: "1000", height: "400" }
-        },
-        [
-          _c("el-table-column", {
-            attrs: {
-              type: "selection",
-              width: "95",
-              align: "center",
-              checked: _vm.checkboxInit
-            }
-          }),
-          _vm._v(" "),
-          _vm._l(_vm.tableHead[0], function(item) {
-            return _c("el-table-column", {
-              key: item.prop,
-              attrs: { label: item.label, align: "center", width: item.width },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(scope) {
-                    return [
-                      item.type === "checkbox"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-checkbox", {
-                                attrs: { disabled: "" },
-                                model: {
-                                  value: scope.row[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(scope.row, item.prop, $$v)
-                                  },
-                                  expression: "scope.row[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _c("span", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  item.inProp
-                                    ? scope.row[item.prop][item.inProp]
-                                    : scope.row[item.prop]
-                                ) +
-                                "\n                    "
-                            )
-                          ])
-                    ]
-                  }
-                }
-              ])
-            })
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "新增用户", visible: _vm.addRoleMask },
-          on: {
-            "update:visible": function($event) {
-              _vm.addRoleMask = $event
-            }
-          }
-        },
-        [_vm._v("\n        111\n    ")]
-      ),
-      _vm._v(" "),
-      _c("Pagination", {
-        attrs: { "page-url": _vm.delBatchUrl },
-        on: { handlePagChg: _vm.handlePagChg }
-      })
-    ],
-    1
-  )
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h2", [_vm._v("角色用户关联")])])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-bdb8fbca", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-26af46f4", module.exports)
   }
 }
 

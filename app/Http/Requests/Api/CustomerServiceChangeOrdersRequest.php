@@ -22,32 +22,37 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                 break;
             case 'POST':
                 return [
-                    'order_id'=> 'required|integer',
-                    'applier_id'=> 'integer',
-                    'submitter_id' => 'integer',
-                    'auditor_id'=> 'integer',
+                    'change_order_no'=> 'string',
+                    'cancel_order_no'=> 'string',
                     'is_canceled'=> 'boolean',
-                    'cancel_order_no'=> 'string|max:255',
-                    'change_remark'=> 'string|max:255',
+                    'ch_applier_id'=> 'integer',
+                    'ch_applied_at' => 'date',
+                    'ch_submitter_id'=> 'integer',
+                    'ch_submitted_at' => 'date',
+                    'ch_auditor_id'=> 'integer',
+                    'ch_audited_at' => 'date',
+                    'change_remark'=> 'string',
                     'change_status'=> 'integer',
-                    
+                    'orders_id'=> 'integer',
+                    //----------变更订单与原始order分界线
                     'system_order_no'=> 'string',
                     'order_status'=> 'integer',
                     'order_source'=> 'string',
-                    
+                    'order_amount'=> 'numeric',
                     'shops_id' => [
                         'required', 'integer',
                         Rule::exists('shops', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
-                    'member_nick' => 'string|max:255',
+                    'shops_name'=> 'string',
                     'logistics_id' => [
                         'required', 'integer',
                         Rule::exists('logistics', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         }),
                     ],
+                    'logistics_sn' => 'string',
                     'billing_way' =>  [
                         'required',
                         Rule::in([
@@ -63,6 +68,11 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                         }),
                     ],
                     'expected_freight' => 'numeric',
+                    'actual_freight' => 'numeric',
+                    'logistics_remark' => 'string',
+                    'is_logistics_checked'=> 'boolean',
+                    'logistics_check_remark'=> 'string',
+                    //'logistics_checked_at' => 'date',
                     'distributions_id' => [
                         'required', 'integer',
                         Rule::exists('distributions', 'id')->where(function ($query) {
@@ -75,21 +85,20 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                             $query->where('status', 1);
                         }),
                     ],
-                    'deliver_goods_fee' => 'numeric',
+                    'deliver_goods_fee'=> 'numeric',
                     'move_upstairs_fee' => 'numeric',
                     'installation_fee' => 'numeric',
                     'total_distribution_fee' => [
                         'numeric',
-                        function($attribute, $value, $fail) {
+                        function ($attribute, $value, $fail) {
                             //设置位数
                             bcscale(2);
                             //判断是否相等
-                            if (
-                                bccomp(
+                            if (bccomp(
                                     bcadd(bcadd($this->deliver_goods_fee, $this->move_upstairs_fee), $this->installation_fee),
                                     $value
                                 ) == 0
-                            ){
+                            ) {
                                 return true;
                             }
                             return $fail('配送总计不正确');
@@ -103,9 +112,12 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                             $query->where('status', 1);
                         }),
                     ],
+                    'is_distribution_checked' => 'boolean',
+                    'distribution_check_remark'=> 'string',
+                    //'distribution_checked_at'=> 'date',
+                    'service_car_fee' => 'numeric',
                     'service_car_info' => 'string|max:255',
                     'take_delivery_goods_fee' => 'numeric',
-
                     'take_delivery_goods_ways_id' => [
                         'required', 'integer',
                         Rule::exists('take_delivery_goods_ways', 'id')->where(function ($query) {
@@ -113,7 +125,6 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                         }),
                     ],
                     'express_fee' => 'numeric',
-                    'service_car_fee' => 'numeric',
                     'cancel_after_verification_code' => 'string|max:255',
                     'wooden_frame_costs' => 'numeric',
                     'preferential_cashback' => 'numeric',
@@ -149,11 +160,17 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                     'accept_order_user' => 'string|max:255',
                     'tax_number' => 'string|max:255',
                     'receipt' => 'string|max:255',
-                    'logistics_remark' => 'string|max:255',
-                    'seller_remark' => 'string|max:255',
-                    'customer_service_remark' => 'string|max:255',
                     'buyer_message' => 'string|max:255',
-                    'status' => 'boolean',
+                    'seller_remark' => 'string|max:255',
+                    'customer_service_remark'=> 'string|max:255',
+                    'stockout_remark' => 'string|max:255',
+                    'taobao_oid' => 'numeric',
+                    'taobao_tid' => 'numeric',
+                    'member_nick'=> 'string|max:255',
+                    'seller_name'=> 'string|max:255',
+                    'seller_flag'=> 'string|max:255',
+                    //'created' => 'date',
+                    //'est_con_time' => 'date',
 
                     'receiver_name' => 'required|string|max:255',
                     'receiver_phone' => 'required|string|max:255',
@@ -164,24 +181,36 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                     'receiver_address' => 'required|string|max:255',
                     'receiver_zip' => 'required|string|max:255',
 
+
+                    'refund_info' => 'string|max:255',
+                    'business_personnel_id'=> 'integer',
+                    'locker_id'=> 'numeric',
+                    //'locked_at' => 'date',
+                    'auditor_id'=> 'integer',
+                    //'audit_at' => 'date',
+                    'cs_auditor_id'=> 'integer',
+                    //'cs_audited_at' => 'date',
+                    'fd_auditor_id'=> 'integer',
+                    //'fd_audited_at' => 'date',
+                    'ca_auditor_id'=> 'integer',
+                    //'ca_audited_at' => 'date',
+                    'stockout_op_id'=> 'integer',
+                    //'stockout_at' => 'date',
+                    'association_taobao_oid'=> 'integer',
+                    'is_merge'=> 'boolean',
+                    'is_split'=> 'boolean',
+                    'is_association'=> 'boolean',
+                    'status'=> 'boolean',
+                    'created_at'=> 'date',
+                    'updated_at'=> 'date',
+
                     'order_items.*.products_id' =>  [
                         'integer',
                         Rule::exists('products', 'id')->where(function ($query) {
                             $query->where('status', 1);
                         })
                     ],
-                    'order_items.*.combinations_id' =>  [
-                        'integer',
-                        Rule::exists('combinations', 'id'),
-                        function($attribute, $value, $fail) {
-                            $ex = explode('.', $attribute);
-                            //判断是否相等
-                            if (\App\Models\Combination::query()->findOrFail($value)->pid == $this->order_items[$ex[1]]['products_id']){
-                                return true;
-                            }
-                            return $fail('组合不属于这个产品');
-                        },
-                    ],
+                    'order_items.*.combinations_id' => 'integer',
                     'order_items.*.quantity' => 'numeric',
                     'order_items.*.total_volume' => 'numeric',
                     'order_items.*.paint' => 'string|max:255',
@@ -191,19 +220,18 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                     'order_items.*.under_line_univalent' => 'numeric',
                     'order_items.*.under_line_total_amount' => [
                         'numeric',
-                        function($attribute, $value, $fail) {
+                        function ($attribute, $value, $fail) {
                             $ex = explode('.', $attribute);
                             //设置位数
                             bcscale(2);
                             //判断是否相等
-                            if (
-                                bccomp(
+                            if (bccomp(
                                     bcmul(
                                         $this->order_items[$ex[1]]['under_line_univalent'],
                                         $this->order_items[$ex[1]]['quantity']),
                                     $value
                                 ) == 0
-                            ){
+                            ) {
                                 return true;
                             }
 
@@ -213,19 +241,18 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                     'order_items.*.under_line_preferential' => 'numeric',
                     'order_items.*.under_line_payment' => [
                         'numeric',
-                        function($attribute, $value, $fail) {
+                        function ($attribute, $value, $fail) {
                             $ex = explode('.', $attribute);
                             //设置位数
                             bcscale(2);
                             //判断是否相等
-                            if (
-                                bccomp(
+                            if (bccomp(
                                     bcsub(
                                         $this->order_items[$ex[1]]['under_line_total_amount'],
                                         $this->order_items[$ex[1]]['under_line_preferential']),
                                     $value
                                 ) == 0
-                            ){
+                            ) {
                                 return true;
                             }
                             return $fail('配送总计不正确');
@@ -279,16 +306,15 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                     'installation_fee' => 'numeric',
                     'total_distribution_fee' => [
                         'numeric',
-                        function($attribute, $value, $fail) {
+                        function ($attribute, $value, $fail) {
                             //设置位数
                             bcscale(2);
                             //判断是否相等
-                            if (
-                                bccomp(
+                            if (bccomp(
                                     bcadd(bcadd($this->deliver_goods_fee, $this->move_upstairs_fee), $this->installation_fee),
                                     $value
                                 ) == 0
-                            ){
+                            ) {
                                 return true;
                             }
                             return $fail('配送总计不正确');
@@ -376,10 +402,10 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                     'order_items.*.combinations_id' =>  [
                         'integer',
                         Rule::exists('combinations', 'id'),
-                        function($attribute, $value, $fail) {
+                        function ($attribute, $value, $fail) {
                             $ex = explode('.', $attribute);
                             //判断是否相等
-                            if (\App\Models\Combination::query()->findOrFail($value)->pid == $this->order_items[$ex[1]]['products_id']){
+                            if (\App\Models\Combination::query()->findOrFail($value)->pid == $this->order_items[$ex[1]]['products_id']) {
                                 return true;
                             }
                             return $fail('组合不属于这个产品');
@@ -394,19 +420,18 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                     'order_items.*.under_line_univalent' => 'numeric',
                     'order_items.*.under_line_total_amount' => [
                         'numeric',
-                        function($attribute, $value, $fail) {
+                        function ($attribute, $value, $fail) {
                             $ex = explode('.', $attribute);
                             //设置位数
                             bcscale(2);
                             //判断是否相等
-                            if (
-                                bccomp(
+                            if (bccomp(
                                     bcmul(
                                         $this->order_items[$ex[1]]['under_line_univalent'],
                                         $this->order_items[$ex[1]]['quantity']),
                                     $value
                                 ) == 0
-                            ){
+                            ) {
                                 return true;
                             }
 
@@ -416,19 +441,18 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                     'order_items.*.under_line_preferential' => 'numeric',
                     'order_items.*.under_line_payment' => [
                         'numeric',
-                        function($attribute, $value, $fail) {
+                        function ($attribute, $value, $fail) {
                             $ex = explode('.', $attribute);
                             //设置位数
                             bcscale(2);
                             //判断是否相等
-                            if (
-                                bccomp(
+                            if (bccomp(
                                     bcsub(
                                         $this->order_items[$ex[1]]['under_line_total_amount'],
                                         $this->order_items[$ex[1]]['under_line_preferential']),
                                     $value
                                 ) == 0
-                            ){
+                            ) {
                                 return true;
                             }
                             return $fail('配送总计不正确');

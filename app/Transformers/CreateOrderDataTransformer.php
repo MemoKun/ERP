@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Models\Warehouse;
+use App\Models\User;
 use App\Models\FeeType;
 use App\Models\Shop;
 use App\Models\Logistics;
@@ -31,6 +32,7 @@ class CreateOrderDataTransformer extends TransformerAbstract
             'take_delivery_goodsWay' => TakeDeliveryGoodsWay::all(),
             'customer_type' => CustomerType::all(),
             'payment_method' => PaymentMethod::all(),
+            'user'=>User::all(),
         ];
     }
 }

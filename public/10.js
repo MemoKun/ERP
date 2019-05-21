@@ -1,19 +1,19 @@
 webpackJsonp([10],{
 
-/***/ 449:
+/***/ 451:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(542)
-  __webpack_require__(544)
+  __webpack_require__(539)
+  __webpack_require__(541)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(546)
+var __vue_script__ = __webpack_require__(543)
 /* template */
-var __vue_template__ = __webpack_require__(548)
+var __vue_template__ = __webpack_require__(544)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -53,17 +53,24 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 542:
+/***/ 538:
+/***/ (function(module, exports) {
+
+module.exports = "/images/background.jpg?84aca450bf621072c8036445581a7d8a";
+
+/***/ }),
+
+/***/ 539:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(543);
+var content = __webpack_require__(540);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("dff72bf6", content, false, {});
+var update = __webpack_require__(6)("aa1f2228", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -80,7 +87,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 543:
+/***/ 540:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -95,17 +102,17 @@ exports.push([module.i, "/* reset element-ui css */\n.login-container .el-input 
 
 /***/ }),
 
-/***/ 544:
+/***/ 541:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(545);
+var content = __webpack_require__(542);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("526007a9", content, false, {});
+var update = __webpack_require__(6)("6d4c0c90", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -122,7 +129,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 545:
+/***/ 542:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -137,12 +144,14 @@ exports.push([module.i, "\n.login-container[data-v-c175f96e] {\n  position: fixe
 
 /***/ }),
 
-/***/ 546:
+/***/ 543:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__router_index_js__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__router_index_js__ = __webpack_require__(43);
+//
+//
 //
 //
 //
@@ -179,27 +188,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'login',
+  name: "login",
   data: function data() {
     return {
       loginForm: {
-        username: '',
-        password: '',
-        code: '',
-        key: ''
+        username: "",
+        password: "",
+        code: "",
+        key: ""
       },
       loginRules: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+        username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        code: [{ required: true, message: "请输入验证码", trigger: "blur" }]
       },
       loading: false,
-      pwdType: 'password',
-      src: '',
+      pwdType: "password",
+      src: "",
       backgroundDiv: {
-        backgroundImage: 'url(' + __webpack_require__(547) + ')',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '100% 100%'
+        backgroundImage: "url(" + __webpack_require__(538) + ")",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "100% 100%"
       }
     };
   },
@@ -207,21 +216,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     //  显示密码
     showPwd: function showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = '';
+      if (this.pwdType === "password") {
+        this.pwdType = "";
       } else {
-        this.pwdType = 'password';
+        this.pwdType = "password";
       }
     },
 
     getCode: function getCode() {
       var _this = this;
 
-      this.$post('/captchas').then(function (res) {
+      this.$post("/captchas").then(function (res) {
         _this.src = res.captcha_image_content;
         _this.loginForm.key = res.captcha_key;
-        _this.loginForm.code = '';
-        $('#yzCode').focus();
+        _this.loginForm.code = "";
+        $("#yzCode").focus();
       });
     },
     submitForm: function submitForm(formName) {
@@ -235,12 +244,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             captcha_key: _this2.loginForm.key,
             captcha_code: _this2.loginForm.code
           };
-          _this2.$store.dispatch('Login', data).then(function () {
+          _this2.$store.dispatch("Login", data).then(function () {
             _this2.$message({
-              message: '登录成功',
-              type: 'success'
+              message: "登录成功",
+              type: "success"
             });
-            _this2.$store.dispatch('Profile');
+            _this2.$store.dispatch("Profile");
             __WEBPACK_IMPORTED_MODULE_0__router_index_js__["a" /* default */].push({
               path: "/",
               query: { redirect: __WEBPACK_IMPORTED_MODULE_0__router_index_js__["a" /* default */].currentRoute.fullPath }
@@ -252,11 +261,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 message: msg
               });
               _this2.getCode();
-              _this2.loginForm.code = '';
+              _this2.loginForm.code = "";
             }
           });
         } else {
-          console.log('error submit!!');
+          console.log("error submit!!");
           return false;
         }
       });
@@ -269,14 +278,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 547:
-/***/ (function(module, exports) {
-
-module.exports = "/images/background.jpg?407082eb78b24c777bc2ec4ee3203bbb";
-
-/***/ }),
-
-/***/ 548:
+/***/ 544:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

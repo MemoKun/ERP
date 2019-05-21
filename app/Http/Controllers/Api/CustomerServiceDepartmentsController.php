@@ -46,7 +46,7 @@ class CustomerServiceDepartmentsController extends Controller
         $receiver_address=$request->input("receiver_address");
         $promise_ship_time=$request->input("promise_ship_time");
         $created_at=$request->input("created_at");
-        $audit_at=$request->input("audit_at");
+        $audit_at=$request->input("cs_audited_at");
         $shops_id=$request->input("shops_id");
         $logistics_id=$request->input("logistics_id");
         $seller_remark=$request->input("seller_remark");

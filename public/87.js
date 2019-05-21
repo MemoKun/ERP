@@ -1,20 +1,24 @@
 webpackJsonp([87],{
 
-/***/ 493:
+/***/ 452:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(551)
+}
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(672)
+var __vue_script__ = __webpack_require__(553)
 /* template */
-var __vue_template__ = __webpack_require__(673)
+var __vue_template__ = __webpack_require__(556)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-30b290d5"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -25,7 +29,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/negativeInvConf.vue"
+Component.options.__file = "resources/assets/js/views/404.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +38,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f01d7f92", Component.options)
+    hotAPI.createRecord("data-v-30b290d5", Component.options)
   } else {
-    hotAPI.reload("data-v-f01d7f92", Component.options)
+    hotAPI.reload("data-v-30b290d5", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,11 +52,57 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 672:
+/***/ 551:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(552);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(6)("56826234", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-30b290d5\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./404.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-30b290d5\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./404.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 552:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.wscn-http404[data-v-30b290d5] {\n  position: relative;\n  width: 1200px;\n  margin: 20px auto 60px;\n  padding: 0 100px;\n  overflow: hidden;\n}\n.wscn-http404 .pic-404[data-v-30b290d5] {\n    position: relative;\n    float: left;\n    width: 600px;\n    padding: 150px 0;\n    overflow: hidden;\n}\n.wscn-http404 .pic-404__parent[data-v-30b290d5] {\n      width: 100%;\n}\n.wscn-http404 .pic-404__child[data-v-30b290d5] {\n      position: absolute;\n}\n.wscn-http404 .pic-404__child.left[data-v-30b290d5] {\n        width: 80px;\n        top: 17px;\n        left: 220px;\n        opacity: 0;\n        -webkit-animation-name: cloudLeft-data-v-30b290d5;\n                animation-name: cloudLeft-data-v-30b290d5;\n        -webkit-animation-duration: 2s;\n                animation-duration: 2s;\n        -webkit-animation-timing-function: linear;\n                animation-timing-function: linear;\n        -webkit-animation-fill-mode: forwards;\n                animation-fill-mode: forwards;\n        -webkit-animation-delay: 1s;\n                animation-delay: 1s;\n}\n.wscn-http404 .pic-404__child.mid[data-v-30b290d5] {\n        width: 46px;\n        top: 10px;\n        left: 420px;\n        opacity: 0;\n        -webkit-animation-name: cloudMid-data-v-30b290d5;\n                animation-name: cloudMid-data-v-30b290d5;\n        -webkit-animation-duration: 2s;\n                animation-duration: 2s;\n        -webkit-animation-timing-function: linear;\n                animation-timing-function: linear;\n        -webkit-animation-fill-mode: forwards;\n                animation-fill-mode: forwards;\n        -webkit-animation-delay: 1.2s;\n                animation-delay: 1.2s;\n}\n.wscn-http404 .pic-404__child.right[data-v-30b290d5] {\n        width: 62px;\n        top: 100px;\n        left: 500px;\n        opacity: 0;\n        -webkit-animation-name: cloudRight-data-v-30b290d5;\n                animation-name: cloudRight-data-v-30b290d5;\n        -webkit-animation-duration: 2s;\n                animation-duration: 2s;\n        -webkit-animation-timing-function: linear;\n                animation-timing-function: linear;\n        -webkit-animation-fill-mode: forwards;\n                animation-fill-mode: forwards;\n        -webkit-animation-delay: 1s;\n                animation-delay: 1s;\n}\n@-webkit-keyframes cloudLeft-data-v-30b290d5 {\n0% {\n    top: 17px;\n    left: 220px;\n    opacity: 0;\n}\n20% {\n    top: 33px;\n    left: 188px;\n    opacity: 1;\n}\n80% {\n    top: 81px;\n    left: 92px;\n    opacity: 1;\n}\n100% {\n    top: 97px;\n    left: 60px;\n    opacity: 0;\n}\n}\n@keyframes cloudLeft-data-v-30b290d5 {\n0% {\n    top: 17px;\n    left: 220px;\n    opacity: 0;\n}\n20% {\n    top: 33px;\n    left: 188px;\n    opacity: 1;\n}\n80% {\n    top: 81px;\n    left: 92px;\n    opacity: 1;\n}\n100% {\n    top: 97px;\n    left: 60px;\n    opacity: 0;\n}\n}\n@-webkit-keyframes cloudMid-data-v-30b290d5 {\n0% {\n    top: 10px;\n    left: 420px;\n    opacity: 0;\n}\n20% {\n    top: 40px;\n    left: 360px;\n    opacity: 1;\n}\n70% {\n    top: 130px;\n    left: 180px;\n    opacity: 1;\n}\n100% {\n    top: 160px;\n    left: 120px;\n    opacity: 0;\n}\n}\n@keyframes cloudMid-data-v-30b290d5 {\n0% {\n    top: 10px;\n    left: 420px;\n    opacity: 0;\n}\n20% {\n    top: 40px;\n    left: 360px;\n    opacity: 1;\n}\n70% {\n    top: 130px;\n    left: 180px;\n    opacity: 1;\n}\n100% {\n    top: 160px;\n    left: 120px;\n    opacity: 0;\n}\n}\n@-webkit-keyframes cloudRight-data-v-30b290d5 {\n0% {\n    top: 100px;\n    left: 500px;\n    opacity: 0;\n}\n20% {\n    top: 120px;\n    left: 460px;\n    opacity: 1;\n}\n80% {\n    top: 180px;\n    left: 340px;\n    opacity: 1;\n}\n100% {\n    top: 200px;\n    left: 300px;\n    opacity: 0;\n}\n}\n@keyframes cloudRight-data-v-30b290d5 {\n0% {\n    top: 100px;\n    left: 500px;\n    opacity: 0;\n}\n20% {\n    top: 120px;\n    left: 460px;\n    opacity: 1;\n}\n80% {\n    top: 180px;\n    left: 340px;\n    opacity: 1;\n}\n100% {\n    top: 200px;\n    left: 300px;\n    opacity: 0;\n}\n}\n.wscn-http404 .bullshit[data-v-30b290d5] {\n    position: relative;\n    float: left;\n    width: 300px;\n    padding: 150px 0;\n    overflow: hidden;\n}\n.wscn-http404 .bullshit__oops[data-v-30b290d5] {\n      font-size: 32px;\n      font-weight: bold;\n      line-height: 40px;\n      color: #1482f0;\n      opacity: 0;\n      margin-bottom: 20px;\n      -webkit-animation-name: slideUp-data-v-30b290d5;\n              animation-name: slideUp-data-v-30b290d5;\n      -webkit-animation-duration: 0.5s;\n              animation-duration: 0.5s;\n      -webkit-animation-fill-mode: forwards;\n              animation-fill-mode: forwards;\n}\n.wscn-http404 .bullshit__headline[data-v-30b290d5] {\n      font-size: 20px;\n      line-height: 24px;\n      color: #1482f0;\n      opacity: 0;\n      margin-bottom: 10px;\n      -webkit-animation-name: slideUp-data-v-30b290d5;\n              animation-name: slideUp-data-v-30b290d5;\n      -webkit-animation-duration: 0.5s;\n              animation-duration: 0.5s;\n      -webkit-animation-delay: 0.1s;\n              animation-delay: 0.1s;\n      -webkit-animation-fill-mode: forwards;\n              animation-fill-mode: forwards;\n}\n.wscn-http404 .bullshit__info[data-v-30b290d5] {\n      font-size: 13px;\n      line-height: 21px;\n      color: grey;\n      opacity: 0;\n      margin-bottom: 30px;\n      -webkit-animation-name: slideUp-data-v-30b290d5;\n              animation-name: slideUp-data-v-30b290d5;\n      -webkit-animation-duration: 0.5s;\n              animation-duration: 0.5s;\n      -webkit-animation-delay: 0.2s;\n              animation-delay: 0.2s;\n      -webkit-animation-fill-mode: forwards;\n              animation-fill-mode: forwards;\n}\n.wscn-http404 .bullshit__return-home[data-v-30b290d5] {\n      display: block;\n      float: left;\n      width: 110px;\n      height: 36px;\n      background: #1482f0;\n      border-radius: 100px;\n      text-align: center;\n      color: #ffffff;\n      opacity: 0;\n      font-size: 14px;\n      line-height: 36px;\n      cursor: pointer;\n      -webkit-animation-name: slideUp-data-v-30b290d5;\n              animation-name: slideUp-data-v-30b290d5;\n      -webkit-animation-duration: 0.5s;\n              animation-duration: 0.5s;\n      -webkit-animation-delay: 0.3s;\n              animation-delay: 0.3s;\n      -webkit-animation-fill-mode: forwards;\n              animation-fill-mode: forwards;\n}\n@-webkit-keyframes slideUp-data-v-30b290d5 {\n0% {\n    -webkit-transform: translateY(60px);\n            transform: translateY(60px);\n    opacity: 0;\n}\n100% {\n    -webkit-transform: translateY(0);\n            transform: translateY(0);\n    opacity: 1;\n}\n}\n@keyframes slideUp-data-v-30b290d5 {\n0% {\n    -webkit-transform: translateY(60px);\n            transform: translateY(60px);\n    opacity: 0;\n}\n100% {\n    -webkit-transform: translateY(0);\n            transform: translateY(0);\n    opacity: 1;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 553:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__img_404_images_404_png__ = __webpack_require__(554);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__img_404_images_404_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__img_404_images_404_png__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__img_404_images_404_cloud_png__ = __webpack_require__(555);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__img_404_images_404_cloud_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__img_404_images_404_cloud_png__);
 //
 //
 //
@@ -73,344 +123,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      newOpt: [{
-        cnt: '新增',
-        icon: 'bf-add',
-        ent: this.addNew
-      }, {
-        cnt: '删除',
-        icon: 'bf-del',
-        ent: this.delMore
-      }, {
-        cnt: '刷新',
-        icon: 'bf-refresh',
-        ent: this.refresh
-      }],
-      disHead: [{
-        label: '负库存配置',
-        prop: "negative_inv",
-        holder: '负库存配置',
-        type: 'text'
-      }, {
-        label: '用户账号',
-        prop: "user",
-        holder: '用户账号',
-        type: 'text'
-      }, {
-        label: '创建人',
-        prop: "creator",
-        holder: '创建人',
-        type: 'text'
-      }, {
-        label: '状态',
-        prop: "status",
-        holder: '状态',
-        type: 'checkbox',
-        doSort: true,
-        chgAble: true,
-        editChgAble: false
-      }],
-      stockHead: [{
-        label: '入库方式方式',
-        prop: "name",
-        holder: '配送方式',
-        type: 'text'
-      }, {
-        label: '状态',
-        prop: "status",
-        holder: '状态',
-        // type: 'select_stu',
-        type: 'checkbox',
-        doSort: true,
-        chgAble: true,
-        editChgAble: false
-      }],
-      url: ['/negativeinvconf', '/stockintypes'],
-      title: ['新增负库存配置', '新增入库方式'],
-      ruleForm: [{
-        name: '',
-        status: true
-      }, {
-        name: '',
-        status: true
-      }],
-      rules: [{
-        name: [{ required: true, message: '请输入负库存配置', trigger: 'blur' }]
-      }, {
-        name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
-      }],
-      addArr: [[{
-        label: '负库存配置',
-        prop: 'negative_inv',
-        holder: '请输入负库存配置',
-        type: 'text'
-      }, {
-        label: '用户账号',
-        prop: 'user',
-        holder: '请输入用户账号',
-        type: 'text'
-      }, {
-        label: '创建人',
-        prop: 'creator',
-        holder: '请输入创建人',
-        type: 'text'
-      }, {
-        label: '状态',
-        prop: 'status',
-        holder: '请选择状态',
-        // type: 'select_stu'
-        type: 'checkbox'
-      }], [{
-        label: '入库方式',
-        prop: 'name',
-        holder: '请输入入库方式',
-        type: 'text'
-      }, {
-        label: '状态',
-        prop: 'status',
-        holder: '请选择状态',
-        // type: 'select_stu'
-        type: 'checkbox'
-      }]],
-      activeName: '0',
-      getsData: [],
-      loading: [true, true],
-      currentIndex: '',
-      /*新增*/
-      showMask: false,
-      showDel: false,
-      editId: '',
-      inputChange: false,
-      delArr: [],
-      multipleSelection: [],
-      refArr: ['conf', 'stock']
+      img_404: __WEBPACK_IMPORTED_MODULE_0__img_404_images_404_png__["default"],
+      img_404_cloud: __WEBPACK_IMPORTED_MODULE_1__img_404_images_404_cloud_png__["default"]
     };
   },
 
-  methods: {
-    //新增
-    addNew: function addNew() {
-      this.showMask = true;
-    },
-    CB_dialog: function CB_dialog(val) {
-      this.showMask = val;
-    },
-    submitForm: function submitForm() {
-      var _this = this;
-
-      this.$post(this.url[this.activeName], this.ruleForm[this.activeName]).then(function () {
-        _this.$message({
-          message: '添加成功',
-          type: 'success'
-        });
-        _this.showMask = false;
-        _this.refresh();
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    tabsClick: function tabsClick() {
-      this.loading = [true, true];
-      this.getData(this.url[this.activeName]);
-    },
-    getData: function getData(url) {
-      var _this2 = this;
-
-      this.$fetch(url).then(function (res) {
-        _this2.loading[_this2.activeName] = false;
-        _this2.getsData = res.data;
-        var pg = res.meta.pagination;
-        _this2.$store.dispatch('currentPage', pg.current_page);
-        _this2.$store.commit('PER_PAGE', pg.per_page);
-        _this2.$store.commit('PAGE_TOTAL', pg.total);
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this2.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    edit: function edit(index) {
-      this.currentIndex = 'index' + index;
-    },
-    handleEdit: function handleEdit() {
-      this.inputChange = true;
-    },
-    editCancel: function editCancel() {
-      this.$message({
-        message: '取消修改',
-        type: 'info'
-      });
-      this.currentIndex = '';
-    },
-    editSave: function editSave(row) {
-      var _this3 = this;
-
-      this.$patch(this.url[this.activeName] + '/' + row.id, row).then(function () {
-        _this3.$message({
-          message: '修改成功',
-          type: 'success'
-        });
-        _this3.currentIndex = '';
-        _this3.inputChange = false;
-        _this3.refresh();
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this3.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    del: function del(row, e) {
-      this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
-      this.delId = row.id;
-    },
-    cancelD: function cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: '取消删除',
-        type: 'info'
-      });
-    },
-    confirmD: function confirmD(id) {
-      var _this4 = this;
-
-      this.$del(this.url[0] + '/' + id).then(function () {
-        _this4.$message({
-          message: '删除成功',
-          type: 'success'
-        });
-        _this4.showDel = false;
-        _this4.refresh();
-      }, function (err) {
-        if (err.response) {
-          _this4.showDel = false;
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this4.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-
-    /*批量删除*/
-    delMore: function delMore() {
-      var _this5 = this;
-
-      if (this.delArr.length === 0) {
-        this.$message({
-          message: '没有选中数据',
-          type: 'warning'
-        });
-      } else {
-        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(function () {
-          _this5.$del(_this5.url[_this5.activeName], { ids: _this5.delArr }).then(function () {
-            _this5.$message({
-              message: '删除成功',
-              type: 'success'
-            });
-            _this5.refresh();
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              var str = arr1.join(',');
-              _this5.$message.error({
-                message: str
-              });
-            }
-          });
-        }).catch(function () {
-          _this5.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
-      }
-    },
-    handleSelectionChange: function handleSelectionChange(val) {
-      if (val.length != 0) {
-        this.editId = val[0].id;
-      } else {
-        this.editId = '';
-      }
-      this.multipleSelection = val;
-      var del = [];
-      this.multipleSelection.forEach(function (selectedItem) {
-        del.push(selectedItem.id);
-      });
-      this.delArr = del.join(',');
-    },
-
-    /*页面刷新*/
-    refresh: function refresh() {
-      this.loading = [true, true];
-      this.getData(this.url[this.activeName]);
+  computed: {
+    message: function message() {
+      return '特朗普说这个页面你不能进......';
     }
-  },
-  mounted: function mounted() {
-    this.getData(this.url[this.activeName]);
-    this.$store.dispatch('setOpt', this.newOpt);
-    var that = this;
-    $(window).resize(function () {
-      that.$store.dispatch('setOpt', that.newOpt);
-    });
   }
 });
 
 /***/ }),
 
-/***/ 673:
+/***/ 554:
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: Error: /Users/xuejunhao/Code/BFERP/node_modules/optipng-bin/vendor/optipng: /Users/xuejunhao/Code/BFERP/node_modules/optipng-bin/vendor/optipng: cannot execute binary file\n\n    at Promise.all.then.arr (/Users/xuejunhao/Code/BFERP/node_modules/execa/index.js:231:11)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:169:7)");
+
+/***/ }),
+
+/***/ 555:
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: Error: /Users/xuejunhao/Code/BFERP/node_modules/optipng-bin/vendor/optipng: /Users/xuejunhao/Code/BFERP/node_modules/optipng-bin/vendor/optipng: cannot execute binary file\n\n    at Promise.all.then.arr (/Users/xuejunhao/Code/BFERP/node_modules/execa/index.js:231:11)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:169:7)");
+
+/***/ }),
+
+/***/ 556:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -419,119 +167,80 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticStyle: { background: "#f0f2f5", "margin-top": "-20px" } },
     [
-      _c(
-        "el-tabs",
-        {
-          on: { "tab-click": _vm.tabsClick },
-          model: {
-            value: _vm.activeName,
-            callback: function($$v) {
-              _vm.activeName = $$v
-            },
-            expression: "activeName"
-          }
-        },
-        [
-          _c(
-            "el-tab-pane",
-            { attrs: { label: "负库存配置", name: "0" } },
-            [
-              _c("light-table", {
-                attrs: {
-                  listData: _vm.getsData,
-                  tableHead: _vm.disHead,
-                  loading: _vm.loading[_vm.activeName],
-                  currentIndex: _vm.currentIndex
-                },
-                on: {
-                  editSave: _vm.editSave,
-                  handleEdit: _vm.handleEdit,
-                  del: _vm.del,
-                  edit: _vm.edit,
-                  editCancel: _vm.editCancel,
-                  handleSelect: _vm.handleSelectionChange
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("add-new", {
-        attrs: {
-          "visible-add": _vm.showMask,
-          title: _vm.title[_vm.activeName],
-          "rule-form": _vm.ruleForm[_vm.activeName],
-          rules: _vm.rules[_vm.activeName],
-          "add-arr": _vm.addArr[_vm.activeName],
-          url: _vm.url[_vm.activeName],
-          "new-ref": _vm.refArr[_vm.activeName]
-        },
-        on: { submitEvent: _vm.submitForm, "CB-dialog": _vm.CB_dialog }
-      }),
-      _vm._v(" "),
-      _c(
-        "el-popover",
-        {
-          attrs: { slot: "tip", placement: "top", width: "160" },
-          slot: "tip",
-          model: {
-            value: _vm.showDel,
-            callback: function($$v) {
-              _vm.showDel = $$v
-            },
-            expression: "showDel"
-          }
-        },
-        [
-          _c("p", [_vm._v("确定删除该条数据？")]),
+      _c("div", { staticClass: "wscn-http404" }, [
+        _c("div", { staticClass: "pic-404" }, [
+          _c("img", {
+            staticClass: "pic-404__parent",
+            attrs: { src: _vm.img_404, alt: "404" }
+          }),
+          _vm._v(" "),
+          _c("img", {
+            staticClass: "pic-404__child left",
+            attrs: { src: _vm.img_404_cloud, alt: "404" }
+          }),
+          _vm._v(" "),
+          _c("img", {
+            staticClass: "pic-404__child mid",
+            attrs: { src: _vm.img_404_cloud, alt: "404" }
+          }),
+          _vm._v(" "),
+          _c("img", {
+            staticClass: "pic-404__child right",
+            attrs: { src: _vm.img_404_cloud, alt: "404" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "bullshit" }, [
+          _c("div", { staticClass: "bullshit__oops" }, [_vm._v("OOPS!")]),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "bullshit__headline" }, [
+            _vm._v(_vm._s(_vm.message))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "bullshit__info" }, [
+            _vm._v(
+              "请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告"
+            )
+          ]),
           _vm._v(" "),
           _c(
-            "div",
-            { staticStyle: { "text-align": "right", margin: "0" } },
-            [
-              _c(
-                "el-button",
-                {
-                  attrs: { size: "mini", type: "text" },
-                  on: { click: _vm.cancelD }
-                },
-                [_vm._v("取消")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "mini" },
-                  on: {
-                    click: function($event) {
-                      return _vm.confirmD(_vm.delId)
-                    }
-                  }
-                },
-                [_vm._v("确定")]
-              )
-            ],
-            1
+            "a",
+            { staticClass: "bullshit__return-home", attrs: { href: "/" } },
+            [_vm._v("返回首页")]
           )
-        ]
-      ),
-      _vm._v(" "),
-      _c("Pagination", { attrs: { "page-url": _vm.url[_vm.activeName] } })
-    ],
-    1
+        ])
+      ])
+    ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "bullshit__info" }, [
+      _vm._v("版权所有"),
+      _c(
+        "a",
+        {
+          staticClass: "link-type",
+          attrs: { href: "https://wallstreetcn.com", target: "_blank" }
+        },
+        [_vm._v("华尔街见闻")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-f01d7f92", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-30b290d5", module.exports)
   }
 }
 

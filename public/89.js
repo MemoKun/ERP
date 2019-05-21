@@ -1,20 +1,24 @@
 webpackJsonp([89],{
 
-/***/ 484:
+/***/ 453:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(557)
+}
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(654)
+var __vue_script__ = __webpack_require__(559)
 /* template */
-var __vue_template__ = __webpack_require__(655)
+var __vue_template__ = __webpack_require__(560)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-366eba34"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -25,7 +29,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/memberMag.vue"
+Component.options.__file = "resources/assets/js/views/dashboard/index.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +38,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-620a5290", Component.options)
+    hotAPI.createRecord("data-v-366eba34", Component.options)
   } else {
-    hotAPI.reload("data-v-620a5290", Component.options)
+    hotAPI.reload("data-v-366eba34", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,15 +52,63 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 654:
+/***/ 549:
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: Error: write EPIPE\n    at exports._errnoException (util.js:1022:11)\n    at WriteWrap.afterWrite [as oncomplete] (net.js:851:14)");
+
+/***/ }),
+
+/***/ 557:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(558);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(6)("e2606f54", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-366eba34\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-366eba34\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 558:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.dashboard-container[data-v-366eba34] {\n  margin: 30px;\n}\n.dashboard-text[data-v-366eba34] {\n  font-size: 30px;\n  line-height: 46px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 559:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(15);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -70,141 +122,102 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "dashboard",
   data: function data() {
     return {
-      newOpt: [{
-        cnt: '新增',
-        icon: 'bf-add',
-        ent: this.test
-      }, {
-        cnt: '修改',
-        icon: 'bf-change',
-        ent: this.test
-      }, {
-        cnt: '删除',
-        icon: 'bf-del',
-        ent: this.test
-      }, {
-        cnt: '导入',
-        icon: 'bf-in',
-        ent: this.test
-      }, {
-        cnt: '导出',
-        icon: 'bf-out',
-        ent: this.test
-      }, {
-        cnt: '刷新',
-        icon: 'bf-refresh',
-        ent: this.test
-      }],
-      currentPage: true,
-      searchBox: {
-        buyNick: '',
-        shopTitle: ''
+      newOpt: [],
+      title: "新增",
+      backgroundDiv: {
+        backgroundImage: "url(" + __webpack_require__(549) + ")",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "100% 100%"
+      },
+      formDialog: {
+        title: "测试",
+        dialogFormVisible: false,
+        form: [{
+          label: "名称",
+          type: "text",
+          formLabelWidth: "120px",
+          name: "hh"
+        }, {
+          label: "代码",
+          type: "text",
+          formLabelWidth: "120px",
+          name: "vv"
+        }, {
+          label: "状态",
+          type: "select",
+          formLabelWidth: "120px",
+          ps: {
+            s: "1"
+          },
+          status: [{
+            label: "是",
+            value: 1
+          }, {
+            label: "否",
+            value: 0
+          }]
+        }]
       }
     };
   },
 
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(["name", "roles"]), {
+    getKey: function getKey() {
+      var arr = this.formDialog.form.ps;
+    }
+  }),
+  components: {
+    // addM
+  },
   methods: {
-    test: function test() {
+    toggle: function toggle() {
+      this.formDialog.dialogFormVisible = !this.formDialog.dialogFormVisible;
+    },
+    confirmAdd: function confirmAdd() {
       console.log(1);
     },
-    getData: function getData() {
-      alert(this.searchBox);
-      console.log(this.searchBox);
+    cancelAdd: function cancelAdd() {
+      console.log(2);
     }
   },
   mounted: function mounted() {
     this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit('change', this.newOpt);
-    var that = this;
-    $(window).resize(function () {
-      return function () {
-        that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit('change', that.newOpt);
-      }();
-    });
   }
 });
 
 /***/ }),
 
-/***/ 655:
+/***/ 560:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.currentPage
-      ? _c("div", { staticClass: "searchBox" }, [
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("买家昵称")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      !$event.type.indexOf("key") &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.getData($event)
-                  }
-                },
-                model: {
-                  value: _vm.searchBox.buyNick,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "buyNick", $$v)
-                  },
-                  expression: "searchBox.buyNick"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("会员姓名")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      !$event.type.indexOf("key") &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.getData($event)
-                  }
-                },
-                model: {
-                  value: _vm.searchBox.shopTitle,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                  },
-                  expression: "searchBox.shopTitle"
-                }
-              })
-            ],
-            1
-          )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("h2", [_vm._v("会员管理")])
+  return _c("div", { style: _vm.backgroundDiv }, [
+    _c("div", { staticClass: "dashboard-container" }, [
+      _c("h1", [_vm._v("欢迎回来！")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "dashboard-text" }, [_vm._v(_vm._s(_vm.name))]),
+      _vm._v(" "),
+      _c(
+        "p",
+        { staticClass: "dashboard-text" },
+        [
+          _vm._v("你的身份是：\n      "),
+          _vm._l(_vm.roles, function(role) {
+            return _c("span", { key: role }, [_vm._v(_vm._s(role))])
+          })
+        ],
+        2
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -213,7 +226,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-620a5290", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-366eba34", module.exports)
   }
 }
 

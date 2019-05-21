@@ -6,19 +6,19 @@
           <div class="searchBox">
             <span>
               <label>会员名称</label>
-              <el-input v-model="searchBox.vip_name" clearable></el-input>
+              <el-input v-model="searchBox.member_nick" clearable></el-input>
             </span>
             <span>
               <label>订单编号</label>
-              <el-input v-model="searchBox.order_num" clearable></el-input>
+              <el-input v-model="searchBox.system_order_no" clearable></el-input>
             </span>
             <span>
               <label>收货人</label>
-              <el-input v-model="searchBox.order_man" clearable></el-input>
+              <el-input v-model="searchBox.receiver_name" clearable></el-input>
             </span>
             <span v-if="filterBox">
               <label>收货手机</label>
-              <el-input v-model="searchBox.order_phone" clearable></el-input>
+              <el-input v-model="searchBox.receiver_phone" clearable></el-input>
             </span>
             <span v-else>
               <el-button type="primary">筛选</el-button>
@@ -32,17 +32,12 @@
           <div class="searchBox" v-show="filterBox">
             <span>
               <label>收货地址</label>
-              <el-input v-model="searchBox.order_address" clearable></el-input>
+              <el-input v-model="searchBox.receiver_address" clearable></el-input>
             </span>
             <span>
               <label>所属店铺</label>
-              <el-select v-model="searchBox.order_shop" clearable placeholder="请选择">
-                <el-option
-                  v-for="item in searchBox.orderShops"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
+              <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
+                <el-option v-for="item in searchBox.orderShops" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </span>
             <span>
@@ -51,78 +46,45 @@
             </span>
             <span>
               <label>业务员</label>
-              <el-input v-model="searchBox.order_staff" clearable></el-input>
+              <el-input v-model="searchBox.business_personnel_id" clearable></el-input>
             </span>
           </div>
           <div class="searchBox" v-show="filterBox">
             <span>
               <label>卖家备注</label>
-              <el-input v-model="searchBox.order_mark" clearable></el-input>
+              <el-input v-model="searchBox.seller_remark" clearable></el-input>
             </span>
             <span>
               <label>物流公司</label>
-              <el-select v-model="searchBox.order_company" clearable placeholder="请选择">
-                <el-option
-                  v-for="item in searchBox.orderCompany"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
+              <el-select v-model="searchBox.logistics_id" clearable placeholder="请选择">
+                <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </span>
             <span>
               <label>淘宝旗帜</label>
               <el-select v-model="searchBox.order_flag" clearable placeholder="请选择">
-                <el-option
-                  v-for="item in searchBox.ordertbFlag"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
+                <el-option v-for="item in searchBox.ordertbFlag" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </span>
             <span>
               <label>锁定状态</label>
               <el-select v-model="searchBox.order_lock" clearable placeholder="请选择">
-                <el-option
-                  v-for="item in searchBox.orderLock"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
+                <el-option v-for="item in searchBox.orderLock" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </span>
           </div>
           <div class="searchBox" v-show="filterBox">
             <span>
               <label>承诺日期</label>
-              <el-date-picker
-                v-model="searchBox.order_promiseDate"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
+              <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
             </span>
             <span>
               <label>业务日期</label>
-              <el-date-picker
-                v-model="searchBox.order_workDate"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
+              <el-date-picker v-model="searchBox.order_workDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
             </span>
             <span>
               <label>客审日期</label>
-              <el-date-picker
-                v-model="searchBox.order_customerInves"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
+              <el-date-picker v-model="searchBox.order_customerInves" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
             </span>
             <span class="transMoney">
               <label>交易金额</label>
@@ -141,23 +103,9 @@
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">
-            <el-table
-              :data="orderListData"
-              fit
-              @selection-change="handleSelectionChange"
-              v-loading="loading"
-              height="350"
-              @row-click="orderListRClick"
-              @row-dblclick="orderDbClick"
-            >
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-              <el-table-column
-                v-for="item in orderListHead"
-                :label="item.label"
-                align="center"
-                :width="item.width"
-                :key="item.label"
-              >
+              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='checkbox'">
                     <span v-if="item.inProp">
@@ -188,9 +136,7 @@
                     </span>
                   </span>
                   <span v-else>
-                    <span
-                      v-if="scope.row[item.prop]"
-                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                    <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                   </span>
                 </template>
               </el-table-column>
@@ -202,23 +148,9 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="已处理" name="1">
-            <el-table
-              :data="alreadyHandle"
-              fit
-              @selection-change="handleSelectionChange"
-              v-loading="loading"
-              height="350"
-              @row-click="orderListRClick"
-              @row-dblclick="orderDbClick"
-            >
+            <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-              <el-table-column
-                v-for="item in orderListHead"
-                :label="item.label"
-                align="center"
-                :width="item.width"
-                :key="item.label"
-              >
+              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='checkbox'">
                     <span v-if="item.inProp">
@@ -249,9 +181,7 @@
                     </span>
                   </span>
                   <span v-else>
-                    <span
-                      v-if="scope.row[item.prop]"
-                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                    <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                   </span>
                 </template>
               </el-table-column>
@@ -266,96 +196,50 @@
       </el-tab-pane>
       <el-tab-pane label="订单明细" name="1">
         <el-form :model="orderDtlFormVal" class="quarter_turn">
-          <el-form-item
-            v-for="item in orderDtlFormHead"
-            :key="item.label"
-            :label="item.label"
-            :prop="item.prop"
-          >
+          <el-form-item v-for="item in orderDtlFormHead" :key="item.label" :label="item.label" :prop="item.prop">
             <span v-if="item.type=='text'">
               <span v-if="item.inProp">
-                <el-input
-                  v-model.trim="orderDtlFormVal[item.prop][item.inProp]"
-                  :placeholder="item.holder"
-                  disabled
-                ></el-input>
+                <el-input v-model.trim="orderDtlFormVal[item.prop][item.inProp]" :placeholder="item.holder" disabled></el-input>
               </span>
               <span v-else>
-                <el-input
-                  v-model.trim="orderDtlFormVal[item.prop]"
-                  :placeholder="item.holder"
-                  disabled
-                ></el-input>
+                <el-input v-model.trim="orderDtlFormVal[item.prop]" :placeholder="item.holder" disabled></el-input>
               </span>
             </span>
             <span v-else-if="item.type=='number'">
-              <el-input
-                type="number"
-                v-model.trim="orderDtlFormVal[item.prop]"
-                :placeholder="item.holder"
-                disabled
-              ></el-input>
+              <el-input type="number" v-model.trim="orderDtlFormVal[item.prop]" :placeholder="item.holder" disabled></el-input>
             </span>
             <span v-else-if="item.type=='textarea'">
-              <el-input
-                type="textarea"
-                v-model.trim="orderDtlFormVal[item.prop]"
-                :placehode="item.holder"
-              ></el-input>
+              <el-input type="textarea" v-model.trim="orderDtlFormVal[item.prop]" :placehode="item.holder"></el-input>
             </span>
           </el-form-item>
         </el-form>
         <el-tabs v-model="rightActiveName" @tab-click="rightHandleClick">
           <el-tab-pane label="商品明细" name="0">
             <el-table :data="proDtlData" fit>
-              <el-table-column
-                v-for="item in orderDtlHead[rightActiveName]"
-                :label="item.label"
-                align="center"
-                :width="item.width"
-                :key="item.label"
-              >
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='checkbox'">
                     <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                   </span>
-                  <span
-                    v-else
-                  >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                 </template>
               </el-table-column>
               <el-table-column type="expand" fixed="left">
                 <template slot-scope="scope">
                   <el-table :data="scope.row['productComp']" fit>
-                    <el-table-column
-                      v-for="item in proCompHead"
-                      :label="item.label"
-                      align="center"
-                      :width="item.width"
-                      :key="item.label"
-                    >
+                    <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                       <template slot-scope="scope">
                         <span v-if="item.prop">
                           <span v-if="item.type=='checkbox'">
                             <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                           </span>
                           <span v-else-if="item.type=='img'">
-                            <el-popover
-                              placement="right"
-                              trigger="hover"
-                              popper-class="picture_detail"
-                            >
+                            <el-popover placement="right" trigger="hover" popper-class="picture_detail">
                               <img :src="scope.row[item.prop]">
-                              <img
-                                slot="reference"
-                                :src="scope.row[item.prop]"
-                                :alt="scope.row[item.alt]"
-                              >
+                              <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                             </el-popover>
                           </span>
-                          <span
-                            v-else
-                          >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                          <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                         </span>
                       </template>
                     </el-table-column>
@@ -370,36 +254,15 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="支付明细" name="1">
-            <el-table
-              :data="payDtlData"
-              fit
-              @row-click="payDtlRClick"
-              :row-class-name="payDtlRCName"
-            >
-              <el-table-column
-                v-for="item in orderDtlHead[rightActiveName]"
-                :label="item.label"
-                align="center"
-                :width="item.width"
-                :key="item.label"
-              >
+            <el-table :data="payDtlData" fit @row-click="payDtlRClick" :row-class-name="payDtlRCName">
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="payDtlIndex=='index'+scope.$index">
                     <span v-if="item.type=='number'">
-                      <el-input
-                        size="small"
-                        type="number"
-                        v-model.trim="scope.row[item.prop]"
-                        :placeholder="item.holder"
-                      ></el-input>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                     </span>
                     <span v-else-if="item.type == 'textarea'">
-                      <el-input
-                        type="textarea"
-                        size="small"
-                        v-model.trim="scope.row[item.prop]"
-                        :placeholder="item.holder"
-                      ></el-input>
+                      <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                     </span>
                     <span v-else-if="item.type == 'select'">
                       <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
@@ -409,20 +272,10 @@
                       </el-select>
                     </span>
                     <span v-else-if="item.type=='DatePicker'">
-                      <el-date-picker
-                        v-model="scope.row[item.prop]"
-                        type="date"
-                        format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择日期"
-                      ></el-date-picker>
+                      <el-date-picker v-model="scope.row[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
                     </span>
                     <span v-else>
-                      <el-input
-                        size="small"
-                        v-model.trim="scope.row[item.prop]"
-                        :disabled="item.editChgAble"
-                      ></el-input>
+                      <el-input size="small" v-model.trim="scope.row[item.prop]" :disabled="item.editChgAble"></el-input>
                     </span>
                   </span>
                   <span v-else>
@@ -431,9 +284,7 @@
                         <span v-if="list.id==scope.row[item.prop]">{{list.name?list.name:''}}</span>
                       </span>
                     </span>
-                    <span
-                      v-else
-                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                    <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                   </span>
                 </template>
               </el-table-column>
@@ -459,39 +310,22 @@
     </el-tabs>
 
     <!--页码-->
-    <Pagination
-      :page-url="this.urls.financialdepts"
-      @handlePagChg="handlePagChg"
-      v-if="activeName=='0'"
-    ></Pagination>
+    <Pagination :page-url="this.urls.financialdepts" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
 
     <!--新增支付明细-->
     <el-dialog title="添加支付明细" :visible.sync="addPayDtlMask">
       <el-form :model="addPayDtlVal">
-        <el-form-item
-          v-for="item in addPayDtlHead"
-          :key="item.label"
-          :label="item.label"
-          :prop="item.prop"
-        >
+        <el-form-item v-for="item in addPayDtlHead" :key="item.label" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.prop=='taobao_oid'">
-              <el-input
-                v-model.trim="orderDtlFormVal['system_order_no']"
-                :placeholder="item.holder"
-                disabled
-              ></el-input>
+              <el-input v-model.trim="orderDtlFormVal['system_order_no']" :placeholder="item.holder" disabled></el-input>
             </span>
             <span v-else>
               <el-input v-model.trim="addPayDtlVal[item.prop]" :placeholder="item.holder"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='number'">
-            <el-input
-              type="number"
-              v-model.trim="addPayDtlVal[item.prop]"
-              :placeholder="item.holder"
-            ></el-input>
+            <el-input type="number" v-model.trim="addPayDtlVal[item.prop]" :placeholder="item.holder"></el-input>
           </span>
           <span v-else-if="item.type=='select'">
             <el-select v-model="addPayDtlVal[item.prop]" :placeholder="item.holder">
@@ -504,13 +338,7 @@
             <el-input type="textarea" v-model.trim="addPayDtlVal[item.prop]"></el-input>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker
-              v-model="addPayDtlVal[item.prop]"
-              type="date"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              placeholder="选择日期"
-            ></el-date-picker>
+            <el-date-picker v-model="addPayDtlVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
           </span>
         </el-form-item>
       </el-form>
@@ -561,27 +389,27 @@ export default {
       ],
       filterBox: false,
       searchBox: {
-        vip_name: "",
-        order_num: "",
-        order_man: "",
-        order_phone: "",
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
         order_money: "",
-        order_address: "",
+        receiver_address: "",
         order_goods: "",
-        order_staff: "",
+        business_personnel_id: "",
         order_promiseDate: "",
         order_workDate: "",
         order_transMStart: "",
         order_transMEnd: "",
         orderCompany: [{ label: "ceshi", value: 0 }],
         order_customerInves: "",
-        order_mark: "",
+        seller_remark: "",
         order_flag: "",
         ordertbFlag: [{ label: "ceshi", value: 0 }],
         order_lock: "",
         orderLock: [{ label: "ceshi", value: 0 }],
-        order_company: "",
-        order_shop: "",
+        logistics_id: "",
+        shops_id: "",
         orderShops: [{ label: "ceshi", value: 0 }]
       },
       /*获取数据*/
