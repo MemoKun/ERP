@@ -496,49 +496,51 @@
     <!--发货-->
     <el-dialog title="订单发货" :visible.sync="stockOutMask" :class="{'more-forms':moreForms}">
       <el-tabs>
+        <label>{{this.updateReceiveInfo}}</label>
+        <label>{{this.updateExpenseData}}</label>
         <el-tab-pane label="发货明细" name="0">
-          <el-form :model="stockOutDtlData" :rules="addStockOutDtlRules" class="storageUpdateForm" id="form">
+          <el-form :model="updateCustomerFormVal" :rules="addStockOutDtlRules" class="storageUpdateForm" id="form">
             <el-form-item v-for="(item,index) in stockOutDtlHead" :key="index" :label="item.label" :prop="item.prop">
               <span v-if="item.type=='text'">
                 <span v-if="item.inProp">
-                  <el-input v-model.trim="stockOutDtlData[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                  <el-input v-model.trim="updateCustomerFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
                 <span v-else>
-                  <el-input v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                  <el-input v-model.trim="updateCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
               <span v-else-if="item.type=='number'">
                 <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                  <el-input type="number" v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+                  <el-input type="number" v-model.trim="updateCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
                 </span>
                 <span v-else>
-                  <el-input type="number" v-model.trim="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                  <el-input type="number" v-model.trim="updateCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
               <span v-else-if="item.type=='select'">
-                <el-select v-model="stockOutDtlData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+                <el-select v-model="updateCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
                   <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                     <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
                   </span>
                 </el-select>
               </span>
               <span v-else-if="item.type=='textarea'">
-                <el-input type="textarea" v-model.trim="stockOutDtlData[item.prop]" :placehode="item.holder"></el-input>
+                <el-input type="textarea" v-model.trim="updateCustomerFormVal[item.prop]" :placehode="item.holder"></el-input>
               </span>
               <span v-else-if="item.type=='checkbox'">
-                <el-checkbox v-model="stockOutDtlData[item.prop]" :disabled="item.chgAble"></el-checkbox>
+                <el-checkbox v-model="updateCustomerFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
               </span>
               <span v-else-if="item.type=='radio'">
-                <el-radio v-model="stockOutDtlData[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-                <el-radio v-model="stockOutDtlData[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+                <el-radio v-model="updateCustomerFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="updateCustomerFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
               </span>
               <span v-else-if="item.type=='DatePicker'">
-                <el-date-picker v-model="stockOutDtlData[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
+                <el-date-picker v-model="updateCustomerFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
                 </el-date-picker>
               </span>
             </el-form-item>
           </el-form>
-          <el-table :data="stockOutDtlData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
+          <el-table :data="updateCustomerFormVal" fit @row-click="addProRowClick">
             <el-table-column v-for="item in stockOutDtlBottomHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='newData'">
@@ -606,16 +608,22 @@ export default {
     return {
       newOpt: [
         {
+          cnt: "修改",
+          icon: "bf-change",
+          ent: this.test,
+          nClick: true
+        },
+        {
           cnt: "驳回",
           icon: "bf-reject",
-          ent: this.handleUnAudit,
-          nClick: false
+          ent: this.handleUnOneAudit,
+          nClick: true
         },
         {
           cnt: "审核",
           icon: "bf-audit",
           ent: this.handleOneAudit,
-          nClick: false
+          nClick: true
         },
         {
           cnt: "货审",
@@ -624,9 +632,10 @@ export default {
           nClick: true
         },
         {
-          cnt: "退审",
+          cnt: "退回货审",
           icon: "bf-auditfaild",
-          ent: this.handleUnOneAudit
+          ent: this.handleunCargoAudit,
+          nClick: true
         },
         {
           cnt: "发货",
@@ -641,15 +650,10 @@ export default {
           nClick: true
         },
         {
-          cnt: "批量处理",
-          icon: "bf-node",
-          ent: this.test,
-          nClick: true
-        },
-        {
           cnt: "导出",
           icon: "bf-out",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "合并",
@@ -660,32 +664,26 @@ export default {
         {
           cnt: "拆分",
           icon: "bf-node",
-          ent: this.test
-        },
-        {
-          cnt: "上一条",
-          icon: "bf-beforeItem",
-          ent: this.test
-        },
-        {
-          cnt: "下一条",
-          icon: "bf-nextItem",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "订单采购",
           icon: "bf-purchase",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "生产排单",
           icon: "bf-machie",
-          ent: this.test
+          ent: this.test,
+          nClick: true
         },
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.refresh
+          ent: this.refresh,
+          nClick: false
         }
       ],
       waitingStockOut: {},
@@ -757,7 +755,7 @@ export default {
         {
           label: "锁定人姓名",
           width: "130",
-          prop: "businessPersonnel",
+          prop: "locker",
           inProp: "username",
           type: "text"
         },
@@ -1813,7 +1811,7 @@ export default {
         }
       ],
       stockOutMask: false,
-      stockOutDtlData: {
+      updateCustomerFormVal: {
         system_order_no: "",
         receiver_name: "",
         receiver_mobile: "",
@@ -2045,6 +2043,36 @@ export default {
         }
       ],
       addSubData: [],
+      updateCustomerMask: false,
+      updateCustomerFormVal: {},
+      updateActiveName: "0",
+      updateProData: [],
+      updateReceiveInfo: {},
+      updateExpenseData: [],
+      updateProIds: [],
+      expenseData: [],
+      proRIndex: "",
+      proCompRowIndex: "",
+      proSubmitData: [],
+      proIds: [],
+      addIds: [],
+      proCompRow: {},
+      proRIndex: "",
+      receiveInfo: {
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_mobile: "",
+        provinces: [],
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        receiver_address: "",
+        receiver_zip: ""
+      },
+      halfForm: true,
+      expenseData: [],
+      expenseRIndex: "",
+      addSubData: [],
       apiData: {}
     };
   },
@@ -2222,10 +2250,95 @@ export default {
     orderListRClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
-      if (row["order_status"] == "已财审") {
+      if (row["order_status"] == "已客审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = false;
-      } else {
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已跟单一审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已财审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已货审") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = false;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "准备出库") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已出库") {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = true;
+        this.newOpt[9].nClick = true;
+        this.newOpt[10].nClick = true;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
       }
     },
     orderDbClick(row) {
@@ -2359,7 +2472,7 @@ export default {
     },
     /*跟单一审*/
     handleOneAudit() {
-      if (this.newOpt[1].nClick) {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -2370,6 +2483,19 @@ export default {
               message: "跟单一审成功",
               type: "success"
             });
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = false;
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = false;
           },
           err => {
             this.$message.error(err.response.data.message);
@@ -2392,7 +2518,7 @@ export default {
       );
     },
     handleCargoAudit() {
-      if (this.newOpt[2].nClick) {
+      if (this.newOpt[3].nClick) {
         return;
       } else {
         this.cargoAuditMask = true;
@@ -2405,6 +2531,19 @@ export default {
               res => {
                 this.cargoAuditFormVal = res;
                 this.cargoAuditTableVal = res.order_items;
+                this.newOpt[0].nClick = true;
+                this.newOpt[1].nClick = true;
+                this.newOpt[2].nClick = true;
+                this.newOpt[3].nClick = true;
+                this.newOpt[4].nClick = false;
+                this.newOpt[5].nClick = true;
+                this.newOpt[6].nClick = true;
+                this.newOpt[7].nClick = false;
+                this.newOpt[8].nClick = true;
+                this.newOpt[9].nClick = true;
+                this.newOpt[10].nClick = true;
+                this.newOpt[11].nClick = false;
+                this.newOpt[12].nClick = false;
               },
               err => {
                 if (err.response) {
@@ -2424,6 +2563,21 @@ export default {
           }
         );
       }
+    },
+    handleunCargoAudit() {
+      this.newOpt[0].nClick = true;
+      this.newOpt[1].nClick = false;
+      this.newOpt[2].nClick = true;
+      this.newOpt[3].nClick = false;
+      this.newOpt[4].nClick = true;
+      this.newOpt[5].nClick = true;
+      this.newOpt[6].nClick = true;
+      this.newOpt[7].nClick = false;
+      this.newOpt[8].nClick = false;
+      this.newOpt[9].nClick = false;
+      this.newOpt[10].nClick = false;
+      this.newOpt[11].nClick = false;
+      this.newOpt[12].nClick = false;
     },
     cargoAuditConfirm() {
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -2477,7 +2631,7 @@ export default {
     },
     /*退审*/
     handleUnOneAudit() {
-      if (this.newOpt[3].nClick) {
+      if (this.newOpt[1].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -2485,9 +2639,22 @@ export default {
           () => {
             this.refresh();
             this.$message({
-              message: "跟单一审退审成功",
+              message: "驳回跟单一审成功",
               type: "success"
             });
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = false;
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = false;
           },
           err => {
             this.$message.error(err.response.data.message);
@@ -2496,57 +2663,249 @@ export default {
       }
     },
     stockOut() {
-      this.stockOutMask = true;
-      if (this.checkboxId == "") {
+      if (this.newOpt[5].nClick) {
         this.$message({
-          type: "info",
-          message: "请先选择订单"
+          message:"请点击要选择的订单并重试",
+          type:"info"
         });
       } else {
-        this.stockOutDtlData.system_order_no = this.curRowData.system_order_no;
-        this.stockOutDtlData.receiver_name = this.curRowData.receiver_name;
-        this.stockOutDtlData.receiver_mobile = this.curRowData.receiver_mobile;
-        this.stockOutDtlData.receiver_address = this.curRowData.receiver_address;
-        this.stockOutDtlData.logistics_id = this.curRowData.logistics_id;
-        this.stockOutDtlData.logistics_sn = this.curRowData.logistics_sn;
-        this.stockOutDtlData.actual_freight = this.curRowData.actual_freight;
-        this.stockOutDtlData.freight_types_id = this.curRowData.freight_types_id;
-        this.stockOutDtlData.expected_freight = this.curRowData.expected_freight;
-        this.stockOutDtlData.total_volume = this.curRowData.total_volume;
-        this.stockOutDtlData.distribution_phone = this.curRowData.distribution_phone;
-        this.stockOutDtlData.distributions_id = this.curRowData.distributions_id;
-        this.stockOutDtlData.distribution_no = this.curRowData.distribution_no;
-        this.stockOutDtlData.distribution_types_id = this.curRowData.distribution_types_id;
-        this.stockOutDtlData.move_upstairs_fee = this.curRowData.move_upstairs_fee;
-        this.stockOutDtlData.deliver_goods_fee = this.curRowData.deliver_goods_fee;
-        this.stockOutDtlData.total_distribution_fee = this.curRowData.total_distribution_fee;
-        this.stockOutDtlData.installation_fee = this.curRowData.installation_fee;
-        this.stockOutDtlData.package_quantity = this.curRowData.package_quantity;
-        this.stockOutDtlData.wooden_frame_costs = this.curRowData.wooden_frame_costs;
-        this.stockOutDtlData.supplier_id = this.curRowData.supplier_id;
-        this.stockOutDtlData.favorable_cashback = this.curRowData.favorable_cashback;
-        this.stockOutDtlData.preferential_cashback = this.curRowData.preferential_cashback;
-        this.stockOutDtlData.warehouses_id = this.curRowData.warehouses_id;
-        this.stockOutDtlData.taobao_oid = this.curRowData.taobao_oid;
+        this.stockOutMask = true;
+        if (this.checkboxId == "") {
+          this.$message({
+            type: "info",
+            message: "请先选择订单"
+          });
+        } else {
+          this.proIds = [];
+          this.updateProIds = [];
+          this.expenseRIndex = "";
+          this.updateCustomerFormVal = {};
+          this.updateProData = [];
+          this.updateReceiveInfo = {};
+          this.updateExpenseData = [];
+          this.proRIndex = "";
+          let id = this.checkboxId ? this.checkboxId : this.curRowId;
+          this.$fetch(this.urls.customerservicedepts + "/" + id, {
+            include:
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+          }).then(
+            res => {
+              this.updateCustomerFormVal = res;
+              if (res["orderItems"]["data"].length > 0) {
+                res["orderItems"]["data"].map(item => {
+                  this.updateProIds.push(item["combination"].id);
+                  item["name"] = item["combination"]["name"];
+                  item["id"] = item.id;
+                  item["products_id"] = item.products_id;
+                  item["combinations_id"] = item.combinations_id;
+                  item["productComp"] =
+                    item["combination"]["productComponents"]["data"];
+                  this.$set(item, "newData", {
+                    quantity: item.quantity,
+                    paint: item.paint,
+                    is_printing: item.is_printing,
+                    printing_fee: item.printing_fee,
+                    is_spot_goods: item.is_spot_goods,
+                    under_line_univalent: item.under_line_univalent,
+                    under_line_preferential: item.under_line_preferential,
+                    total_volume: item.total_volume
+                  });
+                });
+              }
+              this.updateProData = res["orderItems"]["data"];
+              this.updateReceiveInfo = {
+                receiver_name: res.receiver_name,
+                receiver_phone: res.receiver_phone,
+                receiver_mobile: res.receiver_mobile,
+                receiver_state: res.receiver_state,
+                receiver_state: res.receiver_city,
+                receiver_district: res.receiver_district,
+                receiver_address: res.receiver_address,
+                receiver_zip: res.receiver_zip
+              };
+              this.updateExpenseData = res["paymentDetails"]["data"];
+            },
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error(str);
+              }
+            }
+          );
+        }
       }
     },
     stockOutConfirm() {
-      let id = this.checkboxId ? this.checkboxId : curRowId;
+      let forData = this.updateCustomerFormVal;
       let submitData = {
-        logistics_id: this.stockOutDtlData.logistics_id,
-        logistics_sn: this.stockOutDtlData.logistics_sn,
-        actual_freight: this.stockOutDtlData.actual_freight
+        shops_id: forData.shops_id,
+        member_nick: forData.member_nick,
+        logistics_id: forData.logistics_id,
+        logistics_sn: forData.logistics_sn,
+        billing_way: forData.billing_way,
+        promise_ship_time: forData.promise_ship_time,
+        freight_types_id: forData.freight_types_id,
+        expected_freight: forData.expected_freight,
+        distributions_id: forData.distributions_id,
+        distribution_methods_id: forData.distribution_methods_id,
+        deliver_goods_fee: forData.deliver_goods_fee,
+        move_upstairs_fee: forData.move_upstairs_fee,
+        installation_fee: forData.installation_fee,
+        total_distribution_fee: forData.total_distribution_fee,
+        distribution_phone: forData.distribution_phone,
+        distribution_no: forData.distribution_no,
+        distribution_types_id: forData.distribution_types_id,
+        service_car_info: forData.service_car_info,
+        take_delivery_goods_fee: forData.take_delivery_goods_fee,
+        take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
+        express_fee: forData.express_fee,
+        service_car_fee: forData.service_car_fee,
+        cancel_after_verification_code: forData.cancel_after_verification_code,
+        wooden_frame_costs: forData.wooden_frame_costs,
+        preferential_cashback: forData.preferential_cashback,
+        favorable_cashback: forData.favorable_cashback,
+        customer_types_id: forData.customer_types_id,
+        is_invoice: forData.is_invoice,
+        invoice_express_fee: forData.invoice_express_fee,
+        express_invoice_title: forData.express_invoice_title,
+        contract_no: forData.contract_no,
+        payment_methods_id: forData.payment_methods_id,
+        deposit: forData.deposit,
+        document_title: forData.document_title,
+        warehouses_id: forData.warehouses_id,
+        payment_date: forData.payment_date,
+        interest_concessions: forData.interest_concessions,
+        is_notice: forData.is_notice,
+        is_cancel_after_verification: forData.is_cancel_after_verification,
+        accept_order_user: forData.accept_order_user,
+        tax_number: forData.tax_number,
+        receipt: forData.receipt,
+        logistics_remark: forData.logistics_remark,
+        seller_remark: forData.seller_remark,
+        customer_service_remark: forData.customer_service_remark,
+        buyer_message: forData.buyer_message,
+        status: forData.status,
+        receiver_name: this.updateReceiveInfo.receiver_name,
+        receiver_phone: this.updateReceiveInfo.receiver_phone,
+        receiver_mobile: this.updateReceiveInfo.receiver_mobile,
+        receiver_state: this.updateReceiveInfo.receiver_state,
+        receiver_city: this.updateReceiveInfo.receiver_city,
+        receiver_district: this.updateReceiveInfo.receiver_district,
+        receiver_address: this.updateReceiveInfo.receiver_address,
+        receiver_zip: this.updateReceiveInfo.receiver_zip,
+        order_items: [],
+        payment_details: []
       };
-      this.$patch(
-        this.urls.customerservicedepts + "/" + id,
-        submitData
-      ).then(() => {
-        this.stockOutMask = false;
-        this.$message({
-          message: "发货成功",
-          type: "success"
-        });
+      this.updateProData.map(item => {
+        if (item.combinations_id) {
+          let proD = {
+            id: item.id,
+            products_id: item.products_id,
+            combinations_id: item.combinations_id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(proD);
+        } else if (item["originalId"]) {
+          let proD = {
+            id: item["originalId"],
+            products_id: item.pid,
+            combinations_id: item.id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(proD);
+        } else {
+          let proD = {
+            products_id: item.pid,
+            combinations_id: item.id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(proD);
+        }
       });
+      this.updateExpenseData.map(list => {
+        if (list.id) {
+          let expenseD = {
+            id: list.id,
+            payment: list.payment,
+            payment_methods_id: list.payment_methods_id
+          };
+          submitData.payment_details.push(expenseD);
+        } else {
+          let expenseD = {
+            payment: list.payment,
+            payment_methods_id: list.payment_methods_id
+          };
+          submitData.payment_details.push(expenseD);
+        }
+      });
+      let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$message({
+        message: "加载成功",
+        type: "success"
+      });
+      this.$patch(this.urls.merchandiserdepts + "/" + id, submitData).then(
+        () => {
+          this.stockOutMask = false;
+          this.refresh();
+          this.$message({
+            message: "发货成功",
+            type: "success"
+          });
+          this.newOpt[0].nClick = false;
+          this.newOpt[1].nClick = true;
+          this.newOpt[2].nClick = true;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = true;
+          this.newOpt[5].nClick = true;
+          this.newOpt[6].nClick = false;
+          this.newOpt[7].nClick = false;
+          this.newOpt[8].nClick = true;
+          this.newOpt[9].nClick = true;
+          this.newOpt[10].nClick = true;
+          this.newOpt[11].nClick = false;
+          this.newOpt[12].nClick = false;
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error(str);
+          }
+        }
+      );
     },
     handleSelectionChange(val) {
       console.log(val);

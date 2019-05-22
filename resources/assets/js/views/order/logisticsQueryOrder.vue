@@ -544,7 +544,7 @@ export default {
 
     bottomTabsClick() {},
     fetchData() {
-      this.$fetch(this.urls.customerservicedepts, {
+      this.$fetch(this.urls.customerservicedepts+'/logisticsQuery', {
         member_nick:this.searchBox.member_nick,
         system_order_no:this.searchBox.system_order_no,
         receiver_name:this.searchBox.receiver_name,

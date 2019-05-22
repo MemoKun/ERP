@@ -18,6 +18,11 @@ class RoleRequest extends FormRequest
                     'status' => 'boolean',
                 ];
                 break;
+            case 'POST':
+                return [
+                    'status' => 'boolean',
+                ];
+                break;
         }
     }
 }

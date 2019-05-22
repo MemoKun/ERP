@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,7 +24,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         'middleware' => [
             'api.throttle',
             'token.canrefresh',
-            'stringtoboolean'//将字符串的“true”或“false”转为布尔类型
+            'stringtoboolean', //将字符串的“true”或“false”转为布尔类型
         ],
         'limit' => config('api.rate_limits.access.limit'),
         'expires' => config('api.rate_limits.access.expires'),
@@ -63,7 +61,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('acctypes/editstatus', 'AccountingTypesController@editStatusByIds')
             ->name('api.acctypes.editstatusbyids');
 
-            
         //费用类型
         $api->get('feetypes', 'FeeTypesController@index')
             ->name('api.feetypes.index');
@@ -159,7 +156,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 //            ->name('api.storagetypes.destroybyids');
 //        $api->put('storagetypes', 'StorageTypesController@editStatusByIds')
 //            ->name('api.storagetypes.editstatusbyids');
-            
+
         //城市信息
         $api->get('cityinfos', 'CityInfosController@index')
             ->name('api.cityinfos.index');
@@ -171,7 +168,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.cityinfos.destroybyids');
         $api->put('cityinfos/editstatus', 'CityInfosController@editStatusByIds')
             ->name('api.cityinfos.editstatusbyids');
-            
+
         //损坏商品
         $api->get('damagedgoods', 'DamagedGoodsController@index')
             ->name('api.damagedgoods.index');
@@ -187,7 +184,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.damagedgoods.destroybyids');
         $api->put('damagedgoods/editstatus', 'DamagedGoodsController@editStatusByIds')
             ->name('api.damagedgoods.editstatusbyids');
-        
+
         //物流区域资源
         $api->get('logisticsareas', 'LogisticsAreasController@index')
             ->name('api.logisticsareas.index');
@@ -283,7 +280,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.suppliers.destroybyids');
         $api->put('suppliers/editstatus', 'SuppliersController@editStatusByIds')
             ->name('api.suppliers.editstatusbyids');
-            
+
         //供应商资源
         $api->get('shops', 'ShopsController@index')
             ->name('api.shops.index');
@@ -299,7 +296,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.shops.destroybyids');
         $api->put('shops/editstatus', 'ShopsController@editStatusByIds')
             ->name('api.shops.editstatusbyids');
-            
+
         //系列资源
         $api->get('series', 'SeriesController@index')
             ->name('api.series.index');
@@ -315,7 +312,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.series.destroybyids');
         $api->put('series/editstatus', 'SeriesController@editStatusByIds')
             ->name('api.series.editstatusbyids');
-                       
+
         //打印报表资源
         $api->get('printreports', 'PrintReportsController@index')
             ->name('api.printreports.index');
@@ -347,7 +344,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.platforms.destroybyids');
         $api->put('platforms/editstatus', 'PlatformsController@editStatusByIds')
             ->name('api.platforms.editstatusbyids');
-            
+
         //平台资源
         $api->get('departments', 'DepartmentsController@index')
             ->name('api.departments.index');
@@ -382,24 +379,24 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 //        $api->put('goods/editstatus', 'GoodsController@editStatusByIds')
 //            ->name('api.goods.editstatusbyids');
 
-         //商品资源
-         $api->get('products', 'ProductsController@index')
-             ->name('api.products.index');
-         $api->get('products/search', 'ProductsController@searchProducts')
-             ->name('api.products.searchproducts');
-         $api->get('products/{product}', 'ProductsController@show')
-             ->name('api.products.show');
-         $api->post('products', 'ProductsController@store')
-             ->name('api.products.store');
-         $api->patch('products/{product}', 'ProductsController@update')
-             ->name('api.products.update');
-         $api->delete('products/{product}', 'ProductsController@destroy')
-             ->name('api.products.destroy');
-         $api->delete('products', 'ProductsController@destroybyids')
-             ->name('api.products.destroybyids');
-         $api->put('products/editstatus', 'ProductsController@editStatusByIds')
-             ->name('api.products.editstatusbyids');
-        
+        //商品资源
+        $api->get('products', 'ProductsController@index')
+            ->name('api.products.index');
+        $api->get('products/search', 'ProductsController@searchProducts')
+            ->name('api.products.searchproducts');
+        $api->get('products/{product}', 'ProductsController@show')
+            ->name('api.products.show');
+        $api->post('products', 'ProductsController@store')
+            ->name('api.products.store');
+        $api->patch('products/{product}', 'ProductsController@update')
+            ->name('api.products.update');
+        $api->delete('products/{product}', 'ProductsController@destroy')
+            ->name('api.products.destroy');
+        $api->delete('products', 'ProductsController@destroybyids')
+            ->name('api.products.destroybyids');
+        $api->put('products/editstatus', 'ProductsController@editStatusByIds')
+            ->name('api.products.editstatusbyids');
+
         //产品子件资源
         $api->get('productcomponents', 'ProductComponentsController@index')
             ->name('api.productcomponents.index');
@@ -659,6 +656,12 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.searchuntreated');
         $api->get('customerservicedepts', 'CustomerServiceDepartmentsController@index')
             ->name('api.customerservicedepts.index');
+        $api->get('customerservicedepts/logisticsQuery', 'CustomerServiceDepartmentsController@logisticsQuery')
+            ->name('api.customerservicedepts.logisticsQuery');
+        $api->get('customerservicedepts/orderCenter', 'CustomerServiceDepartmentsController@orderCenter')
+            ->name('api.customerservicedepts.orderCenter');
+        $api->get('customerservicedepts/searchordersettlement', 'CustomerServiceDepartmentsController@searchOrderSettlement')
+            ->name('api.customerservicedepts.searchordersettlement');
         $api->get('customerservicedepts/create', 'CustomerServiceDepartmentsController@create')
             ->name('api.customerservicedepts.create');
         $api->get('customerservicedepts/{order}', 'CustomerServiceDepartmentsController@show')
@@ -683,6 +686,20 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.issplitorder');
         $api->put('customerservicedepts/mergerorder', 'CustomerServiceDepartmentsController@isMergerOrder')
             ->name('api.customerservicedepts.ismergerorder');
+
+        //订单结算
+        $api->put('customerservicedepts/{order}/logcheck', 'CustomerServiceDepartmentsController@isLogCheck')
+            ->name('api.customerservicedepts.islogcheck');
+        $api->put('customerservicedepts/{order}/loguncheck', 'CustomerServiceDepartmentsController@isLogUncheck')
+            ->name('api.customerservicedepts.isloguncheck');
+        $api->put('customerservicedepts/{order}/discheck', 'CustomerServiceDepartmentsController@isDisCheck')
+            ->name('api.customerservicedepts.isdischeck');
+        $api->put('customerservicedepts/{order}/disuncheck', 'CustomerServiceDepartmentsController@isDisUncheck')
+            ->name('api.customerservicedepts.isdisuncheck');
+        $api->put('customerservicedepts/{order}/goodscheck', 'CustomerServiceDepartmentsController@isGoodsCheck')
+            ->name('api.customerservicedepts.isgoodscheck');
+        $api->put('customerservicedepts/{order}/goodsuncheck', 'CustomerServiceDepartmentsController@isGoodsUncheck')
+            ->name('api.customerservicedepts.usgoodsuncheck');
 
         //子订单
         $api->delete('orderitems/{orderitem}', 'OrderItemsController@destroy')
@@ -726,7 +743,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.changeorders.issplitorder');
         $api->put('changeorders/mergerorder', 'CustomerServiceChangeOrdersController@isMergerOrder')
             ->name('api.changeorders.ismergerorder');
-        
+
         //红包商品配置
         $api->get('redpackagemag', 'RedPackageController@index')
             ->name('api.redpackagemag.index');
@@ -754,8 +771,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.redpackagemag.issplitorder');
         $api->put('redpackagemag/mergerorder', 'RedPackageController@isMergerOrder')
             ->name('api.redpackagemag.ismergerorder');
-        
-
 
         //跟单部
         $api->get('merchandiserdepts', 'MerchandiserDepartmentsController@index')
@@ -868,7 +883,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicerefunds.isfdaudit');
         $api->put('customerservicerefunds/{refundorder}/fdunaudit', 'CustomerServiceRefundsController@isFdUnAudit')
             ->name('api.customerservicerefunds.isfdunaudit');
-        
+
         // 退款类型
         $api->get('refundreasontype', 'RefundReasonTypeController@index')
             ->name('api.refundreasontype.index');
@@ -1071,7 +1086,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('aftercompensation/mergerorder', 'AfterCompensationController@isMergerOrder')
             ->name('api.aftercompensation.ismergerorder');
 
-
         //门店收款管理
         $api->get('shopgatheringmag', 'ShopGatheringMagController@index')
             ->name('api.shopgatheringmag.index');
@@ -1136,7 +1150,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('userastwarehouse/editstatus', 'UserAstWarehouseController@editStatusByIds')
             ->name('api.userastwarehouse.editstatusbyids');
 
-
         //打印机配置
         $api->get('printerconf', 'PrinterConfController@index')
             ->name('api.printerconf.index');
@@ -1183,11 +1196,11 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.problemProduct.destroybyids');
         $api->put('problemProduct/editstatus', 'ProblemProductController@editStatusByIds')
             ->name('api.problemProduct.editstatusbyids');
-            
+
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
-        
+
         //关联物流用户信息
         $api->get('relateLogistics', 'RelateLogisticsController@index')
         ->name('api.relateLogistics.index');
@@ -1203,7 +1216,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.relateLogistics.update');
         $api->put('relateLogistics/editstatus', 'RelateLogisticsController@editStatusByIds')
         ->name('api.relateLogistics.editstatusbyids');
-    //关联物流公司信息
+        //关联物流公司信息
         $api->get('relateLogisticsCompany', 'RelateLogisticsCompanyController@index')
         ->name('api.relateLogisticsCompany.index');
         $api->delete('relateLogisticsCompany/{relateLogisticsCompany}', 'RelateLogisticsCompanyController@destroy')
@@ -1214,7 +1227,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.relateLogisticsCompany.show');
         $api->put('relateLogisticsCompany/editstatus', 'RelateLogisticsCompanyController@editStatusByIds')
         ->name('api.relateLogisticsCompany.editstatusbyids');
-    //下载配置
+        //下载配置
         $api->get('downLoadConf', 'DownLoadConfController@index')
         ->name('api.downLoadConf.index');
         $api->post('downLoadConf', 'DownLoadConfController@store')
@@ -1229,7 +1242,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.downLoadConf.update');
         $api->put('downLoadConf/editstatus', 'DownLoadConfController@editStatusByIds')
         ->name('api.downLoadConf.editstatusbyids');
-    //买就送商品
+        //买就送商品
         $api->get('buyAndSendPro', 'BuyAndSendProController@index')
         ->name('api.buyAndSendPro.index');
         $api->post('buyAndSendPro', 'BuyAndSendProController@store')
@@ -1248,7 +1261,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.buyAndSendPro.isaudit');
         $api->put('buyAndSendPro/{buyAndSendPro}/void', 'BuyAndSendProController@isVoid')
         ->name('api.buyAndSendPro.isaudit');
-    //买就送赠品
+        //买就送赠品
         $api->get('buyAndSendGift', 'BuyAndSendGiftController@index')
         ->name('api.buyAndSendGift.index');
         $api->delete('buyAndSendGift/{buyAndSendGift}', 'BuyAndSendGiftController@destroy')
@@ -1259,7 +1272,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.buyAndSendGift.show');
         $api->put('buyAndSendGift/editstatus', 'BuyAndSendGiftController@editStatusByIds')
         ->name('api.buyAndSendGift.editstatusbyids');
-    //产品Bom
+        //产品Bom
         $api->get('proBom', 'ProBomController@index')
         ->name('api.proBom.index');
         $api->post('proBom', 'ProBomController@store')
@@ -1274,7 +1287,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.proBom.update');
         $api->put('proBom/editstatus', 'ProBomController@editStatusByIds')
         ->name('api.proBom.editstatusbyids');
-    //产品Bom原材料
+        //产品Bom原材料
         $api->get('proBomMaterial', 'ProBomMaterialController@index')
         ->name('api.proBomMaterial.index');
         $api->delete('proBomMaterial/{proBomMaterial}', 'ProBomMaterialController@destroy')
@@ -1285,7 +1298,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.proBomMaterial.show');
         $api->put('proBomMaterial/editstatus', 'ProBomMaterialController@editStatusByIds')
         ->name('api.proBomMaterial.editstatusbyids');
-    //包件类型
+        //包件类型
         $api->get('packageType', 'PackageTypeController@index')
         ->name('api.packageType.index');
         $api->get('packageType/{packageType}', 'PackageTypeController@show')
@@ -1300,7 +1313,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.packageType.destroybyids');
         $api->put('packageType/editstatus', 'PackageTypeController@editStatusByIds')
         ->name('api.packageType.editstatusbyids');
-    //补件类别
+        //补件类别
         $api->get('resupplieCategory', 'ResupplieCategoryController@index')
         ->name('api.resupplieCategory.index');
         $api->get('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@show')
@@ -1315,7 +1328,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieCategory.destroybyids');
         $api->put('resupplieCategory/editstatus', 'ResupplieCategoryController@editStatusByIds')
         ->name('api.resupplieCategory.editstatusbyids');
-    //退款方式
+        //退款方式
         $api->get('refundMethod', 'RefundMethodController@index')
         ->name('api.refundMethod.index');
         $api->get('refundMethod/{refundMethod}', 'RefundMethodController@show')
@@ -1330,7 +1343,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.refundMethod.destroybyids');
         $api->put('refundMethod/editstatus', 'RefundMethodController@editStatusByIds')
         ->name('api.refundMethod.editstatusbyids');
-    //补件单子单
+        //补件单子单
         $api->get('resupplieOrderItem', 'ResuppliedOrderItemController@index')
         ->name('api.resupplieOrderItem.index');
         $api->get('resupplieOrderItem/{resupplieOrderItem}', 'ResuppliedOrderItemController@show')
@@ -1341,7 +1354,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieOrderItem.destroybyids');
         $api->put('resupplieOrderItem/editstatus', 'ResuppliedOrderItemController@editStatusByIds')
         ->name('api.resupplieOrderItem.editstatusbyids');
-    //补件问题产品
+        //补件问题产品
         $api->get('resupplieProblemProduct', 'ResupplieProblemProductController@index')
         ->name('api.resupplieProblemProduct.index');
         $api->get('resupplieProblemProduct/{resupplieProblemProduct}', 'ResupplieProblemProductController@show')
@@ -1352,7 +1365,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieProblemProduct.destroybyids');
         $api->put('resupplieProblemProduct/editstatus', 'ResupplieProblemProductController@editStatusByIds')
         ->name('api.resupplieProblemProduct.editstatusbyids');
-    //补件责任方
+        //补件责任方
         $api->get('resupplieResponsible', 'ResupplieResponsibleController@index')
         ->name('api.resupplieResponsible.index');
         $api->get('resupplieResponsible/{resupplieResponsible}', 'ResupplieResponsibleController@show')
@@ -1363,7 +1376,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieResponsible.destroybyids');
         $api->put('resupplieResponsible/editstatus', 'ResupplieResponsibleController@editStatusByIds')
         ->name('api.resupplieResponsible.editstatusbyids');
-    //补件图片信息
+        //补件图片信息
         $api->get('resupplieImage', 'ResupplieImageController@index')
         ->name('api.resupplieImage.index');
         $api->get('resupplieImage/{resupplieImage}', 'ResupplieImageController@show')
@@ -1374,7 +1387,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieImage.destroybyids');
         $api->put('resupplieImage/editstatus', 'ResupplieImageController@editStatusByIds')
         ->name('api.resupplieImage.editstatusbyids');
-    //补件驳回原因
+        //补件驳回原因
         $api->get('resupplieRejectReason', 'ResupplieRejectReasonController@index')
         ->name('api.resupplieRejectReason.index');
         $api->post('resupplieRejectReason', 'ResupplieRejectReasonController@store')
@@ -1387,12 +1400,12 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieRejectReason.destroybyids');
         $api->put('resupplieRejectReason/editstatus', 'ResupplieRejectReasonController@editStatusByIds')
         ->name('api.resupplieRejectReason.editstatusbyids');
-    //补件操作记录
+        //补件操作记录
         $api->get('resupplieOperationRecord', 'ResupplieOperationRecordController@index')
         ->name('api.resupplieOperationRecord.index');
         $api->post('resupplieOperationRecord', 'ResupplieOperationRecordController@store')
         ->name('api.resupplieOperationRecord.store');
-    //补件进度
+        //补件进度
         $api->get('resupplieProgress', 'ResupplieProgressController@index')
         ->name('api.resupplieProgress.index');
         $api->post('resupplieProgress', 'ResupplieProgressController@store')
@@ -1405,7 +1418,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieProgress.destroy');
         $api->delete('resupplieProgress', 'ResupplieProgressController@destroybyids')
         ->name('api.resupplieProgress.destroybyids');
-    //补件采购明细
+        //补件采购明细
         $api->get('resuppliePurchase', 'ResuppliePurchaseController@index')
         ->name('api.resuppliePurchase.index');
         $api->get('resuppliePurchase/{resuppliePurchase}', 'ResuppliePurchaseController@show')
@@ -1416,7 +1429,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resuppliePurchase.destroybyids');
         $api->put('resuppliePurchase/editstatus', 'ResuppliePurchaseController@editStatusByIds')
         ->name('api.resuppliePurchase.editstatusbyids');
-    //补件电子面单
+        //补件电子面单
         $api->get('resupplieEsheet', 'ResupplieEsheetController@index')
         ->name('api.resupplieEsheet.index');
         $api->get('resupplieEsheet/{resupplieEsheet}', 'ResupplieEsheetController@show')
@@ -1427,7 +1440,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieEsheet.destroybyids');
         $api->put('resupplieEsheet/editstatus', 'ResupplieEsheetController@editStatusByIds')
         ->name('api.resupplieEsheet.editstatusbyids');
-    //补件内部便签
+        //补件内部便签
         $api->get('resupplieInnerNote', 'ResupplieInnerNoteController@index')
         ->name('api.resupplieInnerNote.index');
         $api->get('resupplieInnerNote/{resupplieInnerNote}', 'ResupplieInnerNoteController@show')
@@ -1457,7 +1470,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieApplication.isSubmit');
         $api->put('resupplieApplication/{resupplieOrder}/reject', 'ResupplieApplicationController@isReject')
         ->name('api.resupplieApplication.isReject');
-    //补件审核
+        //补件审核
         $api->get('resupplieReview', 'ResupplieReviewController@index')
         ->name('api.resupplieReview.index');
         $api->get('resupplieReview/searchBigPackage', 'ResupplieReviewController@searchBigPackage')
@@ -1476,7 +1489,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieReview.auditfaild');
         $api->put('resupplieReview/{resupplieOrder}/settle', 'ResupplieReviewController@isSettle')
         ->name('api.resupplieReview.settle');
-    //补件发货
+        //补件发货
         $api->get('resupplieShip', 'ResupplieShipController@index')
         ->name('api.resupplieShip.index');
         $api->get('resupplieShip/searchUnprint', 'ResupplieShipController@searchUnprint')
@@ -1493,12 +1506,12 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.resupplieShip.consign');
         $api->put('resupplieShip/{resupplieOrder}/print', 'ResupplieShipController@isPrint')
         ->name('api.resupplieShip.print');
-    //补件中心
+        //补件中心
         $api->get('resupplieCenter', 'ResupplieCenterController@index')
         ->name('api.resupplieCenter.index');
         $api->put('resupplieCenter/{resupplieOrder}/invalid', 'ResupplieCenterController@isInvalid')
         ->name('api.resupplieCenter.invalid');
-        
+
         // 薛涛
         //产品映射
         $api->get('promap', 'ProMapController@index')
@@ -1653,11 +1666,26 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         ->name('api.aftersaledefpro.editstatusbyids');
         // 薛涛
 
-        
         //退货子单
         $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
             ->name('api.returnorderitems.destroy');
 
+        //角色管理
+        $api->get('roles', 'RolesController@index')
+            ->name('api.roles.index');
+        $api->post('roles', 'RolesController@insertRole')
+            ->name('api.roles.insertRole');
+//        $api->patch('roles/{roleid}', 'RolesController@update')
+//            ->name('api.roles.update');
+
+        $api->get('rolegroup', 'RoleGroupController@index')
+            ->name('api.roles.index');
+
+        $api->delete('roles', 'RolesController@destroyByIds')
+            ->name('api.roles.destroybyids');
+        //获取权限
+        $api->get('permissions', 'PermissionsController@index')
+            ->name('api.permissions.index');
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');

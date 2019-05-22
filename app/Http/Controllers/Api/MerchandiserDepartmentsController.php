@@ -3,8 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\Api\MerchandiserDepartmentRequest;
+use App\Http\Requests\Api\CustomerServiceDepartmentRequset;
+use App\Http\Requests\Api\PaymentDetailRequest;
+use App\Http\Requests\Api\SplitOrderRequest;
+use App\Http\Requests\Api\MergerOrderRequest;
+use App\Http\Requests\Api\EditStatuRequest;
+use App\Http\Requests\Api\DestroyRequest;
 
 use App\Transformers\CargoAuditTransformer;
 use App\Transformers\OrderTransformer;
@@ -14,6 +21,7 @@ use App\Http\Controllers\Traits\ProcedureTrait;
 
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Dingo\Api\Exception\ResourceException;
+use Dingo\Api\Exception\DeleteResourceFailedException;
 
 
 /**
@@ -176,27 +184,25 @@ class MerchandiserDepartmentsController extends Controller
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function update1(MerchandiserDepartmentRequest $request, Order $order)
-    {
-        return $this->traitUpdate($request, $order, self::TRANSFORMER);
-    }
     public function update(
-        MerchandiserDepartmentRequest $merchandiserDepartmentRequest,
+        CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
+        PaymentDetailRequest $paymentDetailRequest,
         Order $order,
         \App\Handlers\ValidatedHandler $validatedHandler
     ) {
-    
         //锁定才能修改
-        if ($order->unlock()) {
+        if ($order->unReadyStockOut()) {
             throw new UpdateResourceFailedException('订单未锁定无法修改');
         }
 
-        $data[] = $merchandiserDepartmentRequest->validated();
-        $data[] = $merchandiserDepartmentRequest->input('order_items');
+        $data[] = $customerServiceDepartmentRequset->validated();
+        $data[] = $customerServiceDepartmentRequset->input('order_items');
+        $data[] = $paymentDetailRequest->validated()['payment_details'];
 
         $order = DB::transaction(function () use (
             $data,
-            $merchandiserDepartmentRequest,
+            $customerServiceDepartmentRequset,
+            $paymentDetailRequest,
             $order,
             $validatedHandler
         ) {
@@ -205,7 +211,7 @@ class MerchandiserDepartmentsController extends Controller
             if ($data[1]??null) {
                 foreach ($data[1] as $item) {
                     //计算要通过的字段
-                    $validatedData = $validatedHandler->getValidatedData($merchandiserDepartmentRequest->rules(), $item);
+                    $validatedData = $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item);
                     //存在id则更新,否则插入
                     if (isset($item['id'])) {
                         $order->orderItems()->findOrFail($item['id'])->update($validatedData);
@@ -214,6 +220,21 @@ class MerchandiserDepartmentsController extends Controller
                     }
                 }
             }
+
+            if ($data[2]??null) {
+                foreach ($data[2] as $item) {
+                    //计算要通过的字段
+                    $validatedData = $validatedHandler->getValidatedData($paymentDetailRequest->rules(), $item);
+                    //存在id则更新,否则插入
+                    if (isset($item['id'])) {
+                        $order->paymentDetails()->findOrFail($item['id'])->update($validatedData);
+                    } else {
+                        $order->paymentDetails()->create($validatedData);
+                    }
+                }
+            }
+            $order->stockOut();
+
             return $order;
         });
 

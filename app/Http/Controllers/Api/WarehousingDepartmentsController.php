@@ -128,20 +128,21 @@ class WarehousingDepartmentsController extends Controller
      */
     public function index(WarehousingDepartmentRequest $request)
     {
-        $order_status = $status =  null;
-
+        $order_status = $request->input("order_status");
         extract($request->validated());
 
-        $order = Order::query()
-            ->when(!is_null($status), function ($query) use ($status) {
-
-                return $query->where('status', $status);
-
-            })->when($order_status, function ($query) use ($order_status) {
-
-                return $query->where('order_status', $order_status);
-
-            });
+        $order = Order::query()->whereIn('order_status', [$order_status])
+        //->where('member_nick', 'like', '%'.$member_nick.'%')
+        //->where('system_order_no', 'like', '%'.$system_order_no.'%')
+        //->where('receiver_name', 'like', '%'.$receiver_name.'%')
+        //->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+        //->where('receiver_address', 'like', '%'.$receiver_address.'%')
+        //->where('shops_id', 'like', '%'.$shops_id.'%')
+        //->where('logistics_id', 'like', '%'.$logistics_id.'%')
+        //->where('seller_remark', 'like', '%'.$seller_remark.'%')
+        //->where('seller_flag', 'like', '%'.$seller_flag.'%')
+        //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
+        ->orderBy('created_at', 'desc');
 
         return $this->response->paginator($order->paginate(self::PerPage), new OrderTransformer());
     }

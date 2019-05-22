@@ -46,8 +46,8 @@ class Order extends Model
         self::ORDER_STATUS_ONE_AUDIT => '已跟单一审',
         self::ORDER_STATUS_FD_AUDIT => '已财审',
         self::ORDER_STATUS_CARGO_AUDIT => '已货审',
-        self::ORDER_STATUS_READY_STOCK_OUT => '已打发货单',
-        self::ORDER_STATUS_STOCK_OUT => '已出库',
+        self::ORDER_STATUS_READY_STOCK_OUT=> '准备出库',
+        self::ORDER_STATUS_STOCK_OUT => '已出库'
     ];
 
     //订单操作
@@ -117,6 +117,22 @@ class Order extends Model
         'receipt', 'logistics_remark', 'seller_remark', 'customer_service_remark', 'buyer_message', 'status',
         'receiver_name', 'receiver_phone', 'receiver_mobile', 'receiver_state', 'receiver_city', 'receiver_district',
         'receiver_address', 'receiver_zip',
+
+        //new
+        'order_amount',
+        'is_logistics_checked',
+        'logistics_check_remark',
+        'logistics_checked_at',
+        'is_distribution_checked',
+        'distribution_check_remark',
+        'distribution_checked_at',
+        'is_goods_checked',
+        'goods_check_remark',
+        'goods_checked_at',
+        'stockout_at',
+        'stockout_remark',
+        'locked_at',
+        'auditor_id'
     ];
 
     protected $dates = [
@@ -125,6 +141,9 @@ class Order extends Model
         'est_con_time',
         'payment_date',
         'promise_ship_time',
+        'distribution_checked_at',
+        'logistics_checked_at',
+        'stockout_at',
     ];
 
     //设置类型
@@ -215,8 +234,14 @@ class Order extends Model
      */
     public function unlock()
     {
-        return $this->getOriginal('order_status') != self::ORDER_STATUS_LOCK;
+        return ($this->getOriginal('order_status') != self::ORDER_STATUS_LOCK);
     }
+
+    public function unReadyStockOut()
+    {
+        return ($this->getOriginal('order_status') != self::ORDER_STATUS_READY_STOCK_OUT);
+    }
+    
 
     /**
      * 订单锁定或释放.
@@ -228,11 +253,13 @@ class Order extends Model
         if ($this->unlock()) {
             $this->business_personnel_id = Auth::guard('api')->id();
             $this->locker_id = Auth::guard('api')->id();
+            $this->locked_at = date('Y-m-d h:i:s');
             $this->order_status = self::ORDER_STATUS_LOCK;
         } else {
             $this->business_personnel_id = 0;
             $this->locker_id = 0;
             $this->order_status = self::ORDER_STATUS_NEW;
+            $this->locked_at = null;
         }
 
         $this->save();
@@ -350,6 +377,78 @@ class Order extends Model
     public function stockOutUnAudit()
     {
         $this->order_status = self::ORDER_STATUS_CARGO_AUDIT;
+        $this->save();
+    }
+
+
+    /**
+     *运费结算
+     *
+     * @return bool
+     */
+    public function logCheck()
+    {
+        $this->is_logistics_checked = 1;
+        $this->logistics_checked_at = date('Y-m-d h:i:s');
+        $this->save();
+    }
+
+    /**
+     *运费结算退审
+     *
+     * @return bool
+     */
+    public function logUncheck()
+    {
+        $this->is_logistics_checked = 0;
+        $this->logistics_checked_at =null;
+        $this->save();
+    }
+    /**
+     *货款结算
+     *
+     * @return bool
+     */
+    public function goodsCheck()
+    {
+        $this->is_goods_checked = 1;
+        $this->goods_checked_at = date('Y-m-d h:i:s');
+        $this->save();
+    }
+
+    /**
+     *货款结算退审
+     *
+     * @return bool
+     */
+    public function goodsUncheck()
+    {
+        $this->is_goods_checked = 0;
+        $this->goods_checked_at = null;
+        $this->save();
+    }
+
+    /**
+     *配送结算
+     *
+     * @return bool
+     */
+    public function disCheck()
+    {
+        $this->is_distribution_checked = 1;
+        $this->distribution_checked_at = date('Y-m-d h:i:s');
+        $this->save();
+    }
+
+    /**
+     *配送结算退审
+     *
+     * @return bool
+     */
+    public function disUncheck()
+    {
+        $this->is_distribution_checked = 0;
+        $this->distribution_checked_at =null;
         $this->save();
     }
 

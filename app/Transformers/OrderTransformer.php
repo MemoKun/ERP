@@ -11,7 +11,7 @@ class OrderTransformer extends TransformerAbstract
         'shop', 'logistic', 'freightType', 'distribution',
         'distributionMethod', 'distributionType', 'takeDeliveryGoodsWay',
         'customerType', 'paymentMethod', 'warehouses', 'orderItems', 'businessPersonnel',
-        'locker', 'paymentDetails','resupplieOrder'
+        'locker', 'paymentDetails', 'resupplieOrder',
     ];
 
     public function transform(Order $order)
@@ -21,8 +21,10 @@ class OrderTransformer extends TransformerAbstract
             'system_order_no' => $order->system_order_no,
             'order_status' => $order->order_status,
             'order_source' => $order->order_source,
+            'order_amount' => $order->order_amount,
             'shops_id' => $order->shops_id,
             'logistics_id' => $order->logistics_id,
+            'logistics_sn' => $order->logistics_sn,
             'billing_way' => $order->billing_way,
             'promise_ship_time' => optional($order->promise_ship_time)->toDateString(),
             'freight_types_id' => $order->freight_types_id,
@@ -36,6 +38,9 @@ class OrderTransformer extends TransformerAbstract
             'distribution_phone' => $order->distribution_phone,
             'distribution_no' => $order->distribution_no,
             'distribution_types_id' => $order->distribution_types_id,
+            'is_distribution_checked' => $order->is_distribution_checked,
+            'distribution_check_remark' => $order->distribution_check_remark,
+            'distribution_checked_at' => optional($order->distribution_checked_at)->toDateTimeString(),
             'service_car_info' => $order->service_car_info,
             'take_delivery_goods_fee' => $order->take_delivery_goods_fee,
             'take_delivery_goods_ways_id' => $order->take_delivery_goods_ways_id,
@@ -61,7 +66,13 @@ class OrderTransformer extends TransformerAbstract
             'accept_order_user' => $order->accept_order_user,
             'tax_number' => $order->tax_number,
             'receipt' => $order->receipt,
+            'is_logistics_checked' => $order->is_logistics_checked,
             'logistics_remark' => $order->logistics_remark,
+            'logistics_check_remark' => $order->logistics_check_remark,
+            'logistics_checked_at' => optional($order->logistics_checked_at)->toDateTimeString(),
+            'is_goods_checked' => $order->is_goods_checked,
+            'goods_check_remark' => $order->goods_check_remark,
+            'goods_checked_at' => optional($order->goods_checked_at)->toDateTimeString(),
             'seller_remark' => $order->seller_remark,
             'customer_service_remark' => $order->customer_service_remark,
             'taobao_oid' => $order->taobao_oid,
@@ -84,15 +95,17 @@ class OrderTransformer extends TransformerAbstract
             'refund_info' => $order->refund_info,
             'business_personnel_id' => $order->business_personnel_id,
             'locker_id' => $order->locker_id,
+            'locked_at' => optional($order->locked_at)->toDateTimeString(),
+            'auditor_id' => $order->auditor_id,
             'audit_at' => optional($order->audit_at)->toDateTimeString(),
             'association_taobao_oid' => $order->association_taobao_oid,
             'is_merge' => $order->is_merge,
             'is_split' => $order->is_split,
             'is_association' => $order->is_association,
-            'created_at' => $order->created_at
-                                  ->toDateTimeString(),
-            'updated_at' => $order->updated_at
-                                  ->toDateTimeString()
+            'stockout_at' => optional($order->stockout_at)->toDateTimeString(),
+            'stockout_remark' => $order->stockout_remark,
+            'created_at' => optional($order->created_at)->toDateTimeString(),
+            'updated_at' => optional($order->updated_at)->toDateTimeString(),
         ];
     }
 
@@ -158,13 +171,19 @@ class OrderTransformer extends TransformerAbstract
 
     public function includeBusinessPersonnel(Order $order)
     {
-        if(!$order->locker) return ;
+        if (!$order->locker) {
+            return;
+        }
+
         return $this->item($order->businessPersonnel, new UserTransformer());
     }
 
     public function includeLocker(Order $order)
     {
-        if(!$order->locker) return ;
+        if (!$order->locker) {
+            return;
+        }
+
         return $this->item($order->locker, new UserTransformer());
     }
 
@@ -172,12 +191,9 @@ class OrderTransformer extends TransformerAbstract
     {
         return $this->item($order->user, new UserTransformer());
     }
-    
+
     public function includeResupplieOrder(Order $order)
     {
         return $this->collection($order->resupplieOrder, new ResupplieOrderTransformer());
     }
-
-
-
 }

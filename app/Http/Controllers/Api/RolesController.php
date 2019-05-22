@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\DestroyRequest;
+use App\Models\Model;
 use App\Models\Role;
 use App\Http\Requests\Api\RoleRequest;
 use App\Http\Controllers\Traits\CURDTrait;
@@ -25,6 +26,27 @@ class RolesController extends Controller
 
     public function index(RoleRequest $request){
         return $this->allOrPage($request,self::MODEL,self::TRANSFORMER,10);
+    }
+
+    public function insertRole(RoleRequest $request,Role $role){
+//        return $request->post();
+        $data = [
+          'role_group_id' => $request->post('role_group_id'),
+          'name' => $request->post('username'),
+          'description' => $request->post('description'),
+          'remark' => $request->post('remark'),
+        ];
+//        return $data;
+        if(Role::find($request->post('id'))){
+            return $this->traitUpdate($request, Role::find($request->post('id')), self::TRANSFORMER);
+        };
+        return  $this->traitStore($data, self::MODEL, self::TRANSFORMER);
+
+    }
+
+    public function update(RoleRequest $roleRequest,Role $role)
+    {
+        return json_encode($role);
     }
 
     public function destroyByIds(DestroyRequest $request){
