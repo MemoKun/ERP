@@ -24,22 +24,9 @@
     </div>
     <el-tabs v-model="middleActiveName" @tab-click="firstHandleClick" style="height: 250px;">
       <el-tab-pane label="新建" name="0">
-        <el-table
-          :data="newOrderListData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="200"
-          @row-click="orderListRClick"
-          @row-dbclick="orderListRClick"
-        >
+        <el-table :data="newOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
-          <el-table-column
-            v-for="item in middleTableHead"
-            :label="item.label"
-            :width="item.width"
-            :key="item.label"
-          >
+          <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -50,31 +37,16 @@
                 </span>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="待处理" name="1">
-        <el-table
-          :data="untreatedOrderListData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="200"
-          @row-click="orderListRClick"
-          @row-dbclick="orderListRClick"
-        >
+        <el-table :data="untreatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
-          <el-table-column
-            v-for="item in middleTableHead"
-            :label="item.label"
-            :width="item.width"
-            :key="item.label"
-          >
+          <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -85,31 +57,16 @@
                 </span>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="已处理" name="2">
-        <el-table
-          :data="treatedOrderListData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="200"
-          @row-click="orderListRClick"
-          @row-dbclick="orderListRClick"
-        >
+        <el-table :data="treatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
-          <el-table-column
-            v-for="item in middleTableHead"
-            :label="item.label"
-            :width="item.width"
-            :key="item.label"
-          >
+          <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -120,31 +77,16 @@
                 </span>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="作废" name="3">
-        <el-table
-          :data="canceledOrderListData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="200"
-          @row-click="orderListRClick"
-          @row-dbclick="orderListRClick"
-        >
+        <el-table :data="canceledOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
-          <el-table-column
-            v-for="item in middleTableHead"
-            :label="item.label"
-            :width="item.width"
-            :key="item.label"
-          >
+          <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -155,9 +97,7 @@
                 </span>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -165,29 +105,14 @@
       </el-tab-pane>
     </el-tabs>
 
-    <Pagination
-      :page-url="this.urls.changeorders"
-      @handlePagChg="handlePagChg"
-      v-if="middleActiveName=='0'"
-    ></Pagination>
+    <Pagination :page-url="this.urls.changeorders" @handlePagChg="handlePagChg" v-if="middleActiveName=='0'"></Pagination>
 
     <!--底部tab-->
     <el-tabs v-model="bottomActiveName" @tab-click="secondHandleClick">
       <el-tab-pane label="变更明细" name="0">
-        <el-table
-          :data="changeDetails"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="200"
-        >
+        <el-table :data="changeDetails" fit @selection-change="handleSelectionChange" v-loading="loading" height="200">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
-          <el-table-column
-            v-for="item in changeDetailsHead"
-            :label="item.label"
-            :width="item.width"
-            :key="item.label"
-          >
+          <el-table-column v-for="item in changeDetailsHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='checkBox'">
                 <span v-if="item.inProp">
@@ -198,9 +123,7 @@
                 </span>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -208,55 +131,27 @@
       </el-tab-pane>
       <el-tab-pane label="变更订单主信息" name="1">
         <el-form :model="changeOrdersMainInfo" class="quarter_turn">
-          <el-form-item
-            v-for="item in changeOrdersMainInfoHead"
-            :key="item.label"
-            :label="item.label"
-            :prop="item.prop"
-          >
+          <el-form-item v-for="item in changeOrdersMainInfoHead" :key="item.label" :label="item.label" :prop="item.prop">
             <span v-if="item.type=='text'">
               <span v-if="item.inProp">
-                <el-input
-                  v-model.trim="changeOrdersMainInfo[item.prop][item.inProp]"
-                  :placeholder="item.holder"
-                  disabled
-                ></el-input>
+                <el-input v-model.trim="changeOrdersMainInfo[item.prop][item.inProp]" :placeholder="item.holder" disabled></el-input>
               </span>
               <span v-else>
-                <el-input
-                  v-model.trim="changeOrdersMainInfo[item.prop]"
-                  :placeholder="item.holder"
-                  disabled
-                ></el-input>
+                <el-input v-model.trim="changeOrdersMainInfo[item.prop]" :placeholder="item.holder" disabled></el-input>
               </span>
             </span>
             <span v-else-if="item.type=='number'">
-              <el-input
-                type="number"
-                v-model.trim="changeOrdersMainInfo[item.prop]"
-                :placeholder="item.holder"
-                disabled
-              ></el-input>
+              <el-input type="number" v-model.trim="changeOrdersMainInfo[item.prop]" :placeholder="item.holder" disabled></el-input>
             </span>
             <span v-else-if="item.type=='textarea'">
-              <el-input
-                type="textarea"
-                v-model.trim="changeOrdersMainInfo[item.prop]"
-                :placehode="item.holder"
-              ></el-input>
+              <el-input type="textarea" v-model.trim="changeOrdersMainInfo[item.prop]" :placehode="item.holder"></el-input>
             </span>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="操作记录" name="2">
         <el-table :data="operationData" fit height="180">
-          <el-table-column
-            v-for="item in operationHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.label"
-          >
+          <el-table-column v-for="item in operationHead" :label="item.label" align="center" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span v-if="item.type=='img'">
                 <el-popover placement="right" trigger="hover" popper-class="picture_detail">
@@ -272,137 +167,66 @@
     </el-tabs>
 
     <!--新增订单变更-->
-    <el-dialog
-      title="订单明细变更"
-      :visible.sync="addOrderChangesMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-      class="bigDialog"
-    >
+    <el-dialog title="订单明细变更" :visible.sync="addOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <el-button type="text">基础信息</el-button>
       <label>{{this.addChangeOrderFormVal}}</label>
       <br>
       <label>{{this.submitData}}</label>
-      <el-form
-        :model="addChangeOrderFormVal"
-        :rules="addChangeOrderFormRules"
-        class="addChangeOrderForm"
-        id="form"
-      >
-        <el-form-item
-          v-for="(item,index) in addChangeOrderFormHead"
-          :key="index"
-          :label="item.label"
-          :prop="item.prop"
-        >
+      <el-form :model="addChangeOrderFormVal" :rules="addChangeOrderFormRules" class="addChangeOrderForm" id="form">
+        <el-form-item v-for="(item,index) in addChangeOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">
-              <el-input
-                v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
             <span v-else>
-              <el-input
-                v-model.trim="addChangeOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='number'">
-            <span
-              v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'"
-            >
-              <el-input
-                type="number"
-                v-model.trim="addChangeOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-                @input="formChg"
-              ></el-input>
+            <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+              <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
             </span>
             <span v-else>
-              <el-input
-                type="number"
-                v-model.trim="addChangeOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='select'">
-            <el-select
-              v-model="addChangeOrderFormVal[item.prop]"
-              :placeholder="item.holder"
-              :disabled="item.addChgAble"
-            >
+            <el-select v-model="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
               <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
           </span>
           <span v-else-if="item.type=='textarea'">
-            <el-input
-              type="textarea"
-              v-model.trim="addChangeOrderFormVal[item.prop]"
-              :placehode="item.holder"
-            ></el-input>
+            <el-input type="textarea" v-model.trim="addChangeOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
           </span>
           <span v-else-if="item.type=='checkbox'">
             <el-checkbox v-model="addChangeOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
           </span>
           <span v-else-if="item.type=='radio'">
-            <el-radio
-              v-model="addChangeOrderFormVal[item.prop]"
-              label="volume"
-            >{{item.choiceName[0]}}</el-radio>
-            <el-radio
-              v-model="addChangeOrderFormVal[item.prop]"
-              label="weight"
-            >{{item.choiceName[1]}}</el-radio>
+            <el-radio v-model="addChangeOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+            <el-radio v-model="addChangeOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker
-              v-model="addChangeOrderFormVal[item.prop]"
-              type="date"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              placeholder="选择日期"
-            ></el-date-picker>
+            <el-date-picker v-model="addChangeOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
           </span>
         </el-form-item>
       </el-form>
       <el-tabs v-model="addTabActiveName">
         <el-tab-pane label="产品明细" name="0">
           <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-            <el-table-column
-              v-for="item in addHead[0]"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-              :key="item.label"
-            >
+            <el-table-column v-for="item in addHead[0]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='newData'">
                   <span v-if="proRIndex == 'index'+scope.$index">
                     <span v-if="item.type=='number'">
-                      <el-input
-                        size="small"
-                        type="number"
-                        v-model.trim="scope.row[item.prop][item.inProp]"
-                        :placeholder="item.holder"
-                      ></el-input>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                     </span>
                     <span v-else-if="item.type == 'checkbox'">
                       <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
                     </span>
                     <span v-else>
-                      <el-input
-                        size="small"
-                        v-model.trim="scope.row[item.prop][item.inProp]"
-                        :placeholder="item.holder"
-                      ></el-input>
+                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                     </span>
                   </span>
                   <span v-else>
@@ -422,44 +246,26 @@
                       <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                     </el-popover>
                   </span>
-                  <span
-                    v-else
-                  >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                 </span>
               </template>
             </el-table-column>
             <el-table-column type="expand" fixed="left">
               <template slot-scope="scope">
                 <el-table :data="scope.row['productComp']" fit>
-                  <el-table-column
-                    v-for="item in proCompHead"
-                    :label="item.label"
-                    align="center"
-                    :width="item.width"
-                    :key="item.label"
-                  >
+                  <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                     <template slot-scope="scope">
                       <span v-if="item.prop">
                         <span v-if="item.type=='checkbox'">
                           <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                         </span>
                         <span v-else-if="item.type=='img'">
-                          <el-popover
-                            placement="right"
-                            trigger="hover"
-                            popper-class="picture_detail"
-                          >
+                          <el-popover placement="right" trigger="hover" popper-class="picture_detail">
                             <img :src="scope.row[item.prop]">
-                            <img
-                              slot="reference"
-                              :src="scope.row[item.prop]"
-                              :alt="scope.row[item.alt]"
-                            >
+                            <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                           </el-popover>
                         </span>
-                        <span
-                          v-else
-                        >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                        <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                       </span>
                     </template>
                   </el-table-column>
@@ -475,106 +281,49 @@
         </el-tab-pane>
         <el-tab-pane label="订单信息">
           <el-form :model="addChangeOrderFormVal">
-            <el-form-item
-              v-for="(item,index) in addDialogOrderDtlFormHead"
-              :key="index"
-              :label="item.label"
-              :prop="item.prop"
-            >
+            <el-form-item v-for="(item,index) in addDialogOrderDtlFormHead" :key="index" :label="item.label" :prop="item.prop">
               <span v-if="item.type=='number'">
-                <span
-                  v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'"
-                >
-                  <el-input
-                    type="number"
-                    v-model.trim="addChangeOrderFormVal[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                    @input="formChg"
-                  ></el-input>
+                <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+                  <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
                 </span>
                 <span v-else-if="item.type=='number'">
-                  <el-input
-                    type="number"
-                    v-model.trim="addChangeOrderFormVal[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
               <span v-else-if="item.type=='select'">
-                <el-select
-                  v-model="addChangeOrderFormVal[item.prop]"
-                  :placeholder="item.holder"
-                  :disabled="item.addChgAble"
-                >
+                <el-select v-model="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
                   <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                     <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
                   </span>
                 </el-select>
               </span>
               <span v-else-if="item.type=='textarea'">
-                <el-input
-                  type="textarea"
-                  v-model.trim="addChangeOrderFormVal[item.prop]"
-                  :placehode="item.holder"
-                ></el-input>
+                <el-input type="textarea" v-model.trim="addChangeOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="addChangeOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
               </span>
               <span v-else-if="item.type=='radio'">
-                <el-radio
-                  v-model="addChangeOrderFormVal[item.prop]"
-                  label="volume"
-                >{{item.choiceName[0]}}</el-radio>
-                <el-radio
-                  v-model="addChangeOrderFormVal[item.prop]"
-                  label="weight"
-                >{{item.choiceName[1]}}</el-radio>
+                <el-radio v-model="addChangeOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="addChangeOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
               </span>
               <span v-else-if="item.type=='DatePicker'">
-                <el-date-picker
-                  v-model="addChangeOrderFormVal[item.prop]"
-                  type="date"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期"
-                ></el-date-picker>
+                <el-date-picker v-model="addChangeOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
               </span>
               <span v-if="item.type=='text'">
                 <span v-if="item.inProp">
-                  <el-input
-                    v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
                 <span v-else>
-                  <el-input
-                    v-model.trim="addChangeOrderFormVal[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="费用类型" name="2">
-          <el-table
-            :data="expenseData"
-            fit
-            @row-click="addExpenseRClick"
-            :row-class-name="addExpenseRCName"
-          >
-            <el-table-column
-              v-for="item in expenseHead"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-              :key="item.label"
-            >
+          <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+            <el-table-column v-for="item in expenseHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="expenseRIndex == 'index'+scope.$index">
                   <span v-if="item.type=='select'">
@@ -585,12 +334,7 @@
                     </el-select>
                   </span>
                   <span v-else>
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop]"
-                      :placeholder="item.holder"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                   </span>
                 </span>
                 <span v-else>
@@ -627,20 +371,8 @@
     <!-- 选择订单 -->
     <el-dialog title="选择订单" :visible.sync="chooseOrderMask" :class="{'more-forms':moreForms}">
       <el-button type="text">订单列表</el-button>
-      <el-table
-        :data="chooseOrderData"
-        fit
-        height="180"
-        :row-class-name="addOrderRowCName"
-        @row-click="chooseOrderRowClick"
-      >
-        <el-table-column
-          v-for="item in chooseOrderHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="chooseOrderData" fit height="180" :row-class-name="addOrderRowCName" @row-click="chooseOrderRowClick">
+        <el-table-column v-for="item in chooseOrderHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.type=='img'">
               <el-popover placement="right" trigger="hover" popper-class="picture_detail">
@@ -654,17 +386,9 @@
       </el-table>
       <el-button type="text">订单明细</el-button>
       <el-table :data="chooseOrderProListData" fit height="180">
-        <el-table-column
-          v-for="item in chooseOrderProListHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+        <el-table-column v-for="item in chooseOrderProListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
-            <span
-              v-if="scope.row[item.prop]"
-            >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+            <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -680,84 +404,39 @@
     </el-dialog>
 
     <!--商品明细-->
-    <el-dialog
-      title="商品明细"
-      :visible.sync="proMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-    >
+    <el-dialog title="商品明细" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
       <el-button type="text">选择商品</el-button>
       <div class="searchBox">
         <span>
           <label>商品编码</label>
-          <el-input
-            v-model.trim="proQuery.commodity_code"
-            clearable
-            placeholder="请输入商品编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.commodity_code" clearable placeholder="请输入商品编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>子件编码</label>
-          <el-input
-            v-model.trim="proQuery.component_code"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>商品类别</label>
-          <el-select
-            v-model="proQuery.shops_id"
-            clearable
-            placeholder="请选择商品类别"
-            @keyup.enter.native="proQueryClick"
-          >
-            <el-option
-              v-for="item in resData.shops"
-              :key="item.value"
-              :label="item.nick"
-              :value="item.id"
-            ></el-option>
+          <el-select v-model="proQuery.shops_id" clearable placeholder="请选择商品类别" @keyup.enter.native="proQueryClick">
+            <el-option v-for="item in resData.shops" :key="item.value" :label="item.nick" :value="item.id"></el-option>
           </el-select>
         </span>
         <span>
           <label>商品简称</label>
-          <el-input
-            v-model.trim="proQuery.short_name"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.short_name" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>组合筛选</label>
-          <el-input
-            v-model.trim="proQuery.component_code"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>成品筛选</label>
-          <el-input
-            v-model.trim="proQuery.component_code"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <el-button type="primary" @click="proQueryClick">查询</el-button>
       </div>
       <el-table :data="proVal" fit height="250" @row-click="proRowClick">
-        <el-table-column
-          v-for="item in proHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+        <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop">
               <span v-if="item.type=='img'">
@@ -772,51 +451,24 @@
         </el-table-column>
       </el-table>
       <el-button type="text">sku信息</el-button>
-      <el-table
-        :data="proSkuVal"
-        fit
-        height="230"
-        :row-class-name="proSkuCName"
-        @row-click="proSkuRowClick"
-      >
-        <el-table-column
-          v-for="item in proSkuHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
+        <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="proCompRowIndex == 'index'+scope.$index">
                 <span v-if="item.type=='number'">
                   <span v-if="item.inProp=='quantity'">
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                      @input="quantityChg"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="quantityChg"></el-input>
                   </span>
                   <span v-else>
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                   </span>
                 </span>
                 <span v-else-if="item.type=='checkbox'">
                   <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
                 </span>
                 <span v-else>
-                  <el-input
-                    size="small"
-                    v-model.trim="scope.row[item.prop][item.inProp]"
-                    :placeholder="item.holder"
-                  ></el-input>
+                  <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                 </span>
               </span>
               <span v-else>
@@ -843,13 +495,7 @@
         <el-table-column type="expand" fixed="left">
           <template slot-scope="scope">
             <el-table :data="scope.row['productComp']" fit>
-              <el-table-column
-                v-for="item in proCompHead"
-                :label="item.label"
-                align="center"
-                :width="item.width"
-                :key="item.label"
-              >
+              <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.prop">
                     <span v-if="item.type=='checkbox'">
@@ -858,16 +504,10 @@
                     <span v-else-if="item.type=='img'">
                       <el-popover placement="right" trigger="hover" popper-class="picture_detail">
                         <img :src="scope.row[item.prop]">
-                        <img
-                          slot="reference"
-                          :src="scope.row[item.prop]"
-                          :alt="scope.row[item.alt]"
-                        >
+                        <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                       </el-popover>
                     </span>
-                    <span
-                      v-else
-                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                    <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                   </span>
                 </template>
               </el-table-column>
@@ -881,135 +521,64 @@
       </div>
     </el-dialog>
 
-    <!---修改---->
-    <el-dialog
-      title="变更订单修改"
-      :visible.sync="updateOrderChangesMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-      class="bigDialog"
-    >
+    <!--修改-->
+    <el-dialog title="变更订单修改" :visible.sync="updateOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <el-button type="text">基础信息</el-button>
-      <el-form
-        :model="addChangeOrderFormVal"
-        :rules="addChangeOrderFormRules"
-        class="addChangeOrderForm"
-        id="form"
-      >
-        <el-form-item
-          v-for="(item,index) in addChangeOrderFormHead"
-          :key="index"
-          :label="item.label"
-          :prop="item.prop"
-        >
+      <el-form :model="addChangeOrderFormVal" :rules="addChangeOrderFormRules" class="addChangeOrderForm" id="form">
+        <el-form-item v-for="(item,index) in addChangeOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">
-              <el-input
-                v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
             <span v-else>
-              <el-input
-                v-model.trim="addChangeOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='number'">
-            <span
-              v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'"
-            >
-              <el-input
-                type="number"
-                v-model.trim="addChangeOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-                @input="formChg"
-              ></el-input>
+            <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+              <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
             </span>
             <span v-else>
-              <el-input
-                type="number"
-                v-model.trim="addChangeOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='select'">
-            <el-select
-              v-model="addChangeOrderFormVal[item.prop]"
-              :placeholder="item.holder"
-              :disabled="item.addChgAble"
-            >
+            <el-select v-model="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
               <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
           </span>
           <span v-else-if="item.type=='textarea'">
-            <el-input
-              type="textarea"
-              v-model.trim="addChangeOrderFormVal[item.prop]"
-              :placehode="item.holder"
-            ></el-input>
+            <el-input type="textarea" v-model.trim="addChangeOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
           </span>
           <span v-else-if="item.type=='checkbox'">
             <el-checkbox v-model="addChangeOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
           </span>
           <span v-else-if="item.type=='radio'">
-            <el-radio
-              v-model="addChangeOrderFormVal[item.prop]"
-              label="volume"
-            >{{item.choiceName[0]}}</el-radio>
-            <el-radio
-              v-model="addChangeOrderFormVal[item.prop]"
-              label="weight"
-            >{{item.choiceName[1]}}</el-radio>
+            <el-radio v-model="addChangeOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+            <el-radio v-model="addChangeOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker
-              v-model="addChangeOrderFormVal[item.prop]"
-              type="date"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              placeholder="选择日期"
-            ></el-date-picker>
+            <el-date-picker v-model="addChangeOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
           </span>
         </el-form-item>
       </el-form>
       <el-tabs v-model="addTabActiveName">
         <el-tab-pane label="产品明细" name="0">
           <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-            <el-table-column
-              v-for="item in addHead[0]"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-              :key="item.label"
-            >
+            <el-table-column v-for="item in addHead[0]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='newData'">
                   <span v-if="proRIndex == 'index'+scope.$index">
                     <span v-if="item.type=='number'">
-                      <el-input
-                        size="small"
-                        type="number"
-                        v-model.trim="scope.row[item.prop][item.inProp]"
-                        :placeholder="item.holder"
-                      ></el-input>
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                     </span>
                     <span v-else-if="item.type == 'checkbox'">
                       <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
                     </span>
                     <span v-else>
-                      <el-input
-                        size="small"
-                        v-model.trim="scope.row[item.prop][item.inProp]"
-                        :placeholder="item.holder"
-                      ></el-input>
+                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                     </span>
                   </span>
                   <span v-else>
@@ -1029,44 +598,26 @@
                       <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                     </el-popover>
                   </span>
-                  <span
-                    v-else
-                  >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                 </span>
               </template>
             </el-table-column>
             <el-table-column type="expand" fixed="left">
               <template slot-scope="scope">
                 <el-table :data="scope.row['productComp']" fit>
-                  <el-table-column
-                    v-for="item in proCompHead"
-                    :label="item.label"
-                    align="center"
-                    :width="item.width"
-                    :key="item.label"
-                  >
+                  <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                     <template slot-scope="scope">
                       <span v-if="item.prop">
                         <span v-if="item.type=='checkbox'">
                           <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
                         </span>
                         <span v-else-if="item.type=='img'">
-                          <el-popover
-                            placement="right"
-                            trigger="hover"
-                            popper-class="picture_detail"
-                          >
+                          <el-popover placement="right" trigger="hover" popper-class="picture_detail">
                             <img :src="scope.row[item.prop]">
-                            <img
-                              slot="reference"
-                              :src="scope.row[item.prop]"
-                              :alt="scope.row[item.alt]"
-                            >
+                            <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                           </el-popover>
                         </span>
-                        <span
-                          v-else
-                        >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                        <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                       </span>
                     </template>
                   </el-table-column>
@@ -1082,106 +633,49 @@
         </el-tab-pane>
         <el-tab-pane label="订单信息">
           <el-form :model="addChangeOrderFormVal">
-            <el-form-item
-              v-for="(item,index) in addDialogOrderDtlFormHead"
-              :key="index"
-              :label="item.label"
-              :prop="item.prop"
-            >
+            <el-form-item v-for="(item,index) in addDialogOrderDtlFormHead" :key="index" :label="item.label" :prop="item.prop">
               <span v-if="item.type=='number'">
-                <span
-                  v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'"
-                >
-                  <el-input
-                    type="number"
-                    v-model.trim="addChangeOrderFormVal[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                    @input="formChg"
-                  ></el-input>
+                <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+                  <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
                 </span>
                 <span v-else-if="item.type=='number'">
-                  <el-input
-                    type="number"
-                    v-model.trim="addChangeOrderFormVal[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input type="number" v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
               <span v-else-if="item.type=='select'">
-                <el-select
-                  v-model="addChangeOrderFormVal[item.prop]"
-                  :placeholder="item.holder"
-                  :disabled="item.addChgAble"
-                >
+                <el-select v-model="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
                   <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                     <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
                   </span>
                 </el-select>
               </span>
               <span v-else-if="item.type=='textarea'">
-                <el-input
-                  type="textarea"
-                  v-model.trim="addChangeOrderFormVal[item.prop]"
-                  :placehode="item.holder"
-                ></el-input>
+                <el-input type="textarea" v-model.trim="addChangeOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="addChangeOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
               </span>
               <span v-else-if="item.type=='radio'">
-                <el-radio
-                  v-model="addChangeOrderFormVal[item.prop]"
-                  label="volume"
-                >{{item.choiceName[0]}}</el-radio>
-                <el-radio
-                  v-model="addChangeOrderFormVal[item.prop]"
-                  label="weight"
-                >{{item.choiceName[1]}}</el-radio>
+                <el-radio v-model="addChangeOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="addChangeOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
               </span>
               <span v-else-if="item.type=='DatePicker'">
-                <el-date-picker
-                  v-model="addChangeOrderFormVal[item.prop]"
-                  type="date"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期"
-                ></el-date-picker>
+                <el-date-picker v-model="addChangeOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
               </span>
               <span v-if="item.type=='text'">
                 <span v-if="item.inProp">
-                  <el-input
-                    v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input v-model.trim="addChangeOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
                 <span v-else>
-                  <el-input
-                    v-model.trim="addChangeOrderFormVal[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input v-model.trim="addChangeOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="费用类型" name="2">
-          <el-table
-            :data="expenseData"
-            fit
-            @row-click="addExpenseRClick"
-            :row-class-name="addExpenseRCName"
-          >
-            <el-table-column
-              v-for="item in expenseHead"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-              :key="item.label"
-            >
+          <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+            <el-table-column v-for="item in expenseHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="expenseRIndex == 'index'+scope.$index">
                   <span v-if="item.type=='select'">
@@ -1192,12 +686,7 @@
                     </el-select>
                   </span>
                   <span v-else>
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop]"
-                      :placeholder="item.holder"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
                   </span>
                 </span>
                 <span v-else>
@@ -1234,20 +723,8 @@
     <!-- 选择订单 -->
     <el-dialog title="选择订单" :visible.sync="chooseOrderMask" :class="{'more-forms':moreForms}">
       <el-button type="text">订单列表</el-button>
-      <el-table
-        :data="chooseOrderData"
-        fit
-        height="180"
-        :row-class-name="addOrderRowCName"
-        @row-click="chooseOrderRowClick"
-      >
-        <el-table-column
-          v-for="item in chooseOrderHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="chooseOrderData" fit height="180" :row-class-name="addOrderRowCName" @row-click="chooseOrderRowClick">
+        <el-table-column v-for="item in chooseOrderHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.type=='img'">
               <el-popover placement="right" trigger="hover" popper-class="picture_detail">
@@ -1261,17 +738,9 @@
       </el-table>
       <el-button type="text">订单明细</el-button>
       <el-table :data="chooseOrderProListData" fit height="180">
-        <el-table-column
-          v-for="item in chooseOrderProListHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+        <el-table-column v-for="item in chooseOrderProListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
-            <span
-              v-if="scope.row[item.prop]"
-            >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+            <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -1287,84 +756,39 @@
     </el-dialog>
 
     <!--商品明细-->
-    <el-dialog
-      title="商品明细"
-      :visible.sync="proMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-    >
+    <el-dialog title="商品明细" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
       <el-button type="text">选择商品</el-button>
       <div class="searchBox">
         <span>
           <label>商品编码</label>
-          <el-input
-            v-model.trim="proQuery.commodity_code"
-            clearable
-            placeholder="请输入商品编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.commodity_code" clearable placeholder="请输入商品编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>子件编码</label>
-          <el-input
-            v-model.trim="proQuery.component_code"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>商品类别</label>
-          <el-select
-            v-model="proQuery.shops_id"
-            clearable
-            placeholder="请选择商品类别"
-            @keyup.enter.native="proQueryClick"
-          >
-            <el-option
-              v-for="item in resData.shops"
-              :key="item.value"
-              :label="item.nick"
-              :value="item.id"
-            ></el-option>
+          <el-select v-model="proQuery.shops_id" clearable placeholder="请选择商品类别" @keyup.enter.native="proQueryClick">
+            <el-option v-for="item in resData.shops" :key="item.value" :label="item.nick" :value="item.id"></el-option>
           </el-select>
         </span>
         <span>
           <label>商品简称</label>
-          <el-input
-            v-model.trim="proQuery.short_name"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.short_name" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>组合筛选</label>
-          <el-input
-            v-model.trim="proQuery.component_code"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>成品筛选</label>
-          <el-input
-            v-model.trim="proQuery.component_code"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <el-button type="primary" @click="proQueryClick">查询</el-button>
       </div>
       <el-table :data="proVal" fit height="250" @row-click="proRowClick">
-        <el-table-column
-          v-for="item in proHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+        <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop">
               <span v-if="item.type=='img'">
@@ -1379,51 +803,24 @@
         </el-table-column>
       </el-table>
       <el-button type="text">sku信息</el-button>
-      <el-table
-        :data="proSkuVal"
-        fit
-        height="230"
-        :row-class-name="proSkuCName"
-        @row-click="proSkuRowClick"
-      >
-        <el-table-column
-          v-for="item in proSkuHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
+        <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="proCompRowIndex == 'index'+scope.$index">
                 <span v-if="item.type=='number'">
                   <span v-if="item.inProp=='quantity'">
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                      @input="quantityChg"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="quantityChg"></el-input>
                   </span>
                   <span v-else>
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                   </span>
                 </span>
                 <span v-else-if="item.type=='checkbox'">
                   <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
                 </span>
                 <span v-else>
-                  <el-input
-                    size="small"
-                    v-model.trim="scope.row[item.prop][item.inProp]"
-                    :placeholder="item.holder"
-                  ></el-input>
+                  <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                 </span>
               </span>
               <span v-else>
@@ -1450,13 +847,7 @@
         <el-table-column type="expand" fixed="left">
           <template slot-scope="scope">
             <el-table :data="scope.row['productComp']" fit>
-              <el-table-column
-                v-for="item in proCompHead"
-                :label="item.label"
-                align="center"
-                :width="item.width"
-                :key="item.label"
-              >
+              <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.prop">
                     <span v-if="item.type=='checkbox'">
@@ -1465,16 +856,10 @@
                     <span v-else-if="item.type=='img'">
                       <el-popover placement="right" trigger="hover" popper-class="picture_detail">
                         <img :src="scope.row[item.prop]">
-                        <img
-                          slot="reference"
-                          :src="scope.row[item.prop]"
-                          :alt="scope.row[item.alt]"
-                        >
+                        <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                       </el-popover>
                     </span>
-                    <span
-                      v-else
-                    >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                    <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                   </span>
                 </template>
               </el-table-column>
@@ -1504,7 +889,8 @@ export default {
           cnt: "增加",
           icon: "bf-add",
           ent: this.addChanges,
-          ref: "add"
+          ref: "add",
+          nClick: false
         },
         {
           cnt: "修改",
@@ -1545,7 +931,8 @@ export default {
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.refresh
+          ent: this.refresh,
+          nClick: false
         }
       ],
       addTabActiveName: "0",
@@ -2104,12 +1491,8 @@ export default {
       addCustomerFormRules: {
         //新建订单的要求格式
         shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
-        logistics_id: [
-          { required: true, message: " 物流必选", trigger: "blur" }
-        ],
-        billing_way: [
-          { required: true, message: "计费方式必选", trigger: "blur" }
-        ],
+        logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
+        billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
         freight_types_id: [
           { required: true, message: "运费类型必选", trigger: "blur" }
         ],
@@ -2125,9 +1508,7 @@ export default {
         payment_methods_id: [
           { required: true, message: "付款方式必选", trigger: "blur" }
         ],
-        warehouses_id: [
-          { required: true, message: "发货仓库必选", trigger: "blur" }
-        ]
+        warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
       },
 
       addChangeOrderFormHead: [
@@ -3524,33 +2905,47 @@ export default {
       }
     },
     orderListRClick(row) {
-      console.log("orderListRClic");
-      /**if (row["locker_id"] == 0) {
-        this.newOpt[1].nClick = true;
-        this.newOpt[2].nClick = true;
+      console.log("orderListRClick");
+      if (row["change_status"] == 10) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = true;
-        this.newOpt[8].nClick = true;
-        this.newOpt[9].nClick = true;
-        this.newOpt[14].nClick = true;
-        if (row["order_status"] == "已客审") {
-          this.newOpt[5].nClick = true;
-          this.newOpt[6].nClick = false;
-        } else {
-          this.newOpt[5].nClick = false;
-          this.newOpt[6].nClick = true;
-        }
-      } else {
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
+      if (row["change_status"] == 20) {
+        this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = false;
         this.newOpt[3].nClick = true;
         this.newOpt[4].nClick = false;
         this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
+      if (row["change_status"] == 30) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
         this.newOpt[6].nClick = true;
-        this.newOpt[8].nClick = false;
-        this.newOpt[9].nClick = false;
-        this.newOpt[14].nClick = false;
-      }**/
+        this.newOpt[7].nClick = false;
+      }
+      if (row["status"] == 0) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
       this.curRowId = row.id;
       this.curRowData = row;
     },
@@ -3785,6 +3180,7 @@ export default {
             "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
         }).then(
           res => {
+            /*请求选中的数据并拼接用于patch Order的submit*/
             this.addChangeOrderFormVal.orders_id = res["id"];
             let submitData = {
               system_order_no: res["system_order_no"],
@@ -3880,6 +3276,7 @@ export default {
               order_items: [],
               payment_details: []
             };
+            /** 对orderItems进行处理*/
             if (res["orderItems"]["data"].length > 0) {
               res["orderItems"]["data"].map(item => {
                 this.addChangeOrderProIds.push(item["combination"].id);
@@ -3901,67 +3298,29 @@ export default {
                 });
               });
             }
-
             this.proData = res["orderItems"]["data"];
-            this.chooseOrderProListData = res["orderItems"]["data"];
             this.expenseData = res["paymentDetails"]["data"];
-            this.updateProData.map(item => {
-              if (item.combinations_id) {
-                let proD = {
-                  id: item.id,
-                  products_id: item.products_id,
-                  combinations_id: item.combinations_id,
-                  quantity: item["newData"].quantity,
-                  total_volume: item["newData"].total_volume,
-                  paint: item["newData"].paint,
-                  is_printing: item["newData"].is_printing,
-                  printing_fee: item["newData"].printing_fee,
-                  is_spot_goods: item["newData"].is_spot_goods,
-                  under_line_univalent: item["newData"].under_line_univalent,
-                  under_line_total_amount:
-                    item["newData"].under_line_total_amount,
-                  under_line_preferential:
-                    item["newData"].under_line_preferential
-                };
-                submitData.order_items.push(proD);
-              } else if (item["originalId"]) {
-                let proD = {
-                  id: item["originalId"],
-                  products_id: item.pid,
-                  combinations_id: item.id,
-                  quantity: item["newData"].quantity,
-                  total_volume: item["newData"].total_volume,
-                  paint: item["newData"].paint,
-                  is_printing: item["newData"].is_printing,
-                  printing_fee: item["newData"].printing_fee,
-                  is_spot_goods: item["newData"].is_spot_goods,
-                  under_line_univalent: item["newData"].under_line_univalent,
-                  under_line_total_amount:
-                    item["newData"].under_line_total_amount,
-                  under_line_preferential:
-                    item["newData"].under_line_preferential
-                };
-                submitData.order_items.push(proD);
-              } else {
-                let proD = {
-                  products_id: item.pid,
-                  combinations_id: item.id,
-                  quantity: item["newData"].quantity,
-                  total_volume: item["newData"].total_volume,
-                  paint: item["newData"].paint,
-                  is_printing: item["newData"].is_printing,
-                  printing_fee: item["newData"].printing_fee,
-                  is_spot_goods: item["newData"].is_spot_goods,
-                  under_line_univalent: item["newData"].under_line_univalent,
-                  under_line_total_amount:
-                    item["newData"].under_line_total_amount,
-                  under_line_preferential:
-                    item["newData"].under_line_preferential
-                };
-                submitData.order_items.push(proD);
-              }
+            /**将proData数据加入到submitData里 */
+            this.proData.map(item => {
+              let proD = {
+                id: item.id,
+                products_id: item.products_id,
+                combinations_id: item.combinations_id,
+                quantity: item["newData"].quantity,
+                total_volume: item["newData"].total_volume,
+                paint: item["newData"].paint,
+                is_printing: item["newData"].is_printing,
+                printing_fee: item["newData"].printing_fee,
+                is_spot_goods: item["newData"].is_spot_goods,
+                under_line_univalent: item["newData"].under_line_univalent,
+                under_line_total_amount:
+                  item["newData"].under_line_total_amount,
+                under_line_preferential: item["newData"].under_line_preferential
+              };
+              this.submitData.order_items.push(proD);
             });
-            this.updateExpenseData.map(list => {
+            /**将expenseData加入到submitData里*/
+            this.expenseData.map(list => {
               if (list.id) {
                 let expenseD = {
                   id: list.id,
@@ -3990,7 +3349,12 @@ export default {
           }
         );
       }
-      this.$put(this.urls.changeorders + "/" + id + "/audit").then(
+      this.$patch(
+        this.urls.customerservicedepts +
+          "/" +
+          this.addChangeOrderFormVal.orders_id,
+        submitData
+      ).then(
         () => {
           this.refresh();
           this.$message({
@@ -4010,23 +3374,228 @@ export default {
           }
         }
       );
-    }
-  },
-  handleUnAudit() {
-    if (this.newOpt[6].nClick) {
-      return;
-    } else {
-      let id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.changeorders + "/" + id + "/unaudit").then(
+    },
+    handleUnAudit() {
+      if (this.newOpt[6].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.changeorders + "/" + id + "/unaudit").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "退回提交成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    addProDtl() {
+      this.proMask = true;
+      Object.assign(this.proQuery, this.$options.data().proQuery);
+      this.proVal = [];
+      this.proSkuVal = [];
+      this.proIds = [];
+    },
+    formChg() {
+      let formVal;
+      if (this.addOrderChangesMask) {
+        formVal = this.addCustomerFormVal;
+      } else {
+        formVal = this.updateCustomerFormVal;
+      }
+      formVal["total_distribution_fee"] =
+        formVal["deliver_goods_fee"] -
+        0 +
+        (formVal["move_upstairs_fee"] - 0) +
+        (formVal["installation_fee"] - 0);
+      if (this.addOrderChangesMask) {
+        this.addCustomerFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
+      } else {
+        this.updateCustomerFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
+      }
+    },
+    addChangeOrderCancel() {
+      this.addOrderChangesMask = false;
+    },
+    updateChangeOrderCancel() {
+      this.updateOrderChangesMask = false;
+    },
+    //批量删除操作
+    handleSelectionChange(val) {
+      console.log(val);
+      //拿到当前id集合
+      let delArr = [];
+      val.forEach(seletedIem => {
+        delArr.push(selecteItem.id);
+      });
+      console.log(+delArr);
+      this.ids = delArr.join(",");
+      console.log(delArr);
+      //拿到当前id
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
+    },
+    chooseOrderConfirm() {
+      this.chooseOrderMask = false;
+      this.$message({
+        message: "选择订单成功",
+        type: "success"
+      });
+    },
+    addChangeOrdersConfirm() {
+      let tempData = this.addChangeOrderFormVal;
+      this.proData.map(item => {
+        let proD = {
+          id: item.id,
+          products_id: item.products_id,
+          combinations_id: item.combinations_id,
+          quantity: item["newData"].quantity,
+          total_volume: item["newData"].total_volume,
+          paint: item["newData"].paint,
+          is_printing: item["newData"].is_printing,
+          printing_fee: item["newData"].printing_fee,
+          is_spot_goods: item["newData"].is_spot_goods,
+          under_line_univalent: item["newData"].under_line_univalent,
+          under_line_total_amount: item["newData"].under_line_total_amount,
+          under_line_preferential: item["newData"].under_line_preferential
+        };
+        this.addChangeOrderFormVal.order_items.push(proD);
+      });
+      this.expenseData.map(list => {
+        let expenseD = {
+          payment: list.payment,
+          payment_methods_id: list.payment_methods_id
+        };
+        this.addChangeOrderFormVal.payment_details.push(expenseD);
+      });
+      this.$post(this.urls.changeorders, this.addChangeOrderFormVal).then(
         () => {
+          this.addOrderChangesMask = false;
           this.refresh();
           this.$message({
-            message: "退回提交成功",
+            message: "添加成功",
             type: "success"
           });
+          this.addChangeOrderFormVal = {
+            change_order_no: "",
+            cancel_order_no: "",
+            is_canceled: false,
+            change_remark: "",
+            change_status: 10,
+            orders_id: 0,
+            //-----变更订单与原始order分界线--------
+            system_order_no: "",
+            shops_id: 0,
+            shops_name: "",
+            logistics_id: 0,
+            logistics_sn: "",
+            billing_way: "",
+            promise_ship_time: null,
+            freight_types_id: 0,
+            expected_freight: 0,
+            actual_freight: 0,
+            logistics_remark: "",
+            is_logistics_checked: false,
+            logistics_check_remark: "",
+            logistics_checked_at: null,
+            distributions_id: 0,
+            distribution_methods_id: 0,
+            deliver_goods_fee: 0,
+            move_upstairs_fee: 0,
+            installation_fee: 0,
+            total_distribution_fee: 0,
+            distribution_phone: "",
+            distribution_no: "",
+            distribution_types_id: 0,
+            is_distribution_checked: false,
+            distribution_check_remark: "",
+            distribution_checked_at: null,
+            service_car_fee: 0,
+            service_car_info: "",
+            take_delivery_goods_fee: 0,
+            take_delivery_goods_ways_id: 0,
+            express_fee: 0,
+            cancel_after_verification_code: "",
+            wooden_frame_costs: 0,
+            preferential_cashback: 0,
+            favorable_cashback: 0,
+            customer_types_id: 0,
+            is_invoice: false,
+            invoice_express_fee: 0,
+            express_invoice_title: "",
+            contract_no: "",
+            payment_methods_id: 0,
+            deposit: 0,
+            document_title: "",
+            warehouses_id: 0,
+            payment_date: null,
+            interest_concessions: 0,
+            is_notice: false,
+            is_cancel_after_verification: false,
+            accept_order_user: "",
+            tax_number: "",
+            receipt: "",
+            buyer_message: "",
+            seller_remark: "",
+            customer_service_remark: "",
+            stockout_remark: "",
+            taobao_oid: 0,
+            taobao_tid: 0,
+            member_nick: "",
+            seller_name: "",
+            seller_flag: "",
+            created: null,
+            est_con_time: null,
+            receiver_name: "",
+            receiver_phone: "",
+            receiver_mobile: "",
+            receiver_state: "",
+            receiver_city: "",
+            receiver_district: "",
+            receiver_address: "",
+            receiver_zip: "",
+            refund_info: "",
+            business_personnel_id: 0,
+            locker_id: 0,
+            locked_at: null,
+            auditor_id: 0,
+            audit_at: null,
+            cs_auditor_id: 0,
+            cs_audited_at: null,
+            fd_auditor_id: 0,
+            fd_audited_at: null,
+            ca_auditor_id: 0,
+            ca_audited_at: null,
+            stockout_op_id: 0,
+            stockout_at: null,
+            association_taobao_oid: 0,
+            is_merge: false,
+            is_split: false,
+            is_association: false,
+            status: true,
+            order_items: [],
+            payment_details: []
+          };
         },
         err => {
           if (err.response) {
+            this.showDel = false;
             let arr = err.response.data.errors;
             let arr1 = [];
             for (let i in arr) {
@@ -4037,371 +3606,166 @@ export default {
           }
         }
       );
-    }
-  },
-  addProDtl() {
-    this.proMask = true;
-    Object.assign(this.proQuery, this.$options.data().proQuery);
-    this.proVal = [];
-    this.proSkuVal = [];
-    this.proIds = [];
-  },
-  formChg() {
-    let formVal;
-    if (this.addOrderChangesMask) {
-      formVal = this.addCustomerFormVal;
-    } else {
-      formVal = this.updateCustomerFormVal;
-    }
-    formVal["total_distribution_fee"] =
-      formVal["deliver_goods_fee"] -
-      0 +
-      (formVal["move_upstairs_fee"] - 0) +
-      (formVal["installation_fee"] - 0);
-    if (this.addOrderChangesMask) {
-      this.addCustomerFormVal.total_distribution_fee =
-        formVal["total_distribution_fee"];
-    } else {
-      this.updateCustomerFormVal.total_distribution_fee =
-        formVal["total_distribution_fee"];
-    }
-  },
-  addChangeOrderCancel() {
-    this.addOrderChangesMask = false;
-  },
-  updateChangeOrderCancel() {
-    this.updateOrderChangesMask = false;
-  },
-  //批量删除操作
-  handleSelectionChange(val) {
-    console.log(val);
-    //拿到当前id集合
-    let delArr = [];
-    val.forEach(seletedIem => {
-      delArr.push(selecteItem.id);
-    });
-    console.log(+delArr);
-    this.ids = delArr.join(",");
-    console.log(delArr);
-    //拿到当前id
-    this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-    this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-    this.mergerIds = val;
-  },
-  chooseOrderConfirm() {
-    this.chooseOrderMask = false;
-    this.$message({
-      message: "选择订单成功",
-      type: "success"
-    });
-  },
-  addChangeOrdersConfirm() {
-    let tempData = this.addChangeOrderFormVal;
-    this.proData.map(item => {
-      let proD = {
-        id: item.id,
-        products_id: item.products_id,
-        combinations_id: item.combinations_id,
-        quantity: item["newData"].quantity,
-        total_volume: item["newData"].total_volume,
-        paint: item["newData"].paint,
-        is_printing: item["newData"].is_printing,
-        printing_fee: item["newData"].printing_fee,
-        is_spot_goods: item["newData"].is_spot_goods,
-        under_line_univalent: item["newData"].under_line_univalent,
-        under_line_total_amount: item["newData"].under_line_total_amount,
-        under_line_preferential: item["newData"].under_line_preferential
-      };
-      this.addChangeOrderFormVal.order_items.push(proD);
-    });
-    this.expenseData.map(list => {
-      let expenseD = {
-        payment: list.payment,
-        payment_methods_id: list.payment_methods_id
-      };
-      this.addChangeOrderFormVal.payment_details.push(expenseD);
-    });
-    this.$post(this.urls.changeorders, this.addChangeOrderFormVal).then(
-      () => {
-        this.addOrderChangesMask = false;
-        this.refresh();
-        this.$message({
-          message: "添加成功",
-          type: "success"
-        });
-        this.addChangeOrderFormVal = {
-          change_order_no: "",
-          cancel_order_no: "",
-          is_canceled: false,
-          change_remark: "",
-          change_status: 10,
-          orders_id: 0,
-          //-----变更订单与原始order分界线--------
-          system_order_no: "",
-          shops_id: 0,
-          shops_name: "",
-          logistics_id: 0,
-          logistics_sn: "",
-          billing_way: "",
-          promise_ship_time: null,
-          freight_types_id: 0,
-          expected_freight: 0,
-          actual_freight: 0,
-          logistics_remark: "",
-          is_logistics_checked: false,
-          logistics_check_remark: "",
-          logistics_checked_at: null,
-          distributions_id: 0,
-          distribution_methods_id: 0,
-          deliver_goods_fee: 0,
-          move_upstairs_fee: 0,
-          installation_fee: 0,
-          total_distribution_fee: 0,
-          distribution_phone: "",
-          distribution_no: "",
-          distribution_types_id: 0,
-          is_distribution_checked: false,
-          distribution_check_remark: "",
-          distribution_checked_at: null,
-          service_car_fee: 0,
-          service_car_info: "",
-          take_delivery_goods_fee: 0,
-          take_delivery_goods_ways_id: 0,
-          express_fee: 0,
-          cancel_after_verification_code: "",
-          wooden_frame_costs: 0,
-          preferential_cashback: 0,
-          favorable_cashback: 0,
-          customer_types_id: 0,
-          is_invoice: false,
-          invoice_express_fee: 0,
-          express_invoice_title: "",
-          contract_no: "",
-          payment_methods_id: 0,
-          deposit: 0,
-          document_title: "",
-          warehouses_id: 0,
-          payment_date: null,
-          interest_concessions: 0,
-          is_notice: false,
-          is_cancel_after_verification: false,
-          accept_order_user: "",
-          tax_number: "",
-          receipt: "",
-          buyer_message: "",
-          seller_remark: "",
-          customer_service_remark: "",
-          stockout_remark: "",
-          taobao_oid: 0,
-          taobao_tid: 0,
-          member_nick: "",
-          seller_name: "",
-          seller_flag: "",
-          created: null,
-          est_con_time: null,
-          receiver_name: "",
-          receiver_phone: "",
-          receiver_mobile: "",
-          receiver_state: "",
-          receiver_city: "",
-          receiver_district: "",
-          receiver_address: "",
-          receiver_zip: "",
-          refund_info: "",
-          business_personnel_id: 0,
-          locker_id: 0,
-          locked_at: null,
-          auditor_id: 0,
-          audit_at: null,
-          cs_auditor_id: 0,
-          cs_audited_at: null,
-          fd_auditor_id: 0,
-          fd_audited_at: null,
-          ca_auditor_id: 0,
-          ca_audited_at: null,
-          stockout_op_id: 0,
-          stockout_at: null,
-          association_taobao_oid: 0,
-          is_merge: false,
-          is_split: false,
-          is_association: false,
-          status: true,
-          order_items: [],
-          payment_details: []
+    },
+    updateChangeOrdersConfirm() {
+      let tempData = this.addChangeOrderFormVal;
+      this.proData.map(item => {
+        let proD = {
+          id: item.id,
+          products_id: item.products_id,
+          combinations_id: item.combinations_id,
+          quantity: item["newData"].quantity,
+          total_volume: item["newData"].total_volume,
+          paint: item["newData"].paint,
+          is_printing: item["newData"].is_printing,
+          printing_fee: item["newData"].printing_fee,
+          is_spot_goods: item["newData"].is_spot_goods,
+          under_line_univalent: item["newData"].under_line_univalent,
+          under_line_total_amount: item["newData"].under_line_total_amount,
+          under_line_preferential: item["newData"].under_line_preferential
         };
-      },
-      err => {
-        if (err.response) {
-          this.showDel = false;
-          let arr = err.response.data.errors;
-          let arr1 = [];
-          for (let i in arr) {
-            arr1.push(arr[i]);
-          }
-          let str = arr1.join(",");
-          this.$message.error(str);
-        }
-      }
-    );
-  },
-  updateChangeOrdersConfirm() {
-    let tempData = this.addChangeOrderFormVal;
-    this.proData.map(item => {
-      let proD = {
-        id: item.id,
-        products_id: item.products_id,
-        combinations_id: item.combinations_id,
-        quantity: item["newData"].quantity,
-        total_volume: item["newData"].total_volume,
-        paint: item["newData"].paint,
-        is_printing: item["newData"].is_printing,
-        printing_fee: item["newData"].printing_fee,
-        is_spot_goods: item["newData"].is_spot_goods,
-        under_line_univalent: item["newData"].under_line_univalent,
-        under_line_total_amount: item["newData"].under_line_total_amount,
-        under_line_preferential: item["newData"].under_line_preferential
-      };
-      this.addChangeOrderFormVal.order_items.push(proD);
-    });
-    this.expenseData.map(list => {
-      let expenseD = {
-        payment: list.payment,
-        payment_methods_id: list.payment_methods_id
-      };
-      this.addChangeOrderFormVal.payment_details.push(expenseD);
-    });
-    this.$patch(this.urls.changeorders, this.addChangeOrderFormVal).then(
-      () => {
-        this.addOrderChangesMask = false;
-        this.refresh();
-        this.$message({
-          message: "添加成功",
-          type: "success"
-        });
-        this.addChangeOrderFormVal = {
-          change_order_no: "",
-          cancel_order_no: "",
-          is_canceled: false,
-          change_remark: "",
-          change_status: 10,
-          orders_id: 0,
-          //-----变更订单与原始order分界线--------
-          system_order_no: "",
-          shops_id: 0,
-          shops_name: "",
-          logistics_id: 0,
-          logistics_sn: "",
-          billing_way: "",
-          promise_ship_time: null,
-          freight_types_id: 0,
-          expected_freight: 0,
-          actual_freight: 0,
-          logistics_remark: "",
-          is_logistics_checked: false,
-          logistics_check_remark: "",
-          logistics_checked_at: null,
-          distributions_id: 0,
-          distribution_methods_id: 0,
-          deliver_goods_fee: 0,
-          move_upstairs_fee: 0,
-          installation_fee: 0,
-          total_distribution_fee: 0,
-          distribution_phone: "",
-          distribution_no: "",
-          distribution_types_id: 0,
-          is_distribution_checked: false,
-          distribution_check_remark: "",
-          distribution_checked_at: null,
-          service_car_fee: 0,
-          service_car_info: "",
-          take_delivery_goods_fee: 0,
-          take_delivery_goods_ways_id: 0,
-          express_fee: 0,
-          cancel_after_verification_code: "",
-          wooden_frame_costs: 0,
-          preferential_cashback: 0,
-          favorable_cashback: 0,
-          customer_types_id: 0,
-          is_invoice: false,
-          invoice_express_fee: 0,
-          express_invoice_title: "",
-          contract_no: "",
-          payment_methods_id: 0,
-          deposit: 0,
-          document_title: "",
-          warehouses_id: 0,
-          payment_date: null,
-          interest_concessions: 0,
-          is_notice: false,
-          is_cancel_after_verification: false,
-          accept_order_user: "",
-          tax_number: "",
-          receipt: "",
-          buyer_message: "",
-          seller_remark: "",
-          customer_service_remark: "",
-          stockout_remark: "",
-          taobao_oid: 0,
-          taobao_tid: 0,
-          member_nick: "",
-          seller_name: "",
-          seller_flag: "",
-          created: null,
-          est_con_time: null,
-          receiver_name: "",
-          receiver_phone: "",
-          receiver_mobile: "",
-          receiver_state: "",
-          receiver_city: "",
-          receiver_district: "",
-          receiver_address: "",
-          receiver_zip: "",
-          refund_info: "",
-          business_personnel_id: 0,
-          locker_id: 0,
-          locked_at: null,
-          auditor_id: 0,
-          audit_at: null,
-          cs_auditor_id: 0,
-          cs_audited_at: null,
-          fd_auditor_id: 0,
-          fd_audited_at: null,
-          ca_auditor_id: 0,
-          ca_audited_at: null,
-          stockout_op_id: 0,
-          stockout_at: null,
-          association_taobao_oid: 0,
-          is_merge: false,
-          is_split: false,
-          is_association: false,
-          status: true,
-          order_items: [],
-          payment_details: []
+        this.addChangeOrderFormVal.order_items.push(proD);
+      });
+      this.expenseData.map(list => {
+        let expenseD = {
+          payment: list.payment,
+          payment_methods_id: list.payment_methods_id
         };
-      },
-      err => {
-        if (err.response) {
-          this.showDel = false;
-          let arr = err.response.data.errors;
-          let arr1 = [];
-          for (let i in arr) {
-            arr1.push(arr[i]);
+        this.addChangeOrderFormVal.payment_details.push(expenseD);
+      });
+      this.$patch(this.urls.changeorders, this.addChangeOrderFormVal).then(
+        () => {
+          this.addOrderChangesMask = false;
+          this.refresh();
+          this.$message({
+            message: "添加成功",
+            type: "success"
+          });
+          this.addChangeOrderFormVal = {
+            change_order_no: "",
+            cancel_order_no: "",
+            is_canceled: false,
+            change_remark: "",
+            change_status: 10,
+            orders_id: 0,
+            //-----变更订单与原始order分界线--------
+            system_order_no: "",
+            shops_id: 0,
+            shops_name: "",
+            logistics_id: 0,
+            logistics_sn: "",
+            billing_way: "",
+            promise_ship_time: null,
+            freight_types_id: 0,
+            expected_freight: 0,
+            actual_freight: 0,
+            logistics_remark: "",
+            is_logistics_checked: false,
+            logistics_check_remark: "",
+            logistics_checked_at: null,
+            distributions_id: 0,
+            distribution_methods_id: 0,
+            deliver_goods_fee: 0,
+            move_upstairs_fee: 0,
+            installation_fee: 0,
+            total_distribution_fee: 0,
+            distribution_phone: "",
+            distribution_no: "",
+            distribution_types_id: 0,
+            is_distribution_checked: false,
+            distribution_check_remark: "",
+            distribution_checked_at: null,
+            service_car_fee: 0,
+            service_car_info: "",
+            take_delivery_goods_fee: 0,
+            take_delivery_goods_ways_id: 0,
+            express_fee: 0,
+            cancel_after_verification_code: "",
+            wooden_frame_costs: 0,
+            preferential_cashback: 0,
+            favorable_cashback: 0,
+            customer_types_id: 0,
+            is_invoice: false,
+            invoice_express_fee: 0,
+            express_invoice_title: "",
+            contract_no: "",
+            payment_methods_id: 0,
+            deposit: 0,
+            document_title: "",
+            warehouses_id: 0,
+            payment_date: null,
+            interest_concessions: 0,
+            is_notice: false,
+            is_cancel_after_verification: false,
+            accept_order_user: "",
+            tax_number: "",
+            receipt: "",
+            buyer_message: "",
+            seller_remark: "",
+            customer_service_remark: "",
+            stockout_remark: "",
+            taobao_oid: 0,
+            taobao_tid: 0,
+            member_nick: "",
+            seller_name: "",
+            seller_flag: "",
+            created: null,
+            est_con_time: null,
+            receiver_name: "",
+            receiver_phone: "",
+            receiver_mobile: "",
+            receiver_state: "",
+            receiver_city: "",
+            receiver_district: "",
+            receiver_address: "",
+            receiver_zip: "",
+            refund_info: "",
+            business_personnel_id: 0,
+            locker_id: 0,
+            locked_at: null,
+            auditor_id: 0,
+            audit_at: null,
+            cs_auditor_id: 0,
+            cs_audited_at: null,
+            fd_auditor_id: 0,
+            fd_audited_at: null,
+            ca_auditor_id: 0,
+            ca_audited_at: null,
+            stockout_op_id: 0,
+            stockout_at: null,
+            association_taobao_oid: 0,
+            is_merge: false,
+            is_split: false,
+            is_association: false,
+            status: true,
+            order_items: [],
+            payment_details: []
+          };
+        },
+        err => {
+          if (err.response) {
+            this.showDel = false;
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error(str);
           }
-          let str = arr1.join(",");
-          this.$message.error(str);
         }
-      }
-    );
-  },
-  chooseOrderCancel() {
-    this.chooseOrderMask = false;
-    this.$message({
-      message: "取消选择订单",
-      type: "success"
-    });
-  },
-  resets() {
-    this.searchBox = {};
+      );
+    },
+    chooseOrderCancel() {
+      this.chooseOrderMask = false;
+      this.$message({
+        message: "取消选择订单",
+        type: "success"
+      });
+    },
+    resets() {
+      this.searchBox = {};
+    }
   },
   mounted() {
     this.fetchData();

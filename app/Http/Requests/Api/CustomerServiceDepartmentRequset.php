@@ -222,6 +222,8 @@ class CustomerServiceDepartmentRequset extends FormRequest
                 break;
             case 'PATCH':
                 return [
+                    'order_source' => 'numeric',
+                    'order_amount' => 'numeric',
                     'shops_id' => [
                         'integer',
                         Rule::exists('shops', 'id')->where(function ($query) {
@@ -249,6 +251,8 @@ class CustomerServiceDepartmentRequset extends FormRequest
                         }),
                     ],
                     'expected_freight' => 'numeric',
+                    'actual_freight'=> 'numeric',
+                    'logistics_remark'=> 'string',
                     'distributions_id' => [
                         'integer',
                         Rule::exists('distributions', 'id')->where(function ($query) {
@@ -289,9 +293,10 @@ class CustomerServiceDepartmentRequset extends FormRequest
                             $query->where('status', 1);
                         }),
                     ],
+                    'service_car_fee' => 'numeric',
                     'service_car_info' => 'string|max:255',
-                    'take_delivery_goods_fee' => 'numeric',
 
+                    'take_delivery_goods_fee' => 'numeric',
                     'take_delivery_goods_ways_id' => [
                         'integer',
                         Rule::exists('take_delivery_goods_ways', 'id')->where(function ($query) {
@@ -299,7 +304,7 @@ class CustomerServiceDepartmentRequset extends FormRequest
                         }),
                     ],
                     'express_fee' => 'numeric',
-                    'service_car_fee' => 'numeric',
+                    
                     'cancel_after_verification_code' => 'string|max:255',
                     'wooden_frame_costs' => 'numeric',
                     'preferential_cashback' => 'numeric',
@@ -339,7 +344,13 @@ class CustomerServiceDepartmentRequset extends FormRequest
                     'seller_remark' => 'string|max:255',
                     'customer_service_remark' => 'string|max:255',
                     'buyer_message' => 'string|max:255',
+                    'seller_remark'=> 'string',
+                    'customer_service_remark'=> 'string',
+                    'stockout_remark'=> 'string',
                     'status' => 'boolean',
+                    'taobao_oid'=> 'integer',
+                    'taobao_tid'=> 'integer',
+                    'member_nick'=> 'string',
 
                     'receiver_name' => 'string|max:255',
                     'receiver_phone' => 'string|max:255',
