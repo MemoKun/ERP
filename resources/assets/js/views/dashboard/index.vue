@@ -1,11 +1,32 @@
 <template>
-  <div :style="backgroundDiv">
-    <div class="dashboard-container">
-      <h1>欢迎回来！</h1>
+  <div class="login-container" :style="backgroundDiv" height="100%">
+    <div class="dashboard-container" >
+      <h1 >欢迎回来！</h1>
       <p class="dashboard-text">{{name}}</p>
-      <p class="dashboard-text">你的身份是：
-        <span v-for='role in roles' :key='role'>{{role}}</span>
-      </p>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
     </div>
   </div>
 </template>
@@ -20,7 +41,7 @@ export default {
       newOpt: [],
       title: "新增",
       backgroundDiv: {
-        backgroundImage: "url(" + require("../../img/background.jpg") + ")",
+        backgroundImage: "url(" + require("../../img/main.jpg") + ")",
         backgroundRepeat: "no-repeat",
         backgroundSize: "100% 100%"
       },

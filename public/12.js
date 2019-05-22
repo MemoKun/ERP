@@ -12,7 +12,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(552)
 /* template */
-var __vue_template__ = __webpack_require__(553)
+var __vue_template__ = __webpack_require__(554)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -49,13 +49,6 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
-
-/***/ }),
-
-/***/ 537:
-/***/ (function(module, exports) {
-
-module.exports = "/images/background.jpg?84aca450bf621072c8036445581a7d8a";
 
 /***/ }),
 
@@ -121,6 +114,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -131,7 +145,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       newOpt: [],
       title: "新增",
       backgroundDiv: {
-        backgroundImage: "url(" + __webpack_require__(537) + ")",
+        backgroundImage: "url(" + __webpack_require__(553) + ")",
         backgroundRepeat: "no-repeat",
         backgroundSize: "100% 100%"
       },
@@ -194,31 +208,82 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ }),
 
 /***/ 553:
+/***/ (function(module, exports) {
+
+module.exports = "/images/main.jpg?57b9c5bec98e7754cab0e1deda2c7788";
+
+/***/ }),
+
+/***/ 554:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { style: _vm.backgroundDiv }, [
-    _c("div", { staticClass: "dashboard-container" }, [
-      _c("h1", [_vm._v("欢迎回来！")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "dashboard-text" }, [_vm._v(_vm._s(_vm.name))]),
-      _vm._v(" "),
-      _c(
-        "p",
-        { staticClass: "dashboard-text" },
-        [
-          _vm._v("你的身份是：\n      "),
-          _vm._l(_vm.roles, function(role) {
-            return _c("span", { key: role }, [_vm._v(_vm._s(role))])
-          })
-        ],
-        2
-      )
-    ])
-  ])
+  return _c(
+    "div",
+    {
+      staticClass: "login-container",
+      style: _vm.backgroundDiv,
+      attrs: { height: "100%" }
+    },
+    [
+      _c("div", { staticClass: "dashboard-container" }, [
+        _c("h1", [_vm._v("欢迎回来！")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "dashboard-text" }, [_vm._v(_vm._s(_vm.name))]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br")
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

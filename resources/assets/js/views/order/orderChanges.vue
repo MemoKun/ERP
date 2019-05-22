@@ -2553,7 +2553,6 @@ export default {
       this.chooseOrderProListData = [];
       this.proCompRowIndex = "";
       this.addChangeOrderProIds = [];
-
       this.$fetch(
         this.urls.customerservicedepts + "/" + this.chooseOrderRowId,
         {

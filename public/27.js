@@ -6,9 +6,9 @@ webpackJsonp([27],{
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(562)
+var __vue_script__ = __webpack_require__(563)
 /* template */
-var __vue_template__ = __webpack_require__(563)
+var __vue_template__ = __webpack_require__(564)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 562:
+/***/ 563:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2390,7 +2390,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.chooseOrderProListData = [];
       this.proCompRowIndex = "";
       this.addChangeOrderProIds = [];
-
       this.$fetch(this.urls.customerservicedepts + "/" + this.chooseOrderRowId, {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
       }).then(function (res) {
@@ -3495,7 +3494,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ 563:
+/***/ 564:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
