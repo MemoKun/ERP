@@ -6,9 +6,9 @@ webpackJsonp([53],{
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(633)
+var __vue_script__ = __webpack_require__(627)
 /* template */
-var __vue_template__ = __webpack_require__(634)
+var __vue_template__ = __webpack_require__(628)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/printerConf.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/negativeInvConf.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-511fb356", Component.options)
+    hotAPI.createRecord("data-v-f01d7f92", Component.options)
   } else {
-    hotAPI.reload("data-v-511fb356", Component.options)
+    hotAPI.reload("data-v-f01d7f92", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 633:
+/***/ 627:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100,25 +100,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       disHead: [{
-        label: '模块',
-        prop: "model",
-        holder: '模块',
+        label: '负库存配置',
+        prop: "negative_inv",
+        holder: '负库存配置',
         type: 'text'
       }, {
-        label: '打印机',
-        prop: "printer",
-        holder: '打印机',
-        type: 'text'
-      }, {
-        label: '使用人',
+        label: '用户账号',
         prop: "user",
-        holder: '模块',
+        holder: '用户账号',
+        type: 'text'
+      }, {
+        label: '创建人',
+        prop: "creator",
+        holder: '创建人',
         type: 'text'
       }, {
         label: '状态',
         prop: "status",
         holder: '状态',
-        // type: 'select_stu',
         type: 'checkbox',
         doSort: true,
         chgAble: true,
@@ -139,8 +138,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         chgAble: true,
         editChgAble: false
       }],
-      url: ['/printerconf', '/stockintypes'],
-      title: ['新增打印机配置', '新增入库方式'],
+      url: ['/negativeinvconf', '/stockintypes'],
+      title: ['新增负库存配置', '新增入库方式'],
       ruleForm: [{
         name: '',
         status: true
@@ -149,24 +148,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status: true
       }],
       rules: [{
-        name: [{ required: true, message: '请输入打印机配置', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入负库存配置', trigger: 'blur' }]
       }, {
         name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '模块',
-        prop: 'model',
-        holder: '请输入模块',
+        label: '负库存配置',
+        prop: 'negative_inv',
+        holder: '请输入负库存配置',
         type: 'text'
       }, {
-        label: '打印机',
-        prop: 'printer',
-        holder: '请输入打印机',
-        type: 'text'
-      }, {
-        label: '使用人',
+        label: '用户账号',
         prop: 'user',
-        holder: '请输入使用人',
+        holder: '请输入用户账号',
+        type: 'text'
+      }, {
+        label: '创建人',
+        prop: 'creator',
+        holder: '请输入创建人',
         type: 'text'
       }, {
         label: '状态',
@@ -411,7 +410,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 634:
+/***/ 628:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -436,7 +435,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "打印机配置", name: "0" } },
+            { attrs: { label: "负库存配置", name: "0" } },
             [
               _c("light-table", {
                 attrs: {
@@ -532,7 +531,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-511fb356", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-f01d7f92", module.exports)
   }
 }
 

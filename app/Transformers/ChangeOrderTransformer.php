@@ -17,25 +17,37 @@ class ChangeOrderTransformer extends TransformerAbstract
     public function transform(ChangeOrder $order)
     {
         return [
-            'id' => $order->id,
-            'change_order_no'=> $order->change_order_no,
-            'order_id'=> $order->order_id,
-            'applier_id'=> $order->applier_id,
-            'auditor_id'=> $order->auditor_id,
-            'is_canceled'=> $order->is_canceled,
+            'id'=> $order->id,
+            'change_order_no' => $order->change_order_no,
             'cancel_order_no'=> $order->cancel_order_no,
+            'is_canceled'=> $order->is_canceled,
+            'ch_applier_id'=> $order->ch_applier_id,
+            'ch_applied_at' => optional($order->ch_applied_at)->toDateString(),
+            'ch_submitter_id'=> $order->ch_submitter_id,
+            'ch_submitted_at' => optional($order->ch_submitted_at)->toDateString(),
+            'ch_auditor_id'=> $order->ch_auditor_id,
+            'ch_audited_at' => optional($order->ch_audited_at)->toDateString(),
             'change_remark'=> $order->change_remark,
             'change_status'=> $order->change_status,
-            //
+            'orders_id'=> $order->orders_id,
+            //--------变更订单与原始部分分界线-----------------
             'system_order_no' => $order->system_order_no,
-            'order_status' => $order->order_status,
-            'order_source' => $order->order_source,
+            'order_status'  => $order->order_status,
+            'order_source'  => $order->order_source,
+            'order_amount' => $order->order_amount,
             'shops_id' => $order->shops_id,
+            'shop_name' => $order->shop_name,
             'logistics_id' => $order->logistics_id,
+            'logistics_sn' => $order->logistics_sn,
             'billing_way' => $order->billing_way,
-            'promise_ship_time' => optional($order->promise_ship_time)->toDateString(),
+            'promise_ship_time'  => optional($order->promise_ship_time)->toDateString(),
             'freight_types_id' => $order->freight_types_id,
             'expected_freight' => $order->expected_freight,
+            'actual_freight' => $order->actual_freight,
+            'logistics_remark' => $order->logistics_remark,
+            'is_logistics_checked' => $order->is_logistics_checked,
+            'logistics_check_remark' => $order->logistics_check_remark,
+            'logistics_checked_at'  => optional($order->logistics_checked_at)->toDateString(),
             'distributions_id' => $order->distributions_id,
             'distribution_methods_id' => $order->distribution_methods_id,
             'deliver_goods_fee' => $order->deliver_goods_fee,
@@ -45,11 +57,14 @@ class ChangeOrderTransformer extends TransformerAbstract
             'distribution_phone' => $order->distribution_phone,
             'distribution_no' => $order->distribution_no,
             'distribution_types_id' => $order->distribution_types_id,
+            'is_distribution_checked' => $order->is_distribution_checked,
+            'distribution_check_remark' => $order->distribution_check_remark,
+            'distribution_checked_at'  => optional($order->distribution_checked_at)->toDateString(),
+            'service_car_fee' => $order->service_car_fee,
             'service_car_info' => $order->service_car_info,
             'take_delivery_goods_fee' => $order->take_delivery_goods_fee,
             'take_delivery_goods_ways_id' => $order->take_delivery_goods_ways_id,
             'express_fee' => $order->express_fee,
-            'service_car_fee' => $order->service_car_fee,
             'cancel_after_verification_code' => $order->cancel_after_verification_code,
             'wooden_frame_costs' => $order->wooden_frame_costs,
             'preferential_cashback' => $order->preferential_cashback,
@@ -70,18 +85,17 @@ class ChangeOrderTransformer extends TransformerAbstract
             'accept_order_user' => $order->accept_order_user,
             'tax_number' => $order->tax_number,
             'receipt' => $order->receipt,
-            'logistics_remark' => $order->logistics_remark,
+            'buyer_message' => $order->buyer_message,
             'seller_remark' => $order->seller_remark,
             'customer_service_remark' => $order->customer_service_remark,
+            'stockout_remark' => $order->stockout_remark,
             'taobao_oid' => $order->taobao_oid,
             'taobao_tid' => $order->taobao_tid,
             'member_nick' => $order->member_nick,
-            'shop_name' => $order->shop_name,
             'seller_name' => $order->seller_name,
             'seller_flag' => $order->seller_flag,
-            'created' => optional($order->created)->toDateTimeString(),
-            'est_con_time' => optional($order->est_con_time)->toDateTimeString(),
-            'buyer_message' => $order->buyer_message,
+            'created'  => optional($order->created)->toDateString(),
+            'est_con_time' => optional($order->est_con_time)->toDateString(),
             'receiver_name' => $order->receiver_name,
             'receiver_phone' => $order->receiver_phone,
             'receiver_mobile' => $order->receiver_mobile,
@@ -93,16 +107,24 @@ class ChangeOrderTransformer extends TransformerAbstract
             'refund_info' => $order->refund_info,
             'business_personnel_id' => $order->business_personnel_id,
             'locker_id' => $order->locker_id,
-            'audit_at' => optional($order->audit_at)->toDateTimeString(),
+            'locked_at'  => optional($order->locked_at)->toDateString(),
+            'auditor_id' => $order->auditor_id,
+            'audit_at' => optional($order->audit_at)->toDateString(),
+            'cs_auditor_id' => $order->cs_auditor_id,
+            'cs_audited_at'  => optional($order->cs_audited_at)->toDateString(),
+            'fd_auditor_id' => $order->fd_auditor_id,
+            'fd_audited_at' => optional($order->fd_audited_at)->toDateString(),
+            'ca_auditor_id' => $order->ca_auditor_id,
+            'ca_audited_at'  => optional($order->ca_audited_at)->toDateString(),
+            'stockout_op_id' => $order->stockout_op_id,
+            'stockout_at' => optional($order->stockout_at)->toDateString(),
             'association_taobao_oid' => $order->association_taobao_oid,
             'is_merge' => $order->is_merge,
             'is_split' => $order->is_split,
             'is_association' => $order->is_association,
-            'submitted_at' => optional($order->submitted_at)->toDateTimeString(),
-            'created_at' => $order->created_at
-                                  ->toDateTimeString(),
-            'updated_at' => $order->updated_at
-                                  ->toDateTimeString()
+            'status' => $order->status,
+            'created_at'  => optional($order->created_at)->toDateString(),
+            'updated_at'  => optional($order->updated_at)->toDateString(),
         ];
     }
 
@@ -168,13 +190,22 @@ class ChangeOrderTransformer extends TransformerAbstract
 
     public function includeBusinessPersonnel(ChangeOrder $order)
     {
-        if(!$order->locker) return ;
+        if (!$order->locker) {
+            return ;
+        }
         return $this->item($order->businessPersonnel, new UserTransformer());
+    }
+
+    public function includeApplier(ChangeOrder $order)
+    {
+        return $this->item($order->applier, new UserTransformer());
     }
 
     public function includeLocker(ChangeOrder $order)
     {
-        if(!$order->locker) return ;
+        if (!$order->locker) {
+            return ;
+        }
         return $this->item($order->locker, new UserTransformer());
     }
 
@@ -182,8 +213,4 @@ class ChangeOrderTransformer extends TransformerAbstract
     {
         return $this->item($order->user, new UserTransformer());
     }
-
-
-
-
 }

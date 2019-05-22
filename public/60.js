@@ -1,14 +1,14 @@
 webpackJsonp([60],{
 
-/***/ 484:
+/***/ 506:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(623)
+var __vue_script__ = __webpack_require__(661)
 /* template */
-var __vue_template__ = __webpack_require__(624)
+var __vue_template__ = __webpack_require__(662)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/logisticsArea.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/evalCategoryMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6f7ad877", Component.options)
+    hotAPI.createRecord("data-v-286e5fa0", Component.options)
   } else {
-    hotAPI.reload("data-v-6f7ad877", Component.options)
+    hotAPI.reload("data-v-286e5fa0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,11 +48,35 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 623:
+/***/ 661:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -69,86 +93,303 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: '删除',
         icon: 'bf-del',
-        ent: this.doDelMore
+        ent: this.delMore
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
         ent: this.refresh
       }],
-      tableKey: [[{
-        label: '区域编码',
-        width: '',
-        prop: "code",
-        holder: '请输入区域编码',
+      disHead: [{
+        label: '评价类别',
+        prop: "eval_category",
+        holder: '评价类别',
         type: 'text'
       }, {
-        label: '区域名称',
-        width: '',
-        prop: "name",
-        holder: '请输入区域名称',
+        label: '评价描述',
+        prop: "eval_description",
+        holder: '评价描述',
         type: 'text'
       }, {
-        label: '启用',
-        width: '',
+        label: '状态',
         prop: "status",
-        holder: '请选择是否启用',
-        type: 'select_def',
-        doSort: true
-      }]],
-      url: ['/logisticsareas'],
-      title: ['新增区域'],
+        holder: '状态',
+        type: 'checkbox',
+        doSort: true,
+        chgAble: true,
+        editChgAble: false
+      }],
+      stockHead: [{
+        label: '入库方式方式',
+        prop: "name",
+        holder: '配送方式',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: "status",
+        holder: '状态',
+        // type: 'select_stu',
+        type: 'checkbox',
+        doSort: true,
+        chgAble: true,
+        editChgAble: false
+      }],
+      url: ['/evalcategorymag', '/stockintypes'],
+      title: ['新增用户评价类别', '新增入库方式'],
       ruleForm: [{
-        code: '',
         name: '',
-        status: '1'
+        status: true
+      }, {
+        name: '',
+        status: true
       }],
       rules: [{
-        code: [{ required: true, message: '请输入区域编码', trigger: 'blur' }],
-        name: [{ required: true, message: '请输入区域名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入用户评价类别', trigger: 'blur' }]
+      }, {
+        name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '区域代码',
-        prop: 'code',
-        holder: '请输入区域代码',
+        label: '评价类别',
+        prop: 'eval_category',
+        holder: '请输入用户',
         type: 'text'
       }, {
-        label: '区域名称',
-        prop: 'name',
-        holder: '请输入区域名称',
+        label: '评价描述',
+        prop: 'eval_description',
+        holder: '请输入评价描述',
         type: 'text'
       }, {
         label: '状态',
         prop: 'status',
-        holder: '请选择是否启用',
-        type: 'select_def'
-      }]]
+        holder: '请选择状态',
+        // type: 'select_stu'
+        type: 'checkbox'
+      }], [{
+        label: '入库方式',
+        prop: 'name',
+        holder: '请输入入库方式',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
+        // type: 'select_stu'
+        type: 'checkbox'
+      }]],
+      activeName: '0',
+      getsData: [],
+      loading: [true, true],
+      currentIndex: '',
+      /*新增*/
+      showMask: false,
+      showDel: false,
+      editId: '',
+      inputChange: false,
+      delArr: [],
+      multipleSelection: [],
+      refArr: ['mag', 'stock']
     };
   },
 
   methods: {
+    //新增
     addNew: function addNew() {
-      this.$store.dispatch('setShowAdd', true);
+      this.showMask = true;
     },
-    edit: function edit(row) {
-      var obj = {
-        id: row.id,
-        code: row.markcode,
-        name: row.markname,
-        status: row.status
-      };
-      this.$store.dispatch('setRow', row);
-      this.$store.dispatch('setUrl', this.url[0] + "/");
-      this.$store.dispatch('doEdit', obj);
+    CB_dialog: function CB_dialog(val) {
+      this.showMask = val;
     },
-    doDelMore: function doDelMore() {
-      this.$refs.tabs.$emit('delMore');
+    submitForm: function submitForm() {
+      var _this = this;
+
+      this.$post(this.url[this.activeName], this.ruleForm[this.activeName]).then(function () {
+        _this.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+        _this.showMask = false;
+        _this.refresh();
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this.$message.error({
+            message: str
+          });
+        }
+      });
     },
+    tabsClick: function tabsClick() {
+      this.loading = [true, true];
+      this.getData(this.url[this.activeName]);
+    },
+    getData: function getData(url) {
+      var _this2 = this;
+
+      this.$fetch(url).then(function (res) {
+        _this2.loading[_this2.activeName] = false;
+        _this2.getsData = res.data;
+        var pg = res.meta.pagination;
+        _this2.$store.dispatch('currentPage', pg.current_page);
+        _this2.$store.commit('PER_PAGE', pg.per_page);
+        _this2.$store.commit('PAGE_TOTAL', pg.total);
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this2.$message.error({
+            message: str
+          });
+        }
+      });
+    },
+    edit: function edit(index) {
+      this.currentIndex = 'index' + index;
+    },
+    handleEdit: function handleEdit() {
+      this.inputChange = true;
+    },
+    editCancel: function editCancel() {
+      this.$message({
+        message: '取消修改',
+        type: 'info'
+      });
+      this.currentIndex = '';
+    },
+    editSave: function editSave(row) {
+      var _this3 = this;
+
+      this.$patch(this.url[this.activeName] + '/' + row.id, row).then(function () {
+        _this3.$message({
+          message: '修改成功',
+          type: 'success'
+        });
+        _this3.currentIndex = '';
+        _this3.inputChange = false;
+        _this3.refresh();
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this3.$message.error({
+            message: str
+          });
+        }
+      });
+    },
+    del: function del(row, e) {
+      this.showDel = true;
+      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
+      this.delId = row.id;
+    },
+    cancelD: function cancelD() {
+      this.showDel = false;
+      this.$message({
+        message: '取消删除',
+        type: 'info'
+      });
+    },
+    confirmD: function confirmD(id) {
+      var _this4 = this;
+
+      this.$del(this.url[0] + '/' + id).then(function () {
+        _this4.$message({
+          message: '删除成功',
+          type: 'success'
+        });
+        _this4.showDel = false;
+        _this4.refresh();
+      }, function (err) {
+        if (err.response) {
+          _this4.showDel = false;
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this4.$message.error({
+            message: str
+          });
+        }
+      });
+    },
+
+    /*批量删除*/
+    delMore: function delMore() {
+      var _this5 = this;
+
+      if (this.delArr.length === 0) {
+        this.$message({
+          message: '没有选中数据',
+          type: 'warning'
+        });
+      } else {
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function () {
+          _this5.$del(_this5.url[_this5.activeName], { ids: _this5.delArr }).then(function () {
+            _this5.$message({
+              message: '删除成功',
+              type: 'success'
+            });
+            _this5.refresh();
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(',');
+              _this5.$message.error({
+                message: str
+              });
+            }
+          });
+        }).catch(function () {
+          _this5.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      }
+    },
+    handleSelectionChange: function handleSelectionChange(val) {
+      if (val.length != 0) {
+        this.editId = val[0].id;
+      } else {
+        this.editId = '';
+      }
+      this.multipleSelection = val;
+      var del = [];
+      this.multipleSelection.forEach(function (selectedItem) {
+        del.push(selectedItem.id);
+      });
+      this.delArr = del.join(',');
+    },
+
+    /*页面刷新*/
     refresh: function refresh() {
-      this.$store.dispatch('refresh');
+      this.loading = [true, true];
+      this.getData(this.url[this.activeName]);
     }
   },
   mounted: function mounted() {
-    this.$store.dispatch('setTabs', false);
+    this.getData(this.url[this.activeName]);
     this.$store.dispatch('setOpt', this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -159,7 +400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 624:
+/***/ 662:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -169,18 +410,107 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("v-tabs", {
-        ref: "tabs",
-        attrs: {
-          "table-key": _vm.tableKey,
-          url: _vm.url,
-          title: _vm.title,
-          "rule-form": _vm.ruleForm,
-          rules: _vm.rules,
-          "add-arr": _vm.addArr
+      _c(
+        "el-tabs",
+        {
+          on: { "tab-click": _vm.tabsClick },
+          model: {
+            value: _vm.activeName,
+            callback: function($$v) {
+              _vm.activeName = $$v
+            },
+            expression: "activeName"
+          }
         },
-        on: { edit: _vm.edit }
-      })
+        [
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "用户评价类别管理", name: "0" } },
+            [
+              _c("light-table", {
+                attrs: {
+                  listData: _vm.getsData,
+                  tableHead: _vm.disHead,
+                  loading: _vm.loading[_vm.activeName],
+                  currentIndex: _vm.currentIndex
+                },
+                on: {
+                  editSave: _vm.editSave,
+                  handleEdit: _vm.handleEdit,
+                  del: _vm.del,
+                  edit: _vm.edit,
+                  editCancel: _vm.editCancel,
+                  handleSelect: _vm.handleSelectionChange
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("add-new", {
+        attrs: {
+          "visible-add": _vm.showMask,
+          title: _vm.title[_vm.activeName],
+          "rule-form": _vm.ruleForm[_vm.activeName],
+          rules: _vm.rules[_vm.activeName],
+          "add-arr": _vm.addArr[_vm.activeName],
+          url: _vm.url[_vm.activeName],
+          "new-ref": _vm.refArr[_vm.activeName]
+        },
+        on: { submitEvent: _vm.submitForm, "CB-dialog": _vm.CB_dialog }
+      }),
+      _vm._v(" "),
+      _c(
+        "el-popover",
+        {
+          attrs: { slot: "tip", placement: "top", width: "160" },
+          slot: "tip",
+          model: {
+            value: _vm.showDel,
+            callback: function($$v) {
+              _vm.showDel = $$v
+            },
+            expression: "showDel"
+          }
+        },
+        [
+          _c("p", [_vm._v("确定删除该条数据？")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticStyle: { "text-align": "right", margin: "0" } },
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { size: "mini", type: "text" },
+                  on: { click: _vm.cancelD }
+                },
+                [_vm._v("取消")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", size: "mini" },
+                  on: {
+                    click: function($event) {
+                      return _vm.confirmD(_vm.delId)
+                    }
+                  }
+                },
+                [_vm._v("确定")]
+              )
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("Pagination", { attrs: { "page-url": _vm.url[_vm.activeName] } })
     ],
     1
   )
@@ -191,7 +521,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6f7ad877", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-286e5fa0", module.exports)
   }
 }
 

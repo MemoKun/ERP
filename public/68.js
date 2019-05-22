@@ -1,14 +1,14 @@
 webpackJsonp([68],{
 
-/***/ 495:
+/***/ 493:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(645)
+var __vue_script__ = __webpack_require__(635)
 /* template */
-var __vue_template__ = __webpack_require__(646)
+var __vue_template__ = __webpack_require__(636)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/distributeMag.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/accountType.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3102bc2e", Component.options)
+    hotAPI.createRecord("data-v-16860a7e", Component.options)
   } else {
-    hotAPI.reload("data-v-3102bc2e", Component.options)
+    hotAPI.reload("data-v-16860a7e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 645:
+/***/ 635:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80,236 +80,638 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      //操作
       newOpt: [{
         cnt: '新增',
         icon: 'bf-add',
-        ent: this.test
-      }, {
-        cnt: '修改',
-        icon: 'bf-change',
-        ent: this.test
+        ent: this.addNew
       }, {
         cnt: '删除',
         icon: 'bf-del',
-        ent: this.test
-      }, {
-        cnt: '导入',
-        icon: 'bf-in',
-        ent: this.test
-      }, {
-        cnt: '导出',
-        icon: 'bf-out',
-        ent: this.test
+        ent: this.doDelMore
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
-        ent: this.test
+        ent: this.refresh
       }],
-      searchBox: {
-        buyNick: '',
-        shopTitle: ''
-      },
-      currentPage: true
+      //表格
+      tableKey: [[{
+        label: '类型',
+        width: '280',
+        prop: "name",
+        holder: '输入类型',
+        type: 'text'
+      }, {
+        label: '状态',
+        width: '280',
+        prop: "status",
+        holder: '状态',
+        type: 'select_stu',
+        doSort: true
+      }]],
+      url: ['/acctypes'],
+      title: ['新增记账类型'],
+      ruleForm: [{
+        name: '',
+        status: '1'
+      }],
+      rules: [{
+        name: [{ required: true, message: '请输入标记代码', trigger: 'blur' }]
+      }],
+      addArr: [[{
+        label: '类型',
+        prop: 'name',
+        holder: '请输入类型',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
+        type: 'select_stu'
+      }]]
     };
   },
 
   methods: {
-    test: function test() {
-      console.log(1);
+    //新增
+    addNew: function addNew() {
+      this.$store.dispatch('setShowAdd', true);
     },
-    getData: function getData() {
-      alert(this.searchBox);
-      console.log(this.searchBox);
+    edit: function edit(row) {
+      var obj = {
+        id: row.id,
+        name: row.name,
+        status: row.status
+      };
+      this.$store.dispatch('setRow', row);
+      this.$store.dispatch('setUrl', this.url[0] + "/");
+      this.$store.dispatch('doEdit', obj);
+    },
+    doDelMore: function doDelMore() {
+      this.$refs.tabs.$emit('delMore');
+    },
+    refresh: function refresh() {
+      this.$store.dispatch('refresh');
     }
   },
   mounted: function mounted() {
-    this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit('change', this.newOpt);
+    this.$store.dispatch('setTabs', false);
+    this.$store.dispatch('setOpt', this.newOpt);
     var that = this;
     $(window).resize(function () {
-      return function () {
-        that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit('change', that.newOpt);
-      }();
+      that.$store.dispatch('setOpt', that.newOpt);
     });
   }
 });
 
 /***/ }),
 
-/***/ 646:
+/***/ 636:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.currentPage
-      ? _c("div", { staticClass: "searchBox" }, [
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("产品类别")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      "keyCode" in $event &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.getData($event)
-                  }
-                },
-                model: {
-                  value: _vm.searchBox.buyNick,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "buyNick", $$v)
-                  },
-                  expression: "searchBox.buyNick"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("配送商")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      "keyCode" in $event &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.getData($event)
-                  }
-                },
-                model: {
-                  value: _vm.searchBox.shopTitle,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                  },
-                  expression: "searchBox.shopTitle"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("省")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      "keyCode" in $event &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.getData($event)
-                  }
-                },
-                model: {
-                  value: _vm.searchBox.shopTitle,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                  },
-                  expression: "searchBox.shopTitle"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("市")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      "keyCode" in $event &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.getData($event)
-                  }
-                },
-                model: {
-                  value: _vm.searchBox.shopTitle,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                  },
-                  expression: "searchBox.shopTitle"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("区")]),
-              _vm._v(" "),
-              _c("el-input", {
-                staticClass: "half",
-                attrs: { clearable: "" },
-                nativeOn: {
-                  keyup: function($event) {
-                    if (
-                      "keyCode" in $event &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.getData($event)
-                  }
-                },
-                model: {
-                  value: _vm.searchBox.shopTitle,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                  },
-                  expression: "searchBox.shopTitle"
-                }
-              })
-            ],
-            1
-          )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("h2", [_vm._v("配送管理")])
-  ])
+  return _c(
+    "div",
+    [
+      _c("v-tabs", {
+        ref: "tabs",
+        attrs: {
+          "table-key": _vm.tableKey,
+          url: _vm.url,
+          title: _vm.title,
+          "rule-form": _vm.ruleForm,
+          rules: _vm.rules,
+          "add-arr": _vm.addArr
+        },
+        on: { edit: _vm.edit }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -317,7 +719,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3102bc2e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-16860a7e", module.exports)
   }
 }
 

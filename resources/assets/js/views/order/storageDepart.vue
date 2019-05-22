@@ -829,11 +829,22 @@ export default {
       rightActiveName: "0",
       orderListData: [],
       orderListHead: [
-        //订单表头标签
         {
-          label: "系统订单号",
+          label: "订单状态",
+          width: "140",
+          prop: "order_status",
+          type: "text"
+        },
+        {
+          label: "系统订单",
           width: "220",
           prop: "system_order_no",
+          type: "text"
+        },
+        {
+          label: "创建时间",
+          width: "220",
+          prop: "created_at",
           type: "text"
         },
         {
@@ -843,10 +854,9 @@ export default {
           type: "text"
         },
         {
-          //待修改对应表
-          label: "补件单号",
-          width: "220",
-          prop: "taobao_oid",
+          label: "订单来源",
+          width: "130",
+          prop: "order_source",
           type: "text"
         },
         {
@@ -857,31 +867,29 @@ export default {
           type: "text"
         },
         {
-          label: "业务员姓名",
-          width: "140",
-          prop: "businessPersonnel",
-          inProp: "username",
+          label: "买家昵称",
+          width: "130",
+          prop: "member_nick",
           type: "text"
         },
         {
-          label: "物流公司",
-          width: "100",
-          prop: "logistic",
+          label: "客户类型",
+          width: "130",
+          prop: "customerType",
           inProp: "name",
           type: "text"
         },
         {
-          //待修改对应表以及checkbox
-          label: "物流代码",
-          width: "100",
-          prop: "logistic",
-          inProp: "code",
-          type: "checkbox"
+          label: "淘宝旗帜",
+          width: "130",
+          prop: "seller_flag",
+          type: "flag"
         },
         {
-          label: "手机",
+          label: "物流公司",
           width: "140",
-          prop: "phone",
+          prop: "logistic",
+          inProp: "name",
           type: "text"
         },
         {
@@ -891,16 +899,17 @@ export default {
           type: "number"
         },
         {
-          label: "其他费用",
-          width: "120",
-          prop: "other_fee",
-          type: "number"
+          label: "发货仓库",
+          width: "130",
+          prop: "warehouses",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: "实际费用",
-          width: "120",
-          prop: "total_fee",
-          type: "number"
+          label: "收货人",
+          width: "130",
+          prop: "receiver_name",
+          type: "text"
         },
         {
           label: "省",
@@ -927,133 +936,9 @@ export default {
           type: "text"
         },
         {
-          //待修改对应表
-          label: "购买数量",
-          width: "80",
-          prop: "purchase_number",
-          type: "number"
-        },
-        {
-          //待修改对应表
-          label: "总件数",
-          width: "80",
-          prop: "total_number",
-          type: "number"
-        },
-        {
-          //待修改对应表
-          label: "总重量",
-          width: "80",
-          prop: "total_weight",
-          type: "number"
-        },
-        {
-          //待修改对应表
-          label: "总体积",
-          width: "80",
-          prop: "",
-          type: "number"
-        },
-        {
-          //待修改对应表
-          label: "手动修改总体积",
-          width: "80",
-          prop: "mod_total_weight",
-          type: "number"
-        },
-        {
-          //待修改对应表
-          label: "物流单打印状态",
-          width: "80",
-          prop: "logic_order_state",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "系统生成单号",
-          width: "140",
-          prop: "system_oid",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "外部打印单号",
-          width: "140",
-          prop: "outer_oid",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "打单单号",
-          width: "140",
-          prop: "print_oid",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "电子面单号",
-          width: "140",
-          prop: "elec_oid",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "货审状态",
-          width: "100",
-          prop: "audit_state",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "未打单原因",
-          width: "150",
-          prop: "no_order_reason",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "未发货原因",
-          width: "150",
-          prop: "no_deliver_reason",
-          type: "text"
-        },
-        {
-          label: "买家留言",
-          width: "150",
-          prop: "buyer_message",
-          type: "text"
-        },
-        {
-          label: "客服备注",
-          width: "150",
-          prop: "customer_service_remark",
-          type: "text"
-        },
-        {
-          label: "卖家备注",
-          width: "150",
-          prop: "customer_service_remark",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "供应商",
-          width: "130",
-          prop: "supplier",
-          inProp: "name",
-          type: "text"
-        },
-        {
           label: "配送商",
           width: "130",
           prop: "distribution",
-          inProp: "name",
-          type: "text"
-        },
-        {
-          label: "发货仓库",
-          width: "130",
-          prop: "warehouses",
           inProp: "name",
           type: "text"
         },
@@ -1068,6 +953,13 @@ export default {
           label: "配送类型",
           width: "130",
           prop: "distributionType",
+          inProp: "name",
+          type: "text"
+        },
+        {
+          label: "配送方式",
+          width: "130",
+          prop: "distributionMethod",
           inProp: "name",
           type: "text"
         },
@@ -1102,40 +994,22 @@ export default {
           type: "text"
         },
         {
-          //待修改对应表
-          label: "配送方式",
-          width: "120",
-          prop: "distribution_type",
-          inProp: "name",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "提货地址",
+          label: "拍单时间",
           width: "180",
-          prop: "address",
+          prop: "created",
           type: "text"
         },
         {
-          //待修改对应表
-          label: "拉货费用",
-          width: "120",
-          prop: "pull_goods_fee",
-          type: "number"
+          label: "支付日期",
+          width: "180",
+          prop: "payment_date",
+          type: "text"
         },
         {
-          //待修改对应表
-          label: "标准总金额",
-          width: "120",
-          prop: "standard_total_fee",
-          type: "number"
-        },
-        {
-          //待修改对应表
-          label: "商家优惠金额",
-          width: "120",
-          prop: "discount_fee",
-          type: "number"
+          label: "承诺发货日期",
+          width: "180",
+          prop: "promise_ship_time",
+          type: "text"
         },
         {
           label: "木架费",
@@ -1156,92 +1030,23 @@ export default {
           type: "number"
         },
         {
-          //待修改对应表
-          label: "商品总金额",
-          width: "120",
-          prop: "goods_total_fee",
-          type: "number"
-        },
-        {
-          label: "支付时间",
-          width: "180",
-          prop: "payment_time",
-          type: "text"
-        },
-        {
-          label: "承诺发货日期",
-          width: "180",
-          prop: "promise_ship_time",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "支付总金额",
-          width: "120",
-          prop: "total_pay",
-          type: "number"
-        },
-        {
-          //待修改对应表
-          label: "跟单颜色标记名",
-          width: "120",
-          prop: "order_colortarget_name",
-          type: "text"
-        },
-        {
-          //待修改对应表
-          label: "标记名称",
-          width: "120",
-          prop: "target_name",
-          type: "text"
-        },
-        {
-          label: "财审时间",
-          width: "180",
-          prop: "financial_audit_at",
-          type: "text"
-        },
-        {
-          label: "标记人",
-          width: "80",
-          prop: "target_person",
-          type: "text"
-        },
-        {
-          label: "标记时间",
+          label: "服务车金额",
           width: "130",
-          prop: "target_time",
-          type: "text"
-        },
-        {
-          label: "便签人",
-          width: "80",
-          prop: "note_person",
-          type: "text"
-        },
-        {
-          label: "便签时间",
-          width: "130",
-          prop: "note_time",
-          type: "text"
-        },
-        {
-          label: "便签内容",
-          width: "180",
-          prop: "note_content",
-          type: "text"
+          prop: "service_car_fee",
+          type: "number"
         },
         {
           label: "服务车信息",
-          width: "180",
-          prop: "server_car_message",
+          width: "150",
+          prop: "service_car_info",
           type: "text"
         },
         {
           label: "门店收款方式",
-          width: "140",
-          prop: "deposit_type",
-          type: "number"
+          width: "130",
+          prop: "paymentMethod",
+          inProp: "name",
+          type: "text"
         },
         {
           label: "门店订单金额",
@@ -1261,206 +1066,66 @@ export default {
           prop: "is_invoice",
           type: "checkbox"
         },
-        // /*  {
-        //     label: '余额支付金额-京东',
-        //     width: '140',
-        //     prop: '',
-        //     type: 'number'
-        //   },*/
-        // {
-        //     label: '订单状态',
-        //     width: '140',
-        //     prop: 'order_status',
-        //     type: 'text'
-        // },
-        // {
-        //     label: '发票信息',
-        //     width: '160',
-        //     prop: 'print_at',
-        //     type: 'text',
-        // },
-        // {
-        //     label: '纳税识别号',
-        //     width: '180',
-        //     prop: 'tax_number',
-        //     type: 'text'
-        // },
-        // /* {
-        //    label: '纳税注册地址',
-        //    width: '180',
-        //    prop: '',
-        //    type: 'text'
-        //  },
-        //  {
-        //    label: '纳税注册电话',
-        //    width: '140',
-        //    prop: '',
-        //    type: 'number'
-        //  },
-        //  {
-        //    label: '纳税开户银行',
-        //    width: '130',
-        //    prop: '',
-        //    type: 'text'
-        //  },
-        //  {
-        //    label: '纳税银行账号',
-        //    width: '180',
-        //    prop: '',
-        //    type: 'number',
-        //  },
-        //  {
-        //    label: '发票信息-唯品会',
-        //    width: '180',
-        //    prop: '',
-        //    type: 'text'
-        //  },*/
-        // /* {
-        //    label: 'PO单号-唯品会',
-        //    width: '180',
-        //    prop: '',
-        //    type: 'text',
-        //  },
-        //  {
-        //    label: '促销优惠金额-唯品会',
-        //    width: '150',
-        //    prop: '',
-        //    type: 'number',
-        //  },
-        //  {
-        //    label: '期望收货时间-唯品会',
-        //    width: '160',
-        //    prop: '',
-        //    type: 'text',
-        //  },*
-        // /* {
-        //    label: '补件原因',
-        //    width: '150',
-        //    prop: '',
-        //    type: 'text',
-        //  },*/
-        // /* {
-        //    label: '已驳回',
-        //    width: '90',
-        //    prop: '',
-        //    type: 'checkbox'
-        //  },
-        //
-        //  {
-        //    label: '分阶段',
-        //    width: '90',
-        //    prop: '',
-        //    type: 'checkbox'
-        //  },*/
-        // /*{
-        //   label: '服务车',
-        //   width: '90',
-        //   prop: '',
-        //   type: 'checkbox'
-        // },*/
-        // /* {
-        //    label: '赠品',
-        //    width: '90',
-        //    prop: '',
-        //    type: 'checkbox'
-        //  },
-        //  {
-        //    label: '红包',
-        //    width: '90',
-        //    prop: '',
-        //    type: 'checkbox',
-        //  },
-        //  {
-        //    label: '已打印',
-        //    width: '90',
-        //    prop: '',
-        //    type: 'checkbox'
-        //  },*/
-        // /* {
-        //    label: '锁定',
-        //    width: '90',
-        //    prop: '',
-        //    type: 'checkbox',
-        //  },*/
-        // {
-        //     label: '合并订单',
-        //     width: '90',
-        //     prop: 'is_merge',
-        //     type: 'checkbox',
-        // },
-        // {
-        //     label: '拆分订单',
-        //     width: '90',
-        //     prop: 'is_split',
-        //     type: 'checkbox',
-        // },
-        // {
-        //     label: '关联订单',
-        //     width: '90',
-        //     prop: 'is_association',
-        //     type: 'checkbox'
-        // },
-        // {
-        //     label: '接单人',
-        //     width: '120',
-        //     prop: 'accept_order_user',
-        //     type: 'text'
-        // },
-        // {
-        //     label: '收据',
-        //     width: '130',
-        //     prop: 'receipt',
-        //     type: 'text',
-        // },
-        // /* {
-        //    label: '(订单总额+服务车金额)',
-        //    width: '150',
-        //    prop: '',
-        //    type: 'number'
-        //  },*/
-        // /* {
-        //    label: '店铺分组',
-        //    width: '120',
-        //    prop: '',
-        //    type: 'text'
-        //  },*/
-        // {
-        //     label: '关联单号',
-        //     width: '220',
-        //     prop: 'association_taobao_oid',
-        //     type: 'text'
-        // },
-        // {
-        //     label: '退款信息',
-        //     width: '130',
-        //     prop: 'refund_info',
-        //     type: 'text'
-        // },
-        // {
-        //     label: '锁定人账号',
-        //     width: '140',
-        //     prop: 'locker',
-        //     inProp: 'username',
-        //     type: 'text',
-        // },
-        // /* {
-        //    label: '退审',
-        //    width: '90',
-        //    prop: '',
-        //    type: 'checkbox'
-        //  },
-        //  {
-        //    label: '库存占用',
-        //    width: '90',
-        //    prop: '',
-        //    type: 'checkbox',
-        //  },*/
-        // // {
-        // //     label: '需要核销',
-        // //     width: '90',
-        // //     prop: 'is_cancel_after_verification',
-        // //     type: 'checkbox',
-        // // },
+        {
+          label: "发票信息",
+          width: "160",
+          prop: "print_at",
+          type: "text"
+        },
+        {
+          label: "纳税识别号",
+          width: "180",
+          prop: "tax_number",
+          type: "text"
+        },
+        {
+          label: "合并订单",
+          width: "90",
+          prop: "is_merge",
+          type: "checkbox"
+        },
+        {
+          label: "拆分订单",
+          width: "90",
+          prop: "is_split",
+          type: "checkbox"
+        },
+        {
+          label: "关联订单",
+          width: "90",
+          prop: "is_association",
+          type: "checkbox"
+        },
+        {
+          label: "关联单号",
+          width: "220",
+          prop: "association_taobao_oid",
+          type: "text"
+        },
+        {
+          label: "接单人",
+          width: "120",
+          prop: "accept_order_user",
+          type: "text"
+        },
+        {
+          label: "收据",
+          width: "130",
+          prop: "receipt",
+          type: "text"
+        },
+        {
+          label: "退款信息",
+          width: "130",
+          prop: "refund_info",
+          type: "text"
+        },
+        {
+          label: "需要核销",
+          width: "90",
+          prop: "is_cancel_after_verification",
+          type: "checkbox"
+        },
         {
           label: "等通知发货",
           width: "90",
@@ -1468,10 +1133,55 @@ export default {
           type: "checkbox"
         },
         {
-          label: "打印拣货单",
-          width: "90",
-          prop: "is_print_select_good",
-          type: "checkbox"
+          label: "业务员账号",
+          width: "140",
+          prop: "businessPersonnel",
+          inProp: "username",
+          type: "text"
+        },
+        {
+          label: "锁定人账号",
+          width: "130",
+          prop: "locker",
+          inProp: "username",
+          type: "text"
+        },
+        {
+          label: "锁定时间",
+          width: "180",
+          prop: "locked_at",
+          type: "text"
+        },
+        {
+          label: "客审人账号",
+          width: "130",
+          prop: "csAudit",
+          inProp: "username",
+          type: "text"
+        },
+        {
+          label: "客审时间",
+          width: "180",
+          prop: "cs_audited_at",
+          type: "text"
+        },
+        {
+          label: "买家留言",
+          width: "150",
+          prop: "buyer_message",
+          type: "text"
+        },
+        {
+          label: "客服备注",
+          width: "150",
+          prop: "customer_service_remark",
+          type: "text"
+        },
+        {
+          label: "卖家备注",
+          width: "150",
+          prop: "customer_service_remark",
+          type: "text"
         }
       ],
       loading: true, //作用未知

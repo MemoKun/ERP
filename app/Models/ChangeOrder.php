@@ -41,26 +41,125 @@ class ChangeOrder extends Model
     ];
 
     protected $fillable = [
-        'change_order_no','order_id','applier_id','auditor_id','is_canceled','cancel_order_no'
-        ,'change_remark','change_status','system_order_no','order_status',
-        'shops_id', 'member_nick', 'logistics_id', 'logistics_sn', 'billing_way', 'promise_ship_time',
-        'freight_types_id', 'expected_freight', 'actual_freight','distributions_id',
-        'distribution_methods_id', 'deliver_goods_fee', 'move_upstairs_fee', 'installation_fee',
-        'total_distribution_fee', 'distribution_phone', 'distribution_no', 'distribution_types_id',
-        'service_car_info', 'take_delivery_goods_fee', 'take_delivery_goods_ways_id', 'express_fee',
-        'service_car_fee', 'cancel_after_verification_code', 'wooden_frame_costs', 'preferential_cashback',
-        'favorable_cashback', 'customer_types_id', 'is_invoice', 'invoice_express_fee', 'express_invoice_title',
-        'contract_no', 'payment_methods_id', 'deposit', 'document_title', 'warehouses_id', 'payment_date',
-        'interest_concessions', 'is_notice', 'is_cancel_after_verification', 'accept_order_user', 'tax_number',
-        'receipt', 'logistics_remark', 'seller_remark', 'customer_service_remark', 'buyer_message','status',
-        'receiver_name', 'receiver_phone', 'receiver_mobile', 'receiver_state', 'receiver_city', 'receiver_district',
-        'receiver_address', 'receiver_zip'
+        'change_order_no',
+        'cancel_order_no',
+        'is_canceled',
+        'ch_applier_id',
+        'ch_applied_at',
+        'ch_submitter_id',
+        'ch_submitted_at',
+        'ch_auditor_id',
+        'ch_audited_at',
+        'change_remark',
+        'change_status',
+        'orders_id',
+        //-------变更订单与原始order分界线----------
+        'system_order_no',
+        'order_status',
+        'order_source',
+        'order_amount',
+        'shops_id',
+        'shop_name',
+        'logistics_id',
+        'logistics_sn', 
+        'billing_way', 
+        'promise_ship_time',
+        'freight_types_id', 
+        'expected_freight', 
+        'actual_freight',
+        'logistics_remark',
+        'is_logistics_checked',
+        'logistics_check_remark',
+        'logistics_checked_at',
+        'distributions_id',
+        'distribution_methods_id',
+        'deliver_goods_fee',
+        'move_upstairs_fee',
+        'installation_fee',
+        'total_distribution_fee',
+        'distribution_phone',
+        'distribution_no',
+        'distribution_types_id',
+        'is_distribution_checked',
+        'distribution_check_remark',
+        'distribution_checked_at',
+        'service_car_fee',
+        'service_car_info',
+        'take_delivery_goods_fee',
+        'take_delivery_goods_ways_id',
+        'express_fee',
+        'cancel_after_verification_code',
+        'wooden_frame_costs',
+        'preferential_cashback',
+        'favorable_cashback',
+        'customer_types_id',
+        'is_invoice',
+        'invoice_express_fee',
+        'express_invoice_title',
+        'contract_no',
+        'payment_methods_id',
+        'deposit',
+        'document_title',
+        'warehouses_id',
+        'payment_date',
+        'interest_concessions',
+        'is_notice',
+        'is_cancel_after_verification',
+        'accept_order_user',
+        'tax_number',
+        'receipt',
+        'buyer_message',
+        'seller_remark',
+        'customer_service_remark',
+        'stockout_remark', 
+        'taobao_oid',
+        'taobao_tid',
+        'member_nick',
+        'seller_name',
+        'seller_flag',
+        'created',
+        'est_con_time',
+        'receiver_name',
+        'receiver_phone',
+        'receiver_mobile',
+        'receiver_state',
+        'receiver_city',
+        'receiver_district',
+        'receiver_address',
+        'receiver_zip',
+        'refund_info',
+        'business_personnel_id',
+        'locker_id',
+        'locked_at', 
+        'auditor_id', 
+        'audit_at',
+        'cs_auditor_id',
+        'cs_audited_at',
+        'fd_auditor_id',
+        'fd_audited_at',
+        'ca_auditor_id', 
+        'ca_audited_at', 
+        'stockout_op_id', 
+        'stockout_at',
+        'association_taobao_oid',
+        'is_merge',
+        'is_split',
+        'is_association',
+        'status',
+        'created_at',
+        'updated_at',
     ];
 
     protected $dates = [
+        'submitted_at',
+        'created_at',
+        'updated_at',
         'created',
         'audit_at',
-        'submitted_at',
+        'locked_at',
+        'cs_audited_at',
+        'fd_audited_at',
+        'ca_audited_at',
         'est_con_time',
         'payment_date',
         'promise_ship_time'
@@ -96,10 +195,19 @@ class ChangeOrder extends Model
             }
 
             // 如果模型的 user_id 字段为空
-            if (!$model->applier_id) {
-                    $model->applier_id = Auth::guard('api')->id();
+            if (!$model->ch_applier_id) {
+                    $model->ch_applier_id = Auth::guard('api')->id();
                     // 如果生成失败，则终止创建订单
-                if (!$model->applier_id) {
+                if (!$model->ch_applier_id) {
+                    return false;
+                }
+            }
+
+            // 如果模型的 user_id 字段为空
+            if (!$model->ch_applied_at) {
+                $model->ch_applied_at = date("Y-m-d h:i:s");
+                // 如果生成失败，则终止创建订单
+                if (!$model->ch_applied_at) {
                     return false;
                 }
             }
@@ -162,9 +270,9 @@ class ChangeOrder extends Model
      */
     public function submit()
     {
-        $this->locker_id = 0;
+        $this->ch_submitter_id = Auth::guard('api')->id();
         $this->change_status = self::CHANGE_STATUS_SUBMIT;
-        $this->submitted_at = date("Y-m-d h:i:s");
+        $this->ch_submitted_at = date("Y-m-d h:i:s");
         $this->save();
     }
     /**
@@ -484,6 +592,11 @@ class ChangeOrder extends Model
         return $this->belongsTo(User::class, 'business_personnel_id');
     }
 
+    public function applier()
+    {
+        return $this->belongsTo(User::class, 'applier_id');
+    }
+
     public function locker()
     {
         return $this->belongsTo(User::class, 'locker_id');
@@ -493,6 +606,4 @@ class ChangeOrder extends Model
     {
         return $this->hasMany(PaymentDetail::class, 'orders_id');
     }
-
-
 }

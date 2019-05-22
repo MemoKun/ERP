@@ -1299,7 +1299,7 @@ export default {
           break;
         case 1:
           this.$fetch(this.urls.aftersale, {
-            is_finish: 0,
+            is_finish: false,
             include:
               "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(

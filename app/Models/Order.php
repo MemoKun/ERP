@@ -105,34 +105,101 @@ class Order extends Model
     ];
 
     protected $fillable = [
-        'shops_id', 'member_nick', 'logistics_id', 'logistics_sn', 'billing_way', 'promise_ship_time',
-        'freight_types_id', 'expected_freight', 'actual_freight', 'distributions_id',
-        'distribution_methods_id', 'deliver_goods_fee', 'move_upstairs_fee', 'installation_fee',
-        'total_distribution_fee', 'distribution_phone', 'distribution_no', 'distribution_types_id',
-        'service_car_info', 'take_delivery_goods_fee', 'take_delivery_goods_ways_id', 'express_fee',
-        'service_car_fee', 'cancel_after_verification_code', 'wooden_frame_costs', 'preferential_cashback',
-        'favorable_cashback', 'customer_types_id', 'is_invoice', 'invoice_express_fee', 'express_invoice_title',
-        'contract_no', 'payment_methods_id', 'deposit', 'document_title', 'warehouses_id', 'payment_date',
-        'interest_concessions', 'is_notice', 'is_cancel_after_verification', 'accept_order_user', 'tax_number',
-        'receipt', 'logistics_remark', 'seller_remark', 'customer_service_remark', 'buyer_message', 'status',
-        'receiver_name', 'receiver_phone', 'receiver_mobile', 'receiver_state', 'receiver_city', 'receiver_district',
-        'receiver_address', 'receiver_zip',
-
-        //new
+        'system_order_no',
+        'order_status',
+        'order_source',
         'order_amount',
+        'shops_id',
+        'shop_name',
+        'logistics_id',
+        'logistics_sn', 
+        'billing_way', 
+        'promise_ship_time',
+        'freight_types_id', 
+        'expected_freight', 
+        'actual_freight',
+        'logistics_remark',
         'is_logistics_checked',
         'logistics_check_remark',
         'logistics_checked_at',
+        'distributions_id',
+        'distribution_methods_id',
+        'deliver_goods_fee',
+        'move_upstairs_fee',
+        'installation_fee',
+        'total_distribution_fee',
+        'distribution_phone',
+        'distribution_no',
+        'distribution_types_id',
         'is_distribution_checked',
         'distribution_check_remark',
         'distribution_checked_at',
-        'is_goods_checked',
-        'goods_check_remark',
-        'goods_checked_at',
+        'service_car_fee',
+        'service_car_info',
+        'take_delivery_goods_fee',
+        'take_delivery_goods_ways_id',
+        'express_fee',
+        'cancel_after_verification_code',
+        'wooden_frame_costs',
+        'preferential_cashback',
+        'favorable_cashback',
+        'customer_types_id',
+        'is_invoice',
+        'invoice_express_fee',
+        'express_invoice_title',
+        'contract_no',
+        'payment_methods_id',
+        'deposit',
+        'document_title',
+        'warehouses_id',
+        'payment_date',
+        'interest_concessions',
+        'is_notice',
+        'is_cancel_after_verification',
+        'accept_order_user',
+        'tax_number',
+        'receipt',
+        'buyer_message',
+        'seller_remark',
+        'customer_service_remark',
+        'stockout_remark', 
+        'taobao_oid',
+        'taobao_tid',
+        'member_nick',
+        'seller_name',
+        'seller_flag',
+        'created',
+        'est_con_time',
+        'receiver_name',
+        'receiver_phone',
+        'receiver_mobile',
+        'receiver_state',
+        'receiver_city',
+        'receiver_district',
+        'receiver_address',
+        'receiver_zip',
+        'refund_info',
+        'business_personnel_id',
+        'locker_id',
+        'locked_at', 
+        'auditor_id', 
+        'audit_at',
+        'cs_auditor_id',
+        'cs_audited_at',
+        'fd_auditor_id',
+        'fd_audited_at',
+        'ca_auditor_id', 
+        'ca_audited_at', 
+        'stockout_op_id', 
         'stockout_at',
-        'stockout_remark',
-        'locked_at',
-        'auditor_id'
+        'association_taobao_oid',
+        'is_merge',
+        'is_split',
+        'is_association',
+        'status',
+        'created_at',
+        'updated_at',
+
     ];
 
     protected $dates = [
@@ -144,6 +211,10 @@ class Order extends Model
         'distribution_checked_at',
         'logistics_checked_at',
         'stockout_at',
+        'cs_audited_at',
+        'fd_audited_at',
+        'ca_audited_at',
+
     ];
 
     //设置类型
@@ -251,12 +322,10 @@ class Order extends Model
     public function lockOrUnlock()
     {
         if ($this->unlock()) {
-            $this->business_personnel_id = Auth::guard('api')->id();
             $this->locker_id = Auth::guard('api')->id();
             $this->locked_at = date('Y-m-d h:i:s');
             $this->order_status = self::ORDER_STATUS_LOCK;
         } else {
-            $this->business_personnel_id = 0;
             $this->locker_id = 0;
             $this->order_status = self::ORDER_STATUS_NEW;
             $this->locked_at = null;
@@ -272,9 +341,9 @@ class Order extends Model
      */
     public function audit()
     {
-        $this->locker_id = 0;
+        $this->cs_auditor_id = Auth::guard('api')->id();
         $this->order_status = self::ORDER_STATUS_CS_AUDIT;
-        $this->audit_at = date('Y-m-d h:i:s');
+        $this->cs_audited_at = date('Y-m-d h:i:s');
         $this->save();
     }
 
@@ -296,10 +365,9 @@ class Order extends Model
      */
     public function unAudit()
     {
-        $this->business_personnel_id = 0;
-        $this->locker_id = 0;
+        $this->cs_auditor_id = 0;
         $this->order_status = self::ORDER_STATUS_NEW;
-        $this->audit_at = "2000-01-01 00:00:01";
+        $this->cs_audited_at = "2000-01-01 00:00:01";
         $this->save();
     }
 
@@ -451,6 +519,35 @@ class Order extends Model
         $this->distribution_checked_at =null;
         $this->save();
     }
+
+    /**
+     *审计部-审核驳回
+     *
+     * @return bool
+     */
+    public function rejectDeptsAudit()
+    {
+        $this->auditor_id = 0;
+        $this->audit_at =null;
+        $this->order_status = xxx;//填入驳回后的订单状态
+        $this->save();
+    }
+
+    
+    /**
+     *审计部-审核
+     *
+     * @return bool
+     */
+    public function auditDeptsAudit()
+    {
+        $this->auditor_id = Auth::guard('api')->id();
+        $this->audit_at = date('Y-m-d h:i:s');
+        $this->order_status = xxx;//填入审核后的订单状态
+        $this->save();
+    }
+
+
 
     /**
      * 是否缺货.
@@ -684,6 +781,11 @@ class Order extends Model
         return $this->belongsTo(User::class, 'locker_id');
     }
 
+    public function csAudit()
+    {
+        return $this->belongsTo(User::class, 'cs_audit_id');
+    }
+
     public function paymentDetails()
     {
         return $this->hasMany(PaymentDetail::class, 'orders_id');
@@ -692,5 +794,9 @@ class Order extends Model
     public function resupplieOrder()
     {
         return $this->hasMany(ResupplieOrder::class, 'orders_id');
+    }
+
+    public function orderOperationRecord(){
+        return $this->hasMany(orderOperationRecord::class, 'orders_id');
     }
 }

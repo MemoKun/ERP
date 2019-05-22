@@ -1,14 +1,14 @@
 webpackJsonp([24],{
 
-/***/ 466:
+/***/ 467:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(587)
+var __vue_script__ = __webpack_require__(583)
 /* template */
-var __vue_template__ = __webpack_require__(588)
+var __vue_template__ = __webpack_require__(584)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/purchase/purchaseFabric.vue"
+Component.options.__file = "resources/assets/js/views/purchase/otherStorage.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-367c08f1", Component.options)
+    hotAPI.createRecord("data-v-85f29114", Component.options)
   } else {
-    hotAPI.reload("data-v-367c08f1", Component.options)
+    hotAPI.reload("data-v-85f29114", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,119 +48,11 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 587:
+/***/ 583:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -461,7 +353,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             newOpt: [{
                 cnt: '新增',
                 icon: 'bf-add',
-                ent: this.addPurchaseFabric,
+                ent: this.addOtherStorage,
                 nClick: false
             }, {
                 cnt: '修改',
@@ -474,8 +366,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ent: this.test,
                 nClick: false
             }, {
-                cnt: '打印',
-                icon: 'bf-printer',
+                cnt: '提交',
+                icon: 'bf-submit',
+                ent: this.test,
+                nClick: false
+            }, {
+                cnt: '审核',
+                icon: 'bf-audit',
+                ent: this.test,
+                nClick: false
+            }, {
+                cnt: '退审',
+                icon: 'bf-auditfaild',
+                ent: this.test,
+                nClick: false
+            }, {
+                cnt: '导出',
+                icon: 'bf-out',
                 ent: this.test,
                 nClick: false
             }, {
@@ -488,152 +395,171 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             checkboxInit: false,
             filterBox: false,
             searchBox: {
-                fab_no: '',
-                model: '',
-                order_shop: ''
+                storage_no: '',
+                external_no: '',
+                purchase_no: '',
+                spec_no: '',
+                create_time: '',
+                commit_time: '',
+                storage_time: ''
             },
-            topActiveName: 'notStorage',
-            btmActiveName: 'fabricDetail',
-            notStorage: {
+            topActiveName: 'newStorage',
+            btmActiveName: 'storageDetail',
+            newStorage: {
                 table: [{
-                    label: '系统单号',
+                    label: '入库单号',
                     width: '200',
-                    prop: 'order_no',
+                    prop: 'storage_no',
                     type: 'text'
                 }, {
-                    label: '收件方',
+                    label: '外部单号',
                     width: '120',
-                    prop: 'order_user',
+                    prop: 'external_no',
+                    type: 'text'
+                }, {
+                    label: '入库仓库',
+                    width: '120',
+                    prop: 'warehouse',
+                    type: 'text'
+                }, {
+                    label: '供应商',
+                    width: '120',
+                    prop: 'supplier',
                     type: 'text'
                 }, {
                     label: '创建人',
                     width: '120',
-                    prop: 'user',
+                    prop: 'create_user',
                     type: 'text'
                 }, {
-                    label: '订购日期',
-                    width: '180',
-                    prop: 'order_at',
+                    label: '提交人',
+                    width: '120',
+                    prop: 'commit_user',
                     type: 'text'
                 }, {
-                    label: '备注',
-                    width: '180',
-                    prop: 'remark',
+                    label: '入库人',
+                    width: '120',
+                    prop: 'storage_user',
                     type: 'text'
+                }, {
+                    label: '创建时间',
+                    width: '180',
+                    prop: 'create_at',
+                    type: 'text'
+                }, {
+                    label: '提交时间',
+                    width: '180',
+                    prop: 'commit_at',
+                    type: 'text'
+                }, {
+                    label: '入库时间',
+                    width: '180',
+                    prop: 'storage_at',
+                    type: 'text'
+                }, {
+                    label: '开单时间',
+                    width: '180',
+                    prop: 'start_at',
+                    type: 'text'
+                }, {
+                    label: '提交状态',
+                    width: '180',
+                    prop: 'is_commit',
+                    type: 'checkbox'
+                }, {
+                    label: '入库状态',
+                    width: '180',
+                    prop: 'is_storage',
+                    type: 'checkbox'
                 }],
                 loading: true,
                 data: []
             },
-            partialStorage: {
+            commitStorage: {
                 table: [{
-                    label: '系统单号',
+                    label: '入库单号',
                     width: '200',
-                    prop: 'order_no',
+                    prop: 'storage_no',
                     type: 'text'
                 }, {
-                    label: '收件方',
+                    label: '外部单号',
                     width: '120',
-                    prop: 'order_user',
+                    prop: 'external_no',
+                    type: 'text'
+                }, {
+                    label: '入库仓库',
+                    width: '120',
+                    prop: 'warehouse',
+                    type: 'text'
+                }, {
+                    label: '供应商',
+                    width: '120',
+                    prop: 'supplier',
                     type: 'text'
                 }, {
                     label: '创建人',
                     width: '120',
-                    prop: 'user',
+                    prop: 'create_user',
                     type: 'text'
                 }, {
-                    label: '订购日期',
-                    width: '180',
-                    prop: 'order_at',
+                    label: '提交人',
+                    width: '120',
+                    prop: 'commit_user',
                     type: 'text'
                 }, {
-                    label: '备注',
-                    width: '180',
-                    prop: 'remark',
+                    label: '入库人',
+                    width: '120',
+                    prop: 'storage_user',
                     type: 'text'
+                }, {
+                    label: '创建时间',
+                    width: '180',
+                    prop: 'create_at',
+                    type: 'text'
+                }, {
+                    label: '提交时间',
+                    width: '180',
+                    prop: 'commit_at',
+                    type: 'text'
+                }, {
+                    label: '入库时间',
+                    width: '180',
+                    prop: 'storage_at',
+                    type: 'text'
+                }, {
+                    label: '开单时间',
+                    width: '180',
+                    prop: 'start_at',
+                    type: 'text'
+                }, {
+                    label: '提交状态',
+                    width: '180',
+                    prop: 'is_commit',
+                    type: 'checkbox'
+                }, {
+                    label: '入库状态',
+                    width: '180',
+                    prop: 'is_storage',
+                    type: 'checkbox'
                 }],
                 loading: true,
                 data: []
             },
             inStorage: {
                 table: [{
-                    label: '系统单号',
+                    label: '入库单号',
                     width: '200',
-                    prop: 'order_no',
+                    prop: 'storage_no',
                     type: 'text'
                 }, {
-                    label: '收件方',
+                    label: '外部单号',
                     width: '120',
-                    prop: 'order_user',
+                    prop: 'external_no',
                     type: 'text'
                 }, {
-                    label: '创建人',
+                    label: '入库仓库',
                     width: '120',
-                    prop: 'user',
-                    type: 'text'
-                }, {
-                    label: '订购日期',
-                    width: '180',
-                    prop: 'order_at',
-                    type: 'text'
-                }, {
-                    label: '备注',
-                    width: '180',
-                    prop: 'remark',
-                    type: 'text'
-                }],
-                loading: true,
-                data: []
-            },
-            fabricDetail: {
-                table: [{
-                    label: '型号',
-                    width: '200',
-                    prop: 'model',
-                    type: 'text'
-                }, {
-                    label: '面料图片',
-                    width: '120',
-                    prop: 'fabric_img',
-                    type: 'img'
-                }, {
-                    label: '门幅(宽)',
-                    width: '120',
-                    prop: 'width',
-                    type: 'text'
-                }, {
-                    label: '数量(米)',
-                    width: '120',
-                    prop: 'length',
-                    type: 'text'
-                }, {
-                    label: '单价',
-                    width: '120',
-                    prop: 'price',
-                    type: 'text'
-                }, {
-                    label: '合计',
-                    width: '120',
-                    prop: 'sum',
-                    type: 'text'
-                }, {
-                    label: '散剪费',
-                    width: '120',
-                    prop: 'cut_cost',
-                    type: 'text'
-                }, {
-                    label: '快递费',
-                    width: '120',
-                    prop: 'courier',
-                    type: 'text'
-                }, {
-                    label: '总计',
-                    width: '120',
-                    prop: 'total',
-                    type: 'text'
-                }, {
-                    label: '到货时间',
-                    width: '120',
-                    prop: 'arrival_time',
+                    prop: 'warehouse',
                     type: 'text'
                 }, {
                     label: '供应商',
@@ -641,165 +567,318 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     prop: 'supplier',
                     type: 'text'
                 }, {
-                    label: '余额',
+                    label: '创建人',
                     width: '120',
-                    prop: 'balance',
+                    prop: 'create_user',
                     type: 'text'
+                }, {
+                    label: '提交人',
+                    width: '120',
+                    prop: 'commit_user',
+                    type: 'text'
+                }, {
+                    label: '入库人',
+                    width: '120',
+                    prop: 'storage_user',
+                    type: 'text'
+                }, {
+                    label: '创建时间',
+                    width: '180',
+                    prop: 'create_at',
+                    type: 'text'
+                }, {
+                    label: '提交时间',
+                    width: '180',
+                    prop: 'commit_at',
+                    type: 'text'
+                }, {
+                    label: '入库时间',
+                    width: '180',
+                    prop: 'storage_at',
+                    type: 'text'
+                }, {
+                    label: '开单时间',
+                    width: '180',
+                    prop: 'start_at',
+                    type: 'text'
+                }, {
+                    label: '提交状态',
+                    width: '180',
+                    prop: 'is_commit',
+                    type: 'checkbox'
+                }, {
+                    label: '入库状态',
+                    width: '180',
+                    prop: 'is_storage',
+                    type: 'checkbox'
                 }],
                 loading: true,
                 data: []
             },
             storageDetail: {
                 table: [{
-                    label: '型号',
-                    width: '200',
-                    prop: 'model',
-                    type: 'text'
-                }, {
-                    label: '面料图片',
+                    label: '规格图片',
                     width: '120',
-                    prop: 'fabric_img',
+                    prop: 'model_img',
                     type: 'img'
                 }, {
-                    label: '门幅(宽)',
-                    width: '120',
-                    prop: 'width',
+                    label: '商品编码',
+                    width: '200',
+                    prop: 'purchase_no',
                     type: 'text'
                 }, {
-                    label: '数量(米)',
+                    label: '规格编码',
                     width: '120',
-                    prop: 'length',
+                    prop: 'spec_no',
                     type: 'text'
                 }, {
-                    label: '单价',
+                    label: '商品简称',
                     width: '120',
-                    prop: 'price',
+                    prop: 'purchase_short',
                     type: 'text'
                 }, {
-                    label: '合计',
+                    label: '包件数',
                     width: '120',
-                    prop: 'sum',
+                    prop: 'number',
                     type: 'text'
                 }, {
-                    label: '散剪费',
+                    label: '规格',
                     width: '120',
-                    prop: 'cut_cost',
+                    prop: 'spec',
                     type: 'text'
                 }, {
-                    label: '快递费',
+                    label: '规格一',
                     width: '120',
-                    prop: 'courier',
+                    prop: 'spec1',
                     type: 'text'
                 }, {
-                    label: '总计',
+                    label: '颜色',
                     width: '120',
-                    prop: 'total',
+                    prop: 'color',
                     type: 'text'
                 }, {
-                    label: '到货时间',
+                    label: '材质',
                     width: '120',
+                    prop: 'material',
+                    type: 'text'
+                }, {
+                    label: '功能',
+                    width: 'function',
                     prop: 'arrival_time',
                     type: 'text'
                 }, {
-                    label: '供应商',
+                    label: '特殊',
                     width: '120',
-                    prop: 'supplier',
+                    prop: 'special',
                     type: 'text'
                 }, {
-                    label: '余额',
+                    label: '其他',
                     width: '120',
-                    prop: 'balance',
+                    prop: 'other',
+                    type: 'text'
+                }, {
+                    label: '成本金额',
+                    width: '120',
+                    prop: 'cost',
+                    type: 'text'
+                }, {
+                    label: '成本总价',
+                    width: '120',
+                    prop: 'cost_all',
+                    type: 'text'
+                }, {
+                    label: '入库数量',
+                    width: '120',
+                    prop: 'storage_number',
+                    type: 'text'
+                }, {
+                    label: '备注',
+                    width: '120',
+                    prop: 'remark',
                     type: 'text'
                 }],
                 loading: true,
                 data: []
             },
-            addPFDialog: {
+
+            newStorageDialog: {
                 show: false,
                 data: {
-                    receiver: '',
-                    remark: '',
+                    storage_no: '',
+                    external_no: '',
+                    shopName: '',
+                    supplier: '',
+                    start_at: '',
                     data: [],
                     tableHead: [{
-                        label: '型号',
-                        width: '200',
-                        prop: 'model',
-                        type: 'text'
-                    }, {
-                        label: '面料图片',
+                        label: '规格图片',
                         width: '120',
-                        prop: 'fabric_img',
+                        prop: 'model_img',
                         type: 'img'
                     }, {
-                        label: '门幅(宽)',
-                        width: '120',
-                        prop: 'width',
+                        label: '商品编码',
+                        width: '200',
+                        prop: 'purchase_no',
                         type: 'text'
                     }, {
-                        label: '数量(米)',
+                        label: '规格编码',
                         width: '120',
-                        prop: 'length',
+                        prop: 'spec_no',
                         type: 'text'
                     }, {
-                        label: '单价',
+                        label: '商品简称',
                         width: '120',
-                        prop: 'price',
+                        prop: 'purchase_short',
                         type: 'text'
                     }, {
-                        label: '合计',
+                        label: '包件数',
                         width: '120',
-                        prop: 'sum',
+                        prop: 'number',
                         type: 'text'
                     }, {
-                        label: '散剪费',
+                        label: '规格',
                         width: '120',
-                        prop: 'cut_cost',
+                        prop: 'spec',
                         type: 'text'
                     }, {
-                        label: '快递费',
+                        label: '规格一',
                         width: '120',
-                        prop: 'courier',
+                        prop: 'spec1',
                         type: 'text'
                     }, {
-                        label: '总计',
+                        label: '颜色',
                         width: '120',
-                        prop: 'total',
+                        prop: 'color',
                         type: 'text'
                     }, {
-                        label: '到货时间',
+                        label: '材质',
                         width: '120',
+                        prop: 'material',
+                        type: 'text'
+                    }, {
+                        label: '功能',
+                        width: 'function',
                         prop: 'arrival_time',
                         type: 'text'
                     }, {
-                        label: '供应商',
+                        label: '特殊',
                         width: '120',
-                        prop: 'supplier',
+                        prop: 'special',
                         type: 'text'
                     }, {
-                        label: '余额',
+                        label: '其他',
                         width: '120',
-                        prop: 'balance',
+                        prop: 'other',
+                        type: 'text'
+                    }, {
+                        label: '成本金额',
+                        width: '120',
+                        prop: 'cost',
+                        type: 'text'
+                    }, {
+                        label: '成本总价',
+                        width: '120',
+                        prop: 'cost_all',
+                        type: 'text'
+                    }, {
+                        label: '入库数量',
+                        width: '120',
+                        prop: 'storage_number',
+                        type: 'text'
+                    }, {
+                        label: '备注',
+                        width: '120',
+                        prop: 'remark',
                         type: 'text'
                     }]
-                }
-            },
-            addUseDialog: {
-                show: false,
-                data: {
-                    useNumber: '',
-                    useDescription: ''
-                }
-            },
-            changeUseDialog: {
-                show: false,
-                data: {
-                    useNumber: '',
-                    useDescription: ''
                 }
             }
         };
     },
 
+    methods: {
+        updateOpts: function updateOpts() {
+            this.$store.state.opt.opts = this.newOpt;
+            this.$store.commit('change', this.newOpt);
+        },
+        test: function test() {
+            console.log(1);
+        },
+        cancelRowCName: function cancelRowCName(_ref) {
+            var row = _ref.row,
+                rowIndex = _ref.rowIndex;
+
+            row.index = rowIndex;
+        },
+        addCellClick: function addCellClick(row) {
+            this.addCurRow = 'index' + row.index;
+        },
+        delAddPur: function delAddPur(index) {
+            // this.addPFDialog.data.data.splice(index,1);
+        },
+        confirmAdd: function confirmAdd() {},
+        cancelAdd: function cancelAdd() {},
+        clickTopTabs: function clickTopTabs() {
+            switch (this.topActiveName) {
+                case 'newStorage':
+                    this.newStorage.loading = true;
+                    this.newOpt[3].nClick = false;
+                    this.newOpt[4].nClick = true;
+                    this.newOpt[5].nClick = true;
+
+                    this.newStorage.loading = false;
+                    break;
+                case 'commitStorage':
+                    this.commitStorage.loading = true;
+                    this.newOpt[3].nClick = true;
+                    this.newOpt[4].nClick = false;
+                    this.newOpt[5].nClick = false;
+
+                    this.commitStorage.loading = false;
+                    break;
+                case 'inStorage':
+                    this.inStorage.loading = true;
+                    this.newOpt[3].nClick = true;
+                    this.newOpt[4].nClick = true;
+                    this.newOpt[5].nClick = false;
+
+                    this.inStorage.loading = false;
+
+                    break;
+            }
+        },
+        clickBtmTabs: function clickBtmTabs() {
+            switch (this.btmActiveName) {
+                case 'storageDetail':
+                    this.storageDetail.loading = true;
+
+                    this.storageDetail.loading = false;
+                    break;
+                case 'storagePicture':
+
+                    break;
+
+                case 'storageRecord':
+
+                    break;
+            }
+        },
+        addOtherStorage: function addOtherStorage() {
+
+            this.newStorageDialog.show = true;
+        }
+    },
+    watch: {
+        newOpt: {
+            handler: function handler() {
+                this.updateOpts();
+            },
+
+            immediate: true,
+            deep: true
+
+        }
+    },
     computed: {
         resData: {
             get: function get() {
@@ -814,119 +893,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             set: function set() {}
         }
     },
-    methods: {
-        updateOpts: function updateOpts() {
-            this.$store.state.opt.opts = this.newOpt;
-            this.$store.commit('change', this.newOpt);
-        },
-        test: function test() {
-            console.log(1);
-        },
-        clickTopTabs: function clickTopTabs() {
-            var _this = this;
-
-            switch (this.topActiveName) {
-                case 'notStorage':
-                    this.notStorage.loading = true;
-                    this.newOpt[0].nClick = false;
-                    this.newOpt[1].nClick = false;
-                    this.newOpt[2].nClick = false;
-                    this.$fetch(this.urls.purchases, {
-                        purchase_status: 'new',
-                        include: 'user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination'
-                    }).then(function (res) {
-                        _this.notStorage.loading = false;
-                        _this.notStorage.data = res.data;
-                        _this.checkboxInit = false;
-                    }, function (err) {
-                        if (err.response) {
-                            var arr = err.response.data.errors;
-                            var arr1 = [];
-                            for (var i in arr) {
-                                arr1.push(arr[i]);
-                            }
-                            var str = arr1.join(',');
-                            _this.$message.error({
-                                message: str
-                            });
-                        }
-                    });
-                    break;
-                case 'partialStorage':
-                    this.partialStorage.loading = true;
-
-                    this.newOpt[0].nClick = true;
-                    this.newOpt[1].nClick = false;
-                    this.newOpt[2].nClick = true;
-
-                    this.partialStorage.loading = false;
-                    break;
-                case 'inStorage':
-                    this.inStorage.loading = true;
-
-                    this.newOpt[0].nClick = true;
-                    this.newOpt[1].nClick = true;
-                    this.newOpt[2].nClick = true;
-
-                    this.inStorage.loading = false;
-
-                    break;
-            }
-        },
-        clickBtmTabs: function clickBtmTabs() {
-            switch (this.btmActiveName) {
-                case 'fabricDetail':
-                    this.fabricDetail.loading = true;
-
-                    this.fabricDetail.loading = false;
-                    break;
-                case 'storageDetail':
-
-                    this.storageDetail.loading = true;
-
-                    this.storageDetail.loading = false;
-
-                    break;
-            }
-        },
-        addPurchaseFabric: function addPurchaseFabric() {
-            if (this.newOpt[0].nClick) {
-                return;
-            }
-            this.addPFDialog.show = true;
-        },
-        confirmAdd: function confirmAdd() {},
-        cancelAdd: function cancelAdd() {},
-        addUse: function addUse() {
-            this.addUseDialog.show = true;
-        },
-        changeUse: function changeUse() {
-            this.addUseDialog.show = true;
-        },
-        cancelRowCName: function cancelRowCName(_ref) {
-            var row = _ref.row,
-                rowIndex = _ref.rowIndex;
-
-            row.index = rowIndex;
-        },
-        addCellClick: function addCellClick(row) {
-            this.addCurRow = 'index' + row.index;
-        },
-        delAddPur: function delAddPur(index) {
-            this.addPFDialog.data.data.splice(index, 1);
-        }
-    },
-    watch: {
-        newOpt: {
-            handler: function handler() {
-                this.updateOpts();
-            },
-
-            immediate: true,
-            deep: true
-
-        }
-    },
     mounted: function mounted() {
         this.clickTopTabs();
         this.clickBtmTabs();
@@ -936,7 +902,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 588:
+/***/ 584:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -951,7 +917,7 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("面料单号")]),
+              _c("label", [_vm._v("入库单号")]),
               _vm._v(" "),
               _c("el-input", {
                 attrs: { clearable: "" },
@@ -967,15 +933,15 @@ var render = function() {
                   }
                 },
                 model: {
-                  value: _vm.searchBox.fab_no,
+                  value: _vm.searchBox.storage_no,
                   callback: function($$v) {
                     _vm.$set(
                       _vm.searchBox,
-                      "fab_no",
+                      "storage_no",
                       typeof $$v === "string" ? $$v.trim() : $$v
                     )
                   },
-                  expression: "searchBox.fab_no"
+                  expression: "searchBox.storage_no"
                 }
               })
             ],
@@ -985,7 +951,7 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("型号")]),
+              _c("label", [_vm._v("外部单号")]),
               _vm._v(" "),
               _c("el-input", {
                 attrs: { clearable: "" },
@@ -1001,15 +967,15 @@ var render = function() {
                   }
                 },
                 model: {
-                  value: _vm.searchBox.model,
+                  value: _vm.searchBox.external_no,
                   callback: function($$v) {
                     _vm.$set(
                       _vm.searchBox,
-                      "model",
+                      "external_no",
                       typeof $$v === "string" ? $$v.trim() : $$v
                     )
                   },
-                  expression: "searchBox.model"
+                  expression: "searchBox.external_no"
                 }
               })
             ],
@@ -1019,39 +985,33 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("供应商")]),
+              _c("label", [_vm._v("商品编码")]),
               _vm._v(" "),
-              _c(
-                "el-select",
-                {
-                  attrs: { clearable: "", placeholder: "请选择", value: "" },
-                  nativeOn: {
-                    keyup: function($event) {
-                      if (
-                        "keyCode" in $event &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.handleQuery($event)
+              _c("el-input", {
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      "keyCode" in $event &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
                     }
-                  },
-                  model: {
-                    value: _vm.searchBox.order_shop,
-                    callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "order_shop", $$v)
-                    },
-                    expression: "searchBox.order_shop"
+                    return _vm.handleQuery($event)
                   }
                 },
-                _vm._l(_vm.resData.suppliers, function(item) {
-                  return _c("el-option", {
-                    key: item.value,
-                    attrs: { label: item.name, value: item.id }
-                  })
-                }),
-                1
-              )
+                model: {
+                  value: _vm.searchBox.purchase_no,
+                  callback: function($$v) {
+                    _vm.$set(
+                      _vm.searchBox,
+                      "purchase_no",
+                      typeof $$v === "string" ? $$v.trim() : $$v
+                    )
+                  },
+                  expression: "searchBox.purchase_no"
+                }
+              })
             ],
             1
           ),
@@ -1059,7 +1019,43 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("订购日期")]),
+              _c("label", [_vm._v("规格编码")]),
+              _vm._v(" "),
+              _c("el-input", {
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      "keyCode" in $event &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.handleQuery($event)
+                  }
+                },
+                model: {
+                  value: _vm.searchBox.spec_no,
+                  callback: function($$v) {
+                    _vm.$set(
+                      _vm.searchBox,
+                      "spec_no",
+                      typeof $$v === "string" ? $$v.trim() : $$v
+                    )
+                  },
+                  expression: "searchBox.spec_no"
+                }
+              })
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "searchBox" }, [
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("创建时间")]),
               _vm._v(" "),
               _c("el-date-picker", {
                 attrs: {
@@ -1069,11 +1065,59 @@ var render = function() {
                   "end-placeholder": "结束日期"
                 },
                 model: {
-                  value: _vm.searchBox.order_promiseDate,
+                  value: _vm.searchBox.create_time,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_promiseDate", $$v)
+                    _vm.$set(_vm.searchBox, "create_time", $$v)
                   },
-                  expression: "searchBox.order_promiseDate"
+                  expression: "searchBox.create_time"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("提交时间")]),
+              _vm._v(" "),
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
+                model: {
+                  value: _vm.searchBox.commit_time,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "commit_time", $$v)
+                  },
+                  expression: "searchBox.commit_time"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("入库时间")]),
+              _vm._v(" "),
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
+                model: {
+                  value: _vm.searchBox.storage_time,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "storage_time", $$v)
+                  },
+                  expression: "searchBox.storage_time"
                 }
               })
             ],
@@ -1097,7 +1141,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "未入库", name: "notStorage" } },
+            { attrs: { label: "新建", name: "newStorage" } },
             [
               _c(
                 "el-table",
@@ -1106,11 +1150,11 @@ var render = function() {
                     {
                       name: "loading",
                       rawName: "v-loading",
-                      value: _vm.notStorage.loading,
-                      expression: "notStorage.loading"
+                      value: _vm.newStorage.loading,
+                      expression: "newStorage.loading"
                     }
                   ],
-                  attrs: { data: _vm.notStorage.data, fit: "", height: "300" }
+                  attrs: { data: _vm.newStorage.data, fit: "", height: "300" }
                 },
                 [
                   _c("el-table-column", {
@@ -1122,7 +1166,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.notStorage.table, function(item) {
+                  _vm._l(_vm.newStorage.table, function(item) {
                     return _c("el-table-column", {
                       key: item.prop,
                       attrs: {
@@ -1237,7 +1281,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-tab-pane",
-            { attrs: { label: "部分入库", name: "partialStorage" } },
+            { attrs: { label: "已提交", name: "commitStorage" } },
             [
               _c(
                 "el-table",
@@ -1246,12 +1290,12 @@ var render = function() {
                     {
                       name: "loading",
                       rawName: "v-loading",
-                      value: _vm.partialStorage.loading,
-                      expression: "partialStorage.loading"
+                      value: _vm.commitStorage.loading,
+                      expression: "commitStorage.loading"
                     }
                   ],
                   attrs: {
-                    data: _vm.partialStorage.data,
+                    data: _vm.commitStorage.data,
                     fit: "",
                     height: "300"
                   }
@@ -1266,7 +1310,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.partialStorage.table, function(item) {
+                  _vm._l(_vm.commitStorage.table, function(item) {
                     return _c("el-table-column", {
                       key: item.prop,
                       attrs: {
@@ -1522,7 +1566,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("Pagination", { attrs: { "page-url": _vm.urls["purchaseFabric"] } }),
+      _c("Pagination", { attrs: { "page-url": _vm.urls["otherStorage"] } }),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -1539,147 +1583,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "面料明细", name: "fabricDetail" } },
-            [
-              _c(
-                "el-table",
-                {
-                  directives: [
-                    {
-                      name: "loading",
-                      rawName: "v-loading",
-                      value: _vm.fabricDetail.loading,
-                      expression: "fabricDetail.loading"
-                    }
-                  ],
-                  attrs: { data: _vm.fabricDetail.data, fit: "", height: "300" }
-                },
-                [
-                  _c("el-table-column", {
-                    attrs: {
-                      type: "selection",
-                      width: "95",
-                      align: "center",
-                      checked: _vm.checkboxInit
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.fabricDetail.table, function(item) {
-                    return _c("el-table-column", {
-                      key: item.prop,
-                      attrs: {
-                        label: item.label,
-                        align: "center",
-                        width: item.width
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type === "select"
-                                ? _c("span", [
-                                    scope.row[item.prop] === ""
-                                      ? _c("span")
-                                      : typeof scope.row[item.prop] ==
-                                          "object" && item.nmProp
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                                " +
-                                              _vm._s(
-                                                scope.row[item.prop][
-                                                  item.nmProp
-                                                ]
-                                              ) +
-                                              "\n                            "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                                : item.type === "checkbox"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-checkbox", {
-                                        attrs: { disabled: "" },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : item.type === "img"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c(
-                                        "el-popover",
-                                        {
-                                          attrs: {
-                                            placement: "right",
-                                            trigger: "hover",
-                                            "popper-class": "picture_detail"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src: scope.row[item.prop],
-                                              alt: ""
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("img", {
-                                            attrs: {
-                                              slot: "reference",
-                                              src: scope.row[item.prop],
-                                              alt: scope.row[item.alt]
-                                            },
-                                            slot: "reference"
-                                          })
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                                " +
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              ) +
-                                              "\n                            "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  })
-                ],
-                2
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-tab-pane",
-            { attrs: { label: "入库明细", name: "storageDetail" } },
+            { attrs: { label: "入库单明细", name: "storageDetail" } },
             [
               _c(
                 "el-table",
@@ -1819,48 +1723,27 @@ var render = function() {
               )
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("el-tab-pane", {
+            attrs: { label: "入库图片", name: "storagePicture" }
+          }),
+          _vm._v(" "),
+          _c("el-tab-pane", {
+            attrs: { label: "操作记录", name: "storageRecord" }
+          })
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "dialog-footer clearfix",
-          attrs: { slot: "footer" },
-          slot: "footer"
-        },
-        [
-          _c(
-            "div",
-            { staticStyle: { float: "right" } },
-            [
-              _c(
-                "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.addUse } },
-                [_vm._v("新增用途")]
-              ),
-              _vm._v(" "),
-              _c("el-button", { on: { click: _vm.changeUse } }, [
-                _vm._v("修改用途")
-              ])
-            ],
-            1
-          )
-        ]
       ),
       _vm._v(" "),
       _c(
         "el-dialog",
         {
           class: { "more-forms": _vm.moreForms },
-          attrs: { title: "新增采购面料", visible: _vm.addPFDialog.show },
+          attrs: { title: "新增采购面料", visible: _vm.newStorageDialog.show },
           on: {
             "update:visible": function($event) {
-              return _vm.$set(_vm.addPFDialog, "show", $event)
+              return _vm.$set(_vm.newStorageDialog, "show", $event)
             }
           }
         },
@@ -1869,15 +1752,16 @@ var render = function() {
             _c(
               "span",
               [
-                _c("label", [_vm._v("收件方")]),
+                _c("label", [_vm._v("入库单号")]),
                 _vm._v(" "),
                 _c("el-input", {
+                  attrs: { placeholder: "系统自动生成", disabled: "" },
                   model: {
-                    value: _vm.addPFDialog.data.receiver,
+                    value: _vm.newStorageDialog.data.storage_no,
                     callback: function($$v) {
-                      _vm.$set(_vm.addPFDialog.data, "receiver", $$v)
+                      _vm.$set(_vm.newStorageDialog.data, "storage_no", $$v)
                     },
-                    expression: "addPFDialog.data.receiver"
+                    expression: "newStorageDialog.data.storage_no"
                   }
                 })
               ],
@@ -1887,15 +1771,126 @@ var render = function() {
             _c(
               "span",
               [
-                _c("label", [_vm._v("采购单号")]),
+                _c("label", [_vm._v("外部单号")]),
                 _vm._v(" "),
                 _c("el-input", {
                   model: {
-                    value: _vm.addPFDialog.data.remark,
+                    value: _vm.newStorageDialog.data.external_no,
                     callback: function($$v) {
-                      _vm.$set(_vm.addPFDialog.data, "remark", $$v)
+                      _vm.$set(_vm.newStorageDialog.data, "external_no", $$v)
                     },
-                    expression: "addPFDialog.data.remark"
+                    expression: "newStorageDialog.data.external_no"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("入库仓库")]),
+                _vm._v(" "),
+                _c(
+                  "el-select",
+                  {
+                    attrs: { clearable: "", placeholder: "请选择" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          "keyCode" in $event &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.handleQuery($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.newStorageDialog.data.shopName,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newStorageDialog.data, "shopName", $$v)
+                      },
+                      expression: "newStorageDialog.data.shopName"
+                    }
+                  },
+                  _vm._l(_vm.resData.shopNames, function(item) {
+                    return _c("el-option", {
+                      key: item.value,
+                      attrs: { label: item.name, value: item.id }
+                    })
+                  }),
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("供应商")]),
+                _vm._v(" "),
+                _c(
+                  "el-select",
+                  {
+                    attrs: { clearable: "", placeholder: "请选择" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          "keyCode" in $event &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.handleQuery($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.newStorageDialog.data.supplier,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newStorageDialog.data, "supplier", $$v)
+                      },
+                      expression: "newStorageDialog.data.supplier"
+                    }
+                  },
+                  _vm._l(_vm.resData.suppliers, function(item) {
+                    return _c("el-option", {
+                      key: item.value,
+                      attrs: { label: item.name, value: item.id }
+                    })
+                  }),
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("开单时间")]),
+                _vm._v(" "),
+                _c("el-date-picker", {
+                  attrs: { type: "date" },
+                  model: {
+                    value: _vm.newStorageDialog.data.start_at,
+                    callback: function($$v) {
+                      _vm.$set(_vm.newStorageDialog.data, "start_at", $$v)
+                    },
+                    expression: "newStorageDialog.data.start_at"
                   }
                 })
               ],
@@ -1903,13 +1898,13 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("el-button", { attrs: { type: "text" } }, [_vm._v("面料明细")]),
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("入库明细")]),
           _vm._v(" "),
           _c(
             "el-table",
             {
               attrs: {
-                data: _vm.addPFDialog.data.data,
+                data: _vm.newStorageDialog.data.data,
                 fit: "",
                 height: "350",
                 "row-class-name": _vm.cancelRowCName
@@ -1917,7 +1912,10 @@ var render = function() {
               on: { "cell-click": _vm.addCellClick }
             },
             [
-              _vm._l(_vm.addPFDialog.data.tableHead, function(item, index) {
+              _vm._l(_vm.newStorageDialog.data.tableHead, function(
+                item,
+                index
+              ) {
                 return _c("el-table-column", {
                   key: index,
                   attrs: {
@@ -2091,384 +2089,6 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          class: { "more-forms": _vm.moreForms },
-          attrs: { title: "修改采购面料", visible: _vm.addPFDialog.show },
-          on: {
-            "update:visible": function($event) {
-              return _vm.$set(_vm.addPFDialog, "show", $event)
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "searchBox cancelPur" }, [
-            _c(
-              "span",
-              [
-                _c("label", [_vm._v("收件方")]),
-                _vm._v(" "),
-                _c("el-input", {
-                  model: {
-                    value: _vm.addPFDialog.data.receiver,
-                    callback: function($$v) {
-                      _vm.$set(_vm.addPFDialog.data, "receiver", $$v)
-                    },
-                    expression: "addPFDialog.data.receiver"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              [
-                _c("label", [_vm._v("采购单号")]),
-                _vm._v(" "),
-                _c("el-input", {
-                  model: {
-                    value: _vm.addPFDialog.data.remark,
-                    callback: function($$v) {
-                      _vm.$set(_vm.addPFDialog.data, "remark", $$v)
-                    },
-                    expression: "addPFDialog.data.remark"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("el-button", { attrs: { type: "text" } }, [_vm._v("面料明细")]),
-          _vm._v(" "),
-          _c(
-            "el-table",
-            {
-              attrs: {
-                data: _vm.addPFDialog.data.data,
-                fit: "",
-                height: "350",
-                "row-class-name": _vm.cancelRowCName
-              },
-              on: { "cell-click": _vm.addCellClick }
-            },
-            [
-              _vm._l(_vm.addPFDialog.data.tableHead, function(item, index) {
-                return _c("el-table-column", {
-                  key: index,
-                  attrs: {
-                    label: item.label,
-                    align: "center",
-                    width: item.width
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          item.prop == "purchase_fabric"
-                            ? _c("span", [
-                                _vm.addCurRow == "index" + scope.$index
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          on: {
-                                            input: function($event) {
-                                              return _vm.purQChg(scope.row)
-                                            }
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c("span", [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n                        "
-                                      )
-                                    ])
-                              ])
-                            : _c("span", [
-                                item.type == "img"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c(
-                                          "el-popover",
-                                          {
-                                            attrs: {
-                                              placement: "right",
-                                              trigger: "hover",
-                                              "popper-class": "picture_detail"
-                                            }
-                                          },
-                                          [
-                                            _c("img", {
-                                              attrs: {
-                                                src: scope.row[item.prop]
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("img", {
-                                              attrs: {
-                                                slot: "reference",
-                                                src: scope.row[item.prop]
-                                              },
-                                              slot: "reference"
-                                            })
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "select"
-                                  ? _c(
-                                      "span",
-                                      _vm._l(
-                                        _vm.resData[item.stateVal],
-                                        function(list, index) {
-                                          return _c("span", { key: index }, [
-                                            list.id == scope.row[item.prop]
-                                              ? _c("span", [
-                                                  _vm._v(
-                                                    "\n                                       " +
-                                                      _vm._s(list.name) +
-                                                      "\n                                       "
-                                                  )
-                                                ])
-                                              : _vm._e()
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  : _c("span", [
-                                      _vm._v(
-                                        "\n                          " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n                     "
-                                      )
-                                    ])
-                              ])
-                        ]
-                      }
-                    }
-                  ])
-                })
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: {
-                  label: "操作",
-                  width: "90",
-                  align: "center",
-                  fixed: "right"
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        _c(
-                          "el-button",
-                          {
-                            attrs: { size: "mini", type: "danger" },
-                            on: {
-                              click: function($event) {
-                                return _vm.delAddPur(scope.$index)
-                              }
-                            }
-                          },
-                          [_vm._v("删除")]
-                        )
-                      ]
-                    }
-                  }
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.confirmAdd } },
-                [_vm._v("确定")]
-              ),
-              _vm._v(" "),
-              _c("el-button", { on: { click: _vm.cancelAdd } }, [
-                _vm._v("取消")
-              ])
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "新增面料用途", visible: _vm.addUseDialog.show },
-          on: {
-            "update:visible": function($event) {
-              return _vm.$set(_vm.addUseDialog, "show", $event)
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "searchBox cancelPur" }, [
-            _c(
-              "span",
-              [
-                _c("label", [_vm._v("使用数量")]),
-                _vm._v(" "),
-                _c("el-input", {
-                  model: {
-                    value: _vm.addUseDialog.data.useNumber,
-                    callback: function($$v) {
-                      _vm.$set(_vm.addUseDialog.data, "useNumber", $$v)
-                    },
-                    expression: "addUseDialog.data.useNumber"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "searchBox cancelPur" }, [
-            _c(
-              "span",
-              [
-                _c("label", [_vm._v("用途描述")]),
-                _vm._v(" "),
-                _c("el-input", {
-                  attrs: { type: "textarea" },
-                  model: {
-                    value: _vm.addUseDialog.data.useDescription,
-                    callback: function($$v) {
-                      _vm.$set(_vm.addUseDialog.data, "useDescription", $$v)
-                    },
-                    expression: "addUseDialog.data.useDescription"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c("el-button", { attrs: { type: "primary" } }, [_vm._v("确定")]),
-              _vm._v(" "),
-              _c("el-button", [_vm._v("取消")])
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "修改面料用途", visible: _vm.changeUseDialog.show },
-          on: {
-            "update:visible": function($event) {
-              return _vm.$set(_vm.changeUseDialog, "show", $event)
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "searchBox cancelPur" }, [
-            _c(
-              "span",
-              [
-                _c("label", [_vm._v("使用数量")]),
-                _vm._v(" "),
-                _c("el-input", {
-                  model: {
-                    value: _vm.changeUseDialog.data.useNumber,
-                    callback: function($$v) {
-                      _vm.$set(_vm.changeUseDialog.data, "useNumber", $$v)
-                    },
-                    expression: "changeUseDialog.data.useNumber"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "searchBox cancelPur" }, [
-            _c(
-              "span",
-              [
-                _c("label", [_vm._v("用途描述")]),
-                _vm._v(" "),
-                _c("el-input", {
-                  attrs: { type: "textarea" },
-                  model: {
-                    value: _vm.changeUseDialog.data.useDescription,
-                    callback: function($$v) {
-                      _vm.$set(_vm.changeUseDialog.data, "useDescription", $$v)
-                    },
-                    expression: "changeUseDialog.data.useDescription"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c("el-button", { attrs: { type: "primary" } }, [_vm._v("确定")]),
-              _vm._v(" "),
-              _c("el-button", [_vm._v("取消")])
-            ],
-            1
-          )
-        ]
       )
     ],
     1
@@ -2480,7 +2100,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-367c08f1", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-85f29114", module.exports)
   }
 }
 
