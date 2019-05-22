@@ -470,9 +470,6 @@ class CustomerServiceChangeOrdersController extends Controller
         ChangeOrder $order,
         \App\Handlers\ValidatedHandler $validatedHandler)
     {
-        //锁定才能修改
-        if ($order->unlock())
-            throw new UpdateResourceFailedException('订单未锁定无法修改');
 
         $data[] = $customerServiceChangeOrdersRequest->validated();
         $data[] = $customerServiceChangeOrdersRequest->input('order_items');
