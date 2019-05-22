@@ -675,6 +675,7 @@ class CustomerServiceDepartmentRequset extends FormRequest
             'tax_number' => '税号',
             'receipt' => '收据',
             'logistics_remark' => '物流备注',
+            'logistics_sn' => '物流单号',
             'seller_remark' => '卖家备注',
             'customer_service_remark' => '客服备注',
             'buyer_message' => '买家留言',
@@ -701,6 +702,7 @@ class CustomerServiceDepartmentRequset extends FormRequest
             'under_line_total_amount' => '线下金额（数量*单价）',
             'under_line_preferential' => '优惠（线下）',
             'under_line_payment' => '实际支付金额（线下）（线下金额 - 优惠）',
+            'auditor_id' => '审计员',
         ];
     }
 }

@@ -38,18 +38,18 @@ class CustomerServiceDepartmentsController extends Controller
      * */
     public function searchUntreated(CustomerServiceDepartmentRequset $request)
     {
-        $member_nick=$request->input("member_nick");
-        $system_order_no=$request->input("system_order_no");
-        $receiver_name=$request->input("receiver_name");
-        $receiver_phone=$request->input("receiver_phone");
-        $receiver_address=$request->input("receiver_address");
-        $promise_ship_time=$request->input("promise_ship_time");
-        $created_at=$request->input("created_at");
-        $audit_at=$request->input("cs_audited_at");
-        $shops_id=$request->input("shops_id");
-        $logistics_id=$request->input("logistics_id");
-        $seller_remark=$request->input("seller_remark");
-        $seller_flag=$request->input("seller_flag");
+        $member_nick = $request->input('member_nick');
+        $system_order_no = $request->input('system_order_no');
+        $receiver_name = $request->input('receiver_name');
+        $receiver_phone = $request->input('receiver_phone');
+        $receiver_address = $request->input('receiver_address');
+        $promise_ship_time = $request->input('promise_ship_time');
+        $created_at = $request->input('created_at');
+        $audit_at = $request->input('cs_audited_at');
+        $shops_id = $request->input('shops_id');
+        $logistics_id = $request->input('logistics_id');
+        $seller_remark = $request->input('seller_remark');
+        $seller_flag = $request->input('seller_flag');
 
         $order = Order::query()->whereIn('order_status', [ORDER::ORDER_STATUS_NEW, ORDER::ORDER_STATUS_LOCK])
         ->where('member_nick', 'like', '%'.$member_nick.'%')
@@ -171,35 +171,35 @@ class CustomerServiceDepartmentsController extends Controller
      */
     public function searchAudit(CustomerServiceDepartmentRequset $request)
     {
-        $order_status=$request->input("order_status");
+        $order_status = $request->input('order_status');
         $order = Order::query()
-        ->where('order_status','=',$order_status)
+        ->where('order_status', '=', $order_status)
         ->orderBy('created_at', 'desc');
 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
+    public function searchAll(CustomerServiceDepartmentRequset $request)
+    {
+        $order = Order::query()->orderBy('created_at', 'desc');
 
-     public function searchAll(CustomerServiceDepartmentRequset $request)
-     {
-         $order = Order::query()->orderBy('created_at', 'desc');
- 
-         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
-     }
-     public function index(CustomerServiceDepartmentRequset $request)
-     {
-         $order_status = $request->input("order_status");
-         $member_nick=$request->input("member_nick");
-         $system_order_no=$request->input("system_order_no");
-         $receiver_name=$request->input("receiver_name");
-         $receiver_phone=$request->input("receiver_phone");
-         $receiver_address=$request->input("receiver_address");
-         $promise_ship_time=$request->input("promise_ship_time");
-         $created_at=$request->input("created_at");
-         $audit_at=$request->input("audit_at");
-         $shops_id=$request->input("shops_id");
-         $logistics_id=$request->input("logistics_id");
-         $order = Order::query()->whereIn('order_status', [$order_status])
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function index(CustomerServiceDepartmentRequset $request)
+    {
+        $order_status = $request->input('order_status');
+        $member_nick = $request->input('member_nick');
+        $system_order_no = $request->input('system_order_no');
+        $receiver_name = $request->input('receiver_name');
+        $receiver_phone = $request->input('receiver_phone');
+        $receiver_address = $request->input('receiver_address');
+        $promise_ship_time = $request->input('promise_ship_time');
+        $created_at = $request->input('created_at');
+        $audit_at = $request->input('audit_at');
+        $shops_id = $request->input('shops_id');
+        $logistics_id = $request->input('logistics_id');
+        $order = Order::query()->whereIn('order_status', [$order_status])
          ->where('member_nick', 'like', '%'.$member_nick.'%')
          ->where('system_order_no', 'like', '%'.$system_order_no.'%')
          ->where('receiver_name', 'like', '%'.$receiver_name.'%')
@@ -221,13 +221,13 @@ class CustomerServiceDepartmentsController extends Controller
         $member_nick = $request->input('member_nick');
         $system_order_no = $request->input('system_order_no');
         $receiver_name = $request->input('receiver_name');
-        $receiver_phone = $request->input('receiver_phone');
+        $receiver_mobile = $request->input('receiver_mobile');
         $receiver_address = $request->input('receiver_address');
         $order = Order::query()
         ->where('member_nick', 'like', '%'.$member_nick.'%')
         ->where('system_order_no', 'like', '%'.$system_order_no.'%')
         ->where('receiver_name', 'like', '%'.$receiver_name.'%')
-        ->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+        ->where('receiver_mobile', 'like', '%'.$receiver_mobile.'%')
         ->where('receiver_address', 'like', '%'.$receiver_address.'%')
         ->orderBy('created_at', 'desc');
 
@@ -240,14 +240,45 @@ class CustomerServiceDepartmentsController extends Controller
         $member_nick = $request->input('member_nick');
         $system_order_no = $request->input('system_order_no');
         $receiver_name = $request->input('receiver_name');
-        $receiver_phone = $request->input('receiver_phone');
+        $receiver_mobile = $request->input('receiver_mobile');
         $receiver_address = $request->input('receiver_address');
+        $shops_id = $request->input('shops_id');
+        $business_personnel_id = $request->input('business_personnel_id');
+        //$promise_ship_time = $request->input('promise_ship_time');
+        //$created_at = $request->input('created_at');
+        $logistics_id = $request->input('logistics_id');
+        //$stockout_at = $request->input('stockout_at');
+        //$payment_date = $request->input('payment_date');
+        $order_status = $request->input('order_status');
+        $freight_types_id = $request->input('freight_types_id');
+        $seller_flag = $request->input('seller_flag');
+        $logistics_sn = $request->input('logistics_sn');
+        $seller_remark = $request->input('seller_remark');
+        //$suppliers_id = $request->input('suppliers_id');
+        $warehouses_id = $request->input('warehouses_id');
+        //$audit_at = $request->input('audit_at');
+        $auditor_id = $request->input('auditor_id');
         $order = Order::query()
         ->where('member_nick', 'like', '%'.$member_nick.'%')
         ->where('system_order_no', 'like', '%'.$system_order_no.'%')
         ->where('receiver_name', 'like', '%'.$receiver_name.'%')
-        ->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+        ->where('receiver_mobile', 'like', '%'.$receiver_mobile.'%')
         ->where('receiver_address', 'like', '%'.$receiver_address.'%')
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('business_personnel_id', 'like', '%'.$business_personnel_id.'%')
+        //->whereBetween('promise_ship_time', [$promise_ship_time[0], $promise_ship_time[1]])
+        //->where('created_at', 'like', '%'.$created_at.'%')
+        ->where('logistics_id', 'like', '%'.$logistics_id.'%')
+        //->where('stockout_at', 'like', '%'.$stockout_at.'%')
+        //->whereBetween('payment_date', [$payment_date[0], $payment_date[1]])
+        ->where('order_status', 'like', '%'.$order_status.'%')
+        ->where('freight_types_id', 'like', '%'.$freight_types_id.'%')
+        ->where('seller_flag', 'like', '%'.$seller_flag.'%')
+        ->where('logistics_sn', 'like', '%'.$logistics_sn.'%')
+        ->where('seller_remark', 'like', '%'.$seller_remark.'%')
+        ->where('warehouses_id', 'like', '%'.$warehouses_id.'%')
+        //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
+        ->where('auditor_id', 'like', '%'.$auditor_id.'%')
         ->orderBy('created_at', 'desc');
 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
@@ -1594,6 +1625,4 @@ class CustomerServiceDepartmentsController extends Controller
             'auditDeptsAudit'
         );
     }
-
-
 }

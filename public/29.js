@@ -572,6 +572,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -580,33 +603,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       newOpt: [{
         cnt: '删除',
         icon: 'bf-del',
-        ent: this.delBatch,
-        nClick: true
+        ent: this.delBatch
       }, {
         cnt: '退审',
         icon: 'bf-auditfaild',
-        ent: this.handleUnAudit,
-        nClick: true
+        ent: this.handleUnAudit
       }, {
         cnt: '导入',
         icon: 'bf-in',
-        ent: this.test,
-        nClick: false
+        ent: this.test
       }, {
         cnt: '导出',
         icon: 'bf-out',
-        ent: this.test,
-        nClick: false
+        ent: this.test
       }, {
         cnt: '同步',
         icon: 'bf-sync',
-        ent: this.handleMergerOrder,
-        nClick: true
+        ent: this.handleMergerOrder
       }, {
         cnt: '门店收款',
         icon: 'bf-bill',
-        ent: this.test,
-        nClick: false
+        ent: this.test
       }, {
         cnt: '转赠品',
         icon: 'bf-gift',
@@ -637,10 +654,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         stockout_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         payment_date: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         order_status: '',
-        orderStatus: [],
+        orderStatus: [{ label: '未处理', value: 10 }, { label: '订单锁定中', value: 20 }, { label: '已客审', value: 30 }, { label: '已跟单一审', value: 40 }, { label: '已财审', value: 50 }, { label: '已货审', value: 60 }, { label: '准备出库', value: 70 }, { label: '已出库', value: 80 }],
         order_fdAuditDate: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         seller_flag: '',
-        sellerFlags: [],
         logistics_sn: '',
         out_order: '',
         seller_remark: '',
@@ -1078,7 +1094,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '发票信息',
         width: '160',
-        prop: 'print_at',
+        prop: '',
         type: 'text'
       }, {
         label: '纳税识别号',
@@ -1159,7 +1175,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: 'checkbox'
       }, {
         label: '客审',
-        width: '220',
+        width: '90',
         prop: 'resupplieOrder',
         inProp: 'is_review',
         type: 'checkbox',
@@ -1176,7 +1192,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: 'checkbox'
       }, {
         label: '打印',
-        width: '220',
+        width: '90',
         prop: 'resupplieOrder',
         inProp: 'is_print',
         type: 'checkbox',
@@ -1188,21 +1204,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: 'checkbox'
       }, {
         label: '发货',
-        width: '220',
+        width: '90',
         prop: 'resupplieOrder',
         inProp: 'is_consign',
         type: 'checkbox',
         inData: true
       }, {
         label: '结算',
-        width: '220',
+        width: '90',
         prop: 'resupplieOrder',
         inProp: 'is_settle',
         type: 'checkbox',
         inData: true
       }, {
         label: '作废',
-        width: '220',
+        width: '90',
         prop: 'resupplieOrder',
         inProp: 'is_invalid',
         type: 'checkbox',
@@ -1310,7 +1326,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         inProp: 'name',
         type: 'text'
       }],
-      loading: false,
+      loading: true,
       checkboxInit: false,
       orderListIndex: '',
       alreadyHandle: [],
@@ -1378,11 +1394,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: 'number'
       }, {
         label: '支付总金额',
-        prop: 'distribution_phone',
+        prop: '',
         type: 'number'
       }, {
         label: '三包类型',
-        prop: 'distribution_no',
+        prop: '',
         type: 'text'
       }, {
         label: '三包费用',
@@ -1967,17 +1983,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       offerListHead: [{
         label: '单号',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '优惠标题',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '优惠金额',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }],
       //门店收款明细
@@ -1997,7 +2013,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '出货日期',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '门店收款方式',
@@ -2013,12 +2029,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '已付定金',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '欠款金额',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '付款方式',
@@ -2029,7 +2045,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '付款账号',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '付款时间',
@@ -2039,12 +2055,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '收款人',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '收款账号',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '备注',
@@ -2054,7 +2070,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '创建人',
         width: '140',
-        prop: 'mark_time',
+        prop: '',
         type: 'text'
       }, {
         label: '创建时间',
@@ -2067,7 +2083,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       EsheetHead: [{
         label: '电子面单号',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }],
       //其他费用
@@ -2075,42 +2091,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       otherFeeHead: [{
         label: '系统订单号',
         width: '140',
-        prop: 'system_order_no',
+        prop: '',
         type: 'text'
       }, {
         label: '费用类型',
         width: '140',
-        prop: 'feeType',
+        prop: '',
         type: 'text'
       }, {
         label: '费用金额',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }, {
         label: '创建人',
         width: '140',
-        prop: 'creator',
+        prop: '',
         type: 'text'
       }, {
         label: '创建时间',
         width: '140',
-        prop: 'created_at',
+        prop: '',
         type: 'text'
       }, {
         label: '修改人',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }, {
         label: '修改时间',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }, {
         label: '备注',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }],
       //库存占用
@@ -2118,27 +2134,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       warehouseHead: [{
         label: '商品编码',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }, {
         label: '规格编码',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }, {
         label: '占用仓库',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }, {
         label: '占用数',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }, {
         label: '占用时间',
         width: '140',
-        prop: 'esheet_no',
+        prop: '',
         type: 'text'
       }],
       //备注
@@ -2157,31 +2173,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       showDel: false,
       delUrl: '',
       delId: '',
+      //分页
+      pagination: {
+        current_page: 1,
+        per_page: 0,
+        page_total: 0
+      },
       /*删除批量*/
       ids: [],
-      splitMask: false,
-      splitVal: [],
-      splitHead: [{
-        label: '商品编码',
-        prop: 'commodity_code',
-        type: 'text'
-      }, {
-        label: '商品简称',
-        prop: 'short_name',
-        type: 'text'
-      }, {
-        label: '数量',
-        prop: 'quantity',
-        type: 'number'
-      }, {
-        label: '实际拆分数量',
-        prop: '',
-        inProp: 'quantity',
-        type: 'number'
-      }],
-      splitRowIndex: '',
-      splitRow: {},
-      mergerIds: []
+      checkboxId: ''
     };
   },
 
@@ -2292,34 +2292,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         receiver_address: this.searchBox.receiver_address,
         shops_id: this.searchBox.shops_id,
         business_personnel_id: this.searchBox.business_personnel_id,
-        promise_ship_time: this.searchBox.promise_ship_time,
-        created_at: this.searchBox.created_at,
-        order_transMStart: this.searchBox.order_transMStart,
-        order_transMEnd: this.searchBox.order_transMEnd,
-        logistics: this.searchBox.logistics,
-        stockout_at: this.searchBox.stockout_at,
-        payment_date: this.searchBox.payment_date,
+        //promise_ship_time: this.searchBox.promise_ship_time,
+        //created_at: this.searchBox.created_at,
+        //order_transMStart: this.searchBox.order_transMStart,
+        //order_transMEnd: this.searchBox.order_transMEnd,
+        logistics_id: this.searchBox.logistics_id,
+        //stockout_at: this.searchBox.stockout_at,
+        //payment_date: this.searchBox.payment_date,
         order_status: this.searchBox.order_status,
+        freight_types_id: this.searchBox.freight_types_id,
         //order_fdAuditDate: this.searchBox.order_fdAuditDate,
         seller_flag: this.searchBox.seller_flag,
         logistics_sn: this.searchBox.logistics_sn,
         //out_order: this.searchBox.out_order,
         seller_remark: this.searchBox.seller_remark,
-        suppliers_id: this.searchBox.suppliers_id,
+        //suppliers_id: this.searchBox.suppliers_id,
         warehouses_id: this.searchBox.warehouses_id,
         //esheet_no: this.searchBox.esheet_no,
-        audit_at: this.searchBox.audit_at,
+        //audit_at: this.searchBox.audit_at,
         auditor_id: this.searchBox.auditor_id,
         include: 'resupplieOrder,shop,customerType,businessPersonnel,logistic,freightType,distribution,distributionType,distributionMethod,orderItems,paymentMethod,warehouses,orderItems.combination,orderItems.product.supplier,orderItems.product.productComponents,paymentDetails,paymentDetails.paymentMethod,paymentDetails.order,resupplieOrder.resupplieInnerNote,resupplieOrder.resupplieOperationRecord,logistic.orders,logistic.freightType,resupplieOrder.resupplieCategory,resupplieOrder.order,resupplieOrder.refundMethod,resupplieOrder.logistic,resupplieOrder.resupplieEsheet'
       }).then(function (res) {
         _this.loading = false;
         _this.orderListData = res.data;
+        _this.$store.dispatch('shops', '/shops');
+        _this.$store.dispatch('logistics', '/logistics');
+        _this.$store.dispatch('warehouses', '/warehouses');
+        _this.$store.dispatch('freighttypes', '/freighttypes');
+        _this.$fetch(_this.urls.customerservicedepts + '/create').then(function (res) {
+          _this.addSubData = res;
+          console.log(_this.addSubData);
+        }, function (err) {});
         _this.proDtlData = res.data[0] ? res.data['orderItems'].data : [];
         _this.cargoAuditData = res.data;
         _this.payDtlData = res.data[0] ? res.data['paymentDetails'].data : [];
-        _this.innerNoteData = [];
-        _this.operationRecordData = [];
-        _this.checkDtlData = [];
+        /*this.innerNoteData = [];
+        this.operationRecordData = [];
+        this.checkDtlData = [];*/
         _this.logisticsData = res.data[0] ? [{
           orders: res.data['logistic']['orders'],
           name: res.data['logistic']['orders'],
@@ -2327,20 +2336,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           freightType: res.data['logistic']['freightType']
         }] : [];
         _this.reSupplyData = res.data[0] ? res.data['resupplieOrder'].data : [];
-        _this.offerListData = [];
-        _this.receiveDtlData = [];
-        _this.EsheetData = res.data[0] ? res.data['resupplieOrder'].data['resupplieEsheet'].data : [];
-        _this.otherFeeData = [];
-        _this.warehouseData = [];
+        /*this.offerListData = [];
+        this.receiveDtlData = [];
+        this.EsheetData = res.data[0]
+          ? res.data['resupplieOrder'].data['resupplieEsheet'].data
+          : [];
+        this.otherFeeData = [];
+        this.warehouseData = [];*/
 
         var pg = res.meta.pagination;
         _this.$store.dispatch('currentPage', pg.current_page);
         _this.$store.commit('PER_PAGE', pg.per_page);
         _this.$store.commit('PAGE_TOTAL', pg.total);
-        _this.$store.dispatch('paymentmethods', _this.urls.paymentmethods);
-        _this.$fetch(_this.urls.customerservicedepts + '/create').then(function (res) {
-          _this.addSubData = res;
-        }, function (err) {});
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -2367,7 +2374,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         created_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         order_transMStart: '',
         order_transMEnd: '',
-        logistics: '',
+        logistics_id: '',
         stockout_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         payment_date: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         order_status: '',
@@ -2449,7 +2456,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           seller_remark: data['seller_remark']
         };
       }
-      console.log(row);
       this.proDtlData = row['orderItems'].data;
       this.cargoAuditData = row['orderItems'].data;
 
@@ -2470,7 +2476,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.EsheetData = [];
       this.otherFeeData = [];
       this.warehouseData = [];
-      console.log(this.EsheetData);
     },
     proQueryClick: function proQueryClick() {
       var _this2 = this;
@@ -2615,7 +2620,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.showDel = true;
       $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
       this.delId = row.id;
-      this.delUrl = row['orderItems'] ? this.urls.customerservicedepts : row['payment'] ? this.urls['paymentdetails'] : this.urls.orderitems;
+      this.delUrl = this.urls.customerservicedepts;
     },
     cancelD: function cancelD() {
       this.showDel = false;
@@ -2660,7 +2665,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       /*拿到当前id*/
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : '';
       this.curRowData = val.length > 0 ? val[val.length - 1] : '';
-      this.mergerIds = val;
     },
     delBatch: function delBatch() {
       var _this6 = this;
@@ -2722,7 +2726,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     //退审
-    handleUnAudit: function handleUnAudit() {},
+    handleUnAudit: function handleUnAudit() {
+      var _this8 = this;
+
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$put(this.urls.customerservicedepts + '/' + id + '/unaudit').then(function () {
+        _this8.refresh();
+        _this8.$message({
+          message: '退审成功',
+          type: 'success'
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this8.$message.error(str);
+        }
+      });
+    },
 
     //同步
     handleMergerOrder: function handleMergerOrder() {}
@@ -2920,20 +2945,39 @@ var render = function() {
                     [
                       _c("label", [_vm._v("业务员")]),
                       _vm._v(" "),
-                      _c("el-input", {
-                        attrs: { clearable: "" },
-                        model: {
-                          value: _vm.searchBox.business_personnel_id,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.searchBox,
-                              "business_personnel_id",
-                              $$v
-                            )
-                          },
-                          expression: "searchBox.business_personnel_id"
-                        }
-                      })
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.business_personnel_id,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.searchBox,
+                                "business_personnel_id",
+                                $$v
+                              )
+                            },
+                            expression: "searchBox.business_personnel_id"
+                          }
+                        },
+                        _vm._l(_vm.addSubData["user"], function(list) {
+                          return _c(
+                            "span",
+                            { key: list.id },
+                            [
+                              _c("el-option", {
+                                attrs: {
+                                  label: list["username"],
+                                  value: list.id
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        }),
+                        0
+                      )
                     ],
                     1
                   ),
@@ -3217,12 +3261,68 @@ var render = function() {
                             expression: "searchBox.seller_flag"
                           }
                         },
-                        _vm._l(_vm.searchBox.sellerFlags, function(item) {
-                          return _c("el-option", {
-                            key: item.value,
-                            attrs: { label: item.label, value: item.value }
-                          })
-                        }),
+                        [
+                          _c(
+                            "el-option",
+                            { key: 0, attrs: { label: "黑旗", value: 0 } },
+                            [_c("i", { staticClass: "iconfont bf-flag" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 1, attrs: { label: "红旗", value: 1 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "red" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 2, attrs: { label: "黄旗", value: 2 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "yellow" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 3, attrs: { label: "绿旗", value: 3 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "green" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 4, attrs: { label: "蓝旗", value: 4 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "blue" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 5, attrs: { label: "紫旗", value: 5 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "purple" }
+                              })
+                            ]
+                          )
+                        ],
                         1
                       )
                     ],
@@ -3377,16 +3477,35 @@ var render = function() {
                     [
                       _c("label", [_vm._v("审计员")]),
                       _vm._v(" "),
-                      _c("el-input", {
-                        attrs: { clearable: "" },
-                        model: {
-                          value: _vm.searchBox.auditor_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "auditor_id", $$v)
-                          },
-                          expression: "searchBox.auditor_id"
-                        }
-                      })
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.auditor_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.searchBox, "auditor_id", $$v)
+                            },
+                            expression: "searchBox.auditor_id"
+                          }
+                        },
+                        _vm._l(_vm.addSubData["user"], function(list) {
+                          return _c(
+                            "span",
+                            { key: list.id },
+                            [
+                              _c("el-option", {
+                                attrs: {
+                                  label: list["username"],
+                                  value: list.id
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        }),
+                        0
+                      )
                     ],
                     1
                   )
@@ -3396,9 +3515,14 @@ var render = function() {
                   "div",
                   { staticStyle: { "text-align": "right" } },
                   [
-                    _c("el-button", { attrs: { type: "primary" } }, [
-                      _vm._v("筛选")
-                    ]),
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "primary" },
+                        on: { click: _vm.searchData }
+                      },
+                      [_vm._v("筛选")]
+                    ),
                     _vm._v(" "),
                     _c("el-button", { on: { click: _vm.resets } }, [
                       _vm._v("重置")
@@ -3883,9 +4007,20 @@ var render = function() {
                                                                     item.prop
                                                                   ][
                                                                     item.inProp
-                                                                  ]["data"][0][
-                                                                    item.nmProp
-                                                                  ]
+                                                                  ]["data"][0]
+                                                                    ? scope.row[
+                                                                        item
+                                                                          .prop
+                                                                      ][
+                                                                        item
+                                                                          .inProp
+                                                                      ][
+                                                                        "data"
+                                                                      ][0][
+                                                                        item
+                                                                          .nmProp
+                                                                      ]
+                                                                    : ""
                                                                 ) +
                                                                 "\n                      "
                                                             )
@@ -4037,9 +4172,20 @@ var render = function() {
                                                                     item.prop
                                                                   ][
                                                                     item.inProp
-                                                                  ]["data"][0][
-                                                                    item.nmProp
-                                                                  ]
+                                                                  ]["data"][0]
+                                                                    ? scope.row[
+                                                                        item
+                                                                          .prop
+                                                                      ][
+                                                                        item
+                                                                          .inProp
+                                                                      ][
+                                                                        "data"
+                                                                      ][0][
+                                                                        item
+                                                                          .nmProp
+                                                                      ]
+                                                                    : ""
                                                                 ) +
                                                                 "\n                      "
                                                             )
