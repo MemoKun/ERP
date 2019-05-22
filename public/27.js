@@ -932,15 +932,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       newOpt: [{
         cnt: "增加",
         icon: "bf-add",
@@ -1172,106 +1171,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       curRowId: "",
       curRowData: {},
       payDtlData: [],
-      addChangeOrderFormVal: {
-        change_order_no: "",
-        cancel_order_no: "",
-        is_canceled: false,
-        change_remark: "",
-        change_status: 10,
-        orders_id: 0,
-        //-----变更订单与原始order分界线--------
-        system_order_no: "",
-        shops_id: 0,
-        shops_name: "",
-        logistics_id: 0,
-        logistics_sn: "",
-        billing_way: "",
-        promise_ship_time: null,
-        freight_types_id: 0,
-        expected_freight: 0,
-        actual_freight: 0,
-        logistics_remark: "",
-        is_logistics_checked: false,
-        logistics_check_remark: "",
-        logistics_checked_at: null,
-        distributions_id: 0,
-        distribution_methods_id: 0,
-        deliver_goods_fee: 0,
-        move_upstairs_fee: 0,
-        installation_fee: 0,
-        total_distribution_fee: 0,
-        distribution_phone: "",
-        distribution_no: "",
-        distribution_types_id: 0,
-        is_distribution_checked: false,
-        distribution_check_remark: "",
-        distribution_checked_at: null,
-        service_car_fee: 0,
-        service_car_info: "",
-        take_delivery_goods_fee: 0,
-        take_delivery_goods_ways_id: 0,
-        express_fee: 0,
-        cancel_after_verification_code: "",
-        wooden_frame_costs: 0,
-        preferential_cashback: 0,
-        favorable_cashback: 0,
-        customer_types_id: 0,
-        is_invoice: false,
-        invoice_express_fee: 0,
-        express_invoice_title: "",
-        contract_no: "",
-        payment_methods_id: 0,
-        deposit: 0,
-        document_title: "",
-        warehouses_id: 0,
-        payment_date: null,
-        interest_concessions: 0,
-        is_notice: false,
-        is_cancel_after_verification: false,
-        accept_order_user: "",
-        tax_number: "",
-        receipt: "",
-        buyer_message: "",
-        seller_remark: "",
-        customer_service_remark: "",
-        stockout_remark: "",
-        taobao_oid: 0,
-        taobao_tid: 0,
-        member_nick: "",
-        seller_name: "",
-        seller_flag: "",
-        created: null,
-        est_con_time: null,
-        receiver_name: "",
-        receiver_phone: "",
-        receiver_mobile: "",
-        receiver_state: "",
-        receiver_city: "",
-        receiver_district: "",
-        receiver_address: "",
-        receiver_zip: "",
-        refund_info: "",
-        business_personnel_id: 0,
-        locker_id: 0,
-        locked_at: null,
-        auditor_id: 0,
-        audit_at: null,
-        cs_auditor_id: 0,
-        cs_audited_at: null,
-        fd_auditor_id: 0,
-        fd_audited_at: null,
-        ca_auditor_id: 0,
-        ca_audited_at: null,
-        stockout_op_id: 0,
-        stockout_at: null,
-        association_taobao_oid: 0,
-        is_merge: false,
-        is_split: false,
-        is_association: false,
-        status: true,
-        order_items: [],
-        payment_details: []
-      },
+
       addDialogOrderDtlFormHead: [
       //新增会话框 下部订单信息formhead
       {
@@ -1428,68 +1328,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       addOrderChangesMask: false,
       moreForms: true,
       threeParts: true,
-      addCustomerFormVal: {
-        //作用未知
-        shops_id: "",
-        member_nick: "",
-        logistics_id: "",
-        billing_way: "",
-        promise_ship_time: "",
-        freight_types_id: "",
-        expected_freight: "",
-        distributions_id: "",
-        distribution_methods_id: "",
-        deliver_goods_fee: "",
-        move_upstairs_fee: "",
-        installation_fee: "",
-        total_distribution_fee: 0,
-        distribution_phone: "",
-        distribution_no: "",
-        distribution_types_id: "",
-        service_car_info: "",
-        take_delivery_goods_fee: "",
-        take_delivery_goods_ways_id: "",
-        express_fee: "",
-        service_car_fee: "",
-        cancel_after_verification_code: "",
-        wooden_frame_costs: "",
-        preferential_cashback: "",
-        favorable_cashback: "",
-        customer_types_id: "",
-        is_invoice: false,
-        invoice_express_fee: "",
-        express_invoice_title: "",
-        contract_no: "",
-        payment_methods_id: "",
-        deposit: "",
-        document_title: "",
-        warehouses_id: "",
-        payment_date: "",
-        interest_concessions: "",
-        is_notice: false,
-        is_cancel_after_verification: false,
-        accept_order_user: "",
-        tax_number: "",
-        receipt: "",
-        logistics_remark: "",
-        seller_remark: "",
-        customer_service_remark: "",
-        buyer_message: "",
-        status: true
-      },
-      addCustomerFormRules: {
-        //新建订单的要求格式
-        shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
-        logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
-        billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
-        freight_types_id: [{ required: true, message: "运费类型必选", trigger: "blur" }],
-        distributions_id: [{ required: true, message: "配送方式必选", trigger: "blur" }],
-        take_delivery_goods_fee: [{ required: true, message: "提货费用必填", trigger: "blur" }],
-        customer_types_id: [{ required: true, message: "客户类型必选", trigger: "blur" }],
-        payment_methods_id: [{ required: true, message: "付款方式必选", trigger: "blur" }],
-        warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
-      },
-
       addChangeOrderFormHead: [{
         label: "变更单号",
         holder: "系统自动生成",
@@ -1528,6 +1366,106 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       addChangeOrderFormRules: {
         //新建订单的要求格式
         system_order_no: [{ required: true, message: "系统单号必选", trigger: "blur" }]
+      },
+      addChangeOrderFormVal: {
+        change_order_no: "",
+        cancel_order_no: "",
+        is_canceled: false,
+        change_remark: "",
+        change_status: 10,
+        orders_id: 0,
+        //-----变更订单与原始order分界线--------
+        system_order_no: "",
+        shops_id: 0,
+        shops_name: "",
+        logistics_id: 0,
+        logistics_sn: "",
+        billing_way: "",
+        promise_ship_time: null,
+        freight_types_id: 0,
+        expected_freight: 0,
+        actual_freight: 0,
+        logistics_remark: "",
+        is_logistics_checked: false,
+        logistics_check_remark: "",
+        logistics_checked_at: null,
+        distributions_id: 0,
+        distribution_methods_id: 0,
+        deliver_goods_fee: 0,
+        move_upstairs_fee: 0,
+        installation_fee: 0,
+        total_distribution_fee: 0,
+        distribution_phone: "",
+        distribution_no: "",
+        distribution_types_id: 0,
+        is_distribution_checked: false,
+        distribution_check_remark: "",
+        distribution_checked_at: null,
+        service_car_fee: 0,
+        service_car_info: "",
+        take_delivery_goods_fee: 0,
+        take_delivery_goods_ways_id: 0,
+        express_fee: 0,
+        cancel_after_verification_code: "",
+        wooden_frame_costs: 0,
+        preferential_cashback: 0,
+        favorable_cashback: 0,
+        customer_types_id: 0,
+        is_invoice: false,
+        invoice_express_fee: 0,
+        express_invoice_title: "",
+        contract_no: "",
+        payment_methods_id: 0,
+        deposit: 0,
+        document_title: "",
+        warehouses_id: 0,
+        payment_date: null,
+        interest_concessions: 0,
+        is_notice: false,
+        is_cancel_after_verification: false,
+        accept_order_user: "",
+        tax_number: "",
+        receipt: "",
+        buyer_message: "",
+        seller_remark: "",
+        customer_service_remark: "",
+        stockout_remark: "",
+        taobao_oid: 0,
+        taobao_tid: 0,
+        member_nick: "",
+        seller_name: "",
+        seller_flag: "",
+        created: null,
+        est_con_time: null,
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_mobile: "",
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        receiver_address: "",
+        receiver_zip: "",
+        refund_info: "",
+        business_personnel_id: 0,
+        locker_id: 0,
+        locked_at: null,
+        auditor_id: 0,
+        audit_at: null,
+        cs_auditor_id: 0,
+        cs_audited_at: null,
+        fd_auditor_id: 0,
+        fd_audited_at: null,
+        ca_auditor_id: 0,
+        ca_audited_at: null,
+        stockout_op_id: 0,
+        stockout_at: null,
+        association_taobao_oid: 0,
+        is_merge: false,
+        is_split: false,
+        is_association: false,
+        status: true,
+        order_items: [],
+        payment_details: []
       },
       proDtlHead: [{
         label: "sku名称",
@@ -1884,231 +1822,202 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       expenseRIndex: "",
       addSubData: [],
       /*修改*/
-      updateCustomerMask: false,
-      updateCustomerFormVal: {},
-      updateActiveName: "0",
-      updateProData: [],
-      updateReceiveInfo: {},
-      updateExpenseData: [],
-      addChangeOrderProIds: [],
-      /*删除单条*/
-      showDel: false,
-      delUrl: "",
-      delId: "",
-
-      /**底部变更明细*/
-      changeDetails: {},
-      changeDetailsHead: [{
-        label: "组合商品",
-        prop: "combinations",
-        type: "checkbox"
-      }, {
-        label: "规格图片",
-        prop: "spec_img",
-        type: "img"
-      }, {
-        label: "商品编码",
-        prop: "commodity_code",
-        type: "text"
-      }, {
-        label: "商品简称",
-        prop: "short_name",
-        type: "text"
-      }, {
-        label: "规格名称",
-        prop: "spec",
-        type: "text"
-      }, {
-        label: "数量",
-        prop: "quantity",
-        type: "number"
-      }, {
-        label: "销售价格",
-        prop: "price",
-        type: "number"
-      }, {
-        label: "实际价格",
-        prop: "actual_price",
-        type: "number"
-      }, {
-        label: "类型",
-        prop: "type",
-        type: "text"
-      }],
-      changeOrdersMainInfo: {},
-      changeOrdersMainInfoHead: [{
-        label: "单据来源",
-        prop: "order_source",
-        width: "200",
-        type: "text",
-        editChgAble: true,
-        addChgAble: true
-      }, {
-        label: "单据编号",
-        prop: "taobao_oid",
-        type: "text",
-        editChgAble: true,
-        addChgAble: true
-      }, {
-        label: "店铺名称",
-        prop: "shops_id",
-        holder: "请选择店铺",
-        type: "text",
-        editChgAble: true
-      }, {
-        label: "会员昵称",
-        prop: "member_nick",
-        holder: "请输入会员昵称",
-        type: "text"
-      }, {
-        label: "业务员",
-        prop: "business_personnel_name",
-        type: "text"
-      }, {
-        label: "物流公司",
-        prop: "logistics_id",
-        holder: "请选择物流公司",
-        type: "text"
-      }, {
-        label: "承诺日期",
-        prop: "promise_ship_time",
-        type: "text"
-      }, {
-        label: "预计运费",
-        prop: "expected_freight",
-        holder: "请输入预计运费",
-        type: "number"
-      }, {
-        label: "运费类型",
-        prop: "freight_types_id",
-        holder: "请选择运费类型",
-        type: "text"
-      }, {
-        label: "三包服务",
-        prop: "sanbao_service",
-        holder: "请选择运费类型",
-        type: "text"
-      }, {
-        label: "三包类型",
-        prop: "sanbao_type",
-        holder: "请选择运费类型",
-        type: "text"
-      }, {
-        label: "姓名",
-        prop: "receiver_name",
-        holder: "请输入姓名",
-        type: "text"
-      }, {
-        label: "固定电话",
-        prop: "receiver_phone",
-        holder: "请输入固定电话",
-        type: "number"
-      }, {
-        label: "手机",
-        prop: "receiver_mobile",
-        holder: "请输入手机号码",
-        type: "number"
-      }, {
-        label: "省市区",
-        prop: "provinces",
-        type: "text"
-      }, {
-        label: "邮编",
-        prop: "receiver_zip",
-        holder: "请输入邮编",
-        type: "text"
-      }, {
-        label: "地址",
-        prop: "receiver_address",
-        type: "text"
-      }, {
-        label: "配送方式",
-        prop: "distribution_methods_id",
-        type: "text"
-      }, {
-        label: "配送信息",
-        prop: "service_car_info",
-        type: "text"
-      }, {
-        label: "买家留言",
-        prop: "buyer_message",
-        type: "textarea",
-        editChgAble: false,
-        addChgAble: false
-      }, {
-        label: "卖家备注",
-        prop: "seller_remark",
-        type: "textarea",
-        editChgAble: false,
-        addChgAble: false
-      }],
-      operationData: {},
-      operationHead: [{
-        label: "用户",
-        prop: "user",
-        type: "text"
-      }, {
-        label: "操作",
-        prop: "operation",
-        type: "text"
-      }, {
-        label: "操作描述",
-        prop: "operation_description",
-        type: "text"
-      }, {
-        label: "创建时间",
-        prop: "created_at",
-        type: "text"
-      }],
-      //批量选择 批量删除
-      ids: [],
-      splitMask: false,
-      splitVal: [],
-      splitHead: [{
-        label: "商品编码",
-        prop: "commodity_code",
-        type: "text"
-      }, {
-        label: "商品简称",
-        prop: "short_name",
-        type: "text"
-      }, {
-        label: "数量",
-        prop: "quantity",
-        type: "number"
-      }, {
-        label: "实际拆分数量",
-        prop: "newData",
-        inProp: "quantity",
-        type: "number"
-      }],
-      chooseOrderRowIndex: "",
-      chooseOrderRowId: "",
-      mergerIds: [],
-      orderItemListData: [],
-      orderItemListHead: [{
-        label: "系统单号",
-        prop: "system_order_no",
-        width: "220",
-        type: "text"
-      }, {
-        label: "店铺名称",
-        prop: "shops_id",
-        width: "200",
-        type: "text"
-      }, {
-        label: "订单金额",
-        prop: "deposit",
-        width: "200",
-        type: "text"
-      }, {
-        label: "会员ID",
-        prop: "member_nick",
-        width: "200",
-        type: "text"
-      }],
-      updateOrderChangesMask: false
-    };
+      updateCustomerMask: false
+    }, _defineProperty(_ref, "addChangeOrderFormVal", {}), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "addChangeOrderProIds", []), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delUrl", ""), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "changeDetails", {}), _defineProperty(_ref, "changeDetailsHead", [{
+      label: "组合商品",
+      prop: "combinations",
+      type: "checkbox"
+    }, {
+      label: "规格图片",
+      prop: "spec_img",
+      type: "img"
+    }, {
+      label: "商品编码",
+      prop: "commodity_code",
+      type: "text"
+    }, {
+      label: "商品简称",
+      prop: "short_name",
+      type: "text"
+    }, {
+      label: "规格名称",
+      prop: "spec",
+      type: "text"
+    }, {
+      label: "数量",
+      prop: "quantity",
+      type: "number"
+    }, {
+      label: "销售价格",
+      prop: "price",
+      type: "number"
+    }, {
+      label: "实际价格",
+      prop: "actual_price",
+      type: "number"
+    }, {
+      label: "类型",
+      prop: "type",
+      type: "text"
+    }]), _defineProperty(_ref, "changeOrdersMainInfo", {}), _defineProperty(_ref, "changeOrdersMainInfoHead", [{
+      label: "单据来源",
+      prop: "order_source",
+      width: "200",
+      type: "text",
+      editChgAble: true,
+      addChgAble: true
+    }, {
+      label: "单据编号",
+      prop: "taobao_oid",
+      type: "text",
+      editChgAble: true,
+      addChgAble: true
+    }, {
+      label: "店铺名称",
+      prop: "shops_id",
+      holder: "请选择店铺",
+      type: "text",
+      editChgAble: true
+    }, {
+      label: "会员昵称",
+      prop: "member_nick",
+      holder: "请输入会员昵称",
+      type: "text"
+    }, {
+      label: "业务员",
+      prop: "business_personnel_name",
+      type: "text"
+    }, {
+      label: "物流公司",
+      prop: "logistics_id",
+      holder: "请选择物流公司",
+      type: "text"
+    }, {
+      label: "承诺日期",
+      prop: "promise_ship_time",
+      type: "text"
+    }, {
+      label: "预计运费",
+      prop: "expected_freight",
+      holder: "请输入预计运费",
+      type: "number"
+    }, {
+      label: "运费类型",
+      prop: "freight_types_id",
+      holder: "请选择运费类型",
+      type: "text"
+    }, {
+      label: "三包服务",
+      prop: "sanbao_service",
+      holder: "请选择运费类型",
+      type: "text"
+    }, {
+      label: "三包类型",
+      prop: "sanbao_type",
+      holder: "请选择运费类型",
+      type: "text"
+    }, {
+      label: "姓名",
+      prop: "receiver_name",
+      holder: "请输入姓名",
+      type: "text"
+    }, {
+      label: "固定电话",
+      prop: "receiver_phone",
+      holder: "请输入固定电话",
+      type: "number"
+    }, {
+      label: "手机",
+      prop: "receiver_mobile",
+      holder: "请输入手机号码",
+      type: "number"
+    }, {
+      label: "省市区",
+      prop: "provinces",
+      type: "text"
+    }, {
+      label: "邮编",
+      prop: "receiver_zip",
+      holder: "请输入邮编",
+      type: "text"
+    }, {
+      label: "地址",
+      prop: "receiver_address",
+      type: "text"
+    }, {
+      label: "配送方式",
+      prop: "distribution_methods_id",
+      type: "text"
+    }, {
+      label: "配送信息",
+      prop: "service_car_info",
+      type: "text"
+    }, {
+      label: "买家留言",
+      prop: "buyer_message",
+      type: "textarea",
+      editChgAble: false,
+      addChgAble: false
+    }, {
+      label: "卖家备注",
+      prop: "seller_remark",
+      type: "textarea",
+      editChgAble: false,
+      addChgAble: false
+    }]), _defineProperty(_ref, "operationData", {}), _defineProperty(_ref, "operationHead", [{
+      label: "用户",
+      prop: "user",
+      type: "text"
+    }, {
+      label: "操作",
+      prop: "operation",
+      type: "text"
+    }, {
+      label: "操作描述",
+      prop: "operation_description",
+      type: "text"
+    }, {
+      label: "创建时间",
+      prop: "created_at",
+      type: "text"
+    }]), _defineProperty(_ref, "ids", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "splitHead", [{
+      label: "商品编码",
+      prop: "commodity_code",
+      type: "text"
+    }, {
+      label: "商品简称",
+      prop: "short_name",
+      type: "text"
+    }, {
+      label: "数量",
+      prop: "quantity",
+      type: "number"
+    }, {
+      label: "实际拆分数量",
+      prop: "newData",
+      inProp: "quantity",
+      type: "number"
+    }]), _defineProperty(_ref, "chooseOrderRowIndex", ""), _defineProperty(_ref, "chooseOrderRowId", ""), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "orderItemListData", []), _defineProperty(_ref, "orderItemListHead", [{
+      label: "系统单号",
+      prop: "system_order_no",
+      width: "220",
+      type: "text"
+    }, {
+      label: "店铺名称",
+      prop: "shops_id",
+      width: "200",
+      type: "text"
+    }, {
+      label: "订单金额",
+      prop: "deposit",
+      width: "200",
+      type: "text"
+    }, {
+      label: "会员ID",
+      prop: "member_nick",
+      width: "200",
+      type: "text"
+    }]), _defineProperty(_ref, "updateOrderChangesMask", false), _ref;
   },
 
   computed: {
@@ -2339,9 +2248,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     },
-    addProRCName: function addProRCName(_ref) {
-      var row = _ref.row,
-          rowIndex = _ref.rowIndex;
+    addProRCName: function addProRCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
 
       row.index = rowIndex;
     },
@@ -2352,15 +2261,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addProRowClick: function addProRowClick(row) {
       this.proRIndex = "index" + row.index;
     },
-    addAfterSProRowCName: function addAfterSProRowCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
+    addAfterSProRowCName: function addAfterSProRowCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
 
       row.index = rowIndex;
     },
-    addOrderRowCName: function addOrderRowCName(_ref3) {
-      var row = _ref3.row,
-          rowIndex = _ref3.rowIndex;
+    addOrderRowCName: function addOrderRowCName(_ref4) {
+      var row = _ref4.row,
+          rowIndex = _ref4.rowIndex;
 
       row.index = rowIndex;
     },
@@ -2523,9 +2432,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addExpenseRClick: function addExpenseRClick(row) {
       this.expenseRIndex = "index" + row.index;
     },
-    addExpenseRCName: function addExpenseRCName(_ref4) {
-      var row = _ref4.row,
-          rowIndex = _ref4.rowIndex;
+    addExpenseRCName: function addExpenseRCName(_ref5) {
+      var row = _ref5.row,
+          rowIndex = _ref5.rowIndex;
 
       row.index = rowIndex;
     },
@@ -2588,9 +2497,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
       this.proSkuVal = comb;
     },
-    proSkuCName: function proSkuCName(_ref5) {
-      var row = _ref5.row,
-          rowIndex = _ref5.rowIndex;
+    proSkuCName: function proSkuCName(_ref6) {
+      var row = _ref6.row,
+          rowIndex = _ref6.rowIndex;
 
       row.index = rowIndex;
     }
@@ -2599,9 +2508,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.proCompRow = row;
   }), _defineProperty(_methods, "addProRowClick", function addProRowClick(row) {
     this.proRIndex = "index" + row.index;
-  }), _defineProperty(_methods, "addProRCName", function addProRCName(_ref6) {
-    var row = _ref6.row,
-        rowIndex = _ref6.rowIndex;
+  }), _defineProperty(_methods, "addProRCName", function addProRCName(_ref7) {
+    var row = _ref7.row,
+        rowIndex = _ref7.rowIndex;
 
     row.index = rowIndex;
   }), _defineProperty(_methods, "addDelPro", function addDelPro(index) {
@@ -2924,8 +2833,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(function (res) {
         /*请求选中的数据并拼接用于patch Order的submit*/
-        _this11.addChangeOrderFormVal.orders_id = res["id"];
-        var submitData = {
+        _this11.submitData = res;
+        /*let submitData = {
           system_order_no: res["system_order_no"],
           shops_id: res["shops_id"],
           shops_name: res["shops_name"],
@@ -2957,7 +2866,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           take_delivery_goods_fee: res["take_delivery_goods_fee"],
           take_delivery_goods_ways_id: res["take_delivery_goods_ways_id"],
           express_fee: res["express_fee"],
-          cancel_after_verification_code: res["cancel_after_verification_code"],
+          cancel_after_verification_code:
+            res["cancel_after_verification_code"],
           wooden_frame_costs: res["wooden_frame_costs"],
           preferential_cashback: res["preferential_cashback"],
           favorable_cashback: res["favorable_cashback"],
@@ -3017,7 +2927,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           status: res["status"],
           order_items: [],
           payment_details: []
-        };
+        };*/
         /** 对orderItems进行处理*/
         if (res["orderItems"]["data"].length > 0) {
           res["orderItems"]["data"].map(function (item) {
@@ -3138,15 +3048,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), _defineProperty(_methods, "formChg", function formChg() {
     var formVal = void 0;
     if (this.addOrderChangesMask) {
-      formVal = this.addCustomerFormVal;
+      formVal = this.addChangeOrderFormVal;
     } else {
-      formVal = this.updateCustomerFormVal;
+      formVal = this.addChangeOrderFormVal;
     }
     formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
     if (this.addOrderChangesMask) {
-      this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      this.addChangeOrderFormVal.total_distribution_fee = formVal["total_distribution_fee"];
     } else {
-      this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      this.addChangeOrderFormVal.total_distribution_fee = formVal["total_distribution_fee"];
     }
   }), _defineProperty(_methods, "addChangeOrderCancel", function addChangeOrderCancel() {
     this.addOrderChangesMask = false;
@@ -4474,12 +4384,6 @@ var render = function() {
         },
         [
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("基础信息")]),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.addChangeOrderFormVal))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.submitData))]),
           _vm._v(" "),
           _c(
             "el-form",

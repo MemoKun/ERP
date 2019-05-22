@@ -169,9 +169,6 @@
     <!--新增订单变更-->
     <el-dialog title="订单明细变更" :visible.sync="addOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <el-button type="text">基础信息</el-button>
-      <label>{{this.addChangeOrderFormVal}}</label>
-      <br>
-      <label>{{this.submitData}}</label>
       <el-form :model="addChangeOrderFormVal" :rules="addChangeOrderFormRules" class="addChangeOrderForm" id="form">
         <el-form-item v-for="(item,index) in addChangeOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
@@ -1155,106 +1152,7 @@ export default {
       curRowId: "",
       curRowData: {},
       payDtlData: [],
-      addChangeOrderFormVal: {
-        change_order_no: "",
-        cancel_order_no: "",
-        is_canceled: false,
-        change_remark: "",
-        change_status: 10,
-        orders_id: 0,
-        //-----变更订单与原始order分界线--------
-        system_order_no: "",
-        shops_id: 0,
-        shops_name: "",
-        logistics_id: 0,
-        logistics_sn: "",
-        billing_way: "",
-        promise_ship_time: null,
-        freight_types_id: 0,
-        expected_freight: 0,
-        actual_freight: 0,
-        logistics_remark: "",
-        is_logistics_checked: false,
-        logistics_check_remark: "",
-        logistics_checked_at: null,
-        distributions_id: 0,
-        distribution_methods_id: 0,
-        deliver_goods_fee: 0,
-        move_upstairs_fee: 0,
-        installation_fee: 0,
-        total_distribution_fee: 0,
-        distribution_phone: "",
-        distribution_no: "",
-        distribution_types_id: 0,
-        is_distribution_checked: false,
-        distribution_check_remark: "",
-        distribution_checked_at: null,
-        service_car_fee: 0,
-        service_car_info: "",
-        take_delivery_goods_fee: 0,
-        take_delivery_goods_ways_id: 0,
-        express_fee: 0,
-        cancel_after_verification_code: "",
-        wooden_frame_costs: 0,
-        preferential_cashback: 0,
-        favorable_cashback: 0,
-        customer_types_id: 0,
-        is_invoice: false,
-        invoice_express_fee: 0,
-        express_invoice_title: "",
-        contract_no: "",
-        payment_methods_id: 0,
-        deposit: 0,
-        document_title: "",
-        warehouses_id: 0,
-        payment_date: null,
-        interest_concessions: 0,
-        is_notice: false,
-        is_cancel_after_verification: false,
-        accept_order_user: "",
-        tax_number: "",
-        receipt: "",
-        buyer_message: "",
-        seller_remark: "",
-        customer_service_remark: "",
-        stockout_remark: "",
-        taobao_oid: 0,
-        taobao_tid: 0,
-        member_nick: "",
-        seller_name: "",
-        seller_flag: "",
-        created: null,
-        est_con_time: null,
-        receiver_name: "",
-        receiver_phone: "",
-        receiver_mobile: "",
-        receiver_state: "",
-        receiver_city: "",
-        receiver_district: "",
-        receiver_address: "",
-        receiver_zip: "",
-        refund_info: "",
-        business_personnel_id: 0,
-        locker_id: 0,
-        locked_at: null,
-        auditor_id: 0,
-        audit_at: null,
-        cs_auditor_id: 0,
-        cs_audited_at: null,
-        fd_auditor_id: 0,
-        fd_audited_at: null,
-        ca_auditor_id: 0,
-        ca_audited_at: null,
-        stockout_op_id: 0,
-        stockout_at: null,
-        association_taobao_oid: 0,
-        is_merge: false,
-        is_split: false,
-        is_association: false,
-        status: true,
-        order_items: [],
-        payment_details: []
-      },
+      
       addDialogOrderDtlFormHead: [
         //新增会话框 下部订单信息formhead
         {
@@ -1439,78 +1337,6 @@ export default {
       addOrderChangesMask: false,
       moreForms: true,
       threeParts: true,
-      addCustomerFormVal: {
-        //作用未知
-        shops_id: "",
-        member_nick: "",
-        logistics_id: "",
-        billing_way: "",
-        promise_ship_time: "",
-        freight_types_id: "",
-        expected_freight: "",
-        distributions_id: "",
-        distribution_methods_id: "",
-        deliver_goods_fee: "",
-        move_upstairs_fee: "",
-        installation_fee: "",
-        total_distribution_fee: 0,
-        distribution_phone: "",
-        distribution_no: "",
-        distribution_types_id: "",
-        service_car_info: "",
-        take_delivery_goods_fee: "",
-        take_delivery_goods_ways_id: "",
-        express_fee: "",
-        service_car_fee: "",
-        cancel_after_verification_code: "",
-        wooden_frame_costs: "",
-        preferential_cashback: "",
-        favorable_cashback: "",
-        customer_types_id: "",
-        is_invoice: false,
-        invoice_express_fee: "",
-        express_invoice_title: "",
-        contract_no: "",
-        payment_methods_id: "",
-        deposit: "",
-        document_title: "",
-        warehouses_id: "",
-        payment_date: "",
-        interest_concessions: "",
-        is_notice: false,
-        is_cancel_after_verification: false,
-        accept_order_user: "",
-        tax_number: "",
-        receipt: "",
-        logistics_remark: "",
-        seller_remark: "",
-        customer_service_remark: "",
-        buyer_message: "",
-        status: true
-      },
-      addCustomerFormRules: {
-        //新建订单的要求格式
-        shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
-        logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
-        billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
-        freight_types_id: [
-          { required: true, message: "运费类型必选", trigger: "blur" }
-        ],
-        distributions_id: [
-          { required: true, message: "配送方式必选", trigger: "blur" }
-        ],
-        take_delivery_goods_fee: [
-          { required: true, message: "提货费用必填", trigger: "blur" }
-        ],
-        customer_types_id: [
-          { required: true, message: "客户类型必选", trigger: "blur" }
-        ],
-        payment_methods_id: [
-          { required: true, message: "付款方式必选", trigger: "blur" }
-        ],
-        warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
-      },
-
       addChangeOrderFormHead: [
         {
           label: "变更单号",
@@ -1558,6 +1384,106 @@ export default {
         system_order_no: [
           { required: true, message: "系统单号必选", trigger: "blur" }
         ]
+      },
+      addChangeOrderFormVal: {
+        change_order_no: "",
+        cancel_order_no: "",
+        is_canceled: false,
+        change_remark: "",
+        change_status: 10,
+        orders_id: 0,
+        //-----变更订单与原始order分界线--------
+        system_order_no: "",
+        shops_id: 0,
+        shops_name: "",
+        logistics_id: 0,
+        logistics_sn: "",
+        billing_way: "",
+        promise_ship_time: null,
+        freight_types_id: 0,
+        expected_freight: 0,
+        actual_freight: 0,
+        logistics_remark: "",
+        is_logistics_checked: false,
+        logistics_check_remark: "",
+        logistics_checked_at: null,
+        distributions_id: 0,
+        distribution_methods_id: 0,
+        deliver_goods_fee: 0,
+        move_upstairs_fee: 0,
+        installation_fee: 0,
+        total_distribution_fee: 0,
+        distribution_phone: "",
+        distribution_no: "",
+        distribution_types_id: 0,
+        is_distribution_checked: false,
+        distribution_check_remark: "",
+        distribution_checked_at: null,
+        service_car_fee: 0,
+        service_car_info: "",
+        take_delivery_goods_fee: 0,
+        take_delivery_goods_ways_id: 0,
+        express_fee: 0,
+        cancel_after_verification_code: "",
+        wooden_frame_costs: 0,
+        preferential_cashback: 0,
+        favorable_cashback: 0,
+        customer_types_id: 0,
+        is_invoice: false,
+        invoice_express_fee: 0,
+        express_invoice_title: "",
+        contract_no: "",
+        payment_methods_id: 0,
+        deposit: 0,
+        document_title: "",
+        warehouses_id: 0,
+        payment_date: null,
+        interest_concessions: 0,
+        is_notice: false,
+        is_cancel_after_verification: false,
+        accept_order_user: "",
+        tax_number: "",
+        receipt: "",
+        buyer_message: "",
+        seller_remark: "",
+        customer_service_remark: "",
+        stockout_remark: "",
+        taobao_oid: 0,
+        taobao_tid: 0,
+        member_nick: "",
+        seller_name: "",
+        seller_flag: "",
+        created: null,
+        est_con_time: null,
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_mobile: "",
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        receiver_address: "",
+        receiver_zip: "",
+        refund_info: "",
+        business_personnel_id: 0,
+        locker_id: 0,
+        locked_at: null,
+        auditor_id: 0,
+        audit_at: null,
+        cs_auditor_id: 0,
+        cs_audited_at: null,
+        fd_auditor_id: 0,
+        fd_audited_at: null,
+        ca_auditor_id: 0,
+        ca_audited_at: null,
+        stockout_op_id: 0,
+        stockout_at: null,
+        association_taobao_oid: 0,
+        is_merge: false,
+        is_split: false,
+        is_association: false,
+        status: true,
+        order_items: [],
+        payment_details: []
       },
       proDtlHead: [
         {
@@ -1986,7 +1912,7 @@ export default {
       addSubData: [],
       /*修改*/
       updateCustomerMask: false,
-      updateCustomerFormVal: {},
+      addChangeOrderFormVal: {},
       updateActiveName: "0",
       updateProData: [],
       updateReceiveInfo: {},
@@ -3180,8 +3106,8 @@ export default {
         }).then(
           res => {
             /*请求选中的数据并拼接用于patch Order的submit*/
-            this.addChangeOrderFormVal.orders_id = res["id"];
-            let submitData = {
+            this.submitData = res;
+            /*let submitData = {
               system_order_no: res["system_order_no"],
               shops_id: res["shops_id"],
               shops_name: res["shops_name"],
@@ -3274,7 +3200,7 @@ export default {
               status: res["status"],
               order_items: [],
               payment_details: []
-            };
+            };*/
             /** 对orderItems进行处理*/
             if (res["orderItems"]["data"].length > 0) {
               res["orderItems"]["data"].map(item => {
@@ -3411,9 +3337,9 @@ export default {
     formChg() {
       let formVal;
       if (this.addOrderChangesMask) {
-        formVal = this.addCustomerFormVal;
+        formVal = this.addChangeOrderFormVal;
       } else {
-        formVal = this.updateCustomerFormVal;
+        formVal = this.addChangeOrderFormVal;
       }
       formVal["total_distribution_fee"] =
         formVal["deliver_goods_fee"] -
@@ -3421,10 +3347,10 @@ export default {
         (formVal["move_upstairs_fee"] - 0) +
         (formVal["installation_fee"] - 0);
       if (this.addOrderChangesMask) {
-        this.addCustomerFormVal.total_distribution_fee =
+        this.addChangeOrderFormVal.total_distribution_fee =
           formVal["total_distribution_fee"];
       } else {
-        this.updateCustomerFormVal.total_distribution_fee =
+        this.addChangeOrderFormVal.total_distribution_fee =
           formVal["total_distribution_fee"];
       }
     },
