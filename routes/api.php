@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,7 +24,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         'middleware' => [
             'api.throttle',
             'token.canrefresh',
-            'stringtoboolean' //将字符串的“true”或“false”转为布尔类型
+            'stringtoboolean', //将字符串的“true”或“false”转为布尔类型
         ],
         'limit' => config('api.rate_limits.access.limit'),
         'expires' => config('api.rate_limits.access.expires'),
@@ -62,7 +60,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.acctypes.destroybyids');
         $api->put('acctypes/editstatus', 'AccountingTypesController@editStatusByIds')
             ->name('api.acctypes.editstatusbyids');
-
 
         //费用类型
         $api->get('feetypes', 'FeeTypesController@index')
@@ -144,21 +141,21 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('goodscates/editstatus', 'GoodsCategoriesController@editStatusByIds')
             ->name('api.goodscates.editstatusbyids');
 
-        //        //入库类型
-        //        $api->get('storagetypes', 'StorageTypesController@index')
-        //            ->name('api.storagetypes.index');
-        //        $api->get('storagetypes/{storagetype}', 'StorageTypesController@show')
-        //            ->name('api.storagetypes.show');
-        //        $api->post('storagetypes', 'StorageTypesController@store')
-        //            ->name('api.storagetypes.store');
-        //        $api->patch('storagetypes/{storagetype}', 'StorageTypesController@update')
-        //            ->name('api.storagetypes.update');
-        //        $api->delete('storagetypes/{storagetype}', 'StorageTypesController@destroy')
-        //            ->name('api.storagetypes.destroy');
-        //        $api->delete('storagetypes', 'StorageTypesController@destroybyids')
-        //            ->name('api.storagetypes.destroybyids');
-        //        $api->put('storagetypes', 'StorageTypesController@editStatusByIds')
-        //            ->name('api.storagetypes.editstatusbyids');
+//        //入库类型
+//        $api->get('storagetypes', 'StorageTypesController@index')
+//            ->name('api.storagetypes.index');
+//        $api->get('storagetypes/{storagetype}', 'StorageTypesController@show')
+//            ->name('api.storagetypes.show');
+//        $api->post('storagetypes', 'StorageTypesController@store')
+//            ->name('api.storagetypes.store');
+//        $api->patch('storagetypes/{storagetype}', 'StorageTypesController@update')
+//            ->name('api.storagetypes.update');
+//        $api->delete('storagetypes/{storagetype}', 'StorageTypesController@destroy')
+//            ->name('api.storagetypes.destroy');
+//        $api->delete('storagetypes', 'StorageTypesController@destroybyids')
+//            ->name('api.storagetypes.destroybyids');
+//        $api->put('storagetypes', 'StorageTypesController@editStatusByIds')
+//            ->name('api.storagetypes.editstatusbyids');
 
         //城市信息
         $api->get('cityinfos', 'CityInfosController@index')
@@ -665,6 +662,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.searchuntreated');
         $api->get('customerservicedepts', 'CustomerServiceDepartmentsController@index')
             ->name('api.customerservicedepts.index');
+        $api->get('customerservicedepts/logisticsQuery', 'CustomerServiceDepartmentsController@logisticsQuery')
+            ->name('api.customerservicedepts.logisticsQuery');
+        $api->get('customerservicedepts/orderCenter', 'CustomerServiceDepartmentsController@orderCenter')
+            ->name('api.customerservicedepts.orderCenter');
         $api->get('customerservicedepts/searchordersettlement', 'CustomerServiceDepartmentsController@searchOrderSettlement')
             ->name('api.customerservicedepts.searchordersettlement');
         $api->get('customerservicedepts/create', 'CustomerServiceDepartmentsController@create')
@@ -691,7 +692,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.issplitorder');
         $api->put('customerservicedepts/mergerorder', 'CustomerServiceDepartmentsController@isMergerOrder')
             ->name('api.customerservicedepts.ismergerorder');
-
 
         //订单结算
         $api->put('customerservicedepts/{order}/logcheck', 'CustomerServiceDepartmentsController@isLogCheck')
@@ -1100,7 +1100,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('aftercompensation/mergerorder', 'AfterCompensationController@isMergerOrder')
             ->name('api.aftercompensation.ismergerorder');
 
-
         //门店收款管理
         $api->get('shopgatheringmag', 'ShopGatheringMagController@index')
             ->name('api.shopgatheringmag.index');
@@ -1164,7 +1163,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.userastwarehouse.destroybyids');
         $api->put('userastwarehouse/editstatus', 'UserAstWarehouseController@editStatusByIds')
             ->name('api.userastwarehouse.editstatusbyids');
-
 
         //打印机配置
         $api->get('printerconf', 'PrinterConfController@index')
@@ -1681,7 +1679,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('aftersaledefpro/editstatus', 'AfterSaleDefProController@editStatusByIds')
             ->name('api.aftersaledefpro.editstatusbyids');
         // 薛涛
-
 
         //退货子单
         $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')

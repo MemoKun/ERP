@@ -1,14 +1,24 @@
 webpackJsonp([76],{
 
+<<<<<<< HEAD
+/***/ 521:
+=======
 /***/ 472:
+>>>>>>> 3a18589194d845c9a61e39ec2d5d0427b6595bfb
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
+<<<<<<< HEAD
+var __vue_script__ = __webpack_require__(699)
+/* template */
+var __vue_template__ = __webpack_require__(700)
+=======
 var __vue_script__ = __webpack_require__(597)
 /* template */
 var __vue_template__ = __webpack_require__(598)
+>>>>>>> 3a18589194d845c9a61e39ec2d5d0427b6595bfb
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,6 +58,467 @@ module.exports = Component.exports
 
 /***/ }),
 
+<<<<<<< HEAD
+/***/ 699:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+=======
 /***/ 531:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -59,6 +530,7 @@ module.exports = Component.exports
  * @license  MIT
  */
 /* eslint-disable no-proto */
+>>>>>>> 3a18589194d845c9a61e39ec2d5d0427b6595bfb
 
 
 
@@ -28753,6 +29225,1256 @@ function deflate_slow(s, flush) {
   return BS_BLOCK_DONE;
 }
 
+<<<<<<< HEAD
+/***/ 700:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "search_box" }, [
+        _c("div", { staticClass: "searchBox" }, [
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("系统单号")]),
+              _vm._v(" "),
+              _c("el-input", {
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      "keyCode" in $event &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.handleQuery($event)
+                  }
+                },
+                model: {
+                  value: _vm.searchBox.after_sale_order_no,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "after_sale_order_no", $$v)
+                  },
+                  expression: "searchBox.after_sale_order_no"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("订单号")]),
+              _vm._v(" "),
+              _c("el-input", {
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      "keyCode" in $event &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.handleQuery($event)
+                  }
+                },
+                model: {
+                  value: _vm.searchBox.order_no,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "order_no", $$v)
+                  },
+                  expression: "searchBox.order_no"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("会员昵称")]),
+              _vm._v(" "),
+              _c("el-input", {
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      "keyCode" in $event &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.handleQuery($event)
+                  }
+                },
+                model: {
+                  value: _vm.searchBox.vip_name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "vip_name", $$v)
+                  },
+                  expression: "searchBox.vip_name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("业务员")]),
+              _vm._v(" "),
+              _c(
+                "el-select",
+                {
+                  attrs: { clearable: "", placeholder: "请选择" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        "keyCode" in $event &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.handleQuery($event)
+                    }
+                  },
+                  model: {
+                    value: _vm.searchBox.user_id,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "user_id", $$v)
+                    },
+                    expression: "searchBox.user_id"
+                  }
+                },
+                _vm._l(_vm.searchBox.orderStaff, function(item) {
+                  return _c("el-option", {
+                    key: item.value,
+                    attrs: { label: item.label, value: item.value }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.filterBox
+            ? _c(
+                "span",
+                [
+                  _c("label", [_vm._v("售后状态")]),
+                  _vm._v(" "),
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      nativeOn: {
+                        keyup: function($event) {
+                          if (
+                            "keyCode" in $event &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.handleQuery($event)
+                        }
+                      },
+                      model: {
+                        value: _vm.searchBox.after_sale_status,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "after_sale_status", $$v)
+                        },
+                        expression: "searchBox.after_sale_status"
+                      }
+                    },
+                    _vm._l(_vm.resData.aftersalestate, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.name, value: item.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            : _c(
+                "span",
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.handleQuery }
+                    },
+                    [_vm._v("筛选")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      staticStyle: { "margin-right": "5px" },
+                      on: { click: _vm.resets }
+                    },
+                    [_vm._v("重置")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    { on: { click: _vm.toggleShow } },
+                    [
+                      _c("el-button", { attrs: { type: "text" } }, [
+                        _vm._v("展开")
+                      ]),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "el-icon-arrow-down",
+                        staticStyle: { color: "#409EFF" }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+        ]),
+        _vm._v(" "),
+        _vm.filterBox
+          ? _c("div", { staticClass: "searchBox" }, [
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("售后类型")]),
+                  _vm._v(" "),
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      nativeOn: {
+                        keyup: function($event) {
+                          if (
+                            "keyCode" in $event &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.handleQuery($event)
+                        }
+                      },
+                      model: {
+                        value: _vm.searchBox.after_sale_sort,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "after_sale_sort", $$v)
+                        },
+                        expression: "searchBox.after_sale_sort"
+                      }
+                    },
+                    _vm._l(_vm.searchBox.afterSaleSort, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.label, value: item.value }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("联系方式")]),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { clearable: "" },
+                    nativeOn: {
+                      keyup: function($event) {
+                        if (
+                          "keyCode" in $event &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.handleQuery($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.searchBox.order_phone,
+                      callback: function($$v) {
+                        _vm.$set(_vm.searchBox, "order_phone", $$v)
+                      },
+                      expression: "searchBox.order_phone"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("创建时间")]),
+                  _vm._v(" "),
+                  _c("el-date-picker", {
+                    attrs: {
+                      type: "daterange",
+                      "range-separator": "至",
+                      "start-placeholder": "开始日期",
+                      "end-placeholder": "结束日期"
+                    },
+                    model: {
+                      value: _vm.searchBox.created_at,
+                      callback: function($$v) {
+                        _vm.$set(_vm.searchBox, "created_at", $$v)
+                      },
+                      expression: "searchBox.created_at"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("label", [_vm._v("售后分类")]),
+                  _vm._v(" "),
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      nativeOn: {
+                        keyup: function($event) {
+                          if (
+                            "keyCode" in $event &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.handleQuery($event)
+                        }
+                      },
+                      model: {
+                        value: _vm.searchBox.after_sale_type,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "after_sale_type", $$v)
+                        },
+                        expression: "searchBox.after_sale_type"
+                      }
+                    },
+                    _vm._l(_vm.resData.aftersaletype, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.name, value: item.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.filterBox
+          ? _c(
+              "div",
+              { staticClass: "opt", staticStyle: { "text-align": "right" } },
+              [
+                _c(
+                  "el-button",
+                  {
+                    attrs: { type: "primary" },
+                    on: { click: _vm.handleQuery }
+                  },
+                  [_vm._v("筛选")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-button",
+                  {
+                    staticStyle: { "margin-right": "5px" },
+                    on: { click: _vm.resets }
+                  },
+                  [_vm._v("重置")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticStyle: { display: "inline" },
+                    on: { click: _vm.toggleShow }
+                  },
+                  [
+                    _c("el-button", { attrs: { type: "text" } }, [
+                      _vm._v("收起")
+                    ]),
+                    _vm._v(" "),
+                    _c("i", {
+                      staticClass: "el-icon-arrow-up",
+                      staticStyle: { color: "#409EFF" }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-tabs",
+        {
+          on: { "tab-click": _vm.clickTopTabs },
+          model: {
+            value: _vm.topActiveName,
+            callback: function($$v) {
+              _vm.topActiveName = $$v
+            },
+            expression: "topActiveName"
+          }
+        },
+        [
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "新增", name: "0" } },
+            [
+              _c(
+                "el-table",
+                {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.newLoading,
+                      expression: "newLoading"
+                    }
+                  ],
+                  ref: "newTable",
+                  attrs: {
+                    data: _vm.newData,
+                    fit: "",
+                    height: "300",
+                    "row-class-name": _vm.afterSaleRCName,
+                    "row-style": _vm.rowStyle
+                  },
+                  on: {
+                    "selection-change": _vm.handleSelectionChange,
+                    "row-click": _vm.afterSaleRowClick
+                  }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      type: "selection",
+                      width: "95",
+                      align: "center",
+                      checked: _vm.checkboxInit
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.tableHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.prop,
+                      attrs: {
+                        align: "center",
+                        label: item.label,
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              item.type == "select"
+                                ? _c("span", [
+                                    scope.row[item.prop] == ""
+                                      ? _c("span")
+                                      : typeof scope.row[item.prop] ==
+                                          "object" && item.inProp
+                                      ? _c("span", [
+                                          _vm._v(
+                                            _vm._s(
+                                              scope.row[item.prop][item.inProp]
+                                            )
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ])
+                                : item.type == "checkbox"
+                                ? _c(
+                                    "span",
+                                    [
+                                      _c("el-checkbox", {
+                                        attrs: { disabled: "" },
+                                        model: {
+                                          value: scope.row[item.prop],
+                                          callback: function($$v) {
+                                            _vm.$set(scope.row, item.prop, $$v)
+                                          },
+                                          expression: "scope.row[item.prop]"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                : item.type == "img"
+                                ? _c(
+                                    "span",
+                                    [
+                                      _c(
+                                        "el-popover",
+                                        {
+                                          attrs: {
+                                            placement: "right",
+                                            trigger: "hover",
+                                            "popper-class": "picture_detail"
+                                          }
+                                        },
+                                        [
+                                          _c("img", {
+                                            attrs: { src: scope.row[item.prop] }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("img", {
+                                            attrs: {
+                                              slot: "reference",
+                                              src: scope.row[item.prop],
+                                              alt: scope.row[item.alt]
+                                            },
+                                            slot: "reference"
+                                          })
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                : _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
+                                      )
+                                    )
+                                  ])
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      label: "操作",
+                      width: "180",
+                      align: "center",
+                      fixed: "right"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "primary" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addSchedule(scope.row)
+                                  }
+                                }
+                              },
+                              [_vm._v("新增进度")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.del(scope.row, $event)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除")]
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "已提交", name: "1" } },
+            [
+              _c(
+                "el-table",
+                {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.submitLoading,
+                      expression: "submitLoading"
+                    }
+                  ],
+                  ref: "submitTable",
+                  attrs: {
+                    data: _vm.submitData,
+                    fit: "",
+                    height: "300",
+                    "row-class-name": _vm.afterSaleRCName,
+                    "row-style": _vm.rowStyle
+                  },
+                  on: {
+                    "selection-change": _vm.handleSelectionChange,
+                    "row-click": _vm.afterSaleRowClick
+                  }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      type: "selection",
+                      width: "95",
+                      align: "center",
+                      checked: _vm.checkboxInit
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.tableHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.prop,
+                      attrs: {
+                        align: "center",
+                        label: item.label,
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              item.type == "select"
+                                ? _c("span", [
+                                    scope.row[item.prop] == ""
+                                      ? _c("span")
+                                      : typeof scope.row[item.prop] ==
+                                          "object" && item.inProp
+                                      ? _c("span", [
+                                          _vm._v(
+                                            _vm._s(
+                                              scope.row[item.prop][item.inProp]
+                                            )
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ])
+                                : item.type == "checkbox"
+                                ? _c(
+                                    "span",
+                                    [
+                                      _c("el-checkbox", {
+                                        attrs: { disabled: "" },
+                                        model: {
+                                          value: scope.row[item.prop],
+                                          callback: function($$v) {
+                                            _vm.$set(scope.row, item.prop, $$v)
+                                          },
+                                          expression: "scope.row[item.prop]"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                : item.type == "img"
+                                ? _c(
+                                    "span",
+                                    [
+                                      _c(
+                                        "el-popover",
+                                        {
+                                          attrs: {
+                                            placement: "right",
+                                            trigger: "hover",
+                                            "popper-class": "picture_detail"
+                                          }
+                                        },
+                                        [
+                                          _c("img", {
+                                            attrs: { src: scope.row[item.prop] }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("img", {
+                                            attrs: {
+                                              slot: "reference",
+                                              src: scope.row[item.prop],
+                                              alt: scope.row[item.alt]
+                                            },
+                                            slot: "reference"
+                                          })
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                : _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
+                                      )
+                                    )
+                                  ])
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      label: "操作",
+                      width: "180",
+                      align: "center",
+                      fixed: "right"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "primary" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addSchedule(scope.row)
+                                  }
+                                }
+                              },
+                              [_vm._v("新增进度")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.del(scope.row, $event)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除")]
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("Pagination", { attrs: { "page-url": this.urls.aftersale } }),
+      _vm._v(" "),
+      _c(
+        "el-tabs",
+        {
+          model: {
+            value: _vm.bottomActiveName,
+            callback: function($$v) {
+              _vm.bottomActiveName = $$v
+            },
+            expression: "bottomActiveName"
+          }
+        },
+        [
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "售后进度", name: "0" } },
+            [
+              _c(
+                "el-table",
+                { attrs: { data: _vm.scheduleData } },
+                [
+                  _vm._l(_vm.btmTableHead[this.bottomActiveName], function(
+                    item
+                  ) {
+                    return _c("el-table-column", {
+                      key: item.label,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              scope.row[item.prop]
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      label: "操作",
+                      width: "180",
+                      align: "center",
+                      fixed: "right"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "primary" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateSchedule(scope.row, $event)
+                                  }
+                                }
+                              },
+                              [_vm._v("修改")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.delBtmTab(scope.row, $event)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除")]
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "售后产品问题", name: "1" } },
+            [
+              _c(
+                "el-table",
+                { attrs: { data: _vm.defProData } },
+                _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
+                  return _c("el-table-column", {
+                    key: item.label,
+                    attrs: {
+                      label: item.label,
+                      align: "center",
+                      width: item.width
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row[item.prop]
+                              ? _c("span", [
+                                  _vm._v(
+                                    _vm._s(
+                                      item.inProp
+                                        ? scope.row[item.prop][item.inProp]
+                                        : scope.row[item.prop]
+                                    )
+                                  )
+                                ])
+                              : _vm._e()
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "售后图片", name: "2" } },
+            [
+              _c(
+                "el-table",
+                { attrs: { data: _vm.defProData } },
+                _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
+                  return _c("el-table-column", {
+                    key: item.label,
+                    attrs: {
+                      label: item.label,
+                      align: "center",
+                      width: item.width
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "img"
+                              ? _c(
+                                  "span",
+                                  [
+                                    _c(
+                                      "el-popover",
+                                      {
+                                        attrs: {
+                                          placement: "right",
+                                          trigger: "hover",
+                                          "popper-class": "picture_detail"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: scope.row[item.prop] }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("img", {
+                                          attrs: {
+                                            slot: "reference",
+                                            src: scope.row[item.prop],
+                                            alt: scope.row[item.alt]
+                                          },
+                                          slot: "reference"
+                                        })
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e()
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "内部便签", name: "3" } },
+            [
+              _c(
+                "el-table",
+                { attrs: { data: _vm.Data } },
+                _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
+                  return _c("el-table-column", {
+                    key: item.label,
+                    attrs: {
+                      label: item.label,
+                      align: "center",
+                      width: item.width
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "select"
+                              ? _c("span", [
+                                  scope.row[item.prop] == ""
+                                    ? _c("span")
+                                    : typeof scope.row[item.prop] == "object" &&
+                                      item.inProp
+                                    ? _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            scope.row[item.prop][item.inProp]
+                                          )
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : item.type == "checkbox"
+                              ? _c(
+                                  "span",
+                                  [
+                                    _c("el-checkbox", {
+                                      attrs: { disabled: "" },
+                                      model: {
+                                        value: scope.row[item.prop],
+                                        callback: function($$v) {
+                                          _vm.$set(scope.row, item.prop, $$v)
+                                        },
+                                        expression: "scope.row[item.prop]"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : item.type == "img"
+                              ? _c(
+                                  "span",
+                                  [
+                                    _c(
+                                      "el-popover",
+                                      {
+                                        attrs: {
+                                          placement: "right",
+                                          trigger: "hover",
+                                          "popper-class": "picture_detail"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: scope.row[item.prop] }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("img", {
+                                          attrs: {
+                                            slot: "reference",
+                                            src: scope.row[item.prop],
+                                            alt: scope.row[item.alt]
+                                          },
+                                          slot: "reference"
+                                        })
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            item.inProp
+                                              ? scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              : scope.row[item.prop]
+                                          )
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "操作记录", name: "4" } },
+            [
+              _c(
+                "el-table",
+                { attrs: { data: _vm.Data } },
+                _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
+                  return _c("el-table-column", {
+                    key: item.label,
+                    attrs: {
+                      label: item.label,
+                      align: "center",
+                      width: item.width
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.type == "select"
+                              ? _c("span", [
+                                  scope.row[item.prop] == ""
+                                    ? _c("span")
+                                    : typeof scope.row[item.prop] == "object" &&
+                                      item.inProp
+                                    ? _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            scope.row[item.prop][item.inProp]
+                                          )
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : item.type == "checkbox"
+                              ? _c(
+                                  "span",
+                                  [
+                                    _c("el-checkbox", {
+                                      attrs: { disabled: "" },
+                                      model: {
+                                        value: scope.row[item.prop],
+                                        callback: function($$v) {
+                                          _vm.$set(scope.row, item.prop, $$v)
+                                        },
+                                        expression: "scope.row[item.prop]"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : item.type == "img"
+                              ? _c(
+                                  "span",
+                                  [
+                                    _c(
+                                      "el-popover",
+                                      {
+                                        attrs: {
+                                          placement: "right",
+                                          trigger: "hover",
+                                          "popper-class": "picture_detail"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: { src: scope.row[item.prop] }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("img", {
+                                          attrs: {
+                                            slot: "reference",
+                                            src: scope.row[item.prop],
+                                            alt: scope.row[item.alt]
+                                          },
+                                          slot: "reference"
+                                        })
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _c("span", [
+                                  scope.row[item.prop]
+                                    ? _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            item.inProp
+                                              ? scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              : scope.row[item.prop]
+                                          )
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          class: { "more-forms": _vm.moreForms },
+          attrs: { titie: "新建售后单", visible: _vm.addAfterSaleMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.addAfterSaleMask = $event
+=======
 
 /* ===========================================================================
  * For Z_RLE, simply look for runs of bytes, generate matches only of distance
@@ -34732,6 +36454,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               }
               var str = arr1.join(",");
               _this7.$message.error(str);
+>>>>>>> 3a18589194d845c9a61e39ec2d5d0427b6595bfb
             }
           });
         }).catch(function () {
@@ -35148,6 +36871,30 @@ var render = function() {
                           typeof $$v === "string" ? $$v.trim() : $$v
                         )
                       },
+<<<<<<< HEAD
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              scope.row[item.prop]
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  }),
+=======
                       expression: "searchBox.locker"
                     }
                   })
@@ -35159,6 +36906,7 @@ var render = function() {
                 "span",
                 [
                   _c("label", [_vm._v("还款时间")]),
+>>>>>>> 3a18589194d845c9a61e39ec2d5d0427b6595bfb
                   _vm._v(" "),
                   _c("el-date-picker", {
                     attrs: {
@@ -35646,6 +37394,134 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _c(
+<<<<<<< HEAD
+            "el-table",
+            {
+              attrs: {
+                data: _vm.orderDtlVal,
+                fit: "",
+                height: "180",
+                "row-class-name": _vm.addOrderRowCName
+              },
+              on: { "row-click": _vm.addOrderRowClick }
+            },
+            _vm._l(_vm.addOrderProHead, function(item) {
+              return _c("el-table-column", {
+                key: item.label,
+                attrs: {
+                  label: item.label,
+                  align: "center",
+                  width: item.width
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        item.type == "img"
+                          ? _c(
+                              "span",
+                              [
+                                _c(
+                                  "el-popover",
+                                  {
+                                    attrs: {
+                                      placement: "right",
+                                      trigger: "hover",
+                                      "popper-class": "picture_detail"
+                                    }
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: { src: scope.row[item.prop] }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("img", {
+                                      attrs: {
+                                        slot: "reference",
+                                        src: scope.row[item.prop],
+                                        alt: scope.row[item.alt]
+                                      },
+                                      slot: "reference"
+                                    })
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          : _c("span", [
+                              _vm._v(
+                                _vm._s(
+                                  item.inProp
+                                    ? scope.row[item.prop][item.inProp]
+                                    : scope.row[item.prop]
+                                )
+                              )
+                            ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c("el-button", { attrs: { type: "text" } }, [_vm._v("产品列表")]),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: {
+                data: _vm.proDtlVal,
+                fit: "",
+                height: "180",
+                "row-class-name": _vm.addAfterSProRowCName
+              },
+              on: { "row-click": _vm.addAfterSProRowClick }
+            },
+            _vm._l(_vm.addAfterSProHead, function(item) {
+              return _c("el-table-column", {
+                key: item.label,
+                attrs: {
+                  label: item.label,
+                  align: "center",
+                  width: item.width
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        scope.row[item.prop]
+                          ? _c("span", [
+                              _vm._v(
+                                _vm._s(
+                                  item.inProp
+                                    ? scope.row[item.prop][item.inProp]
+                                    : scope.row[item.prop]
+                                )
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    }
+                  }
+                ])
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+=======
             "el-tabs",
             [
               _c(
@@ -36032,6 +37908,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+>>>>>>> 3a18589194d845c9a61e39ec2d5d0427b6595bfb
               _c(
                 "el-tab-pane",
                 { attrs: { label: "操作日志", name: "1" } },
@@ -36750,6 +38627,61 @@ var render = function() {
                   align: "center",
                   width: item.width
                 },
+<<<<<<< HEAD
+                [
+                  _vm._l(_vm.defProHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.label,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              scope.row[item.prop]
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      label: "操作",
+                      width: "90",
+                      align: "center",
+                      fixed: "right"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.delUpdateDefPro(
+                                      scope.row,
+                                      $event
+=======
                 scopedSlots: _vm._u(
                   [
                     {
@@ -37006,6 +38938,7 @@ var render = function() {
                                         })
                                       ],
                                       1
+>>>>>>> 3a18589194d845c9a61e39ec2d5d0427b6595bfb
                                     )
                               ])
                             : _c("span", [

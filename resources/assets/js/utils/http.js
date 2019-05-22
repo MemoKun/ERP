@@ -4,7 +4,7 @@ import store from '../store/index.js'
 import {Message} from 'element-ui'
 import { setToken,removeToken } from '../utils/auth.js';
 
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 50000;
 axios.defaults.baseURL ='http:////bferp.test/api';//bferp.test
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 

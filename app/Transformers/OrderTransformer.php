@@ -11,7 +11,7 @@ class OrderTransformer extends TransformerAbstract
         'shop', 'logistic', 'freightType', 'distribution',
         'distributionMethod', 'distributionType', 'takeDeliveryGoodsWay',
         'customerType', 'paymentMethod', 'warehouses', 'orderItems', 'businessPersonnel',
-        'locker', 'paymentDetails', 'resupplieOrder','csAudit','applier','orderOperationRecord'
+        'locker', 'paymentDetails', 'resupplieOrder', 'csAudit', 'applier', 'orderOperationRecord',
     ];
 
     public function transform(Order $order)
@@ -19,22 +19,22 @@ class OrderTransformer extends TransformerAbstract
         return [
             'id' => $order->id,
             'system_order_no' => $order->system_order_no,
-            'order_status'  => $order->order_status,
-            'order_source'  => $order->order_source,
+            'order_status' => $order->order_status,
+            'order_source' => $order->order_source,
             'order_amount' => $order->order_amount,
             'shops_id' => $order->shops_id,
             'shop_name' => $order->shop_name,
             'logistics_id' => $order->logistics_id,
             'logistics_sn' => $order->logistics_sn,
             'billing_way' => $order->billing_way,
-            'promise_ship_time'  => optional($order->promise_ship_time)->toDateString(),
+            'promise_ship_time' => optional($order->promise_ship_time)->toDateString(),
             'freight_types_id' => $order->freight_types_id,
             'expected_freight' => $order->expected_freight,
             'actual_freight' => $order->actual_freight,
             'logistics_remark' => $order->logistics_remark,
             'is_logistics_checked' => $order->is_logistics_checked,
             'logistics_check_remark' => $order->logistics_check_remark,
-            'logistics_checked_at'  => optional($order->logistics_checked_at)->toDateString(),
+            'logistics_checked_at' => optional($order->logistics_checked_at)->toDateString(),
             'distributions_id' => $order->distributions_id,
             'distribution_methods_id' => $order->distribution_methods_id,
             'deliver_goods_fee' => $order->deliver_goods_fee,
@@ -46,7 +46,7 @@ class OrderTransformer extends TransformerAbstract
             'distribution_types_id' => $order->distribution_types_id,
             'is_distribution_checked' => $order->is_distribution_checked,
             'distribution_check_remark' => $order->distribution_check_remark,
-            'distribution_checked_at'  => optional($order->distribution_checked_at)->toDateString(),
+            'distribution_checked_at' => optional($order->distribution_checked_at)->toDateString(),
             'service_car_fee' => $order->service_car_fee,
             'service_car_info' => $order->service_car_info,
             'take_delivery_goods_fee' => $order->take_delivery_goods_fee,
@@ -72,6 +72,13 @@ class OrderTransformer extends TransformerAbstract
             'accept_order_user' => $order->accept_order_user,
             'tax_number' => $order->tax_number,
             'receipt' => $order->receipt,
+            'is_logistics_checked' => $order->is_logistics_checked,
+            'logistics_remark' => $order->logistics_remark,
+            'logistics_check_remark' => $order->logistics_check_remark,
+            'logistics_checked_at' => optional($order->logistics_checked_at)->toDateTimeString(),
+            'is_goods_checked' => $order->is_goods_checked,
+            'goods_check_remark' => $order->goods_check_remark,
+            'goods_checked_at' => optional($order->goods_checked_at)->toDateTimeString(),
             'buyer_message' => $order->buyer_message,
             'seller_remark' => $order->seller_remark,
             'customer_service_remark' => $order->customer_service_remark,
@@ -81,7 +88,7 @@ class OrderTransformer extends TransformerAbstract
             'member_nick' => $order->member_nick,
             'seller_name' => $order->seller_name,
             'seller_flag' => $order->seller_flag,
-            'created'  => optional($order->created)->toDateString(),
+            'created' => optional($order->created)->toDateString(),
             'est_con_time' => optional($order->est_con_time)->toDateString(),
             'receiver_name' => $order->receiver_name,
             'receiver_phone' => $order->receiver_phone,
@@ -94,24 +101,26 @@ class OrderTransformer extends TransformerAbstract
             'refund_info' => $order->refund_info,
             'business_personnel_id' => $order->business_personnel_id,
             'locker_id' => $order->locker_id,
-            'locked_at'  => optional($order->locked_at)->toDateString(),
+            'locked_at' => optional($order->locked_at)->toDateString(),
             'auditor_id' => $order->auditor_id,
             'audit_at' => optional($order->audit_at)->toDateString(),
             'cs_auditor_id' => $order->cs_auditor_id,
-            'cs_audited_at'  => optional($order->cs_audited_at)->toDateString(),
+            'cs_audited_at' => optional($order->cs_audited_at)->toDateString(),
             'fd_auditor_id' => $order->fd_auditor_id,
             'fd_audited_at' => optional($order->fd_audited_at)->toDateString(),
             'ca_auditor_id' => $order->ca_auditor_id,
-            'ca_audited_at'  => optional($order->ca_audited_at)->toDateString(),
+            'ca_audited_at' => optional($order->ca_audited_at)->toDateString(),
             'stockout_op_id' => $order->stockout_op_id,
             'stockout_at' => optional($order->stockout_at)->toDateString(),
             'association_taobao_oid' => $order->association_taobao_oid,
             'is_merge' => $order->is_merge,
             'is_split' => $order->is_split,
             'is_association' => $order->is_association,
+            'stockout_at' => optional($order->stockout_at)->toDateTimeString(),
+            'stockout_remark' => $order->stockout_remark,
+            'created_at' => optional($order->created_at)->toDateTimeString(),
+            'updated_at' => optional($order->updated_at)->toDateTimeString(),
             'status' => $order->status,
-            'created_at'  => optional($order->created_at)->toDateString(),
-            'updated_at'  => optional($order->updated_at)->toDateString(),
         ];
     }
 
@@ -180,6 +189,7 @@ class OrderTransformer extends TransformerAbstract
         if (!$order->locker) {
             return;
         }
+
         return $this->item($order->businessPersonnel, new UserTransformer());
     }
 
@@ -188,9 +198,10 @@ class OrderTransformer extends TransformerAbstract
         if (!$order->locker) {
             return;
         }
+
         return $this->item($order->locker, new UserTransformer());
     }
-    
+
     public function includeCsAudit(Order $order)
     {
         return $this->item($order->csAudit, new UserTransformer());

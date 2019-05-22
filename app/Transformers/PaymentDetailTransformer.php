@@ -7,6 +7,9 @@ use League\Fractal\TransformerAbstract;
 
 class PaymentDetailTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = [
+        'order', 'paymentMethod',
+    ];
 
     public function transform(PaymentDetail $paymentDetail)
     {
@@ -22,8 +25,17 @@ class PaymentDetailTransformer extends TransformerAbstract
             'created_at' => $paymentDetail->created_at
                                   ->toDateTimeString(),
             'updated_at' => $paymentDetail->updated_at
-                                  ->toDateTimeString()
+                                  ->toDateTimeString(),
         ];
     }
 
+    public function includeOrder(PaymentDetail $paymentDetail)
+    {
+        return $this->item($paymentDetail->order, new OrderTransformer());
+    }
+
+    public function includePaymentMethod(PaymentDetail $paymentDetail)
+    {
+        return $this->item($paymentDetail->paymentMethod, new PaymentMethodTransformer());
+    }
 }

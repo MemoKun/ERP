@@ -7,6 +7,10 @@ use League\Fractal\TransformerAbstract;
 
 class PaymentMethodTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = [
+        'orders', 'paymentDetails', 'refundOrders',
+    ];
+
     public function transform(PaymentMethod $paymentMethod)
     {
         return [
@@ -18,5 +22,20 @@ class PaymentMethodTransformer extends TransformerAbstract
             'updated_at' => $paymentMethod->updated_at
                                     ->toDateTimeString(),
         ];
+    }
+
+    public function includeOrders(PaymentMethod $paymentMethod)
+    {
+        return $this->collection($paymentMethod->orders, new OrderTransformer());
+    }
+
+    public function includePaymentDetails(PaymentMethod $paymentMethod)
+    {
+        return $this->collection($paymentMethod->paymentDetails, new PaymentDetailTransformer());
+    }
+
+    public function includeRefundOrders(PaymentMethod $paymentMethod)
+    {
+        return $this->collection($paymentMethod->refundOrders, new RefundOrderTransformer());
     }
 }

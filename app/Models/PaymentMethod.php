@@ -7,22 +7,26 @@ class PaymentMethod extends Model
     protected $table = 'payment_methods';
 
     protected $fillable = [
-        'name', 'status'
+        'name', 'status',
     ];
 
     //设置类型
     protected $casts = [
-        'status' => 'boolean'
+        'status' => 'boolean',
     ];
 
     public function orders()
     {
-        return $this->hasMany(Order::class,'payment_methods_id');
+        return $this->hasMany(Order::class, 'payment_methods_id');
+    }
+
+    public function paymentDetails()
+    {
+        return $this->hasMany(PaymentDetail::class, 'payment_methods_id');
     }
 
     public function refundOrders()
     {
         return $this->hasMany(RefundOrder::class, 'payment_methods_id');
     }
-
 }

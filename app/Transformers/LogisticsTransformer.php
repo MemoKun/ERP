@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class LogisticsTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'cityInfos', 'printReport', 'freightType','resupplieOrder'
+        'cityInfos', 'printReport', 'freightType', 'resupplieOrder', 'orders',
     ];
 
     public function transform(Logistics $logistics)
@@ -52,4 +52,8 @@ class LogisticsTransformer extends TransformerAbstract
         return $this->collection($logistics->resupplieOrder, new ResupplieOrderTransformer());
     }
 
+    public function includeOrders(Logistics $logistics)
+    {
+        return $this->collection($logistics->orders, new OrderTransformer());
+    }
 }
