@@ -308,7 +308,7 @@ const constantRouterMap = [{
         requireAuth: true
       }
     },
-    {
+    /*{
       path: 'purchaseFabric',
       name: 'PurchaseFabric',
       component: resolve => void(require(['../views/purchase/purchaseFabric.vue'], resolve)),
@@ -317,7 +317,7 @@ const constantRouterMap = [{
         icon: 'puFa',
         requireAuth: true
       }
-    },
+    },*/
     {
       path: 'otherStorage',
       name: 'OtherStorage',
