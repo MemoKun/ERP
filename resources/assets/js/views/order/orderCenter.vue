@@ -42,7 +42,11 @@
             </span>
             <span>
               <label>业务员</label>
-              <el-input v-model="searchBox.business_personnel_id" clearable></el-input>
+              <el-select v-model="searchBox.business_personnel_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
             </span>
             <span>
               <label>承诺日期</label>
@@ -112,7 +116,23 @@
             <span>
               <label>淘宝旗帜</label>
               <el-select v-model="searchBox.seller_flag" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.sellerFlags" :key="item.value" :label="item.label" :value="item.value">
+                <el-option :key="0" label="黑旗" :value="0">
+                  <i class="iconfont bf-flag"></i>
+                </el-option>
+                <el-option :key="1" label="红旗" :value="1">
+                  <i class="iconfont bf-flag" style="color:red"></i>
+                </el-option>
+                <el-option :key="2" label="黄旗" :value="2">
+                  <i class="iconfont bf-flag" style="color:yellow"></i>
+                </el-option>
+                <el-option :key="3" label="绿旗" :value="3">
+                  <i class="iconfont bf-flag" style="color:green"></i>
+                </el-option>
+                <el-option :key="4" label="蓝旗" :value="4">
+                  <i class="iconfont bf-flag" style="color:blue"></i>
+                </el-option>
+                <el-option :key="5" label="紫旗" :value="5">
+                  <i class="iconfont bf-flag" style="color:purple"></i>
                 </el-option>
               </el-select>
             </span>
@@ -152,7 +172,6 @@
               <label>电子面单号</label>
               <el-input v-model="searchBox.esheet_no" clearable></el-input>
             </span>
-
             <span>
               <label>客审时间</label>
               <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期"
@@ -161,11 +180,15 @@
             </span>
             <span>
               <label>审计员</label>
-              <el-input v-model="searchBox.auditor_id" clearable></el-input>
+              <el-select v-model="searchBox.auditor_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
             </span>
           </div>
           <div style="text-align: right">
-            <el-button type="primary">筛选</el-button>
+            <el-button type="primary" @click="searchData">筛选</el-button>
             <el-button @click="resets">重置</el-button>
           </div>
         </div>
@@ -268,7 +291,7 @@
                     <span v-if="item.inProp">
                       <span v-if="item.inData">
                         <span v-if="item.nmProp">
-                          {{scope.row[item.prop][item.inProp]['data'][0][item.nmProp]}}
+                          {{scope.row[item.prop][item.inProp]['data'][0]?scope.row[item.prop][item.inProp]['data'][0][item.nmProp]:''}}
                         </span>
                       </span>
                       <span v-else>
@@ -312,7 +335,7 @@
                     <span v-if="item.inProp">
                       <span v-if="item.inData">
                         <span v-if="item.nmProp">
-                          {{scope.row[item.prop][item.inProp]['data'][0][item.nmProp]}}
+                          {{scope.row[item.prop][item.inProp]['data'][0]?scope.row[item.prop][item.inProp]['data'][0][item.nmProp]:''}}
                         </span>
                       </span>
                       <span v-else>
@@ -528,38 +551,32 @@ export default {
         {
           cnt: '删除',
           icon: 'bf-del',
-          ent: this.delBatch,
-          nClick: true
+          ent: this.delBatch
         },
         {
           cnt: '退审',
           icon: 'bf-auditfaild',
-          ent: this.handleUnAudit,
-          nClick: true
+          ent: this.handleUnAudit
         },
         {
           cnt: '导入',
           icon: 'bf-in',
-          ent: this.test,
-          nClick: false
+          ent: this.test
         },
         {
           cnt: '导出',
           icon: 'bf-out',
-          ent: this.test,
-          nClick: false
+          ent: this.test
         },
         {
           cnt: '同步',
           icon: 'bf-sync',
-          ent: this.handleMergerOrder,
-          nClick: true
+          ent: this.handleMergerOrder
         },
         {
           cnt: '门店收款',
           icon: 'bf-bill',
-          ent: this.test,
-          nClick: false
+          ent: this.test
         },
         {
           cnt: '转赠品',
@@ -597,13 +614,21 @@ export default {
         stockout_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         payment_date: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         order_status: '',
-        orderStatus: [],
+        orderStatus: [
+          { label: '未处理', value: 10 },
+          { label: '订单锁定中', value: 20 },
+          { label: '已客审', value: 30 },
+          { label: '已跟单一审', value: 40 },
+          { label: '已财审', value: 50 },
+          { label: '已货审', value: 60 },
+          { label: '准备出库', value: 70 },
+          { label: '已出库', value: 80 }
+        ],
         order_fdAuditDate: [
           '2018-12-31T16:00:00.000Z',
           '2099-12-31T16:00:00.000Z'
         ],
         seller_flag: '',
-        sellerFlags: [],
         logistics_sn: '',
         out_order: '',
         seller_remark: '',
@@ -1121,7 +1146,7 @@ export default {
         {
           label: '发票信息',
           width: '160',
-          prop: 'print_at',
+          prop: '',
           type: 'text'
         },
         {
@@ -1218,7 +1243,7 @@ export default {
         },
         {
           label: '客审',
-          width: '220',
+          width: '90',
           prop: 'resupplieOrder',
           inProp: 'is_review',
           type: 'checkbox',
@@ -1238,7 +1263,7 @@ export default {
         },
         {
           label: '打印',
-          width: '220',
+          width: '90',
           prop: 'resupplieOrder',
           inProp: 'is_print',
           type: 'checkbox',
@@ -1252,7 +1277,7 @@ export default {
         },
         {
           label: '发货',
-          width: '220',
+          width: '90',
           prop: 'resupplieOrder',
           inProp: 'is_consign',
           type: 'checkbox',
@@ -1260,7 +1285,7 @@ export default {
         },
         {
           label: '结算',
-          width: '220',
+          width: '90',
           prop: 'resupplieOrder',
           inProp: 'is_settle',
           type: 'checkbox',
@@ -1268,7 +1293,7 @@ export default {
         },
         {
           label: '作废',
-          width: '220',
+          width: '90',
           prop: 'resupplieOrder',
           inProp: 'is_invalid',
           type: 'checkbox',
@@ -1396,7 +1421,7 @@ export default {
           type: 'text'
         }
       ],
-      loading: false,
+      loading: true,
       checkboxInit: false,
       orderListIndex: '',
       alreadyHandle: [],
@@ -1480,12 +1505,12 @@ export default {
         },
         {
           label: '支付总金额',
-          prop: 'distribution_phone',
+          prop: '',
           type: 'number'
         },
         {
           label: '三包类型',
-          prop: 'distribution_no',
+          prop: '',
           type: 'text'
         },
         {
@@ -2185,19 +2210,19 @@ export default {
         {
           label: '单号',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
           label: '优惠标题',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
           label: '优惠金额',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         }
       ],
@@ -2221,7 +2246,7 @@ export default {
         {
           label: '出货日期',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
@@ -2240,13 +2265,13 @@ export default {
         {
           label: '已付定金',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
           label: '欠款金额',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
@@ -2259,7 +2284,7 @@ export default {
         {
           label: '付款账号',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
@@ -2271,13 +2296,13 @@ export default {
         {
           label: '收款人',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
           label: '收款账号',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
@@ -2289,7 +2314,7 @@ export default {
         {
           label: '创建人',
           width: '140',
-          prop: 'mark_time',
+          prop: '',
           type: 'text'
         },
         {
@@ -2305,7 +2330,7 @@ export default {
         {
           label: '电子面单号',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         }
       ],
@@ -2315,49 +2340,49 @@ export default {
         {
           label: '系统订单号',
           width: '140',
-          prop: 'system_order_no',
+          prop: '',
           type: 'text'
         },
         {
           label: '费用类型',
           width: '140',
-          prop: 'feeType',
+          prop: '',
           type: 'text'
         },
         {
           label: '费用金额',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         },
         {
           label: '创建人',
           width: '140',
-          prop: 'creator',
+          prop: '',
           type: 'text'
         },
         {
           label: '创建时间',
           width: '140',
-          prop: 'created_at',
+          prop: '',
           type: 'text'
         },
         {
           label: '修改人',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         },
         {
           label: '修改时间',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         },
         {
           label: '备注',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         }
       ],
@@ -2367,31 +2392,31 @@ export default {
         {
           label: '商品编码',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         },
         {
           label: '规格编码',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         },
         {
           label: '占用仓库',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         },
         {
           label: '占用数',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         },
         {
           label: '占用时间',
           width: '140',
-          prop: 'esheet_no',
+          prop: '',
           type: 'text'
         }
       ],
@@ -2411,36 +2436,15 @@ export default {
       showDel: false,
       delUrl: '',
       delId: '',
+      //分页
+      pagination: {
+        current_page: 1,
+        per_page: 0,
+        page_total: 0
+      },
       /*删除批量*/
       ids: [],
-      splitMask: false,
-      splitVal: [],
-      splitHead: [
-        {
-          label: '商品编码',
-          prop: 'commodity_code',
-          type: 'text'
-        },
-        {
-          label: '商品简称',
-          prop: 'short_name',
-          type: 'text'
-        },
-        {
-          label: '数量',
-          prop: 'quantity',
-          type: 'number'
-        },
-        {
-          label: '实际拆分数量',
-          prop: '',
-          inProp: 'quantity',
-          type: 'number'
-        }
-      ],
-      splitRowIndex: '',
-      splitRow: {},
-      mergerIds: []
+      checkboxId: ''
     };
   },
   computed: {
@@ -2549,23 +2553,24 @@ export default {
         receiver_address: this.searchBox.receiver_address,
         shops_id: this.searchBox.shops_id,
         business_personnel_id: this.searchBox.business_personnel_id,
-        promise_ship_time: this.searchBox.promise_ship_time,
-        created_at: this.searchBox.created_at,
-        order_transMStart: this.searchBox.order_transMStart,
-        order_transMEnd: this.searchBox.order_transMEnd,
-        logistics: this.searchBox.logistics,
-        stockout_at: this.searchBox.stockout_at,
-        payment_date: this.searchBox.payment_date,
+        //promise_ship_time: this.searchBox.promise_ship_time,
+        //created_at: this.searchBox.created_at,
+        //order_transMStart: this.searchBox.order_transMStart,
+        //order_transMEnd: this.searchBox.order_transMEnd,
+        logistics_id: this.searchBox.logistics_id,
+        //stockout_at: this.searchBox.stockout_at,
+        //payment_date: this.searchBox.payment_date,
         order_status: this.searchBox.order_status,
+        freight_types_id: this.searchBox.freight_types_id,
         //order_fdAuditDate: this.searchBox.order_fdAuditDate,
         seller_flag: this.searchBox.seller_flag,
         logistics_sn: this.searchBox.logistics_sn,
         //out_order: this.searchBox.out_order,
         seller_remark: this.searchBox.seller_remark,
-        suppliers_id: this.searchBox.suppliers_id,
+        //suppliers_id: this.searchBox.suppliers_id,
         warehouses_id: this.searchBox.warehouses_id,
         //esheet_no: this.searchBox.esheet_no,
-        audit_at: this.searchBox.audit_at,
+        //audit_at: this.searchBox.audit_at,
         auditor_id: this.searchBox.auditor_id,
         include:
           'resupplieOrder,shop,customerType,businessPersonnel,logistic,freightType,distribution,distributionType,distributionMethod,orderItems,paymentMethod,warehouses,orderItems.combination,orderItems.product.supplier,orderItems.product.productComponents,paymentDetails,paymentDetails.paymentMethod,paymentDetails.order,resupplieOrder.resupplieInnerNote,resupplieOrder.resupplieOperationRecord,logistic.orders,logistic.freightType,resupplieOrder.resupplieCategory,resupplieOrder.order,resupplieOrder.refundMethod,resupplieOrder.logistic,resupplieOrder.resupplieEsheet'
@@ -2573,12 +2578,23 @@ export default {
         res => {
           this.loading = false;
           this.orderListData = res.data;
+          this.$store.dispatch('shops', '/shops');
+          this.$store.dispatch('logistics', '/logistics');
+          this.$store.dispatch('warehouses', '/warehouses');
+          this.$store.dispatch('freighttypes', '/freighttypes');
+          this.$fetch(this.urls.customerservicedepts + '/create').then(
+            res => {
+              this.addSubData = res;
+              console.log(this.addSubData);
+            },
+            err => {}
+          );
           this.proDtlData = res.data[0] ? res.data['orderItems'].data : [];
           this.cargoAuditData = res.data;
           this.payDtlData = res.data[0] ? res.data['paymentDetails'].data : [];
-          this.innerNoteData = [];
+          /*this.innerNoteData = [];
           this.operationRecordData = [];
-          this.checkDtlData = [];
+          this.checkDtlData = [];*/
           this.logisticsData = res.data[0]
             ? [
                 {
@@ -2592,25 +2608,18 @@ export default {
           this.reSupplyData = res.data[0]
             ? res.data['resupplieOrder'].data
             : [];
-          this.offerListData = [];
+          /*this.offerListData = [];
           this.receiveDtlData = [];
           this.EsheetData = res.data[0]
             ? res.data['resupplieOrder'].data['resupplieEsheet'].data
             : [];
           this.otherFeeData = [];
-          this.warehouseData = [];
+          this.warehouseData = [];*/
 
           let pg = res.meta.pagination;
           this.$store.dispatch('currentPage', pg.current_page);
           this.$store.commit('PER_PAGE', pg.per_page);
           this.$store.commit('PAGE_TOTAL', pg.total);
-          this.$store.dispatch('paymentmethods', this.urls.paymentmethods);
-          this.$fetch(this.urls.customerservicedepts + '/create').then(
-            res => {
-              this.addSubData = res;
-            },
-            err => {}
-          );
         },
         err => {
           if (err.response) {
@@ -2641,7 +2650,7 @@ export default {
         created_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         order_transMStart: '',
         order_transMEnd: '',
-        logistics: '',
+        logistics_id: '',
         stockout_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         payment_date: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
         order_status: '',
@@ -2730,7 +2739,6 @@ export default {
           seller_remark: data['seller_remark']
         };
       }
-      console.log(row);
       this.proDtlData = row['orderItems'].data;
       this.cargoAuditData = row['orderItems'].data;
 
@@ -2753,7 +2761,6 @@ export default {
       this.EsheetData = [];
       this.otherFeeData = [];
       this.warehouseData = [];
-      console.log(this.EsheetData);
     },
     proQueryClick() {
       this.proSkuVal = [];
@@ -2901,11 +2908,7 @@ export default {
       this.showDel = true;
       $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
       this.delId = row.id;
-      this.delUrl = row['orderItems']
-        ? this.urls.customerservicedepts
-        : row['payment']
-        ? this.urls['paymentdetails']
-        : this.urls.orderitems;
+      this.delUrl = this.urls.customerservicedepts;
     },
     cancelD() {
       this.showDel = false;
@@ -2950,7 +2953,6 @@ export default {
       /*拿到当前id*/
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : '';
       this.curRowData = val.length > 0 ? val[val.length - 1] : '';
-      this.mergerIds = val;
     },
     delBatch() {
       if (this.ids.length === 0) {
@@ -3012,7 +3014,29 @@ export default {
       this.fetchData();
     },
     //退审
-    handleUnAudit() {},
+    handleUnAudit() {
+      let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$put(this.urls.customerservicedepts + '/' + id + '/unaudit').then(
+        () => {
+          this.refresh();
+          this.$message({
+            message: '退审成功',
+            type: 'success'
+          });
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(',');
+            this.$message.error(str);
+          }
+        }
+      );
+    },
     //同步
     handleMergerOrder() {}
   },
