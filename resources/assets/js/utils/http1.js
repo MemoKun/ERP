@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let baseUrl = 'http://bferp.test/api';//bferp.test
+let baseUrl = 'http://erp.2b181.cn/api';//bferp.test
 /*
 if (process.env.NODE_ENV === 'development') {
   baseUrl = 'http://...'
