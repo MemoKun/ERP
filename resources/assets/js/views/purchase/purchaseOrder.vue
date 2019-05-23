@@ -192,7 +192,7 @@
                   <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                 </el-popover>
               </span>
-              <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}}</span>
+              <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="90" align="center" fixed="right">
@@ -1008,7 +1008,6 @@ export default {
           label: "打印时间",
           width: "200",
           prop: "print_at",
-          inProp: "date",
           type: "text"
         },
         /* {
@@ -1825,37 +1824,37 @@ export default {
         {
           label: "库存数",
           width: "120",
-          prop: "",
+          prop: "store_num",
           type: "number"
         },
         {
           label: "订出数",
           width: "120",
-          prop: "",
+          prop: "order_num",
           type: "number"
         },
         {
           label: "在途数",
           width: "120",
-          prop: "",
+          prop: "load_num",
           type: "number"
         },
         {
           label: "在途数(提交)",
           width: "130",
-          prop: "",
+          prop: "submit_num",
           type: "number"
         },
         {
           label: "可用数",
           width: "120",
-          prop: "",
+          prop: "use_num",
           type: "number"
         },
         {
           label: "需采购数",
           width: "130",
-          prop: "",
+          prop: "purchase_num",
           type: "number"
         },
         {
@@ -1974,7 +1973,7 @@ export default {
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.purchases, {
-            purchase_status: "section",
+            purchase_status: "section", 
             include:
               "user,purchaseLists.purchaseDetails,purchaseLists.combination"
           }).then(
@@ -1993,6 +1992,8 @@ export default {
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
             },
             err => {
               if (err.response) {
@@ -2022,17 +2023,20 @@ export default {
               this.finishLoading = false;
               this.finishData = res.data;
               this.checkboxInit = false;
-              if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
-                this.purListVal = res.data[0]["purchaseLists"]["data"][0];
-                this.purDetailsVal =
-                  res.data[0].purchase_lists["data"][0]["purchaseDetails"][
-                    "data"
-                  ];
-              }
+              // if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
+              //   this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+              //   this.purDetailsVal =
+              //     res.data[0].purchase_lists["data"][0]["purchaseDetails"][
+              //       "data"
+              //     ];
+              // }
+              console.log(this.finishData);
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
             },
             err => {
               if (err.response) {
@@ -3141,11 +3145,20 @@ export default {
     clickRightTabs() {},
     /*批量删除 只针对新建模块*/
     handleSelectionChange(val) {
-      if (val.length != 0) {
-        this.updateId = val[0].id;
-      } else {
+      if (val.length == 0) {
         this.updateId = "";
-      }
+      } else if (val.length == 1) {
+        this.updateId = val[0].id;
+        this.newOpt[1].nClick = val[0]["is_change"] ? true : false;
+        this.newOpt[3].nClick = val[0]["is_submit"] ? true : false;
+        this.newOpt[10].nClick = val[0]["is_print"] ? true : false;
+        this.newOpt[4].nClick = val[0]["is_audit"] ? true : false;
+        this.purRowClick(val[0]);
+      } else {
+        this.newOpt[1].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+      };
       this.multipleSelection = val;
       let del = [];
       this.multipleSelection.forEach(selectedItem => {

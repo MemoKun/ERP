@@ -969,7 +969,7 @@ class PurchasesController extends Controller
 
     public function isUnAudit(Purchase $purchase)
     {
-        return $this->traitAction($purchase, !$purchase->status || !$purchase->is_audit, '审核出错，是否未审核或重复退审', 'unAudit');
+        return $this->traitAction($purchase, !$purchase->status || $purchase->getOriginal('purchase_status') == $purchase::PURCHASE_STATUS_NEW, '审核出错，是否未提交或重复退审', 'unAudit');
     }
 
 }
