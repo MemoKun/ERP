@@ -97,6 +97,7 @@ class Purchase extends Model
     public function input()
     {
         $this->is_submit = 1;
+        $this->purchase_status = "section";
         $this->save();
     }
 
@@ -106,16 +107,27 @@ class Purchase extends Model
     public function audit()
     {
         $this->is_audit = 1;
+        $this->purchase_status = "finish";
         $this->save();
     }
 
     /**
-     * 审核
+     * 退审
      */
     public function unAudit()
     {
-        $this->is_audit = 0;
-        $this->save();
+        if ($this->getOriginal('purchase_status') == "section") 
+        {
+            $this->is_submit = 0;
+            $this->purchase_status = "new";
+            $this->save();
+        };
+        if ($this->getOriginal('purchase_status') == "finish") 
+        {
+            $this->is_audit = 0;
+            $this->purchase_status = "section";
+            $this->save();
+        };
     }
 
 
