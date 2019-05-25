@@ -1004,7 +1004,7 @@ export default {
           this.newOpt[4].nClick = true;
           this.newOpt[5].nClick = true;
           this.$fetch(this.urls.stockins, {
-            is_submit: false,
+            stock_in_status: 10,
             include:
               "warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
@@ -1068,8 +1068,7 @@ export default {
           this.newOpt[4].nClick = false;
           this.newOpt[5].nClick = false;
           this.$fetch(this.urls.stockins, {
-            is_submit: true,
-            is_audit: false,
+            stock_in_status: 20,
             include:
               "warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
@@ -1128,7 +1127,7 @@ export default {
           this.newOpt[4].nClick = true;
           this.newOpt[5].nClick = false;
           this.$fetch(this.urls.stockins, {
-            is_audit: true,
+            stock_in_status: 30,
             include:
               "warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
