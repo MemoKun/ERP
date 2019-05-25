@@ -7,10 +7,36 @@ use Illuminate\Support\Facades\Auth;
 
 class StockIn extends Model
 {
+    // 入库状态
+    const STOCKIN_STATUS_NEW = 10;
+    const STOCKIN_STATUS_SUBMIT = 20;
+    const STOCKIN_STATUS_STOCKIN = 30;
+
+    // 入库状态
+    public static $orderStatusMap = [
+        self::STOCKIN_STATUS_NEW => '新建',
+        self::STOCKIN_STATUS_SUBMIT => '已提交',
+        self::STOCKIN_STATUS_STOCKIN => '已入库',
+    ];
+
+    // 入库操作
+    public static $afterSaleOperationMap = [
+        self::STOCKIN_STATUS_NEW => '创建',
+        self::STOCKIN_STATUS_SUBMIT => '提交',
+        self::STOCKIN_STATUS_STOCKIN => '入库',
+    ];
+
+    // 入库操作详情
+    public static $afterSaleOperationDescriptionMap = [
+        self::STOCKIN_STATUS_NEW => '创建入库单',
+        self::STOCKIN_STATUS_SUBMIT => '提交售后单',
+        self::STOCKIN_STATUS_STOCKIN => '审核入库单',
+    ];
+    
     protected $table = 'stock_ins';
 
     protected $fillable = [
-        'stock_in_no', 'external_sn', 'warehouse_id', 'stock_in_types_id', 'suppliers_id',
+        'stock_in_no', 'external_sn', 'stock_in_status', 'warehouse_id', 'stock_in_types_id', 'suppliers_id',
         'creator', 'submitter', 'submit_at', 'auditor', 'audit_at', 'warehouer',
         'stock_in_at', 'is_submit', 'is_audit', 'is_stock_in', 'status', 'print_at',
         'is_print'
@@ -106,6 +132,7 @@ class StockIn extends Model
      */
     public function input()
     {
+        $this->stock_in_status = self::STOCKIN_STATUS_SUBMIT;
         $this->submit_at = Carbon::now();
         $this->submitter = Auth::guard('api')->id();
         $this->is_submit = 1;
@@ -127,6 +154,7 @@ class StockIn extends Model
      */
     public function audit()
     {
+        $this->stock_in_status = self::STOCKIN_STATUS_STOCKIN;
         $this->audit_at = Carbon::now();
         $this->auditor = Auth::guard('api')->id();
         $this->is_audit = 1;
@@ -141,6 +169,7 @@ class StockIn extends Model
      */
     public function unAudit()
     {
+        $this->stock_in_status = self::STOCKIN_STATUS_SUBMIT;
         $this->audit_at = Carbon::now();
         $this->auditor = Auth::guard('api')->id();
         $this->is_audit = 0;
