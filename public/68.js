@@ -507,6 +507,279 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -546,6 +819,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: "bf-refresh",
         ent: this.refresh
       }],
+      Data: [],
       filterBox: false,
       searchBox: {
         after_sale_order_no: "",
@@ -1168,6 +1442,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       updateCompUpload: "upload0",
       updateRwIndex: "0",
       curRowId: "",
+      checkboxId: "",
       curRowData: {}
     };
   },
@@ -2405,8 +2680,7 @@ var render = function() {
                     data: _vm.newData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName,
-                    "row-style": _vm.rowStyle
+                    "row-class-name": _vm.afterSaleRCName
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -2596,8 +2870,7 @@ var render = function() {
                     data: _vm.submitData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName,
-                    "row-style": _vm.rowStyle
+                    "row-class-name": _vm.afterSaleRCName
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -3462,10 +3735,8 @@ var render = function() {
                   attrs: {
                     data: _vm.addAfterSaleForm.after_sale_def_pro,
                     fit: "",
-                    height: "180",
-                    "row-class-name": _vm.defRowCName
-                  },
-                  on: { "row-click": _vm.defRowClick }
+                    height: "180"
+                  }
                 },
                 [
                   _vm._l(_vm.defProHead, function(item) {
@@ -4039,81 +4310,44 @@ var render = function() {
                   attrs: {
                     data: _vm.updateForm.after_sale_def_pro,
                     fit: "",
-                    height: "180",
-                    "row-class-name": _vm.defRowCName
-                  },
-                  on: { "row-click": _vm.defRowClick }
+                    height: "180"
+                  }
                 },
-                [
-                  _vm._l(_vm.defProHead, function(item) {
-                    return _c("el-table-column", {
-                      key: item.label,
-                      attrs: {
-                        label: item.label,
-                        align: "center",
-                        width: item.width
-                      },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(scope) {
-                              return [
-                                scope.row[item.prop]
-                                  ? _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          item.inProp
-                                            ? scope.row[item.prop][item.inProp]
-                                            : scope.row[item.prop]
-                                        )
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ]
-                            }
-                          }
-                        ],
-                        null,
-                        true
-                      )
-                    })
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
+                _vm._l(_vm.defProHead, function(item) {
+                  return _c("el-table-column", {
+                    key: item.label,
                     attrs: {
-                      label: "操作",
-                      width: "90",
+                      label: item.label,
                       align: "center",
-                      fixed: "right"
+                      width: item.width
                     },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function(scope) {
-                          return [
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { size: "mini", type: "danger" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.delUpdateDefPro(
-                                      scope.row,
-                                      $event
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(scope) {
+                            return [
+                              scope.row[item.prop]
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        item.inProp
+                                          ? scope.row[item.prop][item.inProp]
+                                          : scope.row[item.prop]
+                                      )
                                     )
-                                  }
-                                }
-                              },
-                              [_vm._v("删除")]
-                            )
-                          ]
+                                  ])
+                                : _vm._e()
+                            ]
+                          }
                         }
-                      }
-                    ])
+                      ],
+                      null,
+                      true
+                    )
                   })
-                ],
-                2
+                }),
+                1
               )
             ],
             1
@@ -4127,22 +4361,6 @@ var render = function() {
               slot: "footer"
             },
             [
-              _c(
-                "div",
-                { staticStyle: { float: "left" } },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: { click: _vm.addAfterSProClick }
-                    },
-                    [_vm._v("新增售后产品")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c(
                 "div",
                 { staticStyle: { float: "right" } },

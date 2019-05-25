@@ -22,6 +22,7 @@ class CustomerServiceChangeOrdersRequest extends FormRequest
                 break;
             case 'POST':
                 return [
+                    'id'=>'integer',
                     'change_order_no'=> 'string',
                     'cancel_order_no'=> 'string',
                     'is_canceled'=> 'boolean',

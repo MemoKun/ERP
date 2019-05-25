@@ -26,7 +26,7 @@ class ChangeOrder extends Model
 
     //订单操作
     public static $orderOperationMap = [
-        self::CHANGE_STATUS_NEW => '创建',
+        self::CHANGE_STATUS_NEW => '新建',
         self::CHANGE_STATUS_SUBMIT => '提交',
         self::CHANGE_STATUS_AUDIT => '审核',
         self::CHANGE_STATUS_CANCEL => '作废',
@@ -34,7 +34,7 @@ class ChangeOrder extends Model
 
     //订单操作详情
     public static $orderOperationDescriptionMap = [
-        self::CHANGE_STATUS_NEW => '创建变更订单',
+        self::CHANGE_STATUS_NEW => '新建变更订单',
         self::CHANGE_STATUS_SUBMIT => '提交变更订单',
         self::CHANGE_STATUS_AUDIT => '审核变更订单',
         self::CHANGE_STATUS_CANCEL => '作废',
@@ -194,7 +194,7 @@ class ChangeOrder extends Model
                 }
             }
 
-            // 如果模型的 user_id 字段为空
+            // 如果模型的 ch_applier_id 字段为空
             if (!$model->ch_applier_id) {
                     $model->ch_applier_id = Auth::guard('api')->id();
                     // 如果生成失败，则终止创建订单
@@ -203,7 +203,7 @@ class ChangeOrder extends Model
                 }
             }
 
-            // 如果模型的 user_id 字段为空
+            // 如果模型的 ch_applied_at 字段为空
             if (!$model->ch_applied_at) {
                 $model->ch_applied_at = date("Y-m-d h:i:s");
                 // 如果生成失败，则终止创建订单
@@ -237,34 +237,6 @@ class ChangeOrder extends Model
     }
 
     /**
-     * 订单未锁定
-     * @return bool
-     */
-    public function unlock()
-    {
-        return $this->getOriginal('order_status') != self::ORDER_STATUS_LOCK;
-    }
-
-    /**
-     * 订单锁定或释放
-     * @return bool
-     */
-    public function lockOrUnlock()
-    {
-        if ($this->unlock()) {
-            $this->business_personnel_id = Auth::guard('api')->id();
-            $this->locker_id = Auth::guard('api')->id();
-            $this->order_status = self::ORDER_STATUS_LOCK;
-        } else {
-            $this->business_personnel_id = 0;
-            $this->locker_id = 0;
-            $this->order_status = self::ORDER_STATUS_NEW;
-        }
-
-        $this->save();
-    }
-
-    /**
      * 提交
      * @return bool
      */
@@ -276,7 +248,7 @@ class ChangeOrder extends Model
         $this->save();
     }
     /**
-     * 客审
+     * 审核
      * @return bool
      */
     public function audit()
@@ -298,238 +270,6 @@ class ChangeOrder extends Model
         $this->change_status = self::CHANGE_STATUS_NEW;
         $this->submitted_at = null;
         $this->save();
-    }
-
-    /**
-     * 跟单一审
-     * @return bool
-     */
-    public function oneAudit()
-    {
-        $this->order_status = self::ORDER_STATUS_ONE_AUDIT;
-        $this->save();
-    }
-
-    /**
-     * 退回跟单一审
-     * @return bool
-     */
-    public function unOneAudit()
-    {
-        $this->order_status = self::ORDER_STATUS_CS_AUDIT;
-        $this->save();
-    }
-
-    /**
-     * 财审
-     * @return bool
-     */
-    public function financialAudit()
-    {
-        $this->order_status = self::ORDER_STATUS_FD_AUDIT;
-        $this->save();
-    }
-
-    /**
-     * 退回财审
-     * @return bool
-     */
-    public function unFinancialAudit()
-    {
-        $this->order_status = self::ORDER_STATUS_ONE_AUDIT;
-        $this->save();
-    }
-
-    /**
-     * 跟单货审
-     * @return bool
-     */
-    public function cargoAudit()
-    {
-        $this->order_status = self::ORDER_STATUS_CARGO_AUDIT;
-        $this->save();
-    }
-
-    /**
-     * 仓储退回客审
-     * @return bool
-     */
-    public function stockOutToCS()
-    {
-        $this->order_status = self::ORDER_STATUS_NEW;
-        $this->save();
-    }
-
-
-    /**
-     * 仓储发货退审
-     * @return bool
-     */
-    public function stockOutUnAudit()
-    {
-        $this->order_status = self::ORDER_STATUS_CARGO_AUDIT;
-        $this->save();
-    }
-
-
-    /**
-     * 是否缺货
-     * @return bool
-     */
-    public function isOOS()
-    {
-        $warehouseId = $this->warehouses_id;
-
-        //遍历子单商品
-        $this->orderItems->map(function ($item) use ($warehouseId) {
-            $num = $item->combination->productComponents->map(function ($item) use ($warehouseId) {
-                return optional($item->stocks->where('warehouse_id', $warehouseId)->first())->quantity ?? 0;
-            })->min();
-
-            if ($num < $item->quantity) {
-                throw new UpdateResourceFailedException('缺货、请及时补充');
-            }
-        });
-
-        return false;
-    }
-
-
-    /**
-     * 仓储发货
-     * @return bool
-     */
-    public function stockOut()
-    {
-        $this->order_status = self::ORDER_STATUS_STOCK_OUT;
-
-        //获取出库数据
-        $order = $this->load('orderItems.combination.productComponents');
-        //发货---减少库存---新增出库单
-        DB::transaction(function () use ($order) {
-            $warehouseId = $order->warehouses_id;
-            $orderNo = $order->system_order_no;
-            $order->orderItems->map(function ($item) use ($warehouseId, $orderNo) {
-                $amount = $item->quantity;
-                $item->combination->productComponents->map(function ($item) use ($warehouseId, $amount, $orderNo) {
-                    $item->stockOutByWarehouseId($warehouseId, $amount);
-                    StockOut::create([
-                        'warehouse_id'=>$warehouseId,
-                        'product_components_id'=>$item->id,
-                        'stock_out_quantity'=>$amount,
-                        'remark'=>'订单号:'.$orderNo
-                    ]);
-                });
-            });
-        });
-
-        $this->save();
-    }
-
-    /**
-     * 拆单
-     * @param $data       数据
-     * @return bool
-     */
-    public function splitOrder($data)
-    {
-        //获取出库数据
-        $order = $this->load('orderItems');
-
-        $orderItemOne = $order->orderItems->map(function ($item) use ($data) {
-            $orderItem = collect($data)->where('id', $item->id);
-            if ($orderItem->count()) {
-                $orderItem = $orderItem->first();
-                if ($orderItem['quantity'] > 0 && $item->quantity - $orderItem['quantity'] > 0) {
-                    $item->quantity = $item->quantity - $orderItem['quantity'];
-                } elseif ($orderItem['quantity'] > 0 && $item->quantity - $orderItem['quantity'] == 0) {
-                    $item = null;
-                } else {
-                    throw new UpdateResourceFailedException('拆分出错');
-                }
-            }
-            return $item;
-        })->toArray();
-
-        $orderItemTwo = $order->orderItems->map(function ($item) use ($data) {
-            $orderItem = collect($data)->where('id', $item->id);
-            if ($orderItem->count()) {
-                $item->quantity = $orderItem->first()['quantity'];
-            } else {
-                $item = null;
-            }
-            return $item;
-        })->toArray();
-
-        DB::transaction(function () use ($orderItemOne, $orderItemTwo) {
-            //新建订单
-            $newOrderOne = $this->newQuery()->create($this->toArray());
-            $newOrderTwo = $this->newQuery()->create($this->toArray());
-
-            //新增子单
-            collect($orderItemOne)->map(function ($item) use ($newOrderOne) {
-                if (is_null($item)) {
-                    return ;
-                }
-                $newOrderOne->orderItems()->create($item);
-            });
-
-            collect($orderItemTwo)->map(function ($item) use ($newOrderTwo) {
-                if (is_null($item)) {
-                    return ;
-                }
-                $newOrderTwo->orderItems()->create($item);
-            });
-
-            //删除旧单
-            $this->paymentDetails()->delete();
-            $this->orderItems()->delete();
-            $this->delete();
-
-            //记录拆分操作
-        });
-
-        return true;
-    }
-
-    /**
-     * 合并订单
-     * @param $data       数据
-     * @return bool
-     */
-    public function mergerOrder($data)
-    {
-        $orderOneId = $data['order_id_one'];
-        $orderTwoId = $data['order_id_two'];
-
-        $orderOne = $this->newQuery()->findOrFail($orderOneId);
-        $orderTwo = $this->newQuery()->findOrFail($orderTwoId);
-
-        //判断主订单数据是否匹配
-        if (collect($orderOne->toArray())->except(['id', 'system_order_no', 'created_at', 'updated_at'])->diffAssoc($orderTwo->toArray())->count()) {
-            throw new UpdateResourceFailedException('主订单数据匹配，无法合并');
-        }
-
-        //提取数据
-        $order = $orderOne->toArray();
-        $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
-
-        DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
-            //新建订单
-            $newOrder = $this->newQuery()->create($order);
-
-            //新增子单
-            collect($orderItem)->map(function ($item) use ($newOrder) {
-                $newOrder->orderItems()->create($item);
-            });
-
-            //删除旧单
-            PaymentDetail::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
-            OrderItem::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
-            Order::destroy($orderOneId, $orderTwoId);
-
-            //记录拆分操作
-        });
     }
 
     public function shop()

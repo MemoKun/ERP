@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Validation\Rule;
 
-class CustomerServiceDepartmentRequset extends FormRequest
+class CustomerServiceDepartmentRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

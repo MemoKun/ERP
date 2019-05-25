@@ -25,12 +25,7 @@
       <span>
         <label>入库仓库</label>
         <el-select v-model="searchBox.shopNames" clearable placeholder="请选择">
-          <el-option
-            v-for="item in searchBox.shopNames"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
+          <el-option v-for="item in searchBox.shopNames" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </span>
     </div>
@@ -38,30 +33,15 @@
     <!--入库-->
     <el-tabs v-model="topActiveName" @tab-click="clickTopTabs">
       <el-tab-pane label="新建" name="0">
-        <el-table
-          :data="newData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="300"
-          @row-click="stockRowClick"
-        >
+        <el-table :data="newData" fit @selection-change="handleSelectionChange" v-loading="loading" height="300" @row-click="stockRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in stockHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in stockHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -73,30 +53,15 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="已提交" name="1">
-        <el-table
-          :data="partData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="300"
-          @row-click="stockRowClick"
-        >
+        <el-table :data="partData" fit @selection-change="handleSelectionChange" v-loading="loading" height="300" @row-click="stockRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in stockHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in stockHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -108,30 +73,15 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="已入库" name="2">
-        <el-table
-          :data="finishData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="300"
-          @row-click="stockRowClick"
-        >
+        <el-table :data="finishData" fit @selection-change="handleSelectionChange" v-loading="loading" height="300" @row-click="stockRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in stockHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in stockHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -151,13 +101,7 @@
     <el-tabs v-model="btmActiveName" @tab-click="clickBtmTabs">
       <el-tab-pane label="入库单明细" name="0">
         <el-table :data="stockDtlData" fit>
-          <el-table-column
-            v-for="item in btmTableHead[this.btmActiveName]"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in btmTableHead[this.btmActiveName]" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type=='select'">
                 <span v-for="list in resData[item.stateVal]" :key="list.id">
@@ -171,9 +115,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -188,44 +130,17 @@
     </el-tabs>
 
     <!--新建-->
-    <el-dialog
-      title="新建入库单"
-      :visible.sync="addStockMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-    >
+    <el-dialog title="新建入库单" :visible.sync="addStockMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
       <el-button type="text">基本信息</el-button>
-      <add-new
-        :rule-form="addStockFormVal"
-        :rules="addStockFormRules"
-        :add-arr="addStockFormHead"
-        :onlyInputs="true"
-      ></add-new>
+      <add-new :rule-form="addStockFormVal" :rules="addStockFormRules" :add-arr="addStockFormHead" :onlyInputs="true"></add-new>
       <el-button type="text">入库明细</el-button>
-      <el-table
-        :data="addStockTabVal"
-        fit
-        height="300"
-        :row-class-name="addStockRCName"
-        @row-click="addStockRClick"
-      >
-        <el-table-column
-          v-for="item in addStockTabHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="addStockTabVal" fit height="300" :row-class-name="addStockRCName" @row-click="addStockRClick">
+        <el-table-column v-for="item in addStockTabHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="addStockRIndex == 'index'+scope.$index">
                 <span v-if="item.type=='number'">
-                  <el-input
-                    size="small"
-                    type="number"
-                    v-model.trim="scope.row[item.prop][item.inProp]"
-                    :placeholder="item.holder"
-                    @input="stockChg"
-                  ></el-input>
+                  <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="stockChg"></el-input>
                 </span>
                 <span v-else>
                   <el-input type="textarea" v-model.trim="scope.row[item.prop][item.inProp]"></el-input>
@@ -269,49 +184,23 @@
     </el-dialog>
 
     <!--商品明细-->
-    <el-dialog
-      title="商品明细"
-      :visible.sync="proDtlMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-    >
+    <el-dialog title="商品明细" :visible.sync="proDtlMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
+      <label>{{this.proDtlVal}}</label>
       <div class="searchBox">
         <span>
           <label>商品编码</label>
-          <el-input
-            v-model.trim="proQuery.commodity_code"
-            clearable
-            placeholder="请输入商品编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.commodity_code" clearable placeholder="请输入商品编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <el-button type="primary" @click="proQueryClick">查询</el-button>
         <el-button type="primary" @click="proExport">导出</el-button>
         <el-button type="primary" @click="proAutoFill">自动填充</el-button>
       </div>
-      <el-table
-        :data="proDtlVal"
-        fit
-        height="350"
-        :row-class-name="proDtlCName"
-        @row-click="proDtlRClick"
-      >
-        <el-table-column
-          v-for="item in proDtlHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="proDtlVal" fit height="350" :row-class-name="proDtlCName" @row-click="proDtlRClick">
+        <el-table-column v-for="item in proDtlHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="proDtlRIndex == 'index'+scope.$index">
-                <el-input
-                  size="small"
-                  type="number"
-                  v-model.trim="scope.row[item.prop][item.inProp]"
-                  :placeholder="item.holder"
-                  @input="compValChg"
-                ></el-input>
+                <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="compValChg"></el-input>
               </span>
               <span v-else>{{scope.row[item.prop][item.inProp]}}</span>
             </span>
@@ -333,45 +222,17 @@
     </el-dialog>
 
     <!--修改-->
-    <el-dialog
-      title="修改入库单"
-      :visible.sync="updateStockMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-    >
+    <el-dialog title="修改入库单" :visible.sync="updateStockMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
       <el-button type="text">基本信息</el-button>
-      <add-new
-        :rule-form="updateStockFVal"
-        :rules="addStockFormRules"
-        :add-arr="addStockFormHead"
-        :onlyInputs="true"
-        :editSign="true"
-      ></add-new>
+      <add-new :rule-form="updateStockFVal" :rules="addStockFormRules" :add-arr="addStockFormHead" :onlyInputs="true" :editSign="true"></add-new>
       <el-button type="text">入库明细</el-button>
-      <el-table
-        :data="updateStockTabVal"
-        fit
-        height="300"
-        :row-class-name="updateStockRCName"
-        @cell-click="updateStockCClick"
-      >
-        <el-table-column
-          v-for="item in addStockTabHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="updateStockTabVal" fit height="300" :row-class-name="updateStockRCName" @cell-click="updateStockCClick">
+        <el-table-column v-for="item in addStockTabHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="updateStockRIndex == 'index'+scope.$index">
                 <span v-if="item.type=='number'">
-                  <el-input
-                    size="small"
-                    type="number"
-                    v-model.trim="scope.row[item.prop][item.inProp]"
-                    :placeholder="item.holder"
-                    @input="stockChg"
-                  ></el-input>
+                  <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="stockChg"></el-input>
                 </span>
                 <span v-else>
                   <el-input type="textarea" v-model.trim="scope.row[item.prop][item.inProp]"></el-input>
@@ -722,9 +583,7 @@ export default {
         stock_in_details: []
       },
       addStockFormRules: {
-        warehouse_id: [
-          { required: true, message: "入库仓库必选", trigger: "blur" }
-        ],
+        warehouse_id: [{ required: true, message: "入库仓库必选", trigger: "blur" }],
         stock_in_types_id: [
           { required: true, message: "入库类型必选", trigger: "blur" }
         ]
@@ -1348,7 +1207,7 @@ export default {
                     purDtlItem.purchase_quantity -
                     0 -
                     (purDtlItem.stock_in_count - 0),
-                  created_at: item["purchase"]["user"].created_at,
+                  created_at: item["created_at"],
                   purchase_details_id: purDtlItem.id,
                   product_components_id: purDtlItem["productComponent"].id
                 };
@@ -1796,9 +1655,7 @@ export default {
         } else {
           console.log(this.stockRowId);
           let id = this.checkboxId ? this.checkboxId : this.stockRowId;
-          this.$put(
-            this.urls.stockins + "/" + id + "/submit"
-          ).then(
+          this.$put(this.urls.stockins + "/" + id + "/submit").then(
             () => {
               this.$message({
                 message: "提交成功!",

@@ -122,7 +122,6 @@
             </span>
           </div>
         </div>
-
         <!--显示列表-未处理-->
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">
@@ -225,6 +224,7 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
+
       <el-tab-pane label="订单明细" name="1">
         <!-- 上方信息 -->
         <el-form :model="orderDtlFormVal" class="quarter_turn">

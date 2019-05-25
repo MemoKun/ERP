@@ -22,6 +22,9 @@
         <el-button @click="resets">重置</el-button>
       </div>
     </div>
+
+    <!--*****************************************中间主要的table*******************************-->
+    
     <el-tabs v-model="middleActiveName" @tab-click="firstHandleClick" style="height: 250px;">
       <el-tab-pane label="新建" name="0">
         <el-table :data="newOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
@@ -166,8 +169,10 @@
       </el-tab-pane>
     </el-tabs>
 
+    <!--*********************************以下为*新增订单变更*所需的Dialog*****************************-->
+
     <!--新增订单变更-->
-    <el-dialog title="订单明细变更" :visible.sync="addOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
+    <el-dialog title="新增订单变更" :visible.sync="addOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <el-button type="text">基础信息</el-button>
       <el-form :model="addChangeOrderFormVal" :rules="addChangeOrderFormRules" class="addChangeOrderForm" id="form">
         <el-form-item v-for="(item,index) in addChangeOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
@@ -382,7 +387,7 @@
         </el-table-column>
       </el-table>
       <el-button type="text">订单明细</el-button>
-      <el-table :data="chooseOrderProListData" fit height="180">
+      <el-table :data="proData" fit height="180">
         <el-table-column v-for="item in chooseOrderProListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
@@ -401,7 +406,7 @@
     </el-dialog>
 
     <!--商品明细-->
-    <el-dialog title="商品明细" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
+    <el-dialog title="添加商品" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
       <el-button type="text">选择商品</el-button>
       <div class="searchBox">
         <span>
@@ -517,6 +522,8 @@
         <el-button @click="cancelAddProDtl">关闭</el-button>
       </div>
     </el-dialog>
+
+    <!--*********************************以下为*修改*所需的Dialog*****************************-->
 
     <!--修改-->
     <el-dialog title="变更订单修改" :visible.sync="updateOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
@@ -720,6 +727,18 @@
     <!-- 选择订单 -->
     <el-dialog title="选择订单" :visible.sync="chooseOrderMask" :class="{'more-forms':moreForms}">
       <el-button type="text">订单列表</el-button>
+      <label>{{this.proData}}</label>
+      <br>
+      <label>-------------------------------------</label>
+      <br>
+      <label>{{this.proData}}</label>
+      <br>
+      <label>-------------------------------------</label>
+      <br>
+      <label>{{this.expenseData}}</label>
+      <br>
+      <label>-------------------------------------</label>
+      <br>
       <el-table :data="chooseOrderData" fit height="180" :row-class-name="addOrderRowCName" @row-click="chooseOrderRowClick">
         <el-table-column v-for="item in chooseOrderHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
@@ -734,7 +753,7 @@
         </el-table-column>
       </el-table>
       <el-button type="text">订单明细</el-button>
-      <el-table :data="chooseOrderProListData" fit height="180">
+      <el-table :data="proData" fit height="180">
         <el-table-column v-for="item in chooseOrderProListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
@@ -877,7 +896,6 @@ import {
   CodeToText,
   TextToCode
 } from "element-china-area-data";
-
 export default {
   data() {
     return {
@@ -992,7 +1010,7 @@ export default {
         }
       ],
       /**选择订单界面Dialog 产品列表*/
-      chooseOrderProListData: {},
+      proData: {},
       chooseOrderProListHead: [
         {
           label: "sku名称",
@@ -1386,6 +1404,7 @@ export default {
         ]
       },
       addChangeOrderFormVal: {
+        id:"",
         change_order_no: "",
         cancel_order_no: "",
         is_canceled: false,
@@ -1910,6 +1929,7 @@ export default {
       expenseData: [],
       expenseRIndex: "",
       addSubData: [],
+
       /*修改*/
       updateCustomerMask: false,
       addChangeOrderFormVal: {},
@@ -1919,6 +1939,7 @@ export default {
       updateExpenseData: [],
       addChangeOrderProIds: [],
       /*删除单条*/
+
       showDel: false,
       delUrl: "",
       delId: "",
@@ -2124,6 +2145,7 @@ export default {
           type: "text"
         }
       ],
+
       //批量选择 批量删除
       ids: [],
       splitMask: false,
@@ -2289,6 +2311,7 @@ export default {
               }
             }
           );
+          break;
         case 2:
           this.$fetch(this.urls.changeorders + "/searchtreated", {
             include:
@@ -2321,6 +2344,7 @@ export default {
               }
             }
           );
+          break;
         case 3:
           this.$fetch(this.urls.changeorders + "/searchcanceled", {
             include:
@@ -2355,13 +2379,32 @@ export default {
           );
       }
     },
+    /**
+     * ********************************************新  增  变  更  订  单 ***************************************************
+     * 
+     **/
+    //1、新增订单变更，功能主要为打开新增变更Dialog
+    addChanges() {
+      console.log("addChanges");
+      this.addOrderChangesMask = true;
+      this.addIds = [];
+      this.proData = [];
+      this.proRIndex = "";
+    },
+    //2、选择订单·功能主要为打开选择订单dialog
+    chooseOrders() {
+      this.chooseOrderFetchData();
+      this.chooseOrderMask = true;
+    },
+    //3、选择订单加载数据·从数据库读取数据
     chooseOrderFetchData() {
-      this.$fetch(this.urls.customerservicedepts + "/searchall", {
+      this.$fetch(this.urls.changeorders + "/searchorders", {
         include:
           "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(
         res => {
           this.loading = false;
+          //将数据存入chooseOrderData渲染选择订单的dialog
           this.chooseOrderData = res.data;
           let pg = res.meta.pagination;
           this.$store.dispatch("currentPage", pg.current_page);
@@ -2388,97 +2431,15 @@ export default {
         }
       );
     },
-    test() {
-      console.log(1);
-    },
-    confirmAddProDtl() {
-      if (this.addOrderChangesMask) {
-        this.proSubmitData.map(item => {
-          if (this.addIds.indexOf(item.id) == -1) {
-            this.proData.push(item);
-            this.addIds.push(item.id);
-            this.$message({
-              message: "添加商品信息成功",
-              type: "success"
-            });
-            this.proMask = false;
-          } else {
-            this.proData.map((list, index) => {
-              if (list.id == item.id) {
-                this.proData.splice(index, 1);
-                this.proData.push(item);
-                this.$message({
-                  message: "添加商品信息成功",
-                  type: "success"
-                });
-                this.proMask = false;
-              }
-            });
-          }
-        });
-      } else {
-        this.proSubmitData.map(item => {
-          if (this.updateProIds.indexOf(item.id) == -1) {
-            this.updateProData.push(item);
-            this.updateProIds.push(item.id);
-            this.$message({
-              message: "添加商品信息成功",
-              type: "success"
-            });
-          } else {
-            this.updateProData.map((list, index) => {
-              if (list.combinations_id == item.id) {
-                this.$set(item, "originalId", list.id);
-                this.updateProData.splice(index, 1);
-                this.updateProData.push(item);
-                this.$message({
-                  message: "添加商品信息成功",
-                  type: "success"
-                });
-              }
-            });
-          }
-        });
-      }
-    },
-    addProRCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    refresh() {
-      this.loading = true;
-      this.fetchData();
-    },
-    addProRowClick(row) {
-      this.proRIndex = `index${row.index}`;
-    },
-    addAfterSProRowCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    addOrderRowCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    quantityChg(value) {
-      if (value > 0) {
-        let proCRow = this.proCompRow;
-        if (this.proIds.indexOf(proCRow.id) == -1) {
-          this.proIds.push(proCRow.id);
-          this.proSubmitData.push(proCRow);
-        } else {
-          this.proSubmitData.map((list, index) => {
-            if (list.id == proCRow.id) {
-              this.proSubmitData.splice(index, 1);
-              this.proSubmitData.push(proCRow);
-            }
-          });
-        }
-      }
-    },
+    //4、选择订单并将数据填入chooseOrderData中，产品数据存在proData，费用数据存入expenseData
     chooseOrderRowClick(row) {
       this.chooseOrderRowIndex = `index${row.index}`;
-      this.chooseOrderRowId = row.id;
-      this.chooseOrderProListData = [];
+      this.chooseOrderRowId = row.id;//选择订单的当前行订单的id，也就是orders的id
+      this.proData = [];//存储订单的商品信息
+      this.expenseData = [];//存储订单的费用类型信息
       this.proCompRowIndex = "";
       this.addChangeOrderProIds = [];
+      this.curRowData = row;
       this.$fetch(
         this.urls.customerservicedepts + "/" + this.chooseOrderRowId,
         {
@@ -2487,6 +2448,7 @@ export default {
         }
       ).then(
         res => {
+          this.id = res["id"];
           this.addChangeOrderFormVal.orders_id = res["id"];
           //-----变更订单与原始order分界线--------
           this.addChangeOrderFormVal.system_order_no = res["system_order_no"];
@@ -2579,7 +2541,6 @@ export default {
           this.addChangeOrderFormVal.member_nick = res["member_nick"];
           this.addChangeOrderFormVal.seller_name = res["seller_name"];
           this.addChangeOrderFormVal.seller_flag = res["seller_flag"];
-          this.addChangeOrderFormVal.created = res["created"];
           this.addChangeOrderFormVal.est_con_time = res["est_con_time"];
           this.addChangeOrderFormVal.receiver_name = res["receiver_name"];
           this.addChangeOrderFormVal.receiver_phone = res["receiver_phone"];
@@ -2591,25 +2552,13 @@ export default {
           this.addChangeOrderFormVal.receiver_address = res["receiver_address"];
           this.addChangeOrderFormVal.receiver_zip = res["receiver_zip"];
           this.addChangeOrderFormVal.refund_info = res["refund_info"];
-          this.addChangeOrderFormVal.business_personnel_id =
-            res["business_personnel_id"];
-          this.addChangeOrderFormVal.locker_id = res["locker_id"];
-          this.addChangeOrderFormVal.locked_at = res["locked_at"];
-          this.addChangeOrderFormVal.auditor_id = res["auditor_id"];
-          this.addChangeOrderFormVal.audit_at = res["audit_at"];
-          this.addChangeOrderFormVal.cs_auditor_id = res["cs_auditor_id"];
-          this.addChangeOrderFormVal.cs_audited_at = res["cs_audited_at"];
-          this.addChangeOrderFormVal.fd_auditor_id = res["fd_auditor_id"];
-          this.addChangeOrderFormVal.fd_audited_at = res["fd_audited_at"];
-          this.addChangeOrderFormVal.ca_auditor_id = res["ca_auditor_id"];
-          this.addChangeOrderFormVal.ca_audited_at = res["ca_audited_at"];
-          this.addChangeOrderFormVal.stockout_op_id = res["stockout_op_id"];
-          this.addChangeOrderFormVal.stockout_at = res["stockout_at"];
           this.addChangeOrderFormVal.association_taobao_oid =
             res["association_taobao_oid"];
           this.addChangeOrderFormVal.is_merge = res["is_merge"];
           this.addChangeOrderFormVal.is_split = res["is_split"];
           this.addChangeOrderFormVal.is_association = res["is_association"];
+          this.addChangeOrderFormVal.order_items = [];
+          this.addChangeOrderFormVal.payment_details=[];
 
           if (res["orderItems"]["data"].length > 0) {
             res["orderItems"]["data"].map(item => {
@@ -2634,7 +2583,6 @@ export default {
           }
 
           this.proData = res["orderItems"]["data"];
-          this.chooseOrderProListData = res["orderItems"]["data"];
           this.expenseData = res["paymentDetails"]["data"];
         },
         err => {
@@ -2649,6 +2597,308 @@ export default {
           }
         }
       );
+    },
+    //5、确认选择订单-实际并不对订单进行操作，相关操作已经在chooseOrderRowClick完成
+    chooseOrderConfirm() {
+      this.chooseOrderMask = false;
+      this.$message({
+        message: "选择订单成功",
+        type: "success"
+      });
+    },
+    //6、确认新建订单变更，并把订单提交到数据库存储
+    addChangeOrdersConfirm() {
+      this.proData.map(item => {
+        let proD = {
+          id: item.id,
+          products_id: item.products_id,
+          combinations_id: item.combinations_id,
+          quantity: item["newData"].quantity,
+          total_volume: item["newData"].total_volume,
+          paint: item["newData"].paint,
+          is_printing: item["newData"].is_printing,
+          printing_fee: item["newData"].printing_fee,
+          is_spot_goods: item["newData"].is_spot_goods,
+          under_line_univalent: item["newData"].under_line_univalent,
+          under_line_total_amount: item["newData"].under_line_total_amount,
+          under_line_preferential: item["newData"].under_line_preferential
+        };
+        this.addChangeOrderFormVal.order_items.push(proD);
+      });
+      this.expenseData.map(list => {
+        let expenseD = {
+          payment: list.payment,
+          payment_methods_id: list.payment_methods_id
+        };
+        this.addChangeOrderFormVal.payment_details.push(expenseD);
+      });
+      this.$post(this.urls.changeorders, this.addChangeOrderFormVal).then(
+        () => {
+          this.addOrderChangesMask = false;
+          this.refresh();
+          this.$message({
+            message: "添加成功",
+            type: "success"
+          });
+          this.addChangeOrderFormVal = {
+            change_order_no: "",
+            cancel_order_no: "",
+            is_canceled: false,
+            change_remark: "",
+            change_status: 10,
+            orders_id: 0,
+            //-----变更订单与原始order分界线--------
+            system_order_no: "",
+            shops_id: 0,
+            shops_name: "",
+            logistics_id: 0,
+            logistics_sn: "",
+            billing_way: "",
+            promise_ship_time: null,
+            freight_types_id: 0,
+            expected_freight: 0,
+            actual_freight: 0,
+            logistics_remark: "",
+            is_logistics_checked: false,
+            logistics_check_remark: "",
+            logistics_checked_at: null,
+            distributions_id: 0,
+            distribution_methods_id: 0,
+            deliver_goods_fee: 0,
+            move_upstairs_fee: 0,
+            installation_fee: 0,
+            total_distribution_fee: 0,
+            distribution_phone: "",
+            distribution_no: "",
+            distribution_types_id: 0,
+            is_distribution_checked: false,
+            distribution_check_remark: "",
+            distribution_checked_at: null,
+            service_car_fee: 0,
+            service_car_info: "",
+            take_delivery_goods_fee: 0,
+            take_delivery_goods_ways_id: 0,
+            express_fee: 0,
+            cancel_after_verification_code: "",
+            wooden_frame_costs: 0,
+            preferential_cashback: 0,
+            favorable_cashback: 0,
+            customer_types_id: 0,
+            is_invoice: false,
+            invoice_express_fee: 0,
+            express_invoice_title: "",
+            contract_no: "",
+            payment_methods_id: 0,
+            deposit: 0,
+            document_title: "",
+            warehouses_id: 0,
+            payment_date: null,
+            interest_concessions: 0,
+            is_notice: false,
+            is_cancel_after_verification: false,
+            accept_order_user: "",
+            tax_number: "",
+            receipt: "",
+            buyer_message: "",
+            seller_remark: "",
+            customer_service_remark: "",
+            stockout_remark: "",
+            taobao_oid: 0,
+            taobao_tid: 0,
+            member_nick: "",
+            seller_name: "",
+            seller_flag: "",
+            created: null,
+            est_con_time: null,
+            receiver_name: "",
+            receiver_phone: "",
+            receiver_mobile: "",
+            receiver_state: "",
+            receiver_city: "",
+            receiver_district: "",
+            receiver_address: "",
+            receiver_zip: "",
+            refund_info: "",
+            business_personnel_id: 0,
+            locker_id: 0,
+            locked_at: null,
+            auditor_id: 0,
+            audit_at: null,
+            cs_auditor_id: 0,
+            cs_audited_at: null,
+            fd_auditor_id: 0,
+            fd_audited_at: null,
+            ca_auditor_id: 0,
+            ca_audited_at: null,
+            stockout_op_id: 0,
+            stockout_at: null,
+            association_taobao_oid: 0,
+            is_merge: false,
+            is_split: false,
+            is_association: false,
+            status: true,
+            order_items: [],
+            payment_details: []
+          };
+        },
+        err => {
+          if (err.response) {
+            this.showDel = false;
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error(str);
+          }
+        }
+      );
+    },
+
+    /**
+     * ********************************************提  交  变  更  订  单 ***************************************************
+     * 
+     **/
+    //1、点击提交按钮，fetch数据并加载到update窗口里
+    updateChanges() {
+      console.log("updateChanges");
+      if (this.newOpt[1].nClick) {
+        return;
+      } else {
+        this.updateOrderChangesMask = true;
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$fetch(this.urls.changeorders + "/" + id, {
+          include:
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        }).then(
+          res => {
+            this.addChangeOrderFormVal = res;
+            if (res["orderItems"]["data"].length > 0) {
+              res["orderItems"]["data"].map(item => {
+                this.addChangeOrderProIds.push(item["combination"].id);
+                item["name"] = item["combination"]["name"];
+                item["id"] = item.id;
+                item["products_id"] = item.products_id;
+                item["combinations_id"] = item.combinations_id;
+                item["productComp"] =
+                  item["combination"]["productComponents"]["data"];
+                this.$set(item, "newData", {
+                  quantity: item.quantity,
+                  paint: item.paint,
+                  is_printing: item.is_printing,
+                  printing_fee: item.printing_fee,
+                  is_spot_goods: item.is_spot_goods,
+                  under_line_univalent: item.under_line_univalent,
+                  under_line_preferential: item.under_line_preferential,
+                  total_volume: item.total_volume
+                });
+              });
+            }
+
+            this.proData = res["orderItems"]["data"];
+            this.expenseData = res["paymentDetails"]["data"];
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              this.$message.error(arr1.join(","));
+            }
+          }
+        );
+      }
+    },
+
+
+
+    test() {
+      console.log(1);
+    },
+    confirmAddProDtl() {
+      if (this.addOrderChangesMask) {
+        this.proSubmitData.map(item => {
+          if (this.addIds.indexOf(item.id) == -1) {
+            this.proData.push(item);
+            this.addIds.push(item.id);
+            this.$message({
+              message: "添加商品信息成功",
+              type: "success"
+            });
+            this.proMask = false;
+          } else {
+            this.proData.map((list, index) => {
+              if (list.id == item.id) {
+                this.proData.splice(index, 1);
+                this.proData.push(item);
+                this.$message({
+                  message: "添加商品信息成功",
+                  type: "success"
+                });
+                this.proMask = false;
+              }
+            });
+          }
+        });
+      } else {
+        this.proSubmitData.map(item => {
+          if (this.updateProIds.indexOf(item.id) == -1) {
+            this.updateProData.push(item);
+            this.updateProIds.push(item.id);
+            this.$message({
+              message: "添加商品信息成功",
+              type: "success"
+            });
+          } else {
+            this.updateProData.map((list, index) => {
+              if (list.combinations_id == item.id) {
+                this.$set(item, "originalId", list.id);
+                this.updateProData.splice(index, 1);
+                this.updateProData.push(item);
+                this.$message({
+                  message: "添加商品信息成功",
+                  type: "success"
+                });
+              }
+            });
+          }
+        });
+      }
+    },
+    addProRCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    refresh() {
+      this.loading = true;
+      this.fetchData();
+    },
+    addProRowClick(row) {
+      this.proRIndex = `index${row.index}`;
+    },
+    addAfterSProRowCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    addOrderRowCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    quantityChg(value) {
+      if (value > 0) {
+        let proCRow = this.proCompRow;
+        if (this.proIds.indexOf(proCRow.id) == -1) {
+          this.proIds.push(proCRow.id);
+          this.proSubmitData.push(proCRow);
+        } else {
+          this.proSubmitData.map((list, index) => {
+            if (list.id == proCRow.id) {
+              this.proSubmitData.splice(index, 1);
+              this.proSubmitData.push(proCRow);
+            }
+          });
+        }
+      }
     },
     addExpenseRClick(row) {
       this.expenseRIndex = `index${row.index}`;
@@ -2722,23 +2972,11 @@ export default {
     addProRowClick(row) {
       this.proRIndex = `index${row.index}`;
     },
-    addProRCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
     addDelPro(index) {
       this.proData.splice(index, 1);
     },
     cancelAddProDtl() {
       this.proMask = false;
-    },
-
-    /** 选择订单Dialog选择订单*/
-    chooseOrders() {
-      this.chooseOrderFetchData();
-      this.chooseOrderMask = true;
-    },
-    addAfterSProRowClick(row) {
-      this.addAfterSProDtlVal.push(row);
     },
     proQueryClick() {
       this.proSkuVal = [];
@@ -2874,195 +3112,7 @@ export default {
       this.curRowId = row.id;
       this.curRowData = row;
     },
-    addChanges() {
-      console.log("addChanges");
-      this.addOrderChangesMask = true;
-      this.addIds = [];
-      this.proData = [];
-      this.proRIndex = "";
-    },
-    updateChanges() {
-      console.log("updateChanges");
-      if (this.newOpt[1].nClick) {
-        return;
-      } else {
-        this.updateOrderChangesMask = true;
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$fetch(this.urls.changeorders + "/" + id, {
-          include:
-            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-        }).then(
-          res => {
-            this.addChangeOrderFormVal.orders_id = res["id"];
-            //-----变更订单与原始order分界线--------
-            this.addChangeOrderFormVal.system_order_no = res["system_order_no"];
-            this.addChangeOrderFormVal.shops_id = res["shops_id"];
-            this.addChangeOrderFormVal.shops_name = res["shops_name"];
-            this.addChangeOrderFormVal.logistics_id = res["logistics_id"];
-            this.addChangeOrderFormVal.logistics_sn = res["logistics_sn"];
-            this.addChangeOrderFormVal.billing_way = res["billing_way"];
-            this.addChangeOrderFormVal.promise_ship_time =
-              res["promise_ship_time"];
-            this.addChangeOrderFormVal.freight_types_id =
-              res["freight_types_id"];
-            this.addChangeOrderFormVal.expected_freight =
-              res["expected_freight"];
-            this.addChangeOrderFormVal.actual_freight = res["actual_freight"];
-            this.addChangeOrderFormVal.logistics_remark =
-              res["logistics_remark"];
-            this.addChangeOrderFormVal.is_logistics_checked =
-              res["is_logistics_checked"];
-            this.addChangeOrderFormVal.logistics_check_remark =
-              res["logistics_check_remark"];
-            this.addChangeOrderFormVal.logistics_checked_at = res[
-              "logistics_checked_at"
-            ]
-              ? res["logistics_checked_at"]
-              : 0;
-            this.addChangeOrderFormVal.distributions_id =
-              res["distributions_id"];
-            this.addChangeOrderFormVal.distribution_methods_id =
-              res["distribution_methods_id"];
-            this.addChangeOrderFormVal.deliver_goods_fee =
-              res["deliver_goods_fee"];
-            this.addChangeOrderFormVal.move_upstairs_fee =
-              res["move_upstairs_fee"];
-            this.addChangeOrderFormVal.installation_fee =
-              res["installation_fee"];
-            this.addChangeOrderFormVal.total_distribution_fee =
-              res["total_distribution_fee"];
-            this.addChangeOrderFormVal.distribution_phone =
-              res["distribution_phone"];
-            this.addChangeOrderFormVal.distribution_no = res["distribution_no"];
-            this.addChangeOrderFormVal.distribution_types_id =
-              res["distribution_types_id"];
-            this.addChangeOrderFormVal.is_distribution_checked =
-              res["is_distribution_checked"];
-            this.addChangeOrderFormVal.distribution_check_remark =
-              res["distribution_check_remark"];
-            this.addChangeOrderFormVal.distribution_checked_at =
-              res["distribution_checked_at"];
-            this.addChangeOrderFormVal.service_car_fee = res["service_car_fee"];
-            this.addChangeOrderFormVal.service_car_info =
-              res["service_car_info"];
-            this.addChangeOrderFormVal.take_delivery_goods_fee =
-              res["take_delivery_goods_fee"];
-            this.addChangeOrderFormVal.take_delivery_goods_ways_id =
-              res["take_delivery_goods_ways_id"];
-            this.addChangeOrderFormVal.express_fee = res["express_fee"];
-            this.addChangeOrderFormVal.cancel_after_verification_code =
-              res["cancel_after_verification_code"];
-            this.addChangeOrderFormVal.wooden_frame_costs =
-              res["wooden_frame_costs"];
-            this.addChangeOrderFormVal.preferential_cashback =
-              res["preferential_cashback"];
-            this.addChangeOrderFormVal.favorable_cashback =
-              res["favorable_cashback"];
-            this.addChangeOrderFormVal.customer_types_id =
-              res["customer_types_id"];
-            this.addChangeOrderFormVal.is_invoice = res["is_invoice"];
-            this.addChangeOrderFormVal.invoice_express_fee =
-              res["invoice_express_fee"];
-            this.addChangeOrderFormVal.express_invoice_title =
-              res["express_invoice_title"];
-            this.addChangeOrderFormVal.contract_no = res["contract_no"];
-            this.addChangeOrderFormVal.payment_methods_id =
-              res["payment_methods_id"];
-            this.addChangeOrderFormVal.deposit = res["deposit"];
-            this.addChangeOrderFormVal.document_title = res["document_title"];
-            this.addChangeOrderFormVal.warehouses_id = res["warehouses_id"];
-            this.addChangeOrderFormVal.payment_date = res["payment_date"];
-            this.addChangeOrderFormVal.interest_concessions =
-              res["interest_concessions"];
-            this.addChangeOrderFormVal.is_notice = res["is_notice"];
-            this.addChangeOrderFormVal.is_cancel_after_verification =
-              res["is_cancel_after_verification"];
-            this.addChangeOrderFormVal.accept_order_user =
-              res["accept_order_user"];
-            this.addChangeOrderFormVal.tax_number = res["tax_number"];
-            this.addChangeOrderFormVal.receipt = res["receipt"];
-            this.addChangeOrderFormVal.buyer_message = res["buyer_message"];
-            this.addChangeOrderFormVal.seller_remark = res["seller_remark"];
-            this.addChangeOrderFormVal.customer_service_remark =
-              res["customer_service_remark"];
-            this.addChangeOrderFormVal.stockout_remark = res["stockout_remark"];
-            this.addChangeOrderFormVal.taobao_oid = res["taobao_oid"];
-            this.addChangeOrderFormVal.taobao_tid = res["taobao_tid"];
-            this.addChangeOrderFormVal.member_nick = res["member_nick"];
-            this.addChangeOrderFormVal.seller_name = res["seller_name"];
-            this.addChangeOrderFormVal.seller_flag = res["seller_flag"];
-            this.addChangeOrderFormVal.created = res["created"];
-            this.addChangeOrderFormVal.est_con_time = res["est_con_time"];
-            this.addChangeOrderFormVal.receiver_name = res["receiver_name"];
-            this.addChangeOrderFormVal.receiver_phone = res["receiver_phone"];
-            this.addChangeOrderFormVal.receiver_mobile = res["receiver_mobile"];
-            this.addChangeOrderFormVal.receiver_state = res["receiver_state"];
-            this.addChangeOrderFormVal.receiver_city = res["receiver_city"];
-            this.addChangeOrderFormVal.receiver_district =
-              res["receiver_district"];
-            this.addChangeOrderFormVal.receiver_address =
-              res["receiver_address"];
-            this.addChangeOrderFormVal.receiver_zip = res["receiver_zip"];
-            this.addChangeOrderFormVal.refund_info = res["refund_info"];
-            this.addChangeOrderFormVal.business_personnel_id =
-              res["business_personnel_id"];
-            this.addChangeOrderFormVal.locker_id = res["locker_id"];
-            this.addChangeOrderFormVal.locked_at = res["locked_at"];
-            this.addChangeOrderFormVal.auditor_id = res["auditor_id"];
-            this.addChangeOrderFormVal.audit_at = res["audit_at"];
-            this.addChangeOrderFormVal.cs_auditor_id = res["cs_auditor_id"];
-            this.addChangeOrderFormVal.cs_audited_at = res["cs_audited_at"];
-            this.addChangeOrderFormVal.fd_auditor_id = res["fd_auditor_id"];
-            this.addChangeOrderFormVal.fd_audited_at = res["fd_audited_at"];
-            this.addChangeOrderFormVal.ca_auditor_id = res["ca_auditor_id"];
-            this.addChangeOrderFormVal.ca_audited_at = res["ca_audited_at"];
-            this.addChangeOrderFormVal.stockout_op_id = res["stockout_op_id"];
-            this.addChangeOrderFormVal.stockout_at = res["stockout_at"];
-            this.addChangeOrderFormVal.association_taobao_oid =
-              res["association_taobao_oid"];
-            this.addChangeOrderFormVal.is_merge = res["is_merge"];
-            this.addChangeOrderFormVal.is_split = res["is_split"];
-            this.addChangeOrderFormVal.is_association = res["is_association"];
-
-            if (res["orderItems"]["data"].length > 0) {
-              res["orderItems"]["data"].map(item => {
-                this.addChangeOrderProIds.push(item["combination"].id);
-                item["name"] = item["combination"]["name"];
-                item["id"] = item.id;
-                item["products_id"] = item.products_id;
-                item["combinations_id"] = item.combinations_id;
-                item["productComp"] =
-                  item["combination"]["productComponents"]["data"];
-                this.$set(item, "newData", {
-                  quantity: item.quantity,
-                  paint: item.paint,
-                  is_printing: item.is_printing,
-                  printing_fee: item.printing_fee,
-                  is_spot_goods: item.is_spot_goods,
-                  under_line_univalent: item.under_line_univalent,
-                  under_line_preferential: item.under_line_preferential,
-                  total_volume: item.total_volume
-                });
-              });
-            }
-
-            this.proData = res["orderItems"]["data"];
-            this.chooseOrderProListData = res["orderItems"]["data"];
-            this.expenseData = res["paymentDetails"]["data"];
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              this.$message.error(arr1.join(","));
-            }
-          }
-        );
-      }
-    },
+    
     deleteChanges() {
       console.log("deleteChanges");
     },
@@ -3376,162 +3426,8 @@ export default {
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
     },
-    chooseOrderConfirm() {
-      this.chooseOrderMask = false;
-      this.$message({
-        message: "选择订单成功",
-        type: "success"
-      });
-    },
-    addChangeOrdersConfirm() {
-      let tempData = this.addChangeOrderFormVal;
-      this.proData.map(item => {
-        let proD = {
-          id: item.id,
-          products_id: item.products_id,
-          combinations_id: item.combinations_id,
-          quantity: item["newData"].quantity,
-          total_volume: item["newData"].total_volume,
-          paint: item["newData"].paint,
-          is_printing: item["newData"].is_printing,
-          printing_fee: item["newData"].printing_fee,
-          is_spot_goods: item["newData"].is_spot_goods,
-          under_line_univalent: item["newData"].under_line_univalent,
-          under_line_total_amount: item["newData"].under_line_total_amount,
-          under_line_preferential: item["newData"].under_line_preferential
-        };
-        this.addChangeOrderFormVal.order_items.push(proD);
-      });
-      this.expenseData.map(list => {
-        let expenseD = {
-          payment: list.payment,
-          payment_methods_id: list.payment_methods_id
-        };
-        this.addChangeOrderFormVal.payment_details.push(expenseD);
-      });
-      this.$post(this.urls.changeorders, this.addChangeOrderFormVal).then(
-        () => {
-          this.addOrderChangesMask = false;
-          this.refresh();
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          });
-          this.addChangeOrderFormVal = {
-            change_order_no: "",
-            cancel_order_no: "",
-            is_canceled: false,
-            change_remark: "",
-            change_status: 10,
-            orders_id: 0,
-            //-----变更订单与原始order分界线--------
-            system_order_no: "",
-            shops_id: 0,
-            shops_name: "",
-            logistics_id: 0,
-            logistics_sn: "",
-            billing_way: "",
-            promise_ship_time: null,
-            freight_types_id: 0,
-            expected_freight: 0,
-            actual_freight: 0,
-            logistics_remark: "",
-            is_logistics_checked: false,
-            logistics_check_remark: "",
-            logistics_checked_at: null,
-            distributions_id: 0,
-            distribution_methods_id: 0,
-            deliver_goods_fee: 0,
-            move_upstairs_fee: 0,
-            installation_fee: 0,
-            total_distribution_fee: 0,
-            distribution_phone: "",
-            distribution_no: "",
-            distribution_types_id: 0,
-            is_distribution_checked: false,
-            distribution_check_remark: "",
-            distribution_checked_at: null,
-            service_car_fee: 0,
-            service_car_info: "",
-            take_delivery_goods_fee: 0,
-            take_delivery_goods_ways_id: 0,
-            express_fee: 0,
-            cancel_after_verification_code: "",
-            wooden_frame_costs: 0,
-            preferential_cashback: 0,
-            favorable_cashback: 0,
-            customer_types_id: 0,
-            is_invoice: false,
-            invoice_express_fee: 0,
-            express_invoice_title: "",
-            contract_no: "",
-            payment_methods_id: 0,
-            deposit: 0,
-            document_title: "",
-            warehouses_id: 0,
-            payment_date: null,
-            interest_concessions: 0,
-            is_notice: false,
-            is_cancel_after_verification: false,
-            accept_order_user: "",
-            tax_number: "",
-            receipt: "",
-            buyer_message: "",
-            seller_remark: "",
-            customer_service_remark: "",
-            stockout_remark: "",
-            taobao_oid: 0,
-            taobao_tid: 0,
-            member_nick: "",
-            seller_name: "",
-            seller_flag: "",
-            created: null,
-            est_con_time: null,
-            receiver_name: "",
-            receiver_phone: "",
-            receiver_mobile: "",
-            receiver_state: "",
-            receiver_city: "",
-            receiver_district: "",
-            receiver_address: "",
-            receiver_zip: "",
-            refund_info: "",
-            business_personnel_id: 0,
-            locker_id: 0,
-            locked_at: null,
-            auditor_id: 0,
-            audit_at: null,
-            cs_auditor_id: 0,
-            cs_audited_at: null,
-            fd_auditor_id: 0,
-            fd_audited_at: null,
-            ca_auditor_id: 0,
-            ca_audited_at: null,
-            stockout_op_id: 0,
-            stockout_at: null,
-            association_taobao_oid: 0,
-            is_merge: false,
-            is_split: false,
-            is_association: false,
-            status: true,
-            order_items: [],
-            payment_details: []
-          };
-        },
-        err => {
-          if (err.response) {
-            this.showDel = false;
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error(str);
-          }
-        }
-      );
-    },
+    
+    
     updateChangeOrdersConfirm() {
       let tempData = this.addChangeOrderFormVal;
       this.proData.map(item => {
