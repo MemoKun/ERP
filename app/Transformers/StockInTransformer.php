@@ -17,6 +17,7 @@ class StockInTransformer extends TransformerAbstract
             'id' => $stockIn->id,
             'stock_in_no' => $stockIn->stock_in_no,
             'external_sn' => $stockIn->external_sn,
+            'stock_in_status' => $stockIn->stock_in_status,
             'warehouse_id' => $stockIn->warehouse_id,
             'stock_in_types_id' => $stockIn->stock_in_types_id,
             'creator' => $stockIn->creator,
