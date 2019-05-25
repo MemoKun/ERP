@@ -17,6 +17,11 @@ class StockInRequest extends FormRequest
         switch ($this->method()) {
             case 'GET':
                 return [
+                    'stock_in_status' => Rule::in([
+                        \App\Models\StockIn::STOCKIN_STATUS_NEW,
+                        \App\Models\StockIn::STOCKIN_STATUS_SUBMIT,
+                        \App\Models\StockIn::STOCKIN_STATUS_STOCKIN,
+                    ]),
                     'status' => 'boolean',
                     'is_submit' => 'boolean',
                     'is_stock_in' => 'boolean',
@@ -24,6 +29,11 @@ class StockInRequest extends FormRequest
                 break;
             case 'POST':
                 return [
+                    'stock_in_status' => Rule::in([
+                        \App\Models\StockIn::STOCKIN_STATUS_NEW,
+                        \App\Models\StockIn::STOCKIN_STATUS_SUBMIT,
+                        \App\Models\StockIn::STOCKIN_STATUS_STOCKIN,
+                    ]),
                     'warehouse_id' => [
                         'required', 'integer',
                         Rule::exists('warehouses', 'id')->where(function ($query) {
@@ -73,7 +83,6 @@ class StockInRequest extends FormRequest
             'is_submit.boolean' => '是否提交必须布尔类型',
 
             'is_stock_in.boolean' => '是否入库必须布尔类型',
-
 
             'status.boolean' => '状态必须布尔类型',
             'status.required' => '状态必填',

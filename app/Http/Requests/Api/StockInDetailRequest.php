@@ -27,12 +27,12 @@ class StockInDetailRequest extends FormRequest
                             if (!\App\Models\PurchaseDetail::query()->findOrFail($value)->purchaseList->purchase->is_audit)
                                 return $fail('采购单未审核');
 
-                            if (
-                                \App\Models\PurchaseDetail::query()->findOrFail($value)->purchaseList->purchase->getOriginal('purchase_status')
-                                ==
-                                \App\Models\Purchase::PURCHASE_STATUS_FINISH
-                            )
-                                return $fail('采购单已完成');
+                            // if (
+                            //     \App\Models\PurchaseDetail::query()->findOrFail($value)->purchaseList->purchase->getOriginal('purchase_status')
+                            //     ==
+                            //     \App\Models\Purchase::PURCHASE_STATUS_FINISH
+                            // )
+                            //     return $fail('采购单已完成');
 
                             return true;
                         }
