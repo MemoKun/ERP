@@ -1262,9 +1262,9 @@ class CustomerServiceDepartmentsController extends Controller
         \App\Handlers\ValidatedHandler $validatedHandler
     ) {
         //锁定才能修改
-        if ($order->unlock()) {
-            throw new UpdateResourceFailedException('订单未锁定无法修改');
-        }
+        //if ($order->unlock()) {
+        //    throw new UpdateResourceFailedException('订单未锁定无法修改');
+        //}
 
         $data[] = $CustomerServiceDepartmentRequest->validated();
         $data[] = $CustomerServiceDepartmentRequest->input('order_items');
@@ -1290,7 +1290,7 @@ class CustomerServiceDepartmentsController extends Controller
                         $order->orderItems()->create($validatedData);
                     }
                 }
-            }
+            }   
 
             if ($data[2] ?? null) {
                 foreach ($data[2] as $item) {
@@ -1304,7 +1304,7 @@ class CustomerServiceDepartmentsController extends Controller
                     }
                 }
             }
-
+            
             return $order;
         });
 

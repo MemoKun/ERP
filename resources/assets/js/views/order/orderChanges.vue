@@ -24,7 +24,7 @@
     </div>
 
     <!--*****************************************中间主要的table*******************************-->
-    
+
     <el-tabs v-model="middleActiveName" @tab-click="firstHandleClick" style="height: 250px;">
       <el-tab-pane label="新建" name="0">
         <el-table :data="newOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
@@ -1170,7 +1170,7 @@ export default {
       curRowId: "",
       curRowData: {},
       payDtlData: [],
-      
+
       addDialogOrderDtlFormHead: [
         //新增会话框 下部订单信息formhead
         {
@@ -1404,7 +1404,7 @@ export default {
         ]
       },
       addChangeOrderFormVal: {
-        id:"",
+        id: "",
         change_order_no: "",
         cancel_order_no: "",
         is_canceled: false,
@@ -1740,6 +1740,11 @@ export default {
         }
       ],
       proVal: [],
+
+      /*审核*/
+      submitData: {},
+      submitId: 0,
+
       toggleText: false,
       toggleHeight: true,
       clickFlag: false,
@@ -1906,7 +1911,7 @@ export default {
           type: "checkbox"
         }
       ],
-      submitData: {},
+
       proDtlVal: {},
       proCompRowIndex: "",
       proSubmitData: [],
@@ -2248,7 +2253,7 @@ export default {
         case 0:
           this.$fetch(this.urls.changeorders + "/searchnew", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,applier"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier"
           }).then(
             res => {
               this.loading = false;
@@ -2282,7 +2287,7 @@ export default {
         case 1:
           this.$fetch(this.urls.changeorders + "/searchuntreated", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,applier"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier"
           }).then(
             res => {
               this.loading = false;
@@ -2315,7 +2320,7 @@ export default {
         case 2:
           this.$fetch(this.urls.changeorders + "/searchtreated", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
           }).then(
             res => {
               this.loading = false;
@@ -2348,7 +2353,7 @@ export default {
         case 3:
           this.$fetch(this.urls.changeorders + "/searchcanceled", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
           }).then(
             res => {
               this.loading = false;
@@ -2434,9 +2439,9 @@ export default {
     //4、选择订单并将数据填入chooseOrderData中，产品数据存在proData，费用数据存入expenseData
     chooseOrderRowClick(row) {
       this.chooseOrderRowIndex = `index${row.index}`;
-      this.chooseOrderRowId = row.id;//选择订单的当前行订单的id，也就是orders的id
-      this.proData = [];//存储订单的商品信息
-      this.expenseData = [];//存储订单的费用类型信息
+      this.chooseOrderRowId = row.id; //选择订单的当前行订单的id，也就是orders的id
+      this.proData = []; //存储订单的商品信息
+      this.expenseData = []; //存储订单的费用类型信息
       this.proCompRowIndex = "";
       this.addChangeOrderProIds = [];
       this.curRowData = row;
@@ -2558,7 +2563,7 @@ export default {
           this.addChangeOrderFormVal.is_split = res["is_split"];
           this.addChangeOrderFormVal.is_association = res["is_association"];
           this.addChangeOrderFormVal.order_items = [];
-          this.addChangeOrderFormVal.payment_details=[];
+          this.addChangeOrderFormVal.payment_details = [];
 
           if (res["orderItems"]["data"].length > 0) {
             res["orderItems"]["data"].map(item => {
@@ -2757,7 +2762,7 @@ export default {
     },
 
     /**
-     * ********************************************提  交  变  更  订  单 ***************************************************
+     * ******************************************** 修  改 ***************************************************
      * 
      **/
     //1、点击提交按钮，fetch数据并加载到update窗口里
@@ -2813,7 +2818,269 @@ export default {
       }
     },
 
+    /**
+     * ******************************************** 提  交 ***************************************************
+     * 
+     **/
+    handleSubmit() {
+      console.log("handleSubmit");
+      if (this.newOpt[3].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "submit").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "审核成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
 
+    /**
+     * ******************************************** 审  核 ***************************************************
+     * 
+     **/
+    handleAudit() {
+      console.log("handleAudit");
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$fetch(this.urls.changeorders + "/" + id, {
+          include:
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+        }).then(
+          res => {
+            /*请求选中的数据并拼接用于patch Order的submit*/
+            //this.submitData = res;
+            this.submitData = res;
+            let forData = this.submitData;
+            this.submitData = {
+              orders_id: forData.orders_id,
+              system_order_no: forData.system_order_no,
+              shops_id: forData.shops_id,
+              shops_name: forData.shops_name,
+              logistics_id: forData.logistics_id,
+              logistics_sn: forData.logistics_sn,
+              billing_way: forData.billing_way,
+              promise_ship_time: forData.promise_ship_time,
+              freight_types_id: forData.freight_types_id,
+              expected_freight: forData.expected_freight,
+              actual_freight: forData.actual_freight,
+              logistics_remark: forData.logistics_remark,
+              is_logistics_checked: forData.is_logistics_checked,
+              logistics_check_remark: forData.logistics_check_remark,
+              logistics_checked_at: forData.logistics_checked_at,
+              distributions_id: forData.distributions_id,
+              distribution_methods_id: forData.distribution_methods_id,
+              deliver_goods_fee: forData.deliver_goods_fee,
+              move_upstairs_fee: forData.move_upstairs_fee,
+              installation_fee: forData.installation_fee,
+              total_distribution_fee: forData.total_distribution_fee,
+              distribution_phone: forData.distribution_phone,
+              distribution_no: forData.distribution_no,
+              distribution_types_id: forData.distribution_types_id,
+              is_distribution_checked: forData.is_distribution_checked,
+              distribution_check_remark: forData.distribution_check_remark,
+              distribution_checked_at: forData.distribution_checked_at,
+              service_car_fee: forData.service_car_fee,
+              service_car_info: forData.service_car_info,
+              take_delivery_goods_fee: forData.take_delivery_goods_fee,
+              take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
+              express_fee: forData.express_fee,
+              cancel_after_verification_code:
+                forData.cancel_after_verification_code,
+              wooden_frame_costs: forData.wooden_frame_costs,
+              preferential_cashback: forData.preferential_cashback,
+              favorable_cashback: forData.favorable_cashback,
+              customer_types_id: forData.customer_types_id,
+              is_invoice: forData.is_invoice,
+              invoice_express_fee: forData.invoice_express_fee,
+              express_invoice_title: forData.express_invoice_title,
+              contract_no: forData.contract_no,
+              payment_methods_id: forData.payment_methods_id,
+              deposit: forData.deposit,
+              document_title: forData.document_title,
+              warehouses_id: forData.warehouses_id,
+              payment_date: forData.payment_date,
+              interest_concessions: forData.shops_id,
+              is_notice: forData.is_notice,
+              is_cancel_after_verification:
+                forData.is_cancel_after_verification,
+              accept_order_user: forData.accept_order_user,
+              tax_number: forData.tax_number,
+              receipt: forData.receipt,
+              buyer_message: forData.buyer_message,
+              seller_remark: forData.seller_remark,
+              customer_service_remark: forData.customer_service_remark,
+              stockout_remark: forData.stockout_remark,
+              taobao_oid: forData.taobao_oid,
+              taobao_tid: forData.taobao_tid,
+              member_nick: forData.member_nick,
+              seller_name: forData.seller_name,
+              seller_flag: forData.seller_flag,
+              created: forData.created,
+              est_con_time: forData.est_con_time,
+              receiver_name: forData.receiver_name,
+              receiver_phone: forData.receiver_phone,
+              receiver_mobile: forData.receiver_mobile,
+              receiver_state: forData.receiver_state,
+              receiver_city: forData.receiver_city,
+              receiver_district: forData.receiver_district,
+              receiver_address: forData.receiver_address,
+              receiver_zip: forData.receiver_zip,
+              refund_info: forData.refund_info,
+              business_personnel_id: forData.business_personnel_id,
+              locker_id: forData.locker_id,
+              locked_at: forData.locked_at,
+              auditor_id: forData.auditor_id,
+              audit_at: forData.audit_at,
+              cs_auditor_id: forData.cs_auditor_id,
+              cs_audited_at: forData.cs_audited_at,
+              fd_auditor_id: forData.fd_auditor_id,
+              fd_audited_at: forData.fd_audited_at,
+              ca_auditor_id: forData.ca_auditor_id,
+              ca_audited_at: forData.ca_audited_at,
+              stockout_op_id: forData.stockout_op_id,
+              stockout_at: forData.stockout_at,
+              association_taobao_oid: forData.association_taobao_oid,
+              is_merge: forData.is_merge,
+              is_split: forData.is_split,
+              is_association: forData.is_association,
+              status: forData.status,
+              order_items: [],
+              payment_details: []
+            };
+            /** 对orderItems进行处理*/
+            if (res["orderItems"]["data"].length > 0) {
+              res["orderItems"]["data"].map(item => {
+                this.addChangeOrderProIds.push(item["combination"].id);
+                item["name"] = item["combination"]["name"];
+                item["id"] = item.id;
+                item["products_id"] = item.products_id;
+                item["combinations_id"] = item.combinations_id;
+                item["productComp"] =
+                  item["combination"]["productComponents"]["data"];
+                this.$set(item, "newData", {
+                  quantity: item.quantity,
+                  paint: item.paint,
+                  is_printing: item.is_printing,
+                  printing_fee: item.printing_fee,
+                  is_spot_goods: item.is_spot_goods,
+                  under_line_univalent: item.under_line_univalent,
+                  under_line_preferential: item.under_line_preferential,
+                  total_volume: item.total_volume
+                });
+              });
+            }
+            this.proData = res["orderItems"]["data"];
+            this.expenseData = res["paymentDetails"]["data"];
+            /**将proData数据加入到submitData里 */
+            this.proData.map(item => {
+              let proD = {
+                id: item.id,
+                products_id: item.products_id,
+                combinations_id: item.combinations_id,
+                quantity: item["newData"].quantity,
+                total_volume: item["newData"].total_volume,
+                paint: item["newData"].paint,
+                is_printing: item["newData"].is_printing,
+                printing_fee: item["newData"].printing_fee,
+                is_spot_goods: item["newData"].is_spot_goods,
+                under_line_univalent: item["newData"].under_line_univalent,
+                under_line_total_amount:
+                  item["newData"].under_line_total_amount,
+                under_line_preferential: item["newData"].under_line_preferential
+              };
+              this.submitData.order_items.push(proD);
+            });
+            /**将expenseData加入到submitData里*/
+            this.expenseData.map(list => {
+              if (list.id) {
+                let expenseD = {
+                  id: list.id,
+                  payment: list.payment,
+                  payment_methods_id: list.payment_methods_id
+                };
+                this.submitData.payment_details.push(expenseD);
+              } else {
+                let expenseD = {
+                  payment: list.payment,
+                  payment_methods_id: list.payment_methods_id
+                };
+                this.submitData.payment_details.push(expenseD);
+              }
+            });
+
+            this.$patch(
+              this.urls.customerservicedepts + "/" + this.submitData.orders_id,
+              this.submitData
+            ).then(
+              () => {
+                this.$put(
+                  this.urls.changeorders + "/" + id + "/auditchanges"
+                ).then(
+                  () => {
+                    this.$message({
+                      message: "审核成功",
+                      type: "success"
+                    });
+                    this.refresh();
+                  },
+                  err => {
+                    if (err.response) {
+                      let arr = err.response.data.errors;
+                      let arr1 = [];
+                      for (let i in arr) {
+                        arr1.push(arr[i]);
+                      }
+                      let str = arr1.join(",");
+                      this.$message.error(str);
+                    }
+                  }
+                );
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
+              }
+            );
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              this.$message.error(arr1.join(","));
+            }
+          }
+        );
+      }
+    },
 
     test() {
       console.log(1);
@@ -3112,7 +3379,7 @@ export default {
       this.curRowId = row.id;
       this.curRowData = row;
     },
-    
+
     deleteChanges() {
       console.log("deleteChanges");
     },
@@ -3144,212 +3411,7 @@ export default {
         );
       }
     },
-    handleAudit() {
-      console.log("handleAudit");
-      if (this.newOpt[4].nClick) {
-        return;
-      } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$fetch(this.urls.changeorders + "/" + id, {
-          include:
-            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-        }).then(
-          res => {
-            /*请求选中的数据并拼接用于patch Order的submit*/
-            this.submitData = res;
-            /*let submitData = {
-              system_order_no: res["system_order_no"],
-              shops_id: res["shops_id"],
-              shops_name: res["shops_name"],
-              logistics_id: res["logistics_id"],
-              logistics_sn: res["logistics_sn"],
-              billing_way: res["billing_way"],
-              promise_ship_time: res["promise_ship_time"],
-              freight_types_id: res["freight_types_id"],
-              expected_freight: res["expected_freight"],
-              actual_freight: res["actual_freight"],
-              logistics_remark: res["logistics_remark"],
-              is_logistics_checked: res["is_logistics_checked"],
-              logistics_check_remark: res["logistics_check_remark"],
-              logistics_checked_at: res["logistics_checked_at"],
-              distributions_id: res["distributions_id"],
-              distribution_methods_id: res["distribution_methods_id"],
-              deliver_goods_fee: res["deliver_goods_fee"],
-              move_upstairs_fee: res["move_upstairs_fee"],
-              installation_fee: res["installation_fee"],
-              total_distribution_fee: res["total_distribution_fee"],
-              distribution_phone: res["distribution_phone"],
-              distribution_no: res["distribution_no"],
-              distribution_types_id: res["distribution_types_id"],
-              is_distribution_checked: res["is_distribution_checked"],
-              distribution_check_remark: res["distribution_check_remark"],
-              distribution_checked_at: res["distribution_checked_at"],
-              service_car_fee: res["service_car_fee"],
-              service_car_info: res["service_car_info"],
-              take_delivery_goods_fee: res["take_delivery_goods_fee"],
-              take_delivery_goods_ways_id: res["take_delivery_goods_ways_id"],
-              express_fee: res["express_fee"],
-              cancel_after_verification_code:
-                res["cancel_after_verification_code"],
-              wooden_frame_costs: res["wooden_frame_costs"],
-              preferential_cashback: res["preferential_cashback"],
-              favorable_cashback: res["favorable_cashback"],
-              customer_types_id: res["customer_types_id"],
-              is_invoice: res["is_invoice"],
-              invoice_express_fee: res["invoice_express_fee"],
-              express_invoice_title: res["express_invoice_title"],
-              contract_no: res["contract_no"],
-              payment_methods_id: res["payment_methods_id"],
-              deposit: res["deposit"],
-              document_title: res["document_title"],
-              warehouses_id: res["warehouses_id"],
-              payment_date: res["payment_date"],
-              interest_concessions: res["interest_concessions"],
-              is_notice: res["is_notice"],
-              is_cancel_after_verification: res["is_cancel_after_verification"],
-              accept_order_user: res["accept_order_user"],
-              tax_number: res["tax_number"],
-              receipt: res["receipt"],
-              buyer_message: res["buyer_message"],
-              seller_remark: res["seller_remark"],
-              customer_service_remark: res["customer_service_remark"],
-              stockout_remark: res["stockout_remark"],
-              taobao_oid: res["taobao_oid"],
-              taobao_tid: res["taobao_tid"],
-              member_nick: res["member_nick"],
-              seller_name: res["seller_name"],
-              seller_flag: res["seller_flag"],
-              created: res["created"],
-              est_con_time: res["est_con_time"],
-              receiver_name: res["receiver_name"],
-              receiver_phone: res["receiver_phone"],
-              receiver_mobile: res["receiver_mobile"],
-              receiver_state: res["receiver_state"],
-              receiver_city: res["receiver_city"],
-              receiver_district: res["receiver_district"],
-              receiver_address: res["receiver_address"],
-              receiver_zip: res["receiver_zip"],
-              refund_info: res["refund_info"],
-              business_personnel_id: res["business_personnel_id"],
-              locker_id: res["locker_id"],
-              locked_at: res["locked_at"],
-              auditor_id: res["auditor_id"],
-              audit_at: res["system_order_no"],
-              cs_auditor_id: res["cs_auditor_id"],
-              cs_audited_at: res["cs_audited_at"],
-              fd_auditor_id: res["fd_auditor_id"],
-              fd_audited_at: res["fd_audited_at"],
-              ca_auditor_id: res["ca_auditor_id"],
-              ca_audited_at: res["ca_audited_at"],
-              stockout_op_id: res["stockout_op_id"],
-              stockout_at: res["stockout_at"],
-              association_taobao_oid: res["association_taobao_oid"],
-              is_merge: res["is_merge"],
-              is_split: res["is_split"],
-              is_association: res["is_association"],
-              status: res["status"],
-              order_items: [],
-              payment_details: []
-            };*/
-            /** 对orderItems进行处理*/
-            if (res["orderItems"]["data"].length > 0) {
-              res["orderItems"]["data"].map(item => {
-                this.addChangeOrderProIds.push(item["combination"].id);
-                item["name"] = item["combination"]["name"];
-                item["id"] = item.id;
-                item["products_id"] = item.products_id;
-                item["combinations_id"] = item.combinations_id;
-                item["productComp"] =
-                  item["combination"]["productComponents"]["data"];
-                this.$set(item, "newData", {
-                  quantity: item.quantity,
-                  paint: item.paint,
-                  is_printing: item.is_printing,
-                  printing_fee: item.printing_fee,
-                  is_spot_goods: item.is_spot_goods,
-                  under_line_univalent: item.under_line_univalent,
-                  under_line_preferential: item.under_line_preferential,
-                  total_volume: item.total_volume
-                });
-              });
-            }
-            this.proData = res["orderItems"]["data"];
-            this.expenseData = res["paymentDetails"]["data"];
-            /**将proData数据加入到submitData里 */
-            this.proData.map(item => {
-              let proD = {
-                id: item.id,
-                products_id: item.products_id,
-                combinations_id: item.combinations_id,
-                quantity: item["newData"].quantity,
-                total_volume: item["newData"].total_volume,
-                paint: item["newData"].paint,
-                is_printing: item["newData"].is_printing,
-                printing_fee: item["newData"].printing_fee,
-                is_spot_goods: item["newData"].is_spot_goods,
-                under_line_univalent: item["newData"].under_line_univalent,
-                under_line_total_amount:
-                  item["newData"].under_line_total_amount,
-                under_line_preferential: item["newData"].under_line_preferential
-              };
-              this.submitData.order_items.push(proD);
-            });
-            /**将expenseData加入到submitData里*/
-            this.expenseData.map(list => {
-              if (list.id) {
-                let expenseD = {
-                  id: list.id,
-                  payment: list.payment,
-                  payment_methods_id: list.payment_methods_id
-                };
-                submitData.payment_details.push(expenseD);
-              } else {
-                let expenseD = {
-                  payment: list.payment,
-                  payment_methods_id: list.payment_methods_id
-                };
-                submitData.payment_details.push(expenseD);
-              }
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              this.$message.error(arr1.join(","));
-            }
-          }
-        );
-      }
-      this.$patch(
-        this.urls.customerservicedepts +
-          "/" +
-          this.addChangeOrderFormVal.orders_id,
-        submitData
-      ).then(
-        () => {
-          this.refresh();
-          this.$message({
-            message: "审核成功",
-            type: "success"
-          });
-        },
-        err => {
-          if (err.response) {
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error(str);
-          }
-        }
-      );
-    },
+
     handleUnAudit() {
       if (this.newOpt[6].nClick) {
         return;
@@ -3426,8 +3488,7 @@ export default {
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
     },
-    
-    
+
     updateChangeOrdersConfirm() {
       let tempData = this.addChangeOrderFormVal;
       this.proData.map(item => {

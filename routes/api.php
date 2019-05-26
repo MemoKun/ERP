@@ -730,6 +730,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.changeorders.searchtreated');
         $api->get('changeorders/searchcanceled', 'CustomerServiceChangeOrdersController@searchCanceled')
             ->name('api.changeorders.searchcanceled');
+        $api->patch('changeorders/{order}', 'CustomerServiceChangeOrdersController@update')
+            ->name('api.changeorders.update');
+        $api->put('changeorders/{order}/auditchanges', 'CustomerServiceChangeOrdersController@isAuditChanges')
+            ->name('api.changeorders.isauditchanges');
 
             
         $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')

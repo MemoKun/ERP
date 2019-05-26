@@ -20,6 +20,10 @@ class PaymentDetail extends Model
         return $this->belongsTo(Order::class,'orders_id');
     }
 
+    public function ChangeOrder(){
+        return $this->belongsTo(ChangeOrder::class,'change_orders_id');
+    }
+
     public function paymentMethod(){
         return $this->belongsTo(PaymentMethod::class,'payment_methods_id');
     }
