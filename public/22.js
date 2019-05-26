@@ -1046,7 +1046,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "打印时间",
         width: "200",
         prop: "print_at",
-        inProp: "date",
         type: "text"
       },
       /* {
@@ -1762,32 +1761,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "库存数",
         width: "120",
-        prop: "",
+        prop: "store_num",
         type: "number"
       }, {
         label: "订出数",
         width: "120",
-        prop: "",
+        prop: "order_num",
         type: "number"
       }, {
         label: "在途数",
         width: "120",
-        prop: "",
+        prop: "load_num",
         type: "number"
       }, {
         label: "在途数(提交)",
         width: "130",
-        prop: "",
+        prop: "submit_num",
         type: "number"
       }, {
         label: "可用数",
         width: "120",
-        prop: "",
+        prop: "use_num",
         type: "number"
       }, {
         label: "需采购数",
         width: "130",
-        prop: "",
+        prop: "purchase_num",
         type: "number"
       }, {
         label: "到货时间",
@@ -1913,6 +1912,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("suppliers", "/suppliers");
+            _this.$store.dispatch("shops", "/shops");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -1938,14 +1939,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.finishLoading = false;
             _this.finishData = res.data;
             _this.checkboxInit = false;
-            if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
-              _this.purListVal = res.data[0]["purchaseLists"]["data"][0];
-              _this.purDetailsVal = res.data[0].purchase_lists["data"][0]["purchaseDetails"]["data"];
-            }
+            // if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
+            //   this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+            //   this.purDetailsVal =
+            //     res.data[0].purchase_lists["data"][0]["purchaseDetails"][
+            //       "data"
+            //     ];
+            // }
+            console.log(_this.finishData);
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("suppliers", "/suppliers");
+            _this.$store.dispatch("shops", "/shops");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -3037,11 +3044,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*批量删除 只针对新建模块*/
     handleSelectionChange: function handleSelectionChange(val) {
-      if (val.length != 0) {
-        this.updateId = val[0].id;
-      } else {
+      if (val.length == 0) {
         this.updateId = "";
-      }
+      } else if (val.length == 1) {
+        this.updateId = val[0].id;
+        this.newOpt[1].nClick = val[0]["is_change"] ? true : false;
+        this.newOpt[3].nClick = val[0]["is_submit"] ? true : false;
+        this.newOpt[10].nClick = val[0]["is_print"] ? true : false;
+        this.newOpt[4].nClick = val[0]["is_audit"] ? true : false;
+        this.purRowClick(val[0]);
+      } else {
+        this.newOpt[1].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+      };
       this.multipleSelection = val;
       var del = [];
       this.multipleSelection.forEach(function (selectedItem) {
@@ -3933,7 +3949,7 @@ var render = function() {
                                         item.inProp
                                           ? scope.row[item.prop][item.inProp]
                                           : scope.row[item.prop]
-                                      ) + "}"
+                                      )
                                     )
                                   ])
                             ]

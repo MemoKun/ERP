@@ -627,6 +627,314 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -661,6 +969,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: "bf-refresh",
         ent: this.refresh
       }],
+      Data: [],
       /* 搜索框 */
       filterBox: false,
       searchBox: {
@@ -1541,21 +1850,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = false;
-        }
-      }
+        };
+      };
       this.curRowId = row.id;
       this.curRowData = row;
       this.scheduleData = row["afterSaleSchedules"].data;
       this.defProData = row["afterSaleDefPros"].data;
-    },
-    rowStyle: function rowStyle(_ref2) {
-      // console.log((this.purIndex) === rowIndex);
-      /* if((this.purIndex) === rowIndex){
-          return { "background-color": "red" }
-        }*/
-
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
     },
     handleSelectionChange: function handleSelectionChange(val) {
       if (val.length != 0) {
@@ -1575,13 +1875,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.newOpt[1].nClick = false;
             this.newOpt[2].nClick = true;
             this.newOpt[3].nClick = false;
-          }
+          };
         } else if (this.selection.length >= 2) {
           this.newOpt[1].nClick = true;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = true;
         }
-      }
+      };
       var del = [];
       val.forEach(function (selectedItem) {
         del.push(selectedItem.id);
@@ -1811,15 +2111,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     // 新增售后产品
-    addOrderRowCName: function addOrderRowCName(_ref3) {
-      var row = _ref3.row,
-          rowIndex = _ref3.rowIndex;
+    addOrderRowCName: function addOrderRowCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
 
       row.index = rowIndex;
     },
-    addAfterSProRowCName: function addAfterSProRowCName(_ref4) {
-      var row = _ref4.row,
-          rowIndex = _ref4.rowIndex;
+    addAfterSProRowCName: function addAfterSProRowCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
 
       row.index = rowIndex;
     },
@@ -1873,6 +2173,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
     },
+    beforeUpload: function beforeUpload(file) {
+      var _this10 = this;
+
+      this.showChgBtn = false;
+      this.judgeFm(file);
+      var formData = new FormData();
+      formData.append("image", file);
+      axios.post(this.urls.uploadimages, formData).then(function (res) {
+        var imageInfo = res.data.meta;
+        if (imageInfo.status_code == 201) {
+          _this10.noUpload = false;
+          _this10.showChgBtn = true;
+          _this10.addAfterSaleForm.after_sale_def_pro[0].img_url = res.data.path;
+        }
+      }).catch(function (err) {});
+    },
     proQueryRefresh: function proQueryRefresh() {
       this.proQueryClick();
       this.$message({
@@ -1916,44 +2232,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     // 锁定
     lock: function lock() {
-      var _this10 = this;
+      var _this11 = this;
 
       if (this.newOpt[1].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.aftersale + "/" + id + "/lockorunlock").then(function () {
-          _this10.refresh();
-          _this10.$message({
-            message: "锁定成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this10.$message.error(str);
-          }
-        });
-      }
-    },
-
-    // 解锁
-    unLock: function unLock() {
-      var _this11 = this;
-
-      if (this.newOpt[2].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/lockorunlock").then(function () {
           _this11.refresh();
           _this11.$message({
-            message: "解锁成功",
+            message: "锁定成功",
             type: "success"
           });
         }, function (err) {
@@ -1970,18 +2258,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
 
-    // 审核
-    handleAudit: function handleAudit() {
+    // 解锁
+    unLock: function unLock() {
       var _this12 = this;
 
-      if (this.newOpt[3].nClick) {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/oneaudit").then(function () {
+        this.$put(this.urls.aftersale + "/" + id + "/lockorunlock").then(function () {
           _this12.refresh();
           _this12.$message({
-            message: "审核成功",
+            message: "解锁成功",
             type: "success"
           });
         }, function (err) {
@@ -1998,18 +2286,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
 
-    // 退审
-    unAudit: function unAudit() {
+    // 审核
+    handleAudit: function handleAudit() {
       var _this13 = this;
 
-      if (this.newOpt[4].nClick) {
+      if (this.newOpt[3].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.aftersale + "/" + id + "/unoneaudit").then(function () {
+        this.$put(this.urls.aftersale + "/" + id + "/oneaudit").then(function () {
           _this13.refresh();
           _this13.$message({
-            message: "退审成功",
+            message: "审核成功",
             type: "success"
           });
         }, function (err) {
@@ -2021,6 +2309,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             var str = arr1.join(",");
             _this13.$message.error(str);
+          }
+        });
+      }
+    },
+
+    // 退审
+    unAudit: function unAudit() {
+      var _this14 = this;
+
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.aftersale + "/" + id + "/unoneaudit").then(function () {
+          _this14.refresh();
+          _this14.$message({
+            message: "退审成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this14.$message.error(str);
           }
         });
       }
@@ -2559,8 +2875,7 @@ var render = function() {
                     data: _vm.unsubmitData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName,
-                    "row-style": _vm.rowStyle
+                    "row-class-name": _vm.afterSaleRCName
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -2725,8 +3040,7 @@ var render = function() {
                     data: _vm.submitData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName,
-                    "row-style": _vm.rowStyle
+                    "row-class-name": _vm.afterSaleRCName
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -4427,77 +4741,40 @@ var render = function() {
                   attrs: {
                     data: _vm.updateForm.after_sale_def_pro,
                     fit: "",
-                    height: "180",
-                    "row-class-name": _vm.defRowCName
-                  },
-                  on: { "row-click": _vm.defRowClick }
+                    height: "180"
+                  }
                 },
-                [
-                  _vm._l(_vm.defProHead, function(item) {
-                    return _c("el-table-column", {
-                      key: item.label,
-                      attrs: {
-                        label: item.label,
-                        align: "center",
-                        width: item.width
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              scope.row[item.prop]
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        item.inProp
-                                          ? scope.row[item.prop][item.inProp]
-                                          : scope.row[item.prop]
-                                      )
-                                    )
-                                  ])
-                                : _vm._e()
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
+                _vm._l(_vm.defProHead, function(item) {
+                  return _c("el-table-column", {
+                    key: item.label,
                     attrs: {
-                      label: "操作",
-                      width: "90",
+                      label: item.label,
                       align: "center",
-                      fixed: "right"
+                      width: item.width
                     },
                     scopedSlots: _vm._u([
                       {
                         key: "default",
                         fn: function(scope) {
                           return [
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { size: "mini", type: "danger" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.delUpdateDefPro(
-                                      scope.row,
-                                      $event
+                            scope.row[item.prop]
+                              ? _c("span", [
+                                  _vm._v(
+                                    _vm._s(
+                                      item.inProp
+                                        ? scope.row[item.prop][item.inProp]
+                                        : scope.row[item.prop]
                                     )
-                                  }
-                                }
-                              },
-                              [_vm._v("删除")]
-                            )
+                                  )
+                                ])
+                              : _vm._e()
                           ]
                         }
                       }
                     ])
                   })
-                ],
-                2
+                }),
+                1
               )
             ],
             1
@@ -4511,22 +4788,6 @@ var render = function() {
               slot: "footer"
             },
             [
-              _c(
-                "div",
-                { staticStyle: { float: "left" } },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: { click: _vm.updateAfterSProClick }
-                    },
-                    [_vm._v("新增售后产品")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c(
                 "div",
                 { staticStyle: { float: "right" } },

@@ -33583,7 +33583,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: "退审",
         icon: "bf-auditfaild",
-        ent: this.handleSecUnAudit
+        ent: this.handleSecUnAudit,
+        nClick: true
       }, {
         cnt: "导出",
         icon: "bf-out",
@@ -34439,6 +34440,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this3.$store.dispatch("currentPage", pg.current_page);
             _this3.$store.commit("PER_PAGE", pg.per_page);
             _this3.$store.commit("PAGE_TOTAL", pg.total);
+            _this3.newOpt[0].nClick = false;
+            _this3.newOpt[1].nClick = false;
+            _this3.newOpt[2].nClick = false;
+            _this3.newOpt[3].nClick = true;
+            _this3.newOpt[4].nClick = false;
+            _this3.newOpt[5].nClick = false;
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34464,6 +34471,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this3.$store.dispatch("currentPage", pg.current_page);
             _this3.$store.commit("PER_PAGE", pg.per_page);
             _this3.$store.commit("PAGE_TOTAL", pg.total);
+            _this3.newOpt[0].nClick = true;
+            _this3.newOpt[1].nClick = true;
+            _this3.newOpt[2].nClick = true;
+            _this3.newOpt[3].nClick = false;
+            _this3.newOpt[4].nClick = false;
+            _this3.newOpt[5].nClick = false;
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;

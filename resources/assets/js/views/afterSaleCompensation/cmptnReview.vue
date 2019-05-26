@@ -452,7 +452,8 @@ export default {
         {
           cnt: "退审",
           icon: "bf-auditfaild",
-          ent: this.handleSecUnAudit
+          ent: this.handleSecUnAudit,
+          nClick:true
         },
         {
           cnt: "导出",
@@ -1527,13 +1528,19 @@ export default {
               this.problemProData = res.data[0]
                 ? res.data[0]["problemProduct"].data
                 : [];
-
+              
               this.$store.dispatch("feetypes", "/feetypes");
 
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
+              this.newOpt[0].nClick=false;
+              this.newOpt[1].nClick=false;
+              this.newOpt[2].nClick=false;
+              this.newOpt[3].nClick=true;
+              this.newOpt[4].nClick=false;
+              this.newOpt[5].nClick=false;
             },
             err => {
               if (err.response) {
@@ -1564,6 +1571,12 @@ export default {
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
+              this.newOpt[0].nClick=true;
+              this.newOpt[1].nClick=true;
+              this.newOpt[2].nClick=true;
+              this.newOpt[3].nClick=false;
+              this.newOpt[4].nClick=false;
+              this.newOpt[5].nClick=false;
             },
             err => {
               if (err.response) {

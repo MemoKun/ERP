@@ -899,6 +899,12 @@ export default {
       },
       addCmptnOrderFormRules: {
         //新建订单的要求格式
+        customer_nickname: [
+          { required: true, message: "买家昵称必填", trigger: "blur" }
+        ],
+        customer_name: [
+          { required: true, message: "买家姓名必填", trigger: "blur" }
+        ],
         customer_phone: [
           { required: true, message: "买家电话必选", trigger: "blur" }
         ],

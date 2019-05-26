@@ -32,11 +32,11 @@ class AfterCompensationRequest extends FormRequest
                     'logistics_company' => 'required|string|max:255',
                     'logistics_tracking_number' => 'required|string|max:255',
                     'payment_method' => 'required|string|max:255',
-                    'order_stuff' => 'required|numeric',
+                    'order_stuff' => 'required|string',
                     'payee' => 'required|string|max:255',
                     'payee_account' => 'required|string|max:255',
                     'problem_description' => 'required|string|max:255',
-                    'note' => 'required|string|max:255',
+                    'note' => 'string|max:255',
                     'negotiation_date' => 'required|string|max:255',
                     'status' => 'boolean',
                 ];
@@ -56,7 +56,7 @@ class AfterCompensationRequest extends FormRequest
                     'logistics_company' => 'required|string|max:255',
                     'logistics_tracking_number' => 'required|string|max:255',
                     'payment_method' => 'required|string|max:255',
-                    'order_stuff' => 'required|numeric',
+                    'order_stuff' => 'required|string',
                     'payee' => 'required|string|max:255',
                     'payee_account' => 'required|string|max:255',
                     'problem_description' => 'required|string|max:255',
@@ -71,14 +71,12 @@ class AfterCompensationRequest extends FormRequest
     public function messages()
     {
         return [
-          
         ];
     }
 
     public function attributes()
     {
         return [
-      
         ];
     }
 }

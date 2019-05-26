@@ -639,6 +639,268 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -675,6 +937,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         icon: "bf-refresh",
         ent: this.refresh
       }],
+      Data: [],
       /* 搜索框 */
       filterBox: false,
       searchBox: {
@@ -1048,7 +1311,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       width: "150",
       prop: "created_at",
       type: "text"
-    }]]), _defineProperty(_ref, "moreForms", true), _defineProperty(_ref, "selection", ""), _defineProperty(_ref, "updateMask", false), _defineProperty(_ref, "updateId", ""), _defineProperty(_ref, "updateIndex", ""), _defineProperty(_ref, "updateSchIndex", ""), _defineProperty(_ref, "updateForm", {
+    }]]), _defineProperty(_ref, "addActiveName", "0"), _defineProperty(_ref, "moreForms", true), _defineProperty(_ref, "selection", ""), _defineProperty(_ref, "updateMask", false), _defineProperty(_ref, "updateId", ""), _defineProperty(_ref, "updateIndex", ""), _defineProperty(_ref, "updateSchIndex", ""), _defineProperty(_ref, "updateForm", {
       refund_data: [],
       return_data: [],
       patch_data: []
@@ -1565,7 +1828,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.updateMask = false;
         this.updateForm.refund_data = [];
         this.refresh();
-      }
+      };
       if (this.ruleForm.is_return) {
         this.updateForm.return_data.map(function (item) {
           _this6.$post(_this6.urls.aftersalereturn, item).then(function () {}, function (err) {
@@ -1585,7 +1848,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.updateMask = false;
         this.updateForm.return_data = [];
         this.refresh();
-      }
+      };
       if (this.ruleForm.is_patch) {
         this.updateForm.patch_data.map(function (item) {
           _this6.$post(_this6.urls.aftersalepatch, item).then(function () {}, function (err) {
@@ -1604,13 +1867,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
         this.updateMask = false;
         this.refresh();
-      }
+      };
       if (!this.ruleForm.is_refund && !this.ruleForm.is_return && !this.ruleForm.is_patch) {
         this.$message({
           message: "没有选中责任方",
           type: "warning"
         });
-      }
+      };
       this.updateForm.patch_data = [];
     },
     edit: function edit() {
@@ -2284,8 +2547,7 @@ var render = function() {
                     data: _vm.unsubmitData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName,
-                    "row-style": _vm.rowStyle
+                    "row-class-name": _vm.afterSaleRCName
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -2450,8 +2712,7 @@ var render = function() {
                     data: _vm.submitData,
                     fit: "",
                     height: "300",
-                    "row-class-name": _vm.afterSaleRCName,
-                    "row-style": _vm.rowStyle
+                    "row-class-name": _vm.afterSaleRCName
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
@@ -3893,7 +4154,6 @@ var render = function() {
             {
               staticClass: "hidePart",
               attrs: { id: "elTabs" },
-              on: { "tab-click": _vm.addHandleClick },
               model: {
                 value: _vm.addActiveName,
                 callback: function($$v) {
