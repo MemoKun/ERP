@@ -1,14 +1,14 @@
 webpackJsonp([20],{
 
-/***/ 463:
+/***/ 465:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(575)
+var __vue_script__ = __webpack_require__(577)
 /* template */
-var __vue_template__ = __webpack_require__(576)
+var __vue_template__ = __webpack_require__(578)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 575:
+/***/ 577:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1694,7 +1694,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 576:
+/***/ 578:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1715,7 +1715,7 @@ var render = function() {
               nativeOn: {
                 keyup: function($event) {
                   if (
-                    "keyCode" in $event &&
+                    !$event.type.indexOf("key") &&
                     _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                   ) {
                     return null
@@ -1745,7 +1745,7 @@ var render = function() {
               nativeOn: {
                 keyup: function($event) {
                   if (
-                    "keyCode" in $event &&
+                    !$event.type.indexOf("key") &&
                     _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                   ) {
                     return null
@@ -1775,7 +1775,7 @@ var render = function() {
               nativeOn: {
                 keyup: function($event) {
                   if (
-                    "keyCode" in $event &&
+                    !$event.type.indexOf("key") &&
                     _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                   ) {
                     return null
@@ -1805,7 +1805,7 @@ var render = function() {
               nativeOn: {
                 keyup: function($event) {
                   if (
-                    "keyCode" in $event &&
+                    !$event.type.indexOf("key") &&
                     _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                   ) {
                     return null
@@ -1835,7 +1835,7 @@ var render = function() {
               nativeOn: {
                 keyup: function($event) {
                   if (
-                    "keyCode" in $event &&
+                    !$event.type.indexOf("key") &&
                     _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                   ) {
                     return null
@@ -1937,47 +1937,55 @@ var render = function() {
                         align: "center",
                         width: item.width
                       },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-checkbox", {
-                                        attrs: { disabled: "" },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            _vm._s(
-                                              item.inProp
-                                                ? scope.row[item.prop][
-                                                    item.inProp
-                                                  ]
-                                                : scope.row[item.prop]
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type == "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      scope.row[item.prop]
+                                        ? _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              )
                                             )
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
+                                          ])
+                                        : _vm._e()
+                                    ])
+                              ]
+                            }
                           }
-                        }
-                      ])
+                        ],
+                        null,
+                        true
+                      )
                     })
                   }),
                   _vm._v(" "),
@@ -2056,47 +2064,55 @@ var render = function() {
                         align: "center",
                         width: item.width
                       },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-checkbox", {
-                                        attrs: { disabled: "" },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            _vm._s(
-                                              item.inProp
-                                                ? scope.row[item.prop][
-                                                    item.inProp
-                                                  ]
-                                                : scope.row[item.prop]
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type == "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      scope.row[item.prop]
+                                        ? _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              )
                                             )
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
+                                          ])
+                                        : _vm._e()
+                                    ])
+                              ]
+                            }
                           }
-                        }
-                      ])
+                        ],
+                        null,
+                        true
+                      )
                     })
                   }),
                   _vm._v(" "),
@@ -2175,47 +2191,55 @@ var render = function() {
                         align: "center",
                         width: item.width
                       },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-checkbox", {
-                                        attrs: { disabled: "" },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            _vm._s(
-                                              item.inProp
-                                                ? scope.row[item.prop][
-                                                    item.inProp
-                                                  ]
-                                                : scope.row[item.prop]
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type == "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      scope.row[item.prop]
+                                        ? _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              )
                                             )
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
+                                          ])
+                                        : _vm._e()
+                                    ])
+                              ]
+                            }
                           }
-                        }
-                      ])
+                        ],
+                        null,
+                        true
+                      )
                     })
                   }),
                   _vm._v(" "),
@@ -2292,83 +2316,90 @@ var render = function() {
                         align: "center",
                         width: item.width
                       },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "select"
-                                ? _c(
-                                    "span",
-                                    _vm._l(_vm.resData[item.stateVal], function(
-                                      list
-                                    ) {
-                                      return _c("span", { key: list.id }, [
-                                        list.id == scope.row[item.prop]
-                                          ? _c("span", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  list.name
-                                                    ? list.name
-                                                    : list.title
-                                                )
-                                              )
-                                            ])
-                                          : _vm._e()
-                                      ])
-                                    }),
-                                    0
-                                  )
-                                : item.type == "img"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c(
-                                        "el-popover",
-                                        {
-                                          attrs: {
-                                            placement: "right",
-                                            trigger: "hover",
-                                            "popper-class": "picture_detail"
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: { src: scope.row[item.prop] }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("img", {
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type == "select"
+                                  ? _c(
+                                      "span",
+                                      _vm._l(
+                                        _vm.resData[item.stateVal],
+                                        function(list) {
+                                          return _c("span", { key: list.id }, [
+                                            list.id == scope.row[item.prop]
+                                              ? _c("span", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      list.name
+                                                        ? list.name
+                                                        : list.title
+                                                    )
+                                                  )
+                                                ])
+                                              : _vm._e()
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : item.type == "img"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c(
+                                          "el-popover",
+                                          {
                                             attrs: {
-                                              slot: "reference",
-                                              src: scope.row[item.prop],
-                                              alt: scope.row[item.alt]
-                                            },
-                                            slot: "reference"
-                                          })
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                : _c("span", [
-                                    scope.row[item.prop]
-                                      ? _c("span", [
-                                          _vm._v(
-                                            _vm._s(
-                                              item.inProp
-                                                ? scope.row[item.prop][
-                                                    item.inProp
-                                                  ]
-                                                : scope.row[item.prop]
+                                              placement: "right",
+                                              trigger: "hover",
+                                              "popper-class": "picture_detail"
+                                            }
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src: scope.row[item.prop]
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("img", {
+                                              attrs: {
+                                                slot: "reference",
+                                                src: scope.row[item.prop],
+                                                alt: scope.row[item.alt]
+                                              },
+                                              slot: "reference"
+                                            })
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      scope.row[item.prop]
+                                        ? _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                item.inProp
+                                                  ? scope.row[item.prop][
+                                                      item.inProp
+                                                    ]
+                                                  : scope.row[item.prop]
+                                              )
                                             )
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                            ]
+                                          ])
+                                        : _vm._e()
+                                    ])
+                              ]
+                            }
                           }
-                        }
-                      ])
+                        ],
+                        null,
+                        true
+                      )
                     })
                   }),
                   _vm._v(" "),
@@ -2460,157 +2491,163 @@ var render = function() {
                     align: "center",
                     width: item.width
                   },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          item.prop == "newData"
-                            ? _c("span", [
-                                _vm.addStockRIndex == "index" + scope.$index
-                                  ? _c("span", [
-                                      item.type == "number"
-                                        ? _c(
-                                            "span",
-                                            [
-                                              _c("el-input", {
-                                                attrs: {
-                                                  size: "small",
-                                                  type: "number",
-                                                  placeholder: item.holder
-                                                },
-                                                on: { input: _vm.stockChg },
-                                                model: {
-                                                  value:
-                                                    scope.row[item.prop][
-                                                      item.inProp
-                                                    ],
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      scope.row[item.prop],
-                                                      item.inProp,
-                                                      typeof $$v === "string"
-                                                        ? $$v.trim()
-                                                        : $$v
-                                                    )
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.prop == "newData"
+                              ? _c("span", [
+                                  _vm.addStockRIndex == "index" + scope.$index
+                                    ? _c("span", [
+                                        item.type == "number"
+                                          ? _c(
+                                              "span",
+                                              [
+                                                _c("el-input", {
+                                                  attrs: {
+                                                    size: "small",
+                                                    type: "number",
+                                                    placeholder: item.holder
                                                   },
-                                                  expression:
-                                                    "scope.row[item.prop][item.inProp]"
-                                                }
-                                              })
-                                            ],
-                                            1
+                                                  on: { input: _vm.stockChg },
+                                                  model: {
+                                                    value:
+                                                      scope.row[item.prop][
+                                                        item.inProp
+                                                      ],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row[item.prop],
+                                                        item.inProp,
+                                                        typeof $$v === "string"
+                                                          ? $$v.trim()
+                                                          : $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop][item.inProp]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          : _c(
+                                              "span",
+                                              [
+                                                _c("el-input", {
+                                                  attrs: { type: "textarea" },
+                                                  model: {
+                                                    value:
+                                                      scope.row[item.prop][
+                                                        item.inProp
+                                                      ],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row[item.prop],
+                                                        item.inProp,
+                                                        typeof $$v === "string"
+                                                          ? $$v.trim()
+                                                          : $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop][item.inProp]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            scope.row[item.prop][item.inProp]
                                           )
-                                        : _c(
-                                            "span",
-                                            [
-                                              _c("el-input", {
-                                                attrs: { type: "textarea" },
-                                                model: {
-                                                  value:
-                                                    scope.row[item.prop][
-                                                      item.inProp
-                                                    ],
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      scope.row[item.prop],
-                                                      item.inProp,
-                                                      typeof $$v === "string"
-                                                        ? $$v.trim()
-                                                        : $$v
-                                                    )
-                                                  },
-                                                  expression:
-                                                    "scope.row[item.prop][item.inProp]"
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          )
-                                    ])
-                                  : _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          scope.row[item.prop][item.inProp]
                                         )
-                                      )
-                                    ])
-                              ])
-                            : item.prop
-                            ? _c("span", [
-                                item.type == "select"
-                                  ? _c("span", [
-                                      item.inProp
-                                        ? _c(
-                                            "span",
-                                            _vm._l(
-                                              _vm.resData[item.stateVal],
-                                              function(list) {
-                                                return _c(
-                                                  "span",
-                                                  { key: list.id },
-                                                  [
-                                                    list.id ==
-                                                    scope.row[item.prop]
-                                                      ? _c("span", [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              list.name
-                                                                ? list.name
-                                                                : list.title
+                                      ])
+                                ])
+                              : item.prop
+                              ? _c("span", [
+                                  item.type == "select"
+                                    ? _c("span", [
+                                        item.inProp
+                                          ? _c(
+                                              "span",
+                                              _vm._l(
+                                                _vm.resData[item.stateVal],
+                                                function(list) {
+                                                  return _c(
+                                                    "span",
+                                                    { key: list.id },
+                                                    [
+                                                      list.id ==
+                                                      scope.row[item.prop]
+                                                        ? _c("span", [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                list.name
+                                                                  ? list.name
+                                                                  : list.title
+                                                              )
                                                             )
-                                                          )
-                                                        ])
-                                                      : _vm._e()
-                                                  ]
-                                                )
-                                              }
-                                            ),
-                                            0
-                                          )
-                                        : _c(
-                                            "span",
-                                            _vm._l(
-                                              _vm.resData[item.stateVal],
-                                              function(list) {
-                                                return _c(
-                                                  "span",
-                                                  { key: list.id },
-                                                  [
-                                                    list.id ==
-                                                    scope.row[item.prop]
-                                                      ? _c("span", [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              list.name
-                                                                ? list.name
-                                                                : list.title
+                                                          ])
+                                                        : _vm._e()
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          : _c(
+                                              "span",
+                                              _vm._l(
+                                                _vm.resData[item.stateVal],
+                                                function(list) {
+                                                  return _c(
+                                                    "span",
+                                                    { key: list.id },
+                                                    [
+                                                      list.id ==
+                                                      scope.row[item.prop]
+                                                        ? _c("span", [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                list.name
+                                                                  ? list.name
+                                                                  : list.title
+                                                              )
                                                             )
-                                                          )
-                                                        ])
-                                                      : _vm._e()
-                                                  ]
-                                                )
-                                              }
-                                            ),
-                                            0
+                                                          ])
+                                                        : _vm._e()
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                              0
+                                            )
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            item.inProp
+                                              ? scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              : scope.row[item.prop]
                                           )
-                                    ])
-                                  : _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          item.inProp
-                                            ? scope.row[item.prop][item.inProp]
-                                            : scope.row[item.prop]
                                         )
-                                      )
-                                    ])
-                              ])
-                            : _vm._e()
-                        ]
+                                      ])
+                                ])
+                              : _vm._e()
+                          ]
+                        }
                       }
-                    }
-                  ])
+                    ],
+                    null,
+                    true
+                  )
                 })
               }),
               _vm._v(" "),
@@ -2719,7 +2756,7 @@ var render = function() {
                     nativeOn: {
                       keyup: function($event) {
                         if (
-                          "keyCode" in $event &&
+                          !$event.type.indexOf("key") &&
                           _vm._k(
                             $event.keyCode,
                             "enter",
@@ -2792,88 +2829,95 @@ var render = function() {
                   align: "center",
                   width: item.width
                 },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        item.prop == "newData"
-                          ? _c("span", [
-                              _vm.proDtlRIndex == "index" + scope.$index
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-input", {
-                                        attrs: {
-                                          size: "small",
-                                          type: "number",
-                                          placeholder: item.holder
-                                        },
-                                        on: { input: _vm.compValChg },
-                                        model: {
-                                          value:
-                                            scope.row[item.prop][item.inProp],
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              scope.row[item.prop],
-                                              item.inProp,
-                                              typeof $$v === "string"
-                                                ? $$v.trim()
-                                                : $$v
-                                            )
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          item.prop == "newData"
+                            ? _c("span", [
+                                _vm.proDtlRIndex == "index" + scope.$index
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-input", {
+                                          attrs: {
+                                            size: "small",
+                                            type: "number",
+                                            placeholder: item.holder
                                           },
-                                          expression:
-                                            "scope.row[item.prop][item.inProp]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _c("span", [
-                                    _vm._v(
-                                      _vm._s(scope.row[item.prop][item.inProp])
-                                    )
-                                  ])
-                            ])
-                          : item.prop
-                          ? _c("span", [
-                              item.type == "select"
-                                ? _c(
-                                    "span",
-                                    _vm._l(_vm.resData[item.stateVal], function(
-                                      list
-                                    ) {
-                                      return _c("span", { key: list.id }, [
-                                        list.id == scope.row[item.prop]
-                                          ? _c("span", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  list.name
-                                                    ? list.name
-                                                    : list.title
-                                                )
+                                          on: { input: _vm.compValChg },
+                                          model: {
+                                            value:
+                                              scope.row[item.prop][item.inProp],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row[item.prop],
+                                                item.inProp,
+                                                typeof $$v === "string"
+                                                  ? $$v.trim()
+                                                  : $$v
                                               )
-                                            ])
-                                          : _vm._e()
-                                      ])
-                                    }),
-                                    0
-                                  )
-                                : _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        item.inProp
-                                          ? scope.row[item.prop][item.inProp]
-                                          : scope.row[item.prop]
-                                      )
+                                            },
+                                            expression:
+                                              "scope.row[item.prop][item.inProp]"
+                                          }
+                                        })
+                                      ],
+                                      1
                                     )
-                                  ])
-                            ])
-                          : _vm._e()
-                      ]
+                                  : _c("span", [
+                                      _vm._v(
+                                        _vm._s(
+                                          scope.row[item.prop][item.inProp]
+                                        )
+                                      )
+                                    ])
+                              ])
+                            : item.prop
+                            ? _c("span", [
+                                item.type == "select"
+                                  ? _c(
+                                      "span",
+                                      _vm._l(
+                                        _vm.resData[item.stateVal],
+                                        function(list) {
+                                          return _c("span", { key: list.id }, [
+                                            list.id == scope.row[item.prop]
+                                              ? _c("span", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      list.name
+                                                        ? list.name
+                                                        : list.title
+                                                    )
+                                                  )
+                                                ])
+                                              : _vm._e()
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _c("span", [
+                                      _vm._v(
+                                        _vm._s(
+                                          item.inProp
+                                            ? scope.row[item.prop][item.inProp]
+                                            : scope.row[item.prop]
+                                        )
+                                      )
+                                    ])
+                              ])
+                            : _vm._e()
+                        ]
+                      }
                     }
-                  }
-                ])
+                  ],
+                  null,
+                  true
+                )
               })
             }),
             1
@@ -2952,122 +2996,133 @@ var render = function() {
                     align: "center",
                     width: item.width
                   },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          item.prop == "newData"
-                            ? _c("span", [
-                                _vm.updateStockRIndex == "index" + scope.$index
-                                  ? _c("span", [
-                                      item.type == "number"
-                                        ? _c(
-                                            "span",
-                                            [
-                                              _c("el-input", {
-                                                attrs: {
-                                                  size: "small",
-                                                  type: "number",
-                                                  placeholder: item.holder
-                                                },
-                                                on: { input: _vm.stockChg },
-                                                model: {
-                                                  value:
-                                                    scope.row[item.prop][
-                                                      item.inProp
-                                                    ],
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      scope.row[item.prop],
-                                                      item.inProp,
-                                                      typeof $$v === "string"
-                                                        ? $$v.trim()
-                                                        : $$v
-                                                    )
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            item.prop == "newData"
+                              ? _c("span", [
+                                  _vm.updateStockRIndex ==
+                                  "index" + scope.$index
+                                    ? _c("span", [
+                                        item.type == "number"
+                                          ? _c(
+                                              "span",
+                                              [
+                                                _c("el-input", {
+                                                  attrs: {
+                                                    size: "small",
+                                                    type: "number",
+                                                    placeholder: item.holder
                                                   },
-                                                  expression:
-                                                    "scope.row[item.prop][item.inProp]"
-                                                }
-                                              })
-                                            ],
-                                            1
+                                                  on: { input: _vm.stockChg },
+                                                  model: {
+                                                    value:
+                                                      scope.row[item.prop][
+                                                        item.inProp
+                                                      ],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row[item.prop],
+                                                        item.inProp,
+                                                        typeof $$v === "string"
+                                                          ? $$v.trim()
+                                                          : $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop][item.inProp]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          : _c(
+                                              "span",
+                                              [
+                                                _c("el-input", {
+                                                  attrs: { type: "textarea" },
+                                                  model: {
+                                                    value:
+                                                      scope.row[item.prop][
+                                                        item.inProp
+                                                      ],
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        scope.row[item.prop],
+                                                        item.inProp,
+                                                        typeof $$v === "string"
+                                                          ? $$v.trim()
+                                                          : $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "scope.row[item.prop][item.inProp]"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            scope.row[item.prop][item.inProp]
                                           )
-                                        : _c(
-                                            "span",
-                                            [
-                                              _c("el-input", {
-                                                attrs: { type: "textarea" },
-                                                model: {
-                                                  value:
-                                                    scope.row[item.prop][
-                                                      item.inProp
-                                                    ],
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      scope.row[item.prop],
-                                                      item.inProp,
-                                                      typeof $$v === "string"
-                                                        ? $$v.trim()
-                                                        : $$v
-                                                    )
-                                                  },
-                                                  expression:
-                                                    "scope.row[item.prop][item.inProp]"
-                                                }
-                                              })
-                                            ],
-                                            1
+                                        )
+                                      ])
+                                ])
+                              : item.prop
+                              ? _c("span", [
+                                  item.type == "select"
+                                    ? _c(
+                                        "span",
+                                        _vm._l(
+                                          _vm.resData[item.stateVal],
+                                          function(list) {
+                                            return _c(
+                                              "span",
+                                              { key: list.id },
+                                              [
+                                                list.id == scope.row[item.prop]
+                                                  ? _c("span", [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          list.name
+                                                            ? list.name
+                                                            : list.title
+                                                        )
+                                                      )
+                                                    ])
+                                                  : _vm._e()
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                        0
+                                      )
+                                    : _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            item.inProp
+                                              ? scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              : scope.row[item.prop]
                                           )
-                                    ])
-                                  : _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          scope.row[item.prop][item.inProp]
                                         )
-                                      )
-                                    ])
-                              ])
-                            : item.prop
-                            ? _c("span", [
-                                item.type == "select"
-                                  ? _c(
-                                      "span",
-                                      _vm._l(
-                                        _vm.resData[item.stateVal],
-                                        function(list) {
-                                          return _c("span", { key: list.id }, [
-                                            list.id == scope.row[item.prop]
-                                              ? _c("span", [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      list.name
-                                                        ? list.name
-                                                        : list.title
-                                                    )
-                                                  )
-                                                ])
-                                              : _vm._e()
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  : _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          item.inProp
-                                            ? scope.row[item.prop][item.inProp]
-                                            : scope.row[item.prop]
-                                        )
-                                      )
-                                    ])
-                              ])
-                            : _vm._e()
-                        ]
+                                      ])
+                                ])
+                              : _vm._e()
+                          ]
+                        }
                       }
-                    }
-                  ])
+                    ],
+                    null,
+                    true
+                  )
                 })
               }),
               _vm._v(" "),
