@@ -6,7 +6,7 @@ use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\Api\MerchandiserDepartmentRequest;
-use App\Http\Requests\Api\CustomerServiceDepartmentRequset;
+use App\Http\Requests\Api\CustomerServiceDepartmentRequest;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\MergerOrderRequest;
@@ -185,7 +185,7 @@ class MerchandiserDepartmentsController extends Controller
     }
 
     public function update(
-        CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
+        CustomerServiceDepartmentRequest $customerServiceDepartmentRequset,
         PaymentDetailRequest $paymentDetailRequest,
         Order $order,
         \App\Handlers\ValidatedHandler $validatedHandler

@@ -718,7 +718,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //子订单
         $api->delete('orderitems/{orderitem}', 'OrderItemsController@destroy')
             ->name('api.orderitems.destroy');
+
         //订单变更
+        $api->get('changeorders/searchorders', 'CustomerServiceChangeOrdersController@searchOrders')
+            ->name('api.changeorders.searchorders');
         $api->get('changeorders/searchnew', 'CustomerServiceChangeOrdersController@searchNew')
             ->name('api.changeorders.searchnew');
         $api->get('changeorders/searchuntreated', 'CustomerServiceChangeOrdersController@searchUntreated')
@@ -727,6 +730,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.changeorders.searchtreated');
         $api->get('changeorders/searchcanceled', 'CustomerServiceChangeOrdersController@searchCanceled')
             ->name('api.changeorders.searchcanceled');
+
+            
         $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')
             ->name('api.changeorders.isaudit');
         $api->put('changeorders/{order}/unaudit', 'CustomerServiceChangeOrdersController@isUnAudit')

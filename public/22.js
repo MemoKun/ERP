@@ -594,341 +594,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2084,6 +1749,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     confirmAddPur: function confirmAddPur() {
       var _this2 = this;
 
+      var submitData = this.addPurchaseForm;
       this.addPurchaseSkuVal.map(function (item) {
         var sku = {
           combinations_id: item.id,
@@ -2106,9 +1772,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           };
           sku.purchase_details.push(comp);
         });
-        _this2.addPurchaseForm.purchase_lists.push(sku);
+        submitData.purchase_lists.push(sku);
       });
-      this.$post(this.urls.purchases, this.addPurchaseForm).then(function () {
+      this.$post(this.urls.purchases, submitData).then(function () {
         _this2.$message({
           message: "新建采购单成功",
           type: "success"
@@ -3057,7 +2723,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.newOpt[1].nClick = true;
         this.newOpt[3].nClick = true;
         this.newOpt[4].nClick = true;
-      };
+      }
       this.multipleSelection = val;
       var del = [];
       this.multipleSelection.forEach(function (selectedItem) {
@@ -4442,6 +4108,16 @@ var render = function() {
         },
         [
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("基本信息")]),
+          _vm._v(" "),
+          _c("label", [_vm._v(_vm._s(this.addPurchaseSkuVal))]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v("---------------------------")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v(_vm._s(this.addPurchaseForm))]),
           _vm._v(" "),
           _c("add-new", {
             attrs: {

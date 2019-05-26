@@ -1,14 +1,14 @@
 webpackJsonp([39],{
 
-/***/ 490:
+/***/ 486:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(629)
+var __vue_script__ = __webpack_require__(621)
 /* template */
-var __vue_template__ = __webpack_require__(630)
+var __vue_template__ = __webpack_require__(622)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -25,7 +25,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/userAstWarehouse.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/userAstSupplier.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34,9 +34,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6d54c565", Component.options)
+    hotAPI.createRecord("data-v-229f9b9a", Component.options)
   } else {
-    hotAPI.reload("data-v-6d54c565", Component.options)
+    hotAPI.reload("data-v-229f9b9a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 629:
+/***/ 621:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105,9 +105,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         holder: '用户',
         type: 'text'
       }, {
-        label: '仓库',
-        prop: "warehouse",
-        holder: '仓库',
+        label: '供应商',
+        prop: "supplier",
+        holder: '供应商',
         type: 'text'
       }, {
         label: '状态',
@@ -133,8 +133,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         chgAble: true,
         editChgAble: false
       }],
-      url: ['/userastwarehouse', '/stockintypes'],
-      title: ['新增用户关联仓库', '新增入库方式'],
+      url: ['/userastsupplier', '/stockintypes'],
+      title: ['新增用户关联供应商', '新增入库方式'],
       ruleForm: [{
         name: '',
         status: true
@@ -143,7 +143,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status: true
       }],
       rules: [{
-        name: [{ required: true, message: '请输入用户关联仓库', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入用户关联供应商', trigger: 'blur' }]
       }, {
         name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
@@ -153,9 +153,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         holder: '请输入用户',
         type: 'text'
       }, {
-        label: '仓库',
-        prop: 'warehouse',
-        holder: '请输入仓库',
+        label: '供应商',
+        prop: 'supplier',
+        holder: '请输入供应商',
         type: 'text'
       }, {
         label: '状态',
@@ -186,7 +186,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       inputChange: false,
       delArr: [],
       multipleSelection: [],
-      refArr: ['uaw', 'stock']
+      refArr: ['uas', 'stock']
     };
   },
 
@@ -400,7 +400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 630:
+/***/ 622:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -425,7 +425,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "用户关联仓库", name: "0" } },
+            { attrs: { label: "用户关联供应商", name: "0" } },
             [
               _c("light-table", {
                 attrs: {
@@ -521,7 +521,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6d54c565", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-229f9b9a", module.exports)
   }
 }
 

@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\ChangeOrder;
-
+use App\Models\Order;
+use App\Http\Requests\Api\CustomerServiceDepartmentRequest;
 use App\Http\Requests\Api\CustomerServiceChangeOrdersRequest;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
@@ -14,6 +15,7 @@ use App\Http\Requests\Api\EditStatuRequest;
 use App\Http\Requests\Api\DestroyRequest;
 
 use App\Transformers\ChangeOrderTransformer;
+use App\Transformers\OrderTransformer;
 
 use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Controllers\Traits\ProcedureTrait;
@@ -34,35 +36,67 @@ class CustomerServiceChangeOrdersController extends Controller
     const MODEL = ChangeOrder::class;
     const PerPage = 8;
 
+    /************************************中间主要的Table 四个搜索*********************************/
     /**
-     * 获取所有未处理的订单
-     *
-     * @Get("/customerservicedepts/searchuntreated[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
-     * @Versions({"v1"})
-     * */
-    public function searchNew()
+    * 搜索新建订单
+    */
+    public function searchNew(CustomerServiceChangeOrdersRequest $request)
     {
-        $order = ChangeOrder::query()->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_NEW]);
+        $order = ChangeOrder::query()
+        ->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_NEW])
+        ->orderBy('updated_at', 'desc');
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
+    /**
+    * 搜索待处理订单
+    */
+    public function searchUntreated(CustomerServiceChangeOrdersRequest $request)
+    {
+        $order = ChangeOrder::query()
+        ->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_SUBMIT])
+        ->orderBy('updated_at', 'desc');
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+    /**
+    * 搜索已处理订单
+    */
+    public function searchTreated(CustomerServiceChangeOrdersRequest $request)
+    {
+        $order = ChangeOrder::query()
+        ->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_AUDIT])
+        ->orderBy('updated_at', 'desc');
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+    /**
+    * 搜索已作废订单
+    */
+    public function searchCanceled(CustomerServiceChangeOrdersRequest $request)
+    {
+        $order = ChangeOrder::query()
+        ->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_CANCEL])
+        ->orderBy('updated_at', 'desc');
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+    /***************************************选择订单Dialog**************************************/
+   /**
+    * 选择订单·搜索可以进行订单变更的订单列表
+    */
+    public function searchOrders(CustomerServiceDepartmentRequest $request)
+    {
+        $order = Order::query()
+        ->whereIn('order_status',[ORDER::ORDER_STATUS_NEW,ORDER::ORDER_STATUS_LOCK,ORDER::ORDER_STATUS_CS_AUDIT,ORDER::ORDER_STATUS_ONE_AUDIT,ORDER::ORDER_STATUS_CARGO_AUDIT,ORDER::ORDER_STATUS_READY_STOCK_OUT])
+        ->orderBy('updated_at', 'desc');
 
-    public function searchUntreated()
-    {
-        $order = ChangeOrder::query()->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_SUBMIT]);
-        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+        return $this->response->paginator($order->paginate(self::PerPage),new OrderTransformer);
     }
-
-    public function searchTreated()
+   /**
+    * 修改·搜索需要修改的data
+    */
+    public function show(ChangeOrder $order)
     {
-        $order = ChangeOrder::query()->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_AUDIT]);
-        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+         return $this->traitShow($order, self::TRANSFORMER);
     }
-
-    public function searchCanceled()
-    {
-        $order = ChangeOrder::query()->whereIn('change_status',[ChangeOrder::CHANGE_STATUS_CANCEL]);
-        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
-    }
+     
 
 
     public function index(CustomerServiceChangeOrdersRequest $requset)
@@ -209,10 +243,7 @@ class CustomerServiceChangeOrdersController extends Controller
      *      })
      * })
      */
-    public function show(ChangeOrder $order)
-    {
-        return $this->traitShow($order, self::TRANSFORMER);
-    }
+    
 
     /**
      * 修改客服部

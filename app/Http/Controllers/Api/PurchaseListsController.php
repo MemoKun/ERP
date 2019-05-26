@@ -148,7 +148,7 @@ class PurchaseListsController extends Controller
     public function index(PurchaseListRequest $request)
     {
         $commodity_code = '';
-        $is_audit = '1';
+        $is_audit = 'new';
 
         extract($request->validated());
 
@@ -161,7 +161,7 @@ class PurchaseListsController extends Controller
                 });
             })->whereHas('purchase', function($query) use ($is_audit) {
                 $query->when(!is_null($is_audit), function($query) use ($is_audit) {
-                    return $query->where('is_audit', $is_audit);
+                    return $query->where('is_audit','=',$is_audit);
                 });
             });
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
-use App\Http\Requests\Api\CustomerServiceDepartmentRequset;
+use App\Http\Requests\Api\CustomerServiceDepartmentRequest;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\MergerOrderRequest;
@@ -36,7 +36,7 @@ class CustomerServiceDepartmentsController extends Controller
      * @Get("/customerservicedepts/searchuntreated[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
      * */
-    public function searchUntreated(CustomerServiceDepartmentRequset $request)
+    public function searchUntreated(CustomerServiceDepartmentRequest $request)
     {
         $member_nick = $request->input('member_nick');
         $system_order_no = $request->input('system_order_no');
@@ -169,7 +169,7 @@ class CustomerServiceDepartmentsController extends Controller
      *      }
      * })
      */
-    public function searchAudit(CustomerServiceDepartmentRequset $request)
+    public function searchAudit(CustomerServiceDepartmentRequest $request)
     {
         $order_status = $request->input('order_status');
         $order = Order::query()
@@ -179,14 +179,14 @@ class CustomerServiceDepartmentsController extends Controller
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchAll(CustomerServiceDepartmentRequset $request)
+    public function searchAll(CustomerServiceDepartmentRequest $request)
     {
         $order = Order::query()->orderBy('created_at', 'desc');
 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function index(CustomerServiceDepartmentRequset $request)
+    public function index(CustomerServiceDepartmentRequest $request)
     {
         //$order_status = $request->input('order_status');
         //$member_nick = $request->input('member_nick');
@@ -200,23 +200,24 @@ class CustomerServiceDepartmentsController extends Controller
         //$shops_id = $request->input('shops_id');
         //$logistics_id = $request->input('logistics_id');
         //$order = Order::query()->whereIn('order_status', [$order_status])
-        //->where('member_nick', 'like', '%'.$member_nick.'%')
-        //->where('system_order_no', 'like', '%'.$system_order_no.'%')
-        //->where('receiver_name', 'like', '%'.$receiver_name.'%')
-        //->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
-        //->where('receiver_address', 'like', '%'.$receiver_address.'%')
-        //->where('shops_id', 'like', '%'.$shops_id.'%')
-        //->where('logistics_id', 'like', '%'.$logistics_id.'%')
-        //->whereBetween('promise_ship_time', [$promise_ship_time[0], $promise_ship_time[1]])
-        //->whereBetween('created_at', [$created_at[0], $created_at[1]])
-        //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
-        //->orderBy('created_at', 'desc');
+         //->where('member_nick', 'like', '%'.$member_nick.'%')
+         //->where('system_order_no', 'like', '%'.$system_order_no.'%')
+         //->where('receiver_name', 'like', '%'.$receiver_name.'%')
+         //->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+         //->where('receiver_address', 'like', '%'.$receiver_address.'%')
+         //->where('shops_id', 'like', '%'.$shops_id.'%')
+         //->where('logistics_id', 'like', '%'.$logistics_id.'%')
+         //->whereBetween('promise_ship_time', [$promise_ship_time[0], $promise_ship_time[1]])
+         //->whereBetween('created_at', [$created_at[0], $created_at[1]])
+         //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
+         //->orderBy('created_at', 'desc');
+
         //return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
         return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, self::PerPage);
     }
 
     //物流跟单查询
-    public function logisticsQuery(CustomerServiceDepartmentRequset $request)
+    public function logisticsQuery(CustomerServiceDepartmentRequest $request)
     {
         $member_nick = $request->input('member_nick');
         $system_order_no = $request->input('system_order_no');
@@ -235,7 +236,7 @@ class CustomerServiceDepartmentsController extends Controller
     }
 
     //订单中心
-    public function orderCenter(CustomerServiceDepartmentRequset $request)
+    public function orderCenter(CustomerServiceDepartmentRequest $request)
     {
         $member_nick = $request->input('member_nick');
         $system_order_no = $request->input('system_order_no');
@@ -284,7 +285,7 @@ class CustomerServiceDepartmentsController extends Controller
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchOrderSettlement(CustomerServiceDepartmentRequset $request)
+    public function searchOrderSettlement(CustomerServiceDepartmentRequest $request)
     {
         $system_order_no = $request->input('system_order_no');
         $is_logistics_checked = $request->input('is_logistics_checked');
@@ -872,17 +873,17 @@ class CustomerServiceDepartmentsController extends Controller
      * })
      */
     public function store(
-        CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
+        CustomerServiceDepartmentRequest $CustomerServiceDepartmentRequest,
         PaymentDetailRequest $paymentDetailRequest,
         \App\Handlers\ValidatedHandler $validatedHandler
     ) {
-        $data[] = $customerServiceDepartmentRequset->validated();
-        $data[] = $customerServiceDepartmentRequset->input('order_items');
+        $data[] = $CustomerServiceDepartmentRequest->validated();
+        $data[] = $CustomerServiceDepartmentRequest->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'] ?? null;
 
         $id = DB::transaction(function () use (
             $data,
-            $customerServiceDepartmentRequset,
+            $CustomerServiceDepartmentRequest,
             $paymentDetailRequest,
             $validatedHandler
         ) {
@@ -890,7 +891,7 @@ class CustomerServiceDepartmentsController extends Controller
             if ($data[1]) {
                 foreach ($data[1] as $item) {
                     $model->orderItems()->create(
-                        $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item)
+                        $validatedHandler->getValidatedData($CustomerServiceDepartmentRequest->rules(), $item)
                     );
                 }
             }
@@ -1255,7 +1256,7 @@ class CustomerServiceDepartmentsController extends Controller
      * })
      */
     public function update(
-        CustomerServiceDepartmentRequset $customerServiceDepartmentRequset,
+        CustomerServiceDepartmentRequest $CustomerServiceDepartmentRequest,
         PaymentDetailRequest $paymentDetailRequest,
         Order $order,
         \App\Handlers\ValidatedHandler $validatedHandler
@@ -1265,13 +1266,13 @@ class CustomerServiceDepartmentsController extends Controller
             throw new UpdateResourceFailedException('订单未锁定无法修改');
         }
 
-        $data[] = $customerServiceDepartmentRequset->validated();
-        $data[] = $customerServiceDepartmentRequset->input('order_items');
+        $data[] = $CustomerServiceDepartmentRequest->validated();
+        $data[] = $CustomerServiceDepartmentRequest->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'];
 
         $order = DB::transaction(function () use (
             $data,
-            $customerServiceDepartmentRequset,
+            $CustomerServiceDepartmentRequest,
             $paymentDetailRequest,
             $order,
             $validatedHandler
@@ -1281,7 +1282,7 @@ class CustomerServiceDepartmentsController extends Controller
             if ($data[1] ?? null) {
                 foreach ($data[1] as $item) {
                     //计算要通过的字段
-                    $validatedData = $validatedHandler->getValidatedData($customerServiceDepartmentRequset->rules(), $item);
+                    $validatedData = $validatedHandler->getValidatedData($CustomerServiceDepartmentRequest->rules(), $item);
                     //存在id则更新,否则插入
                     if (isset($item['id'])) {
                         $order->orderItems()->findOrFail($item['id'])->update($validatedData);
