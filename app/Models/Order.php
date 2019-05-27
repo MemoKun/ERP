@@ -10,6 +10,7 @@ class Order extends Model
 {
     protected $table = 'orders';
 
+    const ORDER_STATUS_UNAUDIT = 5;
     const ORDER_STATUS_NEW = 10;
     const ORDER_STATUS_LOCK = 20;
     const ORDER_STATUS_CS_AUDIT = 30;
@@ -40,6 +41,7 @@ class Order extends Model
 
     //订单状态
     public static $orderStatusMap = [
+        self::ORDER_STATUS_UNAUDIT => '待审计',
         self::ORDER_STATUS_NEW => '未处理',
         self::ORDER_STATUS_LOCK => '订单锁定',
         self::ORDER_STATUS_CS_AUDIT => '已客审',
@@ -52,6 +54,7 @@ class Order extends Model
 
     //订单操作
     public static $orderOperationMap = [
+        self::ORDER_STATUS_NEW => '待审计',
         self::ORDER_STATUS_NEW => '创建',
         self::ORDER_STATUS_LOCK => '锁定',
         self::ORDER_STATUS_CS_AUDIT => '客审',
@@ -73,6 +76,7 @@ class Order extends Model
 
     //订单操作详情
     public static $orderOperationDescriptionMap = [
+        self::ORDER_STATUS_NEW => '已下载待审计',
         self::ORDER_STATUS_NEW => '创建订单',
         self::ORDER_STATUS_LOCK => '锁定订单',
         self::ORDER_STATUS_CS_AUDIT => '客服审核',
@@ -528,7 +532,7 @@ class Order extends Model
     {
         $this->auditor_id = 0;
         $this->audit_at =null;
-        $this->order_status = xxx;//填入驳回后的订单状态
+        $this->order_status = 5;//填入驳回后的订单状态
         $this->save();
     }
 
@@ -542,7 +546,7 @@ class Order extends Model
     {
         $this->auditor_id = Auth::guard('api')->id();
         $this->audit_at = date('Y-m-d h:i:s');
-        $this->order_status = xxx;//填入审核后的订单状态
+        $this->order_status = 10;//填入审核后的订单状态
         $this->save();
     }
 

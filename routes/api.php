@@ -708,8 +708,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.usgoodsuncheck');
 
         //审计部
-        $api->get('customerservicedepts/searchaudit', 'CustomerServiceDepartmentsController@searchAudit')
-            ->name('api.customerservicedepts.searchaudit');
+        $api->get('customerservicedepts/searchunaudit', 'CustomerServiceDepartmentsController@searchAudit')
+            ->name('api.customerservicedepts.searchunaudit');
         $api->put('customerservicedepts/{order}/auditdeptsrejectaudit', 'CustomerServiceDepartmentsController@isAuditDeptsRejectAudit')
             ->name('api.customerservicedepts.isauditdeptsrejectaudit');
         $api->put('customerservicedepts/{order}/auditdeptsaudit', 'CustomerServiceDepartmentsController@isAuditDeptsAudit')

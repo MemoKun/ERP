@@ -1210,8 +1210,8 @@ export default {
       let index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts + "/searchaudit", {
-            order_status: 40,
+          this.$fetch(this.urls.customerservicedepts, {
+            order_status: 5,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(
@@ -1239,8 +1239,8 @@ export default {
           );
           break;
         case 1:
-          this.$fetch(this.urls.customerservicedepts + "/searchaudit", {
-            order_status: 50,
+          this.$fetch(this.urls.customerservicedepts, {
+            order_status: 10,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(
@@ -1274,18 +1274,14 @@ export default {
     },
     rightHandleClick() {},
     orderListRClick(row) {
-      if (row["order_status"] == "已财审") {
+      if (row["order_status"] == "待审计") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = true;
+      } else if (row["order_status"] == "新建") {
         this.newOpt[0].nClick = true;
         this.newOpt[1].nClick = true;
         this.newOpt[2].nClick = false;
-      } else if (row["order_status"] == "已跟单一审") {
-        this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = true;
-      } else {
-        this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = true;
       }
       this.curRowId = row.id;
       this.curRowData = row;
@@ -1463,19 +1459,22 @@ export default {
     },
     /*退审*/
     handleUnFinancialAudit() {
-      if (this.newOpt[2].nClick) {
+      if (this.newOpt[0].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(
-          this.urls.financialdepts + "/" + id + "/unfinancialaudit"
+          this.urls.customerservicedepts + "/" + id + "/auditdeptsrejectaudit"
         ).then(
           () => {
             this.refresh();
             this.$message({
-              message: "退回财务审核成功",
+              message: "驳回成功",
               type: "success"
             });
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
           },
           err => {
             this.$message.error(err.response.data.message);

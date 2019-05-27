@@ -130,8 +130,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      img_404: __WEBPACK_IMPORTED_MODULE_0__img_404_images_404_png___default.a,
-      img_404_cloud: __WEBPACK_IMPORTED_MODULE_1__img_404_images_404_cloud_png___default.a
+      img_404: __WEBPACK_IMPORTED_MODULE_0__img_404_images_404_png__["default"],
+      img_404_cloud: __WEBPACK_IMPORTED_MODULE_1__img_404_images_404_cloud_png__["default"]
     };
   },
 
@@ -147,14 +147,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ 547:
 /***/ (function(module, exports) {
 
-module.exports = "/images/404.png?fce734c437aa6c2b7986ab399d41affd";
+throw new Error("Module build failed: Error: /Users/xuejunhao/Code/BFERP/node_modules/optipng-bin/vendor/optipng: /Users/xuejunhao/Code/BFERP/node_modules/optipng-bin/vendor/optipng: cannot execute binary file\n\n    at Promise.all.then.arr (/Users/xuejunhao/Code/BFERP/node_modules/execa/index.js:231:11)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:169:7)");
 
 /***/ }),
 
 /***/ 548:
 /***/ (function(module, exports) {
 
-module.exports = "/images/404_cloud.png?d76f30a0b60225f9b8819619ca6ccfab";
+throw new Error("Module build failed: Error: /Users/xuejunhao/Code/BFERP/node_modules/optipng-bin/vendor/optipng: /Users/xuejunhao/Code/BFERP/node_modules/optipng-bin/vendor/optipng: cannot execute binary file\n\n    at Promise.all.then.arr (/Users/xuejunhao/Code/BFERP/node_modules/execa/index.js:231:11)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:169:7)");
 
 /***/ }),
 

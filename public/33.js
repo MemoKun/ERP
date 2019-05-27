@@ -1142,8 +1142,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts + "/searchaudit", {
-            order_status: 40,
+          this.$fetch(this.urls.customerservicedepts, {
+            order_status: 5,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -1167,8 +1167,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 1:
-          this.$fetch(this.urls.customerservicedepts + "/searchaudit", {
-            order_status: 50,
+          this.$fetch(this.urls.customerservicedepts, {
+            order_status: 10,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -1198,18 +1198,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     rightHandleClick: function rightHandleClick() {},
     orderListRClick: function orderListRClick(row) {
-      if (row["order_status"] == "已财审") {
+      if (row["order_status"] == "待审计") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = true;
+      } else if (row["order_status"] == "新建") {
         this.newOpt[0].nClick = true;
         this.newOpt[1].nClick = true;
         this.newOpt[2].nClick = false;
-      } else if (row["order_status"] == "已跟单一审") {
-        this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = true;
-      } else {
-        this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = true;
       }
       this.curRowId = row.id;
       this.curRowData = row;
@@ -1383,16 +1379,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handleUnFinancialAudit: function handleUnFinancialAudit() {
       var _this6 = this;
 
-      if (this.newOpt[2].nClick) {
+      if (this.newOpt[0].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.financialdepts + "/" + id + "/unfinancialaudit").then(function () {
+        this.$put(this.urls.customerservicedepts + "/" + id + "/auditdeptsrejectaudit").then(function () {
           _this6.refresh();
           _this6.$message({
-            message: "退回财务审核成功",
+            message: "驳回成功",
             type: "success"
           });
+          _this6.newOpt[0].nClick = true;
+          _this6.newOpt[1].nClick = true;
+          _this6.newOpt[2].nClick = true;
         }, function (err) {
           _this6.$message.error(err.response.data.message);
         });
