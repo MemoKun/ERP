@@ -274,7 +274,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ 542:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: write EPIPE\n    at exports._errnoException (util.js:1022:11)\n    at WriteWrap.afterWrite [as oncomplete] (net.js:851:14)");
+throw new Error("Module build failed: Error: Command failed: /Users/xuejunhao/Code/BFERP/node_modules/mozjpeg/vendor/cjpeg\n/Users/xuejunhao/Code/BFERP/node_modules/mozjpeg/vendor/cjpeg: /Users/xuejunhao/Code/BFERP/node_modules/mozjpeg/vendor/cjpeg: cannot execute binary file\n\n\n    at Promise.all.then.arr (/Users/xuejunhao/Code/BFERP/node_modules/imagemin-mozjpeg/node_modules/execa/index.js:236:11)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:169:7)");
 
 /***/ }),
 
