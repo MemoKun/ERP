@@ -640,6 +640,114 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1248,6 +1356,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "select",
         stateVal: "paymentmethods"
       }, {
+        label: "到账金额",
+        prop: "arrival_amount",
+        type: "text"
+      }, {
         label: "交易号",
         prop: "taobao_tid",
         type: "text"
@@ -1255,7 +1367,108 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         label: "来源单号",
         prop: "taobao_oid",
         type: "text"
-      }], [], []],
+      }, {
+        label: "系统单号",
+        prop: "system_order_no",
+        type: "text"
+      }], [{
+        label: "内部便签",
+        prop: "inner_note",
+        type: "text"
+      }, {
+        label: "用户",
+        prop: "user",
+        type: "text"
+      }, {
+        label: "内容",
+        prop: "content",
+        type: "text"
+      }, {
+        label: "提出时间",
+        prop: "noted_at",
+        type: "text"
+      }], [{
+        label: "用户",
+        prop: "user",
+        type: "text"
+      }, {
+        label: "操作",
+        prop: "operation",
+        type: "text"
+      }, {
+        label: "操作描述",
+        prop: "operation_description",
+        type: "text"
+      }, {
+        label: "操作时间",
+        prop: "created_at",
+        type: "text"
+      }], [{
+        label: "关联单号",
+        prop: "association_taobao_oid",
+        type: "text"
+      }], [{
+        label: "系统单号",
+        prop: "system_order_no",
+        type: "text"
+      }, {
+        label: "类型名称",
+        prop: "payment_methods_id",
+        type: "select",
+        stateVal: "fee_type"
+      }, {
+        label: "金额",
+        prop: "payment",
+        type: "number"
+      }, {
+        label: "创建人",
+        prop: "creator",
+        type: "text"
+      }, {
+        label: "创建时间",
+        prop: "created_at",
+        type: "text"
+      }, {
+        label: "修改人",
+        prop: "editor",
+        type: "text"
+      }, {
+        label: "修改时间",
+        prop: "edited_at",
+        type: "text"
+      }, {
+        label: "备注",
+        prop: "remark",
+        type: "text"
+      }], [{
+        label: "驳回人",
+        prop: "rejecter",
+        type: "text"
+      }, {
+        label: "驳回时间",
+        prop: "rejected_at",
+        type: "text"
+      }, {
+        label: "驳回原因",
+        prop: "reason",
+        type: "text"
+      }], [{
+        label: "单号",
+        prop: "system_order_no",
+        type: "text"
+      }, {
+        label: "优惠标题",
+        prop: "preferential_title",
+        type: "text"
+      }, {
+        label: "优惠金额",
+        prop: "preferential_cashback",
+        type: "text"
+      }], [{
+        label: "订单图片",
+        prop: "img",
+        type: "img"
+      }]],
       proCompHead: [{
         label: "组合",
         width: "90",
@@ -4111,6 +4324,38 @@ var render = function() {
                                 }
                               }
                             ])
+                          }),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: {
+                              label: "操作",
+                              width: "90",
+                              align: "center"
+                            },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "default",
+                                fn: function(scope) {
+                                  return [
+                                    _c(
+                                      "el-button",
+                                      {
+                                        attrs: { size: "mini", type: "danger" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.delSingle(
+                                              scope.row,
+                                              $event
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("删除")]
+                                    )
+                                  ]
+                                }
+                              }
+                            ])
                           })
                         ],
                         2
@@ -4126,6 +4371,122 @@ var render = function() {
                       _c(
                         "el-table",
                         { attrs: { data: _vm.payDtlData, fit: "" } },
+                        [
+                          _vm._l(
+                            _vm.orderDtlHead[_vm.rightActiveName],
+                            function(item) {
+                              return _c("el-table-column", {
+                                key: item.label,
+                                attrs: {
+                                  label: item.label,
+                                  align: "center",
+                                  width: item.width
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(scope) {
+                                        return [
+                                          item.type == "select"
+                                            ? _c(
+                                                "span",
+                                                _vm._l(
+                                                  _vm.resData[item.stateVal],
+                                                  function(list, index) {
+                                                    return _c(
+                                                      "span",
+                                                      { key: index },
+                                                      [
+                                                        list.id ==
+                                                        scope.row[item.prop]
+                                                          ? _c("span", [
+                                                              _vm._v(
+                                                                "\n                      " +
+                                                                  _vm._s(
+                                                                    list.name
+                                                                      ? list.name
+                                                                      : ""
+                                                                  ) +
+                                                                  "\n                    "
+                                                              )
+                                                            ])
+                                                          : _vm._e()
+                                                      ]
+                                                    )
+                                                  }
+                                                ),
+                                                0
+                                              )
+                                            : _c("span", [
+                                                _vm._v(
+                                                  "\n                  " +
+                                                    _vm._s(
+                                                      item.inProp
+                                                        ? scope.row[item.prop][
+                                                            item.inProp
+                                                          ]
+                                                        : scope.row[item.prop]
+                                                    ) +
+                                                    "\n                "
+                                                )
+                                              ])
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            }
+                          ),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: {
+                              label: "操作",
+                              width: "90",
+                              align: "center"
+                            },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "default",
+                                fn: function(scope) {
+                                  return [
+                                    _c(
+                                      "el-button",
+                                      {
+                                        attrs: { size: "mini", type: "danger" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.delSingle(
+                                              scope.row,
+                                              $event
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("删除")]
+                                    )
+                                  ]
+                                }
+                              }
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-tab-pane",
+                    { attrs: { label: "内部便签", name: "2" } },
+                    [
+                      _c(
+                        "el-table",
+                        { attrs: { data: _vm.orderDtlFormVal, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -4200,27 +4561,491 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c("el-tab-pane", {
-                    attrs: { label: "内部便签", name: "2" }
-                  }),
+                  _c(
+                    "el-tab-pane",
+                    { attrs: { label: "操作记录", name: "3" } },
+                    [
+                      _c(
+                        "el-table",
+                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
+                          item
+                        ) {
+                          return _c("el-table-column", {
+                            key: item.label,
+                            attrs: {
+                              label: item.label,
+                              align: "center",
+                              width: item.width
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      item.type == "select"
+                                        ? _c(
+                                            "span",
+                                            _vm._l(
+                                              _vm.resData[item.stateVal],
+                                              function(list, index) {
+                                                return _c(
+                                                  "span",
+                                                  { key: index },
+                                                  [
+                                                    list.id ==
+                                                    scope.row[item.prop]
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            "\n                      " +
+                                                              _vm._s(
+                                                                list.name
+                                                                  ? list.name
+                                                                  : ""
+                                                              ) +
+                                                              "\n                    "
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        : _c("span", [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ])
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("el-tab-pane", {
-                    attrs: { label: "操作记录", name: "3" }
-                  }),
+                  _c(
+                    "el-tab-pane",
+                    { attrs: { label: "关联信息", name: "4" } },
+                    [
+                      _c(
+                        "el-table",
+                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
+                          item
+                        ) {
+                          return _c("el-table-column", {
+                            key: item.label,
+                            attrs: {
+                              label: item.label,
+                              align: "center",
+                              width: item.width
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      item.type == "select"
+                                        ? _c(
+                                            "span",
+                                            _vm._l(
+                                              _vm.resData[item.stateVal],
+                                              function(list, index) {
+                                                return _c(
+                                                  "span",
+                                                  { key: index },
+                                                  [
+                                                    list.id ==
+                                                    scope.row[item.prop]
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            "\n                      " +
+                                                              _vm._s(
+                                                                list.name
+                                                                  ? list.name
+                                                                  : ""
+                                                              ) +
+                                                              "\n                    "
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        : _c("span", [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ])
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("el-tab-pane", {
-                    attrs: { label: "关联信息", name: "4" }
-                  }),
+                  _c(
+                    "el-tab-pane",
+                    { attrs: { label: "其他费用", name: "5" } },
+                    [
+                      _c(
+                        "el-table",
+                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
+                          item
+                        ) {
+                          return _c("el-table-column", {
+                            key: item.label,
+                            attrs: {
+                              label: item.label,
+                              align: "center",
+                              width: item.width
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      item.type == "select"
+                                        ? _c(
+                                            "span",
+                                            _vm._l(
+                                              _vm.resData[item.stateVal],
+                                              function(list, index) {
+                                                return _c(
+                                                  "span",
+                                                  { key: index },
+                                                  [
+                                                    list.id ==
+                                                    scope.row[item.prop]
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            "\n                      " +
+                                                              _vm._s(
+                                                                list.name
+                                                                  ? list.name
+                                                                  : ""
+                                                              ) +
+                                                              "\n                    "
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        : _c("span", [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ])
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("el-tab-pane", {
-                    attrs: { label: "其他费用", name: "5" }
-                  }),
+                  _c(
+                    "el-tab-pane",
+                    { attrs: { label: "驳回原因", name: "6" } },
+                    [
+                      _c(
+                        "el-table",
+                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
+                          item
+                        ) {
+                          return _c("el-table-column", {
+                            key: item.label,
+                            attrs: {
+                              label: item.label,
+                              align: "center",
+                              width: item.width
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      item.type == "select"
+                                        ? _c(
+                                            "span",
+                                            _vm._l(
+                                              _vm.resData[item.stateVal],
+                                              function(list, index) {
+                                                return _c(
+                                                  "span",
+                                                  { key: index },
+                                                  [
+                                                    list.id ==
+                                                    scope.row[item.prop]
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            "\n                      " +
+                                                              _vm._s(
+                                                                list.name
+                                                                  ? list.name
+                                                                  : ""
+                                                              ) +
+                                                              "\n                    "
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        : _c("span", [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ])
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("el-tab-pane", {
-                    attrs: { label: "驳回原因", name: "6" }
-                  }),
+                  _c(
+                    "el-tab-pane",
+                    { attrs: { label: "优惠列表", name: "7" } },
+                    [
+                      _c(
+                        "el-table",
+                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
+                          item
+                        ) {
+                          return _c("el-table-column", {
+                            key: item.label,
+                            attrs: {
+                              label: item.label,
+                              align: "center",
+                              width: item.width
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      item.type == "select"
+                                        ? _c(
+                                            "span",
+                                            _vm._l(
+                                              _vm.resData[item.stateVal],
+                                              function(list, index) {
+                                                return _c(
+                                                  "span",
+                                                  { key: index },
+                                                  [
+                                                    list.id ==
+                                                    scope.row[item.prop]
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            "\n                      " +
+                                                              _vm._s(
+                                                                list.name
+                                                                  ? list.name
+                                                                  : ""
+                                                              ) +
+                                                              "\n                    "
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        : _c("span", [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ])
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("el-tab-pane", { attrs: { label: "优惠列表", name: "7" } })
+                  _c(
+                    "el-tab-pane",
+                    { attrs: { label: "订单图片", name: "8" } },
+                    [
+                      _c(
+                        "el-table",
+                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
+                          item
+                        ) {
+                          return _c("el-table-column", {
+                            key: item.label,
+                            attrs: {
+                              label: item.label,
+                              align: "center",
+                              width: item.width
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      item.type == "select"
+                                        ? _c(
+                                            "span",
+                                            _vm._l(
+                                              _vm.resData[item.stateVal],
+                                              function(list, index) {
+                                                return _c(
+                                                  "span",
+                                                  { key: index },
+                                                  [
+                                                    list.id ==
+                                                    scope.row[item.prop]
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            "\n                      " +
+                                                              _vm._s(
+                                                                list.name
+                                                                  ? list.name
+                                                                  : ""
+                                                              ) +
+                                                              "\n                    "
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        : _c("span", [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ])
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
               )

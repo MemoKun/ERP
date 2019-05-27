@@ -274,7 +274,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ 542:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: Command failed: /Users/xuejunhao/Code/BFERP/node_modules/mozjpeg/vendor/cjpeg\n/Users/xuejunhao/Code/BFERP/node_modules/mozjpeg/vendor/cjpeg: /Users/xuejunhao/Code/BFERP/node_modules/mozjpeg/vendor/cjpeg: cannot execute binary file\n\n\n    at Promise.all.then.arr (/Users/xuejunhao/Code/BFERP/node_modules/imagemin-mozjpeg/node_modules/execa/index.js:236:11)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:169:7)");
+module.exports = "/images/background.jpg?84aca450bf621072c8036445581a7d8a";
 
 /***/ }),
 

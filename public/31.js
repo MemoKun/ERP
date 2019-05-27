@@ -5244,7 +5244,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.payDtlData, fit: "" } },
+                        { attrs: { data: _vm.orderDtlFormVal, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5325,7 +5325,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.payDtlData, fit: "" } },
+                        { attrs: { data: _vm.curRowData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5406,7 +5406,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.payDtlData, fit: "" } },
+                        { attrs: { data: _vm.curRowData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5487,7 +5487,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.payDtlData, fit: "" } },
+                        { attrs: { data: _vm.curRowData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5568,7 +5568,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.payDtlData, fit: "" } },
+                        { attrs: { data: _vm.curRowData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5649,7 +5649,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.payDtlData, fit: "" } },
+                        { attrs: { data: _vm.curRowData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5730,7 +5730,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.payDtlData, fit: "" } },
+                        { attrs: { data: _vm.curRowData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {

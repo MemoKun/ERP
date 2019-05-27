@@ -341,11 +341,11 @@
                   </el-table>
                 </template>
               </el-table-column>
-              <!--  <el-table-column label="操作" width="90" align="center">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>-->
+              <el-table-column label="操作" width="90" align="center">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="支付明细" name="1">
@@ -364,30 +364,138 @@
                   </span>
                 </template>
               </el-table-column>
-              <!-- <el-table-column label="操作" width="90" align="center">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>-->
+              <el-table-column label="操作" width="90" align="center">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="内部便签" name="2">
-
+            <el-table :data="orderDtlFormVal" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="操作记录" name="3">
-
+            <el-table :data="curRowData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="关联信息" name="4">
-
+            <el-table :data="curRowData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="其他费用" name="5">
-
+            <el-table :data="curRowData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="驳回原因" name="6">
-
+            <el-table :data="curRowData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="优惠列表" name="7">
-
+            <el-table :data="curRowData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="订单图片" name="8">
+            <el-table :data="curRowData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
@@ -1305,6 +1413,11 @@ export default {
             stateVal: "paymentmethods"
           },
           {
+            label: "到账金额",
+            prop: "arrival_amount",
+            type: "text"
+          },
+          {
             label: "交易号",
             prop: "taobao_tid",
             type: "text"
@@ -1313,10 +1426,148 @@ export default {
             label: "来源单号",
             prop: "taobao_oid",
             type: "text"
+          },
+          {
+            label: "系统单号",
+            prop: "system_order_no",
+            type: "text"
           }
         ],
-        [],
-        []
+        [
+          {
+            label: "内部便签",
+            prop: "inner_note",
+            type: "text"
+          },
+          {
+            label: "用户",
+            prop: "user",
+            type: "text"
+          },
+          {
+            label: "内容",
+            prop: "content",
+            type: "text"
+          },
+          {
+            label: "提出时间",
+            prop: "noted_at",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "用户",
+            prop: "user",
+            type: "text"
+          },
+          {
+            label: "操作",
+            prop: "operation",
+            type: "text"
+          },
+          {
+            label: "操作描述",
+            prop: "operation_description",
+            type: "text"
+          },
+          {
+            label: "操作时间",
+            prop: "created_at",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "关联单号",
+            prop: "association_taobao_oid",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "系统单号",
+            prop: "system_order_no",
+            type: "text"
+          },
+          {
+            label: "类型名称",
+            prop: "payment_methods_id",
+            type: "select",
+            stateVal: "fee_type"
+          },
+          {
+            label: "金额",
+            prop: "payment",
+            type: "number"
+          },
+          {
+            label: "创建人",
+            prop: "creator",
+            type: "text"
+          },
+          {
+            label: "创建时间",
+            prop: "created_at",
+            type: "text"
+          },
+          {
+            label: "修改人",
+            prop: "editor",
+            type: "text"
+          },
+          {
+            label: "修改时间",
+            prop: "edited_at",
+            type: "text"
+          },
+          {
+            label: "备注",
+            prop: "remark",
+            type: "text"
+          },
+        ],
+        [
+          {
+            label: "驳回人",
+            prop: "rejecter",
+            type: "text"
+          },
+          {
+            label: "驳回时间",
+            prop: "rejected_at",
+            type: "text"
+          },
+          {
+            label: "驳回原因",
+            prop: "reason",
+            type: "text"
+          },
+        ],
+        [
+          {
+            label: "单号",
+            prop: "system_order_no",
+            type: "text"
+          },
+          {
+            label: "优惠标题",
+            prop: "preferential_title",
+            type: "text"
+          },
+          {
+            label: "优惠金额",
+            prop: "preferential_cashback",
+            type: "text"
+          },
+        ],
+        [
+          {
+            label: "订单图片",
+            prop: "img",
+            type: "img"
+          }
+        ]
       ],
       proCompHead: [
         {
