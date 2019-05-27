@@ -9,6 +9,9 @@ Vue.use(vueResource)
 import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 import 'normalize.css/normalize.css'
 
 import './styles/app.scss'
