@@ -471,7 +471,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "导出",
         icon: "bf-out",
-        ent: this.test
+        ent: this.excelExport
       }, {
         cnt: "停止生产",
         icon: "bf-stop",
@@ -1813,6 +1813,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         include: "productComponents,shop,supplier,goodsCategory,combinations.productComponents"
       }).then(function (res) {
         _this16.logisticsData = res.data;
+      });
+    },
+    excelExport: function excelExport() {
+      var _this17 = this;
+
+      this.$fetch(this.urls.excel).then(function (res) {
+        _this17.$message({
+          message: "打印成功",
+          type: "success"
+        });
       });
     },
 

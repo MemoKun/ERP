@@ -1701,6 +1701,11 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //        $api->patch('roles/{roleid}', 'RolesController@update')
         //            ->name('api.roles.update');
 
+
+        //打印功能
+        $api->get('excel', 'ExcelController@export')
+        ->name('api.excel.export');
+
         $api->get('rolegroup', 'RoleGroupController@index')
             ->name('api.roles.index');
 

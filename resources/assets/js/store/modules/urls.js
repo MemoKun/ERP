@@ -67,6 +67,7 @@ const urls= {
     permissions: '/permissions',
     problemProduct:'problemProduct',
     redpackagemag:'/redpackagemag',
+    excel:'/excel',
 
     me:'/me',
     current:'/current',
