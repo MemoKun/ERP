@@ -43,6 +43,8 @@ class ChangeOrder extends Model
     protected $fillable = [
         'change_order_no',
         'cancel_order_no',
+        'order_items_id',
+        'payment_details_id',
         'is_canceled',
         'ch_applier_id',
         'ch_applied_at',

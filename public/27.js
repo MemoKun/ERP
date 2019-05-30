@@ -1438,6 +1438,107 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         order_items: [],
         payment_details: []
       },
+      updateChangeOrderFormVal: {
+        id: "",
+        change_order_no: "",
+        cancel_order_no: "",
+        is_canceled: false,
+        change_remark: "",
+        change_status: 10,
+        orders_id: 0,
+        //-----变更订单与原始order分界线--------
+        system_order_no: "",
+        shops_id: 0,
+        shops_name: "",
+        logistics_id: 0,
+        logistics_sn: "",
+        billing_way: "",
+        promise_ship_time: null,
+        freight_types_id: 0,
+        expected_freight: 0,
+        actual_freight: 0,
+        logistics_remark: "",
+        is_logistics_checked: false,
+        logistics_check_remark: "",
+        logistics_checked_at: null,
+        distributions_id: 0,
+        distribution_methods_id: 0,
+        deliver_goods_fee: 0,
+        move_upstairs_fee: 0,
+        installation_fee: 0,
+        total_distribution_fee: 0,
+        distribution_phone: "",
+        distribution_no: "",
+        distribution_types_id: 0,
+        is_distribution_checked: false,
+        distribution_check_remark: "",
+        distribution_checked_at: null,
+        service_car_fee: 0,
+        service_car_info: "",
+        take_delivery_goods_fee: 0,
+        take_delivery_goods_ways_id: 0,
+        express_fee: 0,
+        cancel_after_verification_code: "",
+        wooden_frame_costs: 0,
+        preferential_cashback: 0,
+        favorable_cashback: 0,
+        customer_types_id: 0,
+        is_invoice: false,
+        invoice_express_fee: 0,
+        express_invoice_title: "",
+        contract_no: "",
+        payment_methods_id: 0,
+        deposit: 0,
+        document_title: "",
+        warehouses_id: 0,
+        payment_date: null,
+        interest_concessions: 0,
+        is_notice: false,
+        is_cancel_after_verification: false,
+        accept_order_user: "",
+        tax_number: "",
+        receipt: "",
+        buyer_message: "",
+        seller_remark: "",
+        customer_service_remark: "",
+        stockout_remark: "",
+        taobao_oid: 0,
+        taobao_tid: 0,
+        member_nick: "",
+        seller_name: "",
+        seller_flag: "",
+        created: null,
+        est_con_time: null,
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_mobile: "",
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        receiver_address: "",
+        receiver_zip: "",
+        refund_info: "",
+        business_personnel_id: 0,
+        locker_id: 0,
+        locked_at: null,
+        auditor_id: 0,
+        audit_at: null,
+        cs_auditor_id: 0,
+        cs_audited_at: null,
+        fd_auditor_id: 0,
+        fd_audited_at: null,
+        ca_auditor_id: 0,
+        ca_audited_at: null,
+        stockout_op_id: 0,
+        stockout_at: null,
+        association_taobao_oid: 0,
+        is_merge: false,
+        is_split: false,
+        is_association: false,
+        status: true,
+        order_items: [],
+        payment_details: []
+      },
       proDtlHead: [{
         label: "sku名称",
         width: "120",
@@ -2466,7 +2567,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.$fetch(this.urls.changeorders + "/" + id, {
           include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
         }).then(function (res) {
-          _this5.addChangeOrderFormVal = res;
+          _this5.updateChangeOrderFormVal = res;
           if (res["orderItems"]["data"].length > 0) {
             res["orderItems"]["data"].map(function (item) {
               _this5.addChangeOrderProIds.push(item["combination"].id);
@@ -2502,6 +2603,213 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     },
+    updateChangeOrdersConfirm: function updateChangeOrdersConfirm() {
+      var _this6 = this;
+
+      var forData = this.updateChangeOrderFormVal;
+      var submitData = {
+        shops_id: forData.shops_id,
+        member_nick: forData.member_nick,
+        logistics_id: forData.logistics_id,
+        billing_way: forData.billing_way,
+        promise_ship_time: forData.promise_ship_time,
+        freight_types_id: forData.freight_types_id,
+        expected_freight: forData.expected_freight,
+        distributions_id: forData.distributions_id,
+        distribution_methods_id: forData.distribution_methods_id,
+        deliver_goods_fee: forData.deliver_goods_fee,
+        move_upstairs_fee: forData.move_upstairs_fee,
+        installation_fee: forData.installation_fee,
+        total_distribution_fee: forData.total_distribution_fee,
+        distribution_phone: forData.distribution_phone,
+        distribution_no: forData.distribution_no,
+        distribution_types_id: forData.distribution_types_id,
+        service_car_info: forData.service_car_info,
+        take_delivery_goods_fee: forData.take_delivery_goods_fee,
+        take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
+        express_fee: forData.express_fee,
+        service_car_fee: forData.service_car_fee,
+        cancel_after_verification_code: forData.cancel_after_verification_code,
+        wooden_frame_costs: forData.wooden_frame_costs,
+        preferential_cashback: forData.preferential_cashback,
+        favorable_cashback: forData.favorable_cashback,
+        customer_types_id: forData.customer_types_id,
+        is_invoice: forData.is_invoice,
+        invoice_express_fee: forData.invoice_express_fee,
+        express_invoice_title: forData.express_invoice_title,
+        contract_no: forData.contract_no,
+        payment_methods_id: forData.payment_methods_id,
+        deposit: forData.deposit,
+        document_title: forData.document_title,
+        warehouses_id: forData.warehouses_id,
+        payment_date: forData.payment_date,
+        interest_concessions: forData.interest_concessions,
+        is_notice: forData.is_notice,
+        is_cancel_after_verification: forData.is_cancel_after_verification,
+        accept_order_user: forData.accept_order_user,
+        tax_number: forData.tax_number,
+        receipt: forData.receipt,
+        logistics_remark: forData.logistics_remark,
+        seller_remark: forData.seller_remark,
+        customer_service_remark: forData.customer_service_remark,
+        buyer_message: forData.buyer_message,
+        status: forData.status,
+        receiver_name: forData.receiver_name,
+        receiver_phone: forData.receiver_phone,
+        receiver_mobile: forData.receiver_mobile,
+        receiver_state: forData.receiver_state,
+        receiver_city: forData.receiver_city,
+        receiver_district: forData.receiver_district,
+        receiver_address: forData.receiver_address,
+        receiver_zip: forData.receiver_zip,
+        order_items: [],
+        payment_details: []
+      };
+      this.proData.map(function (item) {
+        var proD = {
+          id: item.id,
+          products_id: item.products_id,
+          combinations_id: item.combinations_id,
+          quantity: item["newData"].quantity,
+          total_volume: item["newData"].total_volume,
+          paint: item["newData"].paint,
+          is_printing: item["newData"].is_printing,
+          printing_fee: item["newData"].printing_fee,
+          is_spot_goods: item["newData"].is_spot_goods,
+          under_line_univalent: item["newData"].under_line_univalent,
+          under_line_total_amount: item["newData"].under_line_total_amount,
+          under_line_preferential: item["newData"].under_line_preferential
+        };
+        submitData.order_items.push(proD);
+      });
+      this.expenseData.map(function (list) {
+        var expenseD = {
+          payment: list.payment,
+          payment_methods_id: list.payment_methods_id
+        };
+        submitData.payment_details.push(expenseD);
+      });
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$patch(this.urls.changeorders + "/" + id, submitData).then(function () {
+        _this6.updateOrderChangesMask = false;
+        _this6.refresh();
+        _this6.$message({
+          message: "更新成功",
+          type: "success"
+        });
+        _this6.updateChangeOrderFormVal = {
+          change_order_no: "",
+          cancel_order_no: "",
+          is_canceled: false,
+          change_remark: "",
+          change_status: 10,
+          orders_id: 0,
+          //-----变更订单与原始order分界线--------
+          system_order_no: "",
+          shops_id: 0,
+          shops_name: "",
+          logistics_id: 0,
+          logistics_sn: "",
+          billing_way: "",
+          promise_ship_time: null,
+          freight_types_id: 0,
+          expected_freight: 0,
+          actual_freight: 0,
+          logistics_remark: "",
+          is_logistics_checked: false,
+          logistics_check_remark: "",
+          logistics_checked_at: null,
+          distributions_id: 0,
+          distribution_methods_id: 0,
+          deliver_goods_fee: 0,
+          move_upstairs_fee: 0,
+          installation_fee: 0,
+          total_distribution_fee: 0,
+          distribution_phone: "",
+          distribution_no: "",
+          distribution_types_id: 0,
+          is_distribution_checked: false,
+          distribution_check_remark: "",
+          distribution_checked_at: null,
+          service_car_fee: 0,
+          service_car_info: "",
+          take_delivery_goods_fee: 0,
+          take_delivery_goods_ways_id: 0,
+          express_fee: 0,
+          cancel_after_verification_code: "",
+          wooden_frame_costs: 0,
+          preferential_cashback: 0,
+          favorable_cashback: 0,
+          customer_types_id: 0,
+          is_invoice: false,
+          invoice_express_fee: 0,
+          express_invoice_title: "",
+          contract_no: "",
+          payment_methods_id: 0,
+          deposit: 0,
+          document_title: "",
+          warehouses_id: 0,
+          payment_date: null,
+          interest_concessions: 0,
+          is_notice: false,
+          is_cancel_after_verification: false,
+          accept_order_user: "",
+          tax_number: "",
+          receipt: "",
+          buyer_message: "",
+          seller_remark: "",
+          customer_service_remark: "",
+          stockout_remark: "",
+          taobao_oid: 0,
+          taobao_tid: 0,
+          member_nick: "",
+          seller_name: "",
+          seller_flag: "",
+          created: null,
+          est_con_time: null,
+          receiver_name: "",
+          receiver_phone: "",
+          receiver_mobile: "",
+          receiver_state: "",
+          receiver_city: "",
+          receiver_district: "",
+          receiver_address: "",
+          receiver_zip: "",
+          refund_info: "",
+          business_personnel_id: 0,
+          locker_id: 0,
+          locked_at: null,
+          auditor_id: 0,
+          audit_at: null,
+          cs_auditor_id: 0,
+          cs_audited_at: null,
+          fd_auditor_id: 0,
+          fd_audited_at: null,
+          ca_auditor_id: 0,
+          ca_audited_at: null,
+          stockout_op_id: 0,
+          stockout_at: null,
+          association_taobao_oid: 0,
+          is_merge: false,
+          is_split: false,
+          is_association: false,
+          status: true,
+          order_items: [],
+          payment_details: []
+        };
+      }, function (err) {
+        if (err.response) {
+          _this6.showDel = false;
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this6.$message.error(str);
+        }
+      });
+    },
 
 
     /**
@@ -2509,7 +2817,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * 
      **/
     handleSubmit: function handleSubmit() {
-      var _this6 = this;
+      var _this7 = this;
 
       console.log("handleSubmit");
       if (this.newOpt[3].nClick) {
@@ -2517,8 +2825,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "submit").then(function () {
-          _this6.refresh();
-          _this6.$message({
+          _this7.refresh();
+          _this7.$message({
             message: "审核成功",
             type: "success"
           });
@@ -2530,7 +2838,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this6.$message.error(str);
+            _this7.$message.error(str);
           }
         });
       }
@@ -2542,7 +2850,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * 
      **/
     handleAudit: function handleAudit() {
-      var _this7 = this;
+      var _this8 = this;
 
       console.log("handleAudit");
       if (this.newOpt[4].nClick) {
@@ -2554,24 +2862,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }).then(function (res) {
           /*请求选中的数据并拼接用于patch Order的submit*/
           //this.submitData = res;
-          _this7.submitData = res;
-          var forData = _this7.submitData;
-          _this7.submitData = {
-            orders_id: forData.orders_id,
-            system_order_no: forData.system_order_no,
+          _this8.submitData = res;
+          var patchId = res.orders_id;
+          var patchItemId = res.order_items_id;
+          var paymentDtlId = res.payment_details_id;
+          var forData = _this8.submitData;
+          var patchData = {
             shops_id: forData.shops_id,
-            shops_name: forData.shops_name,
+            member_nick: forData.member_nick,
             logistics_id: forData.logistics_id,
-            logistics_sn: forData.logistics_sn,
             billing_way: forData.billing_way,
             promise_ship_time: forData.promise_ship_time,
             freight_types_id: forData.freight_types_id,
             expected_freight: forData.expected_freight,
-            actual_freight: forData.actual_freight,
-            logistics_remark: forData.logistics_remark,
-            is_logistics_checked: forData.is_logistics_checked,
-            logistics_check_remark: forData.logistics_check_remark,
-            logistics_checked_at: forData.logistics_checked_at,
             distributions_id: forData.distributions_id,
             distribution_methods_id: forData.distribution_methods_id,
             deliver_goods_fee: forData.deliver_goods_fee,
@@ -2581,14 +2884,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             distribution_phone: forData.distribution_phone,
             distribution_no: forData.distribution_no,
             distribution_types_id: forData.distribution_types_id,
-            is_distribution_checked: forData.is_distribution_checked,
-            distribution_check_remark: forData.distribution_check_remark,
-            distribution_checked_at: forData.distribution_checked_at,
-            service_car_fee: forData.service_car_fee,
             service_car_info: forData.service_car_info,
             take_delivery_goods_fee: forData.take_delivery_goods_fee,
             take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
             express_fee: forData.express_fee,
+            service_car_fee: forData.service_car_fee,
             cancel_after_verification_code: forData.cancel_after_verification_code,
             wooden_frame_costs: forData.wooden_frame_costs,
             preferential_cashback: forData.preferential_cashback,
@@ -2603,23 +2903,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             document_title: forData.document_title,
             warehouses_id: forData.warehouses_id,
             payment_date: forData.payment_date,
-            interest_concessions: forData.shops_id,
+            interest_concessions: forData.interest_concessions,
             is_notice: forData.is_notice,
             is_cancel_after_verification: forData.is_cancel_after_verification,
             accept_order_user: forData.accept_order_user,
             tax_number: forData.tax_number,
             receipt: forData.receipt,
-            buyer_message: forData.buyer_message,
+            logistics_remark: forData.logistics_remark,
             seller_remark: forData.seller_remark,
             customer_service_remark: forData.customer_service_remark,
-            stockout_remark: forData.stockout_remark,
-            taobao_oid: forData.taobao_oid,
-            taobao_tid: forData.taobao_tid,
-            member_nick: forData.member_nick,
-            seller_name: forData.seller_name,
-            seller_flag: forData.seller_flag,
-            created: forData.created,
-            est_con_time: forData.est_con_time,
+            buyer_message: forData.buyer_message,
+            status: forData.status,
             receiver_name: forData.receiver_name,
             receiver_phone: forData.receiver_phone,
             receiver_mobile: forData.receiver_mobile,
@@ -2628,38 +2922,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             receiver_district: forData.receiver_district,
             receiver_address: forData.receiver_address,
             receiver_zip: forData.receiver_zip,
-            refund_info: forData.refund_info,
-            business_personnel_id: forData.business_personnel_id,
-            locker_id: forData.locker_id,
-            locked_at: forData.locked_at,
-            auditor_id: forData.auditor_id,
-            audit_at: forData.audit_at,
-            cs_auditor_id: forData.cs_auditor_id,
-            cs_audited_at: forData.cs_audited_at,
-            fd_auditor_id: forData.fd_auditor_id,
-            fd_audited_at: forData.fd_audited_at,
-            ca_auditor_id: forData.ca_auditor_id,
-            ca_audited_at: forData.ca_audited_at,
-            stockout_op_id: forData.stockout_op_id,
-            stockout_at: forData.stockout_at,
-            association_taobao_oid: forData.association_taobao_oid,
-            is_merge: forData.is_merge,
-            is_split: forData.is_split,
-            is_association: forData.is_association,
-            status: forData.status,
             order_items: [],
             payment_details: []
           };
           /** 对orderItems进行处理*/
           if (res["orderItems"]["data"].length > 0) {
             res["orderItems"]["data"].map(function (item) {
-              _this7.addChangeOrderProIds.push(item["combination"].id);
+              _this8.addChangeOrderProIds.push(item["combination"].id);
               item["name"] = item["combination"]["name"];
-              item["id"] = item.id;
+              item["id"] = patchItemId; //这里赋值的是change_orders的itemid，应该赋值为order的item id
               item["products_id"] = item.products_id;
               item["combinations_id"] = item.combinations_id;
               item["productComp"] = item["combination"]["productComponents"]["data"];
-              _this7.$set(item, "newData", {
+              _this8.$set(item, "newData", {
                 quantity: item.quantity,
                 paint: item.paint,
                 is_printing: item.is_printing,
@@ -2671,10 +2946,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
             });
           }
-          _this7.proData = res["orderItems"]["data"];
-          _this7.expenseData = res["paymentDetails"]["data"];
+          _this8.proData = res["orderItems"]["data"];
+          _this8.expenseData = res["paymentDetails"]["data"];
           /**将proData数据加入到submitData里 */
-          _this7.proData.map(function (item) {
+          _this8.proData.map(function (item) {
             var proD = {
               id: item.id,
               products_id: item.products_id,
@@ -2689,33 +2964,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               under_line_total_amount: item["newData"].under_line_total_amount,
               under_line_preferential: item["newData"].under_line_preferential
             };
-            _this7.submitData.order_items.push(proD);
+            patchData.order_items.push(proD);
           });
           /**将expenseData加入到submitData里*/
-          _this7.expenseData.map(function (list) {
+          _this8.expenseData.map(function (list) {
             if (list.id) {
               var expenseD = {
-                id: list.id,
+                id: paymentDtlId,
                 payment: list.payment,
                 payment_methods_id: list.payment_methods_id
               };
-              _this7.submitData.payment_details.push(expenseD);
+              patchData.payment_details.push(expenseD);
             } else {
               var _expenseD = {
                 payment: list.payment,
                 payment_methods_id: list.payment_methods_id
               };
-              _this7.submitData.payment_details.push(_expenseD);
+              patchData.payment_details.push(_expenseD);
             }
           });
-
-          _this7.$patch(_this7.urls.customerservicedepts + "/" + _this7.submitData.orders_id, _this7.submitData).then(function () {
-            _this7.$put(_this7.urls.changeorders + "/" + id + "/auditchanges").then(function () {
-              _this7.$message({
+          var id = _this8.checkboxId ? _this8.checkboxId : _this8.curRowId;
+          _this8.$patch(_this8.urls.customerservicedepts + "/" + patchId, patchData).then(function () {
+            _this8.$put(_this8.urls.changeorders + "/" + id + "/auditchanges").then(function () {
+              _this8.$message({
                 message: "审核成功",
                 type: "success"
               });
-              _this7.refresh();
+              _this8.refresh();
             }, function (err) {
               if (err.response) {
                 var arr = err.response.data.errors;
@@ -2724,7 +2999,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   arr1.push(arr[i]);
                 }
                 var str = arr1.join(",");
-                _this7.$message.error(str);
+                _this8.$message.error(str);
               }
             });
           }, function (err) {
@@ -2735,7 +3010,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 arr1.push(arr[i]);
               }
               var str = arr1.join(",");
-              _this7.$message.error(str);
+              _this8.$message.error(str);
             }
           });
         }, function (err) {
@@ -2745,7 +3020,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             for (var i in arr) {
               arr1.push(arr[i]);
             }
-            _this7.$message.error(arr1.join(","));
+            _this8.$message.error(arr1.join(","));
           }
         });
       }
@@ -2754,48 +3029,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log(1);
     },
     confirmAddProDtl: function confirmAddProDtl() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (this.addOrderChangesMask) {
         this.proSubmitData.map(function (item) {
-          if (_this8.addIds.indexOf(item.id) == -1) {
-            _this8.proData.push(item);
-            _this8.addIds.push(item.id);
-            _this8.$message({
+          if (_this9.addIds.indexOf(item.id) == -1) {
+            _this9.proData.push(item);
+            _this9.addIds.push(item.id);
+            _this9.$message({
               message: "添加商品信息成功",
               type: "success"
             });
-            _this8.proMask = false;
+            _this9.proMask = false;
           } else {
-            _this8.proData.map(function (list, index) {
+            _this9.proData.map(function (list, index) {
               if (list.id == item.id) {
-                _this8.proData.splice(index, 1);
-                _this8.proData.push(item);
-                _this8.$message({
+                _this9.proData.splice(index, 1);
+                _this9.proData.push(item);
+                _this9.$message({
                   message: "添加商品信息成功",
                   type: "success"
                 });
-                _this8.proMask = false;
+                _this9.proMask = false;
               }
             });
           }
         });
       } else {
         this.proSubmitData.map(function (item) {
-          if (_this8.updateProIds.indexOf(item.id) == -1) {
-            _this8.updateProData.push(item);
-            _this8.updateProIds.push(item.id);
-            _this8.$message({
+          if (_this9.updateProIds.indexOf(item.id) == -1) {
+            _this9.updateProData.push(item);
+            _this9.updateProIds.push(item.id);
+            _this9.$message({
               message: "添加商品信息成功",
               type: "success"
             });
           } else {
-            _this8.updateProData.map(function (list, index) {
+            _this9.updateProData.map(function (list, index) {
               if (list.combinations_id == item.id) {
-                _this8.$set(item, "originalId", list.id);
-                _this8.updateProData.splice(index, 1);
-                _this8.updateProData.push(item);
-                _this8.$message({
+                _this9.$set(item, "originalId", list.id);
+                _this9.updateProData.splice(index, 1);
+                _this9.updateProData.push(item);
+                _this9.$message({
                   message: "添加商品信息成功",
                   type: "success"
                 });
@@ -2831,7 +3106,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       row.index = rowIndex;
     },
     quantityChg: function quantityChg(value) {
-      var _this9 = this;
+      var _this10 = this;
 
       if (value > 0) {
         var proCRow = this.proCompRow;
@@ -2841,8 +3116,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           this.proSubmitData.map(function (list, index) {
             if (list.id == proCRow.id) {
-              _this9.proSubmitData.splice(index, 1);
-              _this9.proSubmitData.push(proCRow);
+              _this10.proSubmitData.splice(index, 1);
+              _this10.proSubmitData.push(proCRow);
             }
           });
         }
@@ -2884,7 +3159,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     proRowClick: function proRowClick(row) {
-      var _this10 = this;
+      var _this11 = this;
 
       this.proSkuVal = [];
       this.proCompRowIndex = "";
@@ -2900,7 +3175,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           } else {
             total_volume = 0;
           }
-          _this10.$set(item, "newData", {
+          _this11.$set(item, "newData", {
             quantity: "",
             paint: "",
             is_printing: false,
@@ -2932,7 +3207,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), _defineProperty(_methods, "cancelAddProDtl", function cancelAddProDtl() {
     this.proMask = false;
   }), _defineProperty(_methods, "proQueryClick", function proQueryClick() {
-    var _this11 = this;
+    var _this12 = this;
 
     this.proSkuVal = [];
     this.$fetch(this.urls.products, {
@@ -2943,7 +3218,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       short_name: this.proQuery.short_name,
       include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
     }).then(function (res) {
-      _this11.proVal = res.data;
+      _this12.proVal = res.data;
       var comb = res.data[0]["combinations"]["data"];
       if (comb.length > 0) {
         var total_volume = 0;
@@ -2956,7 +3231,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           } else {
             total_volume = 0;
           }
-          _this11.$set(item, "newData", {
+          _this12.$set(item, "newData", {
             quantity: "",
             paint: "",
             is_printing: false,
@@ -2970,27 +3245,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         comb["productComp"] = [];
       }
-      _this11.proSkuVal = comb;
+      _this12.proSkuVal = comb;
     }, function (err) {});
   }), _defineProperty(_methods, "handlePagChg", function handlePagChg(page) {
-    var _this12 = this;
+    var _this13 = this;
 
     this.$fetch(this.urls.changeorders + "?page=" + page, {
-      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
     }).then(function (res) {
-      var index = _this12.middleActiveName - 0;
+      var index = _this13.middleActiveName - 0;
       switch (index) {
         case 0:
-          _this12.newOrderListData = res.data;
+          _this13.newOrderListData = res.data;
           break;
         case 1:
-          _this12.untreatedOrderListData = res.data;
+          _this13.untreatedOrderListData = res.data;
           break;
         case 2:
-          _this12.treatedOrderListData = res.data;
+          _this13.treatedOrderListData = res.data;
           break;
         case 3:
-          _this12.canceledOrderListData = rew.data;
+          _this13.canceledOrderListData = rew.data;
           break;
       }
     });
@@ -3061,7 +3336,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), _defineProperty(_methods, "deleteChanges", function deleteChanges() {
     console.log("deleteChanges");
   }), _defineProperty(_methods, "submitChanges", function submitChanges() {
-    var _this13 = this;
+    var _this14 = this;
 
     if (this.newOpt[3].nClick) {
       return;
@@ -3069,34 +3344,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$put(this.urls.changeorders + "/" + id + "/submit").then(function () {
         // this.newOpt[1].nClick = true;
-        _this13.refresh();
-        _this13.$message({
-          message: "提交成功",
-          type: "success"
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(",");
-          _this13.$message.error(str);
-        }
-      });
-    }
-  }), _defineProperty(_methods, "handleUnAudit", function handleUnAudit() {
-    var _this14 = this;
-
-    if (this.newOpt[6].nClick) {
-      return;
-    } else {
-      var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.changeorders + "/" + id + "/unaudit").then(function () {
         _this14.refresh();
         _this14.$message({
-          message: "退回提交成功",
+          message: "提交成功",
           type: "success"
         });
       }, function (err) {
@@ -3111,6 +3361,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
+  }), _defineProperty(_methods, "handleUnAudit", function handleUnAudit() {
+    var _this15 = this;
+
+    if (this.newOpt[6].nClick) {
+      return;
+    } else {
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$put(this.urls.changeorders + "/" + id + "/unaudit").then(function () {
+        _this15.refresh();
+        _this15.$message({
+          message: "退回提交成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this15.$message.error(str);
+        }
+      });
+    }
   }), _defineProperty(_methods, "addProDtl", function addProDtl() {
     this.proMask = true;
     Object.assign(this.proQuery, this.$options.data().proQuery);
@@ -3122,13 +3397,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     if (this.addOrderChangesMask) {
       formVal = this.addChangeOrderFormVal;
     } else {
-      formVal = this.addChangeOrderFormVal;
+      formVal = this.updateChangeOrderFormVal;
     }
     formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
     if (this.addOrderChangesMask) {
       this.addChangeOrderFormVal.total_distribution_fee = formVal["total_distribution_fee"];
     } else {
-      this.addChangeOrderFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      this.updateChangeOrderFormVal.total_distribution_fee = formVal["total_distribution_fee"];
     }
   }), _defineProperty(_methods, "addChangeOrderCancel", function addChangeOrderCancel() {
     this.addOrderChangesMask = false;
@@ -3148,153 +3423,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
     this.curRowData = val.length > 0 ? val[val.length - 1] : "";
     this.mergerIds = val;
-  }), _defineProperty(_methods, "updateChangeOrdersConfirm", function updateChangeOrdersConfirm() {
-    var _this15 = this;
-
-    var tempData = this.addChangeOrderFormVal;
-    this.proData.map(function (item) {
-      var proD = {
-        id: item.id,
-        products_id: item.products_id,
-        combinations_id: item.combinations_id,
-        quantity: item["newData"].quantity,
-        total_volume: item["newData"].total_volume,
-        paint: item["newData"].paint,
-        is_printing: item["newData"].is_printing,
-        printing_fee: item["newData"].printing_fee,
-        is_spot_goods: item["newData"].is_spot_goods,
-        under_line_univalent: item["newData"].under_line_univalent,
-        under_line_total_amount: item["newData"].under_line_total_amount,
-        under_line_preferential: item["newData"].under_line_preferential
-      };
-      _this15.addChangeOrderFormVal.order_items.push(proD);
-    });
-    this.expenseData.map(function (list) {
-      var expenseD = {
-        payment: list.payment,
-        payment_methods_id: list.payment_methods_id
-      };
-      _this15.addChangeOrderFormVal.payment_details.push(expenseD);
-    });
-    this.$patch(this.urls.changeorders, this.addChangeOrderFormVal).then(function () {
-      _this15.addOrderChangesMask = false;
-      _this15.refresh();
-      _this15.$message({
-        message: "添加成功",
-        type: "success"
-      });
-      _this15.addChangeOrderFormVal = {
-        change_order_no: "",
-        cancel_order_no: "",
-        is_canceled: false,
-        change_remark: "",
-        change_status: 10,
-        orders_id: 0,
-        //-----变更订单与原始order分界线--------
-        system_order_no: "",
-        shops_id: 0,
-        shops_name: "",
-        logistics_id: 0,
-        logistics_sn: "",
-        billing_way: "",
-        promise_ship_time: null,
-        freight_types_id: 0,
-        expected_freight: 0,
-        actual_freight: 0,
-        logistics_remark: "",
-        is_logistics_checked: false,
-        logistics_check_remark: "",
-        logistics_checked_at: null,
-        distributions_id: 0,
-        distribution_methods_id: 0,
-        deliver_goods_fee: 0,
-        move_upstairs_fee: 0,
-        installation_fee: 0,
-        total_distribution_fee: 0,
-        distribution_phone: "",
-        distribution_no: "",
-        distribution_types_id: 0,
-        is_distribution_checked: false,
-        distribution_check_remark: "",
-        distribution_checked_at: null,
-        service_car_fee: 0,
-        service_car_info: "",
-        take_delivery_goods_fee: 0,
-        take_delivery_goods_ways_id: 0,
-        express_fee: 0,
-        cancel_after_verification_code: "",
-        wooden_frame_costs: 0,
-        preferential_cashback: 0,
-        favorable_cashback: 0,
-        customer_types_id: 0,
-        is_invoice: false,
-        invoice_express_fee: 0,
-        express_invoice_title: "",
-        contract_no: "",
-        payment_methods_id: 0,
-        deposit: 0,
-        document_title: "",
-        warehouses_id: 0,
-        payment_date: null,
-        interest_concessions: 0,
-        is_notice: false,
-        is_cancel_after_verification: false,
-        accept_order_user: "",
-        tax_number: "",
-        receipt: "",
-        buyer_message: "",
-        seller_remark: "",
-        customer_service_remark: "",
-        stockout_remark: "",
-        taobao_oid: 0,
-        taobao_tid: 0,
-        member_nick: "",
-        seller_name: "",
-        seller_flag: "",
-        created: null,
-        est_con_time: null,
-        receiver_name: "",
-        receiver_phone: "",
-        receiver_mobile: "",
-        receiver_state: "",
-        receiver_city: "",
-        receiver_district: "",
-        receiver_address: "",
-        receiver_zip: "",
-        refund_info: "",
-        business_personnel_id: 0,
-        locker_id: 0,
-        locked_at: null,
-        auditor_id: 0,
-        audit_at: null,
-        cs_auditor_id: 0,
-        cs_audited_at: null,
-        fd_auditor_id: 0,
-        fd_audited_at: null,
-        ca_auditor_id: 0,
-        ca_audited_at: null,
-        stockout_op_id: 0,
-        stockout_at: null,
-        association_taobao_oid: 0,
-        is_merge: false,
-        is_split: false,
-        is_association: false,
-        status: true,
-        order_items: [],
-        payment_details: []
-      };
-    }, function (err) {
-      if (err.response) {
-        _this15.showDel = false;
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
-        }
-        var str = arr1.join(",");
-        _this15.$message.error(str);
-      }
-    });
   }), _defineProperty(_methods, "chooseOrderCancel", function chooseOrderCancel() {
     this.chooseOrderMask = false;
     this.$message({
@@ -6676,7 +6804,7 @@ var render = function() {
             {
               staticClass: "addChangeOrderForm",
               attrs: {
-                model: _vm.addChangeOrderFormVal,
+                model: _vm.updateChangeOrderFormVal,
                 rules: _vm.addChangeOrderFormRules,
                 id: "form"
               }
@@ -6699,12 +6827,12 @@ var render = function() {
                                   },
                                   model: {
                                     value:
-                                      _vm.addChangeOrderFormVal[item.prop][
+                                      _vm.updateChangeOrderFormVal[item.prop][
                                         item.inProp
                                       ],
                                     callback: function($$v) {
                                       _vm.$set(
-                                        _vm.addChangeOrderFormVal[item.prop],
+                                        _vm.updateChangeOrderFormVal[item.prop],
                                         item.inProp,
                                         typeof $$v === "string"
                                           ? $$v.trim()
@@ -6712,7 +6840,7 @@ var render = function() {
                                       )
                                     },
                                     expression:
-                                      "addChangeOrderFormVal[item.prop][item.inProp]"
+                                      "updateChangeOrderFormVal[item.prop][item.inProp]"
                                   }
                                 })
                               ],
@@ -6727,10 +6855,11 @@ var render = function() {
                                     disabled: item.addChgAble
                                   },
                                   model: {
-                                    value: _vm.addChangeOrderFormVal[item.prop],
+                                    value:
+                                      _vm.updateChangeOrderFormVal[item.prop],
                                     callback: function($$v) {
                                       _vm.$set(
-                                        _vm.addChangeOrderFormVal,
+                                        _vm.updateChangeOrderFormVal,
                                         item.prop,
                                         typeof $$v === "string"
                                           ? $$v.trim()
@@ -6738,7 +6867,7 @@ var render = function() {
                                       )
                                     },
                                     expression:
-                                      "addChangeOrderFormVal[item.prop]"
+                                      "updateChangeOrderFormVal[item.prop]"
                                   }
                                 })
                               ],
@@ -6761,10 +6890,11 @@ var render = function() {
                                   },
                                   on: { input: _vm.formChg },
                                   model: {
-                                    value: _vm.addChangeOrderFormVal[item.prop],
+                                    value:
+                                      _vm.updateChangeOrderFormVal[item.prop],
                                     callback: function($$v) {
                                       _vm.$set(
-                                        _vm.addChangeOrderFormVal,
+                                        _vm.updateChangeOrderFormVal,
                                         item.prop,
                                         typeof $$v === "string"
                                           ? $$v.trim()
@@ -6772,7 +6902,7 @@ var render = function() {
                                       )
                                     },
                                     expression:
-                                      "addChangeOrderFormVal[item.prop]"
+                                      "updateChangeOrderFormVal[item.prop]"
                                   }
                                 })
                               ],
@@ -6788,10 +6918,11 @@ var render = function() {
                                     disabled: item.addChgAble
                                   },
                                   model: {
-                                    value: _vm.addChangeOrderFormVal[item.prop],
+                                    value:
+                                      _vm.updateChangeOrderFormVal[item.prop],
                                     callback: function($$v) {
                                       _vm.$set(
-                                        _vm.addChangeOrderFormVal,
+                                        _vm.updateChangeOrderFormVal,
                                         item.prop,
                                         typeof $$v === "string"
                                           ? $$v.trim()
@@ -6799,7 +6930,7 @@ var render = function() {
                                       )
                                     },
                                     expression:
-                                      "addChangeOrderFormVal[item.prop]"
+                                      "updateChangeOrderFormVal[item.prop]"
                                   }
                                 })
                               ],
@@ -6818,15 +6949,16 @@ var render = function() {
                                 disabled: item.addChgAble
                               },
                               model: {
-                                value: _vm.addChangeOrderFormVal[item.prop],
+                                value: _vm.updateChangeOrderFormVal[item.prop],
                                 callback: function($$v) {
                                   _vm.$set(
-                                    _vm.addChangeOrderFormVal,
+                                    _vm.updateChangeOrderFormVal,
                                     item.prop,
                                     $$v
                                   )
                                 },
-                                expression: "addChangeOrderFormVal[item.prop]"
+                                expression:
+                                  "updateChangeOrderFormVal[item.prop]"
                               }
                             },
                             _vm._l(_vm.addSubData[item.stateVal], function(
@@ -6858,15 +6990,15 @@ var render = function() {
                           _c("el-input", {
                             attrs: { type: "textarea", placehode: item.holder },
                             model: {
-                              value: _vm.addChangeOrderFormVal[item.prop],
+                              value: _vm.updateChangeOrderFormVal[item.prop],
                               callback: function($$v) {
                                 _vm.$set(
-                                  _vm.addChangeOrderFormVal,
+                                  _vm.updateChangeOrderFormVal,
                                   item.prop,
                                   typeof $$v === "string" ? $$v.trim() : $$v
                                 )
                               },
-                              expression: "addChangeOrderFormVal[item.prop]"
+                              expression: "updateChangeOrderFormVal[item.prop]"
                             }
                           })
                         ],
@@ -6879,15 +7011,15 @@ var render = function() {
                           _c("el-checkbox", {
                             attrs: { disabled: item.chgAble },
                             model: {
-                              value: _vm.addChangeOrderFormVal[item.prop],
+                              value: _vm.updateChangeOrderFormVal[item.prop],
                               callback: function($$v) {
                                 _vm.$set(
-                                  _vm.addChangeOrderFormVal,
+                                  _vm.updateChangeOrderFormVal,
                                   item.prop,
                                   $$v
                                 )
                               },
-                              expression: "addChangeOrderFormVal[item.prop]"
+                              expression: "updateChangeOrderFormVal[item.prop]"
                             }
                           })
                         ],
@@ -6902,15 +7034,16 @@ var render = function() {
                             {
                               attrs: { label: "volume" },
                               model: {
-                                value: _vm.addChangeOrderFormVal[item.prop],
+                                value: _vm.updateChangeOrderFormVal[item.prop],
                                 callback: function($$v) {
                                   _vm.$set(
-                                    _vm.addChangeOrderFormVal,
+                                    _vm.updateChangeOrderFormVal,
                                     item.prop,
                                     $$v
                                   )
                                 },
-                                expression: "addChangeOrderFormVal[item.prop]"
+                                expression:
+                                  "updateChangeOrderFormVal[item.prop]"
                               }
                             },
                             [_vm._v(_vm._s(item.choiceName[0]))]
@@ -6921,15 +7054,16 @@ var render = function() {
                             {
                               attrs: { label: "weight" },
                               model: {
-                                value: _vm.addChangeOrderFormVal[item.prop],
+                                value: _vm.updateChangeOrderFormVal[item.prop],
                                 callback: function($$v) {
                                   _vm.$set(
-                                    _vm.addChangeOrderFormVal,
+                                    _vm.updateChangeOrderFormVal,
                                     item.prop,
                                     $$v
                                   )
                                 },
-                                expression: "addChangeOrderFormVal[item.prop]"
+                                expression:
+                                  "updateChangeOrderFormVal[item.prop]"
                               }
                             },
                             [_vm._v(_vm._s(item.choiceName[1]))]
@@ -6949,15 +7083,15 @@ var render = function() {
                               placeholder: "选择日期"
                             },
                             model: {
-                              value: _vm.addChangeOrderFormVal[item.prop],
+                              value: _vm.updateChangeOrderFormVal[item.prop],
                               callback: function($$v) {
                                 _vm.$set(
-                                  _vm.addChangeOrderFormVal,
+                                  _vm.updateChangeOrderFormVal,
                                   item.prop,
                                   $$v
                                 )
                               },
-                              expression: "addChangeOrderFormVal[item.prop]"
+                              expression: "updateChangeOrderFormVal[item.prop]"
                             }
                           })
                         ],
@@ -7441,7 +7575,7 @@ var render = function() {
                 [
                   _c(
                     "el-form",
-                    { attrs: { model: _vm.addChangeOrderFormVal } },
+                    { attrs: { model: _vm.updateChangeOrderFormVal } },
                     _vm._l(_vm.addDialogOrderDtlFormHead, function(
                       item,
                       index
@@ -7470,12 +7604,12 @@ var render = function() {
                                           on: { input: _vm.formChg },
                                           model: {
                                             value:
-                                              _vm.addChangeOrderFormVal[
+                                              _vm.updateChangeOrderFormVal[
                                                 item.prop
                                               ],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.addChangeOrderFormVal,
+                                                _vm.updateChangeOrderFormVal,
                                                 item.prop,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -7483,7 +7617,7 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "addChangeOrderFormVal[item.prop]"
+                                              "updateChangeOrderFormVal[item.prop]"
                                           }
                                         })
                                       ],
@@ -7501,12 +7635,12 @@ var render = function() {
                                           },
                                           model: {
                                             value:
-                                              _vm.addChangeOrderFormVal[
+                                              _vm.updateChangeOrderFormVal[
                                                 item.prop
                                               ],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.addChangeOrderFormVal,
+                                                _vm.updateChangeOrderFormVal,
                                                 item.prop,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -7514,7 +7648,7 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "addChangeOrderFormVal[item.prop]"
+                                              "updateChangeOrderFormVal[item.prop]"
                                           }
                                         })
                                       ],
@@ -7535,16 +7669,18 @@ var render = function() {
                                       },
                                       model: {
                                         value:
-                                          _vm.addChangeOrderFormVal[item.prop],
+                                          _vm.updateChangeOrderFormVal[
+                                            item.prop
+                                          ],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.addChangeOrderFormVal,
+                                            _vm.updateChangeOrderFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
                                         expression:
-                                          "addChangeOrderFormVal[item.prop]"
+                                          "updateChangeOrderFormVal[item.prop]"
                                       }
                                     },
                                     _vm._l(
@@ -7583,10 +7719,10 @@ var render = function() {
                                     },
                                     model: {
                                       value:
-                                        _vm.addChangeOrderFormVal[item.prop],
+                                        _vm.updateChangeOrderFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.addChangeOrderFormVal,
+                                          _vm.updateChangeOrderFormVal,
                                           item.prop,
                                           typeof $$v === "string"
                                             ? $$v.trim()
@@ -7594,7 +7730,7 @@ var render = function() {
                                         )
                                       },
                                       expression:
-                                        "addChangeOrderFormVal[item.prop]"
+                                        "updateChangeOrderFormVal[item.prop]"
                                     }
                                   })
                                 ],
@@ -7608,16 +7744,16 @@ var render = function() {
                                     attrs: { disabled: item.chgAble },
                                     model: {
                                       value:
-                                        _vm.addChangeOrderFormVal[item.prop],
+                                        _vm.updateChangeOrderFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.addChangeOrderFormVal,
+                                          _vm.updateChangeOrderFormVal,
                                           item.prop,
                                           $$v
                                         )
                                       },
                                       expression:
-                                        "addChangeOrderFormVal[item.prop]"
+                                        "updateChangeOrderFormVal[item.prop]"
                                     }
                                   })
                                 ],
@@ -7633,16 +7769,18 @@ var render = function() {
                                       attrs: { label: "volume" },
                                       model: {
                                         value:
-                                          _vm.addChangeOrderFormVal[item.prop],
+                                          _vm.updateChangeOrderFormVal[
+                                            item.prop
+                                          ],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.addChangeOrderFormVal,
+                                            _vm.updateChangeOrderFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
                                         expression:
-                                          "addChangeOrderFormVal[item.prop]"
+                                          "updateChangeOrderFormVal[item.prop]"
                                       }
                                     },
                                     [_vm._v(_vm._s(item.choiceName[0]))]
@@ -7654,16 +7792,18 @@ var render = function() {
                                       attrs: { label: "weight" },
                                       model: {
                                         value:
-                                          _vm.addChangeOrderFormVal[item.prop],
+                                          _vm.updateChangeOrderFormVal[
+                                            item.prop
+                                          ],
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.addChangeOrderFormVal,
+                                            _vm.updateChangeOrderFormVal,
                                             item.prop,
                                             $$v
                                           )
                                         },
                                         expression:
-                                          "addChangeOrderFormVal[item.prop]"
+                                          "updateChangeOrderFormVal[item.prop]"
                                       }
                                     },
                                     [_vm._v(_vm._s(item.choiceName[1]))]
@@ -7684,16 +7824,16 @@ var render = function() {
                                     },
                                     model: {
                                       value:
-                                        _vm.addChangeOrderFormVal[item.prop],
+                                        _vm.updateChangeOrderFormVal[item.prop],
                                       callback: function($$v) {
                                         _vm.$set(
-                                          _vm.addChangeOrderFormVal,
+                                          _vm.updateChangeOrderFormVal,
                                           item.prop,
                                           $$v
                                         )
                                       },
                                       expression:
-                                        "addChangeOrderFormVal[item.prop]"
+                                        "updateChangeOrderFormVal[item.prop]"
                                     }
                                   })
                                 ],
@@ -7714,12 +7854,12 @@ var render = function() {
                                           },
                                           model: {
                                             value:
-                                              _vm.addChangeOrderFormVal[
+                                              _vm.updateChangeOrderFormVal[
                                                 item.prop
                                               ][item.inProp],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.addChangeOrderFormVal[
+                                                _vm.updateChangeOrderFormVal[
                                                   item.prop
                                                 ],
                                                 item.inProp,
@@ -7729,7 +7869,7 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "addChangeOrderFormVal[item.prop][item.inProp]"
+                                              "updateChangeOrderFormVal[item.prop][item.inProp]"
                                           }
                                         })
                                       ],
@@ -7745,12 +7885,12 @@ var render = function() {
                                           },
                                           model: {
                                             value:
-                                              _vm.addChangeOrderFormVal[
+                                              _vm.updateChangeOrderFormVal[
                                                 item.prop
                                               ],
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.addChangeOrderFormVal,
+                                                _vm.updateChangeOrderFormVal,
                                                 item.prop,
                                                 typeof $$v === "string"
                                                   ? $$v.trim()
@@ -7758,7 +7898,7 @@ var render = function() {
                                               )
                                             },
                                             expression:
-                                              "addChangeOrderFormVal[item.prop]"
+                                              "updateChangeOrderFormVal[item.prop]"
                                           }
                                         })
                                       ],

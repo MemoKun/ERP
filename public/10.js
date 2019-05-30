@@ -221,7 +221,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ 1032:
 /***/ (function(module, exports) {
 
-module.exports = "/images/background.jpg?84aca450bf621072c8036445581a7d8a";
+throw new Error("Module build failed: Error: write EPIPE\n    at exports._errnoException (util.js:1022:11)\n    at WriteWrap.afterWrite [as oncomplete] (net.js:851:14)");
 
 /***/ }),
 

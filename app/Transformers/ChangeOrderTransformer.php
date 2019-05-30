@@ -20,6 +20,8 @@ class ChangeOrderTransformer extends TransformerAbstract
             'id'=> $order->id,
             'change_order_no' => $order->change_order_no,
             'cancel_order_no'=> $order->cancel_order_no,
+            'order_items_id'=> $order->order_items_id,
+            'payment_details_id'=> $order->payment_details_id,
             'is_canceled'=> $order->is_canceled,
             'ch_applier_id'=> $order->ch_applier_id,
             'ch_applied_at' => optional($order->ch_applied_at)->toDateString(),

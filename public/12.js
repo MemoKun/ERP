@@ -786,7 +786,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ 1043:
 /***/ (function(module, exports) {
 
-module.exports = "/images/main.jpg?57b9c5bec98e7754cab0e1deda2c7788";
+throw new Error("Module build failed: Error: write EPIPE\n    at exports._errnoException (util.js:1022:11)\n    at WriteWrap.afterWrite [as oncomplete] (net.js:851:14)");
 
 /***/ }),
 

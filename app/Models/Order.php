@@ -54,7 +54,7 @@ class Order extends Model
 
     //订单操作
     public static $orderOperationMap = [
-        self::ORDER_STATUS_NEW => '待审计',
+        self::ORDER_STATUS_UNAUDIT => '待审计',
         self::ORDER_STATUS_NEW => '创建',
         self::ORDER_STATUS_LOCK => '锁定',
         self::ORDER_STATUS_CS_AUDIT => '客审',
@@ -76,7 +76,7 @@ class Order extends Model
 
     //订单操作详情
     public static $orderOperationDescriptionMap = [
-        self::ORDER_STATUS_NEW => '已下载待审计',
+        self::ORDER_STATUS_UNAUDIT => '已下载待审计',
         self::ORDER_STATUS_NEW => '创建订单',
         self::ORDER_STATUS_LOCK => '锁定订单',
         self::ORDER_STATUS_CS_AUDIT => '客服审核',
@@ -799,7 +799,8 @@ class Order extends Model
         return $this->hasMany(ResupplieOrder::class, 'orders_id');
     }
 
-    public function orderOperationRecord(){
+    public function orderOperationRecord()
+    {
         return $this->hasMany(orderOperationRecord::class, 'orders_id');
     }
 }

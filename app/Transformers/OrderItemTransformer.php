@@ -37,6 +37,9 @@ class OrderItemTransformer extends TransformerAbstract
 
     public function includeOrder(OrderItem $orderItem)
     {
+        if (!$orderItem->order) {
+            return;
+        }
         return $this->item($orderItem->order, new ShopTransformer());
     }
 
