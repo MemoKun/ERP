@@ -9,7 +9,7 @@ class ProductComponent extends Model
     protected $table = 'product_components';
 
     protected $fillable = [
-        'component_code', 'jd_component_code', 'vips_component_code',
+        'component_code', 'jd_component_code', 'vips_component_code','component_name',
         'tb_price', 'cost', 'price', 'highest_price', 'lowest_price',
         'warehouse_cost', 'assembly_price', 'discount', 'commission',
         'is_common', 'package_quantity', 'package_costs',
