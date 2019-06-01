@@ -33555,15 +33555,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         customer_address: "",
         order_stuff: "",
         cmptn_direction: "",
-        cmptn_directions: [{ label: "我们赔偿", value: 0 }, { label: "赔偿我们", value: 1 }],
+        cmptn_directions: [{ label: "我们赔偿", value: '我们赔偿' }, { label: "赔偿我们", value: '赔偿我们' }],
         responsible_party: "",
-        responsible_partys: [{ label: "物流", value: 0 }, { label: "工厂", value: 1 }, { label: "服务商", value: 2 }, { label: "客户", value: 3 }, { label: "公司", value: 4 }, { label: "仓库", value: 5 }, { label: "其他", value: 6 }],
+        responsible_partys: [{ label: "物流", value: '物流' }, { label: "工厂", value: '工厂' }, { label: "服务商", value: '服务商' }, { label: "客户", value: '客户' }, { label: "公司", value: '公司' }, { label: "仓库", value: '仓库' }, { label: "其他", value: '其他' }],
         responsible_person: "",
         logistics_company: "",
-        logistics_companys: [{ label: "顺丰速运", value: 0 }, { label: "韵达快递", value: 1 }],
+        logistics_companys: [{ label: "顺丰速运", value: '顺丰速运' }, { label: "韵达快递", value: '韵达快递' }],
         logistics_tracking_number: "",
         cmptn_shop: "",
-        cmptn_shops: [{ label: "Dreasylife家居旗舰店", value: 0 }, { label: "思享家官方旗舰店", value: 1 }],
+        cmptn_shops: [{ label: "Dreasylife家居旗舰店", value: 'Dreasylife家居旗舰店' }, { label: "思享家官方旗舰店", value: '思享家官方旗舰店' }],
         negotiation_date: "",
         created_at: "",
         submited_at: "",
@@ -34409,6 +34409,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       switch (index) {
         case 0:
           this.$fetch(this.urls.aftercompensation + "/searchall", {
+            customer_nickname: this.searchBox.customer_nickname,
+            customer_name: this.searchBox.customer_name,
+            customer_phone: this.searchBox.customer_phone,
+            customer_address: this.searchBox.customer_address,
+            order_stuff: this.searchBox.order_stuff,
+            cmptn_direction: this.searchBox.cmptn_direction,
+            responsible_party: this.searchBox.responsible_party,
+            responsible_person: this.searchBox.responsible_person,
+            logistics_company: this.searchBox.logistics_company,
+            logistics_tracking_number: this.searchBox.logistics_tracking_number,
+            cmptn_shop: this.searchBox.cmptn_shop,
             include: "problemProduct.afterCompensationOrder"
           }).then(function (res) {
             _this4.loading = false;
@@ -34432,6 +34443,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 1:
           this.$fetch(this.urls.aftercompensation + "/searchalluntreated", {
+            customer_nickname: this.searchBox.customer_nickname,
+            customer_name: this.searchBox.customer_name,
+            customer_phone: this.searchBox.customer_phone,
+            customer_address: this.searchBox.customer_address,
+            order_stuff: this.searchBox.order_stuff,
+            cmptn_direction: this.searchBox.cmptn_direction,
+            responsible_party: this.searchBox.responsible_party,
+            responsible_person: this.searchBox.responsible_person,
+            logistics_company: this.searchBox.logistics_company,
+            logistics_tracking_number: this.searchBox.logistics_tracking_number,
+            cmptn_shop: this.searchBox.cmptn_shop,
             include: "problemProduct.afterCompensationOrder"
           }).then(function (res) {
             _this4.loading = false;
@@ -34455,6 +34477,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 2:
           this.$fetch(this.urls.aftercompensation + "/searchsectreated", {
+            customer_nickname: this.searchBox.customer_nickname,
+            customer_name: this.searchBox.customer_name,
+            customer_phone: this.searchBox.customer_phone,
+            customer_address: this.searchBox.customer_address,
+            order_stuff: this.searchBox.order_stuff,
+            cmptn_direction: this.searchBox.cmptn_direction,
+            responsible_party: this.searchBox.responsible_party,
+            responsible_person: this.searchBox.responsible_person,
+            logistics_company: this.searchBox.logistics_company,
+            logistics_tracking_number: this.searchBox.logistics_tracking_number,
+            cmptn_shop: this.searchBox.cmptn_shop,
             include: "problemProduct.afterCompensationOrder"
           }).then(function (res) {
             _this4.loading = false;
@@ -34478,6 +34511,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 3:
           this.$fetch(this.urls.aftercompensation + "/searchcanceled", {
+            customer_nickname: this.searchBox.customer_nickname,
+            customer_name: this.searchBox.customer_name,
+            customer_phone: this.searchBox.customer_phone,
+            customer_address: this.searchBox.customer_address,
+            order_stuff: this.searchBox.order_stuff,
+            cmptn_direction: this.searchBox.cmptn_direction,
+            responsible_party: this.searchBox.responsible_party,
+            responsible_person: this.searchBox.responsible_person,
+            logistics_company: this.searchBox.logistics_company,
+            logistics_tracking_number: this.searchBox.logistics_tracking_number,
+            cmptn_shop: this.searchBox.cmptn_shop,
             include: "problemProduct.afterCompensationOrder"
           }).then(function (res) {
             _this4.loading = false;
@@ -35216,8 +35260,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
     },
+
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
+
+    //重置筛选
     resets: function resets() {
-      this.searchBox = {};
+      this.searchBox = {
+        customer_nickname: "",
+        customer_name: "",
+        customer_phone: "",
+        customer_address: "",
+        order_stuff: "",
+        cmptn_direction: "",
+        cmptn_directions: [{ label: "我们赔偿", value: '我们赔偿' }, { label: "赔偿我们", value: '赔偿我们' }],
+        responsible_party: "",
+        responsible_partys: [{ label: "物流", value: '物流' }, { label: "工厂", value: '工厂' }, { label: "服务商", value: '服务商' }, { label: "客户", value: '客户' }, { label: "公司", value: '公司' }, { label: "仓库", value: '仓库' }, { label: "其他", value: '其他' }],
+        responsible_person: "",
+        logistics_company: "",
+        logistics_companys: [{ label: "顺丰速运", value: '顺丰速运' }, { label: "韵达快递", value: '韵达快递' }],
+        logistics_tracking_number: "",
+        cmptn_shop: "",
+        cmptn_shops: [{ label: "Dreasylife家居旗舰店", value: 'Dreasylife家居旗舰店' }, { label: "思享家官方旗舰店", value: '思享家官方旗舰店' }],
+        negotiation_date: "",
+        created_at: "",
+        submited_at: "",
+        audited_at: ""
+      };
     }
   },
   mounted: function mounted() {
@@ -35340,11 +35412,18 @@ var render = function() {
                     : _c(
                         "span",
                         [
-                          _c("el-button", { attrs: { type: "primary" } }, [
-                            _vm._v("筛选")
-                          ]),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "primary" },
+                              on: { click: _vm.searchData }
+                            },
+                            [_vm._v("筛选")]
+                          ),
                           _vm._v(" "),
-                          _c("el-button", [_vm._v("重置")]),
+                          _c("el-button", { on: { click: _vm.resets } }, [
+                            _vm._v("重置")
+                          ]),
                           _vm._v(" "),
                           _c(
                             "span",
@@ -35705,9 +35784,14 @@ var render = function() {
                       "div",
                       { staticStyle: { "text-align": "right" } },
                       [
-                        _c("el-button", { attrs: { type: "primary" } }, [
-                          _vm._v("筛选")
-                        ]),
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { type: "primary" },
+                            on: { click: _vm.searchData }
+                          },
+                          [_vm._v("筛选")]
+                        ),
                         _vm._v(" "),
                         _c("el-button", { on: { click: _vm.resets } }, [
                           _vm._v("重置")

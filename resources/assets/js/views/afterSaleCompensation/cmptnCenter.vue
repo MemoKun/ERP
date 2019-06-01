@@ -21,8 +21,8 @@
               <el-input v-model="searchBox.customer_address" clearable></el-input>
             </span>
             <span v-else>
-              <el-button type="primary">筛选</el-button>
-              <el-button>重置</el-button>
+              <el-button type="primary" @click="searchData">筛选</el-button>
+              <el-button @click="resets">重置</el-button>
               <span @click="toggleShow">
                 <el-button type="text">展开</el-button>
                 <i class="el-icon-arrow-down" style="color:#409EFF"></i>
@@ -92,8 +92,8 @@
             </span>
           </div>
           <div v-if="filterBox" style="text-align: right">
-            <el-button type="primary">筛选</el-button>
-            <el-button @click="resets">重置</el-button>
+            <el-button type="primary" @click="searchData">筛选</el-button>
+            <el-button @click="resets" >重置</el-button>
             <span @click="toggleShow" style="display: inline">
               <el-button type="text">收起</el-button>
               <i class="el-icon-arrow-up" style="color:#409EFF"></i>
@@ -424,30 +424,30 @@ export default {
         order_stuff: "",
         cmptn_direction: "",
         cmptn_directions: [
-          { label: "我们赔偿", value: 0 },
-          { label: "赔偿我们", value: 1 }
+          { label: "我们赔偿", value: '我们赔偿' },
+          { label: "赔偿我们", value: '赔偿我们' }
         ],
         responsible_party: "",
         responsible_partys: [
-          { label: "物流", value: 0 },
-          { label: "工厂", value: 1 },
-          { label: "服务商", value: 2 },
-          { label: "客户", value: 3 },
-          { label: "公司", value: 4 },
-          { label: "仓库", value: 5 },
-          { label: "其他", value: 6 }
+          { label: "物流", value: '物流' },
+          { label: "工厂", value: '工厂' },
+          { label: "服务商", value: '服务商' },
+          { label: "客户", value: '客户' },
+          { label: "公司", value: '公司' },
+          { label: "仓库", value: '仓库' },
+          { label: "其他", value: '其他' }
         ],
         responsible_person: "",
         logistics_company: "",
         logistics_companys: [
-          { label: "顺丰速运", value: 0 },
-          { label: "韵达快递", value: 1 }
+          { label: "顺丰速运", value: '顺丰速运' },
+          { label: "韵达快递", value: '韵达快递' }
         ],
         logistics_tracking_number: "",
         cmptn_shop: "",
         cmptn_shops: [
-          { label: "Dreasylife家居旗舰店", value: 0 },
-          { label: "思享家官方旗舰店", value: 1 }
+          { label: "Dreasylife家居旗舰店", value: 'Dreasylife家居旗舰店' },
+          { label: "思享家官方旗舰店", value: '思享家官方旗舰店' }
         ],
         negotiation_date: "",
         created_at: "",
@@ -1500,6 +1500,17 @@ export default {
       switch (index) {
         case 0:
           this.$fetch(this.urls.aftercompensation + "/searchall", {
+            customer_nickname: this.searchBox.customer_nickname,
+            customer_name: this.searchBox.customer_name,
+            customer_phone: this.searchBox.customer_phone,
+            customer_address: this.searchBox.customer_address,
+            order_stuff: this.searchBox.order_stuff,
+            cmptn_direction: this.searchBox.cmptn_direction,
+            responsible_party: this.searchBox.responsible_party,
+            responsible_person: this.searchBox.responsible_person,
+            logistics_company: this.searchBox.logistics_company,
+            logistics_tracking_number: this.searchBox.logistics_tracking_number,
+            cmptn_shop: this.searchBox.cmptn_shop,
             include: "problemProduct.afterCompensationOrder"
           }).then(
             res => {
@@ -1528,6 +1539,17 @@ export default {
           break;
         case 1:
           this.$fetch(this.urls.aftercompensation + "/searchalluntreated", {
+            customer_nickname: this.searchBox.customer_nickname,
+            customer_name: this.searchBox.customer_name,
+            customer_phone: this.searchBox.customer_phone,
+            customer_address: this.searchBox.customer_address,
+            order_stuff: this.searchBox.order_stuff,
+            cmptn_direction: this.searchBox.cmptn_direction,
+            responsible_party: this.searchBox.responsible_party,
+            responsible_person: this.searchBox.responsible_person,
+            logistics_company: this.searchBox.logistics_company,
+            logistics_tracking_number: this.searchBox.logistics_tracking_number,
+            cmptn_shop: this.searchBox.cmptn_shop,
             include: "problemProduct.afterCompensationOrder"
           }).then(
             res => {
@@ -1556,6 +1578,17 @@ export default {
           break;
         case 2:
           this.$fetch(this.urls.aftercompensation + "/searchsectreated", {
+            customer_nickname: this.searchBox.customer_nickname,
+            customer_name: this.searchBox.customer_name,
+            customer_phone: this.searchBox.customer_phone,
+            customer_address: this.searchBox.customer_address,
+            order_stuff: this.searchBox.order_stuff,
+            cmptn_direction: this.searchBox.cmptn_direction,
+            responsible_party: this.searchBox.responsible_party,
+            responsible_person: this.searchBox.responsible_person,
+            logistics_company: this.searchBox.logistics_company,
+            logistics_tracking_number: this.searchBox.logistics_tracking_number,
+            cmptn_shop: this.searchBox.cmptn_shop,
             include: "problemProduct.afterCompensationOrder"
           }).then(
             res => {
@@ -1584,6 +1617,17 @@ export default {
           break;
         case 3:
           this.$fetch(this.urls.aftercompensation + "/searchcanceled", {
+            customer_nickname: this.searchBox.customer_nickname,
+            customer_name: this.searchBox.customer_name,
+            customer_phone: this.searchBox.customer_phone,
+            customer_address: this.searchBox.customer_address,
+            order_stuff: this.searchBox.order_stuff,
+            cmptn_direction: this.searchBox.cmptn_direction,
+            responsible_party: this.searchBox.responsible_party,
+            responsible_person: this.searchBox.responsible_person,
+            logistics_company: this.searchBox.logistics_company,
+            logistics_tracking_number: this.searchBox.logistics_tracking_number,
+            cmptn_shop: this.searchBox.cmptn_shop,
             include: "problemProduct.afterCompensationOrder"
           }).then(
             res => {
@@ -2353,9 +2397,51 @@ export default {
         }
       }
     },
-
+    //筛选
+    searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
+    //重置筛选
     resets() {
-      this.searchBox = {};
+      this.searchBox = {
+        customer_nickname: "",
+        customer_name: "",
+        customer_phone: "",
+        customer_address: "",
+        order_stuff: "",
+        cmptn_direction: "",
+        cmptn_directions: [
+          { label: "我们赔偿", value: '我们赔偿' },
+          { label: "赔偿我们", value: '赔偿我们' }
+        ],
+        responsible_party: "",
+        responsible_partys: [
+          { label: "物流", value: '物流' },
+          { label: "工厂", value: '工厂' },
+          { label: "服务商", value: '服务商' },
+          { label: "客户", value: '客户' },
+          { label: "公司", value: '公司' },
+          { label: "仓库", value: '仓库' },
+          { label: "其他", value: '其他' }
+        ],
+        responsible_person: "",
+        logistics_company: "",
+        logistics_companys: [
+          { label: "顺丰速运", value: '顺丰速运' },
+          { label: "韵达快递", value: '韵达快递' }
+        ],
+        logistics_tracking_number: "",
+        cmptn_shop: "",
+        cmptn_shops: [
+          { label: "Dreasylife家居旗舰店", value: 'Dreasylife家居旗舰店' },
+          { label: "思享家官方旗舰店", value: '思享家官方旗舰店' }
+        ],
+        negotiation_date: "",
+        created_at: "",
+        submited_at: "",
+        audited_at: ""
+      };
     }
   },
   mounted() {
