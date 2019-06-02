@@ -1698,8 +1698,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.roles.index');
         $api->post('roles', 'RolesController@insertRole')
             ->name('api.roles.insertRole');
-        //        $api->patch('roles/{roleid}', 'RolesController@update')
-        //            ->name('api.roles.update');
+        $api->patch('roles/{roleid}', 'RolesController@update')
+            ->name('api.roles.update');
 
 
         //打印功能
@@ -1717,6 +1717,11 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
+
+        $api->get('users', 'UsersController@index')
+            ->name('api.users.index');
+        $api->Post('users/create', 'UsersController@storeUser')
+            ->name('api.users.storeuser');
     });
 
     $api->group([

@@ -18,7 +18,9 @@ class RoleGroupController extends Controller
     use CURDTrait;
     const TRANSFORMER = RoleGroupTransformer::class;
     const MODEL = Rolegroup::class;
+
     public function index(RoleGroupRequest $request){
         return $this->allOrPage($request,self::MODEL,self::TRANSFORMER,0);
     }
+    
 }

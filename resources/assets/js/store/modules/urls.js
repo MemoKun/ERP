@@ -61,6 +61,9 @@ const urls= {
     printerconf:'/printerconf',
     negativeinvconf:'/negativeinvconf',
     problemproduct:'/problemproduct',
+
+
+    users:'/users',
     roles: '/roles',
     roledetails: '/roledetails',
     rolegroup: '/rolegroup',

@@ -32,7 +32,7 @@ class RolesController extends Controller
 //        return $request->post();
         $data = [
           'role_group_id' => $request->post('role_group_id'),
-          'name' => $request->post('username'),
+          'name' => $request->post('name'),
           'description' => $request->post('description'),
           'remark' => $request->post('remark'),
         ];
@@ -44,9 +44,10 @@ class RolesController extends Controller
 
     }
 
-    public function update(RoleRequest $roleRequest,Role $role)
+    public function update(RoleRequest $request,Role $role)
     {
-        return json_encode($role);
+        //return json_encode($role);
+        return $this->traitUpdate($request, $role, self::TRANSFORMER);
     }
 
     public function destroyByIds(DestroyRequest $request){
