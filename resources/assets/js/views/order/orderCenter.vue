@@ -239,12 +239,11 @@
                     {{scope.row[item.prop]['data'][0]?scope.row[item.prop]['data'][0][item.inProp]:''}}
                   </span>
                   <span v-else>
-                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    {{scope.row[item.prop]?scope.row[item.prop][item.inProp]:''}}
                   </span>
-
                 </span>
                 <span v-else>
-                  {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  {{scope.row[item.prop]}}
                 </span>
               </span>
             </template>
@@ -2571,7 +2570,6 @@ export default {
           this.$fetch(this.urls.customerservicedepts + "/create").then(
             res => {
               this.addSubData = res;
-              console.log(this.addSubData);
             },
             err => {}
           );
@@ -2632,35 +2630,42 @@ export default {
           "2018-12-31T16:00:00.000Z",
           "2099-12-31T16:00:00.000Z"
         ],
-        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        order_transMStart: "",
-        order_transMEnd: "",
-        logistics_id: "",
-        stockout_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        payment_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        order_status: "",
-        orderStatus: [],
+        created_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
+        order_transMStart: '',
+        order_transMEnd: '',
+        logistics: '',
+        stockout_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
+        payment_date: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
+        order_status: '',
+        orderStatus: [
+          { label: '未处理', value: 10 },
+          { label: '订单锁定中', value: 20 },
+          { label: '已客审', value: 30 },
+          { label: '已跟单一审', value: 40 },
+          { label: '已财审', value: 50 },
+          { label: '已货审', value: 60 },
+          { label: '准备出库', value: 70 },
+          { label: '已出库', value: 80 }
+        ],
         order_fdAuditDate: [
           "2018-12-31T16:00:00.000Z",
           "2099-12-31T16:00:00.000Z"
         ],
-        seller_flag: "",
-        sellerFlags: [],
-        logistics_sn: "",
-        out_order: "",
-        seller_remark: "",
-        suppliers_id: "",
-        warehouses_id: "",
-        esheet_no: "",
-        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        auditor_id: ""
+        seller_flag: '',
+        logistics_sn: '',
+        out_order: '',
+        seller_remark: '',
+        suppliers_id: '',
+        warehouses_id: '',
+        esheet_no: '',
+        audit_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
+        auditor_id: ''
       };
     },
     //筛选
     searchData() {
       this.loading = true;
       this.fetchData();
-      this.resets();
     },
     rightHandleClick() {},
     orderListRClick(row) {
@@ -2922,7 +2927,6 @@ export default {
     },
     /*批量删除*/
     handleSelectionChange(val) {
-      console.log(val);
       /*拿到id集合*/
       let delArr = [];
       val.forEach(selectedItem => {

@@ -21,19 +21,11 @@
         </span>
         <span>
           <label>业务员</label>
-          <el-select
-            v-model="searchBox.user_id"
-            clearable
-            placeholder="请选择"
-            @keyup.enter.native="handleQuery"
-          >
-            <el-option
-              v-for="item in searchBox.orderStaff"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <el-select v-model="searchBox.user_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
         </span>
         <span v-if="filterBox">
           <label>售后状态</label>
@@ -777,6 +769,7 @@ export default {
         order_no: "",
         vip_name: "",
         orderStaff: [{ label: "ceshi", value: 0 }],
+        user_id:'',
         after_sale_status: "",
         after_sale_type: "",
         order_phone: "",
@@ -992,6 +985,7 @@ export default {
       getsInfo: [],
       newData: [],
       submitData: [],
+      addSubData:[],
       newLoading: true,
       submitLoading: true,
       checkboxInit: false,
@@ -1592,6 +1586,8 @@ export default {
           }).then(
             res => {
               this.newLoading = false;
+              this.addSubData=res;
+              console.log(this.addSubData);
               this.newData = res.data;
               this.scheduleData = res.data[0]
                 ? res.data[0]["afterSaleSchedules"].data

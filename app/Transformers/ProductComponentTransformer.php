@@ -19,6 +19,7 @@ class ProductComponentTransformer extends TransformerAbstract
             'component_code' => $productComponent->component_code,
             'jd_component_code' => $productComponent->jd_component_code,
             'vips_component_code' => $productComponent->vips_component_code,
+            'component_name' => $productComponent->component_name,
             'tb_price' => $productComponent->tb_price,
             'cost' => $productComponent->cost,
             'price' => $productComponent->price,

@@ -3,26 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\DB;
-
 use App\Models\AfterCompensationOrder;
-
 use App\Http\Requests\Api\AfterCompensationRequest;
 use App\Http\Requests\Api\ProblemProductRequest;
-use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\MergerOrderRequest;
 use App\Http\Requests\Api\EditStatuRequest;
 use App\Http\Requests\Api\DestroyRequest;
-
 use App\Transformers\AfterCompensationTransformer;
 use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Controllers\Traits\ProcedureTrait;
-
 use Dingo\Api\Exception\DeleteResourceFailedException;
-use Dingo\Api\Exception\UpdateResourceFailedException;
 
 /**
- * 售后赔偿资源
+ * 售后赔偿资源.
+ *
  * @Resource("aftercompensation",uri="/api")
  */
 class AfterCompensationController extends Controller
@@ -35,40 +30,167 @@ class AfterCompensationController extends Controller
     const PerPage = 8;
 
     /**
-     * 搜索未处理订单
+     * 搜索未处理订单.
      */
-
-     public function searchAll()
-     {
-         $order = AfterCompensationOrder::query()->whereIn('status',[AfterCompensationOrder::RIGHT_STATUS]);
-         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
-     }
-
-    public function searchUntreated()
+    public function searchAll()
     {
-        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_NEW]);
+        $order = AfterCompensationOrder::query()->whereIn('status', [AfterCompensationOrder::RIGHT_STATUS]);
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchAllUntreated()
+    public function searchUntreated(AfterCompensationRequest $request)
     {
-        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_NEW,AfterCompensationOrder::CMPTN_STATUS_ONE_AUDIT]);
+        $customer_nickname = $request->input('customer_nickname');
+        $customer_name = $request->input('customer_name');
+        $customer_phone = $request->input('customer_phone');
+        $customer_address = $request->input('customer_address');
+        $order_stuff = $request->input('order_stuff');
+        $cmptn_direction = $request->input('cmptn_direction');
+        $responsible_party = $request->input('responsible_party');
+        $responsible_person = $request->input('responsible_person');
+        $logistics_company = $request->input('logistics_company');
+        $logistics_tracking_number = $request->input('logistics_tracking_number');
+        $cmptn_shop = $request->input('cmptn_shop');
+        $order = AfterCompensationOrder::query()
+        ->whereIn('cmptn_status', [AfterCompensationOrder::CMPTN_STATUS_NEW])
+        ->where('customer_nickname', 'like', '%'.$customer_nickname.'%')
+        ->where('customer_name', 'like', '%'.$customer_name.'%')
+        ->where('customer_phone', 'like', '%'.$customer_phone.'%')
+        ->where('customer_address', 'like', '%'.$customer_address.'%')
+        ->where('order_stuff', 'like', '%'.$order_stuff.'%')
+        ->where('cmptn_direction', 'like', '%'.$cmptn_direction.'%')
+        ->where('responsible_party', 'like', '%'.$responsible_party.'%')
+        ->where('responsible_person', 'like', '%'.$responsible_person.'%')
+        ->where('logistics_company', 'like', '%'.$logistics_company.'%')
+        ->where('logistics_tracking_number', 'like', '%'.$logistics_tracking_number.'%')
+        ->where('cmptn_shop', 'like', '%'.$cmptn_shop.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchTreated()
+    public function searchAllUntreated(AfterCompensationRequest $request)
     {
-        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_ONE_AUDIT]);
-        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);   
-    }
+        $customer_nickname = $request->input('customer_nickname');
+        $customer_name = $request->input('customer_name');
+        $customer_phone = $request->input('customer_phone');
+        $customer_address = $request->input('customer_address');
+        $order_stuff = $request->input('order_stuff');
+        $cmptn_direction = $request->input('cmptn_direction');
+        $responsible_party = $request->input('responsible_party');
+        $responsible_person = $request->input('responsible_person');
+        $logistics_company = $request->input('logistics_company');
+        $logistics_tracking_number = $request->input('logistics_tracking_number');
+        $cmptn_shop = $request->input('cmptn_shop');
+        $order = AfterCompensationOrder::query()
+        ->whereIn('cmptn_status', [AfterCompensationOrder::CMPTN_STATUS_NEW, AfterCompensationOrder::CMPTN_STATUS_ONE_AUDIT])
+        ->where('customer_nickname', 'like', '%'.$customer_nickname.'%')
+        ->where('customer_name', 'like', '%'.$customer_name.'%')
+        ->where('customer_phone', 'like', '%'.$customer_phone.'%')
+        ->where('customer_address', 'like', '%'.$customer_address.'%')
+        ->where('order_stuff', 'like', '%'.$order_stuff.'%')
+        ->where('cmptn_direction', 'like', '%'.$cmptn_direction.'%')
+        ->where('responsible_party', 'like', '%'.$responsible_party.'%')
+        ->where('responsible_person', 'like', '%'.$responsible_person.'%')
+        ->where('logistics_company', 'like', '%'.$logistics_company.'%')
+        ->where('logistics_tracking_number', 'like', '%'.$logistics_tracking_number.'%')
+        ->where('cmptn_shop', 'like', '%'.$cmptn_shop.'%')
+        ->orderBy('created_at', 'desc');
 
-    public function searchSecTreated()
-    {
-        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_SEC_AUDIT]);
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
-    public function searchCanceled(){
-        $order = AfterCompensationOrder::query()->whereIn('cmptn_status',[AfterCompensationOrder::CMPTN_STATUS_CANCEL]);
+
+    public function searchTreated(AfterCompensationRequest $request)
+    {
+        $customer_nickname = $request->input('customer_nickname');
+        $customer_name = $request->input('customer_name');
+        $customer_phone = $request->input('customer_phone');
+        $customer_address = $request->input('customer_address');
+        $order_stuff = $request->input('order_stuff');
+        $cmptn_direction = $request->input('cmptn_direction');
+        $responsible_party = $request->input('responsible_party');
+        $responsible_person = $request->input('responsible_person');
+        $logistics_company = $request->input('logistics_company');
+        $logistics_tracking_number = $request->input('logistics_tracking_number');
+        $cmptn_shop = $request->input('cmptn_shop');
+        $order = AfterCompensationOrder::query()
+        ->whereIn('cmptn_status', [AfterCompensationOrder::CMPTN_STATUS_ONE_AUDIT])
+        ->where('customer_nickname', 'like', '%'.$customer_nickname.'%')
+        ->where('customer_name', 'like', '%'.$customer_name.'%')
+        ->where('customer_phone', 'like', '%'.$customer_phone.'%')
+        ->where('customer_address', 'like', '%'.$customer_address.'%')
+        ->where('order_stuff', 'like', '%'.$order_stuff.'%')
+        ->where('cmptn_direction', 'like', '%'.$cmptn_direction.'%')
+        ->where('responsible_party', 'like', '%'.$responsible_party.'%')
+        ->where('responsible_person', 'like', '%'.$responsible_person.'%')
+        ->where('logistics_company', 'like', '%'.$logistics_company.'%')
+        ->where('logistics_tracking_number', 'like', '%'.$logistics_tracking_number.'%')
+        ->where('cmptn_shop', 'like', '%'.$cmptn_shop.'%')
+        ->orderBy('created_at', 'desc');
+
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchSecTreated(AfterCompensationRequest $request)
+    {
+        $customer_nickname = $request->input('customer_nickname');
+        $customer_name = $request->input('customer_name');
+        $customer_phone = $request->input('customer_phone');
+        $customer_address = $request->input('customer_address');
+        $order_stuff = $request->input('order_stuff');
+        $cmptn_direction = $request->input('cmptn_direction');
+        $responsible_party = $request->input('responsible_party');
+        $responsible_person = $request->input('responsible_person');
+        $logistics_company = $request->input('logistics_company');
+        $logistics_tracking_number = $request->input('logistics_tracking_number');
+        $cmptn_shop = $request->input('cmptn_shop');
+        $order = AfterCompensationOrder::query()
+        ->whereIn('cmptn_status', [AfterCompensationOrder::CMPTN_STATUS_SEC_AUDIT])
+        ->where('customer_nickname', 'like', '%'.$customer_nickname.'%')
+        ->where('customer_name', 'like', '%'.$customer_name.'%')
+        ->where('customer_phone', 'like', '%'.$customer_phone.'%')
+        ->where('customer_address', 'like', '%'.$customer_address.'%')
+        ->where('order_stuff', 'like', '%'.$order_stuff.'%')
+        ->where('cmptn_direction', 'like', '%'.$cmptn_direction.'%')
+        ->where('responsible_party', 'like', '%'.$responsible_party.'%')
+        ->where('responsible_person', 'like', '%'.$responsible_person.'%')
+        ->where('logistics_company', 'like', '%'.$logistics_company.'%')
+        ->where('logistics_tracking_number', 'like', '%'.$logistics_tracking_number.'%')
+        ->where('cmptn_shop', 'like', '%'.$cmptn_shop.'%')
+        ->orderBy('created_at', 'desc');
+
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+
+    public function searchCanceled(AfterCompensationRequest $request)
+    {
+        $customer_nickname = $request->input('customer_nickname');
+        $customer_name = $request->input('customer_name');
+        $customer_phone = $request->input('customer_phone');
+        $customer_address = $request->input('customer_address');
+        $order_stuff = $request->input('order_stuff');
+        $cmptn_direction = $request->input('cmptn_direction');
+        $responsible_party = $request->input('responsible_party');
+        $responsible_person = $request->input('responsible_person');
+        $logistics_company = $request->input('logistics_company');
+        $logistics_tracking_number = $request->input('logistics_tracking_number');
+        $cmptn_shop = $request->input('cmptn_shop');
+        $order = AfterCompensationOrder::query()
+        ->whereIn('cmptn_status', [AfterCompensationOrder::CMPTN_STATUS_CANCEL])
+        ->where('customer_nickname', 'like', '%'.$customer_nickname.'%')
+        ->where('customer_name', 'like', '%'.$customer_name.'%')
+        ->where('customer_phone', 'like', '%'.$customer_phone.'%')
+        ->where('customer_address', 'like', '%'.$customer_address.'%')
+        ->where('order_stuff', 'like', '%'.$order_stuff.'%')
+        ->where('cmptn_direction', 'like', '%'.$cmptn_direction.'%')
+        ->where('responsible_party', 'like', '%'.$responsible_party.'%')
+        ->where('responsible_person', 'like', '%'.$responsible_person.'%')
+        ->where('logistics_company', 'like', '%'.$logistics_company.'%')
+        ->where('logistics_tracking_number', 'like', '%'.$logistics_tracking_number.'%')
+        ->where('cmptn_shop', 'like', '%'.$cmptn_shop.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
@@ -81,7 +203,7 @@ class AfterCompensationController extends Controller
     }
 
     /**
-     * 获取创建订单数据
+     * 获取创建订单数据.
      */
     public function create(AfterCompensationOrder $order)
     {
@@ -92,7 +214,7 @@ class AfterCompensationController extends Controller
     }
 
     /**
-     * 新增客服部(可选参数：include)
+     * 新增客服部(可选参数：include).
      *
      * @Post("/aftercompensation[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -335,8 +457,8 @@ class AfterCompensationController extends Controller
      *      })
      * })
      */
-     public function store(AfterCompensationRequest $request, ProblemProductRequest $problemProductRequest)
-     {
+    public function store(AfterCompensationRequest $request, ProblemProductRequest $problemProductRequest)
+    {
         $data[] = $request->validated();
         $data[] = $request->input('problem_product');
 
@@ -347,10 +469,10 @@ class AfterCompensationController extends Controller
             self::MODEL,
             self::TRANSFORMER
         );
-     }
-     
+    }
+
     /**
-     * 显示单条客服部
+     * 显示单条客服部.
      *
      * @Get("/aftercompensation/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -443,7 +565,7 @@ class AfterCompensationController extends Controller
     }
 
     /**
-     * 修改客服部
+     * 修改客服部.
      *
      * @Patch("/aftercompensation/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -710,9 +832,8 @@ class AfterCompensationController extends Controller
         );
     }
 
-
     /**
-     * 删除客服部
+     * 删除客服部.
      *
      * @Delete("/aftercompensation/:id")
      * @Versions({"v1"})
@@ -726,8 +847,7 @@ class AfterCompensationController extends Controller
      */
     public function destroy(AfterCompensationOrder $order)
     {
-        DB::transaction(function() use ($order) {
-
+        DB::transaction(function () use ($order) {
             $order = $order->delete();
 
             if ($order === false) {
@@ -739,7 +859,7 @@ class AfterCompensationController extends Controller
     }
 
     /**
-     * 删除一组客服部
+     * 删除一组客服部.
      *
      * @Delete("/aftercompensation")
      * @Versions({"v1"})
@@ -763,8 +883,7 @@ class AfterCompensationController extends Controller
     {
         $ids = explode(',', $request->input('ids'));
 
-        DB::transaction(function() use ($ids) {
-
+        DB::transaction(function () use ($ids) {
             $order = AfterCompensationOrder::destroy($ids);
 
             if ($order === false) {
@@ -811,7 +930,7 @@ class AfterCompensationController extends Controller
     }
 
     /**
-     * 锁定或释放
+     * 锁定或释放.
      *
      * @PUT("/aftercompensation/:id/lockorunlock")
      * @Versions({"v1"})
@@ -848,12 +967,12 @@ class AfterCompensationController extends Controller
      */
     public function isAudit(AfterCompensationOrder $order)
     {
-        return $this->traitAction($order,!$order->status || $order->getOriginal('cmptn_status') ==  $order::CMPTN_STATUS_ONE_AUDIT,'客审出错','audit');
+        return $this->traitAction($order, !$order->status || $order->getOriginal('cmptn_status') == $order::CMPTN_STATUS_ONE_AUDIT, '客审出错', 'audit');
     }
 
     public function isSecAudit(AfterCompensationOrder $order)
     {
-        return $this->traitAction($order,!$order->status || $order->getOriginal('cmptn_status') ==  $order::CMPTN_STATUS_SEC_AUDIT,'客审出错','secaudit');
+        return $this->traitAction($order, !$order->status || $order->getOriginal('cmptn_status') == $order::CMPTN_STATUS_SEC_AUDIT, '客审出错', 'secaudit');
     }
 
     /**
@@ -890,7 +1009,7 @@ class AfterCompensationController extends Controller
     }
 
     /**
-     * 拆单(要及时修改新订单的价格数据)
+     * 拆单(要及时修改新订单的价格数据).
      *
      * @PUT("/aftercompensation/:id/splitorder")
      * @Versions({"v1"})
@@ -918,7 +1037,7 @@ class AfterCompensationController extends Controller
     }
 
     /**
-     * 合并订单
+     * 合并订单.
      *
      * @PUT("/aftercompensation/mergerorder?order_id_one=1&order_id_two=2")
      * @Versions({"v1"})
@@ -944,5 +1063,4 @@ class AfterCompensationController extends Controller
             $mergerOrderRequest->validated()
         );
     }
-
 }

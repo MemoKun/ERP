@@ -1,13 +1,12 @@
 webpackJsonp([28],{
 
-/***/ 1055:
+/***/ 1058:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
-//
 //
 //
 //
@@ -2259,7 +2258,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.$store.dispatch("freighttypes", "/freighttypes");
         _this.$fetch(_this.urls.customerservicedepts + "/create").then(function (res) {
           _this.addSubData = res;
-          console.log(_this.addSubData);
         }, function (err) {});
         _this.proDtlData = res.data[0] ? res.data["orderItems"].data : [];
         _this.cargoAuditData = res.data;
@@ -2308,25 +2306,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         shops_id: "",
         business_personnel_id: "",
         promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        order_transMStart: "",
-        order_transMEnd: "",
-        logistics_id: "",
-        stockout_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        payment_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        order_status: "",
-        orderStatus: [],
+        created_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
+        order_transMStart: '',
+        order_transMEnd: '',
+        logistics: '',
+        stockout_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
+        payment_date: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
+        order_status: '',
+        orderStatus: [{ label: '未处理', value: 10 }, { label: '订单锁定中', value: 20 }, { label: '已客审', value: 30 }, { label: '已跟单一审', value: 40 }, { label: '已财审', value: 50 }, { label: '已货审', value: 60 }, { label: '准备出库', value: 70 }, { label: '已出库', value: 80 }],
         order_fdAuditDate: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        seller_flag: "",
-        sellerFlags: [],
-        logistics_sn: "",
-        out_order: "",
-        seller_remark: "",
-        suppliers_id: "",
-        warehouses_id: "",
-        esheet_no: "",
-        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        auditor_id: ""
+        seller_flag: '',
+        logistics_sn: '',
+        out_order: '',
+        seller_remark: '',
+        suppliers_id: '',
+        warehouses_id: '',
+        esheet_no: '',
+        audit_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
+        auditor_id: ''
       };
     },
 
@@ -2334,7 +2331,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     searchData: function searchData() {
       this.loading = true;
       this.fetchData();
-      this.resets();
     },
     rightHandleClick: function rightHandleClick() {},
     orderListRClick: function orderListRClick(row) {
@@ -2588,7 +2584,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*批量删除*/
     handleSelectionChange: function handleSelectionChange(val) {
-      console.log(val);
       /*拿到id集合*/
       var delArr = [];
       val.forEach(function (selectedItem) {
@@ -2697,7 +2692,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1056:
+/***/ 1059:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -3685,11 +3680,11 @@ var render = function() {
                                                   _vm._v(
                                                     "\n                  " +
                                                       _vm._s(
-                                                        item.inProp
+                                                        scope.row[item.prop]
                                                           ? scope.row[
                                                               item.prop
                                                             ][item.inProp]
-                                                          : scope.row[item.prop]
+                                                          : ""
                                                       ) +
                                                       "\n                "
                                                   )
@@ -3698,13 +3693,7 @@ var render = function() {
                                         : _c("span", [
                                             _vm._v(
                                               "\n                " +
-                                                _vm._s(
-                                                  item.inProp
-                                                    ? scope.row[item.prop][
-                                                        item.inProp
-                                                      ]
-                                                    : scope.row[item.prop]
-                                                ) +
+                                                _vm._s(scope.row[item.prop]) +
                                                 "\n              "
                                             )
                                           ])
@@ -4930,15 +4919,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 949:
+/***/ 952:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1055)
+var __vue_script__ = __webpack_require__(1058)
 /* template */
-var __vue_template__ = __webpack_require__(1056)
+var __vue_template__ = __webpack_require__(1059)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

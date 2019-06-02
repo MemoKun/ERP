@@ -1,14 +1,14 @@
 webpackJsonp([68],{
 
-/***/ 1006:
+/***/ 1009:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1171)
+var __vue_script__ = __webpack_require__(1174)
 /* template */
-var __vue_template__ = __webpack_require__(1172)
+var __vue_template__ = __webpack_require__(1175)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,21 +48,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 1171:
+/***/ 1174:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -826,6 +818,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         order_no: "",
         vip_name: "",
         orderStaff: [{ label: "ceshi", value: 0 }],
+        user_id: '',
         after_sale_status: "",
         after_sale_type: "",
         order_phone: "",
@@ -1004,6 +997,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       getsInfo: [],
       newData: [],
       submitData: [],
+      addSubData: [],
       newLoading: true,
       submitLoading: true,
       checkboxInit: false,
@@ -1515,6 +1509,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.newLoading = false;
+            _this.addSubData = res;
+            console.log(_this.addSubData);
             _this.newData = res.data;
             _this.scheduleData = res.data[0] ? res.data[0]["afterSaleSchedules"].data : [];
             _this.defProData = res.data[0] ? res.data[0]["afterSaleDefPros"].data : [];
@@ -2215,7 +2211,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1172:
+/***/ 1175:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -2326,17 +2322,6 @@ var render = function() {
                 "el-select",
                 {
                   attrs: { clearable: "", placeholder: "请选择" },
-                  nativeOn: {
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.handleQuery($event)
-                    }
-                  },
                   model: {
                     value: _vm.searchBox.user_id,
                     callback: function($$v) {
@@ -2345,13 +2330,19 @@ var render = function() {
                     expression: "searchBox.user_id"
                   }
                 },
-                _vm._l(_vm.searchBox.orderStaff, function(item) {
-                  return _c("el-option", {
-                    key: item.value,
-                    attrs: { label: item.label, value: item.value }
-                  })
+                _vm._l(_vm.addSubData["user"], function(list) {
+                  return _c(
+                    "span",
+                    { key: list.id },
+                    [
+                      _c("el-option", {
+                        attrs: { label: list["username"], value: list.id }
+                      })
+                    ],
+                    1
+                  )
                 }),
-                1
+                0
               )
             ],
             1

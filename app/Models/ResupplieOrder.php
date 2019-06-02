@@ -36,7 +36,7 @@ class ResupplieOrder extends Model
     const RESUPPLIE_INVALID = 1;
 
     protected $fillable = [
-        'resupply_order_no', 'system_order_no', 'package_types_id',
+        'resupply_order_no', 'orders_id', 'system_order_no', 'package_types_id',
         're_supplie_categories_id', 'resupply_cost', 'resupply_money',
         'resupply_reason', 'resupply_remark', 're_supplie_responsibles_id',
         'salesman', 'shop_nick', 'member_nick', 'shop_group', 'member_name',
