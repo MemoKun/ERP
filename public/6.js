@@ -1,54 +1,6 @@
 webpackJsonp([6],{
 
-/***/ 476:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(601)
-/* template */
-var __vue_template__ = __webpack_require__(602)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/views/basicInf/logisticsMag.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fb215f4e", Component.options)
-  } else {
-    hotAPI.reload("data-v-fb215f4e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 522:
+/***/ 1014:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62,9 +14,9 @@ module.exports = Component.exports
 
 
 
-var base64 = __webpack_require__(529)
-var ieee754 = __webpack_require__(530)
-var isArray = __webpack_require__(531)
+var base64 = __webpack_require__(1021)
+var ieee754 = __webpack_require__(1022)
+var isArray = __webpack_require__(1023)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -1842,11 +1794,11 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ }),
 
-/***/ 523:
+/***/ 1015:
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -1856,7 +1808,7 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 
-/***/ 524:
+/***/ 1016:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {/* cpexcel.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -3365,18 +3317,18 @@ if (typeof module !== 'undefined' && module.exports && typeof DO_NOT_EXPORT_CODE
   return cpt;
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(522).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1014).Buffer))
 
 /***/ }),
 
-/***/ 525:
+/***/ 1017:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 526:
+/***/ 1018:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* FileSaver.js
@@ -3562,7 +3514,7 @@ var saveAs = saveAs || (function(view) {
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports.saveAs = saveAs;
-} else if (("function" !== "undefined" && __webpack_require__(527) !== null) && (__webpack_require__(523) !== null)) {
+} else if (("function" !== "undefined" && __webpack_require__(1019) !== null) && (__webpack_require__(1015) !== null)) {
   !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
     return saveAs;
   }).call(exports, __webpack_require__, exports, module),
@@ -3572,7 +3524,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 /***/ }),
 
-/***/ 527:
+/***/ 1019:
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -3582,7 +3534,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 528:
+/***/ 1020:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, Buffer, process) {/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -3596,8 +3548,8 @@ var current_codepage = 1200, current_ansi = 1252;
 /*global cptable:true, window */
 if(true) {
 	if(typeof cptable === 'undefined') {
-		if(typeof global !== 'undefined') global.cptable = __webpack_require__(524);
-		else if(typeof window !== 'undefined') window.cptable = __webpack_require__(524);
+		if(typeof global !== 'undefined') global.cptable = __webpack_require__(1016);
+		else if(typeof window !== 'undefined') window.cptable = __webpack_require__(1016);
 	}
 }
 
@@ -4746,7 +4698,7 @@ function filename(p) {
 	return (c === -1) ? p : p.slice(c+1);
 }
 var fs;
-function get_fs() { return fs || (fs = __webpack_require__(525)); }
+function get_fs() { return fs || (fs = __webpack_require__(1017)); }
 function parse(file, options) {
 if(file.length < 512) throw new Error("CFB file size " + file.length + " < 512");
 var mver = 3;
@@ -5434,7 +5386,7 @@ return exports;
 
 if("function" !== 'undefined' && typeof module !== 'undefined' && typeof DO_NOT_EXPORT_CFB === 'undefined') { module.exports = CFB; }
 var _fs;
-if(true) try { _fs = __webpack_require__(525); } catch(e) {}
+if(true) try { _fs = __webpack_require__(1017); } catch(e) {}
 
 /* normalize data for blob ctor */
 function blobify(data) {
@@ -5695,7 +5647,7 @@ var jszip;
 if(typeof JSZipSync !== 'undefined') jszip = JSZipSync;
 if(true) {
 	if(typeof module !== 'undefined' && module.exports) {
-		if(typeof jszip === 'undefined') jszip = __webpack_require__(532);
+		if(typeof jszip === 'undefined') jszip = __webpack_require__(1024);
 	}
 }
 
@@ -6316,7 +6268,7 @@ var make_offcrypto = function(O, _crypto) {
 	var crypto;
 	if(typeof _crypto !== 'undefined') crypto = _crypto;
 	else if(true) {
-		try { crypto = __webpack_require__(533); }
+		try { crypto = __webpack_require__(1025); }
 		catch(e) { crypto = null; }
 	}
 
@@ -23687,7 +23639,7 @@ return utils;
 })(utils);
 
 if(has_buf && "function" != 'undefined') (function() {
-	var Readable = __webpack_require__(534).Readable;
+	var Readable = __webpack_require__(1026).Readable;
 
 	var write_csv_stream = function(sheet, opts) {
 		var stream = Readable();
@@ -23832,11 +23784,11 @@ else make_xlsx_lib(XLSX);
 /*exported XLS, ODS */
 var XLS = XLSX, ODS = XLSX;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13), __webpack_require__(522).Buffer, __webpack_require__(66)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(1014).Buffer, __webpack_require__(179)))
 
 /***/ }),
 
-/***/ 529:
+/***/ 1021:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23995,7 +23947,7 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ 530:
+/***/ 1022:
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -24086,7 +24038,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 /***/ }),
 
-/***/ 531:
+/***/ 1023:
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -24098,7 +24050,7 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ 532:
+/***/ 1024:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*
@@ -24117,7 +24069,7 @@ Note: since JSZip 3 removed critical functionality, this version assigns to the
 */
 (function(e){
 	if("object"==typeof exports&&"undefined"!=typeof module&&"undefined"==typeof DO_NOT_EXPORT_JSZIP)module.exports=e();
-	else if("function"=="function"&&__webpack_require__(523)&&"undefined"==typeof DO_NOT_EXPORT_JSZIP){JSZipSync=e();!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (e),
+	else if("function"=="function"&&__webpack_require__(1015)&&"undefined"==typeof DO_NOT_EXPORT_JSZIP){JSZipSync=e();!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (e),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}
@@ -33104,35 +33056,35 @@ module.exports = ZStream;
 (9)
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(522).Buffer, __webpack_require__(13)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1014).Buffer, __webpack_require__(34)))
 
 /***/ }),
 
-/***/ 533:
+/***/ 1025:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 534:
+/***/ 1026:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 601:
+/***/ 1093:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver__ = __webpack_require__(526);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver__ = __webpack_require__(1018);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_file_saver__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx__ = __webpack_require__(528);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx__ = __webpack_require__(1020);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_xlsx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_china_area_data__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_element_china_area_data__);
 //
 //
@@ -34058,7 +34010,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 602:
+/***/ 1094:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -34124,43 +34076,53 @@ var render = function() {
                         align: "center",
                         width: item.width
                       },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-checkbox", {
-                                        attrs: { disabled: "" },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _c("span", [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(
-                                          item.inProp
-                                            ? scope.row[item.prop][item.inProp]
-                                            : scope.row[item.prop]
-                                        ) +
-                                        "\n                            "
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type == "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
                                     )
-                                  ])
-                            ]
+                                  : _c("span", [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(
+                                            item.inProp
+                                              ? scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              : scope.row[item.prop]
+                                          ) +
+                                          "\n                            "
+                                      )
+                                    ])
+                              ]
+                            }
                           }
-                        }
-                      ])
+                        ],
+                        null,
+                        true
+                      )
                     })
                   }),
                   _vm._v(" "),
@@ -34236,55 +34198,65 @@ var render = function() {
                         align: "center",
                         width: item.width
                       },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              item.type == "checkbox"
-                                ? _c(
-                                    "span",
-                                    [
-                                      _c("el-checkbox", {
-                                        attrs: { disabled: "" },
-                                        model: {
-                                          value: scope.row[item.prop],
-                                          callback: function($$v) {
-                                            _vm.$set(scope.row, item.prop, $$v)
-                                          },
-                                          expression: "scope.row[item.prop]"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : item.type == "select_def"
-                                ? _c("span", [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(
-                                          scope.row[item.prop] == "0"
-                                            ? "中转"
-                                            : "直达"
-                                        ) +
-                                        "\n                            "
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type == "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
                                     )
-                                  ])
-                                : _c("span", [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(
-                                          item.inProp
-                                            ? scope.row[item.prop][item.inProp]
-                                            : scope.row[item.prop]
-                                        ) +
-                                        "\n                            "
-                                    )
-                                  ])
-                            ]
+                                  : item.type == "select_def"
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(
+                                            scope.row[item.prop] == "0"
+                                              ? "中转"
+                                              : "直达"
+                                          ) +
+                                          "\n                            "
+                                      )
+                                    ])
+                                  : _c("span", [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(
+                                            item.inProp
+                                              ? scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              : scope.row[item.prop]
+                                          ) +
+                                          "\n                            "
+                                      )
+                                    ])
+                              ]
+                            }
                           }
-                        }
-                      ])
+                        ],
+                        null,
+                        true
+                      )
                     })
                   }),
                   _vm._v(" "),
@@ -34372,75 +34344,123 @@ var render = function() {
                     align: "center",
                     width: item.width
                   },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _vm.cityIndex == "index" + scope.$index
-                            ? _c("span", [
-                                item.type == "number"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            size: "small",
-                                            type: "number",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _vm.cityIndex == "index" + scope.$index
+                              ? _c("span", [
+                                  item.type == "number"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            attrs: {
+                                              size: "small",
+                                              type: "number",
+                                              placeholder: item.holder
                                             },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "textarea"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            type: "textarea",
-                                            size: "small",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "textarea"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            attrs: {
+                                              type: "textarea",
+                                              size: "small",
+                                              placeholder: item.holder
                                             },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "selects"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c(
-                                          "el-select",
-                                          {
-                                            attrs: { placeholder: item.holder },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "selects"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c(
+                                            "el-select",
+                                            {
+                                              attrs: {
+                                                placeholder: item.holder
+                                              },
+                                              model: {
+                                                value: scope.row[item.prop],
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    scope.row,
+                                                    item.prop,
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "scope.row[item.prop]"
+                                              }
+                                            },
+                                            _vm._l(_vm.transfers, function(
+                                              list
+                                            ) {
+                                              return _c(
+                                                "span",
+                                                { key: list.value },
+                                                [
+                                                  _c("el-option", {
+                                                    attrs: {
+                                                      label: list.label,
+                                                      value: list.value
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              )
+                                            }),
+                                            0
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "cascader"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-cascader", {
+                                            attrs: {
+                                              size: "middle",
+                                              options: _vm.options,
+                                              placeholder: item.holder
+                                            },
                                             model: {
                                               value: scope.row[item.prop],
                                               callback: function($$v) {
@@ -34452,168 +34472,129 @@ var render = function() {
                                               },
                                               expression: "scope.row[item.prop]"
                                             }
-                                          },
-                                          _vm._l(_vm.transfers, function(list) {
-                                            return _c(
-                                              "span",
-                                              { key: list.value },
-                                              [
-                                                _c("el-option", {
-                                                  attrs: {
-                                                    label: list.label,
-                                                    value: list.value
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          }),
-                                          0
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "checkbox"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            attrs: {
+                                              size: "small",
+                                              placeholder: item.holder
+                                            },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  item.type == "selects"
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                            " +
+                                            _vm._s(
+                                              scope.row[item.prop] === 0
+                                                ? "中转"
+                                                : "直达"
+                                            ) +
+                                            "\n                        "
                                         )
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "cascader"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-cascader", {
-                                          attrs: {
-                                            size: "middle",
-                                            options: _vm.options,
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
+                                      ])
+                                    : item.type == "cascader"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-cascader", {
+                                            attrs: {
+                                              size: "middle",
+                                              options: _vm.options
                                             },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "checkbox"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-checkbox", {
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            size: "small",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                              ])
-                            : _c("span", [
-                                item.type == "selects"
-                                  ? _c("span", [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(
-                                            scope.row[item.prop] === 0
-                                              ? "中转"
-                                              : "直达"
-                                          ) +
-                                          "\n                        "
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
                                       )
-                                    ])
-                                  : item.type == "cascader"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-cascader", {
-                                          attrs: {
-                                            size: "middle",
-                                            options: _vm.options
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "checkbox"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-checkbox", {
-                                          attrs: { disabled: "" },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c("span", [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n                        "
+                                    : item.type == "checkbox"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
                                       )
-                                    ])
-                              ])
-                        ]
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                            " +
+                                            _vm._s(scope.row[item.prop]) +
+                                            "\n                        "
+                                        )
+                                      ])
+                                ])
+                          ]
+                        }
                       }
-                    }
-                  ])
+                    ],
+                    null,
+                    true
+                  )
                 })
               }),
               _vm._v(" "),
@@ -34744,75 +34725,123 @@ var render = function() {
                     align: "center",
                     width: item.width
                   },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(scope) {
-                        return [
-                          _vm.updateIndex == "index" + scope.$index
-                            ? _c("span", [
-                                item.type == "number"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            size: "small",
-                                            type: "number",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _vm.updateIndex == "index" + scope.$index
+                              ? _c("span", [
+                                  item.type == "number"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            attrs: {
+                                              size: "small",
+                                              type: "number",
+                                              placeholder: item.holder
                                             },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "textarea"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            type: "textarea",
-                                            size: "small",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "textarea"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            attrs: {
+                                              type: "textarea",
+                                              size: "small",
+                                              placeholder: item.holder
                                             },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "selects"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c(
-                                          "el-select",
-                                          {
-                                            attrs: { placeholder: item.holder },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "selects"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c(
+                                            "el-select",
+                                            {
+                                              attrs: {
+                                                placeholder: item.holder
+                                              },
+                                              model: {
+                                                value: scope.row[item.prop],
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    scope.row,
+                                                    item.prop,
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "scope.row[item.prop]"
+                                              }
+                                            },
+                                            _vm._l(_vm.transfers, function(
+                                              list
+                                            ) {
+                                              return _c(
+                                                "span",
+                                                { key: list.value },
+                                                [
+                                                  _c("el-option", {
+                                                    attrs: {
+                                                      label: list.label,
+                                                      value: list.value
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              )
+                                            }),
+                                            0
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "cascader"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-cascader", {
+                                            attrs: {
+                                              size: "middle",
+                                              options: _vm.options,
+                                              placeholder: item.holder
+                                            },
                                             model: {
                                               value: scope.row[item.prop],
                                               callback: function($$v) {
@@ -34824,168 +34853,129 @@ var render = function() {
                                               },
                                               expression: "scope.row[item.prop]"
                                             }
-                                          },
-                                          _vm._l(_vm.transfers, function(list) {
-                                            return _c(
-                                              "span",
-                                              { key: list.value },
-                                              [
-                                                _c("el-option", {
-                                                  attrs: {
-                                                    label: list.label,
-                                                    value: list.value
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          }),
-                                          0
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : item.type == "checkbox"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("el-input", {
+                                            attrs: {
+                                              size: "small",
+                                              placeholder: item.holder
+                                            },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  typeof $$v === "string"
+                                                    ? $$v.trim()
+                                                    : $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              : _c("span", [
+                                  item.type == "selects"
+                                    ? _c("span", [
+                                        _vm._v(
+                                          "\n                            " +
+                                            _vm._s(
+                                              scope.row[item.prop] === 0
+                                                ? "中转"
+                                                : "直达"
+                                            ) +
+                                            "\n                        "
                                         )
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "cascader"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-cascader", {
-                                          attrs: {
-                                            size: "middle",
-                                            options: _vm.options,
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
+                                      ])
+                                    : item.type == "cascader"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-cascader", {
+                                            attrs: {
+                                              size: "middle",
+                                              options: _vm.options
                                             },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "checkbox"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-checkbox", {
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c(
-                                      "span",
-                                      [
-                                        _c("el-input", {
-                                          attrs: {
-                                            size: "small",
-                                            placeholder: item.holder
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                typeof $$v === "string"
-                                                  ? $$v.trim()
-                                                  : $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                              ])
-                            : _c("span", [
-                                item.type == "selects"
-                                  ? _c("span", [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(
-                                            scope.row[item.prop] === 0
-                                              ? "中转"
-                                              : "直达"
-                                          ) +
-                                          "\n                        "
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
                                       )
-                                    ])
-                                  : item.type == "cascader"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-cascader", {
-                                          attrs: {
-                                            size: "middle",
-                                            options: _vm.options
-                                          },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "checkbox"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-checkbox", {
-                                          attrs: { disabled: "" },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c("span", [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(scope.row[item.prop]) +
-                                          "\n                        "
+                                    : item.type == "checkbox"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("el-checkbox", {
+                                            attrs: { disabled: "" },
+                                            model: {
+                                              value: scope.row[item.prop],
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  scope.row,
+                                                  item.prop,
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "scope.row[item.prop]"
+                                            }
+                                          })
+                                        ],
+                                        1
                                       )
-                                    ])
-                              ])
-                        ]
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                            " +
+                                            _vm._s(scope.row[item.prop]) +
+                                            "\n                        "
+                                        )
+                                      ])
+                                ])
+                          ]
+                        }
                       }
-                    }
-                  ])
+                    ],
+                    null,
+                    true
+                  )
                 })
               }),
               _vm._v(" "),
@@ -35133,6 +35123,54 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-fb215f4e", module.exports)
   }
 }
+
+/***/ }),
+
+/***/ 968:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(12)
+/* script */
+var __vue_script__ = __webpack_require__(1093)
+/* template */
+var __vue_template__ = __webpack_require__(1094)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/views/basicInf/logisticsMag.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-fb215f4e", Component.options)
+  } else {
+    hotAPI.reload("data-v-fb215f4e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ })
 

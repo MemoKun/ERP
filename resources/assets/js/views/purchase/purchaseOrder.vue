@@ -220,11 +220,6 @@
     <!--新建采购单-->
     <el-dialog title="新建采购单" :visible.sync="addPurchaseMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
       <el-button type="text">基本信息</el-button>
-      <label>{{this.addPurchaseSkuVal}}</label>
-      <br>
-      <label>---------------------------</label>
-      <br>
-      <label>{{this.addPurchaseForm}}</label>
       <add-new :rule-form="addPurchaseForm" :rules="addPurchaseRules" :add-arr="addPurchaseHead" :onlyInputs="true"></add-new>
       <div class="clearfix">
         <div style="float: left">

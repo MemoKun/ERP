@@ -708,8 +708,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.usgoodsuncheck');
 
         //审计部
-        $api->get('customerservicedepts/searchaudit', 'CustomerServiceDepartmentsController@searchAudit')
-            ->name('api.customerservicedepts.searchaudit');
+        $api->get('customerservicedepts/searchunaudit', 'CustomerServiceDepartmentsController@searchAudit')
+            ->name('api.customerservicedepts.searchunaudit');
         $api->put('customerservicedepts/{order}/auditdeptsrejectaudit', 'CustomerServiceDepartmentsController@isAuditDeptsRejectAudit')
             ->name('api.customerservicedepts.isauditdeptsrejectaudit');
         $api->put('customerservicedepts/{order}/auditdeptsaudit', 'CustomerServiceDepartmentsController@isAuditDeptsAudit')
@@ -730,6 +730,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.changeorders.searchtreated');
         $api->get('changeorders/searchcanceled', 'CustomerServiceChangeOrdersController@searchCanceled')
             ->name('api.changeorders.searchcanceled');
+        $api->patch('changeorders/{order}', 'CustomerServiceChangeOrdersController@update')
+            ->name('api.changeorders.update');
+        $api->put('changeorders/{order}/auditchanges', 'CustomerServiceChangeOrdersController@isAuditChanges')
+            ->name('api.changeorders.isauditchanges');
 
             
         $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')
@@ -1696,6 +1700,11 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.roles.insertRole');
         //        $api->patch('roles/{roleid}', 'RolesController@update')
         //            ->name('api.roles.update');
+
+
+        //打印功能
+        $api->get('excel', 'ExcelController@export')
+        ->name('api.excel.export');
 
         $api->get('rolegroup', 'RoleGroupController@index')
             ->name('api.roles.index');

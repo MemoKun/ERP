@@ -468,7 +468,7 @@ export default {
         {
           cnt: "导出",
           icon: "bf-out",
-          ent: this.test
+          ent: this.excelExport
         },
         {
           cnt: "停止生产",
@@ -1943,6 +1943,14 @@ export default {
           "productComponents,shop,supplier,goodsCategory,combinations.productComponents"
       }).then(res => {
         this.logisticsData = res.data;
+      });
+    },
+    excelExport(){
+      this.$fetch(this.urls.excel).then(res => {
+        this.$message({
+          message:"打印成功",
+          type:"success"
+        });
       });
     },
     /*其他*/

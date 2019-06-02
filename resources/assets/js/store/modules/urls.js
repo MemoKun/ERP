@@ -1,6 +1,6 @@
 const urls= {
   state: {
-    testUrl: 'http://bferp.test/#/api',//bferp.test
+    testUrl: 'http://bferp.test/#/api',//bferp.test//erp.2b181.cn
     captchas:'/captchas',
     markcolors:'/markcolors',
     acctypes:'/acctypes',
@@ -67,6 +67,7 @@ const urls= {
     permissions: '/permissions',
     problemProduct:'problemProduct',
     redpackagemag:'/redpackagemag',
+    excel:'/excel',
 
     me:'/me',
     current:'/current',

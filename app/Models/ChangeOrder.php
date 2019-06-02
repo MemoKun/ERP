@@ -43,6 +43,8 @@ class ChangeOrder extends Model
     protected $fillable = [
         'change_order_no',
         'cancel_order_no',
+        'order_items_id',
+        'payment_details_id',
         'is_canceled',
         'ch_applier_id',
         'ch_applied_at',
@@ -243,10 +245,24 @@ class ChangeOrder extends Model
     public function submit()
     {
         $this->ch_submitter_id = Auth::guard('api')->id();
-        $this->change_status = self::CHANGE_STATUS_SUBMIT;
         $this->ch_submitted_at = date("Y-m-d h:i:s");
+        $this->change_status = self::CHANGE_STATUS_SUBMIT;
         $this->save();
     }
+
+    /**
+     * 审核变更
+     *
+     * @return bool
+     */
+     public function auditChanges()
+     {
+         $this->change_status = self::CHANGE_STATUS_AUDIT;
+         $this->ch_auditor_id = Auth::guard('api')->id();
+         $this->ch_audited_at = date("Y-m-d h:i:s");
+         $this->save();
+     }
+
     /**
      * 审核
      * @return bool
@@ -324,7 +340,7 @@ class ChangeOrder extends Model
 
     public function orderItems()
     {
-        return $this->hasMany(OrderItem::class, 'orders_id');
+        return $this->hasMany(OrderItem::class, 'change_orders_id');
     }
 
     public function businessPersonnel()
@@ -344,6 +360,6 @@ class ChangeOrder extends Model
 
     public function paymentDetails()
     {
-        return $this->hasMany(PaymentDetail::class, 'orders_id');
+        return $this->hasMany(PaymentDetail::class, 'change_orders_id');
     }
 }

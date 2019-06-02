@@ -64,120 +64,11 @@ class CustomerServiceDepartmentsController extends Controller
         ->whereBetween('promise_ship_time', [$promise_ship_time[0], $promise_ship_time[1]])
         ->whereBetween('created_at', [$created_at[0], $created_at[1]])
         //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
-        ->orderBy('created_at', 'desc');
+        ->orderBy('updated_at', 'desc');
 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    /**
-     * 获取所有客服部.
-     *
-     * @Get("/customerservicedepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
-     * @Versions({"v1"})
-     * @Parameters({
-     *      @Parameter("status", type="boolean", description="获取的状态", required=false, default="all"),
-     *      @Parameter("order_status", type="boolean", description="获取的状态", required=false, default="all"),
-     * })
-     * @Response(200, body={
-     *       "data": {
-     *           {
-     *              "id": 1,
-     *              "system_order_no": "DD2018082011365716512",
-     *              "order_status": "未处理",
-     *              "order_source": "system",
-     *              "shops_id": 1,
-     *              "logistics_id": 1,
-     *              "billing_way": "weight",
-     *              "promise_ship_time": "2018-08-20",
-     *              "freight_types_id": 1,
-     *              "expected_freight": "10.00",
-     *              "distributions_id": 1,
-     *              "distribution_methods_id": 15,
-     *              "deliver_goods_fee": "10.00",
-     *              "move_upstairs_fee": "10.00",
-     *              "installation_fee": "10.00",
-     *              "total_distribution_fee": "30.00",
-     *              "distribution_phone": "配送电话",
-     *              "distribution_no": "配送单号",
-     *              "distribution_types_id": 1,
-     *              "service_car_info": "服务车信息（配送信息）",
-     *              "take_delivery_goods_fee": "10.00",
-     *              "take_delivery_goods_ways_id": 1,
-     *              "express_fee": "10.00",
-     *              "service_car_fee": "10.00",
-     *              "cancel_after_verification_code": "核销码",
-     *              "wooden_frame_costs": "10.00",
-     *              "preferential_cashback": "2.00",
-     *              "favorable_cashback": "2.00",
-     *              "customer_types_id": 1,
-     *              "is_invoice": false,
-     *              "invoice_express_fee": "5.00",
-     *              "express_invoice_title": "快递发票抬头",
-     *              "contract_no": "合同单号",
-     *              "payment_methods_id": 1,
-     *              "deposit": "10.00",
-     *              "document_title": "单据头",
-     *              "warehouses_id": 1,
-     *              "payment_date": "2018-08-20",
-     *              "interest_concessions": "10.00",
-     *              "is_notice": true,
-     *              "is_cancel_after_verification": false,
-     *              "accept_order_user": "接单用户",
-     *              "tax_number": "税号",
-     *              "receipt": "收据",
-     *              "logistics_remark": "物流备注",
-     *              "seller_remark": "卖家备注",
-     *              "customer_service_remark": "客服备注",
-     *              "taobao_oid": 0,
-     *              "taobao_tid": 0,
-     *              "member_nick": "会员昵称",
-     *              "shop_name": "",
-     *              "seller_name": "",
-     *              "seller_flag": 0,
-     *              "created": null,
-     *              "est_con_time": null,
-     *              "buyer_message": "买家留言",
-     *              "receiver_name": "",
-     *              "receiver_phone": "",
-     *              "receiver_mobile": "",
-     *              "receiver_state": "",
-     *              "receiver_city": "",
-     *              "receiver_district": "",
-     *              "receiver_address": "",
-     *              "receiver_zip": "",
-     *              "refund_info": "无退款",
-     *              "business_personnel_id": 0,
-     *              "locker_id": 0,
-     *              "audit_at": null,
-     *              "association_taobao_oid": "",
-     *              "is_merge": false,
-     *              "is_split": false,
-     *              "is_association": false,
-     *              "created_at": "2018-08-20 11:36:57",
-     *              "updated_at": "2018-08-20 11:36:57"
-     *          }
-     *       },
-     *     "meta": {
-     *          "pagination": {
-     *              "total": 1,
-     *              "count": 1,
-     *              "per_page": 8,
-     *              "current_page": 1,
-     *              "total_pages": 1,
-     *              "links": null
-     *          }
-     *      }
-     * })
-     */
-    public function searchAudit(CustomerServiceDepartmentRequest $request)
-    {
-        $order_status = $request->input('order_status');
-        $order = Order::query()
-        ->where('order_status', '=', $order_status)
-        ->orderBy('created_at', 'desc');
-
-        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
-    }
 
     public function searchAll(CustomerServiceDepartmentRequest $request)
     {
@@ -1262,9 +1153,9 @@ class CustomerServiceDepartmentsController extends Controller
         \App\Handlers\ValidatedHandler $validatedHandler
     ) {
         //锁定才能修改
-        if ($order->unlock()) {
-            throw new UpdateResourceFailedException('订单未锁定无法修改');
-        }
+        //if ($order->unlock()) {
+        //    throw new UpdateResourceFailedException('订单未锁定无法修改');
+        //}
 
         $data[] = $CustomerServiceDepartmentRequest->validated();
         $data[] = $CustomerServiceDepartmentRequest->input('order_items');
@@ -1290,7 +1181,7 @@ class CustomerServiceDepartmentsController extends Controller
                         $order->orderItems()->create($validatedData);
                     }
                 }
-            }
+            }   
 
             if ($data[2] ?? null) {
                 foreach ($data[2] as $item) {
@@ -1304,7 +1195,7 @@ class CustomerServiceDepartmentsController extends Controller
                     }
                 }
             }
-
+            
             return $order;
         });
 

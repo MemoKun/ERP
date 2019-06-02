@@ -186,10 +186,9 @@ class OrderTransformer extends TransformerAbstract
 
     public function includeBusinessPersonnel(Order $order)
     {
-        if (!$order->locker) {
+        if (!$order->business_personnel_id) {
             return;
         }
-
         return $this->item($order->businessPersonnel, new UserTransformer());
     }
 

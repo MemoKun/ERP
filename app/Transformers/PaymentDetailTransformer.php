@@ -31,7 +31,15 @@ class PaymentDetailTransformer extends TransformerAbstract
 
     public function includeOrder(PaymentDetail $paymentDetail)
     {
+        if (!$paymentDetail->order) {
+            return;
+        }
         return $this->item($paymentDetail->order, new OrderTransformer());
+    }
+
+    public function includeChangeOrder(PaymentDetail $paymentDetail)
+    {
+        return $this->item($paymentDetail->order, new ChangeOrderTransformer());
     }
 
     public function includePaymentMethod(PaymentDetail $paymentDetail)

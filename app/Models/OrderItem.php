@@ -23,6 +23,11 @@ class OrderItem extends Model
         return $this->belongsTo(Order::class, 'orders_id');
     }
 
+    public function changeOrder()
+    {
+        return $this->belongsTo(ChangeOrder::class, 'change_orders_id');
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class, 'products_id');
