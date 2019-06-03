@@ -541,6 +541,368 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -572,7 +934,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "退审",
         icon: "bf-auditfaild",
-        ent: this.unAudit
+        ent: this.test
       }, {
         cnt: "导入",
         icon: "bf-in",
@@ -658,6 +1020,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "打印时间",
         width: "200",
         prop: "print_at",
+        inProp: "date",
         type: "text"
       },
       /* {
@@ -1373,32 +1736,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "库存数",
         width: "120",
-        prop: "store_num",
+        prop: "",
         type: "number"
       }, {
         label: "订出数",
         width: "120",
-        prop: "order_num",
+        prop: "",
         type: "number"
       }, {
         label: "在途数",
         width: "120",
-        prop: "load_num",
+        prop: "",
         type: "number"
       }, {
         label: "在途数(提交)",
         width: "130",
-        prop: "submit_num",
+        prop: "",
         type: "number"
       }, {
         label: "可用数",
         width: "120",
-        prop: "use_num",
+        prop: "",
         type: "number"
       }, {
         label: "需采购数",
         width: "130",
-        prop: "purchase_num",
+        prop: "",
         type: "number"
       }, {
         label: "到货时间",
@@ -1524,8 +1887,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
-            _this.$store.dispatch("suppliers", "/suppliers");
-            _this.$store.dispatch("shops", "/shops");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -1551,20 +1912,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.finishLoading = false;
             _this.finishData = res.data;
             _this.checkboxInit = false;
-            // if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
-            //   this.purListVal = res.data[0]["purchaseLists"]["data"][0];
-            //   this.purDetailsVal =
-            //     res.data[0].purchase_lists["data"][0]["purchaseDetails"][
-            //       "data"
-            //     ];
-            // }
-            console.log(_this.finishData);
+            if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
+              _this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+              _this.purDetailsVal = res.data[0].purchase_lists["data"][0]["purchaseDetails"]["data"];
+            }
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
-            _this.$store.dispatch("suppliers", "/suppliers");
-            _this.$store.dispatch("shops", "/shops");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -1696,7 +2051,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     confirmAddPur: function confirmAddPur() {
       var _this2 = this;
 
-      var submitData = this.addPurchaseForm;
       this.addPurchaseSkuVal.map(function (item) {
         var sku = {
           combinations_id: item.id,
@@ -1719,9 +2073,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           };
           sku.purchase_details.push(comp);
         });
-        submitData.purchase_lists.push(sku);
+        _this2.addPurchaseForm.purchase_lists.push(sku);
       });
-      this.$post(this.urls.purchases, submitData).then(function () {
+      this.$post(this.urls.purchases, this.addPurchaseForm).then(function () {
         _this2.$message({
           message: "新建采购单成功",
           type: "success"
@@ -1912,7 +2266,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           message: "添加商品明细成功",
           type: "success"
         });
-        this.proMask = false;
       } else {
         /*判断sku和子件是否重复*/
         var updateStagSku = this.proCurSkuData;
@@ -1936,7 +2289,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 message: "添加商品明细成功",
                 type: "success"
               });
-              this.proMask = false;
               this.proCompRowIndex = "";
             } else {
               /*子件是否重复*/
@@ -1975,7 +2327,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                       message: "添加商品明细成功",
                       type: "success"
                     });
-                    _this6.proMask = false;
                     _this6.proCompRowIndex = "";
                   };
 
@@ -2002,7 +2353,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               message: "添加商品明细成功",
               type: "success"
             });
-            this.proMask = false;
             this.proCompRowIndex = "";
           }
         } else {
@@ -2042,6 +2392,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
       this.proCompVal = row["productComponents"]["data"];
+      // this.proCompVal = Object.assign({},row['productComponents']['data']);
       this.proCurSkuData = row;
     },
     cancelAddProDtl: function cancelAddProDtl() {
@@ -2657,19 +3008,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*批量删除 只针对新建模块*/
     handleSelectionChange: function handleSelectionChange(val) {
-      if (val.length == 0) {
-        this.updateId = "";
-      } else if (val.length == 1) {
+      if (val.length != 0) {
         this.updateId = val[0].id;
-        this.newOpt[1].nClick = val[0]["is_change"] ? true : false;
-        this.newOpt[3].nClick = val[0]["is_submit"] ? true : false;
-        this.newOpt[10].nClick = val[0]["is_print"] ? true : false;
-        this.newOpt[4].nClick = val[0]["is_audit"] ? true : false;
-        this.purRowClick(val[0]);
       } else {
-        this.newOpt[1].nClick = true;
-        this.newOpt[3].nClick = true;
-        this.newOpt[4].nClick = true;
+        this.updateId = "";
       }
       this.multipleSelection = val;
       var del = [];
@@ -2806,21 +3148,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this18.refresh();
         }, function (err) {
           _this18.$message.error(err.response.data.message);
-        });
-      }
-    },
-    unAudit: function unAudit() {
-      var _this19 = this;
-
-      if (!this.newOpt[5].nClick) {
-        this.$put(this.urls.purchases + "/" + this.purRow.id + "/unaudit").then(function () {
-          _this19.$message({
-            message: "退审成功!",
-            type: "success"
-          });
-          _this19.refresh();
-        }, function (err) {
-          _this19.$message.error(err.response.data.message);
         });
       }
     }
@@ -3583,7 +3910,7 @@ var render = function() {
                                           item.inProp
                                             ? scope.row[item.prop][item.inProp]
                                             : scope.row[item.prop]
-                                        )
+                                        ) + "}"
                                       )
                                     ])
                               ]
@@ -4149,7 +4476,7 @@ var render = function() {
                                           ? ""
                                           : scope.row[item.prop]
                                       ) +
-                                      "\n            "
+                                      "\n              "
                                   )
                                 ]
                               }
@@ -4900,7 +5227,7 @@ var render = function() {
                                           ? scope.row[item.prop][item.inProp]
                                           : scope.row[item.prop]
                                       ) +
-                                      "\n          "
+                                      "\n            "
                                   )
                                 ])
                               : _vm._e()
