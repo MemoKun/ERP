@@ -967,7 +967,7 @@ const constantRouterMap = [{
     }
   ]
 },
-/*{
+{
   name: 'ReportStatistics',
   path: '/reportStatistics',
   component: Layout,
@@ -977,7 +977,8 @@ const constantRouterMap = [{
     icon: 'report',
     requireAuth: true
   },
-  children: [{
+  children: [
+    /*{
       path: 'saleStat1',
       name: 'SaleStatistics1.0',
       component: resolve => void(require(['../views/reportStatistics/saleStat1.vue'], resolve)),
@@ -996,18 +997,18 @@ const constantRouterMap = [{
         icon: 'sS2',
         requireAuth: true
       }
-    },
+    },*/
     {
       path: 'saleStat3',
       name: 'SaleStatistics3.0',
       component: resolve => void(require(['../views/reportStatistics/saleStat3.vue'], resolve)),
       meta: {
-        title: '销售统计报表3.0',
+        title: '销售统计报表',
         icon: 'sS3',
         requireAuth: true
       }
     },
-    {
+    /*{
       path: 'shipStat',
       name: 'ShipStatistics',
       component: resolve => void(require(['../views/reportStatistics/shipStat.vue'], resolve)),
@@ -1275,9 +1276,9 @@ const constantRouterMap = [{
         icon: 'typeP',
         requireAuth: true
       }
-    }
+    }*/
   ]
-},*/
+},
 {
   name: 'ReSupplied',
   path: '/reSupplied',

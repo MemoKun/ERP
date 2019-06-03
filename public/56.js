@@ -1,6 +1,6 @@
 webpackJsonp([56],{
 
-/***/ 1121:
+/***/ 1106:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28,77 +28,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       tableKey: [[{
-        label: '报表文件',
-        width: '220',
-        prop: "file",
-        holder: '请输入报表文件',
+        label: '区域编码',
+        width: '',
+        prop: "code",
+        holder: '请输入区域编码',
         type: 'text'
       }, {
-        label: '报表名称',
-        width: '220',
+        label: '区域名称',
+        width: '',
         prop: "name",
-        holder: '请输入报表名称',
+        holder: '请输入区域名称',
         type: 'text'
       }, {
-        label: '报表格式',
-        width: '200',
-        prop: "paper_format",
-        holder: '请输入报表格式',
-        type: 'text'
-      }, {
-        label: '状态',
-        width: '220',
+        label: '启用',
+        width: '',
         prop: "status",
         holder: '请选择是否启用',
-        type: 'select_stu'
+        type: 'select_def',
+        doSort: true
       }]],
-      url: ['/printreports'],
-      title: ['添加报表格式'],
+      url: ['/logisticsareas'],
+      title: ['新增区域'],
       ruleForm: [{
-        file: '',
+        code: '',
         name: '',
-        paper_format: '',
         status: '1'
       }],
       rules: [{
-        file: [{ required: true, message: '请输入文件', trigger: 'blur' }],
-        name: [{ required: true, message: '请输入报表名', trigger: 'blur' }],
-        paper_format: [{ required: true, message: '请输入报表格式', trigger: 'blur' }]
+        code: [{ required: true, message: '请输入区域编码', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入区域名称', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '报表文件',
-        prop: 'file',
-        holder: '请输入报表文件',
+        label: '区域代码',
+        prop: 'code',
+        holder: '请输入区域代码',
         type: 'text'
       }, {
-        label: '报表名称',
+        label: '区域名称',
         prop: 'name',
-        holder: '请输入报表名称',
-        type: 'text'
-      }, {
-        label: '报表格式',
-        prop: 'paper_format',
-        holder: '请输入报表格式',
+        holder: '请输入区域名称',
         type: 'text'
       }, {
         label: '状态',
         prop: 'status',
-        holder: '请选择状态',
-        type: 'select_stu'
+        holder: '请选择是否启用',
+        type: 'select_def'
       }]]
     };
   },
 
   methods: {
-    //新增
     addNew: function addNew() {
       this.$store.dispatch('setShowAdd', true);
     },
     edit: function edit(row) {
       var obj = {
-        file: row.file,
-        name: row.name,
-        paper_format: row.paper_format,
+        id: row.id,
+        code: row.markcode,
+        name: row.markname,
         status: row.status
       };
       this.$store.dispatch('setRow', row);
@@ -124,7 +111,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1122:
+/***/ 1107:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -156,21 +143,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2971de68", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-6f7ad877", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 982:
+/***/ 974:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1121)
+var __vue_script__ = __webpack_require__(1106)
 /* template */
-var __vue_template__ = __webpack_require__(1122)
+var __vue_template__ = __webpack_require__(1107)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -187,7 +174,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/invoiceConf.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/logisticsArea.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -196,9 +183,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2971de68", Component.options)
+    hotAPI.createRecord("data-v-6f7ad877", Component.options)
   } else {
-    hotAPI.reload("data-v-2971de68", Component.options)
+    hotAPI.reload("data-v-6f7ad877", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
