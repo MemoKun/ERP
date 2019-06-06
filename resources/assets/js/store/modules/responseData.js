@@ -98,10 +98,10 @@ const responseData = {
     AFTERSALETYPE: (state, arr) => {
       state.aftersaletype = arr;
     },
-    REFUNDREASONTYPE:(state, arr)=>{
+    REFUNDREASONTYPE: (state, arr) => {
       state.refundreasontype = arr;
     },
-    REFUNDMETHOD:(state, arr)=>{
+    REFUNDMETHOD: (state, arr) => {
       state.refundMethod = arr;
     },
     //add by memokun
@@ -396,16 +396,28 @@ const responseData = {
           return res.data.data
         })
     },
-    refundreasontype({commit}, url) {
-      axios.get(url,{params:{ 'status': true}})
-        .then(res=>{
+    refundreasontype({
+      commit
+    }, url) {
+      axios.get(url, {
+          params: {
+            'status': true
+          }
+        })
+        .then(res => {
           commit('REFUNDREASONTYPE', res.data.data);
           return res.data.data
         })
     },
-    refundMethod({commit}, url) {
-      axios.get(url,{params:{ 'status': true}})
-        .then(res=>{
+    refundMethod({
+      commit
+    }, url) {
+      axios.get(url, {
+          params: {
+            'status': true
+          }
+        })
+        .then(res => {
           commit('REFUNDMETHOD', res.data.data);
           return res.data.data
         })

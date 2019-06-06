@@ -16,12 +16,13 @@
               <label>收货人</label>
               <el-input v-model="searchBox.receiver_name" clearable></el-input>
             </span>
-          </div>
-          <div class="searchBox">
             <span>
               <label>收货手机</label>
               <el-input v-model="searchBox.receiver_mobile" clearable></el-input>
             </span>
+          </div>
+          <div class="searchBox">
+
             <span>
               <label>收货地址</label>
               <el-input v-model="searchBox.receiver_address" clearable></el-input>
@@ -34,8 +35,6 @@
                 </span>
               </el-select>
             </span>
-          </div>
-          <div class="searchBox">
             <span>
               <label>包含商品</label>
               <el-input clearable></el-input>
@@ -48,13 +47,13 @@
                 </span>
               </el-select>
             </span>
+          </div>
+          <div class="searchBox">
             <span>
               <label>承诺日期</label>
               <el-date-picker v-model="searchBox.promise_ship_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
-          </div>
-          <div class="searchBox">
             <span>
               <label>业务日期</label>
               <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -93,13 +92,13 @@
                 </el-option>
               </el-select>
             </span>
-          </div>
-          <div class="searchBox">
             <span>
               <label>财审时间</label>
               <el-date-picker v-model="searchBox.order_fdAuditDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
+          </div>
+          <div class="searchBox">
             <span>
               <label>运费类型</label>
               <el-select v-model="searchBox.freight_types_id" clearable placeholder="请选择">
@@ -131,8 +130,6 @@
                 </el-option>
               </el-select>
             </span>
-          </div>
-          <div class="searchBox">
             <span>
               <label>物流单号</label>
               <el-input v-model="searchBox.logistics_sn" clearable></el-input>
@@ -141,12 +138,13 @@
               <label>外部单号</label>
               <el-input v-model="searchBox.out_order" clearable></el-input>
             </span>
+          </div>
+          <div class="searchBox">
             <span>
               <label>卖家备注</label>
               <el-input v-model="searchBox.seller_remark" clearable></el-input>
             </span>
-          </div>
-          <!--<span>
+            <!--<span>
               <label>供应商</label>
               <el-select v-model="searchBox.suppliers_id" clearable placeholder="请选择">
                 <span v-for="list in resData['suppliers']" :key="list.id">
@@ -154,7 +152,6 @@
                 </span>
               </el-select>
             </span>-->
-          <div class="searchBox">
             <span>
               <label>发货仓库</label>
               <el-select v-model="searchBox.warehouses_id" clearable placeholder="请选择">
@@ -172,6 +169,8 @@
               <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
+          </div>
+          <div class="searchBox">
             <span>
               <label>审计员</label>
               <el-select v-model="searchBox.auditor_id" clearable placeholder="请选择">
@@ -180,15 +179,15 @@
                 </span>
               </el-select>
             </span>
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
           <div style="text-align: right">
             <el-button type="primary" @click="searchData">筛选</el-button>
             <el-button @click="resets">重置</el-button>
           </div>
         </div>
-        <label>
-          {{this.orderListData}}
-        </label>
         <!--订单表格-->
         <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
@@ -2630,36 +2629,36 @@ export default {
           "2018-12-31T16:00:00.000Z",
           "2099-12-31T16:00:00.000Z"
         ],
-        created_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
-        order_transMStart: '',
-        order_transMEnd: '',
-        logistics: '',
-        stockout_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
-        payment_date: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
-        order_status: '',
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_transMEnd: "",
+        logistics: "",
+        stockout_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        payment_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_status: "",
         orderStatus: [
-          { label: '未处理', value: 10 },
-          { label: '订单锁定中', value: 20 },
-          { label: '已客审', value: 30 },
-          { label: '已跟单一审', value: 40 },
-          { label: '已财审', value: 50 },
-          { label: '已货审', value: 60 },
-          { label: '准备出库', value: 70 },
-          { label: '已出库', value: 80 }
+          { label: "未处理", value: 10 },
+          { label: "订单锁定中", value: 20 },
+          { label: "已客审", value: 30 },
+          { label: "已跟单一审", value: 40 },
+          { label: "已财审", value: 50 },
+          { label: "已货审", value: 60 },
+          { label: "准备出库", value: 70 },
+          { label: "已出库", value: 80 }
         ],
         order_fdAuditDate: [
           "2018-12-31T16:00:00.000Z",
           "2099-12-31T16:00:00.000Z"
         ],
-        seller_flag: '',
-        logistics_sn: '',
-        out_order: '',
-        seller_remark: '',
-        suppliers_id: '',
-        warehouses_id: '',
-        esheet_no: '',
-        audit_at: ['2018-12-31T16:00:00.000Z', '2099-12-31T16:00:00.000Z'],
-        auditor_id: ''
+        seller_flag: "",
+        logistics_sn: "",
+        out_order: "",
+        seller_remark: "",
+        suppliers_id: "",
+        warehouses_id: "",
+        esheet_no: "",
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        auditor_id: ""
       };
     },
     //筛选

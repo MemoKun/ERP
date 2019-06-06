@@ -692,6 +692,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.issplitorder');
         $api->put('customerservicedepts/mergerorder', 'CustomerServiceDepartmentsController@isMergerOrder')
             ->name('api.customerservicedepts.ismergerorder');
+        $api->put('customerservicedepts/replacementorder', 'CustomerServiceDepartmentsController@isReplacementOrder')
+            ->name('api.customerservicedepts.isreplacementorder');
 
         //订单结算
         $api->put('customerservicedepts/{order}/logcheck', 'CustomerServiceDepartmentsController@isLogCheck')

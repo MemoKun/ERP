@@ -1022,7 +1022,7 @@ export default {
         {
           cnt: "转补单",
           icon: "bf-transa",
-          ent: this.test,
+          ent: this.replacementOrder,
           nClick: true
         },
         {
@@ -1816,7 +1816,7 @@ export default {
             label: "备注",
             prop: "remark",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1833,7 +1833,7 @@ export default {
             label: "驳回原因",
             prop: "reason",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1850,7 +1850,7 @@ export default {
             label: "优惠金额",
             prop: "preferential_cashback",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -2631,6 +2631,7 @@ export default {
       splitRowIndex: "",
       splitRow: {},
       mergerIds: [],
+      replacementOrderIds:[],
 
       /** 内部便签InnerNote*/
       InnerNoteData: {},
@@ -2675,6 +2676,84 @@ export default {
     },
     test() {
       console.log(1);
+    },
+    /***************************** 转 补 单 *******************************/
+    replacementOrder() {
+      if (this.newOpt[10].nClick) {
+        return;
+      } else {
+        if (this.replacementOrderIds.length != 2) {
+          this.$message({
+            message: "请选择要转补单的订单",
+            type: "info"
+          });
+        } else {
+          let ids = [];
+          this.replacementOrderIds.map(item => {
+            ids.push(item.id);
+          });
+          this.$put(
+            this.urls.customerservicedepts +
+              "/replacementorder" +
+              "?order_id_one=" +
+              ids[0] +
+              "&order_id_two=" +
+              ids[1]
+          ).then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "订单合并成功",
+                type: "success"
+              });
+            },
+            err => {
+              if (err.response) {
+                this.$message.error("合并订单出错");
+              }
+            }
+          );
+        }
+      }
+    },
+    /***************************** 合 并 *******************************/
+    handleMergerOrder() {
+      if (this.newOpt[8].nClick) {
+        return;
+      } else {
+        if (this.mergerIds.length != 2) {
+          this.$message({
+            message: "请选择要合并的订单",
+            type: "info"
+          });
+        } else {
+          let ids = [];
+          this.mergerIds.map(item => {
+            ids.push(item.id);
+          });
+          this.$put(
+            this.urls.customerservicedepts +
+              "/mergerorder" +
+              "?order_id_one=" +
+              ids[0] +
+              "&order_id_two=" +
+              ids[1]
+          ).then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "订单合并成功",
+                type: "success"
+              });
+            },
+            err => {
+              if (err.response) {
+                this.$message.error("合并订单出错");
+              }
+            }
+          );
+        }
+      }
     },
     /*获取数据*/
     outerHandleClick() {
@@ -3362,6 +3441,7 @@ export default {
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
+      this.replacementOrderIds = val;
     },
     delBatch() {
       if (this.ids.length === 0) {
@@ -4012,44 +4092,7 @@ export default {
     cancelSplit() {
       this.splitMask = false;
     },
-    handleMergerOrder() {
-      if (this.newOpt[8].nClick) {
-        return;
-      } else {
-        if (this.mergerIds.length != 2) {
-          this.$message({
-            message: "请选择要合并的订单",
-            type: "info"
-          });
-        } else {
-          let ids = [];
-          this.mergerIds.map(item => {
-            ids.push(item.id);
-          });
-          this.$put(
-            this.urls.customerservicedepts +
-              "/mergerorder" +
-              "?order_id_one=" +
-              ids[0] +
-              "&order_id_two=" +
-              ids[1]
-          ).then(
-            () => {
-              this.refresh();
-              this.$message({
-                message: "订单合并成功",
-                type: "success"
-              });
-            },
-            err => {
-              if (err.response) {
-                this.$message.error("合并订单出错");
-              }
-            }
-          );
-        }
-      }
-    },
+
     resets() {
       this.searchBox = {};
     }

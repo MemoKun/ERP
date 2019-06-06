@@ -220,1028 +220,322 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "订单管理",
         children: [{
           id: 11,
-          label: "客服部",
-          children: [{
-            id: 9,
-            label: "新增"
-          }, {
-            id: 10,
-            label: "修改"
-          }, {
-            id: 10,
-            label: "删除"
-          }, {
-            id: 10,
-            label: "锁定"
-          }, {
-            id: 10,
-            label: "解锁"
-          }, {
-            id: 10,
-            label: "审核"
-          }, {
-            id: 10,
-            label: "退审"
-          }, {
-            id: 10,
-            label: "导出"
-          }, {
-            id: 10,
-            label: "合并"
-          }, {
-            id: 10,
-            label: "拆分"
-          }, {
-            id: 10,
-            label: "转补单"
-          }, {
-            id: 10,
-            label: "转补款"
-          }, {
-            id: 10,
-            label: "订单关联"
-          }, {
-            id: 10,
-            label: "取消关联"
-          }, {
-            id: 10,
-            label: "通知发货"
-          }, {
-            id: 10,
-            label: "打印"
-          }, {
-            id: 10,
-            label: "转送款"
-          }, {
-            id: 10,
-            label: "刷新"
-          }]
+          label: "客服部"
         }, {
           id: 12,
-          label: "跟单部",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "跟单部"
         }, {
           id: 13,
-          label: "财务部",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "财务部"
         }, {
           id: 14,
-          label: "仓储部",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "仓储部"
         }, {
           id: 15,
-          label: "订单变更",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "订单变更"
         }, {
           id: 16,
-          label: "订单中心",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "订单中心"
         }, {
           id: 17,
-          label: "审计部",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "审计部"
         }, {
           id: 18,
-          label: "财务刷单审核",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "财务刷单审核"
         }, {
           id: 19,
-          label: "物流查询订单",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "物流查询订单"
         }, {
           id: 20,
-          label: "订单结算",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "订单结算"
         }]
       }, {
         id: 2,
         label: "采购管理",
         children: [{
           id: 21,
-          label: "采购单管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "采购单管理"
         }, {
           id: 22,
-          label: "入库单管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "入库单管理"
         }, {
           id: 23,
-          label: "取消采购管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "取消采购管理"
         }, {
           id: 24,
-          label: "采购退货管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "采购退货管理"
         }, {
           id: 25,
-          label: "其他入库管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "其他入库管理"
         }]
       }, {
         id: 3,
         label: "退款管理",
         children: [{
           id: 26,
-          label: "客服退款申请",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "客服退款申请"
         }, {
           id: 27,
-          label: "售后退款申请",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "售后退款申请"
         }, {
           id: 28,
-          label: "财务退款审核",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "财务退款审核"
         }, {
           id: 29,
-          label: "退款中心",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "退款中心"
         }, {
           id: 30,
-          label: "审核校对",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          label: "审核校对"
         }]
       }, {
         id: 4,
         label: "下载中心",
         children: [{
-          id: 4,
-          label: "订单下载",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 31,
+          label: "订单下载"
         }, {
-          id: 4,
-          label: "商品下载",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 32,
+          label: "商品下载"
         }, {
-          id: 4,
-          label: "退款单下载",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 33,
+          label: "退款单下载"
         }]
       }, {
         id: 5,
         label: "基础信息",
         children: [{
-          id: 4,
-          label: "商品管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 34,
+          label: "商品管理"
         }, {
-          id: 4,
-          label: "会员管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 35,
+          label: "会员管理"
         }, {
-          id: 4,
-          label: "仓库管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 36,
+          label: "仓库管理"
         }, {
-          id: 4,
-          label: "店铺管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 37,
+          label: "店铺管理"
         }, {
-          id: 4,
-          label: "物流管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 38,
+          label: "物流管理"
         }, {
-          id: 4,
-          label: "供应商管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 39,
+          label: "供应商管理"
         }, {
-          id: 4,
-          label: "费用类型管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 40,
+          label: "费用类型管理"
         }, {
-          id: 4,
-          label: "物流区域",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 41,
+          label: "物流区域"
         }, {
-          id: 4,
-          label: "部门管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 42,
+          label: "部门管理"
         }, {
-          id: 4,
-          label: "标记颜色管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 43,
+          label: "标记颜色管理"
         }, {
-          id: 4,
-          label: "订单状态配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 44,
+          label: "订单状态配置"
         }, {
-          id: 4,
-          label: "城市配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 45,
+          label: "城市配置"
         }, {
-          id: 4,
-          label: "商品类别配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 46,
+          label: "商品类别配置"
         }, {
-          id: 4,
-          label: "公告管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 47,
+          label: "公告管理"
         }, {
-          id: 4,
-          label: "打印机配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 48,
+          label: "打印机配置"
         }, {
-          id: 4,
-          label: "费用类型配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 49,
+          label: "费用类型配置"
         }, {
-          id: 4,
-          label: "用户关联供应商",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 50,
+          label: "用户关联供应商"
         }, {
-          id: 4,
-          label: "负库存配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 51,
+          label: "负库存配置"
         }, {
-          id: 4,
-          label: "用户关联仓库",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 52,
+          label: "用户关联仓库"
         }, {
-          id: 4,
-          label: "发货单配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 53,
+          label: "发货单配置"
         }, {
-          id: 4,
-          label: "配送方式管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 54,
+          label: "配送方式管理"
         }, {
-          id: 4,
-          label: "复检配置管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 55,
+          label: "复检配置管理"
         }, {
-          id: 4,
-          label: "配送管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 56,
+          label: "配送管理"
         }, {
-          id: 4,
-          label: "面料管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 57,
+          label: "面料管理"
         }, {
-          id: 4,
-          label: "记账类型",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 58,
+          label: "记账类型"
         }, {
-          id: 4,
-          label: "量子用户",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 59,
+          label: "量子用户"
         }, {
-          id: 4,
-          label: "运费类型",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 60,
+          label: "运费类型"
         }, {
-          id: 4,
-          label: "买就送管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 61,
+          label: "买就送管理"
         }, {
-          id: 4,
-          label: "产品Bom",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 62,
+          label: "产品Bom"
         }, {
-          id: 4,
-          label: "关联物流",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 63,
+          label: "关联物流"
         }, {
-          id: 4,
-          label: "下载配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 64,
+          label: "下载配置"
         }, {
-          id: 4,
-          label: "产品映射",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 65,
+          label: "产品映射"
         }, {
-          id: 4,
-          label: "最小包管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 66,
+          label: "最小包管理"
         }, {
-          id: 4,
-          label: "线下账户配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 67,
+          label: "线下账户配置"
         }, {
-          id: 4,
-          label: "核销配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 68,
+          label: "核销配置"
         }, {
-          id: 4,
-          label: "刷单锁单配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 69,
+          label: "刷单锁单配置"
         }, {
-          id: 4,
-          label: "门店收款管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 70,
+          label: "门店收款管理"
         }, {
-          id: 4,
-          label: "售后状态管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 71,
+          label: "售后状态管理"
         }, {
-          id: 4,
-          label: "售后类型管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 72,
+          label: "售后类型管理"
         }, {
-          id: 4,
-          label: "评价类别管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 73,
+          label: "评价类别管理"
         }, {
-          id: 4,
-          label: "库存盘点类型",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 74,
+          label: "库存盘点类型"
         }, {
-          id: 4,
-          label: "款项类型设置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 75,
+          label: "款项类型设置"
         }, {
-          id: 4,
-          label: "标签打印配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 76,
+          label: "标签打印配置"
         }, {
-          id: 4,
-          label: "抽检配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 77,
+          label: "抽检配置"
         }, {
-          id: 4,
-          label: "补件责任方配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 78,
+          label: "补件责任方配置"
         }, {
-          id: 4,
-          label: "电子面单配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 79,
+          label: "电子面单配置"
         }, {
-          id: 4,
-          label: "售后基础配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 80,
+          label: "售后基础配置"
         }, {
-          id: 4,
-          label: "退货责任方",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 81,
+          label: "退货责任方"
         }, {
-          id: 4,
-          label: "售后原因管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 82,
+          label: "售后原因管理"
         }, {
-          id: 4,
-          label: "承诺日期配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 83,
+          label: "承诺日期配置"
         }, {
-          id: 4,
-          label: "规格修改配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 84,
+          label: "规格修改配置"
         }, {
-          id: 4,
-          label: "月结功能配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 85,
+          label: "月结功能配置"
         }, {
-          id: 4,
-          label: "采购退货类型",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 86,
+          label: "采购退货类型"
         }, {
-          id: 4,
-          label: "回访超时配置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 87,
+          label: "回访超时配置"
         }, {
-          id: 4,
-          label: "商品属性设置",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 88,
+          label: "商品属性设置"
         }, {
-          id: 4,
-          label: "标准词库",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 89,
+          label: "标准词库"
         }]
       }, {
         id: 6,
         label: "系统管理",
         children: [{
-          id: 4,
-          label: "角色管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 90,
+          label: "角色管理"
         }, {
-          id: 4,
-          label: "用户管理",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 91,
+          label: "用户管理"
         }, {
-          id: 4,
-          label: "角色用户关联",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 92,
+          label: "角色用户关联"
         }]
       }, {
         id: 7,
         label: "报表统计",
         children: [{
-          id: 4,
-          label: "销售报表3.0",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 93,
+          label: "销售报表3.0"
         }]
       }, {
         id: 8,
         label: "补件管理",
         children: [{
-          id: 4,
-          label: "补件申请",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 94,
+          label: "补件申请"
         }, {
-          id: 4,
-          label: "补件审核",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 95,
+          label: "补件审核"
         }, {
-          id: 4,
-          label: "补件中心",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 96,
+          label: "补件中心"
         }, {
-          id: 4,
-          label: "补件发货",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 97,
+          label: "补件发货"
         }]
       }, {
         id: 9,
         label: "售后管理",
         children: [{
-          id: 4,
-          label: "售后申请",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 98,
+          label: "售后申请"
         }, {
-          id: 4,
-          label: "售后提交",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 99,
+          label: "售后提交"
         }, {
-          id: 4,
-          label: "售后审核",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 100,
+          label: "售后审核"
         }, {
-          id: 4,
-          label: "售后中心",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 101,
+          label: "售后中心"
         }]
       }, {
         id: 10,
         label: "售后赔偿",
         children: [{
-          id: 4,
-          label: "赔偿申请",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 102,
+          label: "赔偿申请"
         }, {
-          id: 4,
-          label: "赔偿审核",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 103,
+          label: "赔偿审核"
         }, {
-          id: 4,
-          label: "赔偿中心",
-          children: [{
-            id: 9,
-            label: "三级 1-1-1"
-          }, {
-            id: 10,
-            label: "三级 1-1-2"
-          }]
+          id: 104,
+          label: "赔偿中心"
         }]
       }],
       defaultProps: {
