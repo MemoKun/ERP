@@ -524,6 +524,12 @@ class Order extends Model
         $this->save();
     }
 
+    public function notice()
+    {
+        $this->is_notice = false;
+        $this->save();
+    }
+
     /**
      *审计部-审核驳回
      *

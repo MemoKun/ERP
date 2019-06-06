@@ -1182,7 +1182,7 @@ class CustomerServiceDepartmentsController extends Controller
                         $order->orderItems()->create($validatedData);
                     }
                 }
-            }   
+            }
 
             if ($data[2] ?? null) {
                 foreach ($data[2] as $item) {
@@ -1439,6 +1439,16 @@ class CustomerServiceDepartmentsController extends Controller
             '合并订单出错',
             'replacementOrder',
             $turnToReplacementOrderRequest->validated()
+        );
+    }
+
+    public function isNotice(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '通知发货出错',
+            'notice'
         );
     }
 

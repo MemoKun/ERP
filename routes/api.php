@@ -692,6 +692,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.issplitorder');
         $api->put('customerservicedepts/mergerorder', 'CustomerServiceDepartmentsController@isMergerOrder')
             ->name('api.customerservicedepts.ismergerorder');
+        $api->put('customerservicedepts/{order}/notice', 'CustomerServiceDepartmentsController@isNotice')
+            ->name('api.customerservicedepts.isnotice');
         $api->put('customerservicedepts/replacementorder', 'CustomerServiceDepartmentsController@isReplacementOrder')
             ->name('api.customerservicedepts.isreplacementorder');
 
@@ -1695,6 +1697,23 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
             ->name('api.returnorderitems.destroy');
 
+
+        
+        //报表统计
+        $api->get('reportstatistics', 'ReportStatisticsController@index')
+            ->name('api.reportstatistics.index');
+        $api->get('reportstatistics/{reportstatistics}', 'ReportStatisticsController@show')
+            ->name('api.reportstatistics.show');
+        $api->post('reportstatistics', 'ReportStatisticsController@store')
+            ->name('api.reportstatistics.store');
+        $api->delete('reportstatistics/{reportstatistics}', 'ReportStatisticsController@destroy')
+            ->name('api.reportstatistics.destroy');
+        $api->delete('reportstatistics', 'ReportStatisticsController@destroybyids')
+            ->name('api.reportstatistics.destroybyids');
+        $api->put('reportstatistics/editstatus', 'ReportStatisticsController@editStatusByIds')
+            ->name('api.reportstatistics.editstatusbyids');
+
+        
         //角色管理
         $api->get('roles', 'RolesController@index')
             ->name('api.roles.index');
@@ -1702,7 +1721,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.roles.insertRole');
         $api->patch('roles/{roleid}', 'RolesController@update')
             ->name('api.roles.update');
-
 
         //打印功能
         $api->get('excel', 'ExcelController@export')

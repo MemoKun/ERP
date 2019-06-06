@@ -88,6 +88,7 @@
               <el-date-picker v-model="searchBox.cs_audited_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
+            <span></span>
           </div>
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
@@ -1046,7 +1047,7 @@ export default {
         {
           cnt: "通知发货",
           icon: "bf-deliNotice",
-          ent: this.test,
+          ent: this.isNotice,
           nClick: true
         },
         {
@@ -2753,6 +2754,51 @@ export default {
             }
           );
         }
+      }
+    },
+    isNotice(){
+      if (this.newOpt[14].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/notice").then(
+          () => {
+            this.newOpt[0].nClick = false;
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.newOpt[10].nClick = true;
+            this.newOpt[11].nClick = true;
+            this.newOpt[12].nClick = true;
+            this.newOpt[13].nClick = true;
+            this.newOpt[14].nClick = true;
+            this.newOpt[15].nClick = true;
+            this.newOpt[16].nClick = true;
+            this.newOpt[17].nClick = false;
+            this.refresh();
+            this.$message({
+              message: "通知发货成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
       }
     },
     /*获取数据*/
