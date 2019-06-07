@@ -4,7 +4,7 @@
         <el-menu-item index="2">
             <!--<i class="el-icon-menu"></i>-->
             <img src="/img/logo.png">
-            <span slot="title" class="title">博 飞 ERP</span>
+            <span slot="title" class="title">简艺家居</span>
         </el-menu-item>
     </el-menu>
 </template>

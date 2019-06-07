@@ -2,34 +2,12 @@
   <div>
     <el-tabs v-model="activeName" @tab-click="tabsClick">
       <el-tab-pane label="售后状态" name="0">
-        <light-table
-          :listData="getsData"
-          :tableHead="disHead"
-          @editSave="editSave"
-          @handleEdit="handleEdit"
-          @del="del"
-          height="400"
-          :loading="loading"
-          :currentIndex="currentIndex"
-          @edit="edit"
-          @editCancel="editCancel"
-          @handleSelect="handleSelectionChange"
-        ></light-table>
+        <light-table :listData="getsData" :tableHead="disHead" @editSave="editSave" @handleEdit="handleEdit" @del="del" height="400" :loading="loading" :currentIndex="currentIndex" @edit="edit" @editCancel="editCancel" @handleSelect="handleSelectionChange"></light-table>
       </el-tab-pane>
     </el-tabs>
 
     <!--新增-->
-    <add-new
-      :visible-add="showMask"
-      :title="title"
-      :rule-form="ruleForm"
-      :rules="rules"
-      :add-arr="addArr"
-      :url="url"
-      @submitEvent="submitForm"
-      :new-ref="refArr"
-      @CB-dialog="CB_dialog"
-    ></add-new>
+    <add-new :visible-add="showMask" :title="title" :rule-form="ruleForm" :rules="rules" :add-arr="addArr" :url="url" @submitEvent="submitForm" :new-ref="refArr" @CB-dialog="CB_dialog"></add-new>
 
     <!--删除-->
     <el-popover placement="top" width="160" v-model="showDel" slot="tip">

@@ -22,7 +22,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
     //页面请求
     $api->group([
         'middleware' => [
-            'api.throttle',
+            'api.throttle',//请求频率限制中间件 ，每分钟不超过60次
             'token.canrefresh',
             'stringtoboolean', //将字符串的“true”或“false”转为布尔类型
         ],
@@ -692,6 +692,12 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.issplitorder');
         $api->put('customerservicedepts/mergerorder', 'CustomerServiceDepartmentsController@isMergerOrder')
             ->name('api.customerservicedepts.ismergerorder');
+        $api->put('customerservicedepts/{order}/notice', 'CustomerServiceDepartmentsController@isNotice')
+            ->name('api.customerservicedepts.isnotice');
+        $api->put('customerservicedepts/additionorder', 'CustomerServiceDepartmentsController@isAdditionOrder')
+            ->name('api.customerservicedepts.isadditionorder');
+        $api->put('customerservicedepts/additionmoney', 'CustomerServiceDepartmentsController@isAdditionMoney')
+            ->name('api.customerservicedepts.isadditionmoney');
 
         //订单结算
         $api->put('customerservicedepts/{order}/logcheck', 'CustomerServiceDepartmentsController@isLogCheck')
@@ -1693,14 +1699,30 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
             ->name('api.returnorderitems.destroy');
 
+
+        
+        //报表统计
+        $api->get('reportstatistics', 'ReportStatisticsController@index')
+            ->name('api.reportstatistics.index');
+        $api->get('reportstatistics/{reportstatistics}', 'ReportStatisticsController@show')
+            ->name('api.reportstatistics.show');
+        $api->post('reportstatistics', 'ReportStatisticsController@store')
+            ->name('api.reportstatistics.store');
+        $api->delete('reportstatistics/{reportstatistics}', 'ReportStatisticsController@destroy')
+            ->name('api.reportstatistics.destroy');
+        $api->delete('reportstatistics', 'ReportStatisticsController@destroybyids')
+            ->name('api.reportstatistics.destroybyids');
+        $api->put('reportstatistics/editstatus', 'ReportStatisticsController@editStatusByIds')
+            ->name('api.reportstatistics.editstatusbyids');
+
+        
         //角色管理
         $api->get('roles', 'RolesController@index')
             ->name('api.roles.index');
         $api->post('roles', 'RolesController@insertRole')
             ->name('api.roles.insertRole');
-        //        $api->patch('roles/{roleid}', 'RolesController@update')
-        //            ->name('api.roles.update');
-
+        $api->patch('roles/{roleid}', 'RolesController@update')
+            ->name('api.roles.update');
 
         //打印功能
         $api->get('excel', 'ExcelController@export')
@@ -1717,6 +1739,11 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
+
+        $api->get('users', 'UsersController@index')
+            ->name('api.users.index');
+        $api->Post('users/create', 'UsersController@storeUser')
+            ->name('api.users.storeuser');
     });
 
     $api->group([

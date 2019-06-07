@@ -8,6 +8,7 @@ use App\Http\Requests\Api\CustomerServiceDepartmentRequest;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\MergerOrderRequest;
+use App\Http\Requests\Api\TurnToAdditionOrderRequest;
 use App\Http\Requests\Api\EditStatuRequest;
 use App\Http\Requests\Api\DestroyRequest;
 use App\Transformers\OrderTransformer;
@@ -1181,7 +1182,7 @@ class CustomerServiceDepartmentsController extends Controller
                         $order->orderItems()->create($validatedData);
                     }
                 }
-            }   
+            }
 
             if ($data[2] ?? null) {
                 foreach ($data[2] as $item) {
@@ -1427,6 +1428,38 @@ class CustomerServiceDepartmentsController extends Controller
             '合并订单出错',
             'mergerOrder',
             $mergerOrderRequest->validated()
+        );
+    }
+
+    public function isAdditionOrder(TurnToAdditionOrderRequest $turnToAdditionOrderRequest, Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            false,
+            '合并订单出错',
+            'additionOrder',
+            $turnToAdditionOrderRequest->validated()
+        );
+    }
+
+    public function isAdditionMoney(TurnToAdditionOrderRequest $turnToAdditionOrderRequest, Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            false,
+            '合并订单出错',
+            'additionMoney',
+            $turnToAdditionOrderRequest->validated()
+        );
+    }
+
+    public function isNotice(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '通知发货出错',
+            'notice'
         );
     }
 

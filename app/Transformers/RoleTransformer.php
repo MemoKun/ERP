@@ -24,10 +24,10 @@ class RoleTransformer extends TransformerAbstract
             'name' => $role->name,
             'role_group_id' => $role->role_group_id,
             'description' => $role->description,
-            'status' => $role->status,
             'remark'=> $role->remark,
-            'created_at' => $role->created_at?$role->created_at->toDateTimeString():'',
-            'updated_at' => $role->updated_at?$role->updated_at->toDateTimeString():'',
+            'status' => $role->status,
+            'created_at' => optional($role->created_at)->toDateTimeString(),
+            'updated_at' => optional($role->updated_at)->toDateTimeString(),
         ];
     }
 

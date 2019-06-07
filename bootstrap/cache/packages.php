@@ -60,6 +60,13 @@
       0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
+  'spatie/laravel-permission' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Permission\\PermissionServiceProvider',
+    ),
+  ),
   'tymon/jwt-auth' => 
   array (
     'aliases' => 
@@ -70,6 +77,14 @@
     'providers' => 
     array (
       0 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
+    ),
+  ),
+  'xethron/migrations-generator' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Way\\Generators\\GeneratorsServiceProvider',
+      1 => 'Xethron\\MigrationsGenerator\\MigrationsGeneratorServiceProvider',
     ),
   ),
 );

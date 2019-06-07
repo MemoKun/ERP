@@ -1,10 +1,797 @@
 webpackJsonp([55],{
 
-/***/ 1108:
+/***/ 1113:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -28,51 +815,75 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       tableKey: [[{
-        label: '区域编码',
+        label: '标记代码',
         width: '',
-        prop: "code",
-        holder: '请输入区域编码',
+        prop: "markcode",
+        holder: '请输入标记代码',
         type: 'text'
       }, {
-        label: '区域名称',
-        width: '',
-        prop: "name",
-        holder: '请输入区域名称',
+        label: '标记名称',
+        width: '180',
+        prop: "markname",
+        holder: '请输入标记名称',
         type: 'text'
       }, {
-        label: '启用',
-        width: '',
+        label: '颜色',
+        width: '180',
+        prop: "color",
+        holder: '颜色',
+        type: 'color'
+      }, {
+        label: '描述',
+        width: '180',
+        prop: "description",
+        holder: '描述',
+        type: 'textarea'
+      }, {
+        label: '状态',
+        width: '200',
         prop: "status",
-        holder: '请选择是否启用',
-        type: 'select_def',
+        holder: '状态',
+        type: 'select_stu',
         doSort: true
       }]],
-      url: ['/logisticsareas'],
-      title: ['新增区域'],
+      url: ['/markcolors'],
+      title: ['新增颜色'],
       ruleForm: [{
-        code: '',
-        name: '',
-        status: '1'
+        markcode: '',
+        markname: '',
+        color: '',
+        status: '1',
+        description: ''
       }],
       rules: [{
-        code: [{ required: true, message: '请输入区域编码', trigger: 'blur' }],
-        name: [{ required: true, message: '请输入区域名称', trigger: 'blur' }]
+        markcode: [{ required: true, message: '请输入标记代码', trigger: 'blur' }],
+        markname: [{ required: true, message: '请输入标记名称', trigger: 'blur' }],
+        color: [{ required: true, message: '请选择颜色', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '区域代码',
-        prop: 'code',
-        holder: '请输入区域代码',
+        label: '标记代码',
+        prop: 'markcode',
+        holder: '请输入标记代码',
         type: 'text'
       }, {
-        label: '区域名称',
-        prop: 'name',
-        holder: '请输入区域名称',
+        label: '标记名称',
+        prop: 'markname',
+        holder: '请输入标记名称',
         type: 'text'
+      }, {
+        label: '标记颜色',
+        prop: 'color',
+        type: 'pickColor'
       }, {
         label: '状态',
         prop: 'status',
-        holder: '请选择是否启用',
-        type: 'select_def'
+        holder: '请选择状态',
+        type: 'select_stu'
+      }, {
+        label: '描述',
+        prop: 'description',
+        holder: '请输入描述',
+        type: 'textarea'
       }]]
     };
   },
@@ -81,22 +892,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addNew: function addNew() {
       this.$store.dispatch('setShowAdd', true);
     },
-    edit: function edit(row) {
-      var obj = {
-        id: row.id,
-        code: row.markcode,
-        name: row.markname,
-        status: row.status
-      };
-      this.$store.dispatch('setRow', row);
-      this.$store.dispatch('setUrl', this.url[0] + "/");
-      this.$store.dispatch('doEdit', obj);
-    },
     doDelMore: function doDelMore() {
       this.$refs.tabs.$emit('delMore');
     },
     refresh: function refresh() {
       this.$store.dispatch('refresh');
+    },
+    edit: function edit(row) {
+      var obj = {
+        id: row.id,
+        markcode: row.markcode,
+        markname: row.markname,
+        color: row.color,
+        description: row.description,
+        status: row.status
+      };
+      this.$store.dispatch('setRow', row);
+      this.$store.dispatch('setUrl', this.url[0] + "/");
+      this.$store.dispatch('doEdit', obj);
     }
   },
   mounted: function mounted() {
@@ -111,7 +924,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1109:
+/***/ 1114:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -143,21 +956,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6f7ad877", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-39e633ba", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 977:
+/***/ 979:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1108)
+var __vue_script__ = __webpack_require__(1113)
 /* template */
-var __vue_template__ = __webpack_require__(1109)
+var __vue_template__ = __webpack_require__(1114)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -174,7 +987,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/logisticsArea.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/markerColorMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -183,9 +996,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6f7ad877", Component.options)
+    hotAPI.createRecord("data-v-39e633ba", Component.options)
   } else {
-    hotAPI.reload("data-v-6f7ad877", Component.options)
+    hotAPI.reload("data-v-39e633ba", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

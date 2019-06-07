@@ -317,7 +317,6 @@ class Order extends Model
         return ($this->getOriginal('order_status') != self::ORDER_STATUS_READY_STOCK_OUT);
     }
     
-
     /**
      * 订单锁定或释放.
      *
@@ -475,6 +474,7 @@ class Order extends Model
         $this->logistics_checked_at =null;
         $this->save();
     }
+
     /**
      *货款结算
      *
@@ -523,6 +523,12 @@ class Order extends Model
         $this->save();
     }
 
+    public function notice()
+    {
+        $this->is_notice = false;
+        $this->save();
+    }
+
     /**
      *审计部-审核驳回
      *
@@ -536,7 +542,6 @@ class Order extends Model
         $this->save();
     }
 
-    
     /**
      *审计部-审核
      *
@@ -549,8 +554,6 @@ class Order extends Model
         $this->order_status = 10;//填入审核后的订单状态
         $this->save();
     }
-
-
 
     /**
      * 是否缺货.
@@ -618,6 +621,7 @@ class Order extends Model
     {
         //获取出库数据
         $order = $this->load('orderItems');
+        $order["order_status"] = intval($order["order_status"]);
 
         $orderItemOne = $order->orderItems->map(function ($item) use ($data) {
             $orderItem = collect($data)->where('id', $item->id);
@@ -694,11 +698,12 @@ class Order extends Model
 
         //判断主订单数据是否匹配
         if (collect($orderOne->toArray())->except(['id', 'system_order_no', 'created_at', 'updated_at'])->diffAssoc($orderTwo->toArray())->count()) {
-            throw new UpdateResourceFailedException('主订单数据匹配，无法合并');
+            throw new UpdateResourceFailedException('主订单数据不匹配，无法合并');
         }
 
         //提取数据
         $order = $orderOne->toArray();
+        $order["order_status"] = intval($order["order_status"]);
         $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
 
         DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
@@ -716,6 +721,65 @@ class Order extends Model
             Order::destroy($orderOneId, $orderTwoId);
 
             //记录拆分操作
+        });
+    }
+
+    //转补单
+    public function additionOrder($data)
+    {
+        $orderOneId = $data['order_id_one'];
+        $orderTwoId = $data['order_id_two'];
+
+        $orderOne = $this->newQuery()->findOrFail($orderOneId);
+        $orderTwo = $this->newQuery()->findOrFail($orderTwoId);
+
+        //提取数据
+        $order = $orderOne->toArray();
+        $order["order_status"] = intval($order["order_status"]);
+        $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
+
+        DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
+            //新建订单
+            $newOrder = $this->newQuery()->create($order);
+
+            //新增子单
+            collect($orderItem)->map(function ($item) use ($newOrder) {
+                $newOrder->orderItems()->create($item);
+            });
+
+            //删除旧单
+            PaymentDetail::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
+            OrderItem::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
+            Order::destroy($orderOneId, $orderTwoId);
+        });
+    }
+
+    public function additionMoney($data)
+    {
+        $orderOneId = $data['order_id_one'];
+        $orderTwoId = $data['order_id_two'];
+
+        $orderOne = $this->newQuery()->findOrFail($orderOneId);
+        $orderTwo = $this->newQuery()->findOrFail($orderTwoId);
+
+        //提取数据
+        $order = $orderOne->toArray();
+        $order["order_status"] = intval($order["order_status"]);
+        $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
+
+        DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
+            //新建订单
+            $newOrder = $this->newQuery()->create($order);
+
+            //新增子单
+            collect($orderItem)->map(function ($item) use ($newOrder) {
+                $newOrder->orderItems()->create($item);
+            });
+
+            //删除旧单
+            PaymentDetail::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
+            OrderItem::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
+            Order::destroy($orderOneId, $orderTwoId);
         });
     }
 

@@ -6,13 +6,13 @@ webpackJsonp([13],{
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(1158)
+  __webpack_require__(1159)
 }
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1160)
+var __vue_script__ = __webpack_require__(1161)
 /* template */
-var __vue_template__ = __webpack_require__(1161)
+var __vue_template__ = __webpack_require__(1162)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,13 +52,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 1158:
+/***/ 1159:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(1159);
+var content = __webpack_require__(1160);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 1159:
+/***/ 1160:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(16)(false);
@@ -87,14 +87,14 @@ exports = module.exports = __webpack_require__(16)(false);
 
 
 // module
-exports.push([module.i, "\n.newInput[data-v-4e8131e0]{\n    width: 500px;\n}\n", ""]);
+exports.push([module.i, "\n.newInput[data-v-4e8131e0] {\r\n  width: 500px;\n}\r\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 1160:
+/***/ 1161:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -195,261 +195,236 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            newOpt: [{
-                cnt: '新增',
-                icon: 'bf-add',
-                ent: this.addRole
-            }, {
-                cnt: '修改',
-                icon: 'bf-change',
-                ent: this.changeRole
-            }, {
-                cnt: '删除',
-                icon: 'bf-del',
-                ent: this.deleteRole
-            }, {
-                cnt: '刷新',
-                icon: 'bf-refresh',
-                ent: this.refreshRole
-            }],
-            /*获取数据*/
-            rolesList: [],
-            seriesVal: [],
-            checkboxInit: false,
-            tableHead: [[{
-                label: '名称',
-                width: '120',
-                prop: "name",
-                holder: '请输入名称',
-                type: 'text'
-                // beAble: true
-            }, {
-                label: '组',
-                width: '120',
-                prop: "roleGroup",
-                inProp: "name",
-                holder: '请输入角色组',
-                type: 'text'
-            }, {
-                label: '描述',
-                width: '250',
-                prop: "description",
-                holder: '请输入角色描述',
-                type: 'text'
-            }, {
-                label: '备注',
-                width: '250',
-                prop: "remark",
-                holder: '请输入备注'
-            }, {
-                label: '状态',
-                width: '150',
-                prop: "status",
-                holder: '请选择状态',
-                type: 'checkbox'
-            }],
-            //待更新
-            [{
-                label: '供应商名称',
-                width: '130',
-                prop: "suppliers",
-                inProp: 'name',
-                holder: '请选择供应商名称',
-                type: 'select'
-            }, {
-                label: '系列代码',
-                width: '130',
-                prop: "code",
-                holder: '请输入系列代码',
-                type: 'text'
-            }, {
-                label: '系列名称',
-                width: '130',
-                prop: "name",
-                holder: '请输入系列名称',
-                type: 'text'
-            }, {
-                label: '系列描述',
-                width: '150',
-                prop: "description",
-                holder: '请输入系列描述',
-                type: 'textarea'
-            }, {
-                label: '备注',
-                width: '130',
-                prop: "remark",
-                holder: '请输入名称',
-                type: 'textarea'
-            }, {
-                label: '状态',
-                width: '90',
-                prop: "status",
-                holder: '请选择状态',
-                type: 'checkbox'
-            }]],
-            supplierRow: {},
-            seriesRow: {},
-            loading: true,
-            //添加
-            addRoleMask: false,
-            changeRoleMask: false,
-            newInfo: {
-                username: '',
-                role_group_id: '',
-                description: '',
-                remark: '',
-                permission: []
-            },
-            nowInfo: {
-                username: '',
-                role_group_id: '',
-                description: '',
-                remark: '',
-                permission: []
-            },
-            groupOptions: [],
-            permissionList: []
-        };
+  data: function data() {
+    return {
+      newOpt: [{
+        cnt: "新增",
+        icon: "bf-add",
+        ent: this.addRole
+      }, {
+        cnt: "修改",
+        icon: "bf-change",
+        ent: this.updateRole
+      }, {
+        cnt: "删除",
+        icon: "bf-del",
+        ent: this.deleteRole
+      }, {
+        cnt: "刷新",
+        icon: "bf-refresh",
+        ent: this.refresh
+      }],
+      /*获取数据*/
+      rolesList: [],
+      seriesVal: [],
+      checkboxInit: false,
+      tableHead: [[{
+        label: "角色名称",
+        width: "120",
+        prop: "name",
+        holder: "请输入名称",
+        type: "text"
+      }, {
+        label: "描述",
+        width: "250",
+        prop: "description",
+        holder: "请输入角色描述",
+        type: "text"
+      }, {
+        label: "备注",
+        width: "250",
+        prop: "remark",
+        holder: "请输入备注"
+      }, {
+        label: "状态",
+        width: "150",
+        prop: "status",
+        holder: "请选择状态",
+        type: "checkbox"
+      }], [{
+        label: "角色名称",
+        prop: "name",
+        type: "text"
+      }, {
+        label: "描述",
+        prop: "description",
+        type: "text"
+      }, {
+        label: "备注",
+        prop: "remark",
+        type: "text"
+      }, {
+        label: "状态",
+        prop: "status",
+        type: "checkbox"
+      }, {
+        label: "配置权限",
+        type: "transfer"
+      }]],
+      supplierRow: {},
+      seriesRow: {},
+      loading: true,
+      //添加
+      addRoleMask: false,
+      updateRoleMask: false,
+      addData: {
+        name: "",
+        role_group_id: "",
+        description: "",
+        remark: "",
+        permission: []
+      },
+      updateData: {},
+      groupOptions: [],
+      permissionList: []
+    };
+  },
+
+  computed: {
+    resData: {
+      get: function get() {
+        return this.$store.state.responseData;
+      },
+      set: function set() {}
     },
-
-    computed: {
-        resData: {
-            get: function get() {
-                return this.$store.state.responseData;
-            },
-            set: function set() {}
-        },
-        urls: {
-            get: function get() {
-                return this.$store.state.urls;
-            },
-            set: function set() {}
-        }
-    },
-    methods: {
-        //获取数据
-        fetchData: function fetchData() {
-            var _this = this;
-
-            this.$fetch(this.urls.roles, {
-                include: 'roleGroup'
-            }).then(function (res) {
-                console.log(res.data);
-                _this.loading = false;
-                _this.rolesList = res.data;
-                var pg = res.meta.pagination;
-                _this.$store.dispatch('currentPage', pg.current_page);
-                _this.$store.commit('PER_PAGE', pg.per_page);
-                _this.$store.commit('PAGE_TOTAL', pg.total);
-                _this.delBatchUrl = _this.urls.roledetails;
-            }, function (err) {
-                if (err.response) {
-                    var arr = err.response.data.errors;
-                    var arr1 = [];
-                    for (var i in arr) {
-                        arr1.push(arr[i]);
-                    }
-                    var str = arr1.join(',');
-                    _this.$message.error({
-                        message: str
-                    });
-                }
-            });
-            //    获取分组
-            this.$fetch(this.urls.rolegroup).then(function (res) {
-                console.log(res);
-                _this.groupOptions = res.data;
-            }, function (err) {});
-            //    获取权限列表
-            this.$fetch(this.urls.permissions).then(function (res) {
-                console.log(res.data);
-                _this.permissionList = res.data;
-            }, function (err) {});
-        },
-        submitNewOne: function submitNewOne() {
-            console.log(this.newInfo);
-            this.$post(this.urls.roles, this.newInfo).then(function (res) {
-                console.log(res);
-            });
-        },
-        updateOne: function updateOne() {
-            this.$patch(this.urls.roles + '/' + this.nowInfo.id, this.nowInfo).then(function (res) {
-                console.log(res);
-            });
-        },
-        handleSelectionChange: function handleSelectionChange(val) {
-            this.multipleSelection = val;
-        },
-        addRole: function addRole() {
-            console.log("addRole");
-            this.addRoleMask = true;
-        },
-        changeRole: function changeRole() {
-            console.log("change");
-            console.log(this.multipleSelection);
-            this.changeRoleMask = true;
-            if (this.multipleSelection.length === 0) {
-                this.$message({
-                    message: '请至少选择一条',
-                    type: 'warning'
-                });
-            } else {
-                this.multipleSelection[0].username = this.multipleSelection[0].name;
-                this.nowInfo = this.multipleSelection[0];
-            }
-        },
-        deleteRole: function deleteRole() {
-            console.log("delete");
-        },
-        refreshRole: function refreshRole() {
-            this.loading = true;
-            this.fetchData();
-        },
-
-        /*分页*/
-        handlePagChg: function handlePagChg(page) {
-            var _this2 = this;
-
-            this.$fetch(this.urls.roledetails + '?page=' + page, {
-                include: 'group'
-            }).then(function (res) {
-                _this2.supplierVal = res.data;
-            });
-        }
-    },
-    mounted: function mounted() {
-        this.fetchData();
-        this.$store.state.opt.opts = this.newOpt;
-        this.$store.commit('change', this.newOpt);
-        var that = this;
-        $(window).resize(function () {
-            return function () {
-                that.$store.state.opt.opts = that.newOpt;
-                that.$store.commit('change', that.newOpt);
-            }();
-        });
+    urls: {
+      get: function get() {
+        return this.$store.state.urls;
+      },
+      set: function set() {}
     }
+  },
+  methods: {
+    //获取数据
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.$fetch(this.urls.roles).then(function (res) {
+        console.log(res.data);
+        _this.loading = false;
+        _this.rolesList = res.data;
+        var pg = res.meta.pagination;
+        _this.$store.dispatch("currentPage", pg.current_page);
+        _this.$store.commit("PER_PAGE", pg.per_page);
+        _this.$store.commit("PAGE_TOTAL", pg.total);
+        _this.delBatchUrl = _this.urls.roledetails;
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this.$message.error({
+            message: str
+          });
+        }
+      });
+      //    获取权限列表
+      this.$fetch(this.urls.permissions).then(function (res) {
+        console.log(res.data);
+        _this.permissionList = res.data;
+      }, function (err) {});
+    },
+
+    /**
+     * ********************************************  新  增  角  色  ***************************************************
+     * 
+     **/
+    addRole: function addRole() {
+      console.log("addRole");
+      this.addRoleMask = true;
+    },
+    addRoleConfirm: function addRoleConfirm() {
+      var _this2 = this;
+
+      this.$post(this.urls.roles, this.addData).then(function (res) {
+        _this2.$message({
+          message: "添加角色成功",
+          type: "success"
+        });
+        _this2.addRoleMask = false;
+        _this2.refresh();
+      });
+    },
+
+    /**
+     * ********************************************  修  改  角  色  ***************************************************
+     * 
+     **/
+    updateRole: function updateRole() {
+      console.log("change");
+      console.log(this.multipleSelection);
+      this.updateRoleMask = true;
+      if (this.multipleSelection.length === 0) {
+        this.$message({
+          message: "请至少选择一条",
+          type: "warning"
+        });
+      } else {
+        this.updateData = this.multipleSelection[0];
+      }
+    },
+    updateRoleConfirm: function updateRoleConfirm() {
+      var _this3 = this;
+
+      var submitData = this.updateData;
+      this.$patch(this.urls.roles + "/" + submitData.id, submitData).then(function (res) {
+        console.log(res);
+        _this3.$message({
+          message: "修改角色成功",
+          type: "success"
+        });
+        _this3.refresh();
+        _this3.updateRoleMask = false;
+      });
+    },
+    handleSelectionChange: function handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    deleteRole: function deleteRole() {
+      console.log("delete");
+    },
+
+
+    /**
+     * ********************************************  刷  新  ***************************************************
+     * 
+     **/
+    refresh: function refresh() {
+      this.loading = true;
+      this.fetchData();
+    },
+
+    /*分页*/
+    handlePagChg: function handlePagChg(page) {
+      var _this4 = this;
+
+      this.$fetch(this.urls.roledetails + "?page=" + page, {}).then(function (res) {
+        _this4.supplierVal = res.data;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.fetchData();
+    this.$store.state.opt.opts = this.newOpt;
+    this.$store.commit("change", this.newOpt);
+    var that = this;
+    $(window).resize(function () {
+      return function () {
+        that.$store.state.opt.opts = that.newOpt;
+        that.$store.commit("change", that.newOpt);
+      }();
+    });
+  }
 });
 
 /***/ }),
 
-/***/ 1161:
+/***/ 1162:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -512,13 +487,13 @@ var render = function() {
                             )
                           : _c("span", [
                               _vm._v(
-                                "\n                        " +
+                                "\n                    " +
                                   _vm._s(
                                     item.inProp
                                       ? scope.row[item.prop][item.inProp]
                                       : scope.row[item.prop]
                                   ) +
-                                  "\n                    "
+                                  "\n                "
                               )
                             ])
                       ]
@@ -537,7 +512,7 @@ var render = function() {
       _c(
         "el-dialog",
         {
-          attrs: { title: "新增用户", visible: _vm.addRoleMask },
+          attrs: { title: "新增角色", visible: _vm.addRoleMask },
           on: {
             "update:visible": function($event) {
               _vm.addRoleMask = $event
@@ -545,156 +520,199 @@ var render = function() {
           }
         },
         [
+          _c("label", [_vm._v(_vm._s(this.addData))]),
+          _vm._v(" "),
           _c(
-            "el-row",
-            [
-              _c("el-col", { attrs: { span: 8 } }, [_vm._v("角色名")]),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 16 } },
+            "el-form",
+            {
+              staticClass: "addRoleForm",
+              attrs: { model: _vm.addData, id: "addRoleForm" }
+            },
+            _vm._l(_vm.tableHead[1], function(item, index) {
+              return _c(
+                "el-form-item",
+                { key: index, attrs: { label: item.label, prop: item.prop } },
                 [
-                  _c("el-input", {
-                    attrs: { placeholder: "请输入内容" },
-                    model: {
-                      value: _vm.newInfo.username,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newInfo, "username", $$v)
-                      },
-                      expression: "newInfo.username"
-                    }
-                  })
-                ],
-                1
+                  item.type == "text"
+                    ? _c("span", [
+                        item.inProp
+                          ? _c(
+                              "span",
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: item.addChgAble
+                                  },
+                                  model: {
+                                    value: _vm.addData[item.prop][item.inProp],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.addData[item.prop],
+                                        item.inProp,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression:
+                                      "addData[item.prop][item.inProp]"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _c(
+                              "span",
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: item.addChgAble
+                                  },
+                                  model: {
+                                    value: _vm.addData[item.prop],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.addData,
+                                        item.prop,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression: "addData[item.prop]"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                      ])
+                    : item.type == "textarea"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-input", {
+                            attrs: { type: "textarea", placehode: item.holder },
+                            model: {
+                              value: _vm.addData[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.addData,
+                                  item.prop,
+                                  typeof $$v === "string" ? $$v.trim() : $$v
+                                )
+                              },
+                              expression: "addData[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "select"
+                    ? _c(
+                        "span",
+                        [
+                          _c(
+                            "el-select",
+                            {
+                              attrs: { placeholder: item.holder },
+                              model: {
+                                value: _vm.addData[item.prop],
+                                callback: function($$v) {
+                                  _vm.$set(_vm.addData, item.prop, $$v)
+                                },
+                                expression: "addData[item.prop]"
+                              }
+                            },
+                            _vm._l(_vm.groupOptions, function(list) {
+                              return _c(
+                                "span",
+                                { key: list.id },
+                                [
+                                  _c("el-option", {
+                                    attrs: {
+                                      label: list.name ? list.name : list.nick,
+                                      value: list.id
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            }),
+                            0
+                          )
+                        ],
+                        1
+                      )
+                    : item.type == "checkbox"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-checkbox", {
+                            attrs: { disabled: item.chgAble },
+                            model: {
+                              value: _vm.addData[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(_vm.addData, item.prop, $$v)
+                              },
+                              expression: "addData[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "transfer"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-transfer", {
+                            attrs: {
+                              data: _vm.permissionList,
+                              titles: ["未选", "已选"]
+                            },
+                            model: {
+                              value: _vm.addData.permission,
+                              callback: function($$v) {
+                                _vm.$set(_vm.addData, "permission", $$v)
+                              },
+                              expression: "addData.permission"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ]
               )
-            ],
+            }),
             1
           ),
           _vm._v(" "),
           _c(
-            "el-row",
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
             [
-              _c("el-col", { attrs: { span: 8 } }, [_vm._v("描述")]),
-              _vm._v(" "),
               _c(
-                "el-col",
-                { attrs: { span: 16 } },
-                [
-                  _c("el-input", {
-                    attrs: { placeholder: "请输入内容" },
-                    model: {
-                      value: _vm.newInfo.description,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newInfo, "description", $$v)
-                      },
-                      expression: "newInfo.description"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-row",
-            [
-              _c("el-col", { attrs: { span: 8 } }, [_vm._v("备注")]),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 16 } },
-                [
-                  _c("el-input", {
-                    attrs: { placeholder: "请输入内容" },
-                    model: {
-                      value: _vm.newInfo.remark,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newInfo, "remark", $$v)
-                      },
-                      expression: "newInfo.remark"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-row",
-            [
-              _c("el-col", { attrs: { span: 8 } }, [_vm._v("选择分组")]),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 16 } },
+                "div",
+                { staticStyle: { float: "right" } },
                 [
                   _c(
-                    "el-select",
+                    "el-button",
                     {
-                      attrs: { placeholder: "请选择" },
-                      model: {
-                        value: _vm.newInfo.role_group_id,
-                        callback: function($$v) {
-                          _vm.$set(_vm.newInfo, "role_group_id", $$v)
-                        },
-                        expression: "newInfo.role_group_id"
-                      }
+                      attrs: { type: "primary" },
+                      on: { click: _vm.addRoleConfirm }
                     },
-                    _vm._l(_vm.groupOptions, function(item) {
-                      return _c("el-option", {
-                        key: item.id,
-                        attrs: { label: item.name, value: item.id }
-                      })
-                    }),
-                    1
+                    [_vm._v("提交")]
                   )
                 ],
                 1
               )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("el-row", [_vm._v("\n            配置权限\n        ")]),
-          _vm._v(" "),
-          _c(
-            "el-row",
-            [
-              _c(
-                "el-col",
-                { attrs: { span: "24" } },
-                [
-                  _c("el-transfer", {
-                    attrs: {
-                      data: _vm.permissionList,
-                      titles: ["未选", "已选"]
-                    },
-                    model: {
-                      value: _vm.newInfo.permission,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newInfo, "permission", $$v)
-                      },
-                      expression: "newInfo.permission"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("br"),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.submitNewOne } },
-            [_vm._v("提交")]
+            ]
           )
         ],
         1
@@ -703,164 +721,208 @@ var render = function() {
       _c(
         "el-dialog",
         {
-          attrs: { title: "修改信息", visible: _vm.changeRoleMask },
+          attrs: { title: "修改信息", visible: _vm.updateRoleMask },
           on: {
             "update:visible": function($event) {
-              _vm.changeRoleMask = $event
+              _vm.updateRoleMask = $event
             }
           }
         },
         [
+          _c("label", [_vm._v(_vm._s(this.updateData))]),
+          _vm._v(" "),
           _c(
-            "el-row",
-            [
-              _c("el-col", { attrs: { span: 8 } }, [_vm._v("角色名")]),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 16 } },
+            "el-form",
+            {
+              staticClass: "addRoleForm",
+              attrs: { model: _vm.updateData, id: "addRoleForm" }
+            },
+            _vm._l(_vm.tableHead[1], function(item, index) {
+              return _c(
+                "el-form-item",
+                { key: index, attrs: { label: item.label, prop: item.prop } },
                 [
-                  _c("el-input", {
-                    attrs: { placeholder: "请输入内容" },
-                    model: {
-                      value: _vm.nowInfo.username,
-                      callback: function($$v) {
-                        _vm.$set(_vm.nowInfo, "username", $$v)
-                      },
-                      expression: "nowInfo.username"
-                    }
-                  })
-                ],
-                1
+                  item.type == "text"
+                    ? _c("span", [
+                        item.inProp
+                          ? _c(
+                              "span",
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: item.addChgAble
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.updateData[item.prop][item.inProp],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.updateData[item.prop],
+                                        item.inProp,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression:
+                                      "updateData[item.prop][item.inProp]"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _c(
+                              "span",
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: item.addChgAble
+                                  },
+                                  model: {
+                                    value: _vm.updateData[item.prop],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.updateData,
+                                        item.prop,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression: "updateData[item.prop]"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                      ])
+                    : item.type == "textarea"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-input", {
+                            attrs: { type: "textarea", placehode: item.holder },
+                            model: {
+                              value: _vm.updateData[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.updateData,
+                                  item.prop,
+                                  typeof $$v === "string" ? $$v.trim() : $$v
+                                )
+                              },
+                              expression: "updateData[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "select"
+                    ? _c(
+                        "span",
+                        [
+                          _c(
+                            "el-select",
+                            {
+                              attrs: { placeholder: item.holder },
+                              model: {
+                                value: _vm.updateData[item.prop],
+                                callback: function($$v) {
+                                  _vm.$set(_vm.updateData, item.prop, $$v)
+                                },
+                                expression: "updateData[item.prop]"
+                              }
+                            },
+                            _vm._l(_vm.groupOptions, function(list) {
+                              return _c(
+                                "span",
+                                { key: list.id },
+                                [
+                                  _c("el-option", {
+                                    attrs: {
+                                      label: list.name ? list.name : list.nick,
+                                      value: list.id
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            }),
+                            0
+                          )
+                        ],
+                        1
+                      )
+                    : item.type == "checkbox"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-checkbox", {
+                            attrs: { disabled: item.chgAble },
+                            model: {
+                              value: _vm.updateData[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(_vm.updateData, item.prop, $$v)
+                              },
+                              expression: "updateData[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "transfer"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-transfer", {
+                            attrs: {
+                              data: _vm.permissionList,
+                              titles: ["未选", "已选"]
+                            },
+                            model: {
+                              value: _vm.updateData.permission,
+                              callback: function($$v) {
+                                _vm.$set(_vm.updateData, "permission", $$v)
+                              },
+                              expression: "updateData.permission"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ]
               )
-            ],
+            }),
             1
           ),
           _vm._v(" "),
           _c(
-            "el-row",
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
             [
-              _c("el-col", { attrs: { span: 8 } }, [_vm._v("描述")]),
-              _vm._v(" "),
               _c(
-                "el-col",
-                { attrs: { span: 16 } },
-                [
-                  _c("el-input", {
-                    attrs: { placeholder: "请输入内容" },
-                    model: {
-                      value: _vm.nowInfo.description,
-                      callback: function($$v) {
-                        _vm.$set(_vm.nowInfo, "description", $$v)
-                      },
-                      expression: "nowInfo.description"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-row",
-            [
-              _c("el-col", { attrs: { span: 8 } }, [_vm._v("备注")]),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 16 } },
-                [
-                  _c("el-input", {
-                    attrs: { placeholder: "请输入内容" },
-                    model: {
-                      value: _vm.nowInfo.remark,
-                      callback: function($$v) {
-                        _vm.$set(_vm.nowInfo, "remark", $$v)
-                      },
-                      expression: "nowInfo.remark"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-row",
-            [
-              _c("el-col", { attrs: { span: 8 } }, [_vm._v("选择分组")]),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 16 } },
+                "div",
+                { staticStyle: { float: "right" } },
                 [
                   _c(
-                    "el-select",
+                    "el-button",
                     {
-                      attrs: { placeholder: "请选择" },
-                      model: {
-                        value: _vm.nowInfo.role_group_id,
-                        callback: function($$v) {
-                          _vm.$set(_vm.nowInfo, "role_group_id", $$v)
-                        },
-                        expression: "nowInfo.role_group_id"
-                      }
+                      attrs: { type: "primary" },
+                      on: { click: _vm.updateRoleConfirm }
                     },
-                    _vm._l(_vm.groupOptions, function(item) {
-                      return _c("el-option", {
-                        key: item.id,
-                        attrs: { label: item.name, value: item.id }
-                      })
-                    }),
-                    1
+                    [_vm._v("提交")]
                   )
                 ],
                 1
               )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("el-row", [_vm._v("\n            配置权限\n        ")]),
-          _vm._v(" "),
-          _c(
-            "el-row",
-            [
-              _c(
-                "el-col",
-                { attrs: { span: "24" } },
-                [
-                  _c("el-transfer", {
-                    attrs: {
-                      data: _vm.permissionList,
-                      titles: ["未选", "已选"]
-                    },
-                    model: {
-                      value: _vm.nowInfo.permission,
-                      callback: function($$v) {
-                        _vm.$set(_vm.nowInfo, "permission", $$v)
-                      },
-                      expression: "nowInfo.permission"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("br"),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.updateOne } },
-            [_vm._v("提交")]
+            ]
           )
         ],
         1
