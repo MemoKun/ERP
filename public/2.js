@@ -33917,6 +33917,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -34011,12 +34019,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
        */
       filterBox: false,
       searchBox: {
-        shop_nick: "",
-        order_no: "",
+        shops_id: "",
+        order_sn: "",
         buyer_nick: "",
         buyer_name: "",
-        refund_info: "",
-        locker: "",
+        locker_id: "",
         refund_time: ""
       },
 
@@ -34028,6 +34035,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       orderListTabCurRowId: "",
 
+      addSubData: [],
       untreatedOrderListData: [],
       treatedOrderListData: [],
       OrderListCurRowData: {},
@@ -34200,24 +34208,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         img_url: "",
         refund_reason: "",
         refund_description: "",
-        refund_amount: ""
+        refund_amount: 0
       },
       addRefundOrderFormVal: {
         refund_sn: "",
         order_sn: "",
         refund_payment_methods_id: "",
         shops_id: "",
-        refund_account: "",
+        refund_account: 0,
         bank: "",
         bank_address: "",
-        refund_amount: "",
+        refund_amount: 0,
         transaction_sn: "",
         paipai_sn: "",
         refund_reason_type_id: "",
         buyer_nick: "",
         buyer_name: "",
-        payment_amount: "",
-        order_price: "",
+        payment_amount: 0,
+        order_price: 0,
         order_time: "",
         is_delivered: "0",
         responsible_party: "",
@@ -34229,7 +34237,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           img_url: "",
           refund_reason: "",
           refund_description: "",
-          refund_amount: ""
+          refund_amount: 0
         }]
       },
       addRefundFormRules: {
@@ -34266,9 +34274,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: "所属店铺",
         prop: "shops_id",
-        holder: "请输入所属店铺",
+        holder: "请选择所属店铺",
         width: "200",
-        type: "text"
+        type: "select",
+        stateVal: 'shops'
       }, {
         label: "退款账号",
         prop: "refund_account",
@@ -34384,7 +34393,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         order_sn: "",
         refund_payment_methods_id: "",
         shops_id: "",
-        refund_account: "",
+        refund_account: 0,
         bank: "",
         bank_address: "",
         refund_amount: "",
@@ -34394,19 +34403,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         buyer_nick: "",
         buyer_name: "",
         payment_amount: "",
-        order_price: "",
+        order_price: 0,
         order_time: "",
         is_delivered: "0",
         responsible_party: "",
         responsible_person: "",
-        responsible_amount: "",
+        responsible_amount: 0,
         refund_description: "",
         business_remark: "",
         refund_reason: [{
           img_url: "",
           refund_reason: "",
           refund_description: "",
-          refund_amount: ""
+          refund_amount: 0
         }]
       },
       detailRefundOrderHead: [{
@@ -34556,7 +34565,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "金额",
         width: "200",
         prop: "refund_amount",
-        type: "text"
+        type: "number"
       }],
 
       /*修改*/
@@ -34814,9 +34823,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[5].nClick = false;
           this.newOpt[6].nClick = true;
           this.$fetch(this.urls.customerservicerefunds + "/searchuntreated", {
-            include: "refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial"
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
+            include: "shop,locker,refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial"
           }).then(function (res) {
             _this.loading = false;
+            _this.$fetch(_this.urls.customerservicedepts + "/create").then(function (res) {
+              _this.addSubData = res;
+            }, function (err) {});
             _this.untreatedOrderListData = res.data;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -34824,6 +34841,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$store.commit("PAGE_TOTAL", pg.total);
             _this.$store.dispatch("refundreasontype", "/refundreasontype");
             _this.$store.dispatch("refundMethod", "/refundMethod");
+            _this.$store.dispatch("shops", "/shops");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34843,7 +34861,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = true;
           this.newOpt[5].nClick = true;
           this.newOpt[6].nClick = false;
-          this.$fetch(this.urls.customerservicerefunds + "/searchtreated").then(function (res) {
+          this.$fetch(this.urls.customerservicerefunds + "/searchtreated", {
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id
+          }).then(function (res) {
             _this.loading = false;
             _this.treatedOrderListData = res.data;
             var pg = res.meta.pagination;
@@ -34852,6 +34876,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$store.commit("PAGE_TOTAL", pg.total);
             _this.$store.dispatch("refundreasontype", "/refundreasontype");
             _this.$store.dispatch("refundMethod", "/refundMethod");
+            _this.$store.dispatch("shops", "/shops");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -34866,9 +34891,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         case 2:
           this.$fetch(this.urls.customerservicerefunds, {
             order_status: "等通知发货",
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
             include: "shop,creator,businessPersonnel,locker,afterSale,financial,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
             _this.loading = false;
+            _this.$fetch(_this.urls.customerservicedepts + "/create").then(function (res) {
+              _this.addSubData = res;
+            }, function (err) {});
             _this.untreatedOrderListData = res.data;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
@@ -34876,6 +34909,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$store.commit("PAGE_TOTAL", pg.total);
             _this.$store.dispatch("refundreasontype", "/refundreasontype");
             _this.$store.dispatch("refundMethod", "/refundMethod");
+            _this.$store.dispatch("shops", "/shops");
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -35026,7 +35060,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         img_url: "",
         refund_reason: "",
         refund_description: "",
-        refund_amount: ""
+        refund_amount: 0
       };
       if (this.updateRefundOrderFormVal.refund_reason.length > 0 && !this.updateRefundOrderFormVal.refund_reason[this.updateRefundOrderFormVal.refund_reason.length - 1].refund_reason) {
         this.$message({
@@ -35579,6 +35613,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
     },
+
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
     resets: function resets() {
       this.searchBox = {};
     }
@@ -35625,20 +35665,32 @@ var render = function() {
                 [
                   _c("label", [_vm._v("店铺昵称")]),
                   _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    model: {
-                      value: _vm.searchBox.shop_nick,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.searchBox,
-                          "shop_nick",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "searchBox.shop_nick"
-                    }
-                  })
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      model: {
+                        value: _vm.searchBox.shops_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "shops_id", $$v)
+                        },
+                        expression: "searchBox.shops_id"
+                      }
+                    },
+                    _vm._l(_vm.resData["shops"], function(list) {
+                      return _c(
+                        "span",
+                        { key: list.id },
+                        [
+                          _c("el-option", {
+                            attrs: { label: list["nick"], value: list.id }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
                 ],
                 1
               ),
@@ -35651,15 +35703,15 @@ var render = function() {
                   _c("el-input", {
                     attrs: { clearable: "" },
                     model: {
-                      value: _vm.searchBox.order_no,
+                      value: _vm.searchBox.order_sn,
                       callback: function($$v) {
                         _vm.$set(
                           _vm.searchBox,
-                          "order_no",
+                          "order_sn",
                           typeof $$v === "string" ? $$v.trim() : $$v
                         )
                       },
-                      expression: "searchBox.order_no"
+                      expression: "searchBox.order_sn"
                     }
                   })
                 ],
@@ -35717,45 +35769,34 @@ var render = function() {
               _c(
                 "span",
                 [
-                  _c("label", [_vm._v("还款信息")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    model: {
-                      value: _vm.searchBox.refund_info,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.searchBox,
-                          "refund_info",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "searchBox.refund_info"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
                   _c("label", [_vm._v("锁定人")]),
                   _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    model: {
-                      value: _vm.searchBox.locker,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.searchBox,
-                          "locker",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "searchBox.locker"
-                    }
-                  })
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      model: {
+                        value: _vm.searchBox.locker_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "locker_id", $$v)
+                        },
+                        expression: "searchBox.locker_id"
+                      }
+                    },
+                    _vm._l(_vm.addSubData["user"], function(list) {
+                      return _c(
+                        "span",
+                        { key: list.id },
+                        [
+                          _c("el-option", {
+                            attrs: { label: list["username"], value: list.id }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
                 ],
                 1
               ),
@@ -35783,7 +35824,22 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticStyle: { "text-align": "right" } },
+              [
+                _c(
+                  "el-button",
+                  { attrs: { type: "primary" }, on: { click: _vm.searchData } },
+                  [_vm._v("筛选")]
+                ),
+                _vm._v(" "),
+                _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
           _c(

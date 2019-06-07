@@ -186,9 +186,7 @@
             <el-button @click="resets">重置</el-button>
           </div>
         </div>
-        <label>
-          {{this.orderListData}}
-        </label>
+
         <!--订单表格-->
         <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">

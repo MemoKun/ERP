@@ -5,11 +5,15 @@
         <div class="searchBox">
           <span>
             <label>店铺昵称</label>
-            <el-input v-model.trim="searchBox.shop_nick" clearable></el-input>
+            <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
+                <span v-for="list in resData['shops']" :key="list.id">
+                  <el-option :label="list['nick']" :value="list.id"></el-option>
+                </span>
+              </el-select>
           </span>
           <span>
             <label>订单编号</label>
-            <el-input v-model.trim="searchBox.order_no" clearable></el-input>
+            <el-input v-model.trim="searchBox.order_sn" clearable></el-input>
           </span>
           <span>
             <label>买家昵称</label>
@@ -22,12 +26,12 @@
         </div>
         <div class="searchBox">
           <span>
-            <label>还款信息</label>
-            <el-input v-model.trim="searchBox.refund_info" clearable></el-input>
-          </span>
-          <span>
             <label>锁定人</label>
-            <el-input v-model.trim="searchBox.locker" clearable></el-input>
+            <el-select v-model="searchBox.locker_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
           </span>
           <span>
             <label>还款时间</label>
@@ -39,6 +43,10 @@
               end-placeholder="结束日期"
             ></el-date-picker>
           </span>
+        </div>
+        <div style="text-align: right">
+            <el-button type="primary" @click="searchData">筛选</el-button>
+            <el-button @click="resets">重置</el-button>
         </div>
       </div>
 
@@ -933,12 +941,11 @@ export default {
        */
       filterBox: false,
       searchBox: {
-        shop_nick: "",
-        order_no: "",
+        shops_id: "",
+        order_sn: "",
         buyer_nick: "",
         buyer_name: "",
-        refund_info: "",
-        locker: "",
+        locker_id: "",
         refund_time: ""
       },
 
@@ -950,6 +957,7 @@ export default {
 
       orderListTabCurRowId: "",
 
+      addSubData: [],
       untreatedOrderListData: [],
       treatedOrderListData: [],
       OrderListCurRowData: {},
@@ -1151,24 +1159,24 @@ export default {
         img_url: "",
         refund_reason: "",
         refund_description: "",
-        refund_amount: ""
+        refund_amount: 0
       },
       addRefundOrderFormVal: {
         refund_sn: "",
         order_sn: "",
         refund_payment_methods_id: "",
         shops_id: "",
-        refund_account: "",
+        refund_account: 0,
         bank: "",
         bank_address: "",
-        refund_amount: "",
+        refund_amount: 0,
         transaction_sn: "",
         paipai_sn: "",
         refund_reason_type_id: "",
         buyer_nick: "",
         buyer_name: "",
-        payment_amount: "",
-        order_price: "",
+        payment_amount: 0,
+        order_price: 0,
         order_time: "",
         is_delivered: "0",
         responsible_party: "",
@@ -1181,7 +1189,7 @@ export default {
             img_url: "",
             refund_reason: "",
             refund_description: "",
-            refund_amount: ""
+            refund_amount: 0
           }
         ]
       },
@@ -1232,9 +1240,10 @@ export default {
         {
           label: "所属店铺",
           prop: "shops_id",
-          holder: "请输入所属店铺",
+          holder: "请选择所属店铺",
           width: "200",
-          type: "text"
+          type: "select",
+          stateVal:'shops'
         },
         {
           label: "退款账号",
@@ -1368,7 +1377,7 @@ export default {
         order_sn: "",
         refund_payment_methods_id: "",
         shops_id: "",
-        refund_account: "",
+        refund_account: 0,
         bank: "",
         bank_address: "",
         refund_amount: "",
@@ -1378,12 +1387,12 @@ export default {
         buyer_nick: "",
         buyer_name: "",
         payment_amount: "",
-        order_price: "",
+        order_price: 0,
         order_time: "",
         is_delivered: "0",
         responsible_party: "",
         responsible_person: "",
-        responsible_amount: "",
+        responsible_amount: 0,
         refund_description: "",
         business_remark: "",
         refund_reason: [
@@ -1391,7 +1400,7 @@ export default {
             img_url: "",
             refund_reason: "",
             refund_description: "",
-            refund_amount: ""
+            refund_amount: 0
           }
         ]
       },
@@ -1566,7 +1575,7 @@ export default {
           label: "金额",
           width: "200",
           prop: "refund_amount",
-          type: "text"
+          type: "number"
         }
       ],
 
@@ -1850,11 +1859,22 @@ export default {
           this.newOpt[5].nClick = false;
           this.newOpt[6].nClick = true;
           this.$fetch(this.urls.customerservicerefunds + "/searchuntreated", {
+            shops_id:this.searchBox.shops_id,
+            order_sn:this.searchBox.order_sn,
+            buyer_nick:this.searchBox.buyer_nick,
+            buyer_name:this.searchBox.buyer_name,
+            locker_id:this.searchBox.locker_id,
             include:
-              "refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial"
+              "shop,locker,refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial"
           }).then(
             res => {
               this.loading = false;
+               this.$fetch(this.urls.customerservicedepts + "/create").then(
+                res => {
+                  this.addSubData = res;
+                },
+                err => {}
+              );
               this.untreatedOrderListData = res.data;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
@@ -1862,6 +1882,7 @@ export default {
               this.$store.commit("PAGE_TOTAL", pg.total);
               this.$store.dispatch("refundreasontype", "/refundreasontype");
               this.$store.dispatch("refundMethod", "/refundMethod");
+              this.$store.dispatch("shops", "/shops");
             },
             err => {
               if (err.response) {
@@ -1883,7 +1904,13 @@ export default {
           this.newOpt[4].nClick = true;
           this.newOpt[5].nClick = true;
           this.newOpt[6].nClick = false;
-          this.$fetch(this.urls.customerservicerefunds + "/searchtreated").then(
+          this.$fetch(this.urls.customerservicerefunds + "/searchtreated",{
+            shops_id:this.searchBox.shops_id,
+            order_sn:this.searchBox.order_sn,
+            buyer_nick:this.searchBox.buyer_nick,
+            buyer_name:this.searchBox.buyer_name,
+            locker_id:this.searchBox.locker_id,
+          }).then(
             res => {
               this.loading = false;
               this.treatedOrderListData = res.data;
@@ -1893,6 +1920,7 @@ export default {
               this.$store.commit("PAGE_TOTAL", pg.total);
               this.$store.dispatch("refundreasontype", "/refundreasontype");
               this.$store.dispatch("refundMethod", "/refundMethod");
+              this.$store.dispatch("shops", "/shops");
             },
             err => {
               if (err.response) {
@@ -1909,11 +1937,22 @@ export default {
         case 2:
           this.$fetch(this.urls.customerservicerefunds, {
             order_status: "等通知发货",
+            shops_id:this.searchBox.shops_id,
+            order_sn:this.searchBox.order_sn,
+            buyer_nick:this.searchBox.buyer_nick,
+            buyer_name:this.searchBox.buyer_name,
+            locker_id:this.searchBox.locker_id,
             include:
               "shop,creator,businessPersonnel,locker,afterSale,financial,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(
             res => {
               this.loading = false;
+              this.$fetch(this.urls.customerservicedepts + "/create").then(
+                res => {
+                  this.addSubData = res;
+                },
+                err => {}
+              );
               this.untreatedOrderListData = res.data;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
@@ -1921,6 +1960,7 @@ export default {
               this.$store.commit("PAGE_TOTAL", pg.total);
               this.$store.dispatch("refundreasontype", "/refundreasontype");
               this.$store.dispatch("refundMethod", "/refundMethod");
+              this.$store.dispatch("shops", "/shops");
             },
             err => {
               if (err.response) {
@@ -2085,7 +2125,7 @@ export default {
         img_url: "",
         refund_reason: "",
         refund_description: "",
-        refund_amount: ""
+        refund_amount: 0
       };
       if (
         this.updateRefundOrderFormVal.refund_reason.length > 0 &&
@@ -2672,6 +2712,11 @@ export default {
           }
         );
       }
+    },
+    //筛选
+    searchData() {
+      this.loading = true;
+      this.fetchData();
     },
     resets() {
       this.searchBox = {};

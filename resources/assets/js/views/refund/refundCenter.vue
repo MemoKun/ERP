@@ -5,7 +5,11 @@
         <div class="searchBox">
           <span>
             <label>店铺昵称</label>
-            <el-input v-model.trim="searchBox.shop_nick" clearable></el-input>
+            <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
+                <span v-for="list in resData['shops']" :key="list.id">
+                  <el-option :label="list['nick']" :value="list.id"></el-option>
+                </span>
+              </el-select>
           </span>
           <span>
             <label>订单编号</label>
@@ -22,17 +26,21 @@
         </div>
         <div class="searchBox">
           <span>
-            <label>还款信息</label>
-            <el-input v-model.trim="searchBox.refund_info" clearable></el-input>
-          </span>
-          <span>
             <label>锁定人</label>
-            <el-input v-model.trim="searchBox.locker" clearable></el-input>
+            <el-select v-model="searchBox.locker_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
           </span>
           <span>
             <label>还款时间</label>
             <el-date-picker v-model="searchBox.refund_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
           </span>
+        </div>
+        <div style="text-align: right">
+            <el-button type="primary" @click="searchData">筛选</el-button>
+            <el-button @click="resets">重置</el-button>
         </div>
       </div>
 
@@ -441,15 +449,14 @@ export default {
       */
       filterBox: false,
       searchBox: {
-        shop_nick: "",
-        order_no: "",
+        shops_id: "",
+        order_sn: "",
         buyer_nick: "",
         buyer_name: "",
-        refund_info: "",
-        locker: "",
+        locker_id: "",
         refund_time: ""
       },
-
+      addSubData:[],
       /**订单列表Tab
        * 订单列表的相关参数
        * */
@@ -1259,6 +1266,11 @@ export default {
       switch (index) {
         case 0:
           this.$fetch(this.urls.customerservicerefunds + "/searchuntreated", {
+            shops_id:this.searchBox.shops_id,
+            order_sn:this.searchBox.order_sn,
+            buyer_nick:this.searchBox.buyer_nick,
+            buyer_name:this.searchBox.buyer_name,
+            locker_id:this.searchBox.locker_id,
             include: "refundReason,refundReasonType"
           }).then(
             res => {
@@ -1267,7 +1279,7 @@ export default {
               this.responsiblePartyData[0].responsible_party = "";
               this.responsiblePartyData[0].responsible_person = "";
               this.responsiblePartyData[0].responsible_amount = "";
-              this.$store.dispatch("refundReasonType", "/refundReasonType");
+              this.$store.dispatch("refundreasontype", "/refundreasontype");
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -1287,7 +1299,13 @@ export default {
           break;
         case 1:
           this.$fetch(
-            this.urls.customerservicerefunds + "/searchasuntreated"
+            this.urls.customerservicerefunds + "/searchasuntreated",{
+              shops_id:this.searchBox.shops_id,
+              order_sn:this.searchBox.order_sn,
+              buyer_nick:this.searchBox.buyer_nick,
+              buyer_name:this.searchBox.buyer_name,
+              locker_id:this.searchBox.locker_id,
+            }
           ).then(
             res => {
               this.loading = false;
@@ -1314,6 +1332,11 @@ export default {
           break;
         case 2:
           this.$fetch(this.urls.customerservicerefunds + "/searchfduntreated", {
+            shops_id:this.searchBox.shops_id,
+            order_sn:this.searchBox.order_sn,
+            buyer_nick:this.searchBox.buyer_nick,
+            buyer_name:this.searchBox.buyer_name,
+            locker_id:this.searchBox.locker_id,
             include: "refundReason,refundReasonType"
           }).then(
             res => {
@@ -1322,7 +1345,7 @@ export default {
               this.responsiblePartyData[0].responsible_party = "";
               this.responsiblePartyData[0].responsible_person = "";
               this.responsiblePartyData[0].responsible_amount = "";
-              this.$store.dispatch("refundReasonType", "/refundReasonType");
+              this.$store.dispatch("refundreasontype", "/refundreasontype");
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -1342,6 +1365,11 @@ export default {
           break;
         case 3:
           this.$fetch(this.urls.customerservicerefunds + "/searchfdtreated", {
+            shops_id:this.searchBox.shops_id,
+            order_sn:this.searchBox.order_sn,
+            buyer_nick:this.searchBox.buyer_nick,
+            buyer_name:this.searchBox.buyer_name,
+            locker_id:this.searchBox.locker_id,
             include: "refundReason,refundReasonType"
           }).then(
             res => {
@@ -1350,7 +1378,7 @@ export default {
               this.responsiblePartyData[0].responsible_party = "";
               this.responsiblePartyData[0].responsible_person = "";
               this.responsiblePartyData[0].responsible_amount = "";
-              this.$store.dispatch("refundReasonType", "/refundReasonType");
+              this.$store.dispatch("refundreasontype", "/refundreasontype");
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -1924,10 +1952,25 @@ export default {
     refuseCancel() {
       this.refuseMask = false;
       this.updateRefundOrderFormVal = {};
+    },
+    //筛选
+    searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
+    resets() {
+      this.searchBox = {};
     }
   },
   mounted() {
     this.fetchData();
+    this.$store.dispatch("shops", "/shops");
+    this.$fetch(this.urls.customerservicedepts + "/create").then(
+      res => {
+        this.addSubData = res;
+      },
+      err => {}
+    );
     this.$store.dispatch("setOpt", this.newOpt);
     let that = this;
     $(window).resize(() => {

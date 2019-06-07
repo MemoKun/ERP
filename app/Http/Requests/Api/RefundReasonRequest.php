@@ -53,7 +53,7 @@ class RefundReasonRequest extends FormRequest
             'refund_reason.*.refund_description.string' => '退款描述必须为string类型',
             'refund_reason.*.refund_description.max' => '退款描述最大值为255',
 
-            'refund_reason.*.refund_amount.numeric' => '退款金额必须为数字',
+            'refund_reason.*.refund_amount.numeric' => '退款原因金额必须为数字',
 
             'refund_reason.*.img_url.string' => '图片地址必须为string类型',
             'refund_reason.*.img_url.max' => '图片地址最大为255',
@@ -65,16 +65,15 @@ class RefundReasonRequest extends FormRequest
     public function attributes()
     {
         return [
-            'id'=>'对应退款原因的id',
-            'refund_order_id'=>'对应退款订单的id',
-            'refund_reason'=>'退款原因',
-            'refund_description'=>'退款描述',
-            'refund_amount'=>'退款金额',
-            'img_url'=>'图片地址',
-            'status'=>'退款原因的状态',
-            'created_at'=>'退款原因的创建时间',
-            'updated_at'=>'退款原因的更新时间'
-      
+            'id' => '对应退款原因的id',
+            'refund_order_id' => '对应退款订单的id',
+            'refund_reason' => '退款原因',
+            'refund_description' => '退款描述',
+            'refund_amount' => '退款金额',
+            'img_url' => '图片地址',
+            'status' => '退款原因的状态',
+            'created_at' => '退款原因的创建时间',
+            'updated_at' => '退款原因的更新时间',
         ];
     }
 }

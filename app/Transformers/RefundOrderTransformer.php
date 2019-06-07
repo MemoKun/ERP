@@ -9,8 +9,7 @@ class RefundOrderTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'paymentMethod', 'shop', 'refundPaymentMethod', 'refundReason', 'businessPersonnel',
-        'locker', 'afterSale', 'financial', 'creator',
-
+        'locker', 'afterSale', 'financial', 'creator', 'user',
     ];
 
     public function transform(RefundOrder $refundOrder)
@@ -51,11 +50,11 @@ class RefundOrderTransformer extends TransformerAbstract
             'business_personnel_id' => $refundOrder->business_personnel_id,
             'locker_id' => $refundOrder->locker_id,
             'after_sales_id' => $refundOrder->after_sales_id,
-            'financial_id'=> $refundOrder->financial_id,
+            'financial_id' => $refundOrder->financial_id,
             'locked_at' => optional($refundOrder->locked_at)->toDateString(),
             'cs_audit_at' => optional($refundOrder->cs_audit_at)->toDateString(),
             'as_audit_at' => optional($refundOrder->as_audit_at)->toDateString(),
-            'f_audit_at'=> optional($refundOrder->f_audit_at)->toDateString(),
+            'f_audit_at' => optional($refundOrder->f_audit_at)->toDateString(),
             'status' => $refundOrder->status,
             'created_at' => optional($refundOrder->created_at)->toDateString(),
             'updated_at' => optional($refundOrder->updated_at)->toDateString(),
@@ -89,32 +88,51 @@ class RefundOrderTransformer extends TransformerAbstract
 
     public function includeCreator(RefundOrder $refundOrder)
     {
-        if(!$refundOrder->creator) return ;
+        if (!$refundOrder->creator) {
+            return;
+        }
+
         return $this->item($refundOrder->creator, new UserTransformer());
     }
 
     public function includeBusinessPersonnel(RefundOrder $refundOrder)
     {
-        if(!$refundOrder->businessPersonnel) return ;
+        if (!$refundOrder->businessPersonnel) {
+            return;
+        }
+
         return $this->item($refundOrder->businessPersonnel, new UserTransformer());
     }
 
     public function includeLocker(RefundOrder $refundOrder)
     {
-        if(!$refundOrder->locker) return ;
+        if (!$refundOrder->locker) {
+            return;
+        }
+
         return $this->item($refundOrder->locker, new UserTransformer());
     }
 
     public function includeAfterSale(RefundOrder $refundOrder)
     {
-        if(!$refundOrder->afterSale) return ;
+        if (!$refundOrder->afterSale) {
+            return;
+        }
+
         return $this->item($refundOrder->afterSale, new UserTransformer());
     }
 
     public function includeFinancial(RefundOrder $refundOrder)
     {
-        if(!$refundOrder->afterSale) return ;
+        if (!$refundOrder->afterSale) {
+            return;
+        }
+
         return $this->item($refundOrder->afterSale, new UserTransformer());
     }
 
+    public function includeUser(RefundOrder $refundOrder)
+    {
+        return $this->item($refundOrder->user, new UserTransformer());
+    }
 }
