@@ -5,7 +5,11 @@
                 <div class="searchBox">
                     <span>
                         <label>店铺昵称</label>
-                        <el-input v-model.trim="searchBox.shop_nick" clearable></el-input>
+                        <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
+                <span v-for="list in resData['shops']" :key="list.id">
+                  <el-option :label="list['nick']" :value="list.id"></el-option>
+                </span>
+              </el-select>
                     </span>
                     <span>
                         <label>订单编号</label>
@@ -22,18 +26,22 @@
                 </div>
                 <div class="searchBox">
                     <span>
-                        <label>还款信息</label>
-                        <el-input v-model.trim="searchBox.refund_info" clearable></el-input>
-                    </span>
-                    <span>
                         <label>锁定人</label>
-                        <el-input v-model.trim="searchBox.locker" clearable></el-input>
+                        <el-select v-model="searchBox.locker_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
                     </span>
                     <span>
                         <label>还款时间</label>
                         <el-date-picker v-model="searchBox.refund_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
                     </span>
                 </div>
+                <div style="text-align: right">
+            <el-button type="primary" @click="searchData">筛选</el-button>
+            <el-button @click="resets">重置</el-button>
+        </div>
             </div>
 
             <!--显示列表-未处理-->
@@ -357,18 +365,17 @@ export default {
           ent: this.refresh
         }
       ],
-
+      addSubData:[],
       /**SearchBox
        * 搜索框相关参数
       */
       filterBox: false,
       searchBox: {
-        shop_nick: "",
+        shops_id: "",
         order_no: "",
         buyer_nick: "",
         buyer_name: "",
-        refund_info: "",
-        locker: "",
+        locker_id: "",
         refund_time: ""
       },
 
@@ -1178,13 +1185,20 @@ export default {
       let index = this.orderListActiveName - 0;
       switch (index) {
         case 0:
+          this.newOpt[2].nClick = false;
+          this.newOpt[3].nClick = true;
           this.$fetch(this.urls.customerservicerefunds + "/searchalltreated", {
+            shops_id:this.searchBox.shops_id,
+            order_sn:this.searchBox.order_sn,
+            buyer_nick:this.searchBox.buyer_nick,
+            buyer_name:this.searchBox.buyer_name,
+            locker_id:this.searchBox.locker_id,
             include: "refundReason,refundReasonType"
           }).then(
             res => {
               this.loading = false;
               this.untreatedOrderListData = res.data;
-              this.$store.dispatch("refundReasonType", "/refundReasonType");
+              this.$store.dispatch("refundreasontype", "/refundreasontype");
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -1203,8 +1217,16 @@ export default {
           );
           break;
         case 1:
+          this.newOpt[2].nClick = true;
+          this.newOpt[3].nClick = false;
           this.$fetch(
-            this.urls.customerservicerefunds + "/searchfdtreated"
+            this.urls.customerservicerefunds + "/searchfdtreated",{
+              shops_id:this.searchBox.shops_id,
+              order_sn:this.searchBox.order_sn,
+              buyer_nick:this.searchBox.buyer_nick,
+              buyer_name:this.searchBox.buyer_name,
+              locker_id:this.searchBox.locker_id,
+            }
           ).then(
             res => {
               this.loading = false;
@@ -1525,6 +1547,30 @@ export default {
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
       this.OrderListCurRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
+      let index = this.orderListActiveName - 0;
+      if (index == 0) {
+        if (this.mergerIds.length == 1) {
+          if (val[0].refund_order_status == "订单锁定"||val[0].refund_order_status == "售后锁定"||val[0].refund_order_status == "财务锁定") {
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = false;
+          } else {
+            this.newOpt[0].nClick = false;
+            this.newOpt[1].nClick = true;
+          }
+          if (val[0].refund_order_status == "已客审"||val[0].refund_order_status == "已后审"||val[0].refund_order_status == "已财审") {
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = false;
+          } else {
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = true;
+          }
+        } else if (this.mergerIds.length >= 2) {
+          this.newOpt[0].nClick = true;
+          this.newOpt[1].nClick = true;
+          this.newOpt[2].nClick = true;
+          this.newOpt[3].nClick = true;
+        }
+      }
     },
     delBatch() {
       if (this.ids.length === 0) {
@@ -1820,10 +1866,25 @@ export default {
     refuseCancel() {
       this.refuseMask = false;
       this.updateRefundOrderFormVal = {};
+    },
+    //筛选
+    searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
+    resets() {
+      this.searchBox = {};
     }
   },
   mounted() {
     this.fetchData();
+    this.$store.dispatch("shops", "/shops");
+    this.$fetch(this.urls.customerservicedepts + "/create").then(
+      res => {
+        this.addSubData = res;
+      },
+      err => {}
+    );
     this.$store.dispatch("setOpt", this.newOpt);
     let that = this;
     $(window).resize(() => {

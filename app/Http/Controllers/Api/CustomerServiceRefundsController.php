@@ -4,24 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\RefundOrder;
 use App\Models\RefundReason;
-
 use Illuminate\Support\Facades\DB;
-
 use App\Http\Requests\Api\CustomerServiceRefundRequest;
 use App\Http\Requests\Api\RefundReasonRequest;
 use App\Http\Requests\Api\DestroyRequest;
-
 use App\Transformers\RefundOrderTransformer;
-use App\Transformers\RefundReasonTransformer;
-
-
 use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Controllers\Traits\ProcedureTrait;
-
 use Dingo\Api\Exception\UpdateResourceFailedException;
 
 /**
- * 客服退款资源
+ * 客服退款资源.
+ *
  * @Resource("customerservicerefunds",uri="/api")
  */
 class CustomerServiceRefundsController extends Controller
@@ -34,7 +28,7 @@ class CustomerServiceRefundsController extends Controller
     const PerPage = 8;
 
     /**
-     * 获取所有客服退款
+     * 获取所有客服退款.
      *
      * @Get("/customerservicerefunds{?status}[&include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial]")
      * @Versions({"v1"})
@@ -97,50 +91,141 @@ class CustomerServiceRefundsController extends Controller
         return $this->allOrPage($requset, self::MODEL, self::TRANSFORMER, self::PerPage);
     }
 
-    public function searchUntreated()
+    public function searchUntreated(CustomerServiceRefundRequest $request)
     {
-        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_NEW,RefundOrder::REFUND_STATUS_LOCK]);
+        $shops_id = $request->input('shops_id');
+        $order_sn = $request->input('order_sn');
+        $buyer_nick = $request->input('buyer_nick');
+        $buyer_name = $request->input('buyer_name');
+        $locker_id = $request->input('locker_id');
+        $order = RefundOrder::query()
+        ->whereIn('refund_order_status', [RefundOrder::REFUND_STATUS_NEW, RefundOrder::REFUND_STATUS_LOCK])
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('order_sn', 'like', '%'.$order_sn.'%')
+        ->where('buyer_nick', 'like', '%'.$buyer_nick.'%')
+        ->where('buyer_name', 'like', '%'.$buyer_name.'%')
+        ->where('locker_id', 'like', '%'.$locker_id.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchTreated()
+    public function searchTreated(CustomerServiceRefundRequest $request)
     {
-        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_CS_AUDIT,RefundOrder::REFUND_STATUS_AS_LOCK]);
+        $shops_id = $request->input('shops_id');
+        $order_sn = $request->input('order_sn');
+        $buyer_nick = $request->input('buyer_nick');
+        $buyer_name = $request->input('buyer_name');
+        $locker_id = $request->input('locker_id');
+        $order = RefundOrder::query()
+        ->whereIn('refund_order_status', [RefundOrder::REFUND_STATUS_CS_AUDIT, RefundOrder::REFUND_STATUS_AS_LOCK])
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('order_sn', 'like', '%'.$order_sn.'%')
+        ->where('buyer_nick', 'like', '%'.$buyer_nick.'%')
+        ->where('buyer_name', 'like', '%'.$buyer_name.'%')
+        ->where('locker_id', 'like', '%'.$locker_id.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchAsUntreated()
+    public function searchAsUntreated(CustomerServiceRefundRequest $request)
     {
-        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_CS_AUDIT,RefundOrder::REFUND_STATUS_AS_LOCK]);
+        $shops_id = $request->input('shops_id');
+        $order_sn = $request->input('order_sn');
+        $buyer_nick = $request->input('buyer_nick');
+        $buyer_name = $request->input('buyer_name');
+        $locker_id = $request->input('locker_id');
+        $order = RefundOrder::query()
+        ->whereIn('refund_order_status', [RefundOrder::REFUND_STATUS_CS_AUDIT, RefundOrder::REFUND_STATUS_AS_LOCK])
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('order_sn', 'like', '%'.$order_sn.'%')
+        ->where('buyer_nick', 'like', '%'.$buyer_nick.'%')
+        ->where('buyer_name', 'like', '%'.$buyer_name.'%')
+        ->where('locker_id', 'like', '%'.$locker_id.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchAsTreated()
+    public function searchAsTreated(CustomerServiceRefundRequest $request)
     {
-        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_AS_AUDIT,RefundOrder::REFUND_STATUS_FD_LOCK]);
+        $shops_id = $request->input('shops_id');
+        $order_sn = $request->input('order_sn');
+        $buyer_nick = $request->input('buyer_nick');
+        $buyer_name = $request->input('buyer_name');
+        $locker_id = $request->input('locker_id');
+        $order = RefundOrder::query()
+        ->whereIn('refund_order_status', [RefundOrder::REFUND_STATUS_AS_AUDIT, RefundOrder::REFUND_STATUS_FD_LOCK])
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('order_sn', 'like', '%'.$order_sn.'%')
+        ->where('buyer_nick', 'like', '%'.$buyer_nick.'%')
+        ->where('buyer_name', 'like', '%'.$buyer_name.'%')
+        ->where('locker_id', 'like', '%'.$locker_id.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchFdUntreated()
+    public function searchFdUntreated(CustomerServiceRefundRequest $request)
     {
-        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_AS_AUDIT,RefundOrder::REFUND_STATUS_FD_LOCK]);
+        $shops_id = $request->input('shops_id');
+        $order_sn = $request->input('order_sn');
+        $buyer_nick = $request->input('buyer_nick');
+        $buyer_name = $request->input('buyer_name');
+        $locker_id = $request->input('locker_id');
+        $order = RefundOrder::query()
+        ->whereIn('refund_order_status', [RefundOrder::REFUND_STATUS_AS_AUDIT, RefundOrder::REFUND_STATUS_FD_LOCK])
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('order_sn', 'like', '%'.$order_sn.'%')
+        ->where('buyer_nick', 'like', '%'.$buyer_nick.'%')
+        ->where('buyer_name', 'like', '%'.$buyer_name.'%')
+        ->where('locker_id', 'like', '%'.$locker_id.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchFdTreated()
+    public function searchFdTreated(CustomerServiceRefundRequest $request)
     {
-        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_FD_AUDIT]);
+        $shops_id = $request->input('shops_id');
+        $order_sn = $request->input('order_sn');
+        $buyer_nick = $request->input('buyer_nick');
+        $buyer_name = $request->input('buyer_name');
+        $locker_id = $request->input('locker_id');
+        $order = RefundOrder::query()
+        ->whereIn('refund_order_status', [RefundOrder::REFUND_STATUS_FD_AUDIT])
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('order_sn', 'like', '%'.$order_sn.'%')
+        ->where('buyer_nick', 'like', '%'.$buyer_nick.'%')
+        ->where('buyer_name', 'like', '%'.$buyer_name.'%')
+        ->where('locker_id', 'like', '%'.$locker_id.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
-    public function searchAllTreated()
+    public function searchAllTreated(CustomerServiceRefundRequest $request)
     {
-        $order = RefundOrder::query()->whereIn('refund_order_status',[RefundOrder::REFUND_STATUS_NEW,RefundOrder::REFUND_STATUS_LOCK,RefundOrder::REFUND_STATUS_CS_AUDIT,RefundOrder::REFUND_STATUS_AS_LOCK,RefundOrder::REFUND_STATUS_AS_AUDIT,RefundOrder::REFUND_STATUS_FD_LOCK]);
+        $shops_id = $request->input('shops_id');
+        $order_sn = $request->input('order_sn');
+        $buyer_nick = $request->input('buyer_nick');
+        $buyer_name = $request->input('buyer_name');
+        $locker_id = $request->input('locker_id');
+        $order = RefundOrder::query()
+        ->whereIn('refund_order_status', [RefundOrder::REFUND_STATUS_NEW, RefundOrder::REFUND_STATUS_LOCK, RefundOrder::REFUND_STATUS_CS_AUDIT, RefundOrder::REFUND_STATUS_AS_LOCK, RefundOrder::REFUND_STATUS_AS_AUDIT, RefundOrder::REFUND_STATUS_FD_LOCK])
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('order_sn', 'like', '%'.$order_sn.'%')
+        ->where('buyer_nick', 'like', '%'.$buyer_nick.'%')
+        ->where('buyer_name', 'like', '%'.$buyer_name.'%')
+        ->where('locker_id', 'like', '%'.$locker_id.'%')
+        ->orderBy('created_at', 'desc');
+
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
     /**
-     * 新增客服退款(可选参数：include)
+     * 新增客服退款(可选参数：include).
      *
      * @Post("/customerservicerefunds[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]")
      * @Versions({"v1"})
@@ -247,7 +332,7 @@ class CustomerServiceRefundsController extends Controller
     }
 
     /**
-     * 显示单条客服退款
+     * 显示单条客服退款.
      *
      * @Get("/customerservicerefunds/:id[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]")
      * @Versions({"v1"})
@@ -300,7 +385,7 @@ class CustomerServiceRefundsController extends Controller
     }
 
     /**
-     * 修改客服退款
+     * 修改客服退款.
      *
      * @Patch("/customerservicerefunds/:id[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]")
      * @Versions({"v1"})
@@ -340,23 +425,23 @@ class CustomerServiceRefundsController extends Controller
      *          "status_code": 422,
      *      }),
      *      @Response(201, body={
-     *          
+     *
      *      })
      * })
      */
-    public function update( 
-        CustomerServiceRefundRequest $request, 
+    public function update(
+        CustomerServiceRefundRequest $request,
         RefundReasonRequest $refundReasonRequest,
         RefundOrder $refundorder,
         \App\Handlers\ValidatedHandler $validatedHandler)
     {
         //锁定才能修改
-        if ($refundorder->unlock()||$refundorder->asUnlock())
+        if ($refundorder->unlock() || $refundorder->asUnlock()) {
             throw new UpdateResourceFailedException('订单未锁定无法修改');
-
+        }
         $data[] = $request->validated();
         $data[] = $request->input('refund_reason');
-        
+
         return $this->traitJoint2Update(
             $data,
             'refundReason',
@@ -367,7 +452,7 @@ class CustomerServiceRefundsController extends Controller
     }
 
     /**
-     * 删除客服退款
+     * 删除客服退款.
      *
      * @Delete("/customerservicerefunds/:id")
      * @Versions({"v1"})
@@ -385,10 +470,10 @@ class CustomerServiceRefundsController extends Controller
             // 删除退货原因
             $refundreason = RefundReason::where('refund_order_id', $refundorder->id);
             $delrefundreason = $refundreason->delete();
-            $refundreason->get()->map(function($item){
+            $refundreason->get()->map(function ($item) {
                 $item->refundReasonType()->delete();
             });
-            
+
             //删除退货单
             $delorder = RefundOrder::where('id', $refundorder->id);
             $delRefundOrder = $delorder->delete();
@@ -402,7 +487,7 @@ class CustomerServiceRefundsController extends Controller
     }
 
     /**
-     * 删除一组客服退款
+     * 删除一组客服退款.
      *
      * @Delete("/customerservicerefunds")
      * @Versions({"v1"})
@@ -430,10 +515,10 @@ class CustomerServiceRefundsController extends Controller
             // 删除退货原因
             $refundreason = RefundReason::whereIn('refund_order_id', $ids);
             $delrefundreason = $refundreason->delete();
-            $refundreason->get()->map(function($item){
+            $refundreason->get()->map(function ($item) {
                 $item->refundReasonType()->delete();
             });
-            
+
             //删除退货单
             $delorder = RefundOrder::whereIn('id', $ids);
             $delRefundOrder = $delorder->delete();
@@ -447,7 +532,7 @@ class CustomerServiceRefundsController extends Controller
     }
 
     /**
-     * 锁定或释放
+     * 锁定或释放.
      *
      * @PUT("/customerservicerefunds/:id/lockorunlock")
      * @Versions({"v1"})
@@ -459,14 +544,13 @@ class CustomerServiceRefundsController extends Controller
      *      @Response(204, body={})
      * })
      */
-
-     public function asRefuse(RefundOrder $refundorder)
-     {
-         return $this->traitAction(
+    public function asRefuse(RefundOrder $refundorder)
+    {
+        return $this->traitAction(
              $refundorder,
              !$refundorder->status,
              '无法驳回', 'asDoRefuse');
-     }
+    }
 
     public function isLockOrUnlock(RefundOrder $refundorder)
     {
@@ -497,9 +581,6 @@ class CustomerServiceRefundsController extends Controller
             $refundorder->getOriginal('refund_order_status') > $refundorder::REFUND_STATUS_FD_AUDIT,//=
             '无法锁定', 'fdLockOrUnlock');
     }
-
-
-    
 
     /**
      * 客审
@@ -574,6 +655,7 @@ class CustomerServiceRefundsController extends Controller
             'unAudit'
         );
     }
+
     public function isAsUnAudit(RefundOrder $refundorder)
     {
         return $this->traitAction(
@@ -585,6 +667,7 @@ class CustomerServiceRefundsController extends Controller
             'asUnAudit'
         );
     }
+
     public function isFdUnAudit(RefundOrder $refundorder)
     {
         return $this->traitAction(
@@ -596,6 +679,4 @@ class CustomerServiceRefundsController extends Controller
             'fdUnAudit'
         );
     }
-
-
 }

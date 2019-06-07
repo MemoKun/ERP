@@ -33090,6 +33090,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_china_area_data__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_china_area_data__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -33526,15 +33536,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       */
       filterBox: false,
       searchBox: {
-        shop_nick: "",
-        order_no: "",
+        shops_id: "",
+        order_sn: "",
         buyer_nick: "",
         buyer_name: "",
-        refund_info: "",
-        locker: "",
+        locker_id: "",
         refund_time: ""
       },
-
+      addSubData: [],
       /**订单列表Tab
        * 订单列表的相关参数
        * */
@@ -34180,7 +34189,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     */
   },
-  methods: {
+  methods: _defineProperty({
     toggleShow: function toggleShow() {
       this.filterBox = !this.filterBox;
     },
@@ -34249,6 +34258,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       switch (index) {
         case 0:
           this.$fetch(this.urls.customerservicerefunds + "/searchuntreated", {
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
             include: "refundReason,refundReasonType"
           }).then(function (res) {
             _this.loading = false;
@@ -34256,7 +34270,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.responsiblePartyData[0].responsible_party = "";
             _this.responsiblePartyData[0].responsible_person = "";
             _this.responsiblePartyData[0].responsible_amount = "";
-            _this.$store.dispatch("refundReasonType", "/refundReasonType");
+            _this.$store.dispatch("refundreasontype", "/refundreasontype");
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -34273,7 +34287,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 1:
-          this.$fetch(this.urls.customerservicerefunds + "/searchasuntreated").then(function (res) {
+          this.$fetch(this.urls.customerservicerefunds + "/searchasuntreated", {
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id
+          }).then(function (res) {
             _this.loading = false;
             _this.asUntreatedOrderListData = res.data;
             _this.responsiblePartyData[0].responsible_party = "";
@@ -34296,6 +34316,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           break;
         case 2:
           this.$fetch(this.urls.customerservicerefunds + "/searchfduntreated", {
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
             include: "refundReason,refundReasonType"
           }).then(function (res) {
             _this.loading = false;
@@ -34303,7 +34328,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.responsiblePartyData[0].responsible_party = "";
             _this.responsiblePartyData[0].responsible_person = "";
             _this.responsiblePartyData[0].responsible_amount = "";
-            _this.$store.dispatch("refundReasonType", "/refundReasonType");
+            _this.$store.dispatch("refundreasontype", "/refundreasontype");
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -34321,6 +34346,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           break;
         case 3:
           this.$fetch(this.urls.customerservicerefunds + "/searchfdtreated", {
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
             include: "refundReason,refundReasonType"
           }).then(function (res) {
             _this.loading = false;
@@ -34328,7 +34358,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.responsiblePartyData[0].responsible_party = "";
             _this.responsiblePartyData[0].responsible_person = "";
             _this.responsiblePartyData[0].responsible_amount = "";
-            _this.$store.dispatch("refundReasonType", "/refundReasonType");
+            _this.$store.dispatch("refundreasontype", "/refundreasontype");
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -34844,10 +34874,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     refuseCancel: function refuseCancel() {
       this.refuseMask = false;
       this.updateRefundOrderFormVal = {};
+    },
+
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchData();
     }
-  },
+  }, "resets", function resets() {
+    this.searchBox = {};
+  }),
   mounted: function mounted() {
+    var _this17 = this;
+
     this.fetchData();
+    this.$store.dispatch("shops", "/shops");
+    this.$fetch(this.urls.customerservicedepts + "/create").then(function (res) {
+      _this17.addSubData = res;
+    }, function (err) {});
     this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -34888,20 +34932,32 @@ var render = function() {
                 [
                   _c("label", [_vm._v("店铺昵称")]),
                   _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    model: {
-                      value: _vm.searchBox.shop_nick,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.searchBox,
-                          "shop_nick",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "searchBox.shop_nick"
-                    }
-                  })
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      model: {
+                        value: _vm.searchBox.shops_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "shops_id", $$v)
+                        },
+                        expression: "searchBox.shops_id"
+                      }
+                    },
+                    _vm._l(_vm.resData["shops"], function(list) {
+                      return _c(
+                        "span",
+                        { key: list.id },
+                        [
+                          _c("el-option", {
+                            attrs: { label: list["nick"], value: list.id }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
                 ],
                 1
               ),
@@ -34980,45 +35036,34 @@ var render = function() {
               _c(
                 "span",
                 [
-                  _c("label", [_vm._v("还款信息")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    model: {
-                      value: _vm.searchBox.refund_info,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.searchBox,
-                          "refund_info",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "searchBox.refund_info"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
                   _c("label", [_vm._v("锁定人")]),
                   _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    model: {
-                      value: _vm.searchBox.locker,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.searchBox,
-                          "locker",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "searchBox.locker"
-                    }
-                  })
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      model: {
+                        value: _vm.searchBox.locker_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "locker_id", $$v)
+                        },
+                        expression: "searchBox.locker_id"
+                      }
+                    },
+                    _vm._l(_vm.addSubData["user"], function(list) {
+                      return _c(
+                        "span",
+                        { key: list.id },
+                        [
+                          _c("el-option", {
+                            attrs: { label: list["username"], value: list.id }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
                 ],
                 1
               ),
@@ -35046,7 +35091,22 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticStyle: { "text-align": "right" } },
+              [
+                _c(
+                  "el-button",
+                  { attrs: { type: "primary" }, on: { click: _vm.searchData } },
+                  [_vm._v("筛选")]
+                ),
+                _vm._v(" "),
+                _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
           _c(
