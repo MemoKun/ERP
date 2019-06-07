@@ -33,6 +33,7 @@ class ReportStatisticsController extends Controller
         
         $dailyOrderNum = count($dailyOrder);
         $monthlyOrderNum = count($monthlyOrder);
+        
         return $monthlyOrderNum;
     }
 

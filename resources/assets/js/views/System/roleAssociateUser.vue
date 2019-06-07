@@ -53,12 +53,8 @@
     </el-tabs>
 
     <el-dialog title="角色权限管理" :visible.sync="userPermissionMask">
-      <label>{{this.selectRoleId}}</label>
       <div class="searchBox">
-        <div>
-          <label width="200">所属角色</label>
-        </div>
-        <el-select v-model="selectRoleId" placeholder="请选择" width="200px" @change="fetchRolePermissions"> 
+        <el-select v-model="selectRoleId" placeholder="所属角色" width="200px" @change="fetchRolePermissions">
           <span v-for="list in roleData" :key="list.id">
             <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
           </span>
@@ -69,11 +65,34 @@
         <el-tree ref="permissionTree" :data="permissionListTree" show-checkbox node-key="label" :props="defaultProps" @check="getCheckedNodes">
         </el-tree>
       </div>
+      <div slot="footer" class="dialog-footer clearfix">
+        <div style="float: right">
+          <el-button type="primary" @click="changePermissionsConfirm">更改权限</el-button>
+        </div>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="角色用户关联" :visible.sync="userRolesMask">
+      <div>
+        <el-select v-model="selectRoleId" placeholder="所属角色" width="200px" @change="fetchRolePermissions">
+          <span v-for="list in roleData" :key="list.id">
+            <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+          </span>
+        </el-select>
+      </div>
+      <br>
+      <div>
+        <el-transfer v-model="alreadyContainUsers" :data="unContainUsers" :titles="['未包含用户', '已包含用户']"></el-transfer>
+      </div>
+      <div slot="footer" class="dialog-footer clearfix">
+        <div style="float: right">
+          <el-button type="primary" @click="test">关联角色</el-button>
+        </div>
+      </div>
     </el-dialog>
   </div>
 </template>
 <script>
-
 export default {
   data() {
     return {
@@ -86,19 +105,19 @@ export default {
         {
           cnt: "角色用户",
           icon: "bf-juruser",
-          ent: this.test
+          ent: this.addUserRoles
         },
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.test
+          ent: this.refresh
         }
       ],
       activeName: "0",
       loading: false,
       roleListData: {},
       userListData: {},
-      tempUserListData:{},
+      tempUserListData: {},
       curRowId: "",
       curRowData: {},
       checkboxId: "",
@@ -186,6 +205,7 @@ export default {
         ]
       ],
       userPermissionMask: false,
+      userRolesMask: false,
       permissionListTree: [
         {
           id: 1,
@@ -624,13 +644,28 @@ export default {
           ]
         }
       ],
-      permissionListData:"",
+      permissionListData: "",
       defaultProps: {
         children: "children",
         label: "label"
       },
       selectRoleId: "",
-      roleData: {}
+      roleData: {},
+      alreadyContainUsers: [1],
+      unContainUsers: [
+        {
+          key: 1,
+          label: "余煌"
+        },
+        {
+          key: 2,
+          label: "陈一珍"
+        },
+        {
+          key: 3,
+          label: "廖丽华"
+        }
+      ]
     };
   },
   computed: {
@@ -694,22 +729,40 @@ export default {
         err => {}
       );
     },
-    getCheckedNodes(){
-      this.permissionListData = this.$refs.permissionTree.getCheckedKeys();
-    },
-    fetchRolePermissions(){
-      let id = this.selectRoleId;
-      this.$fetch(this.urls.permissions+"/"+id).then(
-        res=>{
-          let checked = ["订单管理","采购管理"];
-          this.$refs.permissionTree.setCheckedKeys(checked);
+    addUserRoles() {
+      this.userRolesMask = true;
+      this.$fetch(this.urls.roles).then(
+        res => {
+          this.roleData = res.data;
         },
-        err=>{}
+        err => {}
       );
     },
-    refresh(){
-      this.fetchData();
+    getCheckedNodes() {
+      this.permissionListData = this.$refs.permissionTree.getCheckedKeys();
     },
+    fetchRolePermissions() {
+      let id = this.selectRoleId;
+      this.$fetch(this.urls.permissions + "/" + id).then(
+        res => {
+          let checked = ["订单管理", "采购管理"];
+          this.$refs.permissionTree.setCheckedKeys(checked);
+        },
+        err => {}
+      );
+    },
+    changePermissionsConfirm() {
+      this.userPermissionMask = false;
+      this.$message({
+        message: "更改权限成功！",
+        type: "success"
+      });
+    },
+    changeUserRoles() {},
+    refresh() {
+      this.loading = true;
+      this.fetchData();
+    }
   },
   mounted() {
     this.fetchData();

@@ -141,8 +141,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -207,9 +205,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "状态",
         prop: "status",
         type: "checkbox"
-      }, {
-        label: "配置权限",
-        type: "transfer"
       }]],
       supplierRow: {},
       seriesRow: {},
@@ -435,13 +430,13 @@ var render = function() {
                             )
                           : _c("span", [
                               _vm._v(
-                                "\n                    " +
+                                "\n          " +
                                   _vm._s(
                                     item.inProp
                                       ? scope.row[item.prop][item.inProp]
                                       : scope.row[item.prop]
                                   ) +
-                                  "\n                "
+                                  "\n        "
                               )
                             ])
                       ]
@@ -468,8 +463,6 @@ var render = function() {
           }
         },
         [
-          _c("label", [_vm._v(_vm._s(this.addData))]),
-          _vm._v(" "),
           _c(
             "el-form",
             {
@@ -677,8 +670,6 @@ var render = function() {
           }
         },
         [
-          _c("label", [_vm._v(_vm._s(this.updateData))]),
-          _vm._v(" "),
           _c(
             "el-form",
             {

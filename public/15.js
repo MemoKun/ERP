@@ -127,7 +127,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -139,11 +158,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "角色用户",
         icon: "bf-juruser",
-        ent: this.test
+        ent: this.addUserRoles
       }, {
         cnt: "刷新",
         icon: "bf-refresh",
-        ent: this.test
+        ent: this.refresh
       }],
       activeName: "0",
       loading: false,
@@ -218,6 +237,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }]],
       userPermissionMask: false,
+      userRolesMask: false,
       permissionListTree: [{
         id: 1,
         label: "订单管理",
@@ -547,7 +567,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "label"
       },
       selectRoleId: "",
-      roleData: {}
+      roleData: {},
+      alreadyContainUsers: [1],
+      unContainUsers: [{
+        key: 1,
+        label: "余煌"
+      }, {
+        key: 2,
+        label: "陈一珍"
+      }, {
+        key: 3,
+        label: "廖丽华"
+      }]
     };
   },
 
@@ -607,19 +638,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this2.getCheckedNodes();
       }, function (err) {});
     },
+    addUserRoles: function addUserRoles() {
+      var _this3 = this;
+
+      this.userRolesMask = true;
+      this.$fetch(this.urls.roles).then(function (res) {
+        _this3.roleData = res.data;
+      }, function (err) {});
+    },
     getCheckedNodes: function getCheckedNodes() {
       this.permissionListData = this.$refs.permissionTree.getCheckedKeys();
     },
     fetchRolePermissions: function fetchRolePermissions() {
-      var _this3 = this;
+      var _this4 = this;
 
       var id = this.selectRoleId;
       this.$fetch(this.urls.permissions + "/" + id).then(function (res) {
         var checked = ["订单管理", "采购管理"];
-        _this3.$refs.permissionTree.setCheckedKeys(checked);
+        _this4.$refs.permissionTree.setCheckedKeys(checked);
       }, function (err) {});
     },
+    changePermissionsConfirm: function changePermissionsConfirm() {
+      this.userPermissionMask = false;
+      this.$message({
+        message: "更改权限成功！",
+        type: "success"
+      });
+    },
+    changeUserRoles: function changeUserRoles() {},
     refresh: function refresh() {
+      this.loading = true;
       this.fetchData();
     }
   },
@@ -945,20 +993,14 @@ var render = function() {
           }
         },
         [
-          _c("label", [_vm._v(_vm._s(this.selectRoleId))]),
-          _vm._v(" "),
           _c(
             "div",
             { staticClass: "searchBox" },
             [
-              _c("div", [
-                _c("label", { attrs: { width: "200" } }, [_vm._v("所属角色")])
-              ]),
-              _vm._v(" "),
               _c(
                 "el-select",
                 {
-                  attrs: { placeholder: "请选择", width: "200px" },
+                  attrs: { placeholder: "所属角色", width: "200px" },
                   on: { change: _vm.fetchRolePermissions },
                   model: {
                     value: _vm.selectRoleId,
@@ -1006,6 +1048,127 @@ var render = function() {
               })
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "div",
+                { staticStyle: { float: "right" } },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.changePermissionsConfirm }
+                    },
+                    [_vm._v("更改权限")]
+                  )
+                ],
+                1
+              )
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "角色用户关联", visible: _vm.userRolesMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.userRolesMask = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            [
+              _c(
+                "el-select",
+                {
+                  attrs: { placeholder: "所属角色", width: "200px" },
+                  on: { change: _vm.fetchRolePermissions },
+                  model: {
+                    value: _vm.selectRoleId,
+                    callback: function($$v) {
+                      _vm.selectRoleId = $$v
+                    },
+                    expression: "selectRoleId"
+                  }
+                },
+                _vm._l(_vm.roleData, function(list) {
+                  return _c(
+                    "span",
+                    { key: list.id },
+                    [
+                      _c("el-option", {
+                        attrs: {
+                          label: list.name ? list.name : list.nick,
+                          value: list.id
+                        }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c("el-transfer", {
+                attrs: {
+                  data: _vm.unContainUsers,
+                  titles: ["未包含用户", "已包含用户"]
+                },
+                model: {
+                  value: _vm.alreadyContainUsers,
+                  callback: function($$v) {
+                    _vm.alreadyContainUsers = $$v
+                  },
+                  expression: "alreadyContainUsers"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "div",
+                { staticStyle: { float: "right" } },
+                [
+                  _c(
+                    "el-button",
+                    { attrs: { type: "primary" }, on: { click: _vm.test } },
+                    [_vm._v("关联角色")]
+                  )
+                ],
+                1
+              )
+            ]
           )
         ]
       )
