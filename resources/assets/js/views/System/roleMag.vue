@@ -134,14 +134,6 @@ export default {
             type: "text"
           },
           {
-            label: "用户组",
-            width: "120",
-            prop: "roleGroup",
-            inProp: "name",
-            holder: "请输入角色组",
-            type: "text"
-          },
-          {
             label: "描述",
             width: "250",
             prop: "description",
@@ -167,11 +159,6 @@ export default {
             label: "角色名称",
             prop: "name",
             type: "text"
-          },
-          {
-            label: "用户组",
-            prop: "role_group_id",
-            type: "select"
           },
           {
             label: "描述",
@@ -229,9 +216,7 @@ export default {
   methods: {
     //获取数据
     fetchData() {
-      this.$fetch(this.urls.roles, {
-        include: "roleGroup"
-      }).then(
+      this.$fetch(this.urls.roles).then(
         res => {
           console.log(res.data);
           this.loading = false;
@@ -255,14 +240,6 @@ export default {
             });
           }
         }
-      );
-      //    获取分组
-      this.$fetch(this.urls.rolegroup).then(
-        res => {
-          console.log(res);
-          this.groupOptions = res.data;
-        },
-        err => {}
       );
       //    获取权限列表
       this.$fetch(this.urls.permissions).then(
@@ -340,7 +317,6 @@ export default {
     /*分页*/
     handlePagChg(page) {
       this.$fetch(this.urls.roledetails + "?page=" + page, {
-        include: "group"
       }).then(res => {
         this.supplierVal = res.data;
       });

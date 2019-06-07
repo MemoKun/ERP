@@ -175,13 +175,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         holder: "请输入名称",
         type: "text"
       }, {
-        label: "用户组",
-        width: "120",
-        prop: "roleGroup",
-        inProp: "name",
-        holder: "请输入角色组",
-        type: "text"
-      }, {
         label: "描述",
         width: "250",
         prop: "description",
@@ -202,10 +195,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "角色名称",
         prop: "name",
         type: "text"
-      }, {
-        label: "用户组",
-        prop: "role_group_id",
-        type: "select"
       }, {
         label: "描述",
         prop: "description",
@@ -260,9 +249,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchData: function fetchData() {
       var _this = this;
 
-      this.$fetch(this.urls.roles, {
-        include: "roleGroup"
-      }).then(function (res) {
+      this.$fetch(this.urls.roles).then(function (res) {
         console.log(res.data);
         _this.loading = false;
         _this.rolesList = res.data;
@@ -284,11 +271,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         }
       });
-      //    获取分组
-      this.$fetch(this.urls.rolegroup).then(function (res) {
-        console.log(res);
-        _this.groupOptions = res.data;
-      }, function (err) {});
       //    获取权限列表
       this.$fetch(this.urls.permissions).then(function (res) {
         console.log(res.data);
@@ -369,9 +351,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handlePagChg: function handlePagChg(page) {
       var _this4 = this;
 
-      this.$fetch(this.urls.roledetails + "?page=" + page, {
-        include: "group"
-      }).then(function (res) {
+      this.$fetch(this.urls.roledetails + "?page=" + page, {}).then(function (res) {
         _this4.supplierVal = res.data;
       });
     }

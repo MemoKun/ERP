@@ -96,6 +96,7 @@ export default {
       loading: false,
       roleListData: {},
       userListData: {},
+      tempUserListData:{},
       curRowId: "",
       curRowData: {},
       checkboxId: "",
@@ -647,6 +648,24 @@ export default {
     test() {
       console.log(1);
     },
+    fetchData() {
+      this.loading = true;
+      this.$fetch(this.urls.users).then(
+        res => {
+          this.tempUserListData = res.data;
+          this.userListData = res.data;
+          this.loading = false;
+        },
+        err => {}
+      );
+      this.$fetch(this.urls.roles).then(
+        res => {
+          this.roleListData = res.data;
+          this.loading = false;
+        },
+        err => {}
+      );
+    },
     listRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
@@ -673,6 +692,7 @@ export default {
     }
   },
   mounted() {
+    this.fetchData();
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit("change", this.newOpt);
     const that = this;

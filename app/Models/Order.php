@@ -317,7 +317,6 @@ class Order extends Model
         return ($this->getOriginal('order_status') != self::ORDER_STATUS_READY_STOCK_OUT);
     }
     
-
     /**
      * 订单锁定或释放.
      *
@@ -622,6 +621,7 @@ class Order extends Model
     {
         //获取出库数据
         $order = $this->load('orderItems');
+        $order["order_status"] = intval($order["order_status"]);
 
         $orderItemOne = $order->orderItems->map(function ($item) use ($data) {
             $orderItem = collect($data)->where('id', $item->id);
@@ -703,6 +703,7 @@ class Order extends Model
 
         //提取数据
         $order = $orderOne->toArray();
+        $order["order_status"] = intval($order["order_status"]);
         $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
 
         DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
@@ -723,6 +724,7 @@ class Order extends Model
         });
     }
 
+    //转补单
     public function replacementOrder($data)
     {
         $orderOneId = $data['order_id_one'];
@@ -733,6 +735,7 @@ class Order extends Model
 
         //提取数据
         $order = $orderOne->toArray();
+        $order["order_status"] = intval($order["order_status"]);
         $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
 
         DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {

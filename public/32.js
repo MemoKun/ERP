@@ -2419,12 +2419,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.$put(this.urls.customerservicedepts + "/replacementorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
             _this.refresh();
             _this.$message({
-              message: "订单合并成功",
+              message: "转补单成功",
               type: "success"
             });
           }, function (err) {
             if (err.response) {
-              _this.$message.error("合并订单出错");
+              _this.$message.error("转补单出错");
             }
           });
         }

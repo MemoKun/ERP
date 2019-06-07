@@ -2704,13 +2704,13 @@ export default {
             () => {
               this.refresh();
               this.$message({
-                message: "订单合并成功",
+                message: "转补单成功",
                 type: "success"
               });
             },
             err => {
               if (err.response) {
-                this.$message.error("合并订单出错");
+                this.$message.error("转补单出错");
               }
             }
           );

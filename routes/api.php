@@ -22,7 +22,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
     //页面请求
     $api->group([
         'middleware' => [
-            'api.throttle',
+            'api.throttle',//请求频率限制中间件 ，每分钟不超过60次
             'token.canrefresh',
             'stringtoboolean', //将字符串的“true”或“false”转为布尔类型
         ],

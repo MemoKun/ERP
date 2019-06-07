@@ -147,6 +147,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       loading: false,
       roleListData: {},
       userListData: {},
+      tempUserListData: {},
       curRowId: "",
       curRowData: {},
       checkboxId: "",
@@ -565,6 +566,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     test: function test() {
       console.log(1);
     },
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.loading = true;
+      this.$fetch(this.urls.users).then(function (res) {
+        _this.tempUserListData = res.data;
+        _this.userListData = res.data;
+        _this.loading = false;
+      }, function (err) {});
+      this.$fetch(this.urls.roles).then(function (res) {
+        _this.roleListData = res.data;
+        _this.loading = false;
+      }, function (err) {});
+    },
     listRowClick: function listRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
@@ -581,15 +596,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
     },
     addUserPermission: function addUserPermission() {
-      var _this = this;
+      var _this2 = this;
 
       this.userPermissionMask = true;
       this.$fetch(this.urls.roles).then(function (res) {
-        _this.roleData = res.data;
+        _this2.roleData = res.data;
       }, function (err) {});
     }
   },
   mounted: function mounted() {
+    this.fetchData();
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit("change", this.newOpt);
     var that = this;
