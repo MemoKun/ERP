@@ -725,7 +725,36 @@ class Order extends Model
     }
 
     //转补单
-    public function replacementOrder($data)
+    public function additionOrder($data)
+    {
+        $orderOneId = $data['order_id_one'];
+        $orderTwoId = $data['order_id_two'];
+
+        $orderOne = $this->newQuery()->findOrFail($orderOneId);
+        $orderTwo = $this->newQuery()->findOrFail($orderTwoId);
+
+        //提取数据
+        $order = $orderOne->toArray();
+        $order["order_status"] = intval($order["order_status"]);
+        $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
+
+        DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
+            //新建订单
+            $newOrder = $this->newQuery()->create($order);
+
+            //新增子单
+            collect($orderItem)->map(function ($item) use ($newOrder) {
+                $newOrder->orderItems()->create($item);
+            });
+
+            //删除旧单
+            PaymentDetail::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
+            OrderItem::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
+            Order::destroy($orderOneId, $orderTwoId);
+        });
+    }
+
+    public function additionMoney($data)
     {
         $orderOneId = $data['order_id_one'];
         $orderTwoId = $data['order_id_two'];

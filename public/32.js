@@ -1017,12 +1017,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "转补单",
         icon: "bf-transa",
-        ent: this.replacementOrder,
+        ent: this.additionOrder,
         nClick: true
       }, {
         cnt: "转补款",
         icon: "bf-transferAcc",
-        ent: this.test,
+        ent: this.additionMoney,
         nClick: true
       }, {
         cnt: "订单关联",
@@ -2351,7 +2351,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       splitRowIndex: "",
       splitRow: {},
       mergerIds: [],
-      replacementOrderIds: [],
+      additionOrderIds: [],
 
       /** 内部便签InnerNote*/
       InnerNoteData: {},
@@ -2400,23 +2400,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     /***************************** 转 补 单 *******************************/
-    replacementOrder: function replacementOrder() {
+    additionOrder: function additionOrder() {
       var _this = this;
 
       if (this.newOpt[10].nClick) {
         return;
       } else {
-        if (this.replacementOrderIds.length != 2) {
+        if (this.additionOrderIds.length != 2) {
           this.$message({
             message: "请选择要转补单的订单",
             type: "info"
           });
         } else {
           var ids = [];
-          this.replacementOrderIds.map(function (item) {
+          this.additionOrderIds.map(function (item) {
             ids.push(item.id);
           });
-          this.$put(this.urls.customerservicedepts + "/replacementorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
+          this.$put(this.urls.customerservicedepts + "/additionorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
             _this.refresh();
             _this.$message({
               message: "转补单成功",
@@ -2431,9 +2431,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
 
+    /***************************** 转 补 款 *******************************/
+    additionMoney: function additionMoney() {
+      var _this2 = this;
+
+      if (this.newOpt[11].nclick) {
+        return;
+      } else {
+        if (this.additionOrderIds.length != 2) {
+          this.$message({
+            message: "请选择要转补款的订单",
+            type: "info"
+          });
+        } else {
+          var ids = [];
+          this.additionOrderIds.map(function (item) {
+            ids.push(item.id);
+          });
+          this.$put(this.urls.customerservicedepts + "/additionmoney" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
+            _this2.refresh();
+            _this2.$message({
+              message: "转补款成功",
+              type: "success"
+            });
+            _this2.additionOrderIds = [];
+          }, function (err) {
+            if (err.response) {
+              _this2.$message.error("转补款出错");
+            }
+          });
+        }
+      }
+    },
+
     /***************************** 合 并 *******************************/
     handleMergerOrder: function handleMergerOrder() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.newOpt[8].nClick) {
         return;
@@ -2449,47 +2482,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             ids.push(item.id);
           });
           this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-            _this2.refresh();
-            _this2.$message({
+            _this3.refresh();
+            _this3.$message({
               message: "订单合并成功",
               type: "success"
             });
+            _this3.mergerIds = [];
           }, function (err) {
             if (err.response) {
-              _this2.$message.error("合并订单出错");
+              _this3.$message.error("合并订单出错");
             }
           });
         }
       }
     },
     isNotice: function isNotice() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.newOpt[14].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/notice").then(function () {
-          _this3.newOpt[0].nClick = false;
-          _this3.newOpt[1].nClick = true;
-          _this3.newOpt[2].nClick = true;
-          _this3.newOpt[3].nClick = true;
-          _this3.newOpt[4].nClick = true;
-          _this3.newOpt[5].nClick = true;
-          _this3.newOpt[6].nClick = true;
-          _this3.newOpt[7].nClick = true;
-          _this3.newOpt[8].nClick = true;
-          _this3.newOpt[9].nClick = true;
-          _this3.newOpt[10].nClick = true;
-          _this3.newOpt[11].nClick = true;
-          _this3.newOpt[12].nClick = true;
-          _this3.newOpt[13].nClick = true;
-          _this3.newOpt[14].nClick = true;
-          _this3.newOpt[15].nClick = true;
-          _this3.newOpt[16].nClick = true;
-          _this3.newOpt[17].nClick = false;
-          _this3.refresh();
-          _this3.$message({
+          _this4.newOpt[0].nClick = false;
+          _this4.newOpt[1].nClick = true;
+          _this4.newOpt[2].nClick = true;
+          _this4.newOpt[3].nClick = true;
+          _this4.newOpt[4].nClick = true;
+          _this4.newOpt[5].nClick = true;
+          _this4.newOpt[6].nClick = true;
+          _this4.newOpt[7].nClick = true;
+          _this4.newOpt[8].nClick = true;
+          _this4.newOpt[9].nClick = true;
+          _this4.newOpt[10].nClick = true;
+          _this4.newOpt[11].nClick = true;
+          _this4.newOpt[12].nClick = true;
+          _this4.newOpt[13].nClick = true;
+          _this4.newOpt[14].nClick = true;
+          _this4.newOpt[15].nClick = true;
+          _this4.newOpt[16].nClick = true;
+          _this4.newOpt[17].nClick = false;
+          _this4.refresh();
+          _this4.$message({
             message: "通知发货成功",
             type: "success"
           });
@@ -2501,7 +2535,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this3.$message.error(str);
+            _this4.$message.error(str);
           }
         });
       }
@@ -2562,7 +2596,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     fetchData: function fetchData() {
-      var _this4 = this;
+      var _this5 = this;
 
       var index = this.leftTopActiveName - 0;
       switch (index) {
@@ -2581,15 +2615,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             cs_audited_at: this.searchBox.cs_audited_at,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
-            _this4.loading = false;
-            _this4.orderListData = res.data;
+            _this5.loading = false;
+            _this5.orderListData = res.data;
             var pg = res.meta.pagination;
-            _this4.$store.dispatch("currentPage", pg.current_page);
-            _this4.$store.commit("PER_PAGE", pg.per_page);
-            _this4.$store.commit("PAGE_TOTAL", pg.total);
-            _this4.$store.dispatch("paymentmethods", _this4.urls.paymentmethods);
-            _this4.$fetch(_this4.urls.customerservicedepts + "/create").then(function (res) {
-              _this4.addSubData = res;
+            _this5.$store.dispatch("currentPage", pg.current_page);
+            _this5.$store.commit("PER_PAGE", pg.per_page);
+            _this5.$store.commit("PAGE_TOTAL", pg.total);
+            _this5.$store.dispatch("paymentmethods", _this5.urls.paymentmethods);
+            _this5.$fetch(_this5.urls.customerservicedepts + "/create").then(function (res) {
+              _this5.addSubData = res;
             }, function (err) {});
           }, function (err) {
             if (err.response) {
@@ -2598,7 +2632,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this4.$message.error(arr1.join(","));
+              _this5.$message.error(arr1.join(","));
             }
           });
           break;
@@ -2618,12 +2652,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             cs_audited_at: this.searchBox.cs_audited_at,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
-            _this4.loading = false;
-            _this4.alreadyHandle = res.data;
+            _this5.loading = false;
+            _this5.alreadyHandle = res.data;
             var pg = res.meta.pagination;
-            _this4.$store.dispatch("currentPage", pg.current_page);
-            _this4.$store.commit("PER_PAGE", pg.per_page);
-            _this4.$store.commit("PAGE_TOTAL", pg.total);
+            _this5.$store.dispatch("currentPage", pg.current_page);
+            _this5.$store.commit("PER_PAGE", pg.per_page);
+            _this5.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -2631,7 +2665,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this4.$message.error(arr1.join(","));
+              _this5.$message.error(arr1.join(","));
             }
           });
           break;
@@ -2640,12 +2674,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             order_status: "等通知发货",
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
-            _this4.loading = false;
-            _this4.orderListData = res.data;
+            _this5.loading = false;
+            _this5.orderListData = res.data;
             var pg = res.meta.pagination;
-            _this4.$store.dispatch("currentPage", pg.current_page);
-            _this4.$store.commit("PER_PAGE", pg.per_page);
-            _this4.$store.commit("PAGE_TOTAL", pg.total);
+            _this5.$store.dispatch("currentPage", pg.current_page);
+            _this5.$store.commit("PER_PAGE", pg.per_page);
+            _this5.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -2653,7 +2687,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this4.$message.error(arr1.join(","));
+              _this5.$message.error(arr1.join(","));
             }
           });
           break;
@@ -2782,7 +2816,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proRIndex = "";
     },
     proQueryClick: function proQueryClick() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.proSkuVal = [];
       this.$fetch(this.urls.products, {
@@ -2793,7 +2827,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         short_name: this.proQuery.short_name,
         include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
       }).then(function (res) {
-        _this5.proVal = res.data;
+        _this6.proVal = res.data;
         var comb = res.data[0]["combinations"]["data"];
         if (comb.length > 0) {
           var total_volume = 0;
@@ -2806,7 +2840,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
               total_volume = 0;
             }
-            _this5.$set(item, "newData", {
+            _this6.$set(item, "newData", {
               quantity: "",
               paint: "",
               is_printing: false,
@@ -2820,7 +2854,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         } else {
           comb["productComp"] = [];
         }
-        _this5.proSkuVal = comb;
+        _this6.proSkuVal = comb;
       }, function (err) {});
     },
     addHandleClick: function addHandleClick() {},
@@ -2837,7 +2871,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proData.splice(index, 1);
     },
     addCustomerConfirm: function addCustomerConfirm() {
-      var _this6 = this;
+      var _this7 = this;
 
       var forData = this.addCustomerFormVal;
       var submitData = {
@@ -2921,22 +2955,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         submitData.payment_details.push(expenseD);
       });
       this.$post(this.urls.customerservicedepts, submitData).then(function () {
-        _this6.addCustomerMask = false;
-        _this6.refresh();
-        _this6.$message({
+        _this7.addCustomerMask = false;
+        _this7.refresh();
+        _this7.$message({
           message: "添加成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this6.showDel = false;
+          _this7.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this6.$message.error(str);
+          _this7.$message.error(str);
         }
       });
     },
@@ -2970,7 +3004,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     proRowClick: function proRowClick(row) {
-      var _this7 = this;
+      var _this8 = this;
 
       this.proSkuVal = [];
       this.proCompRowIndex = "";
@@ -2986,7 +3020,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           } else {
             total_volume = 0;
           }
-          _this7.$set(item, "newData", {
+          _this8.$set(item, "newData", {
             quantity: "",
             paint: "",
             is_printing: false,
@@ -3014,7 +3048,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proCompRow = row;
     },
     quantityChg: function quantityChg(value) {
-      var _this8 = this;
+      var _this9 = this;
 
       if (value > 0) {
         var proCRow = this.proCompRow;
@@ -3024,8 +3058,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         } else {
           this.proSubmitData.map(function (list, index) {
             if (list.id == proCRow.id) {
-              _this8.proSubmitData.splice(index, 1);
-              _this8.proSubmitData.push(proCRow);
+              _this9.proSubmitData.splice(index, 1);
+              _this9.proSubmitData.push(proCRow);
             }
           });
         }
@@ -3047,23 +3081,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     confirmAddProDtl: function confirmAddProDtl() {
-      var _this9 = this;
+      var _this10 = this;
 
       if (this.addCustomerMask) {
         this.proSubmitData.map(function (item) {
-          if (_this9.addIds.indexOf(item.id) == -1) {
-            _this9.proData.push(item);
-            _this9.addIds.push(item.id);
-            _this9.$message({
+          if (_this10.addIds.indexOf(item.id) == -1) {
+            _this10.proData.push(item);
+            _this10.addIds.push(item.id);
+            _this10.$message({
               message: "添加商品信息成功",
               type: "success"
             });
           } else {
-            _this9.proData.map(function (list, index) {
+            _this10.proData.map(function (list, index) {
               if (list.id == item.id) {
-                _this9.proData.splice(index, 1);
-                _this9.proData.push(item);
-                _this9.$message({
+                _this10.proData.splice(index, 1);
+                _this10.proData.push(item);
+                _this10.$message({
                   message: "添加商品信息成功",
                   type: "success"
                 });
@@ -3073,20 +3107,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       } else {
         this.proSubmitData.map(function (item) {
-          if (_this9.updateProIds.indexOf(item.id) == -1) {
-            _this9.updateProData.push(item);
-            _this9.updateProIds.push(item.id);
-            _this9.$message({
+          if (_this10.updateProIds.indexOf(item.id) == -1) {
+            _this10.updateProData.push(item);
+            _this10.updateProIds.push(item.id);
+            _this10.$message({
               message: "添加商品信息成功",
               type: "success"
             });
           } else {
-            _this9.updateProData.map(function (list, index) {
+            _this10.updateProData.map(function (list, index) {
               if (list.combinations_id == item.id) {
-                _this9.$set(item, "originalId", list.id);
-                _this9.updateProData.splice(index, 1);
-                _this9.updateProData.push(item);
-                _this9.$message({
+                _this10.$set(item, "originalId", list.id);
+                _this10.updateProData.splice(index, 1);
+                _this10.updateProData.push(item);
+                _this10.$message({
                   message: "添加商品信息成功",
                   type: "success"
                 });
@@ -3146,25 +3180,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     confirmD: function confirmD(url, id) {
-      var _this10 = this;
+      var _this11 = this;
 
       this.$del(url + "/" + id).then(function () {
-        _this10.showDel = false;
-        _this10.refresh();
-        _this10.$message({
+        _this11.showDel = false;
+        _this11.refresh();
+        _this11.$message({
           message: "删除成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this10.showDel = false;
+          _this11.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this10.$message.error(str);
+          _this11.$message.error(str);
         }
       });
     },
@@ -3182,10 +3216,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
-      this.replacementOrderIds = val;
+      this.additionOrderIds = val;
     },
     delBatch: function delBatch() {
-      var _this11 = this;
+      var _this12 = this;
 
       if (this.ids.length === 0) {
         this.$message({
@@ -3198,9 +3232,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          _this11.$del(_this11.urls.customerservicedepts, { ids: _this11.ids }).then(function () {
-            _this11.refresh();
-            _this11.$message({
+          _this12.$del(_this12.urls.customerservicedepts, { ids: _this12.ids }).then(function () {
+            _this12.refresh();
+            _this12.$message({
               message: "删除成功",
               type: "success"
             });
@@ -3212,11 +3246,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 arr1.push(arr[i]);
               }
               var str = arr1.join(",");
-              _this11.$message.error(str);
+              _this12.$message.error(str);
             }
           });
         }).catch(function () {
-          _this11.$message({
+          _this12.$message({
             type: "info",
             message: "已取消删除"
           });
@@ -3226,15 +3260,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*页码*/
     handlePagChg: function handlePagChg(page) {
-      var _this12 = this;
+      var _this13 = this;
 
       this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(function (res) {
-        if (_this12.leftTopActiveName == "0") {
-          _this12.orderListData = res.data;
+        if (_this13.leftTopActiveName == "0") {
+          _this13.orderListData = res.data;
         } else {
-          _this12.alreadyHandle = res.data;
+          _this13.alreadyHandle = res.data;
         }
       });
     },
@@ -3245,69 +3279,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*锁定*/
     lockOrder: function lockOrder() {
-      var _this13 = this;
+      var _this14 = this;
 
       if (this.newOpt[3].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
-          _this13.newOpt[0].nClick = false;
-          _this13.newOpt[1].nClick = false;
-          _this13.newOpt[2].nClick = false;
-          _this13.newOpt[3].nClick = true;
-          _this13.newOpt[4].nClick = false;
-          _this13.newOpt[5].nClick = false;
-          _this13.newOpt[6].nClick = true;
-          _this13.newOpt[7].nClick = false;
-          _this13.newOpt[8].nClick = false;
-          _this13.newOpt[9].nClick = false;
-          _this13.newOpt[10].nClick = false;
-          _this13.newOpt[11].nClick = false;
-          _this13.newOpt[12].nClick = true;
-          _this13.newOpt[13].nClick = false;
-          _this13.newOpt[14].nClick = false;
-          _this13.newOpt[15].nClick = false;
-          _this13.newOpt[16].nClick = false;
-          _this13.newOpt[17].nClick = false;
-          _this13.refresh();
-          _this13.$message({
-            message: "锁定成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this13.$message.error(str);
-          }
-        });
-      }
-    },
-
-    /*解锁*/
-    debLock: function debLock() {
-      var _this14 = this;
-
-      if (this.newOpt[4].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
           _this14.newOpt[0].nClick = false;
-          _this14.newOpt[1].nClick = true;
-          _this14.newOpt[2].nClick = true;
-          _this14.newOpt[3].nClick = false;
-          _this14.newOpt[4].nClick = true;
-          _this14.newOpt[5].nClick = true;
+          _this14.newOpt[1].nClick = false;
+          _this14.newOpt[2].nClick = false;
+          _this14.newOpt[3].nClick = true;
+          _this14.newOpt[4].nClick = false;
+          _this14.newOpt[5].nClick = false;
           _this14.newOpt[6].nClick = true;
           _this14.newOpt[7].nClick = false;
-          _this14.newOpt[8].nClick = true;
-          _this14.newOpt[9].nClick = true;
+          _this14.newOpt[8].nClick = false;
+          _this14.newOpt[9].nClick = false;
           _this14.newOpt[10].nClick = false;
           _this14.newOpt[11].nClick = false;
           _this14.newOpt[12].nClick = true;
@@ -3318,7 +3306,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this14.newOpt[17].nClick = false;
           _this14.refresh();
           _this14.$message({
-            message: "解锁成功",
+            message: "锁定成功",
             type: "success"
           });
         }, function (err) {
@@ -3335,9 +3323,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
 
+    /*解锁*/
+    debLock: function debLock() {
+      var _this15 = this;
+
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
+          _this15.newOpt[0].nClick = false;
+          _this15.newOpt[1].nClick = true;
+          _this15.newOpt[2].nClick = true;
+          _this15.newOpt[3].nClick = false;
+          _this15.newOpt[4].nClick = true;
+          _this15.newOpt[5].nClick = true;
+          _this15.newOpt[6].nClick = true;
+          _this15.newOpt[7].nClick = false;
+          _this15.newOpt[8].nClick = true;
+          _this15.newOpt[9].nClick = true;
+          _this15.newOpt[10].nClick = false;
+          _this15.newOpt[11].nClick = false;
+          _this15.newOpt[12].nClick = true;
+          _this15.newOpt[13].nClick = false;
+          _this15.newOpt[14].nClick = false;
+          _this15.newOpt[15].nClick = false;
+          _this15.newOpt[16].nClick = false;
+          _this15.newOpt[17].nClick = false;
+          _this15.refresh();
+          _this15.$message({
+            message: "解锁成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this15.$message.error(str);
+          }
+        });
+      }
+    },
+
     /*修改*/
     updateData: function updateData() {
-      var _this15 = this;
+      var _this16 = this;
 
       this.proIds = [];
       this.updateProIds = [];
@@ -3352,16 +3386,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$fetch(this.urls.customerservicedepts + "/" + id, {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
       }).then(function (res) {
-        _this15.updateCustomerFormVal = res;
+        _this16.updateCustomerFormVal = res;
         if (res["orderItems"]["data"].length > 0) {
           res["orderItems"]["data"].map(function (item) {
-            _this15.updateProIds.push(item["combination"].id);
+            _this16.updateProIds.push(item["combination"].id);
             item["name"] = item["combination"]["name"];
             item["id"] = item.id;
             item["products_id"] = item.products_id;
             item["combinations_id"] = item.combinations_id;
             item["productComp"] = item["combination"]["productComponents"]["data"];
-            _this15.$set(item, "newData", {
+            _this16.$set(item, "newData", {
               quantity: item.quantity,
               paint: item.paint,
               is_printing: item.is_printing,
@@ -3373,8 +3407,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
           });
         }
-        _this15.updateProData = res["orderItems"]["data"];
-        _this15.updateReceiveInfo = {
+        _this16.updateProData = res["orderItems"]["data"];
+        _this16.updateReceiveInfo = {
           receiver_name: res.receiver_name,
           receiver_phone: res.receiver_phone,
           receiver_mobile: res.receiver_mobile,
@@ -3382,7 +3416,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           receiver_address: res.receiver_address,
           receiver_zip: res.receiver_zip
         };
-        _this15.updateExpenseData = res["paymentDetails"]["data"];
+        _this16.updateExpenseData = res["paymentDetails"]["data"];
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -3391,17 +3425,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this15.$message.error(str);
+          _this16.$message.error(str);
         }
       });
     },
     updateDelPro: function updateDelPro(row, index) {
-      var _this16 = this;
+      var _this17 = this;
 
       if (row["originalId"]) {
         this.$del(this.urls.orderitems + "/" + row["originalId"]).then(function () {
-          _this16.updateProData.splice(index, 1);
-          _this16.$message({
+          _this17.updateProData.splice(index, 1);
+          _this17.$message({
             message: "删除成功",
             type: "success"
           });
@@ -3413,41 +3447,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this16.$message.error(str);
+            _this17.$message.error(str);
           }
         });
       } else if (row.id) {
         this.$del(this.urls.orderitems + "/" + row.id).then(function () {
-          _this16.updateProData.splice(index, 1);
-          _this16.$message({
-            message: "删除成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this16.$message.error(str);
-          }
-        });
-      } else {
-        this.updateProData.splice(index, 1);
-        this.$message({
-          message: "删除商品信息成功",
-          type: "success"
-        });
-      }
-    },
-    updateDelExpense: function updateDelExpense(row, index) {
-      var _this17 = this;
-
-      if (row.id) {
-        this.$del(this.urls.paymentdetails + "/" + row.id).then(function () {
-          _this17.updateExpenseData.splice(index, 1);
+          _this17.updateProData.splice(index, 1);
           _this17.$message({
             message: "删除成功",
             type: "success"
@@ -3464,6 +3469,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }
         });
       } else {
+        this.updateProData.splice(index, 1);
+        this.$message({
+          message: "删除商品信息成功",
+          type: "success"
+        });
+      }
+    },
+    updateDelExpense: function updateDelExpense(row, index) {
+      var _this18 = this;
+
+      if (row.id) {
+        this.$del(this.urls.paymentdetails + "/" + row.id).then(function () {
+          _this18.updateExpenseData.splice(index, 1);
+          _this18.$message({
+            message: "删除成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this18.$message.error(str);
+          }
+        });
+      } else {
         this.updateExpenseData.splice(index, 1);
         this.$message({
           message: "删除商品信息成功",
@@ -3472,7 +3506,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     updateCustomerConfirm: function updateCustomerConfirm() {
-      var _this18 = this;
+      var _this19 = this;
 
       var forData = this.updateCustomerFormVal;
       var submitData = {
@@ -3605,22 +3639,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "success"
       });
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(function () {
-        _this18.updateCustomerMask = false;
-        _this18.refresh();
-        _this18.$message({
+        _this19.updateCustomerMask = false;
+        _this19.refresh();
+        _this19.$message({
           message: "修改成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this18.showDel = false;
+          _this19.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this18.$message.error(str);
+          _this19.$message.error(str);
         }
       });
     },
@@ -3634,78 +3668,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*审核*/
     handleAudit: function handleAudit() {
-      var _this19 = this;
+      var _this20 = this;
 
       if (this.newOpt[5].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(function () {
-          _this19.newOpt[0].nClick = false;
-          _this19.newOpt[1].nClick = true;
-          _this19.newOpt[2].nClick = true;
-          _this19.newOpt[3].nClick = true;
-          _this19.newOpt[4].nClick = true;
-          _this19.newOpt[5].nClick = true;
-          _this19.newOpt[6].nClick = false;
-          _this19.newOpt[7].nClick = false;
-          _this19.newOpt[8].nClick = false;
-          _this19.newOpt[9].nClick = false;
-          _this19.newOpt[10].nClick = true;
-          _this19.newOpt[11].nClick = false;
-          _this19.newOpt[12].nClick = false;
-          _this19.newOpt[13].nClick = false;
-          _this19.newOpt[14].nClick = false;
-          _this19.newOpt[15].nClick = false;
-          _this19.newOpt[16].nClick = true;
-          _this19.newOpt[17].nClick = false;
-          _this19.refresh();
-          _this19.$message({
-            message: "审核成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this19.$message.error(str);
-          }
-        });
-      }
-    },
-    handleUnAudit: function handleUnAudit() {
-      var _this20 = this;
-
-      if (this.newOpt[6].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(function () {
           _this20.newOpt[0].nClick = false;
           _this20.newOpt[1].nClick = true;
           _this20.newOpt[2].nClick = true;
-          _this20.newOpt[3].nClick = false;
+          _this20.newOpt[3].nClick = true;
           _this20.newOpt[4].nClick = true;
           _this20.newOpt[5].nClick = true;
-          _this20.newOpt[6].nClick = true;
+          _this20.newOpt[6].nClick = false;
           _this20.newOpt[7].nClick = false;
-          _this20.newOpt[8].nClick = true;
-          _this20.newOpt[9].nClick = true;
-          _this20.newOpt[10].nClick = false;
+          _this20.newOpt[8].nClick = false;
+          _this20.newOpt[9].nClick = false;
+          _this20.newOpt[10].nClick = true;
           _this20.newOpt[11].nClick = false;
-          _this20.newOpt[12].nClick = true;
+          _this20.newOpt[12].nClick = false;
           _this20.newOpt[13].nClick = false;
           _this20.newOpt[14].nClick = false;
           _this20.newOpt[15].nClick = false;
-          _this20.newOpt[16].nClick = false;
+          _this20.newOpt[16].nClick = true;
           _this20.newOpt[17].nClick = false;
           _this20.refresh();
           _this20.$message({
-            message: "退审成功",
+            message: "审核成功",
             type: "success"
           });
         }, function (err) {
@@ -3721,8 +3711,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
     },
-    handleSplitOrder: function handleSplitOrder() {
+    handleUnAudit: function handleUnAudit() {
       var _this21 = this;
+
+      if (this.newOpt[6].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(function () {
+          _this21.newOpt[0].nClick = false;
+          _this21.newOpt[1].nClick = true;
+          _this21.newOpt[2].nClick = true;
+          _this21.newOpt[3].nClick = false;
+          _this21.newOpt[4].nClick = true;
+          _this21.newOpt[5].nClick = true;
+          _this21.newOpt[6].nClick = true;
+          _this21.newOpt[7].nClick = false;
+          _this21.newOpt[8].nClick = true;
+          _this21.newOpt[9].nClick = true;
+          _this21.newOpt[10].nClick = false;
+          _this21.newOpt[11].nClick = false;
+          _this21.newOpt[12].nClick = true;
+          _this21.newOpt[13].nClick = false;
+          _this21.newOpt[14].nClick = false;
+          _this21.newOpt[15].nClick = false;
+          _this21.newOpt[16].nClick = false;
+          _this21.newOpt[17].nClick = false;
+          _this21.refresh();
+          _this21.$message({
+            message: "退审成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this21.$message.error(str);
+          }
+        });
+      }
+    },
+    handleSplitOrder: function handleSplitOrder() {
+      var _this22 = this;
 
       if (this.newOpt[9].nClick) {
         return;
@@ -3742,7 +3776,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 quantity: ""
               }
             };
-            _this21.splitVal.push(list);
+            _this22.splitVal.push(list);
           });
         }
       }
@@ -3763,7 +3797,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     confirmSplit: function confirmSplit() {
-      var _this22 = this;
+      var _this23 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       var confSplit = {
@@ -3781,8 +3815,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
       this.$put(this.urls.customerservicedepts + "/" + id + "/splitorder", confSplit).then(function () {
-        _this22.splitMask = false;
-        _this22.refresh();
+        _this23.splitMask = false;
+        _this23.refresh();
         /*   this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = true;
@@ -3795,7 +3829,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[14].nClick = true;
           this.newOpt[15].nClick = false;
           this.newOpt[18].nClick = false;*/
-        _this22.$message({
+        _this23.$message({
           message: "订单拆分成功",
           type: "success"
         });
@@ -3807,7 +3841,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this22.$message.error(str);
+          _this23.$message.error(str);
         }
       });
     },

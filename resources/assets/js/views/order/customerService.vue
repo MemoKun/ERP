@@ -1023,13 +1023,13 @@ export default {
         {
           cnt: "转补单",
           icon: "bf-transa",
-          ent: this.replacementOrder,
+          ent: this.additionOrder,
           nClick: true
         },
         {
           cnt: "转补款",
           icon: "bf-transferAcc",
-          ent: this.test,
+          ent: this.additionMoney,
           nClick: true
         },
         {
@@ -2632,7 +2632,7 @@ export default {
       splitRowIndex: "",
       splitRow: {},
       mergerIds: [],
-      replacementOrderIds:[],
+      additionOrderIds:[],
 
       /** 内部便签InnerNote*/
       InnerNoteData: {},
@@ -2679,23 +2679,23 @@ export default {
       console.log(1);
     },
     /***************************** 转 补 单 *******************************/
-    replacementOrder() {
+    additionOrder() {
       if (this.newOpt[10].nClick) {
         return;
       } else {
-        if (this.replacementOrderIds.length != 2) {
+        if (this.additionOrderIds.length != 2) {
           this.$message({
             message: "请选择要转补单的订单",
             type: "info"
           });
         } else {
           let ids = [];
-          this.replacementOrderIds.map(item => {
+          this.additionOrderIds.map(item => {
             ids.push(item.id);
           });
           this.$put(
             this.urls.customerservicedepts +
-              "/replacementorder" +
+              "/additionorder" +
               "?order_id_one=" +
               ids[0] +
               "&order_id_two=" +
@@ -2711,6 +2711,46 @@ export default {
             err => {
               if (err.response) {
                 this.$message.error("转补单出错");
+              }
+            }
+          );
+        }
+      }
+    },
+    /***************************** 转 补 款 *******************************/
+    additionMoney(){
+      if(this.newOpt[11].nclick){
+        return;
+      }else{
+        if (this.additionOrderIds.length != 2) {
+          this.$message({
+            message: "请选择要转补款的订单",
+            type: "info"
+          });
+        } else {
+          let ids = [];
+          this.additionOrderIds.map(item => {
+            ids.push(item.id);
+          });
+          this.$put(
+            this.urls.customerservicedepts +
+              "/additionmoney" +
+              "?order_id_one=" +
+              ids[0] +
+              "&order_id_two=" +
+              ids[1]
+          ).then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "转补款成功",
+                type: "success"
+              });
+              this.additionOrderIds = [];
+            },
+            err => {
+              if (err.response) {
+                this.$message.error("转补款出错");
               }
             }
           );
@@ -2746,6 +2786,7 @@ export default {
                 message: "订单合并成功",
                 type: "success"
               });
+              this.mergerIds = [];
             },
             err => {
               if (err.response) {
@@ -3487,7 +3528,7 @@ export default {
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
-      this.replacementOrderIds = val;
+      this.additionOrderIds = val;
     },
     delBatch() {
       if (this.ids.length === 0) {

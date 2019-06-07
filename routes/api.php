@@ -694,8 +694,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.ismergerorder');
         $api->put('customerservicedepts/{order}/notice', 'CustomerServiceDepartmentsController@isNotice')
             ->name('api.customerservicedepts.isnotice');
-        $api->put('customerservicedepts/replacementorder', 'CustomerServiceDepartmentsController@isReplacementOrder')
-            ->name('api.customerservicedepts.isreplacementorder');
+        $api->put('customerservicedepts/additionorder', 'CustomerServiceDepartmentsController@isAdditionOrder')
+            ->name('api.customerservicedepts.isadditionorder');
+        $api->put('customerservicedepts/additionmoney', 'CustomerServiceDepartmentsController@isAdditionMoney')
+            ->name('api.customerservicedepts.isadditionmoney');
 
         //订单结算
         $api->put('customerservicedepts/{order}/logcheck', 'CustomerServiceDepartmentsController@isLogCheck')
