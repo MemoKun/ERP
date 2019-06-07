@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Http\Requests\Api\CustomerServiceDepartmentRequest;
 use App\Http\Requests\Api\EditStatuRequest;
@@ -19,6 +20,20 @@ class ReportStatisticsController extends Controller
     public function index(CustomerServiceDepartmentRequest $request)
     {
         return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+    }
+
+    public function orderAmount(CustomerServiceDepartmentRequest $request)
+    {
+        $today=date("Y-m-d");
+        $thismonth_start = date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m"),1,date("Y"))); 
+        $thismonth_end = date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("t"),date("Y")));
+
+        $dailyOrder = DB::table("orders")->whereDate('created_at', $today)->get();
+        $monthlyOrder = DB::table("orders")->whereBetween('created_at', [$thismonth_start, $thismonth_end])->get();
+        
+        $dailyOrderNum = count($dailyOrder);
+        $monthlyOrderNum = count($monthlyOrder);
+        return $monthlyOrderNum;
     }
 
     public function store(CustomerServiceDepartmentRequest $request)

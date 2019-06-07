@@ -1704,6 +1704,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //报表统计
         $api->get('reportstatistics', 'ReportStatisticsController@index')
             ->name('api.reportstatistics.index');
+        $api->get('reportstatistics/orderAmount', 'ReportStatisticsController@orderAmount')
+            ->name('api.reportstatistics.orderamount');
         $api->get('reportstatistics/{reportstatistics}', 'ReportStatisticsController@show')
             ->name('api.reportstatistics.show');
         $api->post('reportstatistics', 'ReportStatisticsController@store')
@@ -1723,6 +1725,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.roles.insertRole');
         $api->patch('roles/{roleid}', 'RolesController@update')
             ->name('api.roles.update');
+
+        //权限管理
+        $api->get('permissions/{permissions}', 'PermissionsController@index')
+            ->name('api.permissions.index');
 
         //打印功能
         $api->get('excel', 'ExcelController@export')

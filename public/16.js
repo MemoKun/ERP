@@ -127,7 +127,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         category: "金额",
         sales: "988230",
-        orderNum: "785",
+        orderNum: "",
         OrderPrice: "1258.571",
         monthSales: "12882701",
         monthOrderNum: "1562",
@@ -158,12 +158,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         monthOrderNum: "2341",
         monthCustomerOrderPrice: "652123"
       }]
+
     };
   },
 
+  computed: {
+    resData: {
+      get: function get() {
+        return this.$store.state.responseData;
+      },
+      set: function set() {}
+    },
+    urls: {
+      get: function get() {
+        return this.$store.state.urls;
+      },
+      set: function set() {}
+    }
+  },
   methods: {
     test: function test() {
       console.log(1);
+    },
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.$fetch(this.urls.reportstatistics + "/orderAmount").then(function (res) {
+        _this.salesAmount[1]["orderNum"] = res;
+      }, function (err) {});
     },
     salesPrediction: function salesPrediction() {
       // 基于准备好的dom，初始化echarts实例
@@ -427,6 +449,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
+    this.fetchData();
     this.salesPrediction();
     this.shopsPercent();
     this.regionSale();

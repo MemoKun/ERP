@@ -53,11 +53,12 @@
     </el-tabs>
 
     <el-dialog title="角色权限管理" :visible.sync="userPermissionMask">
+      <label>{{this.selectRoleId}}</label>
       <div class="searchBox">
         <div>
           <label width="200">所属角色</label>
         </div>
-        <el-select v-model="selectRoleId" placeholder="请选择" width="200px">
+        <el-select v-model="selectRoleId" placeholder="请选择" width="200px" @change="fetchRolePermissions"> 
           <span v-for="list in roleData" :key="list.id">
             <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
           </span>
@@ -65,13 +66,14 @@
       </div>
       <br>
       <div>
-        <el-tree :data="permissionListData" show-checkbox node-key="id" :default-expanded-keys="[2, 3]" :default-checked-keys="[5]" :props="defaultProps">
+        <el-tree ref="permissionTree" :data="permissionListTree" show-checkbox node-key="label" :props="defaultProps" @check="getCheckedNodes">
         </el-tree>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -184,7 +186,7 @@ export default {
         ]
       ],
       userPermissionMask: false,
-      permissionListData: [
+      permissionListTree: [
         {
           id: 1,
           label: "订单管理",
@@ -622,6 +624,7 @@ export default {
           ]
         }
       ],
+      permissionListData:"",
       defaultProps: {
         children: "children",
         label: "label"
@@ -686,10 +689,27 @@ export default {
       this.$fetch(this.urls.roles).then(
         res => {
           this.roleData = res.data;
+          this.getCheckedNodes();
         },
         err => {}
       );
-    }
+    },
+    getCheckedNodes(){
+      this.permissionListData = this.$refs.permissionTree.getCheckedKeys();
+    },
+    fetchRolePermissions(){
+      let id = this.selectRoleId;
+      this.$fetch(this.urls.permissions+"/"+id).then(
+        res=>{
+          let checked = ["订单管理","采购管理"];
+          this.$refs.permissionTree.setCheckedKeys(checked);
+        },
+        err=>{}
+      );
+    },
+    refresh(){
+      this.fetchData();
+    },
   },
   mounted() {
     this.fetchData();

@@ -126,6 +126,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -216,7 +218,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }]],
       userPermissionMask: false,
-      permissionListData: [{
+      permissionListTree: [{
         id: 1,
         label: "订单管理",
         children: [{
@@ -539,6 +541,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           label: "赔偿中心"
         }]
       }],
+      permissionListData: "",
       defaultProps: {
         children: "children",
         label: "label"
@@ -601,7 +604,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.userPermissionMask = true;
       this.$fetch(this.urls.roles).then(function (res) {
         _this2.roleData = res.data;
+        _this2.getCheckedNodes();
       }, function (err) {});
+    },
+    getCheckedNodes: function getCheckedNodes() {
+      this.permissionListData = this.$refs.permissionTree.getCheckedKeys();
+    },
+    fetchRolePermissions: function fetchRolePermissions() {
+      var _this3 = this;
+
+      var id = this.selectRoleId;
+      this.$fetch(this.urls.permissions + "/" + id).then(function (res) {
+        var checked = ["订单管理", "采购管理"];
+        _this3.$refs.permissionTree.setCheckedKeys(checked);
+      }, function (err) {});
+    },
+    refresh: function refresh() {
+      this.fetchData();
     }
   },
   mounted: function mounted() {
@@ -926,6 +945,8 @@ var render = function() {
           }
         },
         [
+          _c("label", [_vm._v(_vm._s(this.selectRoleId))]),
+          _vm._v(" "),
           _c(
             "div",
             { staticClass: "searchBox" },
@@ -938,6 +959,7 @@ var render = function() {
                 "el-select",
                 {
                   attrs: { placeholder: "请选择", width: "200px" },
+                  on: { change: _vm.fetchRolePermissions },
                   model: {
                     value: _vm.selectRoleId,
                     callback: function($$v) {
@@ -973,14 +995,14 @@ var render = function() {
             "div",
             [
               _c("el-tree", {
+                ref: "permissionTree",
                 attrs: {
-                  data: _vm.permissionListData,
+                  data: _vm.permissionListTree,
                   "show-checkbox": "",
-                  "node-key": "id",
-                  "default-expanded-keys": [2, 3],
-                  "default-checked-keys": [5],
+                  "node-key": "label",
                   props: _vm.defaultProps
-                }
+                },
+                on: { check: _vm.getCheckedNodes }
               })
             ],
             1

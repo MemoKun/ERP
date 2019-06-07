@@ -73,7 +73,7 @@ export default {
         {
           category: "金额",
           sales: "988230",
-          orderNum: "785",
+          orderNum: "",
           OrderPrice: "1258.571",
           monthSales: "12882701",
           monthOrderNum: "1562",
@@ -108,12 +108,37 @@ export default {
           monthOrderNum: "2341",
           monthCustomerOrderPrice: "652123"
         },
-      ]
+      ],
+      
     };
+  },
+  computed: {
+    resData: {
+      get: function() {
+        return this.$store.state.responseData;
+      },
+      set: function() {}
+    },
+    urls: {
+      get: function() {
+        return this.$store.state.urls;
+      },
+      set: function() {}
+    }
   },
   methods: {
     test() {
       console.log(1);
+    },
+    fetchData(){
+      this.$fetch(this.urls.reportstatistics+"/orderAmount").then(
+        res=>{
+          this.salesAmount[1]["orderNum"]=res;
+        },
+        err=>{
+
+        }
+      )
     },
     salesPrediction() {
       // 基于准备好的dom，初始化echarts实例
@@ -511,6 +536,7 @@ export default {
     }
   },
   mounted() {
+    this.fetchData();
     this.salesPrediction();
     this.shopsPercent();
     this.regionSale();
