@@ -654,7 +654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       var id = this.selectRoleId;
       this.$fetch(this.urls.permissions + "/" + id).then(function (res) {
-        var checked = ["订单管理", "采购管理"];
+        var checked = ["订单管理", "采购管理", "退款管理", "下载中心", "基础信息", "系统管理", "报表统计", "补件管理", "售后管理", "售后赔偿"];
         _this4.$refs.permissionTree.setCheckedKeys(checked);
       }, function (err) {});
     },

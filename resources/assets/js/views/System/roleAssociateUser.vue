@@ -745,7 +745,18 @@ export default {
       let id = this.selectRoleId;
       this.$fetch(this.urls.permissions + "/" + id).then(
         res => {
-          let checked = ["订单管理", "采购管理"];
+          let checked = [
+            "订单管理",
+            "采购管理",
+            "退款管理",
+            "下载中心",
+            "基础信息",
+            "系统管理",
+            "报表统计",
+            "补件管理",
+            "售后管理",
+            "售后赔偿"
+          ];
           this.$refs.permissionTree.setCheckedKeys(checked);
         },
         err => {}
