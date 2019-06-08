@@ -1035,13 +1035,13 @@ export default {
         {
           cnt: "订单关联",
           icon: "bf-asso",
-          ent: this.test,
+          ent: this.associateOrder,
           nClick: true
         },
         {
           cnt: "取消关联",
           icon: "bf-cancelAsso",
-          ent: this.test,
+          ent: this.cancelAssociateOrder,
           nClick: true
         },
         {
@@ -1053,7 +1053,7 @@ export default {
         {
           cnt: "打印",
           icon: "bf-printer",
-          ent: this.test,
+          ent: this.print,
           nClick: true
         },
         {
@@ -2632,7 +2632,7 @@ export default {
       splitRowIndex: "",
       splitRow: {},
       mergerIds: [],
-      additionOrderIds:[],
+      additionOrderIds: [],
 
       /** 内部便签InnerNote*/
       InnerNoteData: {},
@@ -2718,10 +2718,10 @@ export default {
       }
     },
     /***************************** 转 补 款 *******************************/
-    additionMoney(){
-      if(this.newOpt[11].nclick){
+    additionMoney() {
+      if (this.newOpt[11].nclick) {
         return;
-      }else{
+      } else {
         if (this.additionOrderIds.length != 2) {
           this.$message({
             message: "请选择要转补款的订单",
@@ -2797,7 +2797,7 @@ export default {
         }
       }
     },
-    isNotice(){
+    isNotice() {
       if (this.newOpt[14].nClick) {
         return;
       } else {
@@ -4178,6 +4178,40 @@ export default {
     },
     cancelSplit() {
       this.splitMask = false;
+    },
+    print() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    associateOrder() {
+      if (this.mergerIds.length != 2) {
+        this.$message({
+          message: "请选择要关联的订单",
+          type: "info"
+        });
+      } else {
+        this.$message({
+          message: "关联订单成功",
+          type: "success"
+        });
+        this.refresh();
+      }
+    },
+    cancelAssociateOrder() {
+      if (this.mergerIds.length != 2) {
+        this.$message({
+          message: "请选择要取消关联的订单",
+          type: "info"
+        });
+      } else {
+        this.$message({
+          message: "取消关联订单成功",
+          type: "success"
+        });
+        this.refresh();
+      }
     },
 
     resets() {

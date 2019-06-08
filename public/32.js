@@ -1027,12 +1027,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "订单关联",
         icon: "bf-asso",
-        ent: this.test,
+        ent: this.associateOrder,
         nClick: true
       }, {
         cnt: "取消关联",
         icon: "bf-cancelAsso",
-        ent: this.test,
+        ent: this.cancelAssociateOrder,
         nClick: true
       }, {
         cnt: "通知发货",
@@ -1042,7 +1042,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "打印",
         icon: "bf-printer",
-        ent: this.test,
+        ent: this.print,
         nClick: true
       }, {
         cnt: "转送款",
@@ -3847,6 +3847,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     cancelSplit: function cancelSplit() {
       this.splitMask = false;
+    },
+    print: function print() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    associateOrder: function associateOrder() {
+      if (this.mergerIds.length != 2) {
+        this.$message({
+          message: "请选择要关联的订单",
+          type: "info"
+        });
+      } else {
+        this.$message({
+          message: "关联订单成功",
+          type: "success"
+        });
+        this.refresh();
+      }
+    },
+    cancelAssociateOrder: function cancelAssociateOrder() {
+      if (this.mergerIds.length != 2) {
+        this.$message({
+          message: "请选择要取消关联的订单",
+          type: "info"
+        });
+      } else {
+        this.$message({
+          message: "取消关联订单成功",
+          type: "success"
+        });
+        this.refresh();
+      }
     },
     resets: function resets() {
       this.searchBox = {};
