@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lou
- * Date: 2019/2/12
- * Time: 23:31
- */
 
 namespace App\Transformers;
 
@@ -22,9 +16,9 @@ class RoleTransformer extends TransformerAbstract
         return [
             'id' => $role->id,
             'name' => $role->name,
-            'role_group_id' => $role->role_group_id,
             'description' => $role->description,
             'remark'=> $role->remark,
+            'guard_name'=> $role->guard_name,
             'status' => $role->status,
             'created_at' => optional($role->created_at)->toDateTimeString(),
             'updated_at' => optional($role->updated_at)->toDateTimeString(),
@@ -35,5 +29,4 @@ class RoleTransformer extends TransformerAbstract
     {
         return $this->item($role->roleGroup, new RoleGroupTransformer());
     }
-
 }

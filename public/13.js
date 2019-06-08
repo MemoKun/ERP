@@ -141,6 +141,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -221,7 +223,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       updateData: {},
       groupOptions: [],
-      permissionList: []
+      permissionList: [],
+      curRowId: "",
+      curRowData: {}
     };
   },
 
@@ -245,7 +249,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       this.$fetch(this.urls.roles).then(function (res) {
-        console.log(res.data);
         _this.loading = false;
         _this.rolesList = res.data;
         var pg = res.meta.pagination;
@@ -299,34 +302,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      * 
      **/
     updateRole: function updateRole() {
-      console.log("change");
-      console.log(this.multipleSelection);
-      this.updateRoleMask = true;
-      if (this.multipleSelection.length === 0) {
+      var _this3 = this;
+
+      if (this.ids.length == 0) {
         this.$message({
           message: "请至少选择一条",
           type: "warning"
         });
       } else {
-        this.updateData = this.multipleSelection[0];
+        this.updateRoleMask = true;
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$fetch(this.urls.roles + "/" + id).then(function (res) {
+          _this3.updateData = res.data[0];
+        }, function (err) {});
       }
     },
     updateRoleConfirm: function updateRoleConfirm() {
-      var _this3 = this;
+      var _this4 = this;
 
-      var submitData = this.updateData;
-      this.$patch(this.urls.roles + "/" + submitData.id, submitData).then(function (res) {
-        console.log(res);
-        _this3.$message({
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      var forData = this.updateData;
+      var submitData = {
+        id: forData.id,
+        name: forData.name,
+        description: forData.description,
+        remark: forData.remark,
+        created_at: forData.created_at,
+        updated_at: forData.updated_at
+      };
+      this.$patch(this.urls.roles + "/" + id, submitData).then(function (res) {
+        _this4.$message({
           message: "修改角色成功",
           type: "success"
         });
-        _this3.refresh();
-        _this3.updateRoleMask = false;
-      });
+        _this4.refresh();
+        _this4.updateRoleMask = false;
+      }, function (err) {});
     },
     handleSelectionChange: function handleSelectionChange(val) {
-      this.multipleSelection = val;
+      console.log(val);
+      /*拿到id集合*/
+      var delArr = [];
+      val.forEach(function (selectedItem) {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.additionOrderIds = val;
     },
     deleteRole: function deleteRole() {
       console.log("delete");
@@ -344,10 +368,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /*分页*/
     handlePagChg: function handlePagChg(page) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$fetch(this.urls.roledetails + "?page=" + page, {}).then(function (res) {
-        _this4.supplierVal = res.data;
+        _this5.supplierVal = res.data;
       });
     }
   },
@@ -670,11 +694,13 @@ var render = function() {
           }
         },
         [
+          _c("label", [_vm._v(_vm._s(this.updateData))]),
+          _vm._v(" "),
           _c(
             "el-form",
             {
-              staticClass: "addRoleForm",
-              attrs: { model: _vm.updateData, id: "addRoleForm" }
+              staticClass: "updateRoleForm",
+              attrs: { model: _vm.updateData, id: "updateRoleForm" }
             },
             _vm._l(_vm.tableHead[1], function(item, index) {
               return _c(

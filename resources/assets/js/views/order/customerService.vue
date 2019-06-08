@@ -3962,10 +3962,6 @@ export default {
         }
       });
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$message({
-        message: "加载成功",
-        type: "success"
-      });
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(
         () => {
           this.updateCustomerMask = false;

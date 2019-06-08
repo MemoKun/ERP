@@ -15,6 +15,7 @@
         </template>
       </el-table-column>
     </el-table>
+
     <!--新增角色-->
     <el-dialog title="新增角色" :visible.sync="addRoleMask">
       <el-form :model="addData" class="addRoleForm" id="addRoleForm">
@@ -53,7 +54,8 @@
     </el-dialog>
     <!--修改信息-->
     <el-dialog title="修改信息" :visible.sync="updateRoleMask">
-      <el-form :model="updateData" class="addRoleForm" id="addRoleForm">
+      <label>{{this.updateData}}</label>
+      <el-form :model="updateData" class="updateRoleForm" id="updateRoleForm">
         <el-form-item v-for="(item,index) in tableHead[1]" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">
@@ -190,7 +192,9 @@ export default {
       },
       updateData: {},
       groupOptions: [],
-      permissionList: []
+      permissionList: [],
+      curRowId: "",
+      curRowData: {}
     };
   },
   computed: {
@@ -212,7 +216,6 @@ export default {
     fetchData() {
       this.$fetch(this.urls.roles).then(
         res => {
-          console.log(res.data);
           this.loading = false;
           this.rolesList = res.data;
           let pg = res.meta.pagination;
@@ -267,36 +270,57 @@ export default {
      * 
      **/
     updateRole() {
-      console.log("change");
-      console.log(this.multipleSelection);
-      this.updateRoleMask = true;
-      if (this.multipleSelection.length === 0) {
+      if (this.ids.length == 0) {
         this.$message({
           message: "请至少选择一条",
           type: "warning"
         });
       } else {
-        this.updateData = this.multipleSelection[0];
+        this.updateRoleMask = true;
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$fetch(this.urls.roles + "/" + id).then(
+          res => {
+            this.updateData = res.data[0];
+          },
+          err => {}
+        );
       }
     },
     updateRoleConfirm() {
-      let submitData = this.updateData;
-      this.$patch(
-        this.urls.roles + "/" + submitData.id,
-        submitData
-      ).then(res => {
-        console.log(res);
-        this.$message({
-          message: "修改角色成功",
-          type: "success"
-        });
-        this.refresh();
-        this.updateRoleMask = false;
-      });
+      let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      let forData = this.updateData;
+      let submitData = {
+        id: forData.id,
+        name: forData.name,
+        description: forData.description,
+        remark: forData.remark,
+        created_at: forData.created_at,
+        updated_at: forData.updated_at
+      };
+      this.$patch(this.urls.roles + "/" + id, submitData).then(
+        res => {
+          this.$message({
+            message: "修改角色成功",
+            type: "success"
+          });
+          this.refresh();
+          this.updateRoleMask = false;
+        },
+        err => {}
+      );
     },
-
     handleSelectionChange(val) {
-      this.multipleSelection = val;
+      console.log(val);
+      /*拿到id集合*/
+      let delArr = [];
+      val.forEach(selectedItem => {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.additionOrderIds = val;
     },
     deleteRole() {
       console.log("delete");

@@ -1721,10 +1721,14 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //角色管理
         $api->get('roles', 'RolesController@index')
             ->name('api.roles.index');
+        $api->get('roles/{roles}', 'RolesController@show')
+            ->name('api.roles.show');
         $api->post('roles', 'RolesController@insertRole')
             ->name('api.roles.insertRole');
-        $api->patch('roles/{roleid}', 'RolesController@update')
+        $api->patch('roles/{roles}', 'RolesController@update')
             ->name('api.roles.update');
+        $api->delete('roles/{roles}', 'RolesController@destroyByIds')
+            ->name('api.roles.destroybyids');
 
         //权限管理
         $api->get('permissions/{permissions}', 'PermissionsController@index')
@@ -1737,8 +1741,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->get('rolegroup', 'RoleGroupController@index')
             ->name('api.roles.index');
 
-        $api->delete('roles', 'RolesController@destroyByIds')
-            ->name('api.roles.destroybyids');
+        
         //获取权限
         $api->get('permissions', 'PermissionsController@index')
             ->name('api.permissions.index');

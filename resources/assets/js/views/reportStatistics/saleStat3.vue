@@ -107,9 +107,8 @@ export default {
           monthSales: "8901",
           monthOrderNum: "2341",
           monthCustomerOrderPrice: "652123"
-        },
-      ],
-      
+        }
+      ]
     };
   },
   computed: {
@@ -130,15 +129,13 @@ export default {
     test() {
       console.log(1);
     },
-    fetchData(){
-      this.$fetch(this.urls.reportstatistics+"/orderAmount").then(
-        res=>{
-          this.salesAmount[1]["orderNum"]=res;
+    fetchData() {
+      this.$fetch(this.urls.reportstatistics + "/orderAmount").then(
+        res => {
+          this.salesAmount[1]["orderNum"] = res;
         },
-        err=>{
-
-        }
-      )
+        err => {}
+      );
     },
     salesPrediction() {
       // 基于准备好的dom，初始化echarts实例
@@ -533,6 +530,9 @@ export default {
           }
         ]
       });
+    },
+    refresh(){
+      this.fetchData();
     }
   },
   mounted() {

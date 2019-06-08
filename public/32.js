@@ -3634,10 +3634,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       });
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$message({
-        message: "加载成功",
-        type: "success"
-      });
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(function () {
         _this19.updateCustomerMask = false;
         _this19.refresh();

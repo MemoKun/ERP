@@ -1,21 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lou
- * Date: 2019/2/12
- * Time: 23:07
- */
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Api\DestroyRequest;
-use App\Models\Model;
-use App\Models\Role;
-use App\Http\Requests\Api\RoleRequest;
 use App\Http\Controllers\Traits\CURDTrait;
-use App\Transformers\RoleTransformer;
+use App\Http\Requests\Api\DestroyRequest;
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Illuminate\Support\Facades\DB;
+
+use App\Models\Role;
+use App\Http\Requests\Api\RoleRequest;
+use App\Transformers\RoleTransformer;
 
 class RolesController extends Controller
 {
@@ -24,11 +18,18 @@ class RolesController extends Controller
     const TRANSFORMER = RoleTransformer::class;
     const MODEL = Role::class;
 
-    public function index(RoleRequest $request){
-        return $this->allOrPage($request,self::MODEL,self::TRANSFORMER,10);
+    public function index(RoleRequest $request)
+    {
+        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
     }
 
-    public function insertRole(RoleRequest $request,Role $role){
+    public function show(Role $role)
+    {
+        return $this->traitShow($role, self::TRANSFORMER);
+    }
+
+    public function insertRole(RoleRequest $request, Role $role)
+    {
 //        return $request->post();
         $data = [
           'role_group_id' => $request->post('role_group_id'),
@@ -37,20 +38,19 @@ class RolesController extends Controller
           'remark' => $request->post('remark'),
         ];
 //        return $data;
-        if(Role::find($request->post('id'))){
+        if (Role::find($request->post('id'))) {
             return $this->traitUpdate($request, Role::find($request->post('id')), self::TRANSFORMER);
         };
         return  $this->traitStore($data, self::MODEL, self::TRANSFORMER);
-
     }
 
-    public function update(RoleRequest $request,Role $role)
+    public function update(RoleRequest $request, Role $role)
     {
-        //return json_encode($role);
         return $this->traitUpdate($request, $role, self::TRANSFORMER);
     }
 
-    public function destroyByIds(DestroyRequest $request){
+    public function destroyByIds(DestroyRequest $request)
+    {
         $ids = explode(',', $request->input('ids'));
 
         DB::transaction(function () use ($ids) {
@@ -75,7 +75,6 @@ class RolesController extends Controller
             if ($delProduct === false) {
                 throw new DeleteResourceFailedException('The given data was invalid.');
             }
-
         });
 
         return $this->noContent();

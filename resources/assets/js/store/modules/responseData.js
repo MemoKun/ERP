@@ -488,6 +488,19 @@ const responseData = {
           return res.data.data
         })
     },
+    roles({
+      commit
+    }, url) {
+      axios.get(url, {
+          params: {
+            'status': true
+          }
+        })
+        .then(res => {
+          commit('ROLES', res.data.data);
+          return res.data.data
+        })
+    },
   }
 };
 

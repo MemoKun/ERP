@@ -16,8 +16,7 @@ class RoleRequest extends FormRequest
                 break;
             case 'POST':
                 return [
-                    'role_group_id'=> 'required|integer',
-                    'name'=> 'required|string',
+                    'name'=> 'string',
                     'description'=> 'string',
                     'remark'=> 'string',
                     'status' => 'boolean',
@@ -25,8 +24,6 @@ class RoleRequest extends FormRequest
                 break;
             case 'PATCH':
                 return [
-                    'id' =>'integer',
-                    'role_group_id' => 'integer',
                     'name' => 'string',
                     'description'=> 'string',
                     'remark'=> 'string',
@@ -38,6 +35,21 @@ class RoleRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'name.string' => '角色名称必须为string',
+            'description.string' => '描述必须为string',
+            'remark.string' => '备注必须为string',
+            'status.boolean' => '状态必须为boolean',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => '角色名称',
+            'description' => '描述',
+            'remark' => '备注',
+            'status' => '状态',
+        ];
     }
 }

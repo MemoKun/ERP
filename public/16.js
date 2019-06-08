@@ -158,7 +158,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         monthOrderNum: "2341",
         monthCustomerOrderPrice: "652123"
       }]
-
     };
   },
 
@@ -446,6 +445,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           data: [5, 2, 7, 8]
         }]
       });
+    },
+    refresh: function refresh() {
+      this.fetchData();
     }
   },
   mounted: function mounted() {
