@@ -114,7 +114,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       newOpt: [{
         cnt: "刷新",
         icon: "bf-refresh",
-        ent: this.test
+        ent: this.refresh
       }],
       salesAmount: [{
         category: "类别",
@@ -126,20 +126,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         monthCustomerOrderPrice: "本月客单价"
       }, {
         category: "金额",
-        sales: "988230",
+        sales: "",
         orderNum: "",
-        OrderPrice: "1258.571",
-        monthSales: "12882701",
-        monthOrderNum: "1562",
-        monthCustomerOrderPrice: "1657.212"
+        OrderPrice: "",
+        monthSales: "",
+        monthOrderNum: "",
+        monthCustomerOrderPrice: ""
       }, {
         category: "同比增长速率",
-        sales: "9%",
-        orderNum: "4.4%",
-        OrderPrice: "1.2%",
-        monthSales: "3.5%",
-        monthOrderNum: "7%",
-        monthCustomerOrderPrice: "7.9%"
+        sales: "",
+        orderNum: "",
+        OrderPrice: "",
+        monthSales: "",
+        monthOrderNum: "",
+        monthCustomerOrderPrice: ""
       }],
       costAmount: [{
         category: "类别",
@@ -183,7 +183,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       this.$fetch(this.urls.reportstatistics + "/orderAmount").then(function (res) {
-        _this.salesAmount[1]["orderNum"] = res;
+        _this.salesAmount = res;
       }, function (err) {});
     },
     salesPrediction: function salesPrediction() {

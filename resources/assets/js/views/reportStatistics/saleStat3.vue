@@ -57,7 +57,7 @@ export default {
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.test
+          ent: this.refresh
         }
       ],
       salesAmount: [
@@ -72,21 +72,21 @@ export default {
         },
         {
           category: "金额",
-          sales: "988230",
+          sales: "",
           orderNum: "",
-          OrderPrice: "1258.571",
-          monthSales: "12882701",
-          monthOrderNum: "1562",
-          monthCustomerOrderPrice: "1657.212"
+          OrderPrice: "",
+          monthSales: "",
+          monthOrderNum: "",
+          monthCustomerOrderPrice: ""
         },
         {
           category: "同比增长速率",
-          sales: "9%",
-          orderNum: "4.4%",
-          OrderPrice: "1.2%",
-          monthSales: "3.5%",
-          monthOrderNum: "7%",
-          monthCustomerOrderPrice: "7.9%"
+          sales: "",
+          orderNum: "",
+          OrderPrice: "",
+          monthSales: "",
+          monthOrderNum: "",
+          monthCustomerOrderPrice: ""
         }
       ],
       costAmount: [
@@ -132,7 +132,7 @@ export default {
     fetchData() {
       this.$fetch(this.urls.reportstatistics + "/orderAmount").then(
         res => {
-          this.salesAmount[1]["orderNum"] = res;
+          this.salesAmount = res;
         },
         err => {}
       );

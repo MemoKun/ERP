@@ -15,7 +15,8 @@ use App\Http\Controllers\Traits\CURDTrait;
 class UsersController extends Controller
 {
     use CURDTrait;
-    
+    use HasRoles;
+
     const TRANSFORMER = UserTransformer::class;
     const MODEL = User::class;
 
@@ -32,7 +33,7 @@ class UsersController extends Controller
         $userIds = $request->input('userIds');
         $role = Role::findById(intval($roleId));
         $user = User::findById($userIds[0]);
-        $user->assignRole($role);
+        $user->syncRoles($role);
         //$status=$user->hasRole($role);
         return $user;
     }

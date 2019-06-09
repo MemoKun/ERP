@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
-
-use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -64,12 +62,12 @@ class User extends Authenticatable implements JWTSubject
      */
     public function roles()
     {
-        return $this->hasMany(Role::class);
+        return $this->hasMany(Role::class,'user_id');
     }
 
     public function purchase()
     {
-        return $this->hasMany(Purchase::class, 'user_id ');
+        return $this->hasMany(Purchase::class, 'user_id');
     }
 
     public function order()
