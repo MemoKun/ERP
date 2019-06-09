@@ -1032,17 +1032,17 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.aftersalereturns.isuntwoaudit');
 
         //仓储退货
-        $api->get('warehousingreturns', 'WarehousingReturnsController@index')
+        /*$api->get('warehousingreturns', 'WarehousingReturnsController@index')
             ->name('api.warehousingreturns.index');
         $api->get('warehousingreturns/{returnorder}', 'WarehousingReturnsController@show')
             ->name('api.warehousingreturns.show');
         $api->put('warehousingreturns/{returnorder}/whaudit', 'WarehousingReturnsController@isWhAudit')
             ->name('api.warehousingreturns.iswhaudit');
         $api->put('warehousingreturns/{returnorder}/whunaudit', 'WarehousingReturnsController@isWhUnAudit')
-            ->name('api.warehousingreturns.iswhunaudit');
+            ->name('api.warehousingreturns.iswhunaudit');*/
 
         //收货方式
-        $api->get('receipttypes', 'ReceiptTypesController@index')
+        /*$api->get('receipttypes', 'ReceiptTypesController@index')
             ->name('api.receipttypes.index');
         $api->get('receipttypes/{receipttype}', 'ReceiptTypesController@show')
             ->name('api.receipttypes.show');
@@ -1055,21 +1055,21 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->delete('receipttypes', 'ReceiptTypesController@destroybyids')
             ->name('api.receipttypes.destroybyids');
         $api->put('receipttypes/editstatus', 'ReceiptTypesController@editStatusByIds')
-            ->name('api.receipttypes.editstatusbyids');
+            ->name('api.receipttypes.editstatusbyids');*/
 
         //库存同步
-        $api->get('stocksyncreturn', 'StockSyncReturnsController@index')
+        /*$api->get('stocksyncreturn', 'StockSyncReturnsController@index')
             ->name('api.stocksyncreturn.index');
         $api->get('stocksyncreturn/{returnorder}', 'StockSyncReturnsController@show')
             ->name('api.stocksyncreturn.show');
         $api->put('stocksyncreturn/{returnorder}/stocksubmit', 'StockSyncReturnsController@isStockSubmit')
             ->name('api.stocksyncreturn.isstocksubmit');
         $api->put('stocksyncreturn/{returnorder}/stocksync', 'StockSyncReturnsController@isStockSync')
-            ->name('api.stocksyncreturn.isstocksync');
+            ->name('api.stocksyncreturn.isstocksync');*/
 
         //退货子单
-        $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
-            ->name('api.returnorderitems.destroy');
+        /*$api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
+            ->name('api.returnorderitems.destroy');*/
 
         //售后赔偿
         $api->get('aftercompensation/searchall', 'AfterCompensationController@searchAll')
@@ -1696,8 +1696,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         // 薛涛
 
         //退货子单
-        $api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
-            ->name('api.returnorderitems.destroy');
+        /*$api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
+            ->name('api.returnorderitems.destroy');*/
 
 
         
@@ -1758,7 +1758,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->post('users/setroles', 'UsersController@setRoles')
             ->name('api.users.setroles');
     });
-
     $api->group([
         'middleware' => 'api.throttle',
         'limit' => config('api.rate_limits.sign.limit'),
