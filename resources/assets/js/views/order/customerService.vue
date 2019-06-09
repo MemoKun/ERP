@@ -1005,7 +1005,7 @@ export default {
         {
           cnt: "导出",
           icon: "bf-out",
-          ent: this.test,
+          ent: this.excelExport,
           nClick: true
         },
         {
@@ -4209,7 +4209,14 @@ export default {
         this.refresh();
       }
     },
-
+    excelExport(){
+      this.$fetch(this.urls.excel).then(res => {
+        this.$message({
+          message:"打印成功",
+          type:"success"
+        });
+      });
+    },
     resets() {
       this.searchBox = {};
     }

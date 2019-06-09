@@ -1002,7 +1002,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "导出",
         icon: "bf-out",
-        ent: this.test,
+        ent: this.excelExport,
         nClick: true
       }, {
         cnt: "合并",
@@ -3877,6 +3877,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
         this.refresh();
       }
+    },
+    excelExport: function excelExport() {
+      var _this24 = this;
+
+      this.$fetch(this.urls.excel).then(function (res) {
+        _this24.$message({
+          message: "打印成功",
+          type: "success"
+        });
+      });
     },
     resets: function resets() {
       this.searchBox = {};

@@ -1736,10 +1736,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->get('permissions/{permissions}', 'PermissionsController@index')
             ->name('api.permissions.index');
 
-        //打印功能
-        $api->get('excel', 'ExcelController@export')
-        ->name('api.excel.export');
-
         $api->get('rolegroup', 'RoleGroupController@index')
             ->name('api.roles.index');
 
@@ -1750,6 +1746,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
+
+        //excel导入导出功能
+        $api->get('excel', 'ExcelController@ordersExport')
+            ->name('api.excel.ordersexport');
 
         $api->get('users', 'UsersController@index')
             ->name('api.users.index');
