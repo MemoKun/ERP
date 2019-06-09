@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 use App\Models\User;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
@@ -15,9 +19,22 @@ class UsersController extends Controller
     const TRANSFORMER = UserTransformer::class;
     const MODEL = User::class;
 
+    protected $guard_name = 'web';
+
     public function index(UserRequest $request)
     {
         return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+    }
+    
+    public function setRoles(UserRequest $request)
+    {
+        $roleId = $request->input('roleId');
+        $userIds = $request->input('userIds');
+        $role = Role::findById(intval($roleId));
+        $user = User::findById($userIds[0]);
+        $user->assignRole($role);
+        //$status=$user->hasRole($role);
+        return $user;
     }
 
     public function store(Request $request)

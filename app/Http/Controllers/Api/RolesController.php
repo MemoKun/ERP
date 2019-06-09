@@ -6,8 +6,11 @@ use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Requests\Api\DestroyRequest;
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
-use App\Models\Role;
+
+use App\Models\Roles;
 use App\Http\Requests\Api\RoleRequest;
 use App\Transformers\RoleTransformer;
 
@@ -16,19 +19,30 @@ class RolesController extends Controller
     use CURDTrait;
 
     const TRANSFORMER = RoleTransformer::class;
-    const MODEL = Role::class;
+    const MODEL = Roles::class;
 
     public function index(RoleRequest $request)
     {
         return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
     }
 
-    public function show(Role $role)
+    public function show(Roles $role)
     {
         return $this->traitShow($role, self::TRANSFORMER);
     }
 
-    public function insertRole(RoleRequest $request, Role $role)
+    public function giveRolesPermission(RoleRequest $request)
+    {
+        $roleId = $request->input('roleId');
+        $permissions = $request->input('permissions');
+        $role = Role::findById($roleId);
+        $role->syncPermissions($permissions);
+        $result=$role->hasAnyPermission($permissions);
+
+        return $result;
+    }
+
+    public function insertRole(RoleRequest $request, Roles $role)
     {
 //        return $request->post();
         $data = [
@@ -38,13 +52,13 @@ class RolesController extends Controller
           'remark' => $request->post('remark'),
         ];
 //        return $data;
-        if (Role::find($request->post('id'))) {
-            return $this->traitUpdate($request, Role::find($request->post('id')), self::TRANSFORMER);
+        if (Roles::find($request->post('id'))) {
+            return $this->traitUpdate($request, Roles::find($request->post('id')), self::TRANSFORMER);
         };
         return  $this->traitStore($data, self::MODEL, self::TRANSFORMER);
     }
 
-    public function update(RoleRequest $request, Role $role)
+    public function update(RoleRequest $request, Roles $role)
     {
         return $this->traitUpdate($request, $role, self::TRANSFORMER);
     }
@@ -70,7 +84,7 @@ class RolesController extends Controller
 //            });
 
             //删除产品
-            $delProduct = Role::destroy($ids);
+            $delProduct = Roles::destroy($ids);
 
             if ($delProduct === false) {
                 throw new DeleteResourceFailedException('The given data was invalid.');

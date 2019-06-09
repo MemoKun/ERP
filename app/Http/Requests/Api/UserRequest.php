@@ -14,8 +14,8 @@ class UserRequest extends FormRequest
                 break;
             case 'POST':
                 return [
-                    'username' => 'required|string|max:255',
-                    'password' => 'required|string|min:6',
+                    'username' => 'string|max:255',
+                    'password' => 'string|min:6',
                     'work_id' => 'string|max:255',
                     'real_name' => 'string|max:255',
                     'id_no' => 'string|max:255',
@@ -23,8 +23,8 @@ class UserRequest extends FormRequest
                     'email' => 'string|max:255',
                     'home_address' => 'string|max:255',
                     'remark' => 'string|max:255',
-                    'hiredate' => optional($user->hiredate)->toDateTimeString(),
-                    'departure_date' => optional($user->departure_date)->toDateTimeString(),
+                    'hiredate' => 'date',
+                    'departure_date' => 'date',
                 ];
                 break;
             case 'PATCH':
@@ -38,8 +38,8 @@ class UserRequest extends FormRequest
                     'email' => 'string|max:255',
                     'home_address' => 'string|max:255',
                     'remark' => 'string|max:255',
-                    'hiredate' => optional($user->hiredate)->toDateTimeString(),
-                    'departure_date' => optional($user->departure_date)->toDateTimeString(),
+                    'hiredate' => 'date',
+                    'departure_date' => 'date',
                 ];
                 break;
         }

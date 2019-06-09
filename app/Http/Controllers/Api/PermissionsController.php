@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lou
- * Date: 2019/2/16
- * Time: 23:00
- */
 
 namespace App\Http\Controllers\Api;
 
@@ -23,4 +17,6 @@ class PermissionsController extends Controller
     public function index(PermissionRequest $request){
         return $this->allOrPage($request,self::MODEL,self::TRANSFORMER,0,0);
     }
+
+    
 }

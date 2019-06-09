@@ -1725,6 +1725,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.roles.show');
         $api->post('roles', 'RolesController@insertRole')
             ->name('api.roles.insertRole');
+        $api->post('roles/giverolespermission', 'RolesController@giveRolesPermission')
+            ->name('api.roles.giveRolesPermission');
         $api->patch('roles/{roles}', 'RolesController@update')
             ->name('api.roles.update');
         $api->delete('roles/{roles}', 'RolesController@destroyByIds')
@@ -1751,8 +1753,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 
         $api->get('users', 'UsersController@index')
             ->name('api.users.index');
-        $api->Post('users/create', 'UsersController@storeUser')
+        $api->post('users/create', 'UsersController@storeUser')
             ->name('api.users.storeuser');
+        $api->post('users/setroles', 'UsersController@setRoles')
+            ->name('api.users.setroles');
     });
 
     $api->group([

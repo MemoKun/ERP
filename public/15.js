@@ -147,6 +147,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -154,7 +155,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       newOpt: [{
         cnt: "角色权限",
         icon: "bf-jurisdiction",
-        ent: this.addUserPermission
+        ent: this.addRolesPermission
       }, {
         cnt: "角色用户",
         icon: "bf-juruser",
@@ -236,7 +237,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "created_at",
         type: "text"
       }]],
-      userPermissionMask: false,
+      RolesPermissionMask: false,
       userRolesMask: false,
       permissionListTree: [{
         id: 1,
@@ -469,7 +470,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           label: "售后基础配置"
         }, {
           id: 81,
-          label: "退货责任方"
+          label: "退货责任方配置"
         }, {
           id: 82,
           label: "售后原因管理"
@@ -568,17 +569,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       selectRoleId: "",
       roleData: {},
-      alreadyContainUsers: [1],
-      unContainUsers: [{
-        key: 1,
-        label: "余煌"
-      }, {
-        key: 2,
-        label: "陈一珍"
-      }, {
-        key: 3,
-        label: "廖丽华"
-      }]
+      alreadyContainUsers: [],
+      unContainUsers: []
     };
   },
 
@@ -629,10 +621,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
     },
-    addUserPermission: function addUserPermission() {
+    addRolesPermission: function addRolesPermission() {
       var _this2 = this;
 
-      this.userPermissionMask = true;
+      this.RolesPermissionMask = true;
       this.$fetch(this.urls.roles).then(function (res) {
         _this2.roleData = res.data;
         _this2.getCheckedNodes();
@@ -645,6 +637,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$fetch(this.urls.roles).then(function (res) {
         _this3.roleData = res.data;
       }, function (err) {});
+      this.$fetch(this.urls.users).then(function (res) {
+        var usersData = res.data;
+        usersData.map(function (item) {
+          var users = {
+            key: item.id,
+            label: item.real_name
+          };
+          _this3.unContainUsers.push(users);
+        });
+      });
     },
     getCheckedNodes: function getCheckedNodes() {
       this.permissionListData = this.$refs.permissionTree.getCheckedKeys();
@@ -659,13 +661,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, function (err) {});
     },
     changePermissionsConfirm: function changePermissionsConfirm() {
-      this.userPermissionMask = false;
-      this.$message({
-        message: "更改权限成功！",
-        type: "success"
-      });
+      var _this5 = this;
+
+      this.RolesPermissionMask = false;
+      var submitData = {
+        roleId: this.selectRoleId,
+        permissions: this.permissionListData
+      };
+      this.$post(this.urls.roles + "/giverolespermission", submitData).then(function (res) {
+        _this5.$message({
+          message: "更改权限成功！",
+          type: "success"
+        });
+      }, function (err) {});
     },
-    changeUserRoles: function changeUserRoles() {},
+    changeUserRolesConfirm: function changeUserRolesConfirm() {
+      var _this6 = this;
+
+      this.RolesPermissionMask = false;
+      var submitData = {
+        userIds: this.alreadyContainUsers,
+        roleId: this.selectRoleId
+      };
+      this.$post(this.urls.users + "/setroles", submitData).then(function (res) {
+        _this6.$message({
+          message: "设置角色成功！",
+          type: "success"
+        });
+      }, function (err) {});
+    },
     refresh: function refresh() {
       this.loading = true;
       this.fetchData();
@@ -985,10 +1009,10 @@ var render = function() {
       _c(
         "el-dialog",
         {
-          attrs: { title: "角色权限管理", visible: _vm.userPermissionMask },
+          attrs: { title: "角色权限管理", visible: _vm.RolesPermissionMask },
           on: {
             "update:visible": function($event) {
-              _vm.userPermissionMask = $event
+              _vm.RolesPermissionMask = $event
             }
           }
         },
@@ -1089,6 +1113,8 @@ var render = function() {
           }
         },
         [
+          _c("label", [_vm._v(_vm._s(this.alreadyContainUsers))]),
+          _vm._v(" "),
           _c(
             "div",
             [
@@ -1162,8 +1188,11 @@ var render = function() {
                 [
                   _c(
                     "el-button",
-                    { attrs: { type: "primary" }, on: { click: _vm.test } },
-                    [_vm._v("关联角色")]
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.changeUserRolesConfirm }
+                    },
+                    [_vm._v("设置关联角色")]
                   )
                 ],
                 1

@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-use App\Models\Role;
+use App\Models\Roles;
 use League\Fractal\TransformerAbstract;
 
 class RoleTransformer extends TransformerAbstract
@@ -11,7 +11,7 @@ class RoleTransformer extends TransformerAbstract
       'roleGroup'
     ];
 
-    public function transform(Role $role)
+    public function transform(Roles $role)
     {
         return [
             'id' => $role->id,
@@ -25,7 +25,7 @@ class RoleTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeRoleGroup(Role $role)
+    public function includeRoleGroup(Roles $role)
     {
         return $this->item($role->roleGroup, new RoleGroupTransformer());
     }

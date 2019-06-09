@@ -52,7 +52,7 @@
       </el-tab-pane>
     </el-tabs>
 
-    <el-dialog title="角色权限管理" :visible.sync="userPermissionMask">
+    <el-dialog title="角色权限管理" :visible.sync="RolesPermissionMask">
       <div class="searchBox">
         <el-select v-model="selectRoleId" placeholder="所属角色" width="200px" @change="fetchRolePermissions">
           <span v-for="list in roleData" :key="list.id">
@@ -73,6 +73,7 @@
     </el-dialog>
 
     <el-dialog title="角色用户关联" :visible.sync="userRolesMask">
+      <label>{{this.alreadyContainUsers}}</label>
       <div>
         <el-select v-model="selectRoleId" placeholder="所属角色" width="200px" @change="fetchRolePermissions">
           <span v-for="list in roleData" :key="list.id">
@@ -86,7 +87,7 @@
       </div>
       <div slot="footer" class="dialog-footer clearfix">
         <div style="float: right">
-          <el-button type="primary" @click="test">关联角色</el-button>
+          <el-button type="primary" @click="changeUserRolesConfirm">设置关联角色</el-button>
         </div>
       </div>
     </el-dialog>
@@ -100,7 +101,7 @@ export default {
         {
           cnt: "角色权限",
           icon: "bf-jurisdiction",
-          ent: this.addUserPermission
+          ent: this.addRolesPermission
         },
         {
           cnt: "角色用户",
@@ -204,7 +205,7 @@ export default {
           }
         ]
       ],
-      userPermissionMask: false,
+      RolesPermissionMask: false,
       userRolesMask: false,
       permissionListTree: [
         {
@@ -517,7 +518,7 @@ export default {
             },
             {
               id: 81,
-              label: "退货责任方"
+              label: "退货责任方配置"
             },
             {
               id: 82,
@@ -651,20 +652,8 @@ export default {
       },
       selectRoleId: "",
       roleData: {},
-      alreadyContainUsers: [1],
+      alreadyContainUsers: [],
       unContainUsers: [
-        {
-          key: 1,
-          label: "余煌"
-        },
-        {
-          key: 2,
-          label: "陈一珍"
-        },
-        {
-          key: 3,
-          label: "廖丽华"
-        }
       ]
     };
   },
@@ -719,8 +708,8 @@ export default {
       this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
     },
-    addUserPermission() {
-      this.userPermissionMask = true;
+    addRolesPermission() {
+      this.RolesPermissionMask = true;
       this.$fetch(this.urls.roles).then(
         res => {
           this.roleData = res.data;
@@ -737,6 +726,18 @@ export default {
         },
         err => {}
       );
+      this.$fetch(this.urls.users).then(
+        res=>{
+          let usersData = res.data;
+          usersData.map(item=>{
+            let users = {
+              key:item.id,
+              label:item.real_name
+            }
+            this.unContainUsers.push(users);
+          })
+        }
+      )
     },
     getCheckedNodes() {
       this.permissionListData = this.$refs.permissionTree.getCheckedKeys();
@@ -763,13 +764,37 @@ export default {
       );
     },
     changePermissionsConfirm() {
-      this.userPermissionMask = false;
-      this.$message({
-        message: "更改权限成功！",
-        type: "success"
-      });
+      this.RolesPermissionMask = false;
+      let submitData = {
+        roleId: this.selectRoleId,
+        permissions: this.permissionListData
+      };
+      this.$post(this.urls.roles + "/giverolespermission", submitData).then(
+        res => {
+          this.$message({
+            message: "更改权限成功！",
+            type: "success"
+          });
+        },
+        err => {}
+      );
     },
-    changeUserRoles() {},
+    changeUserRolesConfirm() {
+      this.RolesPermissionMask = false;
+      let submitData = {
+        userIds: this.alreadyContainUsers,
+        roleId: this.selectRoleId
+      };
+      this.$post(this.urls.users + "/setroles", submitData).then(
+        res => {
+          this.$message({
+            message: "设置角色成功！",
+            type: "success"
+          });
+        },
+        err => {}
+      );
+    },
     refresh() {
       this.loading = true;
       this.fetchData();

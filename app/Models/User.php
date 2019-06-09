@@ -6,12 +6,18 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
+
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    
     use HasRoles;
+    use Notifiable;
+    
+    protected $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +37,18 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    public static function findByIds(array $ids)
+    {
+        $user = static::whereIn('id', $id)->get();
+        return $user;
+    }
+
+    public static function findById(int $id)
+    {
+        $user = static::where('id', $id)->get();
+        return $user;
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -46,7 +64,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function roles()
     {
-        return $this->hasMany('App\Models\Role');
+        return $this->hasMany(Role::class);
     }
 
     public function purchase()
