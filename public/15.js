@@ -147,7 +147,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -633,6 +632,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addUserRoles: function addUserRoles() {
       var _this3 = this;
 
+      this.unContainUsers = [];
       this.userRolesMask = true;
       this.$fetch(this.urls.roles).then(function (res) {
         _this3.roleData = res.data;
@@ -660,8 +660,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this4.$refs.permissionTree.setCheckedKeys(checked);
       }, function (err) {});
     },
-    changePermissionsConfirm: function changePermissionsConfirm() {
+    getRolesAsUsers: function getRolesAsUsers() {
       var _this5 = this;
+
+      var id = this.selectRoleId;
+      var submitData = {
+        roleId: this.selectRoleId
+      };
+      this.$fetch(this.urls.users + "/" + id + "/getrolesassociateusers", submitData).then(function (res) {
+        _this5.alreadyContainUsers = res;
+      }, function (err) {});
+    },
+    changePermissionsConfirm: function changePermissionsConfirm() {
+      var _this6 = this;
 
       this.RolesPermissionMask = false;
       var submitData = {
@@ -669,14 +680,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         permissions: this.permissionListData
       };
       this.$post(this.urls.roles + "/giverolespermission", submitData).then(function (res) {
-        _this5.$message({
+        _this6.$message({
           message: "更改权限成功！",
           type: "success"
         });
       }, function (err) {});
     },
     changeUserRolesConfirm: function changeUserRolesConfirm() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.RolesPermissionMask = false;
       var submitData = {
@@ -684,10 +695,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         roleId: this.selectRoleId
       };
       this.$post(this.urls.users + "/setroles", submitData).then(function (res) {
-        _this6.$message({
-          message: "设置角色成功！",
-          type: "success"
-        });
+        if (res == 1) {
+          _this7.$message({
+            message: "设置角色成功！",
+            type: "success"
+          });
+        } else {
+          _this7.$message({
+            message: "设置角色失败！",
+            type: "info"
+          });
+        }
       }, function (err) {});
     },
     refresh: function refresh() {
@@ -1113,8 +1131,6 @@ var render = function() {
           }
         },
         [
-          _c("label", [_vm._v(_vm._s(this.alreadyContainUsers))]),
-          _vm._v(" "),
           _c(
             "div",
             [
@@ -1122,7 +1138,7 @@ var render = function() {
                 "el-select",
                 {
                   attrs: { placeholder: "所属角色", width: "200px" },
-                  on: { change: _vm.fetchRolePermissions },
+                  on: { change: _vm.getRolesAsUsers },
                   model: {
                     value: _vm.selectRoleId,
                     callback: function($$v) {

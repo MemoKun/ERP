@@ -11,7 +11,6 @@ use Auth;
 
 class User extends Authenticatable implements JWTSubject
 {
-    
     use HasRoles;
     use Notifiable;
     
@@ -35,18 +34,6 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    public static function findByIds(array $ids)
-    {
-        $user = static::whereIn('id', $id)->get();
-        return $user;
-    }
-
-    public static function findById(int $id)
-    {
-        $user = static::where('id', $id)->get();
-        return $user;
-    }
-
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -60,10 +47,10 @@ class User extends Authenticatable implements JWTSubject
     /**
      * 获取与用户关联的角色
      */
-    public function roles()
+    /*public function roles()
     {
-        return $this->hasMany(Role::class,'user_id');
-    }
+        return $this->hasMany(Role::class);
+    }*/
 
     public function purchase()
     {

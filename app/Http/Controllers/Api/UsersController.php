@@ -32,10 +32,25 @@ class UsersController extends Controller
         $roleId = $request->input('roleId');
         $userIds = $request->input('userIds');
         $role = Role::findById(intval($roleId));
-        $user = User::findById($userIds[0]);
-        $user->syncRoles($role);
-        //$status=$user->hasRole($role);
-        return $user;
+        foreach ($userIds as $id) {
+            $user = User::where('id', $id)->first();
+            $user->syncRoles($role["name"]);
+        }
+        $status=intval($user->hasRole($role["name"]));
+        return $status;
+    }
+
+    public function getRolesAssociateUsers(UserRequest $request){
+        $roleId = intval($request->input('roleId'));
+        $role = Role::findById($roleId);
+        $users = User::All();
+        $usersHasRoles = [];
+        foreach($users as $user){
+            if($user->hasRole($role['name'])){
+                array_push($usersHasRoles,$user['id']);
+            }
+        }
+        return $usersHasRoles;
     }
 
     public function store(Request $request)

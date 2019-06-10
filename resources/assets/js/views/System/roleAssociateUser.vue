@@ -73,9 +73,8 @@
     </el-dialog>
 
     <el-dialog title="角色用户关联" :visible.sync="userRolesMask">
-      <label>{{this.alreadyContainUsers}}</label>
       <div>
-        <el-select v-model="selectRoleId" placeholder="所属角色" width="200px" @change="fetchRolePermissions">
+        <el-select v-model="selectRoleId" placeholder="所属角色" width="200px" @change="getRolesAsUsers">
           <span v-for="list in roleData" :key="list.id">
             <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
           </span>
@@ -653,8 +652,7 @@ export default {
       selectRoleId: "",
       roleData: {},
       alreadyContainUsers: [],
-      unContainUsers: [
-      ]
+      unContainUsers: []
     };
   },
   computed: {
@@ -719,6 +717,7 @@ export default {
       );
     },
     addUserRoles() {
+      this.unContainUsers = [];
       this.userRolesMask = true;
       this.$fetch(this.urls.roles).then(
         res => {
@@ -726,18 +725,16 @@ export default {
         },
         err => {}
       );
-      this.$fetch(this.urls.users).then(
-        res=>{
-          let usersData = res.data;
-          usersData.map(item=>{
-            let users = {
-              key:item.id,
-              label:item.real_name
-            }
-            this.unContainUsers.push(users);
-          })
-        }
-      )
+      this.$fetch(this.urls.users).then(res => {
+        let usersData = res.data;
+        usersData.map(item => {
+          let users = {
+            key: item.id,
+            label: item.real_name
+          };
+          this.unContainUsers.push(users);
+        });
+      });
     },
     getCheckedNodes() {
       this.permissionListData = this.$refs.permissionTree.getCheckedKeys();
@@ -759,6 +756,21 @@ export default {
             "售后赔偿"
           ];
           this.$refs.permissionTree.setCheckedKeys(checked);
+        },
+        err => {}
+      );
+    },
+    getRolesAsUsers() {
+      let id = this.selectRoleId;
+      let submitData = {
+        roleId: this.selectRoleId
+      };
+      this.$fetch(
+        this.urls.users + "/" + id + "/getrolesassociateusers",
+        submitData
+      ).then(
+        res => {
+          this.alreadyContainUsers = res;
         },
         err => {}
       );
@@ -787,10 +799,17 @@ export default {
       };
       this.$post(this.urls.users + "/setroles", submitData).then(
         res => {
-          this.$message({
-            message: "设置角色成功！",
-            type: "success"
-          });
+          if (res == 1) {
+            this.$message({
+              message: "设置角色成功！",
+              type: "success"
+            });
+          } else {
+            this.$message({
+              message: "设置角色失败！",
+              type: "info"
+            });
+          }
         },
         err => {}
       );
