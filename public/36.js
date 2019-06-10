@@ -64,19 +64,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       newOpt: [{
         cnt: '删除',
         icon: 'bf-del',
-        ent: this.test
+        ent: this.downloadOrders
       }, {
         cnt: '导出',
         icon: 'bf-out',
-        ent: this.test
+        ent: this.downloadOrders
       }, {
         cnt: '同步',
         icon: 'bf-sync',
-        ent: this.test
+        ent: this.downloadOrders
       }, {
         cnt: '下载',
         icon: 'bf-dwn',
-        ent: this.test
+        ent: this.downloadOrders
       }],
       searchBox: {
         shop_name: '',
@@ -94,6 +94,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     test: function test() {
       console.log(1);
+    },
+    downloadOrders: function downloadOrders() {
+      this.$message({
+        message: "请先连接淘宝API",
+        type: "success"
+      });
     }
   },
   mounted: function mounted() {

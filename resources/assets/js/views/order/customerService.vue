@@ -955,6 +955,8 @@ import {
   CodeToText,
   TextToCode
 } from "element-china-area-data";
+import VueResource from "vue-resource";
+Vue.use(VueResource);
 export default {
   data() {
     return {
@@ -4209,11 +4211,11 @@ export default {
         this.refresh();
       }
     },
-    excelExport(){
+    excelExport() {
       this.$fetch(this.urls.excel).then(res => {
         this.$message({
-          message:"打印成功",
-          type:"success"
+          message: "打印成功",
+          type: "success"
         });
       });
     },

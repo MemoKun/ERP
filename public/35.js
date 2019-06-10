@@ -63,80 +63,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       newOpt: [{
-        cnt: '导出',
-        icon: 'bf-out',
-        ent: this.test
+        cnt: "导出",
+        icon: "bf-out",
+        ent: this.downloadOrders
       }, {
-        cnt: '下载',
-        icon: 'bf-dwn',
-        ent: this.test
+        cnt: "下载",
+        icon: "bf-dwn",
+        ent: this.downloadOrders
       }],
       searchBox: {
-        shop_id: '',
-        order_workDate: '',
-        buyer_nickname: '',
-        orderShops: [{ label: '简艺家具旗舰店', value: 0 }, { label: '迪洛家具旗舰店', value: 1 }]
+        shop_id: "",
+        order_workDate: "",
+        buyer_nickname: "",
+        orderShops: [{ label: "简艺家具旗舰店", value: 0 }, { label: "迪洛家具旗舰店", value: 1 }]
       },
       loading: true,
       downloadData: [],
       checkboxInit: false,
       orderListHead: [{
-        label: '退款单号',
-        width: '150',
-        prop: 'refund_num',
-        type: 'text'
+        label: "退款单号",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
       }, {
-        label: '淘宝交易单号',
-        width: '150',
-        prop: 'refund_num',
-        type: 'text'
+        label: "淘宝交易单号",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
       }, {
-        label: '子订单号',
-        width: '150',
-        prop: 'refund_num',
-        type: 'text'
+        label: "子订单号",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
       }, {
-        label: '交易金额',
-        width: '150',
-        prop: 'refund_num',
-        type: 'text'
+        label: "交易金额",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
       }, {
-        label: '买家昵称',
-        width: '150',
-        prop: 'refund_num',
-        type: 'text'
+        label: "买家昵称",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
       }, {
-        label: '退款金额',
-        width: '150',
-        prop: 'refund_num',
-        type: 'text'
+        label: "退款金额",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
       }, {
-        label: '退款原因',
-        width: '150',
-        prop: 'refund_num',
-        type: 'text'
+        label: "退款原因",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
       }, {
-        label: '退款说明',
-        width: '150',
-        prop: 'refund_num',
-        type: 'text'
+        label: "退款说明",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
       }]
     };
   },
@@ -144,16 +132,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     test: function test() {
       console.log(1);
+    },
+    downloadOrders: function downloadOrders() {
+      this.$message({
+        message: "请先连接淘宝API",
+        type: "success"
+      });
     }
   },
   mounted: function mounted() {
     this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit('change', this.newOpt);
+    this.$store.commit("change", this.newOpt);
     var that = this;
     $(window).resize(function () {
       return function () {
         that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit('change', that.newOpt);
+        that.$store.commit("change", that.newOpt);
       }();
     });
   }
@@ -181,6 +175,7 @@ var render = function() {
                   "span",
                   [
                     _c("label", [_vm._v("店铺")]),
+                    _vm._v(" "),
                     _c(
                       "el-select",
                       {

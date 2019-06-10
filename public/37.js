@@ -55,50 +55,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       newOpt: [{
-        cnt: '下载',
-        icon: 'bf-dwn',
-        ent: this.test
+        cnt: "下载",
+        icon: "bf-dwn",
+        ent: this.downloadOrders
       }],
       searchBox: {
-        shop_name: '',
-        dwn_type: '',
-        pro_num: '',
-        order_num: '',
-        shopNames: [{ label: '简艺家具旗舰店', value: 0 }, { label: '迪洛家具旗舰店', value: 1 }],
-        work_date: ''
+        shop_name: "",
+        dwn_type: "",
+        pro_num: "",
+        order_num: "",
+        shopNames: [{ label: "简艺家具旗舰店", value: 0 }, { label: "迪洛家具旗舰店", value: 1 }],
+        work_date: ""
       },
       tableData3: [],
       multipleSelection: []
@@ -108,16 +80,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     test: function test() {
       console.log(1);
+    },
+    downloadOrders: function downloadOrders() {
+      this.$message({
+        message: "请先连接淘宝API",
+        type: "success"
+      });
     }
   },
   mounted: function mounted() {
     this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit('change', this.newOpt);
+    this.$store.commit("change", this.newOpt);
     var that = this;
     $(window).resize(function () {
       return function () {
         that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit('change', that.newOpt);
+        that.$store.commit("change", that.newOpt);
       }();
     });
   }
@@ -141,6 +119,7 @@ var render = function() {
             "span",
             [
               _c("label", [_vm._v("店铺名称")]),
+              _vm._v(" "),
               _c(
                 "el-select",
                 {

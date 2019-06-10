@@ -7,6 +7,7 @@ webpackJsonp([32],{
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_resource__ = __webpack_require__(305);
 //
 //
 //
@@ -960,6 +961,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {

@@ -58,22 +58,22 @@
           {
             cnt: '删除',
             icon: 'bf-del',
-            ent: this.test
+            ent: this.downloadOrders
           },
           {
             cnt: '导出',
             icon: 'bf-out',
-            ent: this.test
+            ent: this.downloadOrders
           },
           {
             cnt: '同步',
             icon: 'bf-sync',
-            ent: this.test
+            ent: this.downloadOrders
           },
           {
             cnt: '下载',
             icon: 'bf-dwn',
-            ent: this.test
+            ent: this.downloadOrders
           }
         ],
         searchBox:{
@@ -97,7 +97,14 @@
     methods:{
       test(){
         console.log(1);
-      }
+      },
+      downloadOrders(){
+      this.$message({
+        message:"请先连接淘宝API",
+        type:"success"
+      });
+    }
+      
     },
     mounted() {
       this.$store.state.opt.opts = this.newOpt;
