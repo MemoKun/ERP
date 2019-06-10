@@ -644,6 +644,7 @@
         </el-table-column>
       </el-table>
       <el-button type="text">sku信息</el-button>
+      <label>{{this.proSkuVal}}</label>
       <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
         <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
@@ -2638,7 +2639,10 @@ export default {
 
       /** 内部便签InnerNote*/
       InnerNoteData: {},
-      InnerNoteHead: []
+      InnerNoteHead: [],
+
+
+      curCombRowData:[],
     };
   },
   computed: {
@@ -3150,6 +3154,7 @@ export default {
         res => {
           this.proVal = res.data;
           let comb = res.data[0]["combinations"]["data"];
+          this.curCombRowData = res.data[0]["combinations"]["data"];
           if (comb.length > 0) {
             let total_volume = 0;
             comb.map(item => {
@@ -3327,6 +3332,7 @@ export default {
       this.proSkuVal = [];
       this.proCompRowIndex = "";
       let comb = row["combinations"]["data"];
+      this.curCombRowData = row["combinations"]["data"];
       if (comb.length > 0) {
         let total_volume = 0;
         comb.map(item => {
@@ -3365,6 +3371,12 @@ export default {
     quantityChg(value) {
       if (value > 0) {
         let proCRow = this.proCompRow;
+        //this.proSkuVal[0]['newData']['total_volume'];
+        this.proSkuVal[0]['newData']['total_volume']=this.proSkuVal[0]['newData']['quantity']*this.curCombRowData[0]['newData']['total_volume'];
+        this.$message({
+          message:this.curCombRowData,
+          type:"info"
+        });
         if (this.proIds.indexOf(proCRow.id) == -1) {
           this.proIds.push(proCRow.id);
           this.proSubmitData.push(proCRow);

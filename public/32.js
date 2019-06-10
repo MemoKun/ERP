@@ -959,6 +959,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -2358,7 +2359,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 
       /** 内部便签InnerNote*/
       InnerNoteData: {},
-      InnerNoteHead: []
+      InnerNoteHead: [],
+
+      curCombRowData: []
     };
   },
 
@@ -2832,6 +2835,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       }).then(function (res) {
         _this6.proVal = res.data;
         var comb = res.data[0]["combinations"]["data"];
+        _this6.curCombRowData = res.data[0]["combinations"]["data"];
         if (comb.length > 0) {
           var total_volume = 0;
           comb.map(function (item) {
@@ -3012,6 +3016,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       this.proSkuVal = [];
       this.proCompRowIndex = "";
       var comb = row["combinations"]["data"];
+      this.curCombRowData = row["combinations"]["data"];
       if (comb.length > 0) {
         var total_volume = 0;
         comb.map(function (item) {
@@ -3055,6 +3060,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 
       if (value > 0) {
         var proCRow = this.proCompRow;
+        //this.proSkuVal[0]['newData']['total_volume'];
+        this.proSkuVal[0]['newData']['total_volume'] = this.proSkuVal[0]['newData']['quantity'] * this.curCombRowData[0]['newData']['total_volume'];
+        this.$message({
+          message: this.curCombRowData,
+          type: "info"
+        });
         if (this.proIds.indexOf(proCRow.id) == -1) {
           this.proIds.push(proCRow.id);
           this.proSubmitData.push(proCRow);
@@ -7442,6 +7453,8 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("sku信息")]),
+          _vm._v(" "),
+          _c("label", [_vm._v(_vm._s(this.proSkuVal))]),
           _vm._v(" "),
           _c(
             "el-table",
