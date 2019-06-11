@@ -97,7 +97,7 @@
         </span>
       </div>
       <div class="opt" v-if="filterBox" style="text-align: right">
-        <el-button type="primary" @click="check">筛选</el-button>
+        <el-button type="primary" @click="checks">筛选</el-button>
         <el-button @click="resets">重置</el-button>
         <span @click="toggleShow" style="display: inline">
           <el-button type="text">收起</el-button>
@@ -132,8 +132,8 @@
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
                 <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
+                >{{scope.row[item.prop][item.inProp]}}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -180,8 +180,8 @@
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
                 <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
+                >{{scope.row[item.prop][item.inProp]}}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -192,7 +192,11 @@
                   <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                 </el-popover>
               </span>
-              <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}}</span>
+              <span v-else>
+                <span
+                  v-if="scope.row[item.prop]"
+                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              </span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="90" align="center" fixed="right">
@@ -224,8 +228,8 @@
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
                 <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                  v-else-if="typeof scope.row[item.prop] == 'object' && item.inProp"
+                >{{scope.row[item.prop][item.inProp]}}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -236,7 +240,11 @@
                   <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
                 </el-popover>
               </span>
-              <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              <span v-else>
+                <span
+                  v-if="scope.row[item.prop]"
+                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              </span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="90" align="center" fixed="right">
@@ -553,30 +561,9 @@
           :key="item.label"
         >
           <template slot-scope="scope">
-            <span v-if="item.prop">
-              {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-              <!--<span v-if="item.type=='select'">
-                            <span v-if="scope.row[item.prop]==''"></span>
-                            <span v-else-if="typeof scope.row[item.prop] =='object' && item.nmProp">
-
-                                 {{scope.row[item.prop][item.inProp]}}
-                            </span>
-                            <span v-else>
-                                   <span v-for="(list,index) in resData[item.stateVal]" :key="index">
-                                       <span v-if="item.inProp">
-                                          <span v-if="list.id==scope.row[item.prop][item.inProp]">
-                                          {{list.name?list.name:''}}
-                                          </span>
-                                       </span>
-                                       <span v-else>
-                                          <span v-if="list.id==scope.row[item.prop]">
-                                    {{list.name?list.name:''}}
-                                </span>
-                                       </span>
-                            </span>
-                            </span>
-              </span>-->
-            </span>
+            <span
+              v-if="item.prop"
+            >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -933,7 +920,7 @@ export default {
         {
           cnt: "退审",
           icon: "bf-auditfaild",
-          ent: this.test
+          ent: this.unAudit
         },
         {
           cnt: "导入",
@@ -1924,7 +1911,6 @@ export default {
     },
     urls: {
       get: function() {
-        console.log(this.$store.state.urls);
         return this.$store.state.urls;
       },
       set: function() {}
@@ -1942,8 +1928,11 @@ export default {
     resets() {
       this.searchBox = {};
     },
+    checks() {},
     /*获取采购数据*/
     clickTopTabs() {
+      this.purListVal = [];
+      this.purDetailsVal = [];
       this.fetchPurchaseData();
     },
     fetchPurchaseData() {
@@ -1964,17 +1953,15 @@ export default {
               this.checkboxInit = false;
               let pg = res.meta.pagination;
               if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
-                this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+                this.purListVal.push(res.data[0].purchaseLists.data[0]);
                 this.purDetailsVal =
-                  res.data[0].purchase_lists["data"][0]["purchaseDetails"][
-                    "data"
-                  ];
+                  res.data[0].purchaseLists.data[0].purchaseDetails.data;
               }
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
-              this.$store.dispatch("suppliers", "/suppliers");
-              this.$store.dispatch("shops", "/shops");
             },
             err => {
               if (err.response) {
@@ -1998,18 +1985,16 @@ export default {
           this.$fetch(this.urls.purchases, {
             purchase_status: "section",
             include:
-              "user,purchaseLists.purchaseDetails,purchaseLists.combination"
+              "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(
             res => {
               this.partLoading = false;
               this.partData = res.data;
               this.checkboxInit = false;
-              if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
-                this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+              if (res.data[0] && res.data[0].purchaseLists.data[0]) {
+                this.purListVal.push(res.data[0].purchaseLists.data[0]);
                 this.purDetailsVal =
-                  res.data[0].purchase_lists["data"][0]["purchaseDetails"][
-                    "data"
-                  ];
+                  res.data[0].purchaseLists.data[0].purchaseDetails.data;
               }
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
@@ -2038,18 +2023,16 @@ export default {
           this.$fetch(this.urls.purchases, {
             purchase_status: "finish",
             include:
-              "user,purchaseLists.purchaseDetails,purchaseLists.combination"
+              "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(
             res => {
               this.finishLoading = false;
               this.finishData = res.data;
               this.checkboxInit = false;
-              if (res.data[0] && res.data[0]["purchaseLists"]["data"][0]) {
-                this.purListVal = res.data[0]["purchaseLists"]["data"][0];
+              if (res.data[0] && res.data[0].purchaseLists.data[0]) {
+                this.purListVal.push(res.data[0].purchaseLists.data[0]);
                 this.purDetailsVal =
-                  res.data[0].purchase_lists["data"][0]["purchaseDetails"][
-                    "data"
-                  ];
+                  res.data[0].purchaseLists.data[0].purchaseDetails.data;
               }
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
@@ -2078,10 +2061,6 @@ export default {
     },
     purRowClick(row) {
       this.purRow = row;
-      // this.activeRow = 'index'+row.index;
-      // this.$refs.newTable.toggleRowSelection(row);
-      // this.$refs.partTable.toggleRowSelection(row);
-      // this.$refs.finishTable.toggleRowSelection(row);
       this.purListVal = row["purchaseLists"]["data"];
       this.purIndex = row.index;
       if (row["purchaseLists"]["data"][0]) {
@@ -2094,7 +2073,6 @@ export default {
       this.newOpt[3].nClick = row["is_submit"] ? true : false;
       this.newOpt[10].nClick = row["is_print"] ? true : false;
       this.newOpt[4].nClick = row["is_audit"] ? true : false;
-      // this.rowStyle({row, rowIndex});
     },
     purListRowClick(row) {
       this.purDetailsVal = row["purchaseDetails"]["data"];
@@ -2179,6 +2157,7 @@ export default {
       this.addPurchaseCompVal.splice(index, 1);
     },
     confirmAddPur() {
+      this.addPurchaseForm.purchase_lists = [];
       this.addPurchaseSkuVal.map(item => {
         let sku = {
           combinations_id: item.id,
@@ -2390,6 +2369,9 @@ export default {
           this.addPurSkuStagId.push(stagSku.id);
         }
         this.addPurchaseCompVal = this.addPurchaseSkuVal[0].compData;
+        console.log(this.addPurSkuStagId);
+        console.log(this.addPurchaseSkuVal);
+        this.proMask = false;
         this.$message({
           message: "添加商品明细成功",
           type: "success"
@@ -2413,6 +2395,7 @@ export default {
                 compData: updateStagSku.compData,
                 is_newAdd: true
               });
+              this.proMask = false;
               this.$message({
                 message: "添加商品明细成功",
                 type: "success"
@@ -2452,6 +2435,7 @@ export default {
                     purList["purchaseDetails"]["data"].push(
                       updateStagSku.compData[i]
                     );
+                    this.proMask = false;
                     this.$message({
                       message: "添加商品明细成功",
                       type: "success"
@@ -2474,6 +2458,7 @@ export default {
               is_newAdd: true
             });
             this.updatePurCompVal = updateStagSku.compData;
+            this.proMask = false;
             this.$message({
               message: "添加商品明细成功",
               type: "success"
@@ -3251,6 +3236,22 @@ export default {
             }
           );
         }
+      }
+    },
+    unAudit() {
+      if (!this.newOpt[5].nClick) {
+        this.$put(this.urls.purchases + "/" + this.purRow.id + "/unaudit").then(
+          () => {
+            this.$message({
+              message: "退审成功!",
+              type: "success"
+            });
+            this.refresh();
+          },
+          err => {
+            this.$message.error(err.response.data.message);
+          }
+        );
       }
     },
     /*打印*/
