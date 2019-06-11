@@ -22,7 +22,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
     //页面请求
     $api->group([
         'middleware' => [
-            'api.throttle',//请求频率限制中间件 ，每分钟不超过60次
+            'api.throttle', //请求频率限制中间件 ，每分钟不超过60次
             'token.canrefresh',
             'stringtoboolean', //将字符串的“true”或“false”转为布尔类型
         ],
@@ -30,115 +30,115 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         'expires' => config('api.rate_limits.access.expires'),
     ], function (Dingo\Api\Routing\Router $api) {
         //标记颜色
-        $api->get('markcolors', 'MarkColorsController@index')
+        $api->get('markcolors', 'MarkColorsController@index')->middleware('permission:标记颜色管理')
             ->name('api.markcolors.index');
-        $api->get('markcolors/{markcolor}', 'MarkColorsController@show')
+        $api->get('markcolors/{markcolor}', 'MarkColorsController@show')->middleware('permission:标记颜色管理')
             ->name('api.markcolors.show');
-        $api->post('markcolors', 'MarkColorsController@store')
+        $api->post('markcolors', 'MarkColorsController@store')->middleware('permission:标记颜色管理')
             ->name('api.markcolors.store');
-        $api->patch('markcolors/{markcolor}', 'MarkColorsController@update')
+        $api->patch('markcolors/{markcolor}', 'MarkColorsController@update')->middleware('permission:标记颜色管理')
             ->name('api.markcolors.update');
-        $api->delete('markcolors/{markcolor}', 'MarkColorsController@destroy')
+        $api->delete('markcolors/{markcolor}', 'MarkColorsController@destroy')->middleware('permission:标记颜色管理')
             ->name('api.markcolors.destroy');
-        $api->delete('markcolors', 'MarkColorsController@destroybyids')
+        $api->delete('markcolors', 'MarkColorsController@destroybyids')->middleware('permission:标记颜色管理')
             ->name('api.markcolors.destroybyids');
-        $api->put('markcolors/editstatus', 'MarkColorsController@editStatusByIds')
+        $api->put('markcolors/editstatus', 'MarkColorsController@editStatusByIds')->middleware('permission:标记颜色管理')
             ->name('api.markcolors.editstatusbyids');
 
         //记账类型
-        $api->get('acctypes', 'AccountingTypesController@index')
+        $api->get('acctypes', 'AccountingTypesController@index')->middleware('permission:记账类型')
             ->name('api.acctypes.index');
-        $api->get('acctypes/{acctype}', 'AccountingTypesController@show')
+        $api->get('acctypes/{acctype}', 'AccountingTypesController@show')->middleware('permission:记账类型')
             ->name('api.acctypes.show');
-        $api->post('acctypes', 'AccountingTypesController@store')
+        $api->post('acctypes', 'AccountingTypesController@store')->middleware('permission:记账类型')
             ->name('api.acctypes.store');
-        $api->patch('acctypes/{acctype}', 'AccountingTypesController@update')
+        $api->patch('acctypes/{acctype}', 'AccountingTypesController@update')->middleware('permission:记账类型')
             ->name('api.acctypes.update');
-        $api->delete('acctypes/{acctype}', 'AccountingTypesController@destroy')
+        $api->delete('acctypes/{acctype}', 'AccountingTypesController@destroy')->middleware('permission:记账类型')
             ->name('api.acctypes.destroy');
-        $api->delete('acctypes', 'AccountingTypesController@destroybyids')
+        $api->delete('acctypes', 'AccountingTypesController@destroybyids')->middleware('permission:记账类型')
             ->name('api.acctypes.destroybyids');
-        $api->put('acctypes/editstatus', 'AccountingTypesController@editStatusByIds')
+        $api->put('acctypes/editstatus', 'AccountingTypesController@editStatusByIds')->middleware('permission:记账类型')
             ->name('api.acctypes.editstatusbyids');
 
         //费用类型
-        $api->get('feetypes', 'FeeTypesController@index')
+        $api->get('feetypes', 'FeeTypesController@index')->middleware('permission:费用类型管理')
             ->name('api.feetypes.index');
-        $api->get('feetypes/{feetype}', 'FeeTypesController@show')
+        $api->get('feetypes/{feetype}', 'FeeTypesController@show')->middleware('permission:费用类型管理')
             ->name('api.feetypes.show');
-        $api->post('feetypes', 'FeeTypesController@store')
+        $api->post('feetypes', 'FeeTypesController@store')->middleware('permission:费用类型管理')
             ->name('api.feetypes.store');
-        $api->patch('feetypes/{feetype}', 'FeeTypesController@update')
+        $api->patch('feetypes/{feetype}', 'FeeTypesController@update')->middleware('permission:费用类型管理')
             ->name('api.feetypes.update');
-        $api->delete('feetypes/{feetype}', 'FeeTypesController@destroy')
+        $api->delete('feetypes/{feetype}', 'FeeTypesController@destroy')->middleware('permission:费用类型管理')
             ->name('api.feetypes.destroy');
-        $api->delete('feetypes', 'FeeTypesController@destroybyids')
+        $api->delete('feetypes', 'FeeTypesController@destroybyids')->middleware('permission:费用类型管理')
             ->name('api.feetypes.destroybyids');
-        $api->put('feetypes/editstatus', 'FeeTypesController@editStatusByIds')
+        $api->put('feetypes/editstatus', 'FeeTypesController@editStatusByIds')->middleware('permission:费用类型管理')
             ->name('api.feetypes.editstatusbyids');
 
         //配送方式
-        $api->get('distmets', 'DistributionMethodsController@index')
+        $api->get('distmets', 'DistributionMethodsController@index')->middleware('permission:配送方式管理')
             ->name('api.distmets.index');
-        $api->get('distmets/{distmet}', 'DistributionMethodsController@show')
+        $api->get('distmets/{distmet}', 'DistributionMethodsController@show')->middleware('permission:配送方式管理')
             ->name('api.distmets.show');
-        $api->post('distmets', 'DistributionMethodsController@store')
+        $api->post('distmets', 'DistributionMethodsController@store')->middleware('permission:配送方式管理')
             ->name('api.distmets.store');
-        $api->patch('distmets/{distmet}', 'DistributionMethodsController@update')
+        $api->patch('distmets/{distmet}', 'DistributionMethodsController@update')->middleware('permission:配送方式管理')
             ->name('api.distmets.update');
-        $api->delete('distmets/{distmet}', 'DistributionMethodsController@destroy')
+        $api->delete('distmets/{distmet}', 'DistributionMethodsController@destroy')->middleware('permission:配送方式管理')
             ->name('api.distmets.destroy');
-        $api->delete('distmets', 'DistributionMethodsController@destroybyids')
+        $api->delete('distmets', 'DistributionMethodsController@destroybyids')->middleware('permission:配送方式管理')
             ->name('api.distmets.destroybyids');
-        $api->put('distmets/editstatus', 'DistributionMethodsController@editStatusByIds')
+        $api->put('distmets/editstatus', 'DistributionMethodsController@editStatusByIds')->middleware('permission:配送方式管理')
             ->name('api.distmets.editstatusbyids');
 
         //费用类别
-        $api->get('feecates', 'FeeCategoriesController@index')
+        $api->get('feecates', 'FeeCategoriesController@index')->middleware('permission:费用类型管理')
             ->name('api.feecates.index');
-        $api->get('feecates/{feecate}', 'FeeCategoriesController@show')
+        $api->get('feecates/{feecate}', 'FeeCategoriesController@show')->middleware('permission:费用类型管理')
             ->name('api.feecates.show');
-        $api->post('feecates', 'FeeCategoriesController@store')
+        $api->post('feecates', 'FeeCategoriesController@store')->middleware('permission:费用类型管理')
             ->name('api.feecates.store');
-        $api->patch('feecates/{feecate}', 'FeeCategoriesController@update')
+        $api->patch('feecates/{feecate}', 'FeeCategoriesController@update')->middleware('permission:费用类型管理')
             ->name('api.feecates.update');
-        $api->delete('feecates/{feecate}', 'FeeCategoriesController@destroy')
+        $api->delete('feecates/{feecate}', 'FeeCategoriesController@destroy')->middleware('permission:费用类型管理')
             ->name('api.feecates.destroy');
-        $api->delete('feecates', 'FeeCategoriesController@destroybyids')
+        $api->delete('feecates', 'FeeCategoriesController@destroybyids')->middleware('permission:费用类型管理')
             ->name('api.feecates.destroybyids');
-        $api->put('feecates/editstatus', 'FeeCategoriesController@editStatusByIds')
+        $api->put('feecates/editstatus', 'FeeCategoriesController@editStatusByIds')->middleware('permission:费用类型管理')
             ->name('api.feecates.editstatusbyids');
 
         //运费类型
-        $api->get('freighttypes', 'FreightTypesController@index')
+        $api->get('freighttypes', 'FreightTypesController@index')->middleware('permission:运费类型')
             ->name('api.freighttypes.index');
-        $api->get('freighttypes/{freighttype}', 'FreightTypesController@show')
+        $api->get('freighttypes/{freighttype}', 'FreightTypesController@show')->middleware('permission:运费类型')
             ->name('api.freighttypes.show');
-        $api->post('freighttypes', 'FreightTypesController@store')
+        $api->post('freighttypes', 'FreightTypesController@store')->middleware('permission:运费类型')
             ->name('api.freighttypes.store');
-        $api->patch('freighttypes/{freighttype}', 'FreightTypesController@update')
+        $api->patch('freighttypes/{freighttype}', 'FreightTypesController@update')->middleware('permission:运费类型')
             ->name('api.freighttypes.update');
-        $api->delete('freighttypes/{freighttype}', 'FreightTypesController@destroy')
+        $api->delete('freighttypes/{freighttype}', 'FreightTypesController@destroy')->middleware('permission:运费类型')
             ->name('api.freighttypes.destroy');
-        $api->delete('freighttypes', 'FreightTypesController@destroybyids')
+        $api->delete('freighttypes', 'FreightTypesController@destroybyids')->middleware('permission:运费类型')
             ->name('api.freighttypes.destroybyids');
-        $api->put('freighttypes/editstatus', 'FreightTypesController@editStatusByIds')
+        $api->put('freighttypes/editstatus', 'FreightTypesController@editStatusByIds')->middleware('permission:运费类型')
             ->name('api.freighttypes.editstatusbyids');
 
         //商品类别
-        $api->get('goodscates', 'GoodsCategoriesController@index')
+        $api->get('goodscates', 'GoodsCategoriesController@index')->middleware('permission:商品类别配置')
             ->name('api.goodscates.index');
-        $api->get('goodscates/{goodscate}', 'GoodsCategoriesController@show')
+        $api->get('goodscates/{goodscate}', 'GoodsCategoriesController@show')->middleware('permission:商品类别配置')
             ->name('api.goodscates.show');
-        $api->post('goodscates', 'GoodsCategoriesController@store')
+        $api->post('goodscates', 'GoodsCategoriesController@store')->middleware('permission:商品类别配置')
             ->name('api.goodscates.store');
-        $api->patch('goodscates/{goodscate}', 'GoodsCategoriesController@update')
+        $api->patch('goodscates/{goodscate}', 'GoodsCategoriesController@update')->middleware('permission:商品类别配置')
             ->name('api.goodscates.update');
-        $api->delete('goodscates/{goodscate}', 'GoodsCategoriesController@destroy')
+        $api->delete('goodscates/{goodscate}', 'GoodsCategoriesController@destroy')->middleware('permission:商品类别配置')
             ->name('api.goodscates.destroy');
-        $api->delete('goodscates', 'GoodsCategoriesController@destroybyids')
+        $api->delete('goodscates', 'GoodsCategoriesController@destroybyids')->middleware('permission:商品类别配置')
             ->name('api.goodscates.destroybyids');
-        $api->put('goodscates/editstatus', 'GoodsCategoriesController@editStatusByIds')
+        $api->put('goodscates/editstatus', 'GoodsCategoriesController@editStatusByIds')->middleware('permission:商品类别配置')
             ->name('api.goodscates.editstatusbyids');
 
 //        //入库类型
@@ -158,15 +158,15 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
 //            ->name('api.storagetypes.editstatusbyids');
 
         //城市信息
-        $api->get('cityinfos', 'CityInfosController@index')
+        $api->get('cityinfos', 'CityInfosController@index')->middleware('permission:城市配置')
             ->name('api.cityinfos.index');
-        $api->get('cityinfos/{cityinfo}', 'CityInfosController@show')
+        $api->get('cityinfos/{cityinfo}', 'CityInfosController@show')->middleware('permission:城市配置')
             ->name('api.cityinfos.show');
-        $api->delete('cityinfos/{cityinfo}', 'CityInfosController@destroy')
+        $api->delete('cityinfos/{cityinfo}', 'CityInfosController@destroy')->middleware('permission:城市配置')
             ->name('api.cityinfos.destroy');
-        $api->delete('cityinfos', 'CityInfosController@destroybyids')
+        $api->delete('cityinfos', 'CityInfosController@destroybyids')->middleware('permission:城市配置')
             ->name('api.cityinfos.destroybyids');
-        $api->put('cityinfos/editstatus', 'CityInfosController@editStatusByIds')
+        $api->put('cityinfos/editstatus', 'CityInfosController@editStatusByIds')->middleware('permission:城市配置')
             ->name('api.cityinfos.editstatusbyids');
 
         //损坏商品
@@ -186,115 +186,115 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.damagedgoods.editstatusbyids');
 
         //物流区域资源
-        $api->get('logisticsareas', 'LogisticsAreasController@index')
+        $api->get('logisticsareas', 'LogisticsAreasController@index')->middleware('permission:物流区域')
             ->name('api.logisticsareas.index');
-        $api->get('logisticsareas/{logisticsarea}', 'LogisticsAreasController@show')
+        $api->get('logisticsareas/{logisticsarea}', 'LogisticsAreasController@show')->middleware('permission:物流区域')
             ->name('api.logisticsareas.show');
-        $api->post('logisticsareas', 'LogisticsAreasController@store')
+        $api->post('logisticsareas', 'LogisticsAreasController@store')->middleware('permission:物流区域')
             ->name('api.logisticsareas.store');
-        $api->patch('logisticsareas/{logisticsarea}', 'LogisticsAreasController@update')
+        $api->patch('logisticsareas/{logisticsarea}', 'LogisticsAreasController@update')->middleware('permission:物流区域')
             ->name('api.logisticsareas.update');
-        $api->delete('logisticsareas/{logisticsarea}', 'LogisticsAreasController@destroy')
+        $api->delete('logisticsareas/{logisticsarea}', 'LogisticsAreasController@destroy')->middleware('permission:物流区域')
             ->name('api.logisticsareas.destroy');
-        $api->delete('logisticsareas', 'LogisticsAreasController@destroybyids')
+        $api->delete('logisticsareas', 'LogisticsAreasController@destroybyids')->middleware('permission:物流区域')
             ->name('api.logisticsareas.destroybyids');
-        $api->put('logisticsareas/editstatus', 'LogisticsAreasController@editStatusByIds')
+        $api->put('logisticsareas/editstatus', 'LogisticsAreasController@editStatusByIds')->middleware('permission:物流区域')
             ->name('api.logisticsareas.editstatusbyids');
 
         //物流资源
-        $api->get('logistics', 'LogisticsController@index')
+        $api->get('logistics', 'LogisticsController@index')->middleware('permission:物流管理')
             ->name('api.logistics.index');
-        $api->get('logistics/{logistics}', 'LogisticsController@show')
+        $api->get('logistics/{logistics}', 'LogisticsController@show')->middleware('permission:物流管理')
             ->name('api.logistics.show');
-        $api->post('logistics', 'LogisticsController@store')
+        $api->post('logistics', 'LogisticsController@store')->middleware('permission:物流管理')
             ->name('api.logistics.store');
-        $api->patch('logistics/{logistics}', 'LogisticsController@update')
+        $api->patch('logistics/{logistics}', 'LogisticsController@update')->middleware('permission:物流管理')
             ->name('api.logistics.update');
-        $api->delete('logistics/{logistics}', 'LogisticsController@destroy')
+        $api->delete('logistics/{logistics}', 'LogisticsController@destroy')->middleware('permission:物流管理')
             ->name('api.logistics.destroy');
-        $api->delete('logistics', 'LogisticsController@destroybyids')
+        $api->delete('logistics', 'LogisticsController@destroybyids')->middleware('permission:物流管理')
             ->name('api.logistics.destroybyids');
-        $api->put('logistics/editstatus', 'LogisticsController@editStatusByIds')
+        $api->put('logistics/editstatus', 'LogisticsController@editStatusByIds')->middleware('permission:物流管理')
             ->name('api.logistics.editstatusbyids');
 
         //仓库资源
-        $api->get('warehouses', 'WarehousesController@index')
+        $api->get('warehouses', 'WarehousesController@index')->middleware('permission:仓库管理')
             ->name('api.warehouses.index');
-        $api->get('warehouses/{warehouse}', 'WarehousesController@show')
+        $api->get('warehouses/{warehouse}', 'WarehousesController@show')->middleware('permission:仓库管理')
             ->name('api.warehouses.show');
-        $api->post('warehouses', 'WarehousesController@store')
+        $api->post('warehouses', 'WarehousesController@store')->middleware('permission:仓库管理')
             ->name('api.warehouses.store');
-        $api->patch('warehouses/{warehouse}', 'WarehousesController@update')
+        $api->patch('warehouses/{warehouse}', 'WarehousesController@update')->middleware('permission:仓库管理')
             ->name('api.warehouses.update');
-        $api->delete('warehouses/{warehouse}', 'WarehousesController@destroy')
+        $api->delete('warehouses/{warehouse}', 'WarehousesController@destroy')->middleware('permission:仓库管理')
             ->name('api.warehouses.destroy');
-        $api->delete('warehouses', 'WarehousesController@destroybyids')
+        $api->delete('warehouses', 'WarehousesController@destroybyids')->middleware('permission:仓库管理')
             ->name('api.warehouses.destroybyids');
-        $api->put('warehouses/editstatus', 'WarehousesController@editStatusByIds')
+        $api->put('warehouses/editstatus', 'WarehousesController@editStatusByIds')->middleware('permission:仓库管理')
             ->name('api.warehouses.editstatusbyids');
 
         //配送资源
-        $api->get('distributions', 'DistributionsController@index')
+        $api->get('distributions', 'DistributionsController@index')->middleware('permission:配送管理')
             ->name('api.distributions.index');
-        $api->get('distributions/{distribution}', 'DistributionsController@show')
+        $api->get('distributions/{distribution}', 'DistributionsController@show')->middleware('permission:配送管理')
             ->name('api.distributions.show');
-        $api->post('distributions', 'DistributionsController@store')
+        $api->post('distributions', 'DistributionsController@store')->middleware('permission:配送管理')
             ->name('api.distributions.store');
-        $api->patch('distributions/{distribution}', 'DistributionsController@update')
+        $api->patch('distributions/{distribution}', 'DistributionsController@update')->middleware('permission:配送管理')
             ->name('api.distributions.update');
-        $api->delete('distributions/{distribution}', 'DistributionsController@destroy')
+        $api->delete('distributions/{distribution}', 'DistributionsController@destroy')->middleware('permission:配送管理')
             ->name('api.distributions.destroy');
-        $api->delete('distributions', 'DistributionsController@destroybyids')
+        $api->delete('distributions', 'DistributionsController@destroybyids')->middleware('permission:配送管理')
             ->name('api.distributions.destroybyids');
-        $api->put('distributions/editstatus', 'DistributionsController@editStatusByIds')
+        $api->put('distributions/editstatus', 'DistributionsController@editStatusByIds')->middleware('permission:配送管理')
             ->name('api.distributions.editstatusbyids');
 
         //配送类型资源
-        $api->get('distributiontypes', 'DistributionTypesController@index')
+        $api->get('distributiontypes', 'DistributionTypesController@index')->middleware('permission:配送管理')
             ->name('api.distributiontypes.index');
-        $api->get('distributiontypes/{distributiontype}', 'DistributionTypesController@show')
+        $api->get('distributiontypes/{distributiontype}', 'DistributionTypesController@show')->middleware('permission:配送管理')
             ->name('api.distributiontypes.show');
-        $api->post('distributiontypes', 'DistributionTypesController@store')
+        $api->post('distributiontypes', 'DistributionTypesController@store')->middleware('permission:配送管理')
             ->name('api.distributiontypes.store');
-        $api->patch('distributiontypes/{distributiontype}', 'DistributionTypesController@update')
+        $api->patch('distributiontypes/{distributiontype}', 'DistributionTypesController@update')->middleware('permission:配送管理')
             ->name('api.distributiontypes.update');
-        $api->delete('distributiontypes/{distributiontype}', 'DistributionTypesController@destroy')
+        $api->delete('distributiontypes/{distributiontype}', 'DistributionTypesController@destroy')->middleware('permission:配送管理')
             ->name('api.distributiontypes.destroy');
-        $api->delete('distributiontypes', 'DistributionTypesController@destroybyids')
+        $api->delete('distributiontypes', 'DistributionTypesController@destroybyids')->middleware('permission:配送管理')
             ->name('api.distributiontypes.destroybyids');
-        $api->put('distributiontypes/editstatus', 'DistributionTypesController@editStatusByIds')
+        $api->put('distributiontypes/editstatus', 'DistributionTypesController@editStatusByIds')->middleware('permission:配送管理')
             ->name('api.distributiontypes.editstatusbyids');
 
         //供应商资源
-        $api->get('suppliers', 'SuppliersController@index')
+        $api->get('suppliers', 'SuppliersController@index')->middleware('permission:供应商管理')
             ->name('api.suppliers.index');
-        $api->get('suppliers/{supplier}', 'SuppliersController@show')
+        $api->get('suppliers/{supplier}', 'SuppliersController@show')->middleware('permission:供应商管理')
             ->name('api.suppliers.show');
-        $api->post('suppliers', 'SuppliersController@store')
+        $api->post('suppliers', 'SuppliersController@store')->middleware('permission:供应商管理')
             ->name('api.suppliers.store');
-        $api->patch('suppliers/{supplier}', 'SuppliersController@update')
+        $api->patch('suppliers/{supplier}', 'SuppliersController@update')->middleware('permission:供应商管理')
             ->name('api.suppliers.update');
-        $api->delete('suppliers/{supplier}', 'SuppliersController@destroy')
+        $api->delete('suppliers/{supplier}', 'SuppliersController@destroy')->middleware('permission:供应商管理')
             ->name('api.suppliers.destroy');
-        $api->delete('suppliers', 'SuppliersController@destroybyids')
+        $api->delete('suppliers', 'SuppliersController@destroybyids')->middleware('permission:供应商管理')
             ->name('api.suppliers.destroybyids');
-        $api->put('suppliers/editstatus', 'SuppliersController@editStatusByIds')
+        $api->put('suppliers/editstatus', 'SuppliersController@editStatusByIds')->middleware('permission:供应商管理')
             ->name('api.suppliers.editstatusbyids');
 
-        //供应商资源
-        $api->get('shops', 'ShopsController@index')
+        //店铺资源
+        $api->get('shops', 'ShopsController@index')->middleware('permission:店铺管理')
             ->name('api.shops.index');
-        $api->get('shops/{shop}', 'ShopsController@show')
+        $api->get('shops/{shop}', 'ShopsController@show')->middleware('permission:店铺管理')
             ->name('api.shops.show');
-        $api->post('shops', 'ShopsController@store')
+        $api->post('shops', 'ShopsController@store')->middleware('permission:店铺管理')
             ->name('api.shops.store');
-        $api->patch('shops/{shop}', 'ShopsController@update')
+        $api->patch('shops/{shop}', 'ShopsController@update')->middleware('permission:店铺管理')
             ->name('api.shops.update');
-        $api->delete('shops/{shop}', 'ShopsController@destroy')
+        $api->delete('shops/{shop}', 'ShopsController@destroy')->middleware('permission:店铺管理')
             ->name('api.shops.destroy');
-        $api->delete('shops', 'ShopsController@destroybyids')
+        $api->delete('shops', 'ShopsController@destroybyids')->middleware('permission:店铺管理')
             ->name('api.shops.destroybyids');
-        $api->put('shops/editstatus', 'ShopsController@editStatusByIds')
+        $api->put('shops/editstatus', 'ShopsController@editStatusByIds')->middleware('permission:店铺管理')
             ->name('api.shops.editstatusbyids');
 
         //系列资源
@@ -345,20 +345,20 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('platforms/editstatus', 'PlatformsController@editStatusByIds')
             ->name('api.platforms.editstatusbyids');
 
-        //平台资源
-        $api->get('departments', 'DepartmentsController@index')
+        //部门资源
+        $api->get('departments', 'DepartmentsController@index')->middleware('permission:部门管理')
             ->name('api.departments.index');
-        $api->get('departments/{department}', 'DepartmentsController@show')
+        $api->get('departments/{department}', 'DepartmentsController@show')->middleware('permission:部门管理')
             ->name('api.departments.show');
-        $api->post('departments', 'DepartmentsController@store')
+        $api->post('departments', 'DepartmentsController@store')->middleware('permission:部门管理')
             ->name('api.departments.store');
-        $api->patch('departments/{department}', 'DepartmentsController@update')
+        $api->patch('departments/{department}', 'DepartmentsController@update')->middleware('permission:部门管理')
             ->name('api.departments.update');
-        $api->delete('departments/{department}', 'DepartmentsController@destroy')
+        $api->delete('departments/{department}', 'DepartmentsController@destroy')->middleware('permission:部门管理')
             ->name('api.departments.destroy');
-        $api->delete('departments', 'DepartmentsController@destroybyids')
+        $api->delete('departments', 'DepartmentsController@destroybyids')->middleware('permission:部门管理')
             ->name('api.departments.destroybyids');
-        $api->put('departments/editstatus', 'DepartmentsController@editStatusByIds')
+        $api->put('departments/editstatus', 'DepartmentsController@editStatusByIds')->middleware('permission:部门管理')
             ->name('api.departments.editstatusbyids');
 
         //         //商品资源
@@ -380,53 +380,53 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //            ->name('api.goods.editstatusbyids');
 
         //商品资源
-        $api->get('products', 'ProductsController@index')
+        $api->get('products', 'ProductsController@index')->middleware('permission:商品管理')
             ->name('api.products.index');
-        $api->get('products/search', 'ProductsController@searchProducts')
+        $api->get('products/search', 'ProductsController@searchProducts')->middleware('permission:商品管理')
             ->name('api.products.searchproducts');
-        $api->get('products/{product}', 'ProductsController@show')
+        $api->get('products/{product}', 'ProductsController@show')->middleware('permission:商品管理')
             ->name('api.products.show');
-        $api->post('products', 'ProductsController@store')
+        $api->post('products', 'ProductsController@store')->middleware('permission:商品管理')
             ->name('api.products.store');
-        $api->patch('products/{product}', 'ProductsController@update')
+        $api->patch('products/{product}', 'ProductsController@update')->middleware('permission:商品管理')
             ->name('api.products.update');
-        $api->delete('products/{product}', 'ProductsController@destroy')
+        $api->delete('products/{product}', 'ProductsController@destroy')->middleware('permission:商品管理')
             ->name('api.products.destroy');
-        $api->delete('products', 'ProductsController@destroybyids')
+        $api->delete('products', 'ProductsController@destroybyids')->middleware('permission:商品管理')
             ->name('api.products.destroybyids');
-        $api->put('products/editstatus', 'ProductsController@editStatusByIds')
+        $api->put('products/editstatus', 'ProductsController@editStatusByIds')->middleware('permission:商品管理')
             ->name('api.products.editstatusbyids');
 
         //产品子件资源
-        $api->get('productcomponents', 'ProductComponentsController@index')
+        $api->get('productcomponents', 'ProductComponentsController@index')->middleware('permission:商品管理')
             ->name('api.productcomponents.index');
-        $api->get('productcomponents/{productcomponent}', 'ProductComponentsController@show')
+        $api->get('productcomponents/{productcomponent}', 'ProductComponentsController@show')->middleware('permission:商品管理')
             ->name('api.productcomponents.show');
-        $api->delete('productcomponents/{productcomponent}', 'ProductComponentsController@destroy')
+        $api->delete('productcomponents/{productcomponent}', 'ProductComponentsController@destroy')->middleware('permission:商品管理')
             ->name('api.productcomponents.destroy');
-        $api->delete('productcomponents', 'ProductComponentsController@destroybyids')
+        $api->delete('productcomponents', 'ProductComponentsController@destroybyids')->middleware('permission:商品管理')
             ->name('api.goproductcomponentsods.destroybyids');
 
         //组合资源
-        $api->get('combinations', 'CombinationsController@index')
+        $api->get('combinations', 'CombinationsController@index')->middleware('permission:商品管理')
             ->name('api.combinations.index');
-        $api->get('combinations/{combination}', 'CombinationsController@show')
+        $api->get('combinations/{combination}', 'CombinationsController@show')->middleware('permission:商品管理')
             ->name('api.combinations.show');
-        $api->post('combinations', 'CombinationsController@store')
+        $api->post('combinations', 'CombinationsController@store')->middleware('permission:商品管理')
             ->name('api.combinations.store');
-        $api->patch('combinations/{combination}', 'CombinationsController@update')
+        $api->patch('combinations/{combination}', 'CombinationsController@update')->middleware('permission:商品管理')
             ->name('api.combinations.update');
-        $api->delete('combinations/{combination}', 'CombinationsController@destroy')
+        $api->delete('combinations/{combination}', 'CombinationsController@destroy')->middleware('permission:商品管理')
             ->name('api.combinations.destroy');
-        $api->delete('combinations', 'CombinationsController@destroybyids')
+        $api->delete('combinations', 'CombinationsController@destroybyids')->middleware('permission:商品管理')
             ->name('api.combinations.destroybyids');
 
         //下载商品资源 暂定
-        $api->get('goodsdownloads', 'GoodsDownloadsController@index')
+        $api->get('goodsdownloads', 'GoodsDownloadsController@index')->middleware('permission:商品下载')
             ->name('api.goodsdownloads.index');
 
         //下载订单资源 暂定
-        $api->get('orderdownloads', 'OrderDownloadsController@index')
+        $api->get('orderdownloads', 'OrderDownloadsController@index')->middleware('permission:订单下载')
             ->name('api.orderdownloads.index');
 
         //库存资源
@@ -446,163 +446,163 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.stocks.editstatusbyids');
 
         //采购单资源
-        $api->get('purchases', 'PurchasesController@index')
+        $api->get('purchases', 'PurchasesController@index')->middleware('permission:采购单管理')
             ->name('api.purchases.index');
-        $api->get('purchases/{purchase}', 'PurchasesController@show')
+        $api->get('purchases/{purchase}', 'PurchasesController@show')->middleware('permission:采购单管理')
             ->name('api.purchases.show');
-        $api->post('purchases', 'PurchasesController@store')
+        $api->post('purchases', 'PurchasesController@store')->middleware('permission:采购单管理')
             ->name('api.purchases.store');
-        $api->delete('purchases/{purchase}', 'PurchasesController@destroy')
+        $api->delete('purchases/{purchase}', 'PurchasesController@destroy')->middleware('permission:采购单管理')
             ->name('api.purchases.destroy');
-        $api->patch('purchases/{purchase}', 'PurchasesController@update')
+        $api->patch('purchases/{purchase}', 'PurchasesController@update')->middleware('permission:采购单管理')
             ->name('api.purchases.update');
-        $api->delete('purchases', 'PurchasesController@destroybyids')
+        $api->delete('purchases', 'PurchasesController@destroybyids')->middleware('permission:采购单管理')
             ->name('api.purchases.destroybyids');
-        $api->put('purchases/editstatus', 'PurchasesController@editStatusByIds')
+        $api->put('purchases/editstatus', 'PurchasesController@editStatusByIds')->middleware('permission:采购单管理')
             ->name('api.purchases.editstatusbyids');
-        $api->put('purchases/{purchase}/submit', 'PurchasesController@isSubmit')
+        $api->put('purchases/{purchase}/submit', 'PurchasesController@isSubmit')->middleware('permission:采购单管理')
             ->name('api.purchases.issubmit');
-        $api->put('purchases/{purchase}/print', 'PurchasesController@isPrint')
+        $api->put('purchases/{purchase}/print', 'PurchasesController@isPrint')->middleware('permission:采购单管理')
             ->name('api.purchases.isprint');
-        $api->put('purchases/{purchase}/audit', 'PurchasesController@isAudit')
+        $api->put('purchases/{purchase}/audit', 'PurchasesController@isAudit')->middleware('permission:采购单管理')
             ->name('api.purchases.isAudit');
-        $api->put('purchases/{purchase}/unaudit', 'PurchasesController@isUnAudit')
+        $api->put('purchases/{purchase}/unaudit', 'PurchasesController@isUnAudit')->middleware('permission:采购单管理')
             ->name('api.purchases.isUnAudit');
 
         //采购清单
-        $api->get('purchaselists', 'PurchaseListsController@index')
+        $api->get('purchaselists', 'PurchaseListsController@index')->middleware('permission:采购单管理')
             ->name('api.purchaselists.index');
-        $api->delete('purchaselists/{purchaselist}', 'PurchaseListsController@destroy')
+        $api->delete('purchaselists/{purchaselist}', 'PurchaseListsController@destroy')->middleware('permission:采购单管理')
             ->name('api.purchaselists.destroy');
-        $api->delete('purchaselists', 'PurchaseListsController@destroybyids')
+        $api->delete('purchaselists', 'PurchaseListsController@destroybyids')->middleware('permission:采购单管理')
             ->name('api.purchaselists.destroybyids');
 
         //采购单详情
-        $api->delete('purchasedetails/{purchasedetail}', 'PurchaseDetailsController@destroy')
+        $api->delete('purchasedetails/{purchasedetail}', 'PurchaseDetailsController@destroy')->middleware('permission:采购单管理')
             ->name('api.purchasedetails.destroy');
-        $api->delete('purchasedetails', 'PurchaseDetailsController@destroybyids')
+        $api->delete('purchasedetails', 'PurchaseDetailsController@destroybyids')->middleware('permission:采购单管理')
             ->name('api.purchasedetails.destroybyids');
 
         //入库类型
-        $api->get('stockintypes', 'StockInTypesController@index')
+        $api->get('stockintypes', 'StockInTypesController@index')->middleware('permission:入库单管理')
             ->name('api.stockintypes.index');
-        $api->get('stockintypes/{stockintype}', 'StockInTypesController@show')
+        $api->get('stockintypes/{stockintype}', 'StockInTypesController@show')->middleware('permission:入库单管理')
             ->name('api.stockintypes.show');
-        $api->post('stockintypes', 'StockInTypesController@store')
+        $api->post('stockintypes', 'StockInTypesController@store')->middleware('permission:入库单管理')
             ->name('api.stockintypes.store');
-        $api->patch('stockintypes/{stockintype}', 'StockInTypesController@update')
+        $api->patch('stockintypes/{stockintype}', 'StockInTypesController@update')->middleware('permission:入库单管理')
             ->name('api.stockintypes.update');
-        $api->delete('stockintypes/{stockintype}', 'StockInTypesController@destroy')
+        $api->delete('stockintypes/{stockintype}', 'StockInTypesController@destroy')->middleware('permission:入库单管理')
             ->name('api.stockintypes.destroy');
-        $api->delete('stockintypes', 'StockInTypesController@destroybyids')
+        $api->delete('stockintypes', 'StockInTypesController@destroybyids')->middleware('permission:入库单管理')
             ->name('api.stockintypes.destroybyids');
-        $api->put('stockintypes/editstatus', 'StockInTypesController@editStatusByIds')
+        $api->put('stockintypes/editstatus', 'StockInTypesController@editStatusByIds')->middleware('permission:入库单管理')
             ->name('api.stockintypes.editstatusbyids');
 
         //入库单
-        $api->get('stockins', 'StockInsContoller@index')
+        $api->get('stockins', 'StockInsContoller@index')->middleware('permission:入库单管理')
             ->name('api.stockins.index');
-        $api->get('stockins/{stockin}', 'StockInsContoller@show')
+        $api->get('stockins/{stockin}', 'StockInsContoller@show')->middleware('permission:入库单管理')
             ->name('api.stockins.show');
-        $api->post('stockins', 'StockInsContoller@store')
+        $api->post('stockins', 'StockInsContoller@store')->middleware('permission:入库单管理')
             ->name('api.stockins.store');
-        $api->patch('stockins/{stockin}', 'StockInsContoller@update')
+        $api->patch('stockins/{stockin}', 'StockInsContoller@update')->middleware('permission:入库单管理')
             ->name('api.stockins.update');
-        $api->delete('stockins/{stockin}', 'StockInsContoller@destroy')
+        $api->delete('stockins/{stockin}', 'StockInsContoller@destroy')->middleware('permission:入库单管理')
             ->name('api.stockins.destroy');
-        $api->delete('stockins', 'StockInsContoller@destroybyids')
+        $api->delete('stockins', 'StockInsContoller@destroybyids')->middleware('permission:入库单管理')
             ->name('api.stockins.destroybyids');
-        $api->put('stockins/editstatus', 'StockInsContoller@editStatusByIds')
+        $api->put('stockins/editstatus', 'StockInsContoller@editStatusByIds')->middleware('permission:入库单管理')
             ->name('api.stockins.editstatusbyids');
-        $api->put('stockins/{stockin}/submit', 'StockInsContoller@isSubmit')
+        $api->put('stockins/{stockin}/submit', 'StockInsContoller@isSubmit')->middleware('permission:入库单管理')
             ->name('api.stockins.issubmit');
-        $api->put('stockins/{stockin}/print', 'StockInsContoller@isPrint')
+        $api->put('stockins/{stockin}/print', 'StockInsContoller@isPrint')->middleware('permission:入库单管理')
             ->name('api.stockins.isprint');
-        $api->put('stockins/{stockin}/audit', 'StockInsContoller@isAudit')
+        $api->put('stockins/{stockin}/audit', 'StockInsContoller@isAudit')->middleware('permission:入库单管理')
             ->name('api.stockins.isAudit');
-        $api->put('stockins/{stockin}/unaudit', 'StockInsContoller@isUnAudit')
+        $api->put('stockins/{stockin}/unaudit', 'StockInsContoller@isUnAudit')->middleware('permission:入库单管理')
             ->name('api.stockins.isUnAudit');
-        $api->put('stockins/{stockin}/stockin', 'StockInsContoller@stockIn')
+        $api->put('stockins/{stockin}/stockin', 'StockInsContoller@stockIn')->middleware('permission:入库单管理')
             ->name('api.stockins.stockin');
 
         //入库单详情
-        $api->get('stockindetails', 'StockInDetailsController@index')
+        $api->get('stockindetails', 'StockInDetailsController@index')->middleware('permission:入库单管理')
             ->name('api.stockindetails.index');
-        $api->delete('stockindetails/{stockindetail}', 'StockInDetailsController@destroy')
+        $api->delete('stockindetails/{stockindetail}', 'StockInDetailsController@destroy')->middleware('permission:入库单管理')
             ->name('api.stockindetails.destroy');
-        $api->delete('stockindetails', 'StockInDetailsController@destroybyids')
+        $api->delete('stockindetails', 'StockInDetailsController@destroybyids')->middleware('permission:入库单管理')
             ->name('api.stockindetails.destroybyids');
 
         //取消采购
-        $api->get('cancelpurchases', 'CancelPurchasesController@index')
+        $api->get('cancelpurchases', 'CancelPurchasesController@index')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchases.index');
-        $api->get('cancelpurchases/{cancelpurchase}', 'CancelPurchasesController@show')
+        $api->get('cancelpurchases/{cancelpurchase}', 'CancelPurchasesController@show')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchases.show');
-        $api->post('cancelpurchases', 'CancelPurchasesController@store')
+        $api->post('cancelpurchases', 'CancelPurchasesController@store')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchases.store');
-        $api->patch('cancelpurchases/{cancelpurchase}', 'CancelPurchasesController@update')
+        $api->patch('cancelpurchases/{cancelpurchase}', 'CancelPurchasesController@update')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchases.update');
-        $api->delete('cancelpurchases/{cancelpurchase}', 'CancelPurchasesController@destroy')
+        $api->delete('cancelpurchases/{cancelpurchase}', 'CancelPurchasesController@destroy')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchases.destroy');
-        $api->delete('cancelpurchases', 'CancelPurchasesController@destroybyids')
+        $api->delete('cancelpurchases', 'CancelPurchasesController@destroybyids')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchases.destroybyids');
-        $api->put('cancelpurchases/editstatus', 'CancelPurchasesController@editStatusByIds')
+        $api->put('cancelpurchases/editstatus', 'CancelPurchasesController@editStatusByIds')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchases.editstatusbyids');
-        $api->put('cancelpurchases/{cancelpurchase}/submit', 'CancelPurchasesController@isSubmit')
+        $api->put('cancelpurchases/{cancelpurchase}/submit', 'CancelPurchasesController@isSubmit')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchases.issubmit');
 
         //取消采购单详情
-        $api->get('cancelpurchasedetails', 'CancelPurchaseDetailsController@index')
+        $api->get('cancelpurchasedetails', 'CancelPurchaseDetailsController@index')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchasedetails.index');
-        $api->delete('cancelpurchasedetails/{cancelpurchasedetail}', 'CancelPurchaseDetailsController@destroy')
+        $api->delete('cancelpurchasedetails/{cancelpurchasedetail}', 'CancelPurchaseDetailsController@destroy')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchasedetails.destroy');
-        $api->delete('cancelpurchasedetails', 'CancelPurchaseDetailsController@destroybyids')
+        $api->delete('cancelpurchasedetails', 'CancelPurchaseDetailsController@destroybyids')->middleware('permission:取消采购管理')
             ->name('api.cancelpurchasedetails.destroybyids');
 
         //采购退货
-        $api->get('purchasereturns', 'PurchaseReturnsController@index')
+        $api->get('purchasereturns', 'PurchaseReturnsController@index')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.index');
-        $api->get('purchasereturns/{purchasereturn}', 'PurchaseReturnsController@show')
+        $api->get('purchasereturns/{purchasereturn}', 'PurchaseReturnsController@show')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.show');
-        $api->post('purchasereturns', 'PurchaseReturnsController@store')
+        $api->post('purchasereturns', 'PurchaseReturnsController@store')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.store');
-        $api->patch('purchasereturns/{purchasereturn}', 'PurchaseReturnsController@update')
+        $api->patch('purchasereturns/{purchasereturn}', 'PurchaseReturnsController@update')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.update');
-        $api->delete('purchasereturns/{purchasereturn}', 'PurchaseReturnsController@destroy')
+        $api->delete('purchasereturns/{purchasereturn}', 'PurchaseReturnsController@destroy')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.destroy');
-        $api->delete('purchasereturns', 'PurchaseReturnsController@destroybyids')
+        $api->delete('purchasereturns', 'PurchaseReturnsController@destroybyids')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.destroybyids');
-        $api->put('purchasereturns/editstatus', 'PurchaseReturnsController@editStatusByIds')
+        $api->put('purchasereturns/editstatus', 'PurchaseReturnsController@editStatusByIds')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.editstatusbyids');
-        $api->put('purchasereturns/{purchasereturn}/submit', 'PurchaseReturnsController@isSubmit')
+        $api->put('purchasereturns/{purchasereturn}/submit', 'PurchaseReturnsController@isSubmit')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.issubmit');
-        $api->put('purchasereturns/{purchasereturn}/audit', 'PurchaseReturnsController@isAudit')
+        $api->put('purchasereturns/{purchasereturn}/audit', 'PurchaseReturnsController@isAudit')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.isAudit');
-        $api->put('purchasereturns/{purchasereturn}/print', 'PurchaseReturnsController@isPrint')
+        $api->put('purchasereturns/{purchasereturn}/print', 'PurchaseReturnsController@isPrint')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.isprint');
-        //        $api->put('purchasereturns/{purchasereturn}/auditfaild', 'PurchaseReturnsController@isAuditFaild')
+        //        $api->put('purchasereturns/{purchasereturn}/auditfaild', 'PurchaseReturnsController@isAuditFaild')->middleware('permission:采购退货管理')
         //            ->name('api.purchasereturns.isretrial');
 
         //采购退货类型
-        $api->get('purchasereturntypes', 'PurchaseReturnTypesController@index')
+        $api->get('purchasereturntypes', 'PurchaseReturnTypesController@index')->middleware('permission:采购退货管理')
             ->name('api.purchasereturntypes.index');
-        $api->get('purchasereturntypes/{purchasereturntype}', 'PurchaseReturnTypesController@show')
+        $api->get('purchasereturntypes/{purchasereturntype}', 'PurchaseReturnTypesController@show')->middleware('permission:采购退货管理')
             ->name('api.purchasereturntypes.show');
-        $api->post('purchasereturntypes', 'PurchaseReturnTypesController@store')
+        $api->post('purchasereturntypes', 'PurchaseReturnTypesController@store')->middleware('permission:采购退货管理')
             ->name('api.purchasereturntypes.store');
-        $api->patch('purchasereturntypes/{purchasereturntype}', 'PurchaseReturnTypesController@update')
+        $api->patch('purchasereturntypes/{purchasereturntype}', 'PurchaseReturnTypesController@update')->middleware('permission:采购退货管理')
             ->name('api.purchasereturntypes.update');
-        $api->delete('purchasereturntypes/{purchasereturntype}', 'PurchaseReturnTypesController@destroy')
+        $api->delete('purchasereturntypes/{purchasereturntype}', 'PurchaseReturnTypesController@destroy')->middleware('permission:采购退货管理')
             ->name('api.purchasereturntypes.destroy');
-        $api->delete('purchasereturntypes', 'PurchaseReturnTypesController@destroybyids')
+        $api->delete('purchasereturntypes', 'PurchaseReturnTypesController@destroybyids')->middleware('permission:采购退货管理')
             ->name('api.purchasereturntypes.destroybyids');
-        $api->put('purchasereturntypes/editstatus', 'PurchaseReturnTypesController@editStatusByIds')
+        $api->put('purchasereturntypes/editstatus', 'PurchaseReturnTypesController@editStatusByIds')->middleware('permission:采购退货管理')
             ->name('api.purchasereturntypes.editstatusbyids');
 
         //采购退货详情
-        $api->get('purchasereturndetails', 'PurchaseReturnDetailsController@index')
+        $api->get('purchasereturndetails', 'PurchaseReturnDetailsController@index')->middleware('permission:采购退货管理')
             ->name('api.purchasereturndetails.index');
-        $api->delete('purchasereturndetails/{purchasereturndetail}', 'PurchaseReturnDetailsController@destroy')
+        $api->delete('purchasereturndetails/{purchasereturndetail}', 'PurchaseReturnDetailsController@destroy')->middleware('permission:采购退货管理')
             ->name('api.purchasereturndetails.destroy');
         $api->delete('purchasereturndetails', 'PurchaseReturnDetailsController@destroybyids')
             ->name('api.purchasereturndetails.destroybyids');
@@ -640,23 +640,23 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.paymentmethods.editstatusbyids');
 
         //客户类型
-        $api->get('customertypes', 'CustomerTypesController@index')
+        $api->get('customertypes', 'CustomerTypesController@index')->middleware('permission:客服部')
             ->name('api.customertypes.index');
-        $api->get('customertypes/{customertype}', 'CustomerTypesController@show')
+        $api->get('customertypes/{customertype}', 'CustomerTypesController@show')->middleware('permission:客服部')
             ->name('api.customertypes.show');
-        $api->post('customertypes', 'CustomerTypesController@store')
+        $api->post('customertypes', 'CustomerTypesController@store')->middleware('permission:客服部')
             ->name('api.customertypes.store');
-        $api->patch('customertypes/{customertype}', 'CustomerTypesController@update')
+        $api->patch('customertypes/{customertype}', 'CustomerTypesController@update')->middleware('permission:客服部')
             ->name('api.customertypes.update');
-        $api->delete('customertypes/{customertype}', 'CustomerTypesController@destroy')
+        $api->delete('customertypes/{customertype}', 'CustomerTypesController@destroy')->middleware('permission:客服部')
             ->name('api.customertypes.destroy');
-        $api->delete('customertypes', 'CustomerTypesController@destroybyids')
+        $api->delete('customertypes', 'CustomerTypesController@destroybyids')->middleware('permission:客服部')
             ->name('api.customertypes.destroybyids');
-        $api->put('customertypes/editstatus', 'CustomerTypesController@editStatusByIds')
+        $api->put('customertypes/editstatus', 'CustomerTypesController@editStatusByIds')->middleware('permission:客服部')
             ->name('api.customertypes.editstatusbyids');
 
         //客服部
-        $api->get('customerservicedepts/searchall', 'CustomerServiceDepartmentsController@searchAll')
+        $api->get('customerservicedepts/searchall', 'CustomerServiceDepartmentsController@searchAll')->middleware('permission:客服部')
             ->name('api.customerservicedepts.searchall');
         $api->get('customerservicedepts/searchuntreated', 'CustomerServiceDepartmentsController@searchUntreated')->middleware('permission:客服部')
             ->name('api.customerservicedepts.searchuntreated');
@@ -700,77 +700,75 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.isadditionmoney');
 
         //订单结算
-        $api->put('customerservicedepts/{order}/logcheck', 'CustomerServiceDepartmentsController@isLogCheck')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/logcheck', 'CustomerServiceDepartmentsController@isLogCheck')->middleware('permission:订单结算')
             ->name('api.customerservicedepts.islogcheck');
-        $api->put('customerservicedepts/{order}/loguncheck', 'CustomerServiceDepartmentsController@isLogUncheck')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/loguncheck', 'CustomerServiceDepartmentsController@isLogUncheck')->middleware('permission:订单结算')
             ->name('api.customerservicedepts.isloguncheck');
-        $api->put('customerservicedepts/{order}/discheck', 'CustomerServiceDepartmentsController@isDisCheck')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/discheck', 'CustomerServiceDepartmentsController@isDisCheck')->middleware('permission:订单结算')
             ->name('api.customerservicedepts.isdischeck');
-        $api->put('customerservicedepts/{order}/disuncheck', 'CustomerServiceDepartmentsController@isDisUncheck')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/disuncheck', 'CustomerServiceDepartmentsController@isDisUncheck')->middleware('permission:订单结算')
             ->name('api.customerservicedepts.isdisuncheck');
-        $api->put('customerservicedepts/{order}/goodscheck', 'CustomerServiceDepartmentsController@isGoodsCheck')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/goodscheck', 'CustomerServiceDepartmentsController@isGoodsCheck')->middleware('permission:订单结算')
             ->name('api.customerservicedepts.isgoodscheck');
-        $api->put('customerservicedepts/{order}/goodsuncheck', 'CustomerServiceDepartmentsController@isGoodsUncheck')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/goodsuncheck', 'CustomerServiceDepartmentsController@isGoodsUncheck')->middleware('permission:订单结算')
             ->name('api.customerservicedepts.usgoodsuncheck');
 
         //审计部
-        $api->get('customerservicedepts/searchunaudit', 'CustomerServiceDepartmentsController@searchAudit')->middleware('permission:客服部')
+        $api->get('customerservicedepts/searchunaudit', 'CustomerServiceDepartmentsController@searchAudit')->middleware('permission:审计部')
             ->name('api.customerservicedepts.searchunaudit');
-        $api->put('customerservicedepts/{order}/auditdeptsrejectaudit', 'CustomerServiceDepartmentsController@isAuditDeptsRejectAudit')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/auditdeptsrejectaudit', 'CustomerServiceDepartmentsController@isAuditDeptsRejectAudit')->middleware('permission:审计部')
             ->name('api.customerservicedepts.isauditdeptsrejectaudit');
-        $api->put('customerservicedepts/{order}/auditdeptsaudit', 'CustomerServiceDepartmentsController@isAuditDeptsAudit')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/auditdeptsaudit', 'CustomerServiceDepartmentsController@isAuditDeptsAudit')->middleware('permission:审计部')
             ->name('api.customerservicedepts.isauditdeptsaudit');
 
         //子订单
-        $api->delete('orderitems/{orderitem}', 'OrderItemsController@destroy')->middleware('permission:客服部')
+        $api->delete('orderitems/{orderitem}', 'OrderItemsController@destroy')
             ->name('api.orderitems.destroy');
 
         //订单变更
-        $api->get('changeorders/searchorders', 'CustomerServiceChangeOrdersController@searchOrders')->middleware('permission:客服部')
+        $api->get('changeorders/searchorders', 'CustomerServiceChangeOrdersController@searchOrders')->middleware('permission:订单变更')
             ->name('api.changeorders.searchorders');
-        $api->get('changeorders/searchnew', 'CustomerServiceChangeOrdersController@searchNew')->middleware('permission:客服部')
+        $api->get('changeorders/searchnew', 'CustomerServiceChangeOrdersController@searchNew')->middleware('permission:订单变更')
             ->name('api.changeorders.searchnew');
-        $api->get('changeorders/searchuntreated', 'CustomerServiceChangeOrdersController@searchUntreated')->middleware('permission:客服部')
+        $api->get('changeorders/searchuntreated', 'CustomerServiceChangeOrdersController@searchUntreated')->middleware('permission:订单变更')
             ->name('api.changeorders.searchuntreated');
-        $api->get('changeorders/searchtreated', 'CustomerServiceChangeOrdersController@searchTreated')->middleware('permission:客服部')
+        $api->get('changeorders/searchtreated', 'CustomerServiceChangeOrdersController@searchTreated')->middleware('permission:订单变更')
             ->name('api.changeorders.searchtreated');
-        $api->get('changeorders/searchcanceled', 'CustomerServiceChangeOrdersController@searchCanceled')->middleware('permission:客服部')
+        $api->get('changeorders/searchcanceled', 'CustomerServiceChangeOrdersController@searchCanceled')->middleware('permission:订单变更')
             ->name('api.changeorders.searchcanceled');
-        $api->patch('changeorders/{order}', 'CustomerServiceChangeOrdersController@update')->middleware('permission:客服部')
+        $api->patch('changeorders/{order}', 'CustomerServiceChangeOrdersController@update')->middleware('permission:订单变更')
             ->name('api.changeorders.update');
-        $api->put('changeorders/{order}/auditchanges', 'CustomerServiceChangeOrdersController@isAuditChanges')->middleware('permission:客服部')
+        $api->put('changeorders/{order}/auditchanges', 'CustomerServiceChangeOrdersController@isAuditChanges')->middleware('permission:订单变更')
             ->name('api.changeorders.isauditchanges');
-
-            
-        $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')->middleware('permission:客服部')
+        $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')->middleware('permission:订单变更')
             ->name('api.changeorders.isaudit');
-        $api->put('changeorders/{order}/unaudit', 'CustomerServiceChangeOrdersController@isUnAudit')->middleware('permission:客服部')
+        $api->put('changeorders/{order}/unaudit', 'CustomerServiceChangeOrdersController@isUnAudit')->middleware('permission:订单变更')
             ->name('api.changeorders.isunaudit');
-        $api->put('changeorders/{order}/submit', 'CustomerServiceChangeOrdersController@isSubmit')->middleware('permission:客服部')
+        $api->put('changeorders/{order}/submit', 'CustomerServiceChangeOrdersController@isSubmit')->middleware('permission:订单变更')
             ->name('api.changeorders.issubmit');
-        $api->get('changeorders/create', 'CustomerServiceChangeOrdersController@create')->middleware('permission:客服部')
+        $api->get('changeorders/create', 'CustomerServiceChangeOrdersController@create')->middleware('permission:订单变更')
             ->name('api.changeorders.create');
-        $api->get('changeorders/{order}', 'CustomerServiceChangeOrdersController@show')->middleware('permission:客服部')
+        $api->get('changeorders/{order}', 'CustomerServiceChangeOrdersController@show')->middleware('permission:订单变更')
             ->name('api.changeorders.show');
-        $api->post('changeorders', 'CustomerServiceChangeOrdersController@store')->middleware('permission:客服部')
+        $api->post('changeorders', 'CustomerServiceChangeOrdersController@store')->middleware('permission:订单变更')
             ->name('api.changeorders.store');
-        $api->patch('changeorders/{order}', 'CustomerServiceChangeOrdersController@update')->middleware('permission:客服部')
+        $api->patch('changeorders/{order}', 'CustomerServiceChangeOrdersController@update')->middleware('permission:订单变更')
             ->name('api.changeorders.update');
-        $api->delete('changeorders/{order}', 'CustomerServiceChangeOrdersController@destroy')->middleware('permission:客服部')
+        $api->delete('changeorders/{order}', 'CustomerServiceChangeOrdersController@destroy')->middleware('permission:订单变更')
             ->name('api.changeorders.destroy');
-        $api->delete('changeorders', 'CustomerServiceChangeOrdersController@destroybyids')->middleware('permission:客服部')
+        $api->delete('changeorders', 'CustomerServiceChangeOrdersController@destroybyids')->middleware('permission:订单变更')
             ->name('api.changeorders.destroybyids');
-        $api->put('changeorders/editstatus', 'CustomerServiceChangeOrdersController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('changeorders/editstatus', 'CustomerServiceChangeOrdersController@editStatusByIds')->middleware('permission:订单变更')
             ->name('api.changeorders.editstatusbyids');
-        $api->put('changeorders/{order}/lockorunlock', 'CustomerServiceChangeOrdersController@isLockOrUnlock')->middleware('permission:客服部')
+        $api->put('changeorders/{order}/lockorunlock', 'CustomerServiceChangeOrdersController@isLockOrUnlock')->middleware('permission:订单变更')
             ->name('api.changeorders.islockorunlock');
-        $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')->middleware('permission:客服部')
+        $api->put('changeorders/{order}/audit', 'CustomerServiceChangeOrdersController@isAudit')->middleware('permission:订单变更')
             ->name('api.changeorders.isaudit');
-        $api->put('changeorders/{order}/unaudit', 'CustomerServiceChangeOrdersController@isUnAudit')->middleware('permission:客服部')
+        $api->put('changeorders/{order}/unaudit', 'CustomerServiceChangeOrdersController@isUnAudit')->middleware('permission:订单变更')
             ->name('api.changeorders.isunaudit');
-        $api->put('changeorders/{order}/splitorder', 'CustomerServiceChangeOrdersController@isSplitOrder')->middleware('permission:客服部')
+        $api->put('changeorders/{order}/splitorder', 'CustomerServiceChangeOrdersController@isSplitOrder')->middleware('permission:订单变更')
             ->name('api.changeorders.issplitorder');
-        $api->put('changeorders/mergerorder', 'CustomerServiceChangeOrdersController@isMergerOrder')->middleware('permission:客服部')
+        $api->put('changeorders/mergerorder', 'CustomerServiceChangeOrdersController@isMergerOrder')->middleware('permission:订单变更')
             ->name('api.changeorders.ismergerorder');
 
         //红包商品配置
@@ -802,37 +800,37 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.redpackagemag.ismergerorder');
 
         //跟单部
-        $api->get('merchandiserdepts', 'MerchandiserDepartmentsController@index')->middleware('permission:客服部')
+        $api->get('merchandiserdepts', 'MerchandiserDepartmentsController@index')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.index');
-        $api->get('merchandiserdepts/searchstockout', 'MerchandiserDepartmentsController@searchStockOut')->middleware('permission:客服部')
+        $api->get('merchandiserdepts/searchstockout', 'MerchandiserDepartmentsController@searchStockOut')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.searchstockout');
-        $api->get('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@show')->middleware('permission:客服部')
+        $api->get('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@show')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.show');
-        $api->get('merchandiserdepts/{order}/stock', 'MerchandiserDepartmentsController@getStockByWarehouses')->middleware('permission:客服部')
+        $api->get('merchandiserdepts/{order}/stock', 'MerchandiserDepartmentsController@getStockByWarehouses')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.stock');
-        $api->put('merchandiserdepts/{order}/unaudit', 'MerchandiserDepartmentsController@isUnAudit')->middleware('permission:客服部')
+        $api->put('merchandiserdepts/{order}/unaudit', 'MerchandiserDepartmentsController@isUnAudit')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.isunaudit');
-        $api->put('merchandiserdepts/{order}/oneaudit', 'MerchandiserDepartmentsController@isOneAudit')->middleware('permission:客服部')
+        $api->put('merchandiserdepts/{order}/oneaudit', 'MerchandiserDepartmentsController@isOneAudit')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.isoneaudit');
-        $api->put('merchandiserdepts/{order}/unoneaudit', 'MerchandiserDepartmentsController@isUnOneAudit')->middleware('permission:客服部')
+        $api->put('merchandiserdepts/{order}/unoneaudit', 'MerchandiserDepartmentsController@isUnOneAudit')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.isunoneaudit');
-        $api->put('merchandiserdepts/{order}/cargoaudit', 'MerchandiserDepartmentsController@isCargoAudit')->middleware('permission:客服部')
+        $api->put('merchandiserdepts/{order}/cargoaudit', 'MerchandiserDepartmentsController@isCargoAudit')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.iscargoaudit');
-        $api->patch('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@update')->middleware('permission:客服部')
+        $api->patch('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@update')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.update');
-        // $api->put('merchandiserdepts/{order}/splitorder', 'MerchandiserDepartmentsController@isSplitOrder')->middleware('permission:客服部')
+        // $api->put('merchandiserdepts/{order}/splitorder', 'MerchandiserDepartmentsController@isSplitOrder')->middleware('permission:跟单部')
         //     ->name('api.merchandiserdepts.issplitorder');
-        // $api->put('merchandiserdepts/mergerorder', 'MerchandiserDepartmentsController@isMergerOrder')->middleware('permission:客服部')
+        // $api->put('merchandiserdepts/mergerorder', 'MerchandiserDepartmentsController@isMergerOrder')->middleware('permission:跟单部')
         //     ->name('api.merchandiserdepts.ismergerorder');
 
         //财务部
-        $api->get('financialdepts', 'FinancialDepartmentsController@index')->middleware('permission:客服部')
+        $api->get('financialdepts', 'FinancialDepartmentsController@index')->middleware('permission:财务部')
             ->name('api.financialdepts.index');
-        $api->put('financialdepts/{order}/reject', 'FinancialDepartmentsController@isReject')->middleware('permission:客服部')
+        $api->put('financialdepts/{order}/reject', 'FinancialDepartmentsController@isReject')->middleware('permission:财务部')
             ->name('api.financialdepts.isreject');
-        $api->put('financialdepts/{order}/financialaudit', 'FinancialDepartmentsController@isFinancialAudit')->middleware('permission:客服部')
+        $api->put('financialdepts/{order}/financialaudit', 'FinancialDepartmentsController@isFinancialAudit')->middleware('permission:财务部')
             ->name('api.financialdepts.isFinancialAudit');
-        $api->put('financialdepts/{order}/unfinancialaudit', 'FinancialDepartmentsController@isUnFinancialAudit')->middleware('permission:客服部')
+        $api->put('financialdepts/{order}/unfinancialaudit', 'FinancialDepartmentsController@isUnFinancialAudit')->middleware('permission:财务部')
             ->name('api.financialdepts.isunfinancialaudit');
 
         //支付明细
@@ -844,157 +842,153 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.paymentdetails.destroy');
 
         //仓储部
-        $api->get('warehousingdepts', 'WarehousingDepartmentsController@index')->middleware('permission:客服部')
+        $api->get('warehousingdepts', 'WarehousingDepartmentsController@index')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.index');
-        $api->get('warehousingdepts/searchuntreated', 'WarehousingDepartmentsController@searchUntreated')->middleware('permission:客服部')
+        $api->get('warehousingdepts/searchuntreated', 'WarehousingDepartmentsController@searchUntreated')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.searchuntreated');
-        $api->get('warehousingdepts/{order}', 'WarehousingDepartmentsController@show')->middleware('permission:客服部')
+        $api->get('warehousingdepts/{order}', 'WarehousingDepartmentsController@show')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.show');
-        $api->patch('warehousingdepts/{order}', 'WarehousingDepartmentsController@update')->middleware('permission:客服部')
+        $api->patch('warehousingdepts/{order}', 'WarehousingDepartmentsController@update')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.update');
-        $api->put('warehousingdepts/{order}/stockout', 'WarehousingDepartmentsController@isStockOut')->middleware('permission:客服部')
+        $api->put('warehousingdepts/{order}/stockout', 'WarehousingDepartmentsController@isStockOut')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.isstockout');
-        $api->put('warehousingdepts/{order}/stockoutunaudit', 'WarehousingDepartmentsController@isStockOutUnAudit')->middleware('permission:客服部')
+        $api->put('warehousingdepts/{order}/stockoutunaudit', 'WarehousingDepartmentsController@isStockOutUnAudit')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.isstockoutunaudit');
-        $api->put('warehousingdepts/{order}/stockouttocs', 'WarehousingDepartmentsController@isStockOutToCS')->middleware('permission:客服部')
+        $api->put('warehousingdepts/{order}/stockouttocs', 'WarehousingDepartmentsController@isStockOutToCS')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.isstockouttocs');
-        $api->put('warehousingdepts/{order}/isprintdispatchbill', 'WarehousingDepartmentsController@isPrintDispatchBill')->middleware('permission:客服部')
+        $api->put('warehousingdepts/{order}/isprintdispatchbill', 'WarehousingDepartmentsController@isPrintDispatchBill')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.isprintdispatchbill');
 
         //客服退款申请
-        $api->get('customerservicerefunds', 'CustomerServiceRefundsController@index')->middleware('permission:客服部')
+        $api->get('customerservicerefunds', 'CustomerServiceRefundsController@index')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.index');
-        $api->get('customerservicerefunds/searchuntreated', 'CustomerServiceRefundsController@searchUntreated')->middleware('permission:客服部')
+        $api->get('customerservicerefunds/searchuntreated', 'CustomerServiceRefundsController@searchUntreated')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.searchuntreated');
-        $api->get('customerservicerefunds/searchtreated', 'CustomerServiceRefundsController@searchTreated')->middleware('permission:客服部')
+        $api->get('customerservicerefunds/searchtreated', 'CustomerServiceRefundsController@searchTreated')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.searchtreated');
-        $api->get('customerservicerefunds/searchasuntreated', 'CustomerServiceRefundsController@searchAsUntreated')->middleware('permission:客服部')
+        $api->get('customerservicerefunds/searchasuntreated', 'CustomerServiceRefundsController@searchAsUntreated')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.searchasuntreated');
-        $api->get('customerservicerefunds/searchastreated', 'CustomerServiceRefundsController@searchAsTreated')->middleware('permission:客服部')
+        $api->get('customerservicerefunds/searchastreated', 'CustomerServiceRefundsController@searchAsTreated')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.searchastreated');
-        $api->get('customerservicerefunds/searchfduntreated', 'CustomerServiceRefundsController@searchFdUntreated')->middleware('permission:客服部')
+        $api->get('customerservicerefunds/searchfduntreated', 'CustomerServiceRefundsController@searchFdUntreated')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.searchfduntreated');
-        $api->get('customerservicerefunds/searchfdtreated', 'CustomerServiceRefundsController@searchFdTreated')->middleware('permission:客服部')
+        $api->get('customerservicerefunds/searchfdtreated', 'CustomerServiceRefundsController@searchFdTreated')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.searchfdtreated');
-        $api->get('customerservicerefunds/searchalltreated', 'CustomerServiceRefundsController@searchAllTreated')->middleware('permission:客服部')
+        $api->get('customerservicerefunds/searchalltreated', 'CustomerServiceRefundsController@searchAllTreated')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.searchalltreated');
-
-        $api->get('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@show')->middleware('permission:客服部')
+        $api->get('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@show')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.show');
-        $api->post('customerservicerefunds', 'CustomerServiceRefundsController@store')->middleware('permission:客服部')
+        $api->post('customerservicerefunds', 'CustomerServiceRefundsController@store')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.store');
-        $api->patch('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@update')->middleware('permission:客服部')
+        $api->patch('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@update')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.update');
-        $api->delete('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@destroy')->middleware('permission:客服部')
+        $api->delete('customerservicerefunds/{refundorder}', 'CustomerServiceRefundsController@destroy')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.destroy');
-        $api->delete('customerservicerefunds', 'CustomerServiceRefundsController@destroybyids')->middleware('permission:客服部')
+        $api->delete('customerservicerefunds', 'CustomerServiceRefundsController@destroybyids')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.destroybyids');
-
-        $api->put('customerservicerefunds/{refundorder}/asrefuse', 'CustomerServiceRefundsController@asRefuse')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/asrefuse', 'CustomerServiceRefundsController@asRefuse')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.asrefuse');
-
-        $api->put('customerservicerefunds/{refundorder}/lockorunlock', 'CustomerServiceRefundsController@isLockOrUnlock')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/lockorunlock', 'CustomerServiceRefundsController@isLockOrUnlock')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.islockorunlock');
-        $api->put('customerservicerefunds/{refundorder}/aslockorunlock', 'CustomerServiceRefundsController@isAsLockOrUnlock')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/aslockorunlock', 'CustomerServiceRefundsController@isAsLockOrUnlock')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.isaslockorunlock');
-        $api->put('customerservicerefunds/{refundorder}/fdlockorunlock', 'CustomerServiceRefundsController@isFdLockOrUnlock')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/fdlockorunlock', 'CustomerServiceRefundsController@isFdLockOrUnlock')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.isfdlockorunlock');
-
-        $api->put('customerservicerefunds/{refundorder}/audit', 'CustomerServiceRefundsController@isAudit')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/audit', 'CustomerServiceRefundsController@isAudit')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.isaudit');
-        $api->put('customerservicerefunds/{refundorder}/unaudit', 'CustomerServiceRefundsController@isUnAudit')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/unaudit', 'CustomerServiceRefundsController@isUnAudit')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.isunaudit');
-        $api->put('customerservicerefunds/{refundorder}/asaudit', 'CustomerServiceRefundsController@isAsAudit')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/asaudit', 'CustomerServiceRefundsController@isAsAudit')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.isasaudit');
-        $api->put('customerservicerefunds/{refundorder}/asunaudit', 'CustomerServiceRefundsController@isAsUnAudit')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/asunaudit', 'CustomerServiceRefundsController@isAsUnAudit')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.isasunaudit');
-        $api->put('customerservicerefunds/{refundorder}/fdaudit', 'CustomerServiceRefundsController@isFdAudit')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/fdaudit', 'CustomerServiceRefundsController@isFdAudit')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.isfdaudit');
-        $api->put('customerservicerefunds/{refundorder}/fdunaudit', 'CustomerServiceRefundsController@isFdUnAudit')->middleware('permission:客服部')
+        $api->put('customerservicerefunds/{refundorder}/fdunaudit', 'CustomerServiceRefundsController@isFdUnAudit')->middleware('permission:客服退款申请')
             ->name('api.customerservicerefunds.isfdunaudit');
 
         // 退款类型
-        $api->get('refundreasontype', 'RefundReasonTypeController@index')->middleware('permission:客服部')
+        $api->get('refundreasontype', 'RefundReasonTypeController@index')->middleware('permission:退款管理')
             ->name('api.refundreasontype.index');
-        $api->get('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@show')->middleware('permission:客服部')
+        $api->get('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@show')->middleware('permission:退款管理')
             ->name('api.refundreasontype.show');
-        $api->post('refundreasontype', 'RefundReasonTypeController@store')->middleware('permission:客服部')
+        $api->post('refundreasontype', 'RefundReasonTypeController@store')->middleware('permission:退款管理')
             ->name('api.refundreasontype.store');
-        $api->patch('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@update')->middleware('permission:客服部')
+        $api->patch('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@update')->middleware('permission:退款管理')
             ->name('api.refundreasontype.update');
-        $api->delete('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@destroy')->middleware('permission:客服部')
+        $api->delete('refundreasontype/{refundreasontype}', 'RefundReasonTypeController@destroy')->middleware('permission:退款管理')
             ->name('api.refundreasontype.destroy');
-        $api->delete('refundreasontype', 'RefundReasonTypeController@destroybyids')->middleware('permission:客服部')
+        $api->delete('refundreasontype', 'RefundReasonTypeController@destroybyids')->middleware('permission:退款管理')
             ->name('api.refundreasontype.destroybyids');
-        $api->put('refundreasontype/editstatus', 'RefundReasonTypeController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('refundreasontype/editstatus', 'RefundReasonTypeController@editStatusByIds')->middleware('permission:退款管理')
             ->name('api.refundreasontype.editstatusbyids');
 
         //退款原因
-        $api->get('refundreasons', 'RefundReasonsController@index')->middleware('permission:客服部')
+        $api->get('refundreasons', 'RefundReasonsController@index')->middleware('permission:退款管理')
             ->name('api.refundreasons.index');
-        $api->get('refundreasons/{refunreason}', 'RefundReasonsController@show')->middleware('permission:客服部')
+        $api->get('refundreasons/{refunreason}', 'RefundReasonsController@show')->middleware('permission:退款管理')
             ->name('api.refundreasons.show');
-        $api->post('refundreasons', 'RefundReasonsController@store')->middleware('permission:客服部')
+        $api->post('refundreasons', 'RefundReasonsController@store')->middleware('permission:退款管理')
             ->name('api.refundreasons.store');
-        $api->patch('refundreasons/{refunreason}', 'RefundReasonsController@update')->middleware('permission:客服部')
+        $api->patch('refundreasons/{refunreason}', 'RefundReasonsController@update')->middleware('permission:退款管理')
             ->name('api.refundreasons.update');
-        $api->delete('refundreasons/{refunreason}', 'RefundReasonsController@destroy')->middleware('permission:客服部')
+        $api->delete('refundreasons/{refunreason}', 'RefundReasonsController@destroy')->middleware('permission:退款管理')
             ->name('api.refundreasons.destroy');
-        $api->delete('refundreasons', 'RefundReasonsController@destroybyids')->middleware('permission:客服部')
+        $api->delete('refundreasons', 'RefundReasonsController@destroybyids')->middleware('permission:退款管理')
             ->name('api.refundreasons.destroybyids');
-        $api->put('refundreasons/editstatus', 'RefundReasonsController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('refundreasons/editstatus', 'RefundReasonsController@editStatusByIds')->middleware('permission:退款管理')
             ->name('api.refundreasons.editstatusbyids');
 
         //退货原因
-        $api->get('returnreasons', 'ReturnReasonsController@index')->middleware('permission:客服部')
+        $api->get('returnreasons', 'ReturnReasonsController@index')->middleware('permission:退款管理')
             ->name('api.returnreasons.index');
-        $api->get('returnreasons/{returnreason}', 'ReturnReasonsController@show')->middleware('permission:客服部')
+        $api->get('returnreasons/{returnreason}', 'ReturnReasonsController@show')->middleware('permission:退款管理')
             ->name('api.returnreasons.show');
-        $api->post('returnreasons', 'ReturnReasonsController@store')->middleware('permission:客服部')
+        $api->post('returnreasons', 'ReturnReasonsController@store')->middleware('permission:退款管理')
             ->name('api.returnreasons.store');
-        $api->patch('returnreasons/{returnreason}', 'ReturnReasonsController@update')->middleware('permission:客服部')
+        $api->patch('returnreasons/{returnreason}', 'ReturnReasonsController@update')->middleware('permission:退款管理')
             ->name('api.returnreasons.update');
-        $api->delete('returnreasons/{returnreason}', 'ReturnReasonsController@destroy')->middleware('permission:客服部')
+        $api->delete('returnreasons/{returnreason}', 'ReturnReasonsController@destroy')->middleware('permission:退款管理')
             ->name('api.returnreasons.destroy');
-        $api->delete('returnreasons', 'ReturnReasonsController@destroybyids')->middleware('permission:客服部')
+        $api->delete('returnreasons', 'ReturnReasonsController@destroybyids')->middleware('permission:退款管理')
             ->name('api.returnreasons.destroybyids');
-        $api->put('returnreasons/editstatus', 'ReturnReasonsController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('returnreasons/editstatus', 'ReturnReasonsController@editStatusByIds')->middleware('permission:退款管理')
             ->name('api.returnreasons.editstatusbyids');
 
-        //售后退款
-        $api->get('aftersalerefunds', 'AfterSaleRefundsController@index')->middleware('permission:客服部')
+        //售后退款申请
+        $api->get('aftersalerefunds', 'AfterSaleRefundsController@index')->middleware('permission:售后退款申请')
             ->name('api.aftersalerefunds.index');
-        $api->get('aftersalerefunds/{refundorder}', 'AfterSaleRefundsController@show')->middleware('permission:客服部')
+        $api->get('aftersalerefunds/{refundorder}', 'AfterSaleRefundsController@show')->middleware('permission:售后退款申请')
             ->name('api.aftersalerefunds.show');
-        $api->patch('aftersalerefunds/{refundorder}', 'AfterSaleRefundsController@update')->middleware('permission:客服部')
+        $api->patch('aftersalerefunds/{refundorder}', 'AfterSaleRefundsController@update')->middleware('permission:售后退款申请')
             ->name('api.aftersalerefunds.update');
-        $api->delete('aftersalerefunds/{refundorder}', 'AfterSaleRefundsController@destroy')->middleware('permission:客服部')
+        $api->delete('aftersalerefunds/{refundorder}', 'AfterSaleRefundsController@destroy')->middleware('permission:售后退款申请')
             ->name('api.aftersalerefunds.destroy');
-        $api->delete('aftersalerefunds', 'AfterSaleRefundsController@destroybyids')->middleware('permission:客服部')
+        $api->delete('aftersalerefunds', 'AfterSaleRefundsController@destroybyids')->middleware('permission:售后退款申请')
             ->name('api.aftersalerefunds.destroybyids');
-        $api->put('aftersalerefunds/{refundorder}/lockorunlock', 'AfterSaleRefundsController@isLockOrUnlock')->middleware('permission:客服部')
+        $api->put('aftersalerefunds/{refundorder}/lockorunlock', 'AfterSaleRefundsController@isLockOrUnlock')->middleware('permission:售后退款申请')
             ->name('api.aftersalerefunds.islockorunlock');
-        $api->put('aftersalerefunds/{refundorder}/audit', 'AfterSaleRefundsController@isAudit')->middleware('permission:客服部')
+        $api->put('aftersalerefunds/{refundorder}/audit', 'AfterSaleRefundsController@isAudit')->middleware('permission:售后退款申请')
             ->name('api.aftersalerefunds.isaudit');
-        $api->put('aftersalerefunds/{refundorder}/unaudit', 'AfterSaleRefundsController@isUnAudit')->middleware('permission:客服部')
+        $api->put('aftersalerefunds/{refundorder}/unaudit', 'AfterSaleRefundsController@isUnAudit')->middleware('permission:售后退款申请')
             ->name('api.aftersalerefunds.isunaudit');
 
-        //财务退款
-        $api->get('financialrefunds', 'FinancialRefundsController@index')->middleware('permission:客服部')
+        //财务退款审核
+        $api->get('financialrefunds', 'FinancialRefundsController@index')->middleware('permission:财务退款审核')
             ->name('api.financialrefunds.index');
-        $api->get('financialrefunds/{returnorder}', 'FinancialRefundsController@show')->middleware('permission:客服部')
+        $api->get('financialrefunds/{returnorder}', 'FinancialRefundsController@show')->middleware('permission:财务退款审核')
             ->name('api.financialrefunds.show');
-        $api->patch('financialrefunds/{returnorder}', 'FinancialRefundsController@update')->middleware('permission:客服部')
+        $api->patch('financialrefunds/{returnorder}', 'FinancialRefundsController@update')->middleware('permission:财务退款审核')
             ->name('api.financialrefunds.update');
-        $api->delete('financialrefunds/{returnorder}', 'FinancialRefundsController@destroy')->middleware('permission:客服部')
+        $api->delete('financialrefunds/{returnorder}', 'FinancialRefundsController@destroy')->middleware('permission:财务退款审核')
             ->name('api.financialrefunds.destroy');
-        $api->delete('financialrefunds', 'FinancialRefundsController@destroybyids')->middleware('permission:客服部')
+        $api->delete('financialrefunds', 'FinancialRefundsController@destroybyids')->middleware('permission:财务退款审核')
             ->name('api.financialrefunds.destroybyids');
-        $api->put('financialrefunds/{returnorder}/lockorunlock', 'FinancialRefundsController@isLockOrUnlock')->middleware('permission:客服部')
+        $api->put('financialrefunds/{returnorder}/lockorunlock', 'FinancialRefundsController@isLockOrUnlock')->middleware('permission:财务退款审核')
             ->name('api.financialrefunds.islockorunlock');
-        $api->put('financialrefunds/{returnorder}/audit', 'FinancialRefundsController@isAudit')->middleware('permission:客服部')
+        $api->put('financialrefunds/{returnorder}/audit', 'FinancialRefundsController@isAudit')->middleware('permission:财务退款审核')
             ->name('api.financialrefunds.isaudit');
-        $api->put('financialrefunds/{returnorder}/unaudit', 'FinancialRefundsController@isUnAudit')->middleware('permission:客服部')
+        $api->put('financialrefunds/{returnorder}/unaudit', 'FinancialRefundsController@isUnAudit')->middleware('permission:财务退款审核')
             ->name('api.financialrefunds.isunaudit');
 
         //客服退货
@@ -1072,626 +1066,626 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.returnorderitems.destroy');*/
 
         //售后赔偿
-        $api->get('aftercompensation/searchall', 'AfterCompensationController@searchAll')->middleware('permission:客服部')
+        $api->get('aftercompensation/searchall', 'AfterCompensationController@searchAll')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.searchall');
-        $api->get('aftercompensation/searchuntreated', 'AfterCompensationController@searchUntreated')->middleware('permission:客服部')
+        $api->get('aftercompensation/searchuntreated', 'AfterCompensationController@searchUntreated')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.searchuntreated');
-        $api->get('aftercompensation/searchalluntreated', 'AfterCompensationController@searchAllUntreated')->middleware('permission:客服部')
+        $api->get('aftercompensation/searchalluntreated', 'AfterCompensationController@searchAllUntreated')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.searchalluntreated');
-        $api->get('aftercompensation/searchtreated', 'AfterCompensationController@searchTreated')->middleware('permission:客服部')
+        $api->get('aftercompensation/searchtreated', 'AfterCompensationController@searchTreated')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.searchtreated');
-        $api->get('aftercompensation/searchsectreated', 'AfterCompensationController@searchSecTreated')->middleware('permission:客服部')
+        $api->get('aftercompensation/searchsectreated', 'AfterCompensationController@searchSecTreated')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.searchtreated');
-        $api->get('aftercompensation/searchcanceled', 'AfterCompensationController@searchCanceled')->middleware('permission:客服部')
+        $api->get('aftercompensation/searchcanceled', 'AfterCompensationController@searchCanceled')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.searchcanceled');
-        $api->get('aftercompensation', 'AfterCompensationController@index')->middleware('permission:客服部')
+        $api->get('aftercompensation', 'AfterCompensationController@index')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.index');
-        $api->get('aftercompensation/create', 'AfterCompensationController@create')->middleware('permission:客服部')
+        $api->get('aftercompensation/create', 'AfterCompensationController@create')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.create');
-        $api->get('aftercompensation/{order}', 'AfterCompensationController@show')->middleware('permission:客服部')
+        $api->get('aftercompensation/{order}', 'AfterCompensationController@show')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.show');
-        $api->post('aftercompensation', 'AfterCompensationController@store')->middleware('permission:客服部')
+        $api->post('aftercompensation', 'AfterCompensationController@store')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.store');
-        $api->patch('aftercompensation/{order}', 'AfterCompensationController@update')->middleware('permission:客服部')
+        $api->patch('aftercompensation/{order}', 'AfterCompensationController@update')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.update');
-        $api->delete('aftercompensation/{order}', 'AfterCompensationController@destroy')->middleware('permission:客服部')
+        $api->delete('aftercompensation/{order}', 'AfterCompensationController@destroy')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.destroy');
-        $api->delete('aftercompensation', 'AfterCompensationController@destroybyids')->middleware('permission:客服部')
+        $api->delete('aftercompensation', 'AfterCompensationController@destroybyids')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.destroybyids');
-        $api->put('aftercompensation/editstatus', 'AfterCompensationController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('aftercompensation/editstatus', 'AfterCompensationController@editStatusByIds')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.editstatusbyids');
-        $api->put('aftercompensation/{order}/lockorunlock', 'AfterCompensationController@isLockOrUnlock')->middleware('permission:客服部')
+        $api->put('aftercompensation/{order}/lockorunlock', 'AfterCompensationController@isLockOrUnlock')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.islockorunlock');
-        $api->put('aftercompensation/{order}/audit', 'AfterCompensationController@isAudit')->middleware('permission:客服部')
+        $api->put('aftercompensation/{order}/audit', 'AfterCompensationController@isAudit')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.isaudit');
-        $api->put('aftercompensation/{order}/secaudit', 'AfterCompensationController@isSecAudit')->middleware('permission:客服部')
+        $api->put('aftercompensation/{order}/secaudit', 'AfterCompensationController@isSecAudit')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.issecaudit');
-        $api->put('aftercompensation/{order}/unaudit', 'AfterCompensationController@isUnAudit')->middleware('permission:客服部')
+        $api->put('aftercompensation/{order}/unaudit', 'AfterCompensationController@isUnAudit')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.isunaudit');
-        $api->put('aftercompensation/{order}/secunaudit', 'AfterCompensationController@isSecUnAudit')->middleware('permission:客服部')
+        $api->put('aftercompensation/{order}/secunaudit', 'AfterCompensationController@isSecUnAudit')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.issecunaudit');
-        $api->put('aftercompensation/{order}/splitorder', 'AfterCompensationController@isSplitOrder')->middleware('permission:客服部')
+        $api->put('aftercompensation/{order}/splitorder', 'AfterCompensationController@isSplitOrder')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.issplitorder');
-        $api->put('aftercompensation/mergerorder', 'AfterCompensationController@isMergerOrder')->middleware('permission:客服部')
+        $api->put('aftercompensation/mergerorder', 'AfterCompensationController@isMergerOrder')->middleware('permission:售后赔偿')
             ->name('api.aftercompensation.ismergerorder');
 
         //门店收款管理
-        $api->get('shopgatheringmag', 'ShopGatheringMagController@index')->middleware('permission:客服部')
+        $api->get('shopgatheringmag', 'ShopGatheringMagController@index')->middleware('permission:门店收款管理')
             ->name('api.shopgatheringmag.index');
-        $api->get('shopgatheringmag/{mag}', 'ShopGatheringMagController@show')->middleware('permission:客服部')
+        $api->get('shopgatheringmag/{mag}', 'ShopGatheringMagController@show')->middleware('permission:门店收款管理')
             ->name('api.shopgatheringmag.show');
-        $api->post('shopgatheringmag', 'ShopGatheringMagController@store')->middleware('permission:客服部')
+        $api->post('shopgatheringmag', 'ShopGatheringMagController@store')->middleware('permission:门店收款管理')
             ->name('api.shopgatheringmag.store');
-        $api->patch('shopgatheringmag/{mag}', 'ShopGatheringMagController@update')->middleware('permission:客服部')
+        $api->patch('shopgatheringmag/{mag}', 'ShopGatheringMagController@update')->middleware('permission:门店收款管理')
             ->name('api.shopgatheringmag.update');
-        $api->delete('shopgatheringmag/{mag}', 'ShopGatheringMagController@destroy')->middleware('permission:客服部')
+        $api->delete('shopgatheringmag/{mag}', 'ShopGatheringMagController@destroy')->middleware('permission:门店收款管理')
             ->name('api.shopgatheringmag.destroy');
-        $api->delete('shopgatheringmag', 'ShopGatheringMagController@destroybyids')->middleware('permission:客服部')
+        $api->delete('shopgatheringmag', 'ShopGatheringMagController@destroybyids')->middleware('permission:门店收款管理')
             ->name('api.shopgatheringmag.destroybyids');
-        $api->put('shopgatheringmag/editstatus', 'ShopGatheringMagController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('shopgatheringmag/editstatus', 'ShopGatheringMagController@editStatusByIds')->middleware('permission:门店收款管理')
             ->name('api.shopgatheringmag.editstatusbyids');
 
         //评价类型
-        $api->get('evalcategorymag', 'EvalCategoryMagController@index')->middleware('permission:客服部')
+        $api->get('evalcategorymag', 'EvalCategoryMagController@index')->middleware('permission:评价类别管理')
             ->name('api.evalcategorymag.index');
-        $api->get('evalcategorymag/{mag}', 'EvalCategoryMagController@show')->middleware('permission:客服部')
+        $api->get('evalcategorymag/{mag}', 'EvalCategoryMagController@show')->middleware('permission:评价类别管理')
             ->name('api.evalcategorymag.show');
-        $api->post('evalcategorymag', 'EvalCategoryMagController@store')->middleware('permission:客服部')
+        $api->post('evalcategorymag', 'EvalCategoryMagController@store')->middleware('permission:评价类别管理')
             ->name('api.evalcategorymag.store');
-        $api->patch('evalcategorymag/{mag}', 'EvalCategoryMagController@update')->middleware('permission:客服部')
+        $api->patch('evalcategorymag/{mag}', 'EvalCategoryMagController@update')->middleware('permission:评价类别管理')
             ->name('api.evalcategorymag.update');
-        $api->delete('evalcategorymag/{mag}', 'EvalCategoryMagController@destroy')->middleware('permission:客服部')
+        $api->delete('evalcategorymag/{mag}', 'EvalCategoryMagController@destroy')->middleware('permission:评价类别管理')
             ->name('api.evalcategorymag.destroy');
-        $api->delete('evalcategorymag', 'EvalCategoryMagController@destroybyids')->middleware('permission:客服部')
+        $api->delete('evalcategorymag', 'EvalCategoryMagController@destroybyids')->middleware('permission:评价类别管理')
             ->name('api.evalcategorymag.destroybyids');
-        $api->put('evalcategorymag/editstatus', 'EvalCategoryMagController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('evalcategorymag/editstatus', 'EvalCategoryMagController@editStatusByIds')->middleware('permission:评价类别管理')
             ->name('api.evalcategorymag.editstatusbyids');
 
         //用户关联供应商
-        $api->get('userastsupplier', 'UserAstSupplierController@index')->middleware('permission:客服部')
+        $api->get('userastsupplier', 'UserAstSupplierController@index')->middleware('permission:用户关联供应商')
             ->name('api.userastsupplier.index');
-        $api->get('userastsupplier/{uas}', 'UserAstSupplierController@show')->middleware('permission:客服部')
+        $api->get('userastsupplier/{uas}', 'UserAstSupplierController@show')->middleware('permission:用户关联供应商')
             ->name('api.userastsupplier.show');
-        $api->post('userastsupplier', 'UserAstSupplierController@store')->middleware('permission:客服部')
+        $api->post('userastsupplier', 'UserAstSupplierController@store')->middleware('permission:用户关联供应商')
             ->name('api.userastsupplier.store');
-        $api->patch('userastsupplier/{uas}', 'UserAstSupplierController@update')->middleware('permission:客服部')
+        $api->patch('userastsupplier/{uas}', 'UserAstSupplierController@update')->middleware('permission:用户关联供应商')
             ->name('api.userastsupplier.update');
-        $api->delete('userastsupplier/{uas}', 'UserAstSupplierController@destroy')->middleware('permission:客服部')
+        $api->delete('userastsupplier/{uas}', 'UserAstSupplierController@destroy')->middleware('permission:用户关联供应商')
             ->name('api.userastsupplier.destroy');
-        $api->delete('userastsupplier', 'UserAstSupplierController@destroybyids')->middleware('permission:客服部')
+        $api->delete('userastsupplier', 'UserAstSupplierController@destroybyids')->middleware('permission:用户关联供应商')
             ->name('api.userastsupplier.destroybyids');
-        $api->put('userastsupplier/editstatus', 'UserAstSupplierController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('userastsupplier/editstatus', 'UserAstSupplierController@editStatusByIds')->middleware('permission:用户关联供应商')
             ->name('api.userastsupplier.editstatusbyids');
 
         //用户关联仓库
-        $api->get('userastwarehouse', 'UserAstWarehouseController@index')->middleware('permission:客服部')
+        $api->get('userastwarehouse', 'UserAstWarehouseController@index')->middleware('permission:用户关联仓库')
             ->name('api.userastwarehouse.index');
-        $api->get('userastwarehouse/{uas}', 'UserAstWarehouseController@show')->middleware('permission:客服部')
+        $api->get('userastwarehouse/{uas}', 'UserAstWarehouseController@show')->middleware('permission:用户关联仓库')
             ->name('api.userastwarehouse.show');
-        $api->post('userastwarehouse', 'UserAstWarehouseController@store')->middleware('permission:客服部')
+        $api->post('userastwarehouse', 'UserAstWarehouseController@store')->middleware('permission:用户关联仓库')
             ->name('api.userastwarehouse.store');
-        $api->patch('userastwarehouse/{uas}', 'UserAstWarehouseController@update')->middleware('permission:客服部')
+        $api->patch('userastwarehouse/{uas}', 'UserAstWarehouseController@update')->middleware('permission:用户关联仓库')
             ->name('api.userastwarehouse.update');
-        $api->delete('userastwarehouse/{uas}', 'UserAstWarehouseController@destroy')->middleware('permission:客服部')
+        $api->delete('userastwarehouse/{uas}', 'UserAstWarehouseController@destroy')->middleware('permission:用户关联仓库')
             ->name('api.userastwarehouse.destroy');
-        $api->delete('userastwarehouse', 'UserAstWarehouseController@destroybyids')->middleware('permission:客服部')
+        $api->delete('userastwarehouse', 'UserAstWarehouseController@destroybyids')->middleware('permission:用户关联仓库')
             ->name('api.userastwarehouse.destroybyids');
-        $api->put('userastwarehouse/editstatus', 'UserAstWarehouseController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('userastwarehouse/editstatus', 'UserAstWarehouseController@editStatusByIds')->middleware('permission:用户关联仓库')
             ->name('api.userastwarehouse.editstatusbyids');
 
         //打印机配置
-        $api->get('printerconf', 'PrinterConfController@index')->middleware('permission:客服部')
+        $api->get('printerconf', 'PrinterConfController@index')->middleware('permission:打印机配置')
             ->name('api.printerconf.index');
-        $api->get('printerconf/{conf}', 'PrinterConfController@show')->middleware('permission:客服部')
+        $api->get('printerconf/{conf}', 'PrinterConfController@show')->middleware('permission:打印机配置')
             ->name('api.printerconf.show');
-        $api->post('printerconf', 'PrinterConfController@store')->middleware('permission:客服部')
+        $api->post('printerconf', 'PrinterConfController@store')->middleware('permission:打印机配置')
             ->name('api.printerconf.store');
-        $api->patch('printerconf/{conf}', 'PrinterConfController@update')->middleware('permission:客服部')
+        $api->patch('printerconf/{conf}', 'PrinterConfController@update')->middleware('permission:打印机配置')
             ->name('api.printerconf.update');
-        $api->delete('printerconf/{conf}', 'PrinterConfController@destroy')->middleware('permission:客服部')
+        $api->delete('printerconf/{conf}', 'PrinterConfController@destroy')->middleware('permission:打印机配置')
             ->name('api.printerconf.destroy');
-        $api->delete('printerconf', 'PrinterConfController@destroybyids')->middleware('permission:客服部')
+        $api->delete('printerconf', 'PrinterConfController@destroybyids')->middleware('permission:打印机配置')
             ->name('api.printerconf.destroybyids');
-        $api->put('printerconf/editstatus', 'PrinterConfController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('printerconf/editstatus', 'PrinterConfController@editStatusByIds')->middleware('permission:打印机配置')
             ->name('api.printerconf.editstatusbyids');
 
         //负库存配置
-        $api->get('negativeinvconf', 'NegativeInvConfController@index')->middleware('permission:客服部')
+        $api->get('negativeinvconf', 'NegativeInvConfController@index')->middleware('permission:负库存配置')
             ->name('api.negativeinvconf.index');
-        $api->get('negativeinvconf/{conf}', 'NegativeInvConfController@show')->middleware('permission:客服部')
+        $api->get('negativeinvconf/{conf}', 'NegativeInvConfController@show')->middleware('permission:负库存配置')
             ->name('api.negativeinvconf.show');
-        $api->post('negativeinvconf', 'NegativeInvConfController@store')->middleware('permission:客服部')
+        $api->post('negativeinvconf', 'NegativeInvConfController@store')->middleware('permission:负库存配置')
             ->name('api.negativeinvconf.store');
-        $api->patch('negativeinvconf/{conf}', 'NegativeInvConfController@update')->middleware('permission:客服部')
+        $api->patch('negativeinvconf/{conf}', 'NegativeInvConfController@update')->middleware('permission:负库存配置')
             ->name('api.negativeinvconf.update');
-        $api->delete('negativeinvconf/{conf}', 'NegativeInvConfController@destroy')->middleware('permission:客服部')
+        $api->delete('negativeinvconf/{conf}', 'NegativeInvConfController@destroy')->middleware('permission:负库存配置')
             ->name('api.negativeinvconf.destroy');
-        $api->delete('negativeinvconf', 'NegativeInvConfController@destroybyids')->middleware('permission:客服部')
+        $api->delete('negativeinvconf', 'NegativeInvConfController@destroybyids')->middleware('permission:负库存配置')
             ->name('api.negativeinvconf.destroybyids');
-        $api->put('negativeinvconf/editstatus', 'NegativeInvConfController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('negativeinvconf/editstatus', 'NegativeInvConfController@editStatusByIds')->middleware('permission:负库存配置')
             ->name('api.negativeinvconf.editstatusbyids');
         //问题产品
-        $api->get('problemProduct', 'ProblemProductController@index')->middleware('permission:客服部')
+        $api->get('problemProduct', 'ProblemProductController@index')->middleware('permission:商品管理')
             ->name('api.problemProduct.index');
-        $api->get('problemProduct/{problemProduct}', 'ProblemProductController@show')->middleware('permission:客服部')
+        $api->get('problemProduct/{problemProduct}', 'ProblemProductController@show')->middleware('permission:商品管理')
             ->name('api.problemProduct.show');
-        $api->post('problemProduct', 'ProblemProductController@store')->middleware('permission:客服部')
+        $api->post('problemProduct', 'ProblemProductController@store')->middleware('permission:商品管理')
             ->name('api.problemProduct.store');
-        $api->patch('problemProduct/{problemProduct}', 'ProblemProductController@update')->middleware('permission:客服部')
+        $api->patch('problemProduct/{problemProduct}', 'ProblemProductController@update')->middleware('permission:商品管理')
             ->name('api.problemProduct.update');
-        $api->delete('problemProduct/{problemProduct}', 'ProblemProductController@destroy')->middleware('permission:客服部')
+        $api->delete('problemProduct/{problemProduct}', 'ProblemProductController@destroy')->middleware('permission:商品管理')
             ->name('api.problemProduct.destroy');
-        $api->delete('problemProduct', 'ProblemProductController@destroybyids')->middleware('permission:客服部')
+        $api->delete('problemProduct', 'ProblemProductController@destroybyids')->middleware('permission:商品管理')
             ->name('api.problemProduct.destroybyids');
-        $api->put('problemProduct/editstatus', 'ProblemProductController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('problemProduct/editstatus', 'ProblemProductController@editStatusByIds')->middleware('permission:商品管理')
             ->name('api.problemProduct.editstatusbyids');
 
         //上传图片
-        $api->post('uploadimages', 'UploadImagesController@store')->middleware('permission:客服部')
+        $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
 
         //关联物流用户信息
-        $api->get('relateLogistics', 'RelateLogisticsController@index')->middleware('permission:客服部')
+        $api->get('relateLogistics', 'RelateLogisticsController@index')->middleware('permission:关联物流')
             ->name('api.relateLogistics.index');
-        $api->post('relateLogistics', 'RelateLogisticsController@store')->middleware('permission:客服部')
+        $api->post('relateLogistics', 'RelateLogisticsController@store')->middleware('permission:关联物流')
             ->name('api.relateLogistics.store');
-        $api->delete('relateLogistics/{relateLogistics}', 'RelateLogisticsController@destroy')->middleware('permission:客服部')
+        $api->delete('relateLogistics/{relateLogistics}', 'RelateLogisticsController@destroy')->middleware('permission:关联物流')
             ->name('api.relateLogistics.destroy');
-        $api->delete('relateLogistics', 'RelateLogisticsController@destroybyids')->middleware('permission:客服部')
+        $api->delete('relateLogistics', 'RelateLogisticsController@destroybyids')->middleware('permission:关联物流')
             ->name('api.relateLogistics.destroybyids');
-        $api->get('relateLogistics/{relateLogistics}', 'RelateLogisticsController@show')->middleware('permission:客服部')
+        $api->get('relateLogistics/{relateLogistics}', 'RelateLogisticsController@show')->middleware('permission:关联物流')
             ->name('api.relateLogistics.show');
-        $api->patch('relateLogistics/{relateLogistics}', 'RelateLogisticsController@update')->middleware('permission:客服部')
+        $api->patch('relateLogistics/{relateLogistics}', 'RelateLogisticsController@update')->middleware('permission:关联物流')
             ->name('api.relateLogistics.update');
-        $api->put('relateLogistics/editstatus', 'RelateLogisticsController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('relateLogistics/editstatus', 'RelateLogisticsController@editStatusByIds')->middleware('permission:关联物流')
             ->name('api.relateLogistics.editstatusbyids');
         //关联物流公司信息
-        $api->get('relateLogisticsCompany', 'RelateLogisticsCompanyController@index')->middleware('permission:客服部')
+        $api->get('relateLogisticsCompany', 'RelateLogisticsCompanyController@index')->middleware('permission:关联物流')
             ->name('api.relateLogisticsCompany.index');
-        $api->delete('relateLogisticsCompany/{relateLogisticsCompany}', 'RelateLogisticsCompanyController@destroy')->middleware('permission:客服部')
+        $api->delete('relateLogisticsCompany/{relateLogisticsCompany}', 'RelateLogisticsCompanyController@destroy')->middleware('permission:关联物流')
             ->name('api.relateLogisticsCompany.destroy');
-        $api->delete('relateLogisticsCompany', 'RelateLogisticsCompanyController@destroybyids')->middleware('permission:客服部')
+        $api->delete('relateLogisticsCompany', 'RelateLogisticsCompanyController@destroybyids')->middleware('permission:关联物流')
             ->name('api.relateLogisticsCompany.destroybyids');
-        $api->get('relateLogisticsCompany/{relateLogisticsCompany}', 'RelateLogisticsCompanyController@show')->middleware('permission:客服部')
+        $api->get('relateLogisticsCompany/{relateLogisticsCompany}', 'RelateLogisticsCompanyController@show')->middleware('permission:关联物流')
             ->name('api.relateLogisticsCompany.show');
-        $api->put('relateLogisticsCompany/editstatus', 'RelateLogisticsCompanyController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('relateLogisticsCompany/editstatus', 'RelateLogisticsCompanyController@editStatusByIds')->middleware('permission:关联物流')
             ->name('api.relateLogisticsCompany.editstatusbyids');
         //下载配置
-        $api->get('downLoadConf', 'DownLoadConfController@index')->middleware('permission:客服部')
+        $api->get('downLoadConf', 'DownLoadConfController@index')->middleware('permission:下载配置')
             ->name('api.downLoadConf.index');
-        $api->post('downLoadConf', 'DownLoadConfController@store')->middleware('permission:客服部')
+        $api->post('downLoadConf', 'DownLoadConfController@store')->middleware('permission:下载配置')
             ->name('api.downLoadConf.store');
-        $api->delete('downLoadConf/{downLoadConf}', 'DownLoadConfController@destroy')->middleware('permission:客服部')
+        $api->delete('downLoadConf/{downLoadConf}', 'DownLoadConfController@destroy')->middleware('permission:下载配置')
             ->name('api.downLoadConf.destroy');
-        $api->delete('downLoadConf', 'DownLoadConfController@destroybyIds')->middleware('permission:客服部')
+        $api->delete('downLoadConf', 'DownLoadConfController@destroybyIds')->middleware('permission:下载配置')
             ->name('api.downLoadConf.destroybyIds');
-        $api->get('downLoadConf/{downLoadConf}', 'DownLoadConfController@show')->middleware('permission:客服部')
+        $api->get('downLoadConf/{downLoadConf}', 'DownLoadConfController@show')->middleware('permission:下载配置')
             ->name('api.downLoadConf.show');
-        $api->patch('downLoadConf/{downLoadConf}', 'DownLoadConfController@update')->middleware('permission:客服部')
+        $api->patch('downLoadConf/{downLoadConf}', 'DownLoadConfController@update')->middleware('permission:下载配置')
             ->name('api.downLoadConf.update');
-        $api->put('downLoadConf/editstatus', 'DownLoadConfController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('downLoadConf/editstatus', 'DownLoadConfController@editStatusByIds')->middleware('permission:下载配置')
             ->name('api.downLoadConf.editstatusbyids');
         //买就送商品
-        $api->get('buyAndSendPro', 'BuyAndSendProController@index')->middleware('permission:客服部')
+        $api->get('buyAndSendPro', 'BuyAndSendProController@index')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.index');
-        $api->post('buyAndSendPro', 'BuyAndSendProController@store')->middleware('permission:客服部')
+        $api->post('buyAndSendPro', 'BuyAndSendProController@store')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.store');
-        $api->delete('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@destroy')->middleware('permission:客服部')
+        $api->delete('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@destroy')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.destroy');
-        $api->delete('buyAndSendPro', 'BuyAndSendProController@destroybyids')->middleware('permission:客服部')
+        $api->delete('buyAndSendPro', 'BuyAndSendProController@destroybyids')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.destroybyids');
-        $api->get('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@show')->middleware('permission:客服部')
+        $api->get('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@show')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.show');
-        $api->patch('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@update')->middleware('permission:客服部')
+        $api->patch('buyAndSendPro/{buyAndSendPro}', 'BuyAndSendProController@update')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.update');
-        $api->put('buyAndSendPro/editstatus', 'BuyAndSendProController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('buyAndSendPro/editstatus', 'BuyAndSendProController@editStatusByIds')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.editstatusbyids');
-        $api->put('buyAndSendPro/{buyAndSendPro}/audit', 'BuyAndSendProController@isAudit')->middleware('permission:客服部')
+        $api->put('buyAndSendPro/{buyAndSendPro}/audit', 'BuyAndSendProController@isAudit')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.isaudit');
-        $api->put('buyAndSendPro/{buyAndSendPro}/void', 'BuyAndSendProController@isVoid')->middleware('permission:客服部')
+        $api->put('buyAndSendPro/{buyAndSendPro}/void', 'BuyAndSendProController@isVoid')->middleware('permission:买就送管理')
             ->name('api.buyAndSendPro.isaudit');
         //买就送赠品
-        $api->get('buyAndSendGift', 'BuyAndSendGiftController@index')->middleware('permission:客服部')
+        $api->get('buyAndSendGift', 'BuyAndSendGiftController@index')->middleware('permission:买就送管理')
             ->name('api.buyAndSendGift.index');
-        $api->delete('buyAndSendGift/{buyAndSendGift}', 'BuyAndSendGiftController@destroy')->middleware('permission:客服部')
+        $api->delete('buyAndSendGift/{buyAndSendGift}', 'BuyAndSendGiftController@destroy')->middleware('permission:买就送管理')
             ->name('api.buyAndSendGift.destroy');
-        $api->delete('buyAndSendGift', 'BuyAndSendGiftController@destroybyids')->middleware('permission:客服部')
+        $api->delete('buyAndSendGift', 'BuyAndSendGiftController@destroybyids')->middleware('permission:买就送管理')
             ->name('api.buyAndSendGift.destroybyids');
-        $api->get('buyAndSendGift/{buyAndSendGift}', 'BuyAndSendGiftController@show')->middleware('permission:客服部')
+        $api->get('buyAndSendGift/{buyAndSendGift}', 'BuyAndSendGiftController@show')->middleware('permission:买就送管理')
             ->name('api.buyAndSendGift.show');
-        $api->put('buyAndSendGift/editstatus', 'BuyAndSendGiftController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('buyAndSendGift/editstatus', 'BuyAndSendGiftController@editStatusByIds')->middleware('permission:买就送管理')
             ->name('api.buyAndSendGift.editstatusbyids');
         //产品Bom
-        $api->get('proBom', 'ProBomController@index')->middleware('permission:客服部')
+        $api->get('proBom', 'ProBomController@index')->middleware('permission:产品Bom')
             ->name('api.proBom.index');
-        $api->post('proBom', 'ProBomController@store')->middleware('permission:客服部')
+        $api->post('proBom', 'ProBomController@store')->middleware('permission:产品Bom')
             ->name('api.proBom.store');
-        $api->delete('proBom/{proBom}', 'ProBomController@destroy')->middleware('permission:客服部')
+        $api->delete('proBom/{proBom}', 'ProBomController@destroy')->middleware('permission:产品Bom')
             ->name('api.proBom.destroy');
-        $api->delete('proBom', 'ProBomController@destroybyids')->middleware('permission:客服部')
+        $api->delete('proBom', 'ProBomController@destroybyids')->middleware('permission:产品Bom')
             ->name('api.proBom.destroybyids');
-        $api->get('proBom/{proBom}', 'ProBomController@show')->middleware('permission:客服部')
+        $api->get('proBom/{proBom}', 'ProBomController@show')->middleware('permission:产品Bom')
             ->name('api.proBom.show');
-        $api->patch('proBom/{proBom}', 'ProBomController@update')->middleware('permission:客服部')
+        $api->patch('proBom/{proBom}', 'ProBomController@update')->middleware('permission:产品Bom')
             ->name('api.proBom.update');
-        $api->put('proBom/editstatus', 'ProBomController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('proBom/editstatus', 'ProBomController@editStatusByIds')->middleware('permission:产品Bom')
             ->name('api.proBom.editstatusbyids');
         //产品Bom原材料
-        $api->get('proBomMaterial', 'ProBomMaterialController@index')->middleware('permission:客服部')
+        $api->get('proBomMaterial', 'ProBomMaterialController@index')->middleware('permission:产品Bom')
             ->name('api.proBomMaterial.index');
-        $api->delete('proBomMaterial/{proBomMaterial}', 'ProBomMaterialController@destroy')->middleware('permission:客服部')
+        $api->delete('proBomMaterial/{proBomMaterial}', 'ProBomMaterialController@destroy')->middleware('permission:产品Bom')
             ->name('api.proBomMaterial.destroy');
-        $api->delete('proBomMaterial', 'ProBomMaterialController@destroybyids')->middleware('permission:客服部')
+        $api->delete('proBomMaterial', 'ProBomMaterialController@destroybyids')->middleware('permission:产品Bom')
             ->name('api.proBomMaterial.destroybyids');
-        $api->get('proBomMaterial/{proBomMaterial}', 'ProBomMaterialController@show')->middleware('permission:客服部')
+        $api->get('proBomMaterial/{proBomMaterial}', 'ProBomMaterialController@show')->middleware('permission:产品Bom')
             ->name('api.proBomMaterial.show');
-        $api->put('proBomMaterial/editstatus', 'ProBomMaterialController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('proBomMaterial/editstatus', 'ProBomMaterialController@editStatusByIds')->middleware('permission:产品Bom')
             ->name('api.proBomMaterial.editstatusbyids');
         //包件类型
-        $api->get('packageType', 'PackageTypeController@index')->middleware('permission:客服部')
+        $api->get('packageType', 'PackageTypeController@index')->middleware('permission:补件管理')
             ->name('api.packageType.index');
-        $api->get('packageType/{packageType}', 'PackageTypeController@show')->middleware('permission:客服部')
+        $api->get('packageType/{packageType}', 'PackageTypeController@show')->middleware('permission:补件管理')
             ->name('api.packageType.show');
-        $api->post('packageType', 'PackageTypeController@store')->middleware('permission:客服部')
+        $api->post('packageType', 'PackageTypeController@store')->middleware('permission:补件管理')
             ->name('api.packageType.store');
-        $api->patch('packageType/{packageType}', 'PackageTypeController@update')->middleware('permission:客服部')
+        $api->patch('packageType/{packageType}', 'PackageTypeController@update')->middleware('permission:补件管理')
             ->name('api.packageType.update');
-        $api->delete('packageType/{packageType}', 'PackageTypeController@destroy')->middleware('permission:客服部')
+        $api->delete('packageType/{packageType}', 'PackageTypeController@destroy')->middleware('permission:补件管理')
             ->name('api.packageType.destroy');
-        $api->delete('packageType', 'PackageTypeController@destroybyids')->middleware('permission:客服部')
+        $api->delete('packageType', 'PackageTypeController@destroybyids')->middleware('permission:补件管理')
             ->name('api.packageType.destroybyids');
-        $api->put('packageType/editstatus', 'PackageTypeController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('packageType/editstatus', 'PackageTypeController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.packageType.editstatusbyids');
         //补件类别
-        $api->get('resupplieCategory', 'ResupplieCategoryController@index')->middleware('permission:客服部')
+        $api->get('resupplieCategory', 'ResupplieCategoryController@index')->middleware('permission:补件管理')
             ->name('api.resupplieCategory.index');
-        $api->get('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@show')->middleware('permission:客服部')
+        $api->get('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@show')->middleware('permission:补件管理')
             ->name('api.resupplieCategory.show');
-        $api->post('resupplieCategory', 'ResupplieCategoryController@store')->middleware('permission:客服部')
+        $api->post('resupplieCategory', 'ResupplieCategoryController@store')->middleware('permission:补件管理')
             ->name('api.resupplieCategory.store');
-        $api->patch('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@update')->middleware('permission:客服部')
+        $api->patch('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@update')->middleware('permission:补件管理')
             ->name('api.resupplieCategory.update');
-        $api->delete('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieCategory/{resupplieCategory}', 'ResupplieCategoryController@destroy')->middleware('permission:补件管理')
             ->name('api.resupplieCategory.destroy');
-        $api->delete('resupplieCategory', 'ResupplieCategoryController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieCategory', 'ResupplieCategoryController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resupplieCategory.destroybyids');
-        $api->put('resupplieCategory/editstatus', 'ResupplieCategoryController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resupplieCategory/editstatus', 'ResupplieCategoryController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.resupplieCategory.editstatusbyids');
         //退款方式
-        $api->get('refundMethod', 'RefundMethodController@index')->middleware('permission:客服部')
+        $api->get('refundMethod', 'RefundMethodController@index')->middleware('permission:补件管理')
             ->name('api.refundMethod.index');
-        $api->get('refundMethod/{refundMethod}', 'RefundMethodController@show')->middleware('permission:客服部')
+        $api->get('refundMethod/{refundMethod}', 'RefundMethodController@show')->middleware('permission:补件管理')
             ->name('api.refundMethod.show');
-        $api->post('refundMethod', 'RefundMethodController@store')->middleware('permission:客服部')
+        $api->post('refundMethod', 'RefundMethodController@store')->middleware('permission:补件管理')
             ->name('api.refundMethod.store');
-        $api->patch('refundMethod/{refundMethod}', 'RefundMethodController@update')->middleware('permission:客服部')
+        $api->patch('refundMethod/{refundMethod}', 'RefundMethodController@update')->middleware('permission:补件管理')
             ->name('api.refundMethod.update');
-        $api->delete('refundMethod/{refundMethod}', 'RefundMethodController@destroy')->middleware('permission:客服部')
+        $api->delete('refundMethod/{refundMethod}', 'RefundMethodController@destroy')->middleware('permission:补件管理')
             ->name('api.refundMethod.destroy');
-        $api->delete('refundMethod', 'RefundMethodController@destroybyids')->middleware('permission:客服部')
+        $api->delete('refundMethod', 'RefundMethodController@destroybyids')->middleware('permission:补件管理')
             ->name('api.refundMethod.destroybyids');
-        $api->put('refundMethod/editstatus', 'RefundMethodController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('refundMethod/editstatus', 'RefundMethodController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.refundMethod.editstatusbyids');
         //补件单子单
-        $api->get('resupplieOrderItem', 'ResuppliedOrderItemController@index')->middleware('permission:客服部')
+        $api->get('resupplieOrderItem', 'ResuppliedOrderItemController@index')->middleware('permission:补件管理')
             ->name('api.resupplieOrderItem.index');
-        $api->get('resupplieOrderItem/{resupplieOrderItem}', 'ResuppliedOrderItemController@show')->middleware('permission:客服部')
+        $api->get('resupplieOrderItem/{resupplieOrderItem}', 'ResuppliedOrderItemController@show')->middleware('permission:补件管理')
             ->name('api.resupplieOrderItem.show');
-        $api->delete('resupplieOrderItem/{resupplieOrderItem}', 'ResuppliedOrderItemController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieOrderItem/{resupplieOrderItem}', 'ResuppliedOrderItemController@destroy')->middleware('permission:补件管理')
             ->name('api.resupplieOrderItem.destroy');
-        $api->delete('resupplieOrderItem', 'ResuppliedOrderItemController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieOrderItem', 'ResuppliedOrderItemController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resupplieOrderItem.destroybyids');
-        $api->put('resupplieOrderItem/editstatus', 'ResuppliedOrderItemController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resupplieOrderItem/editstatus', 'ResuppliedOrderItemController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.resupplieOrderItem.editstatusbyids');
         //补件问题产品
-        $api->get('resupplieProblemProduct', 'ResupplieProblemProductController@index')->middleware('permission:客服部')
+        $api->get('resupplieProblemProduct', 'ResupplieProblemProductController@index')->middleware('permission:补件管理')
             ->name('api.resupplieProblemProduct.index');
-        $api->get('resupplieProblemProduct/{resupplieProblemProduct}', 'ResupplieProblemProductController@show')->middleware('permission:客服部')
+        $api->get('resupplieProblemProduct/{resupplieProblemProduct}', 'ResupplieProblemProductController@show')->middleware('permission:补件管理')
             ->name('api.resupplieProblemProduct.show');
-        $api->delete('resupplieProblemProduct/{resupplieProblemProduct}', 'ResupplieProblemProductController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieProblemProduct/{resupplieProblemProduct}', 'ResupplieProblemProductController@destroy')->middleware('permission:补件管理')
             ->name('api.resupplieProblemProduct.destroy');
-        $api->delete('resupplieProblemProduct', 'ResupplieProblemProductController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieProblemProduct', 'ResupplieProblemProductController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resupplieProblemProduct.destroybyids');
-        $api->put('resupplieProblemProduct/editstatus', 'ResupplieProblemProductController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resupplieProblemProduct/editstatus', 'ResupplieProblemProductController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.resupplieProblemProduct.editstatusbyids');
         //补件责任方
-        $api->get('resupplieResponsible', 'ResupplieResponsibleController@index')->middleware('permission:客服部')
+        $api->get('resupplieResponsible', 'ResupplieResponsibleController@index')->middleware('permission:补件管理')
             ->name('api.resupplieResponsible.index');
-        $api->get('resupplieResponsible/{resupplieResponsible}', 'ResupplieResponsibleController@show')->middleware('permission:客服部')
+        $api->get('resupplieResponsible/{resupplieResponsible}', 'ResupplieResponsibleController@show')->middleware('permission:补件管理')
             ->name('api.resupplieResponsible.show');
-        $api->delete('resupplieResponsible/{resupplieResponsible}', 'ResupplieResponsibleController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieResponsible/{resupplieResponsible}', 'ResupplieResponsibleController@destroy')->middleware('permission:补件责任方配置')
             ->name('api.resupplieResponsible.destroy');
-        $api->delete('resupplieResponsible', 'ResupplieResponsibleController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieResponsible', 'ResupplieResponsibleController@destroybyids')->middleware('permission:补件责任方配置')
             ->name('api.resupplieResponsible.destroybyids');
-        $api->put('resupplieResponsible/editstatus', 'ResupplieResponsibleController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resupplieResponsible/editstatus', 'ResupplieResponsibleController@editStatusByIds')->middleware('permission:补件责任方配置')
             ->name('api.resupplieResponsible.editstatusbyids');
         //补件图片信息
-        $api->get('resupplieImage', 'ResupplieImageController@index')->middleware('permission:客服部')
+        $api->get('resupplieImage', 'ResupplieImageController@index')->middleware('permission:补件管理')
             ->name('api.resupplieImage.index');
-        $api->get('resupplieImage/{resupplieImage}', 'ResupplieImageController@show')->middleware('permission:客服部')
+        $api->get('resupplieImage/{resupplieImage}', 'ResupplieImageController@show')->middleware('permission:补件管理')
             ->name('api.resupplieImage.show');
-        $api->delete('resupplieImage/{resupplieImage}', 'ResupplieImageController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieImage/{resupplieImage}', 'ResupplieImageController@destroy')->middleware('permission:补件管理')
             ->name('api.resupplieImage.destroy');
-        $api->delete('resupplieImage', 'ResupplieImageController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieImage', 'ResupplieImageController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resupplieImage.destroybyids');
-        $api->put('resupplieImage/editstatus', 'ResupplieImageController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resupplieImage/editstatus', 'ResupplieImageController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.resupplieImage.editstatusbyids');
         //补件驳回原因
-        $api->get('resupplieRejectReason', 'ResupplieRejectReasonController@index')->middleware('permission:客服部')
+        $api->get('resupplieRejectReason', 'ResupplieRejectReasonController@index')->middleware('permission:补件管理')
             ->name('api.resupplieRejectReason.index');
-        $api->post('resupplieRejectReason', 'ResupplieRejectReasonController@store')->middleware('permission:客服部')
+        $api->post('resupplieRejectReason', 'ResupplieRejectReasonController@store')->middleware('permission:补件管理')
             ->name('api.resupplieRejectReason.store');
-        $api->delete('resupplieRejectReason/{resupplieRejectReason}', 'ResupplieRejectReasonController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieRejectReason/{resupplieRejectReason}', 'ResupplieRejectReasonController@destroy')->middleware('permission:补件管理')
             ->name('api.resupplieRejectReason.destroy');
-        $api->get('resupplieRejectReason/{resupplieRejectReason}', 'ResupplieRejectReasonController@show')->middleware('permission:客服部')
+        $api->get('resupplieRejectReason/{resupplieRejectReason}', 'ResupplieRejectReasonController@show')->middleware('permission:补件管理')
             ->name('api.resupplieRejectReason.show');
-        $api->delete('resupplieRejectReason', 'ResupplieRejectReasonController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieRejectReason', 'ResupplieRejectReasonController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resupplieRejectReason.destroybyids');
-        $api->put('resupplieRejectReason/editstatus', 'ResupplieRejectReasonController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resupplieRejectReason/editstatus', 'ResupplieRejectReasonController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.resupplieRejectReason.editstatusbyids');
         //补件操作记录
-        $api->get('resupplieOperationRecord', 'ResupplieOperationRecordController@index')->middleware('permission:客服部')
+        $api->get('resupplieOperationRecord', 'ResupplieOperationRecordController@index')->middleware('permission:补件管理')
             ->name('api.resupplieOperationRecord.index');
-        $api->post('resupplieOperationRecord', 'ResupplieOperationRecordController@store')->middleware('permission:客服部')
+        $api->post('resupplieOperationRecord', 'ResupplieOperationRecordController@store')->middleware('permission:补件管理')
             ->name('api.resupplieOperationRecord.store');
         //补件进度
-        $api->get('resupplieProgress', 'ResupplieProgressController@index')->middleware('permission:客服部')
+        $api->get('resupplieProgress', 'ResupplieProgressController@index')->middleware('permission:补件管理')
             ->name('api.resupplieProgress.index');
-        $api->post('resupplieProgress', 'ResupplieProgressController@store')->middleware('permission:客服部')
+        $api->post('resupplieProgress', 'ResupplieProgressController@store')->middleware('permission:补件管理')
             ->name('api.resupplieProgress.store');
-        $api->get('resupplieProgress/{resupplieProgress}', 'ResupplieProgressController@show')->middleware('permission:客服部')
+        $api->get('resupplieProgress/{resupplieProgress}', 'ResupplieProgressController@show')->middleware('permission:补件管理')
             ->name('api.resupplieProgress.show');
-        $api->patch('resupplieProgress/{resupplieProgress}', 'ResupplieProgressController@update')->middleware('permission:客服部')
+        $api->patch('resupplieProgress/{resupplieProgress}', 'ResupplieProgressController@update')->middleware('permission:补件管理')
             ->name('api.resupplieProgress.update');
-        $api->delete('resupplieProgress/{resupplieProgress}', 'ResupplieProgressController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieProgress/{resupplieProgress}', 'ResupplieProgressController@destroy')->middleware('permission:补件管理')
             ->name('api.resupplieProgress.destroy');
-        $api->delete('resupplieProgress', 'ResupplieProgressController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieProgress', 'ResupplieProgressController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resupplieProgress.destroybyids');
         //补件采购明细
-        $api->get('resuppliePurchase', 'ResuppliePurchaseController@index')->middleware('permission:客服部')
+        $api->get('resuppliePurchase', 'ResuppliePurchaseController@index')->middleware('permission:补件管理')
             ->name('api.resuppliePurchase.index');
-        $api->get('resuppliePurchase/{resuppliePurchase}', 'ResuppliePurchaseController@show')->middleware('permission:客服部')
+        $api->get('resuppliePurchase/{resuppliePurchase}', 'ResuppliePurchaseController@show')->middleware('permission:补件管理')
             ->name('api.resuppliePurchase.show');
-        $api->delete('resuppliePurchase/{resuppliePurchase}', 'ResuppliePurchaseController@destroy')->middleware('permission:客服部')
+        $api->delete('resuppliePurchase/{resuppliePurchase}', 'ResuppliePurchaseController@destroy')->middleware('permission:补件管理')
             ->name('api.resuppliePurchase.destroy');
-        $api->delete('resuppliePurchase', 'ResuppliePurchaseController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resuppliePurchase', 'ResuppliePurchaseController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resuppliePurchase.destroybyids');
-        $api->put('resuppliePurchase/editstatus', 'ResuppliePurchaseController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resuppliePurchase/editstatus', 'ResuppliePurchaseController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.resuppliePurchase.editstatusbyids');
         //补件电子面单
-        $api->get('resupplieEsheet', 'ResupplieEsheetController@index')->middleware('permission:客服部')
+        $api->get('resupplieEsheet', 'ResupplieEsheetController@index')->middleware('permission:补件管理')
             ->name('api.resupplieEsheet.index');
-        $api->get('resupplieEsheet/{resupplieEsheet}', 'ResupplieEsheetController@show')->middleware('permission:客服部')
+        $api->get('resupplieEsheet/{resupplieEsheet}', 'ResupplieEsheetController@show')->middleware('permission:补件管理')
             ->name('api.resupplieEsheet.show');
-        $api->delete('resupplieEsheet/{resupplieEsheet}', 'ResupplieEsheetController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieEsheet/{resupplieEsheet}', 'ResupplieEsheetController@destroy')->middleware('permission:补件管理')
             ->name('api.resupplieEsheet.destroy');
-        $api->delete('resupplieEsheet', 'ResupplieEsheetController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieEsheet', 'ResupplieEsheetController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resupplieEsheet.destroybyids');
-        $api->put('resupplieEsheet/editstatus', 'ResupplieEsheetController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resupplieEsheet/editstatus', 'ResupplieEsheetController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.resupplieEsheet.editstatusbyids');
         //补件内部便签
-        $api->get('resupplieInnerNote', 'ResupplieInnerNoteController@index')->middleware('permission:客服部')
+        $api->get('resupplieInnerNote', 'ResupplieInnerNoteController@index')->middleware('permission:补件管理')
             ->name('api.resupplieInnerNote.index');
-        $api->get('resupplieInnerNote/{resupplieInnerNote}', 'ResupplieInnerNoteController@show')->middleware('permission:客服部')
+        $api->get('resupplieInnerNote/{resupplieInnerNote}', 'ResupplieInnerNoteController@show')->middleware('permission:补件管理')
             ->name('api.resupplieInnerNote.show');
-        $api->delete('resupplieInnerNote/{resupplieInnerNote}', 'ResupplieInnerNoteController@destroy')->middleware('permission:客服部')
+        $api->delete('resupplieInnerNote/{resupplieInnerNote}', 'ResupplieInnerNoteController@destroy')->middleware('permission:补件管理')
             ->name('api.resupplieInnerNote.destroy');
-        $api->delete('resupplieInnerNote', 'ResupplieInnerNoteController@destroybyids')->middleware('permission:客服部')
+        $api->delete('resupplieInnerNote', 'ResupplieInnerNoteController@destroybyids')->middleware('permission:补件管理')
             ->name('api.resupplieInnerNote.destroybyids');
-        $api->put('resupplieInnerNote/editstatus', 'ResupplieInnerNoteController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('resupplieInnerNote/editstatus', 'ResupplieInnerNoteController@editStatusByIds')->middleware('permission:补件管理')
             ->name('api.resupplieInnerNote.editstatusbyids');
         //补件申请
-        $api->get('resupplieApplication', 'ResupplieApplicationController@index')->middleware('permission:客服部')
+        $api->get('resupplieApplication', 'ResupplieApplicationController@index')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.index');
-        $api->post('resupplieApplication', 'ResupplieApplicationController@store')->middleware('permission:客服部')
+        $api->post('resupplieApplication', 'ResupplieApplicationController@store')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.store');
-        $api->get('resupplieApplication/searchUnsubmited', 'ResupplieApplicationController@searchUnsubmited')->middleware('permission:客服部')
+        $api->get('resupplieApplication/searchUnsubmited', 'ResupplieApplicationController@searchUnsubmited')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.searchUnsubmited');
-        $api->get('resupplieApplication/searchSubmited', 'ResupplieApplicationController@searchSubmited')->middleware('permission:客服部')
+        $api->get('resupplieApplication/searchSubmited', 'ResupplieApplicationController@searchSubmited')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.searchSubmited');
-        $api->get('resupplieApplication/{resupplieOrder}', 'ResupplieApplicationController@show')->middleware('permission:客服部')
+        $api->get('resupplieApplication/{resupplieOrder}', 'ResupplieApplicationController@show')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.show');
-        $api->patch('resupplieApplication/{resupplieOrder}', 'ResupplieApplicationController@update')->middleware('permission:客服部')
+        $api->patch('resupplieApplication/{resupplieOrder}', 'ResupplieApplicationController@update')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.update');
-        $api->patch('resupplieApplication/{resupplieOrder}/rejectReason', 'ResupplieApplicationController@rejectReason')->middleware('permission:客服部')
+        $api->patch('resupplieApplication/{resupplieOrder}/rejectReason', 'ResupplieApplicationController@rejectReason')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.rejectReason');
-        $api->put('resupplieApplication/{resupplieOrder}/submit', 'ResupplieApplicationController@isSubmit')->middleware('permission:客服部')
+        $api->put('resupplieApplication/{resupplieOrder}/submit', 'ResupplieApplicationController@isSubmit')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.isSubmit');
-        $api->put('resupplieApplication/{resupplieOrder}/reject', 'ResupplieApplicationController@isReject')->middleware('permission:客服部')
+        $api->put('resupplieApplication/{resupplieOrder}/reject', 'ResupplieApplicationController@isReject')->middleware('permission:补件管理')
             ->name('api.resupplieApplication.isReject');
         //补件审核
-        $api->get('resupplieReview', 'ResupplieReviewController@index')->middleware('permission:客服部')
+        $api->get('resupplieReview', 'ResupplieReviewController@index')->middleware('permission:补件管理')
             ->name('api.resupplieReview.index');
-        $api->get('resupplieReview/searchBigPackage', 'ResupplieReviewController@searchBigPackage')->middleware('permission:客服部')
+        $api->get('resupplieReview/searchBigPackage', 'ResupplieReviewController@searchBigPackage')->middleware('permission:补件管理')
             ->name('api.resupplieReview.searchBigPackage');
-        $api->get('resupplieReview/searchPartPackage', 'ResupplieReviewController@searchPartPackage')->middleware('permission:客服部')
+        $api->get('resupplieReview/searchPartPackage', 'ResupplieReviewController@searchPartPackage')->middleware('permission:补件管理')
             ->name('api.resupplieReview.searchPartPackage');
-        $api->get('resupplieReview/searchMoneyPackage', 'ResupplieReviewController@searchMoneyPackage')->middleware('permission:客服部')
+        $api->get('resupplieReview/searchMoneyPackage', 'ResupplieReviewController@searchMoneyPackage')->middleware('permission:补件管理')
             ->name('api.resupplieReview.searchMoneyPackage');
-        $api->get('resupplieReview/searchReview', 'ResupplieReviewController@searchReview')->middleware('permission:客服部')
+        $api->get('resupplieReview/searchReview', 'ResupplieReviewController@searchReview')->middleware('permission:补件管理')
             ->name('api.resupplieReview.searchReview');
-        $api->get('resupplieReview/searchSettle', 'ResupplieReviewController@searchSettle')->middleware('permission:客服部')
+        $api->get('resupplieReview/searchSettle', 'ResupplieReviewController@searchSettle')->middleware('permission:补件管理')
             ->name('api.resupplieReview.searchSettle');
-        $api->put('resupplieReview/{resupplieOrder}/audit', 'ResupplieReviewController@isAudit')->middleware('permission:客服部')
+        $api->put('resupplieReview/{resupplieOrder}/audit', 'ResupplieReviewController@isAudit')->middleware('permission:补件管理')
             ->name('api.resupplieReview.audit');
-        $api->put('resupplieReview/{resupplieOrder}/auditfaild', 'ResupplieReviewController@isAuditFaild')->middleware('permission:客服部')
+        $api->put('resupplieReview/{resupplieOrder}/auditfaild', 'ResupplieReviewController@isAuditFaild')->middleware('permission:补件管理')
             ->name('api.resupplieReview.auditfaild');
-        $api->put('resupplieReview/{resupplieOrder}/settle', 'ResupplieReviewController@isSettle')->middleware('permission:客服部')
+        $api->put('resupplieReview/{resupplieOrder}/settle', 'ResupplieReviewController@isSettle')->middleware('permission:补件管理')
             ->name('api.resupplieReview.settle');
         //补件发货
-        $api->get('resupplieShip', 'ResupplieShipController@index')->middleware('permission:客服部')
+        $api->get('resupplieShip', 'ResupplieShipController@index')->middleware('permission:补件管理')
             ->name('api.resupplieShip.index');
-        $api->get('resupplieShip/searchUnprint', 'ResupplieShipController@searchUnprint')->middleware('permission:客服部')
+        $api->get('resupplieShip/searchUnprint', 'ResupplieShipController@searchUnprint')->middleware('permission:补件管理')
             ->name('api.resupplieShip.searchUnprint');
-        $api->get('resupplieShip/searchPrint', 'ResupplieShipController@searchPrint')->middleware('permission:客服部')
+        $api->get('resupplieShip/searchPrint', 'ResupplieShipController@searchPrint')->middleware('permission:补件管理')
             ->name('api.resupplieShip.searchPrint');
-        $api->get('resupplieShip/searchUnconsign', 'ResupplieShipController@searchUnconsign')->middleware('permission:客服部')
+        $api->get('resupplieShip/searchUnconsign', 'ResupplieShipController@searchUnconsign')->middleware('permission:补件管理')
             ->name('api.resupplieShip.searchUnconsign');
-        $api->get('resupplieShip/searchConsign', 'ResupplieShipController@searchConsign')->middleware('permission:客服部')
+        $api->get('resupplieShip/searchConsign', 'ResupplieShipController@searchConsign')->middleware('permission:补件管理')
             ->name('api.resupplieShip.searchConsign');
-        $api->put('resupplieShip/{resupplieOrder}/examination', 'ResupplieShipController@examination')->middleware('permission:客服部')
+        $api->put('resupplieShip/{resupplieOrder}/examination', 'ResupplieShipController@examination')->middleware('permission:补件管理')
             ->name('api.resupplieShip.examination');
-        $api->put('resupplieShip/{resupplieOrder}/consign', 'ResupplieShipController@isConsign')->middleware('permission:客服部')
+        $api->put('resupplieShip/{resupplieOrder}/consign', 'ResupplieShipController@isConsign')->middleware('permission:补件管理')
             ->name('api.resupplieShip.consign');
-        $api->put('resupplieShip/{resupplieOrder}/print', 'ResupplieShipController@isPrint')->middleware('permission:客服部')
+        $api->put('resupplieShip/{resupplieOrder}/print', 'ResupplieShipController@isPrint')->middleware('permission:补件管理')
             ->name('api.resupplieShip.print');
         //补件中心
-        $api->get('resupplieCenter', 'ResupplieCenterController@index')->middleware('permission:客服部')
+        $api->get('resupplieCenter', 'ResupplieCenterController@index')->middleware('permission:补件管理')
             ->name('api.resupplieCenter.index');
-        $api->put('resupplieCenter/{resupplieOrder}/invalid', 'ResupplieCenterController@isInvalid')->middleware('permission:客服部')
+        $api->put('resupplieCenter/{resupplieOrder}/invalid', 'ResupplieCenterController@isInvalid')->middleware('permission:补件管理')
             ->name('api.resupplieCenter.invalid');
 
         // 薛涛
         //产品映射
-        $api->get('promap', 'ProMapController@index')->middleware('permission:客服部')
+        $api->get('promap', 'ProMapController@index')->middleware('permission:产品映射')
             ->name('api.promap.index');
-        $api->post('promap', 'ProMapController@store')->middleware('permission:客服部')
+        $api->post('promap', 'ProMapController@store')->middleware('permission:产品映射')
             ->name('api.promap.store');
-        $api->get('promap/{promap}', 'ProMapController@show')->middleware('permission:客服部')
+        $api->get('promap/{promap}', 'ProMapController@show')->middleware('permission:产品映射')
             ->name('api.promap.show');
-        $api->patch('promap/{promap}', 'ProMapController@update')->middleware('permission:客服部')
+        $api->patch('promap/{promap}', 'ProMapController@update')->middleware('permission:产品映射')
             ->name('api.promap.update');
-        $api->delete('promap/{promap}', 'ProMapController@destroy')->middleware('permission:客服部')
+        $api->delete('promap/{promap}', 'ProMapController@destroy')->middleware('permission:产品映射')
             ->name('api.promap.destroy');
-        $api->delete('promap', 'ProMapController@destroybyids')->middleware('permission:客服部')
+        $api->delete('promap', 'ProMapController@destroybyids')->middleware('permission:产品映射')
             ->name('api.promap.destroybyids');
-        $api->put('promap/editstatus', 'ProMapController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('promap/editstatus', 'ProMapController@editStatusByIds')->middleware('permission:产品映射')
             ->name('api.promap.editstatusbyids');
         //最小包管理
-        $api->get('minipackage', 'MiniPackageController@index')->middleware('permission:客服部')
+        $api->get('minipackage', 'MiniPackageController@index')->middleware('permission:最小包管理')
             ->name('api.minipackage.index');
-        $api->post('minipackage', 'MiniPackageController@store')->middleware('permission:客服部')
+        $api->post('minipackage', 'MiniPackageController@store')->middleware('permission:最小包管理')
             ->name('api.minipackage.store');
-        $api->get('minipackage/{minipackage}', 'MiniPackageController@show')->middleware('permission:客服部')
+        $api->get('minipackage/{minipackage}', 'MiniPackageController@show')->middleware('permission:最小包管理')
             ->name('api.minipackage.show');
-        $api->patch('minipackage/{minipackage}', 'MiniPackageController@update')->middleware('permission:客服部')
+        $api->patch('minipackage/{minipackage}', 'MiniPackageController@update')->middleware('permission:最小包管理')
             ->name('api.minipackage.update');
-        $api->delete('minipackage/{minipackage}', 'MiniPackageController@destroy')->middleware('permission:客服部')
+        $api->delete('minipackage/{minipackage}', 'MiniPackageController@destroy')->middleware('permission:最小包管理')
             ->name('api.minipackage.destroy');
-        $api->delete('minipackage', 'MiniPackageController@destroybyids')->middleware('permission:客服部')
+        $api->delete('minipackage', 'MiniPackageController@destroybyids')->middleware('permission:最小包管理')
             ->name('api.minipackage.destroybyids');
-        $api->put('minipackage/editstatus', 'MiniPackageController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('minipackage/editstatus', 'MiniPackageController@editStatusByIds')->middleware('permission:最小包管理')
             ->name('api.minipackage.editstatusbyids');
         //线下账户配置
-        $api->get('offlineaccountconf', 'OfflineAccountConfController@index')->middleware('permission:客服部')
+        $api->get('offlineaccountconf', 'OfflineAccountConfController@index')->middleware('permission:线下账户配置')
             ->name('api.offlineaccountconf.index');
-        $api->post('offlineaccountconf', 'OfflineAccountConfController@store')->middleware('permission:客服部')
+        $api->post('offlineaccountconf', 'OfflineAccountConfController@store')->middleware('permission:线下账户配置')
             ->name('api.offlineaccountconf.store');
-        $api->get('offlineaccountconf/{offlineaccoutconf}', 'OfflineAccountConfController@show')->middleware('permission:客服部')
+        $api->get('offlineaccountconf/{offlineaccoutconf}', 'OfflineAccountConfController@show')->middleware('permission:线下账户配置')
             ->name('api.offlineaccountconf.show');
-        $api->patch('offlineaccountconf/{offlineaccoutconf}', 'OfflineAccountConfController@update')->middleware('permission:客服部')
+        $api->patch('offlineaccountconf/{offlineaccoutconf}', 'OfflineAccountConfController@update')->middleware('permission:线下账户配置')
             ->name('api.offlineaccountconf.update');
-        $api->delete('offlineaccountconf/{offlineaccoutconf}', 'OfflineAccountConfController@destroy')->middleware('permission:客服部')
+        $api->delete('offlineaccountconf/{offlineaccoutconf}', 'OfflineAccountConfController@destroy')->middleware('permission:线下账户配置')
             ->name('api.offlineaccountconf.destroy');
-        $api->delete('offlineaccountconf', 'OfflineAccountConfController@destroybyids')->middleware('permission:客服部')
+        $api->delete('offlineaccountconf', 'OfflineAccountConfController@destroybyids')->middleware('permission:线下账户配置')
             ->name('api.offlineaccountconf.destroybyids');
-        $api->put('offlineaccountconf/editstatus', 'OfflineAccountConfController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('offlineaccountconf/editstatus', 'OfflineAccountConfController@editStatusByIds')->middleware('permission:线下账户配置')
             ->name('api.offlineaccountconf.editstatusbyids');
         //刷单锁单配置
-        $api->get('brushlockconf', 'BrushLockConfController@index')->middleware('permission:客服部')
+        $api->get('brushlockconf', 'BrushLockConfController@index')->middleware('permission:刷单锁单配置')
             ->name('api.brushlockconf.index');
-        $api->post('brushlockconf', 'BrushLockConfController@store')->middleware('permission:客服部')
+        $api->post('brushlockconf', 'BrushLockConfController@store')->middleware('permission:刷单锁单配置')
             ->name('api.brushlockconf.store');
-        $api->get('brushlockconf/{brushlockconf}', 'BrushLockConfController@show')->middleware('permission:客服部')
+        $api->get('brushlockconf/{brushlockconf}', 'BrushLockConfController@show')->middleware('permission:刷单锁单配置')
             ->name('api.brushlockconf.show');
-        $api->patch('brushlockconf/{brushlockconf}', 'BrushLockConfController@update')->middleware('permission:客服部')
+        $api->patch('brushlockconf/{brushlockconf}', 'BrushLockConfController@update')->middleware('permission:刷单锁单配置')
             ->name('api.brushlockconf.update');
-        $api->delete('brushlockconf/{brushlockconf}', 'BrushLockConfController@destroy')->middleware('permission:客服部')
+        $api->delete('brushlockconf/{brushlockconf}', 'BrushLockConfController@destroy')->middleware('permission:刷单锁单配置')
             ->name('api.brushlockconf.destroy');
-        $api->delete('brushlockconf', 'BrushLockConfController@destroybyids')->middleware('permission:客服部')
+        $api->delete('brushlockconf', 'BrushLockConfController@destroybyids')->middleware('permission:刷单锁单配置')
             ->name('api.brushlockconf.destroybyids');
-        $api->put('brushlockconf/editstatus', 'BrushLockConfController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('brushlockconf/editstatus', 'BrushLockConfController@editStatusByIds')->middleware('permission:刷单锁单配置')
             ->name('api.brushlockconf.editstatusbyids');
         //售后状态
-        $api->get('aftersalestate', 'AfterSaleStateController@index')->middleware('permission:客服部')
+        $api->get('aftersalestate', 'AfterSaleStateController@index')->middleware('permission:售后状态管理')
             ->name('api.aftersalestate.index');
-        $api->get('aftersalestate/{state}', 'AfterSaleStateController@show')->middleware('permission:客服部')
+        $api->get('aftersalestate/{state}', 'AfterSaleStateController@show')->middleware('permission:售后状态管理')
             ->name('api.aftersalestate.show');
-        $api->post('aftersalestate', 'AfterSaleStateController@store')->middleware('permission:客服部')
+        $api->post('aftersalestate', 'AfterSaleStateController@store')->middleware('permission:售后状态管理')
             ->name('api.aftersalestate.store');
-        $api->patch('aftersalestate/{state}', 'AfterSaleStateController@update')->middleware('permission:客服部')
+        $api->patch('aftersalestate/{state}', 'AfterSaleStateController@update')->middleware('permission:售后状态管理')
             ->name('api.aftersalestate.update');
-        $api->delete('aftersalestate/{state}', 'AfterSaleStateController@destroy')->middleware('permission:客服部')
+        $api->delete('aftersalestate/{state}', 'AfterSaleStateController@destroy')->middleware('permission:售后状态管理')
             ->name('api.aftersalestate.destroy');
-        $api->delete('aftersalestate', 'AfterSaleStateController@destroybyids')->middleware('permission:客服部')
+        $api->delete('aftersalestate', 'AfterSaleStateController@destroybyids')->middleware('permission:售后状态管理')
             ->name('api.aftersalestate.destroybyids');
-        $api->put('aftersalestate/editstatus', 'AfterSaleStateController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('aftersalestate/editstatus', 'AfterSaleStateController@editStatusByIds')->middleware('permission:售后状态管理')
             ->name('api.aftersalestate.editstatusbyids');
         //售后类型
-        $api->get('aftersaletype', 'AfterSaleTypeController@index')->middleware('permission:客服部')
+        $api->get('aftersaletype', 'AfterSaleTypeController@index')->middleware('permission:售后类型管理')
             ->name('api.aftersaletype.index');
-        $api->get('aftersaletype/{type}', 'AfterSaleTypeController@show')->middleware('permission:客服部')
+        $api->get('aftersaletype/{type}', 'AfterSaleTypeController@show')->middleware('permission:售后类型管理')
             ->name('api.aftersaletype.show');
-        $api->post('aftersaletype', 'AfterSaleTypeController@store')->middleware('permission:客服部')
+        $api->post('aftersaletype', 'AfterSaleTypeController@store')->middleware('permission:售后类型管理')
             ->name('api.aftersaletype.store');
-        $api->patch('aftersaletype/{type}', 'AfterSaleTypeController@update')->middleware('permission:客服部')
+        $api->patch('aftersaletype/{type}', 'AfterSaleTypeController@update')->middleware('permission:售后类型管理')
             ->name('api.aftersaletype.update');
-        $api->delete('aftersaletype/{type}', 'AfterSaleTypeController@destroy')->middleware('permission:客服部')
+        $api->delete('aftersaletype/{type}', 'AfterSaleTypeController@destroy')->middleware('permission:售后类型管理')
             ->name('api.aftersaletype.destroy');
-        $api->delete('aftersaletype', 'AfterSaleTypeController@destroybyids')->middleware('permission:客服部')
+        $api->delete('aftersaletype', 'AfterSaleTypeController@destroybyids')->middleware('permission:售后类型管理')
             ->name('api.aftersaletype.destroybyids');
-        $api->put('aftersaletype/editstatus', 'AfterSaleTypeController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('aftersaletype/editstatus', 'AfterSaleTypeController@editStatusByIds')->middleware('permission:售后类型管理')
             ->name('api.aftersaletype.editstatusbyids');
         //售后管理
-        $api->get('aftersale', 'AfterSaleController@index')->middleware('permission:客服部')
+        $api->get('aftersale', 'AfterSaleController@index')->middleware('permission:售后管理')
             ->name('api.aftersale.index');
-        $api->post('aftersale', 'AfterSaleController@store')->middleware('permission:客服部')
+        $api->post('aftersale', 'AfterSaleController@store')->middleware('permission:售后管理')
             ->name('api.aftersale.store');
-        $api->get('aftersale/{aftersale}', 'AfterSaleController@show')->middleware('permission:客服部')
+        $api->get('aftersale/{aftersale}', 'AfterSaleController@show')->middleware('permission:售后管理')
             ->name('api.aftersale.show');
-        $api->patch('aftersale/{aftersale}', 'AfterSaleController@update')->middleware('permission:客服部')
+        $api->patch('aftersale/{aftersale}', 'AfterSaleController@update')->middleware('permission:售后管理')
             ->name('api.aftersale.update');
-        $api->delete('aftersale/{aftersale}', 'AfterSaleController@destroy')->middleware('permission:客服部')
+        $api->delete('aftersale/{aftersale}', 'AfterSaleController@destroy')->middleware('permission:售后管理')
             ->name('api.aftersale.destroy');
-        $api->delete('aftersale', 'AfterSaleController@destroybyids')->middleware('permission:客服部')
+        $api->delete('aftersale', 'AfterSaleController@destroybyids')->middleware('permission:售后管理')
             ->name('api.aftersale.destroybyids');
-        $api->put('aftersale/editstatus', 'AfterSaleController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('aftersale/editstatus', 'AfterSaleController@editStatusByIds')->middleware('permission:售后管理')
             ->name('api.aftersale.editstatusbyids');
-        $api->put('aftersale/{aftersale}/lockorunlock', 'AfterSaleController@isLockOrUnlock')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/lockorunlock', 'AfterSaleController@isLockOrUnlock')->middleware('permission:售后管理')
             ->name('api.aftersale.islockorunlock');
-        $api->put('aftersale/{aftersale}/audit', 'AfterSaleController@isAudit')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/audit', 'AfterSaleController@isAudit')->middleware('permission:售后管理')
             ->name('api.aftersale.isaudit');
-        $api->put('aftersale/{aftersale}/unaudit', 'AfterSaleController@isUnAudit')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/unaudit', 'AfterSaleController@isUnAudit')->middleware('permission:售后管理')
             ->name('api.aftersale.isunaudit');
-        $api->put('aftersale/{aftersale}/oneaudit', 'AfterSaleController@isOneAudit')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/oneaudit', 'AfterSaleController@isOneAudit')->middleware('permission:售后管理')
             ->name('api.aftersale.isoneaudit');
-        $api->put('aftersale/{aftersale}/unoneaudit', 'AfterSaleController@isUnOneAudit')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/unoneaudit', 'AfterSaleController@isUnOneAudit')->middleware('permission:售后管理')
             ->name('api.aftersale.isunoneaudit');
-        $api->put('aftersale/{aftersale}/twoaudit', 'AfterSaleController@isTwoAudit')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/twoaudit', 'AfterSaleController@isTwoAudit')->middleware('permission:售后管理')
             ->name('api.aftersale.istwoaudit');
-        $api->put('aftersale/{aftersale}/untwoaudit', 'AfterSaleController@isUnTwoAudit')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/untwoaudit', 'AfterSaleController@isUnTwoAudit')->middleware('permission:售后管理')
             ->name('api.aftersale.isuntwoaudit');
-        $api->put('aftersale/{aftersale}/reject', 'AfterSaleController@isReject')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/reject', 'AfterSaleController@isReject')->middleware('permission:售后管理')
             ->name('api.aftersale.isreject');
-        $api->put('aftersale/{aftersale}/finish', 'AfterSaleController@isFinish')->middleware('permission:客服部')
+        $api->put('aftersale/{aftersale}/finish', 'AfterSaleController@isFinish')->middleware('permission:售后管理')
             ->name('api.aftersale.isfinish');
         // 售后进度
-        $api->get('aftersaleschedule', 'AfterSaleScheduleController@index')->middleware('permission:客服部')
+        $api->get('aftersaleschedule', 'AfterSaleScheduleController@index')->middleware('permission:售后管理')
             ->name('api.aftersaleschedule.index');
-        $api->get('aftersaleschedule/{aftersaleschedule}', 'AfterSaleScheduleController@show')->middleware('permission:客服部')
+        $api->get('aftersaleschedule/{aftersaleschedule}', 'AfterSaleScheduleController@show')->middleware('permission:售后管理')
             ->name('api.aftersaleschedule.show');
-        $api->post('aftersaleschedule', 'AfterSaleScheduleController@store')->middleware('permission:客服部')
+        $api->post('aftersaleschedule', 'AfterSaleScheduleController@store')->middleware('permission:售后管理')
             ->name('api.aftersaleschedule.store');
-        $api->patch('aftersaleschedule/{aftersaleschedule}', 'AfterSaleScheduleController@update')->middleware('permission:客服部')
+        $api->patch('aftersaleschedule/{aftersaleschedule}', 'AfterSaleScheduleController@update')->middleware('permission:售后管理')
             ->name('api.aftersaleschedule.update');
-        $api->delete('aftersaleschedule/{aftersaleschedule}', 'AfterSaleScheduleController@destroy')->middleware('permission:客服部')
+        $api->delete('aftersaleschedule/{aftersaleschedule}', 'AfterSaleScheduleController@destroy')->middleware('permission:售后管理')
             ->name('api.aftersaleschedule.destroy');
-        $api->delete('aftersaleschedule', 'AfterSaleScheduleController@destroybyids')->middleware('permission:客服部')
+        $api->delete('aftersaleschedule', 'AfterSaleScheduleController@destroybyids')->middleware('permission:售后管理')
             ->name('api.aftersaleschedule.destroybyids');
-        $api->put('aftersaleschedule/editstatus', 'AfterSaleScheduleController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('aftersaleschedule/editstatus', 'AfterSaleScheduleController@editStatusByIds')->middleware('permission:售后管理')
             ->name('api.aftersaleschedule.editstatusbyids');
         // 售后问题产品
-        $api->get('aftersaledefpro', 'AfterSaleDefProController@index')->middleware('permission:客服部')
+        $api->get('aftersaledefpro', 'AfterSaleDefProController@index')->middleware('permission:售后管理')
             ->name('api.aftersaledefpro.index');
-        $api->get('aftersaledefpro/{aftersaledefpro}', 'AfterSaleDefProController@show')->middleware('permission:客服部')
+        $api->get('aftersaledefpro/{aftersaledefpro}', 'AfterSaleDefProController@show')->middleware('permission:售后管理')
             ->name('api.aftersaledefpro.show');
-        $api->post('aftersaledefpro', 'AfterSaleDefProController@store')->middleware('permission:客服部')
+        $api->post('aftersaledefpro', 'AfterSaleDefProController@store')->middleware('permission:售后管理')
             ->name('api.aftersaledefpro.store');
-        $api->delete('aftersaledefpro/{aftersaledefpro}', 'AfterSaleDefProController@destroy')->middleware('permission:客服部')
+        $api->delete('aftersaledefpro/{aftersaledefpro}', 'AfterSaleDefProController@destroy')->middleware('permission:售后管理')
             ->name('api.aftersaledefpro.destroy');
-        $api->delete('aftersaledefpro', 'AfterSaleDefProController@destroybyids')->middleware('permission:客服部')
+        $api->delete('aftersaledefpro', 'AfterSaleDefProController@destroybyids')->middleware('permission:售后管理')
             ->name('api.aftersaledefpro.destroybyids');
-        $api->put('aftersaledefpro/editstatus', 'AfterSaleDefProController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('aftersaledefpro/editstatus', 'AfterSaleDefProController@editStatusByIds')->middleware('permission:售后管理')
             ->name('api.aftersaledefpro.editstatusbyids');
         // 薛涛
 
@@ -1699,65 +1693,61 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         /*$api->delete('returnorderitems/{returnorderitem}', 'ReturnOrderItemsController@destroy')
             ->name('api.returnorderitems.destroy');*/
 
-
-        
         //报表统计
-        $api->get('reportstatistics', 'ReportStatisticsController@index')->middleware('permission:客服部')
+        $api->get('reportstatistics', 'ReportStatisticsController@index')->middleware('permission:报表统计')
             ->name('api.reportstatistics.index');
-        $api->get('reportstatistics/orderAmount', 'ReportStatisticsController@orderAmount')->middleware('permission:客服部')
+        $api->get('reportstatistics/orderAmount', 'ReportStatisticsController@orderAmount')->middleware('permission:报表统计')
             ->name('api.reportstatistics.orderamount');
-        $api->get('reportstatistics/{reportstatistics}', 'ReportStatisticsController@show')->middleware('permission:客服部')
+        $api->get('reportstatistics/{reportstatistics}', 'ReportStatisticsController@show')->middleware('permission:报表统计')
             ->name('api.reportstatistics.show');
-        $api->post('reportstatistics', 'ReportStatisticsController@store')->middleware('permission:客服部')
+        $api->post('reportstatistics', 'ReportStatisticsController@store')->middleware('permission:报表统计')
             ->name('api.reportstatistics.store');
-        $api->delete('reportstatistics/{reportstatistics}', 'ReportStatisticsController@destroy')->middleware('permission:客服部')
+        $api->delete('reportstatistics/{reportstatistics}', 'ReportStatisticsController@destroy')->middleware('permission:报表统计')
             ->name('api.reportstatistics.destroy');
-        $api->delete('reportstatistics', 'ReportStatisticsController@destroybyids')->middleware('permission:客服部')
+        $api->delete('reportstatistics', 'ReportStatisticsController@destroybyids')->middleware('permission:报表统计')
             ->name('api.reportstatistics.destroybyids');
-        $api->put('reportstatistics/editstatus', 'ReportStatisticsController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('reportstatistics/editstatus', 'ReportStatisticsController@editStatusByIds')->middleware('permission:报表统计')
             ->name('api.reportstatistics.editstatusbyids');
 
-        
         //角色管理
-        $api->get('roles', 'RolesController@index')->middleware('permission:客服部')
+        $api->get('roles', 'RolesController@index')->middleware('permission:角色管理')
             ->name('api.roles.index');
-        $api->get('roles/{roles}', 'RolesController@show')->middleware('permission:客服部')
+        $api->get('roles/{roles}', 'RolesController@show')->middleware('permission:角色管理')
             ->name('api.roles.show');
-        $api->post('roles', 'RolesController@insertRole')->middleware('permission:客服部')
+        $api->post('roles', 'RolesController@insertRole')->middleware('permission:角色管理')
             ->name('api.roles.insertRole');
-        $api->post('roles/giverolespermission', 'RolesController@giveRolesPermission')->middleware('permission:客服部')
+        $api->post('roles/giverolespermission', 'RolesController@giveRolesPermission')->middleware('permission:角色管理')
             ->name('api.roles.giveRolesPermission');
-        $api->patch('roles/{roles}', 'RolesController@update')->middleware('permission:客服部')
+        $api->patch('roles/{roles}', 'RolesController@update')->middleware('permission:角色管理')
             ->name('api.roles.update');
-        $api->delete('roles/{roles}', 'RolesController@destroyByIds')->middleware('permission:客服部')
+        $api->delete('roles/{roles}', 'RolesController@destroyByIds')->middleware('permission:角色管理')
             ->name('api.roles.destroybyids');
 
         //权限管理
-        $api->get('permissions/{permissions}', 'PermissionsController@index')->middleware('permission:客服部')
+        $api->get('permissions/{permissions}', 'PermissionsController@index')->middleware('permission:角色管理')
             ->name('api.permissions.index');
 
-        $api->get('rolegroup', 'RoleGroupController@index')->middleware('permission:客服部')
+        $api->get('rolegroup', 'RoleGroupController@index')->middleware('permission:角色管理')
             ->name('api.roles.index');
 
-        
         //获取权限
-        $api->get('permissions', 'PermissionsController@index')->middleware('permission:客服部')
+        $api->get('permissions', 'PermissionsController@index')->middleware('permission:角色管理')
             ->name('api.permissions.index');
         //上传图片
-        $api->post('uploadimages', 'UploadImagesController@store')->middleware('permission:客服部')
+        $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
 
         //excel导入导出功能
-        $api->get('excel', 'ExcelController@ordersExport')->middleware('permission:客服部')
+        $api->get('excel', 'ExcelController@ordersExport')
             ->name('api.excel.ordersexport');
 
-        $api->get('users', 'UsersController@index')->middleware('permission:客服部')
+        $api->get('users', 'UsersController@index')->middleware('permission:用户管理')
             ->name('api.users.index');
-        $api->post('users/create', 'UsersController@storeUser')->middleware('permission:客服部')
+        $api->post('users/create', 'UsersController@storeUser')->middleware('permission:用户管理')
             ->name('api.users.storeuser');
-        $api->post('users/setroles', 'UsersController@setRoles')->middleware('permission:客服部')
+        $api->post('users/setroles', 'UsersController@setRoles')->middleware('permission:用户管理')
             ->name('api.users.setroles');
-        $api->get('users/{users}/getrolesassociateusers', 'UsersController@getRolesAssociateUsers')->middleware('permission:客服部')
+        $api->get('users/{users}/getrolesassociateusers', 'UsersController@getRolesAssociateUsers')->middleware('permission:用户管理')
             ->name('api.users.getrolesassociateusers');
     });
     $api->group([
