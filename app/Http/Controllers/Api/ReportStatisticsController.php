@@ -198,6 +198,51 @@ class ReportStatisticsController extends Controller
         $REFUND_STATUS_FD_AUDIT_NUM = count($REFUND_STATUS_FD_AUDIT);
 
         $refundOrderNumArray = array($REFUND_STATUS_NEW_NUM, $REFUND_STATUS_LOCK_NUM, $REFUND_STATUS_CS_AUDIT_NUM, $REFUND_STATUS_AS_LOCK_NUM, $REFUND_STATUS_AS_AUDIT_NUM, $REFUND_STATUS_FD_LOCK_NUM, $REFUND_STATUS_FD_AUDIT_NUM);
+
+
+        //采购
+        $PURCHASE_STATUS_NEW = DB::table("purchases")->where('purchase_status', '=', 'new')->get();
+        $PURCHASE_STATUS_SECTION = DB::table("purchases")->where('purchase_status', '=', 'section')->get();
+        $PURCHASE_STATUS_FINISH = DB::table("purchases")->where('purchase_status', '=', 'finish')->get();
+
+        $PURCHASE_STATUS_NEW_NUM = count($PURCHASE_STATUS_NEW);
+        $PURCHASE_STATUS_SECTION_NUM = count($PURCHASE_STATUS_SECTION);
+        $PURCHASE_STATUS_FINISH_NUM = count($PURCHASE_STATUS_FINISH);
+
+        $purchaseOrderNumArray = array($PURCHASE_STATUS_NEW_NUM,$PURCHASE_STATUS_SECTION_NUM,$PURCHASE_STATUS_FINISH_NUM);
+
+        //取消采购
+        $CANCEL_PURCHASE_NEW = DB::table("cancel_purchases")->where('is_submit', '=', 0)->get();
+        $CANCEL_PURCHASE_SUBMIT = DB::table("cancel_purchases")->where('is_submit', '=', 0)->get();
+
+        $CANCEL_PURCHASE_NEW_NUM = count($CANCEL_PURCHASE_NEW);
+        $CANCEL_PURCHASE_SUBMIT_NUM = count($CANCEL_PURCHASE_SUBMIT);
+
+        $cancelPurchaseOrderNum = array($CANCEL_PURCHASE_NEW_NUM,$CANCEL_PURCHASE_SUBMIT_NUM);
+
+        $STOCKIN_STATUS_NEW = DB::table("stock_ins")->where('stock_in_status', '=', 10)->get();
+        $STOCKIN_STATUS_SUBMIT = DB::table("stock_ins")->where('stock_in_status', '=', 20)->get();
+        $STOCKIN_STATUS_STOCKIN = DB::table("stock_ins")->where('stock_in_status', '=', 30)->get();
+
+        $STOCKIN_STATUS_NEW_NUM = count($STOCKIN_STATUS_NEW);
+        $STOCKIN_STATUS_SUBMIT_NUM = count($STOCKIN_STATUS_SUBMIT);
+        $STOCKIN_STATUS_STOCKIN_NUM = count($STOCKIN_STATUS_STOCKIN);
+
+        $stockInOrderNum = array($STOCKIN_STATUS_NEW_NUM,$STOCKIN_STATUS_SUBMIT_NUM,$STOCKIN_STATUS_STOCKIN_NUM);
+
+        //补件订单统计
+        $RESUPPLIE_UNSUBMITED = DB::table("re_supplie_orders")->where('is_submit', '=', 0)->get();
+        $RESUPPLIE_UNREVIEW = DB::table("re_supplie_orders")->where('is_review', '=', 0)->get();
+        $RESUPPLIE_UNSETTLE = DB::table("re_supplie_orders")->where('is_settle', '=', 0)->get();
+
+        $RESUPPLIE_UNSUBMITED_NUM = count($RESUPPLIE_UNSUBMITED);
+        $RESUPPLIE_UNREVIEW_NUM = count($RESUPPLIE_UNREVIEW);
+        $RESUPPLIE_UNSETTLE_NUM = count($RESUPPLIE_UNSETTLE);
+
+        $reSupplieOrderNum = array($RESUPPLIE_UNSUBMITED_NUM,$RESUPPLIE_UNREVIEW_NUM,$RESUPPLIE_UNSETTLE_NUM);
+
+        $reportData = array($salesOrderNumArray,$changeOrderNumArray,$refundOrderNumArray,$purchaseOrderNumArray,$cancelPurchaseOrderNum,$stockInOrderNum,$reSupplieOrderNum);
+        return $reportData;
     }
 
     public function store(CustomerServiceDepartmentRequest $request)
