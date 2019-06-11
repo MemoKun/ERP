@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class StockInTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'warehouse', 'stockInType', 'stockInDetails', 'supplier', 'submitter', 'auditor', 'warehouer'
+        'warehouse', 'stockInType', 'stockInDetails', 'supplier', 'submitter', 'auditor', 'warehouer', 'creator'
     ];
 
     public function transform(StockIn $stockIn)
@@ -20,17 +20,17 @@ class StockInTransformer extends TransformerAbstract
             'stock_in_status' => $stockIn->stock_in_status,
             'warehouse_id' => $stockIn->warehouse_id,
             'stock_in_types_id' => $stockIn->stock_in_types_id,
-            'creator' => $stockIn->creator,
+            'creator_id' => $stockIn->creator_id,
             'is_submit' => $stockIn->is_submit,
-            'submitter' => $stockIn->submitter,
+            'submitter_id' => $stockIn->submitter_id,
             'submit_at' => optional($stockIn->submit_at)->toDateTimeString(),
             'is_print' => $stockIn->is_print,
             'print_at' => optional($stockIn->print_at)->toDateTimeString(),
             'is_audit' => $stockIn->is_audit,
-            'auditor' => $stockIn->auditor,
+            'auditor_id' => $stockIn->auditor_id,
             'audit_at' => optional($stockIn->audit_at)->toDateTimeString(),
             'is_stock_in' => $stockIn->is_stock_in,
-            'warehouer' => $stockIn->warehouer,
+            'warehouer_id' => $stockIn->warehouer_id,
             'stock_in_at' =>  optional($stockIn->stock_in_at)->toDateTimeString(),
             'status' => $stockIn->status,
             'created_at' => $stockIn->created_at
@@ -61,21 +61,27 @@ class StockInTransformer extends TransformerAbstract
         return $this->item($stockIn->supplier, new SupplierTransformer());
     }
 
+    public function includeCreator(StockIn $stockIn)
+    {
+        if(!$stockIn->creator_id) return ;
+        return $this->item($stockIn->creator, new UserTransformer());
+    }
+
     public function includeSubmitter(StockIn $stockIn)
     {
-        if(!$stockIn->submitter) return ;
+        if(!$stockIn->submitter_id) return ;
         return $this->item($stockIn->submitter, new UserTransformer());
     }
 
     public function includeAuditor(StockIn $stockIn)
     {
-        if(!$stockIn->auditor) return ;
+        if(!$stockIn->auditor_id) return ;
         return $this->item($stockIn->auditor, new UserTransformer());
     }
 
     public function includeWarehouer(StockIn $stockIn)
     {
-        if(!$stockIn->warehouer) return ;
+        if(!$stockIn->warehouer_id) return ;
         return $this->item($stockIn->warehouer, new UserTransformer());
     }
 
