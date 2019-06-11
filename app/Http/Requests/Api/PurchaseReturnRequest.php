@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
+use Illuminate\Validation\Rule;
 class PurchaseReturnRequest extends FormRequest
 {
 
@@ -15,6 +16,11 @@ class PurchaseReturnRequest extends FormRequest
         switch ($this->method()) {
             case 'GET':
                 return [
+                    'purchase_return_status' => Rule::in([
+                        \App\Models\PurchaseReturn::PURCHASE_RETURN_STATUS_NEW,
+                        \App\Models\PurchaseReturn::PURCHASE_RETURN_STATUS_SUBMIT,
+                        \App\Models\PurchaseReturn::PURCHASE_RETURN_STATUS_AUDIT,
+                    ]),
                     'status' => 'boolean',
                     'is_submit' => 'boolean',
                     'is_audit' => 'boolean',
@@ -22,6 +28,11 @@ class PurchaseReturnRequest extends FormRequest
                 break;
             case 'POST':
                 return [
+                    'purchase_return_status' => Rule::in([
+                        \App\Models\PurchaseReturn::PURCHASE_RETURN_STATUS_NEW,
+                        \App\Models\PurchaseReturn::PURCHASE_RETURN_STATUS_SUBMIT,
+                        \App\Models\PurchaseReturn::PURCHASE_RETURN_STATUS_AUDIT,
+                    ]),
                     'remark' => 'string|nullable|max:255',
                     'status' => 'boolean',
                 ];

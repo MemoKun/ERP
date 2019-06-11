@@ -25,11 +25,12 @@ class PurchaseDetailRequest extends FormRequest
                     'purchase_lists.*.purchase_details.*.product_components_id' => [
                         'required', 'integer',
                         Rule::exists('product_components', 'id'),
-                        function ($attribute, $value, $fail) {
+                        function($attribute, $value, $fail) {
                             $ex = explode('.', $attribute);
                             $purchaseLists = $this->purchase_lists[$ex[1]];
                             //list里面是否存在重复的sku 或 子件是否属于sku
-                            if (!(collect($this->purchase_lists[$ex[1]]['purchase_details'])
+                            if (
+                                !(collect($this->purchase_lists[$ex[1]]['purchase_details'])
                                     ->where('product_components_id', $value)->count()>1)
                                 &&
                                 \App\Models\CombinationProductComponent::query()
@@ -44,13 +45,13 @@ class PurchaseDetailRequest extends FormRequest
                     'purchase_lists.*.purchase_details.*.purchase_quantity' => 'required|integer|min:1',
                     'purchase_lists.*.purchase_details.*.shops_id' => [
                         'integer',
-                        Rule::exists('shops', 'id')->where(function ($query) {
+                        Rule::exists('shops', 'id')->where(function($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     'purchase_lists.*.purchase_details.*.suppliers_id' => [
                         'integer',
-                        Rule::exists('shops', 'id')->where(function ($query) {
+                        Rule::exists('suppliers', 'id')->where(function($query) {
                             $query->where('status', 1);
                         }),
                     ],
@@ -73,13 +74,14 @@ class PurchaseDetailRequest extends FormRequest
                     'purchase_lists.*.purchase_details.*.product_components_id' => [
                         'integer',
                         Rule::exists('product_components', 'id'),
-                        function ($attribute, $value, $fail) {
+                        function($attribute, $value, $fail) {
 
                             $ex = explode('.', $attribute);
 
                             $purchaseLists = $this->purchase_lists[$ex[1]];
                             //details 是否存在重复数据 或 子件属于这个sku
-                            if (collect($this->purchase_lists[$ex[1]]['purchase_details'])
+                            if (
+                                collect($this->purchase_lists[$ex[1]]['purchase_details'])
                                 ->where('product_components_id', $value)
                                 ->count()>1
                                 ||
@@ -91,12 +93,10 @@ class PurchaseDetailRequest extends FormRequest
                             }
 
                             //判断是否存在purchase_details.*.id
-                            if ($id = $purchaseLists['purchase_details'][$ex[3]]['id'] ?? null) {
+                            if ($id = $purchaseLists['purchase_details'][$ex[3]]['id'] ?? null)
                                 //purchase_details表里是否同一条数据
-                                if (\App\Models\PurchaseDetail::findOrfail($id)->product_components_id == $value) {
+                                if (\App\Models\PurchaseDetail::findOrfail($id)->product_components_id == $value)
                                     return true;
-                                }
-                            }
 
                             //判断上一层是否存在id
                             if ($id = $purchaseLists['id'] ?? null) {
@@ -111,13 +111,13 @@ class PurchaseDetailRequest extends FormRequest
                     'purchase_lists.*.purchase_details.*.purchase_quantity' => ['integer', 'min:1'],
                     'purchase_lists.*.purchase_details.*.shops_id' => [
                         'integer',
-                        Rule::exists('shops', 'id')->where(function ($query) {
+                        Rule::exists('shops', 'id')->where(function($query) {
                             $query->where('status', 1);
                         }),
                     ],
                     'purchase_lists.*.purchase_details.*.suppliers_id' => [
                         'integer',
-                        Rule::exists('shops', 'id')->where(function ($query) {
+                        Rule::exists('shops', 'id')->where(function($query) {
                             $query->where('status', 1);
                         }),
                     ],
@@ -134,7 +134,8 @@ class PurchaseDetailRequest extends FormRequest
         }
     }
 
-    public function messages()
+    public
+    function messages()
     {
         return [
             'purchase_lists.*.purchase_details.*.id.required' => '采购详情id必填',
@@ -176,7 +177,8 @@ class PurchaseDetailRequest extends FormRequest
         ];
     }
 
-    public function attributes()
+    public
+    function attributes()
     {
         return [
             'purchases_id' => '采购id',

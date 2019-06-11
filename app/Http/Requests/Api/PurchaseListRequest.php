@@ -28,10 +28,10 @@ class PurchaseListRequest extends FormRequest
                         Rule::exists('combinations', 'id'),
                         function($attribute, $value, $fail) {
                             //list里面是否存在重复的sku
-                            if(!(collect($this->purchase_lists)->where('combinations_id',$value)->count()>1)){
-                                return true;
+                            if((collect($this->purchase_lists)->where('combinations_id',$value)->count()>1)){
+                                return $fail('存在重复的组合数据');;
                             }
-                            return $fail('存在重复的组合数据');
+                            return true;
                         }
                     ],
                     'purchase_lists.*.remark' => 'string|nullable|max:255'
