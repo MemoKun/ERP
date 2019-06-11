@@ -37,7 +37,7 @@ class StockIn extends Model
 
     protected $fillable = [
         'stock_in_no', 'external_sn', 'stock_in_status', 'warehouse_id', 'stock_in_types_id', 'suppliers_id',
-        'creator', 'submitter', 'submit_at', 'auditor', 'audit_at', 'warehouer',
+        'creator_id', 'submitter_id', 'submit_at', 'auditor_id', 'audit_at', 'warehouer_id',
         'stock_in_at', 'is_submit', 'is_audit', 'is_stock_in', 'status', 'print_at',
         'is_print'
     ];
@@ -59,10 +59,10 @@ class StockIn extends Model
         'warehouse_id' => 'integer',
         'stock_in_types_id' => 'integer',
         'suppliers_id' => 'integer',
-        'creator' => 'integer',
-        'submitter' => 'integer',
-        'auditor' => 'integer',
-        'warehouer' => 'integer',
+        'creator_id' => 'integer',
+        'submitter_id' => 'integer',
+        'auditor_id' => 'integer',
+        'warehouer_id' => 'integer',
     ];
 
     protected static function boot()
@@ -72,19 +72,20 @@ class StockIn extends Model
         static::creating(function ($model) {
             // 如果模型的 no 字段为空
             if (!$model->stock_in_no) {
-                // 调用 findAvailableNo 生成订单流水号
+                // 调用 findAvailableNo 生成    订单流水号
                 $model->stock_in_no = static::findAvailableNo();
                 // 如果生成失败，则终止创建订单
                 if (!$model->stock_in_no) {
                     return false;
                 }
             }
-            // 如果模型的 creator 字段为空
-            if (!$model->creator) {
+            
+            // 如果模型的 creator_id 字段为空
+            if (!$model->creator_id) {
 
-                $model->creator = Auth::guard('api')->id();
+                $model->creator_id = Auth::guard('api')->id();
                 // 如果生成失败，则终止创建订单
-                if (!$model->creator) {
+                if (!$model->creator_id) {
                     return false;
                 }
             }
@@ -111,19 +112,24 @@ class StockIn extends Model
         return $this->belongsTo(Supplier::class, 'suppliers_id');
     }
 
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
+
     public function submitter()
     {
-        return $this->belongsTo(User::class, 'submitter');
+        return $this->belongsTo(User::class, 'submitter_id');
     }
 
     public function auditor()
     {
-        return $this->belongsTo(User::class, 'auditor');
+        return $this->belongsTo(User::class, 'auditor_id');
     }
 
     public function warehouer()
     {
-        return $this->belongsTo(User::class, 'warehouer');
+        return $this->belongsTo(User::class, 'warehouer_id');
     }
 
 
@@ -134,7 +140,7 @@ class StockIn extends Model
     {
         $this->stock_in_status = self::STOCKIN_STATUS_SUBMIT;
         $this->submit_at = Carbon::now();
-        $this->submitter = Auth::guard('api')->id();
+        $this->submitter_id = Auth::guard('api')->id();
         $this->is_submit = 1;
         $this->save();
     }
@@ -156,11 +162,12 @@ class StockIn extends Model
     {
         $this->stock_in_status = self::STOCKIN_STATUS_STOCKIN;
         $this->audit_at = Carbon::now();
-        $this->auditor = Auth::guard('api')->id();
+        $this->auditor_id = Auth::guard('api')->id();
         $this->is_audit = 1;
         $this->is_stock_in = 1;
         $this->stock_in_at = Carbon::now();
-        $this->warehouer = Auth::guard('api')->id();
+        $this->warehouer_id = Auth::guard('api')->id();
+        
         $this->save();
     }
 
@@ -171,8 +178,9 @@ class StockIn extends Model
     {
         $this->stock_in_status = self::STOCKIN_STATUS_SUBMIT;
         $this->audit_at = Carbon::now();
-        $this->auditor = Auth::guard('api')->id();
+        $this->auditor_id = Auth::guard('api')->id();
         $this->is_audit = 0;
+        
         $this->save();
     }
 
@@ -182,7 +190,7 @@ class StockIn extends Model
     public function stockIn()
     {
         $this->stock_in_at = Carbon::now();
-        $this->warehouer = Auth::guard('api')->id();
+        $this->warehouer_id = Auth::guard('api')->id();
         $this->is_stock_in = 1;
         $this->save();
     }

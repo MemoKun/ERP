@@ -58,6 +58,39 @@ class PurchaseDetail extends Model
         return true;
     }
 
+    /**
+     *  取消入库并且修改子采购单状态
+     *
+     * @param $amount 数量
+     */
+    public function decreaseStockInCount($amount)
+    {
+        if (!in_array($this->getOriginal('purchase_item_status'), [\App\Models\Purchase::PURCHASE_STATUS_FINISH, \App\Models\Purchase::PURCHASE_STATUS_SECTION])) {
+            throw new UpdateResourceFailedException('取消入库错误，查看订单是否已经完成');
+        }
+        if ($amount < 0) {
+            throw new UpdateResourceFailedException('数量不可小于0');
+        }
+        if ($this->stock_in_count < $amount) {
+            throw new UpdateResourceFailedException('取消入库数量超过已入库数量');
+        }
+
+        $this->decrement('stock_in_count', $amount);
+
+        if($this->stock_in_count){
+
+            //设置子订单状态
+            if ($this->purchase_quantity - $this->stock_in_count > 0) {
+                $this->purchase_item_status = \App\Models\Purchase::PURCHASE_STATUS_SECTION;
+            } else {
+                $this->purchase_item_status = \App\Models\Purchase::PURCHASE_STATUS_NEW;
+            }
+        }
+
+        $this->save();
+        return true;
+    }
+
     //减少采购数
     public function decreasePurchaseQuantity($amount)
     {

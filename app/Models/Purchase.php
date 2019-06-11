@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class Purchase extends Model
 {
@@ -65,7 +66,7 @@ class Purchase extends Model
             // 如果模型的 user_id 字段为空
             if (!$model->user_id) {
 
-                $model->user_id = 1;
+                $model->user_id = Auth::guard('api')->id();
                 // 如果生成失败，则终止创建订单
                 if (!$model->user_id) {
                     return false;
@@ -106,6 +107,15 @@ class Purchase extends Model
     public function audit()
     {
         $this->is_audit = 1;
+        $this->save();
+    }
+
+    /**
+     * 退审
+     */
+    public function unAudit()
+    {
+        $this->is_audit = 0;
         $this->save();
     }
 

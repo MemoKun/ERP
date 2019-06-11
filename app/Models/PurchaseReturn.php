@@ -3,13 +3,40 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseReturn extends Model
 {
+    // 采购退货状态
+    const PURCHASE_RETURN_STATUS_NEW = 10;
+    const PURCHASE_RETURN_STATUS_SUBMIT = 20;
+    const PURCHASE_RETURN_STATUS_AUDIT = 30;
+
+    // 采购退货状态
+    public static $orderStatusMap = [
+        self::PURCHASE_RETURN_STATUS_NEW => '新建',
+        self::PURCHASE_RETURN_STATUS_SUBMIT => '未审核',
+        self::PURCHASE_RETURN_STATUS_AUDIT => '已审核',
+    ];
+
+    // 采购退货操作
+    public static $afterSaleOperationMap = [
+        self::PURCHASE_RETURN_STATUS_NEW => '创建',
+        self::PURCHASE_RETURN_STATUS_SUBMIT => '提交',
+        self::PURCHASE_RETURN_STATUS_AUDIT => '审核',
+    ];
+
+    // 采购退货操作详情
+    public static $afterSaleOperationDescriptionMap = [
+        self::PURCHASE_RETURN_STATUS_NEW => '创建采购退货单',
+        self::PURCHASE_RETURN_STATUS_SUBMIT => '提交采购退货单',
+        self::PURCHASE_RETURN_STATUS_AUDIT => '审核采购退货单',
+    ];
+
     protected $table = 'purchase_returns';
 
     protected $fillable = [
-        'remark','status'
+        'remark','status','purchase_return_status'
     ];
 
     //设置类型
@@ -34,12 +61,12 @@ class PurchaseReturn extends Model
                     return false;
                 }
             }
-            // 如果模型的 creator 字段为空
-            if (!$model->creator) {
+            // 如果模型的 creator_id 字段为空
+            if (!$model->creator_id) {
 
-                $model->creator = 'admin';
+                $model->creator_id = Auth::guard('api')->id();;
                 // 如果生成失败，则终止创建订单
-                if (!$model->creator) {
+                if (!$model->creator_id) {
                     return false;
                 }
             }
@@ -68,33 +95,48 @@ class PurchaseReturn extends Model
      */
     public function input()
     {
+        $this->purchase_return_status = self::PURCHASE_RETURN_STATUS_SUBMIT;
         $this->is_submit = 1;
-        $this->submitter = 'admin';
+        $this->submitter_id = Auth::guard('api')->id();
         $this->submit_at = Carbon::now();
         $this->save();
     }
 
-//    /**
-//     * 退审
-//     */
-//    public function auditFaild()
-//    {
-//        $this->is_submit = 0;
-//        $this->submitter = '';
-//        $this->submit_at = null;
-//        $this->save();
-//    }
+    /**
+     * 驳回
+     */
+    public function reject()
+    {
+        $this->purchase_return_status = self::PURCHASE_RETURN_STATUS_NEW;
+        $this->is_submit = 0;
+        $this->submitter_id = 0;
+        $this->submit_at = null;
+        $this->save();
+    }
 
     /**
      * 审核
      */
     public function audit()
     {
+        $this->purchase_return_status = self::PURCHASE_RETURN_STATUS_AUDIT;
         $this->audit_at = Carbon::now();
-        $this->auditor = 'admin';
+        $this->auditor_id = Auth::guard('api')->id();
         $this->is_audit = 1;
         $this->save();
     }
+    
+   /**
+    * 退审
+    */
+   public function unAudit()
+   {
+        $this->purchase_return_status = self::PURCHASE_RETURN_STATUS_SUBMIT;
+        $this->audit_at = null;
+        $this->auditor_id = 0;
+        $this->is_audit = 0;
+        $this->save();
+   }
 
     /**
      * 打印
@@ -110,4 +152,18 @@ class PurchaseReturn extends Model
         return $this->hasMany(PurchaseReturnDetail::class,'purchase_returns_id');
     }
 
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    public function submitter()
+    {
+        return $this->belongsTo(User::class, 'submitter_id');
+    }
+
+    public function auditor()
+    {
+        return $this->belongsTo(User::class, 'auditor_id');
+    }
 }
