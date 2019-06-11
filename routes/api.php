@@ -576,12 +576,14 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.purchasereturns.editstatusbyids');
         $api->put('purchasereturns/{purchasereturn}/submit', 'PurchaseReturnsController@isSubmit')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.issubmit');
+        $api->put('purchasereturns/{purchasereturn}/reject', 'PurchaseReturnsController@isReject')->middleware('permission:采购退货管理')
+            ->name('api.purchasereturns.isReject');
         $api->put('purchasereturns/{purchasereturn}/audit', 'PurchaseReturnsController@isAudit')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.isAudit');
+        $api->put('purchasereturns/{purchasereturn}/unaudit', 'PurchaseReturnsController@isUnAudit')->middleware('permission:采购退货管理')
+            ->name('api.purchasereturns.isUnAudit');
         $api->put('purchasereturns/{purchasereturn}/print', 'PurchaseReturnsController@isPrint')->middleware('permission:采购退货管理')
             ->name('api.purchasereturns.isprint');
-        //        $api->put('purchasereturns/{purchasereturn}/auditfaild', 'PurchaseReturnsController@isAuditFaild')->middleware('permission:采购退货管理')
-        //            ->name('api.purchasereturns.isretrial');
 
         //采购退货类型
         $api->get('purchasereturntypes', 'PurchaseReturnTypesController@index')->middleware('permission:采购退货管理')
