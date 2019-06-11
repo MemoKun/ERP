@@ -15,7 +15,10 @@
         <div id="resupplieOrder" :style="{width: '400px', height: '350px'}"></div>
         <div id="aftersaleOrder" :style="{width: '400px', height: '350px'}"></div>
       </div>
-      <div id="changeOrdersCharts" :style="{width: '1000px', height: '500px'}"></div>
+      <div class="searchBox">
+        <div id="cmptnOrder" :style="{width: '400px', height: '350px'}"></div>
+      </div>
+      <div id="monthlySalesPrediction" :style="{width: '1000px', height: '500px'}"></div>
       <div id="salesPrediction" :style="{width: '1000px', height: '500px'}"></div>
       <!--<div id="salesHotMap" :style="{width: '800px', height: '400px'}"></div>-->
       <div id="productHotMap" :style="{width: '1000px', height: '500px'}"></div>
@@ -24,8 +27,15 @@
 </template>
 
 <script>
+import {
+  regionDataPlus,
+  CodeToText,
+  TextToCode
+} from "element-china-area-data";
 import { mapGetters } from "vuex";
 import echarts from "echarts";
+import VueResource from "vue-resource";
+Vue.use(VueResource);
 export default {
   name: "dashboard",
   data() {
@@ -33,67 +43,8 @@ export default {
       msg: "Welcome to Your Vue.js App",
       newOpt: [],
       title: "新增",
-      backgroundDiv: {
-        backgroundImage: "url(" + require("../../img/main.jpg") + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 100%"
-      },
-      formDialog: {
-        title: "测试",
-        dialogFormVisible: false,
-        form: [
-          {
-            label: "名称",
-            type: "text",
-            formLabelWidth: "120px",
-            name: "hh"
-          },
-          {
-            label: "代码",
-            type: "text",
-            formLabelWidth: "120px",
-            name: "vv"
-          },
-          {
-            label: "状态",
-            type: "select",
-            formLabelWidth: "120px",
-            ps: {
-              s: "1"
-            },
-            status: [
-              {
-                label: "是",
-                value: 1
-              },
-              {
-                label: "否",
-                value: 0
-              }
-            ]
-          }
-        ]
-      }
-    };
-  },
-  computed: {
-    ...mapGetters(["name", "roles"]),
-    getKey() {
-      let arr = this.formDialog.form.ps;
-    }
-  },
-  components: {
-    // addM
-  },
-  methods: {
-    salesOrder() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(
-        document.getElementById("salesOrder"),
-        "light"
-      );
-      // 绘制图表
-      myChart.setOption({
+      salesData: 1111,
+      salesOrderOption: {
         title: { text: "销售订单" },
         tooltip: {
           trigger: "item",
@@ -129,24 +80,16 @@ export default {
               }
             },
             data: [
-              { value: 335, name: "未客审" },
-              { value: 310, name: "未货审" },
-              { value: 234, name: "未财审" },
-              { value: 135, name: "未打单" },
-              { value: 1548, name: "未发货" }
+              { value: 0, name: "未客审" },
+              { value: 0, name: "未货审" },
+              { value: 0, name: "未财审" },
+              { value: 0, name: "未打单" },
+              { value: 0, name: "未发货" }
             ]
           }
         ]
-      });
-    },
-    changeOrder() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(
-        document.getElementById("changeOrder"),
-        "light"
-      );
-      // 绘制图表
-      myChart.setOption({
+      },
+      changeOrderOption: {
         title: { text: "变更订单" },
         tooltip: {
           trigger: "item",
@@ -181,22 +124,11 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 335, name: "未提交" },
-              { value: 310, name: "未审核" },
-            ]
+            data: [{ value: 335, name: "未提交" }, { value: 310, name: "未审核" }]
           }
         ]
-      });
-    },
-    refundOrder() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(
-        document.getElementById("refundOrder"),
-        "light"
-      );
-      // 绘制图表
-      myChart.setOption({
+      },
+      refundOrderOption: {
         title: { text: "退款订单" },
         tooltip: {
           trigger: "item",
@@ -234,20 +166,12 @@ export default {
             data: [
               { value: 310, name: "未客审" },
               { value: 234, name: "未财审" },
-              { value: 135, name: "售后未审核" },
+              { value: 135, name: "售后未审核" }
             ]
           }
         ]
-      });
-    },
-    purchaseOrder() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(
-        document.getElementById("purchaseOrder"),
-        "light"
-      );
-      // 绘制图表
-      myChart.setOption({
+      },
+      purchaseOrderOption: {
         title: { text: "采购订单" },
         tooltip: {
           trigger: "item",
@@ -256,7 +180,7 @@ export default {
         legend: {
           orient: "vertical",
           x: "right",
-          data: ["未客审", "未货审", "未财审", "未打单"]
+          data: ["新采购单", "部分入库"]
         },
         series: [
           {
@@ -282,24 +206,11 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 335, name: "未客审" },
-              { value: 310, name: "未货审" },
-              { value: 234, name: "未财审" },
-              { value: 135, name: "未打单" },
-            ]
+            data: [{ value: 335, name: "新采购单" }, { value: 310, name: "部分入库" }]
           }
         ]
-      });
-    },
-    purchaseCancelOrder() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(
-        document.getElementById("purchaseCancelOrder"),
-        "light"
-      );
-      // 绘制图表
-      myChart.setOption({
+      },
+      purchaseCancelOrderOption: {
         title: { text: "取消采购订单" },
         tooltip: {
           trigger: "item",
@@ -308,7 +219,7 @@ export default {
         legend: {
           orient: "vertical",
           x: "right",
-          data: ["未客审", "未货审", "未财审", "未提交"]
+          data: ["新建", "已提交"]
         },
         series: [
           {
@@ -334,24 +245,11 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 335, name: "未客审" },
-              { value: 310, name: "未货审" },
-              { value: 234, name: "未财审" },
-              { value: 1548, name: "未提交" }
-            ]
+            data: [{ value: 335, name: "新建" }, { value: 310, name: "已提交" }]
           }
         ]
-      });
-    },
-    stockInOrder() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(
-        document.getElementById("stockInOrder"),
-        "light"
-      );
-      // 绘制图表
-      myChart.setOption({
+      },
+      stockInOrderOption: {
         title: { text: "入库订单" },
         tooltip: {
           trigger: "item",
@@ -360,7 +258,7 @@ export default {
         legend: {
           orient: "vertical",
           x: "right",
-          data: ["未提交", "未审核"]
+          data: ["未提交", "未入库"]
         },
         series: [
           {
@@ -387,21 +285,13 @@ export default {
               }
             },
             data: [
-              { value: 335, name: "未客审" },
-              { value: 135, name: "未审核" },
+              { value: 335, name: "未提交" },
+              { value: 135, name: "未入库" },
             ]
           }
         ]
-      });
-    },
-    resupplieOrder() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(
-        document.getElementById("resupplieOrder"),
-        "light"
-      );
-      // 绘制图表
-      myChart.setOption({
+      },
+      resupplieOrderOption: {
         title: { text: "补件订单" },
         tooltip: {
           trigger: "item",
@@ -438,23 +328,14 @@ export default {
             },
             data: [
               { value: 335, name: "未提交" },
-              { value: 234, name: "未审核（大件）" },
-              { value: 135, name: "未审核（零件）" },
-              { value: 1548, name: "未审核（金额）" }
+              { value: 234, name: "未审核" },
+              { value: 135, name: "未结算" },
             ]
           }
         ]
-      });
-    },
-    aftersaleOrder() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(
-        document.getElementById("aftersaleOrder"),
-        "light"
-      );
-      // 绘制图表
-      myChart.setOption({
-        title: { text: "销售订单" },
+      },
+      aftersaleOrderOption: {
+        title: { text: "售后订单" },
         tooltip: {
           trigger: "item",
           formatter: "{a} <br/>{b}: {c} ({d}%)"
@@ -462,11 +343,11 @@ export default {
         legend: {
           orient: "vertical",
           x: "right",
-          data: ["未客审", "未货审", "未财审", "未打单", "未发货"]
+          data: ["未客审", "未售后提交", "未售后审核"]
         },
         series: [
           {
-            name: "访问来源",
+            name: "售后订单",
             type: "pie",
             radius: ["50%", "70%"],
             avoidLabelOverlap: false,
@@ -490,19 +371,188 @@ export default {
             },
             data: [
               { value: 335, name: "未客审" },
-              { value: 310, name: "未货审" },
-              { value: 234, name: "未财审" },
-              { value: 135, name: "未打单" },
-              { value: 1548, name: "未发货" }
+              { value: 310, name: "未售后提交" },
+              { value: 234, name: "未售后审核" },
             ]
           }
         ]
-      });
+      },
+      cmptnOrderOption:{
+        title: { text: "售后赔偿" },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+          orient: "vertical",
+          x: "right",
+          data: ["未售后提交", "未售后审核"]
+        },
+        series: [
+          {
+            name: "售后订单",
+            type: "pie",
+            radius: ["50%", "70%"],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: "center"
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: "30",
+                  fontWeight: "bold"
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: [
+              { value: 335, name: "未售后提交" },
+              { value: 310, name: "未售后审核" },
+            ]
+          }
+        ]
+      },
+    };
+  },
+  computed: {
+    resData: {
+      get: function() {
+        return this.$store.state.responseData;
+      },
+      set: function() {}
     },
-    changeOrdersCharts() {
+    urls: {
+      get: function() {
+        return this.$store.state.urls;
+      },
+      set: function() {}
+    },
+    ...mapGetters(["name", "roles"])
+  },
+  components: {
+    // addM
+  },
+  methods: {
+    fetchData() {
+      this.$fetch(this.urls.reportstatistics + "/indexreport").then(
+        res => {
+          //销售订单赋值
+          this.salesOrderOption.series[0].data[0].value = res[0][0] + res[0][1];
+          this.salesOrderOption.series[0].data[1].value = res[0][4];
+          this.salesOrderOption.series[0].data[2].value = res[0][3];
+          this.salesOrderOption.series[0].data[3].value = res[0][5];
+          this.salesOrderOption.series[0].data[4].value = res[0][6];
+
+          this.changeOrderOption.series[0].data[0].value = res[1][0];
+          this.changeOrderOption.series[0].data[1].value = res[1][1];
+
+          this.refundOrderOption.series[0].data[0].value =
+            res[2][0] + res[2][1];
+          this.refundOrderOption.series[0].data[1].value = res[2][2];
+          this.refundOrderOption.series[0].data[2].value =
+            res[2][3] + res[2][4];
+
+          this.purchaseOrderOption.series[0].data[0].value = res[3][0];
+          this.purchaseOrderOption.series[0].data[1].value = res[3][1];
+
+          this.purchaseCancelOrderOption.series[0].data[0].value = res[4][0];
+          this.purchaseCancelOrderOption.series[0].data[1].value = res[4][1];
+
+          this.stockInOrderOption.series[0].data[0].value = res[5][0];
+          this.stockInOrderOption.series[0].data[1].value = res[5][1];
+
+          this.resupplieOrderOption.series[0].data[0].value = res[6][0];
+          this.resupplieOrderOption.series[0].data[1].value = res[6][1];
+          this.resupplieOrderOption.series[0].data[2].value = res[6][2];
+
+          this.aftersaleOrderOption.series[0].data[0].value = res[7][0];
+          this.aftersaleOrderOption.series[0].data[1].value = res[7][1]+res[7][2];
+          this.aftersaleOrderOption.series[0].data[2].value = res[7][3];
+
+          this.cmptnOrderOption.series[0].data[0].value = res[8][0];
+          this.cmptnOrderOption.series[0].data[1].value = res[8][1];
+
+
+          //销售订单绘制
+          let salesOrderCharts = this.$echarts.init(
+            document.getElementById("salesOrder"),
+            "light"
+          );
+          salesOrderCharts.setOption(this.salesOrderOption);
+
+          //变更订单绘制
+          let changeOrderCharts = this.$echarts.init(
+            document.getElementById("changeOrder"),
+            "light"
+          );
+          changeOrderCharts.setOption(this.changeOrderOption);
+
+          //退款订单绘制
+          let refundOrderCharts = this.$echarts.init(
+            document.getElementById("refundOrder"),
+            "light"
+          );
+          refundOrderCharts.setOption(this.refundOrderOption);
+
+          //采购订单绘制
+          let purchaseOrderCharts = this.$echarts.init(
+            document.getElementById("purchaseOrder"),
+            "light"
+          );
+          purchaseOrderCharts.setOption(this.purchaseOrderOption);
+
+          //取消采购订单绘制
+          let purchaseCancelOrderCharts = this.$echarts.init(
+            document.getElementById("purchaseCancelOrder"),
+            "light"
+          );
+          purchaseCancelOrderCharts.setOption(this.purchaseCancelOrderOption);
+
+          //入库订单绘制
+          let stockInOrderCharts = this.$echarts.init(
+            document.getElementById("stockInOrder"),
+            "light"
+          );
+          stockInOrderCharts.setOption(this.stockInOrderOption);
+
+          //补件订单绘制
+          let resupplieOrderCharts = this.$echarts.init(
+            document.getElementById("resupplieOrder"),
+            "light"
+          );
+          resupplieOrderCharts.setOption(this.resupplieOrderOption);
+
+          //售后订单绘制
+          let aftersaleOrder = this.$echarts.init(
+            document.getElementById("aftersaleOrder"),
+            "light"
+          );
+          aftersaleOrder.setOption(this.aftersaleOrderOption);
+
+          let cmptnOrder = this.$echarts.init(
+            document.getElementById("cmptnOrder"),
+            "light"
+          );
+          cmptnOrder.setOption(this.cmptnOrderOption);
+
+          this.monthlySalesPrediction();
+          this.salesPrediction();
+          this.productHotMap();
+        },
+        err => {}
+      );
+    },
+    monthlySalesPrediction() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(
-        document.getElementById("changeOrdersCharts"),
+        document.getElementById("monthlySalesPrediction"),
         "light"
       );
       var dataAxis = [
@@ -517,22 +567,9 @@ export default {
         "9月",
         "10月",
         "11月",
-        "12月",
+        "12月"
       ];
-      var data = [
-        220,
-        182,
-        191,
-        234,
-        290,
-        330,
-        310,
-        123,
-        442,
-        321,
-        90,
-        149,
-      ];
+      var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149];
       var yMax = 500;
       var dataShadow = [];
 
@@ -542,7 +579,7 @@ export default {
       // 绘制图表
       myChart.setOption({
         title: {
-          text: "月份销售单量预测",
+          text: "月份销售单量预测"
         },
         xAxis: {
           data: dataAxis,
@@ -1098,9 +1135,6 @@ export default {
         ]
       });
     },
-    toggle() {
-      this.formDialog.dialogFormVisible = !this.formDialog.dialogFormVisible;
-    },
     confirmAdd() {
       console.log(1);
     },
@@ -1109,19 +1143,12 @@ export default {
     }
   },
   mounted() {
-    this.salesOrder();
-    this.changeOrder();
-    this.refundOrder();
-    this.purchaseOrder();
-    this.purchaseCancelOrder();
-    this.stockInOrder();
-    this.resupplieOrder();
-    this.changeOrder();
-    this.changeOrdersCharts();
-    this.salesPrediction();
-    //this.salesHotMap();
-    this.productHotMap();
+    this.fetchData();
     this.$store.state.opt.opts = this.newOpt;
+    let that = this;
+    $(window).resize(() => {
+      that.$store.dispatch("setOpt", that.newOpt);
+    });
   }
 };
 </script>

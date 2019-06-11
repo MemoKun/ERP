@@ -141,12 +141,12 @@ class ReportStatisticsController extends Controller
     {
         //订单统计
         $ORDER_STATUS_NEW = DB::table("orders")->where('order_status', '=', 10)->get();
-        $ORDER_STATUS_LOCK = DB::table("orders")->where('order_status', '=', 20)->get();
+        $ORDER_STATUS_LOCK = DB::table("orders")->where('order_status', '=', 20)->get();//待客审
         $ORDER_STATUS_CS_AUDIT = DB::table("orders")->where('order_status', '=', 30)->get();
-        $ORDER_STATUS_ONE_AUDIT = DB::table("orders")->where('order_status', '=', 40)->get();
-        $ORDER_STATUS_FD_AUDIT = DB::table("orders")->where('order_status', '=', 50)->get();
-        $ORDER_STATUS_CARGO_AUDIT = DB::table("orders")->where('order_status', '=', 60)->get();
-        $ORDER_STATUS_READY_STOCK_OUT = DB::table("orders")->where('order_status', '=', 70)->get();
+        $ORDER_STATUS_ONE_AUDIT = DB::table("orders")->where('order_status', '=', 40)->get();//待财审
+        $ORDER_STATUS_FD_AUDIT = DB::table("orders")->where('order_status', '=', 50)->get();//待货审
+        $ORDER_STATUS_CARGO_AUDIT = DB::table("orders")->where('order_status', '=', 60)->get();//未打单
+        $ORDER_STATUS_READY_STOCK_OUT = DB::table("orders")->where('order_status', '=', 70)->get();//待发货
         $ORDER_STATUS_STOCK_OUT = DB::table("orders")->where('order_status', '=', 80)->get();
 
         $ORDER_STATUS_NEW_NUM = count($ORDER_STATUS_NEW);
@@ -174,8 +174,8 @@ class ReportStatisticsController extends Controller
         $CHANGE_STATUS_AUDIT = DB::table("change_orders")->where('change_status', '=', 30)->get();
         $CHANGE_STATUS_CANCEL = DB::table("change_orders")->where('change_status', '=', 40)->get();
 
-        $CHANGE_STATUS_NEW_NUM = count($CHANGE_STATUS_NEW);
-        $CHANGE_STATUS_SUBMIT_NUM = count($CHANGE_STATUS_SUBMIT);
+        $CHANGE_STATUS_NEW_NUM = count($CHANGE_STATUS_NEW);//未提交
+        $CHANGE_STATUS_SUBMIT_NUM = count($CHANGE_STATUS_SUBMIT);//未审核
         $CHANGE_STATUS_AUDIT_NUM = count($CHANGE_STATUS_AUDIT);
         $CHANGE_STATUS_CANCEL_NUM = count($CHANGE_STATUS_CANCEL);
 
@@ -189,11 +189,11 @@ class ReportStatisticsController extends Controller
         $REFUND_STATUS_FD_LOCK = DB::table("refund_orders")->where('refund_order_status', '=', 45)->get();
         $REFUND_STATUS_FD_AUDIT = DB::table("refund_orders")->where('refund_order_status', '=', 50)->get();
 
-        $REFUND_STATUS_NEW_NUM = count($REFUND_STATUS_NEW);
-        $REFUND_STATUS_LOCK_NUM = count($REFUND_STATUS_LOCK);
-        $REFUND_STATUS_CS_AUDIT_NUM = count($REFUND_STATUS_CS_AUDIT);
-        $REFUND_STATUS_AS_LOCK_NUM = count($REFUND_STATUS_AS_LOCK);
-        $REFUND_STATUS_AS_AUDIT_NUM = count($REFUND_STATUS_AS_AUDIT);
+        $REFUND_STATUS_NEW_NUM = count($REFUND_STATUS_NEW);//未客审
+        $REFUND_STATUS_LOCK_NUM = count($REFUND_STATUS_LOCK);//未客审
+        $REFUND_STATUS_CS_AUDIT_NUM = count($REFUND_STATUS_CS_AUDIT);//未售后审
+        $REFUND_STATUS_AS_LOCK_NUM = count($REFUND_STATUS_AS_LOCK);//未财审
+        $REFUND_STATUS_AS_AUDIT_NUM = count($REFUND_STATUS_AS_AUDIT);//未财审
         $REFUND_STATUS_FD_LOCK_NUM = count($REFUND_STATUS_FD_LOCK);
         $REFUND_STATUS_FD_AUDIT_NUM = count($REFUND_STATUS_FD_AUDIT);
 
@@ -215,25 +215,26 @@ class ReportStatisticsController extends Controller
         $CANCEL_PURCHASE_NEW = DB::table("cancel_purchases")->where('is_submit', '=', 0)->get();
         $CANCEL_PURCHASE_SUBMIT = DB::table("cancel_purchases")->where('is_submit', '=', 0)->get();
 
-        $CANCEL_PURCHASE_NEW_NUM = count($CANCEL_PURCHASE_NEW);
-        $CANCEL_PURCHASE_SUBMIT_NUM = count($CANCEL_PURCHASE_SUBMIT);
+        $CANCEL_PURCHASE_NEW_NUM = count($CANCEL_PURCHASE_NEW);//新建取消采购
+        $CANCEL_PURCHASE_SUBMIT_NUM = count($CANCEL_PURCHASE_SUBMIT);//已提交取消采购
 
         $cancelPurchaseOrderNum = array($CANCEL_PURCHASE_NEW_NUM,$CANCEL_PURCHASE_SUBMIT_NUM);
 
+        //入库订单
         $STOCKIN_STATUS_NEW = DB::table("stock_ins")->where('stock_in_status', '=', 10)->get();
         $STOCKIN_STATUS_SUBMIT = DB::table("stock_ins")->where('stock_in_status', '=', 20)->get();
         $STOCKIN_STATUS_STOCKIN = DB::table("stock_ins")->where('stock_in_status', '=', 30)->get();
 
-        $STOCKIN_STATUS_NEW_NUM = count($STOCKIN_STATUS_NEW);
-        $STOCKIN_STATUS_SUBMIT_NUM = count($STOCKIN_STATUS_SUBMIT);
-        $STOCKIN_STATUS_STOCKIN_NUM = count($STOCKIN_STATUS_STOCKIN);
+        $STOCKIN_STATUS_NEW_NUM = count($STOCKIN_STATUS_NEW);//新建
+        $STOCKIN_STATUS_SUBMIT_NUM = count($STOCKIN_STATUS_SUBMIT);//已提交
+        $STOCKIN_STATUS_STOCKIN_NUM = count($STOCKIN_STATUS_STOCKIN);//已入库
 
         $stockInOrderNum = array($STOCKIN_STATUS_NEW_NUM,$STOCKIN_STATUS_SUBMIT_NUM,$STOCKIN_STATUS_STOCKIN_NUM);
 
         //补件订单统计
-        $RESUPPLIE_UNSUBMITED = DB::table("re_supplie_orders")->where('is_submit', '=', 0)->get();
-        $RESUPPLIE_UNREVIEW = DB::table("re_supplie_orders")->where('is_review', '=', 0)->get();
-        $RESUPPLIE_UNSETTLE = DB::table("re_supplie_orders")->where('is_settle', '=', 0)->get();
+        $RESUPPLIE_UNSUBMITED = DB::table("re_supplie_orders")->where('is_submit', '=', 0)->get();//未提交
+        $RESUPPLIE_UNREVIEW = DB::table("re_supplie_orders")->where('is_review', '=', 0)->get();//未审核
+        $RESUPPLIE_UNSETTLE = DB::table("re_supplie_orders")->where('is_settle', '=', 0)->get();//未结算
 
         $RESUPPLIE_UNSUBMITED_NUM = count($RESUPPLIE_UNSUBMITED);
         $RESUPPLIE_UNREVIEW_NUM = count($RESUPPLIE_UNREVIEW);
@@ -241,7 +242,37 @@ class ReportStatisticsController extends Controller
 
         $reSupplieOrderNum = array($RESUPPLIE_UNSUBMITED_NUM,$RESUPPLIE_UNREVIEW_NUM,$RESUPPLIE_UNSETTLE_NUM);
 
-        $reportData = array($salesOrderNumArray,$changeOrderNumArray,$refundOrderNumArray,$purchaseOrderNumArray,$cancelPurchaseOrderNum,$stockInOrderNum,$reSupplieOrderNum);
+        //售后订单
+        $AFTERSALE_STATUS_NEW = DB::table("after_sale")->where('order_status', '=', 10)->get();
+        $AFTERSALE_STATUS_SUBMIT = DB::table("after_sale")->where('order_status', '=', 20)->get();
+        $AFTERSALE_STATUS_LOCK = DB::table("after_sale")->where('order_status', '=', 25)->get();
+        $AFTERSALE_STATUS_ONE_AUDIT = DB::table("after_sale")->where('order_status', '=', 30)->get();
+        $AFTERSALE_STATUS_TWO_AUDIT = DB::table("after_sale")->where('order_status', '=', 40)->get();
+        $AFTERSALE_STATUS_FINISH = DB::table("after_sale")->where('order_status', '=', 50)->get();
+
+        $AFTERSALE_STATUS_NEW_NUM = count($AFTERSALE_STATUS_NEW);//待客审
+        $AFTERSALE_STATUS_SUBMIT_NUM = count($AFTERSALE_STATUS_SUBMIT);//待售后提交
+        $AFTERSALE_STATUS_LOCK_NUM = count($AFTERSALE_STATUS_LOCK);//待售后提交
+        $AFTERSALE_STATUS_ONE_AUDIT_NUM = count($AFTERSALE_STATUS_ONE_AUDIT);//待售后审核
+        $AFTERSALE_STATUS_TWO_AUDIT_NUM = count($AFTERSALE_STATUS_TWO_AUDIT);
+        $AFTERSALE_STATUS_FINISH_NUM = count($AFTERSALE_STATUS_FINISH);
+
+        $aftersaleOrderNum = array($AFTERSALE_STATUS_NEW_NUM,$AFTERSALE_STATUS_SUBMIT_NUM,$AFTERSALE_STATUS_LOCK_NUM,$AFTERSALE_STATUS_ONE_AUDIT_NUM,$AFTERSALE_STATUS_TWO_AUDIT_NUM,$AFTERSALE_STATUS_FINISH_NUM);
+
+        //售后赔偿
+        $CMPTN_STATUS_NEW = DB::table("cmptn_orders")->where('cmptn_status', '=', 10)->get();
+        $CMPTN_STATUS_ONE_AUDIT = DB::table("cmptn_orders")->where('cmptn_status', '=', 20)->get();
+        $CMPTN_STATUS_SEC_AUDIT = DB::table("cmptn_orders")->where('cmptn_status', '=', 30)->get();
+        $CMPTN_STATUS_CANCEL = DB::table("cmptn_orders")->where('cmptn_status', '=', 50)->get();
+
+        $CMPTN_STATUS_NEW_NUM = count($CMPTN_STATUS_NEW);//未售后提交
+        $CMPTN_STATUS_ONE_AUDIT_NUM = count($CMPTN_STATUS_ONE_AUDIT);//未售后审核
+        $CMPTN_STATUS_SEC_AUDIT_NUM = count($CMPTN_STATUS_SEC_AUDIT);
+        $CMPTN_STATUS_CANCEL_NUM = count($CMPTN_STATUS_CANCEL);
+
+        $cmptnOrderNum = array($CMPTN_STATUS_NEW_NUM,$CMPTN_STATUS_ONE_AUDIT_NUM,$CMPTN_STATUS_SEC_AUDIT_NUM,$CMPTN_STATUS_CANCEL_NUM);
+
+        $reportData = array($salesOrderNumArray,$changeOrderNumArray,$refundOrderNumArray,$purchaseOrderNumArray,$cancelPurchaseOrderNum,$stockInOrderNum,$reSupplieOrderNum,$aftersaleOrderNum,$cmptnOrderNum);
         return $reportData;
     }
 

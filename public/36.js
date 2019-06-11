@@ -1,21 +1,10 @@
 webpackJsonp([36],{
 
-/***/ 1088:
+/***/ 1110:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -62,29 +51,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
-        cnt: '删除',
-        icon: 'bf-del',
+        cnt: "删除",
+        icon: "bf-del",
         ent: this.downloadOrders
       }, {
-        cnt: '导出',
-        icon: 'bf-out',
+        cnt: "导出",
+        icon: "bf-out",
         ent: this.downloadOrders
       }, {
-        cnt: '同步',
-        icon: 'bf-sync',
+        cnt: "同步",
+        icon: "bf-sync",
         ent: this.downloadOrders
       }, {
-        cnt: '下载',
-        icon: 'bf-dwn',
+        cnt: "下载",
+        icon: "bf-dwn",
         ent: this.downloadOrders
       }],
       searchBox: {
-        shop_name: '',
-        dwn_type: '',
-        pro_num: '',
-        shopNames: [{ label: '店铺1', value: 0 }, { label: '店铺2', value: 1 }],
-        dwnTypes: [{ label: '下载类型1', value: 0 }, { label: '下载类型2', value: 1 }]
-
+        shop_name: "",
+        dwn_type: "",
+        pro_num: "",
+        shopNames: [{ label: "店铺1", value: 0 }, { label: "店铺2", value: 1 }],
+        dwnTypes: [{ label: "下载类型1", value: 0 }, { label: "下载类型2", value: 1 }]
       },
       tableData3: [],
       multipleSelection: []
@@ -104,12 +92,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit('change', this.newOpt);
+    this.$store.commit("change", this.newOpt);
     var that = this;
     $(window).resize(function () {
       return function () {
         that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit('change', that.newOpt);
+        that.$store.commit("change", that.newOpt);
       }();
     });
   }
@@ -117,7 +105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1089:
+/***/ 1111:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -280,9 +268,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1088)
+var __vue_script__ = __webpack_require__(1110)
 /* template */
-var __vue_template__ = __webpack_require__(1089)
+var __vue_template__ = __webpack_require__(1111)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

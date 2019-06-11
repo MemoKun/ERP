@@ -1700,6 +1700,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.reportstatistics.index');
         $api->get('reportstatistics/orderAmount', 'ReportStatisticsController@orderAmount')->middleware('permission:报表统计')
             ->name('api.reportstatistics.orderamount');
+        $api->get('reportstatistics/indexreport', 'ReportStatisticsController@indexReport')
+            ->name('api.reportstatistics.indexreport');
         $api->get('reportstatistics/{reportstatistics}', 'ReportStatisticsController@show')->middleware('permission:报表统计')
             ->name('api.reportstatistics.show');
         $api->post('reportstatistics', 'ReportStatisticsController@store')->middleware('permission:报表统计')
