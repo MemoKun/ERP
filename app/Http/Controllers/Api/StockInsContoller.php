@@ -499,7 +499,7 @@ class StockInsContoller extends Controller
     }
 
     /**
-     * 审核
+     * 入库
      *
      * @PUT("/purchases/:id/audit")
      * @Versions({"v1"})
@@ -513,45 +513,47 @@ class StockInsContoller extends Controller
      */
     public function isAudit(StockIn $stockin)
     {
-        return $this->traitAction($stockin, !$stockin->status || !$stockin->is_submit || $stockin->is_audit, '审核出错，是否未提交或重复审核', 'audit');
+        DB::transaction(function() use ($stockin) {
+            $this->traitAction(
+                $stockin, 
+                !$stockin->status || !$stockin->is_submit || $stockin->is_audit, 
+                '审核出错，是否未提交或重复审核', 
+                'audit');
+
+            //遍历入库单详情
+            $stockin->stockInDetails->map(function($stockInDetail) use ($stockin) {
+                    //获取采购详情
+                    $purchaseDetail = $stockInDetail->purchaseDetail;
+                    //修改子采购单明细的状态、入库数。
+                    $purchaseDetail->addStockInCount($stockInDetail->stock_in_quantity);
+                    //修改库存数量
+                    $purchaseDetail->productComponent->stockInByWarehouseId($stockin->warehouse_id,$stockInDetail->stock_in_quantity);
+                    //检查并修改主采购订单状态
+                    $stockInDetail->purchaseDetail->purchaseList->purchase->checkAndChangePurchaseStatus();
+                });
+
+        });
+
+        return $this->noContent();
     }
 
     public function isUnAudit(StockIn $stockin)
     {
-        return $this->traitAction($stockin, !$stockin->status || !$stockin->is_audit, '退审出错，是否未审核或重复退审', 'unAudit');
-    }
-
-    /**
-     * 入库
-     *
-     * @PUT("/purchases/:id/stockin")
-     * @Versions({"v1"})
-     * @Transaction({
-     *      @Response(422, body={
-     *          "message": "入库出错",
-     *          "status_code": 422,
-     *      }),
-     *      @Response(204, body={})
-     * })
-     */
-    public function stockIn(StockIn $stockin)
-    {
         DB::transaction(function() use ($stockin) {
-            //修改入库状态
             $this->traitAction(
-                $stockin,
-                !$stockin->status || !$stockin->is_submit || !$stockin->is_audit || !$stockin->is_submit || $stockin->is_stock_in,
-                '入库出错',
-                'stockIn'
-            );
+                $stockin, 
+                !$stockin->status || !$stockin->is_audit, 
+                '退审出错，是否未审核或重复退审', 
+                'unAudit');
+
             //遍历入库单详情
             $stockin->stockInDetails->map(function($stockInDetail) use ($stockin) {
                 //获取采购详情
                 $purchaseDetail = $stockInDetail->purchaseDetail;
                 //修改子采购单明细的状态、入库数。
-                $purchaseDetail->addStockInCount($stockInDetail->stock_in_quantity);
+                $purchaseDetail->decreaseStockInCount($stockInDetail->stock_in_quantity);
                 //修改库存数量
-                $purchaseDetail->productComponent->stockInByWarehouseId($stockin->warehouse_id,$stockInDetail->stock_in_quantity);
+                $purchaseDetail->productComponent->stockOutByWarehouseId($stockin->warehouse_id,$stockInDetail->stock_in_quantity);
                 //检查并修改主采购订单状态
                 $stockInDetail->purchaseDetail->purchaseList->purchase->checkAndChangePurchaseStatus();
             });

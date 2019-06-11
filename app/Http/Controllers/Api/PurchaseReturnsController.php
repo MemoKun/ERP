@@ -587,7 +587,7 @@ class PurchaseReturnsController extends Controller
             //修改入库状态
             $this->traitAction(
                 $purchasereturn,
-                !$purchasereturn->status || $purchasereturn->is_submit,
+                !$purchasereturn->status || $purchasereturn->is_submit || $purchasereturn->is_audit,
                 '无需重复提交',
                 'input'
             );
@@ -597,29 +597,33 @@ class PurchaseReturnsController extends Controller
     }
 
 
-//    /**
-//     * 退审
-//     *
-//     * @PUT("/purchasereturns/:id/auditfaild")
-//     * @Versions({"v1"})
-//     * @Transaction({
-//     *      @Response(422, body={
-//     *          "message": "无法退审",
-//     *          "status_code": 422,
-//     *      }),
-//     *      @Response(204, body={})
-//     * })
-//     */
-//    public function isAuditFaild(PurchaseReturn $purchasereturn)
-//    {
-//
-//        return $this->traitAction($purchasereturn,
-//            !$purchasereturn->status || !$purchasereturn->is_submit || $purchasereturn->is_audit,
-//            '无法退审',
-//            'auditFaild'
-//        );
-//
-//    }
+    /**
+     * 驳回
+     *
+     * @PUT("/purchasereturns/:id/reject")
+     * @Versions({"v1"})
+     * @Transaction({
+     *      @Response(422, body={
+     *          "message": "驳回失败，可能未提交或者重复驳回",
+     *          "status_code": 422,
+     *      }),
+     *      @Response(204, body={})
+     * })
+     */
+    public function isReject(PurchaseReturn $purchasereturn)
+    {
+        DB::transaction(function () use ($purchasereturn) {
+            //修改入库状态
+            $this->traitAction(
+                $purchasereturn,
+                !$purchasereturn->status || !$purchasereturn->is_submit || $purchasereturn->is_audit,
+                '驳回失败，可能未提交或者重复驳回',
+                'reject'
+            );
+        });
+
+        return $this->noContent();
+    }
 
     /**
      * 审核
@@ -644,11 +648,9 @@ class PurchaseReturnsController extends Controller
                 '审核出错，是否未提交或重复审核',
                 'audit');
 
-            //生成出库单，记录出库的数量等信息
+            // 生成出库单，记录出库的数量等信息
 
-
-
-            //修改库存数量
+            // 修改库存数量
             foreach ($purchasereturn->purchaseReturnDetails as $item) {
                 if($item->stock->decreaseQuantity($item->purchase_return_quantity) <= 0){
                     throw new UpdateResourceFailedException('商品库存不足');
@@ -658,6 +660,41 @@ class PurchaseReturnsController extends Controller
 
         return $this->noContent();
     }
+
+    
+   /**
+    * 退审
+    *
+    * @PUT("/purchasereturns/:id/unaudit")
+    * @Versions({"v1"})
+    * @Transaction({
+    *      @Response(422, body={
+    *          "message": "退审失败，可能未审核或重复退审",
+    *          "status_code": 422,
+    *      }),
+    *      @Response(204, body={})
+    * })
+    */
+   public function isUnAudit(PurchaseReturn $purchasereturn)
+   {
+        DB::transaction(function () use ($purchasereturn) {
+            $this->traitAction(
+                $purchasereturn,
+                !$purchasereturn->status || !$purchasereturn->is_submit || !$purchasereturn->is_audit,
+                '退审失败，可能未审核或重复退审',
+                'unAudit'
+            );
+
+            // 修改库存数量
+            foreach ($purchasereturn->purchaseReturnDetails as $item) {
+                if($item->stock->addQuantity($item->purchase_return_quantity) <= 0){
+                    throw new UpdateResourceFailedException('加库存不可小于0');
+                }
+            }
+        });
+
+        return $this->noContent();
+   }
 
     /**
      * 打印
