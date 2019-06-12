@@ -645,6 +645,10 @@
       </el-table>
       <el-button type="text">sku信息</el-button>
       <label>{{this.proSkuVal}}</label>
+      <br>
+      <label>{{this.curProSkuNum}}</label>
+      <br>
+      <label>{{this.curProSkuVolume}}</label>
       <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
         <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
@@ -2852,7 +2856,8 @@ export default {
           break;
       }
     },
-    handleClick() {//首页未处理Tab-pane加载数据
+    handleClick() {
+      //首页未处理Tab-pane加载数据
       this.loading = true;
       this.fetchData();
     },
@@ -3267,6 +3272,7 @@ export default {
       this.proVal = [];
       this.proSkuVal = [];
       this.proIds = [];
+      this.proQueryClick();
     },
     //添加商品界面-上方按钮-查询商品
     proQueryClick() {
@@ -3282,6 +3288,7 @@ export default {
       }).then(
         res => {
           this.proVal = res.data;
+          //只是处理了res.data的第一个数据
           let comb = res.data[0]["combinations"]["data"];
           this.curCombRowData = res.data[0]["combinations"]["data"];
           if (comb.length > 0) {
@@ -3310,6 +3317,7 @@ export default {
             comb["productComp"] = [];
           }
           this.proSkuVal = comb;
+          this.curProSkuVolume = comb[0]["newData"]["total_volume"];
         },
         err => {}
       );
@@ -3346,6 +3354,7 @@ export default {
         comb["productComp"] = [];
       }
       this.proSkuVal = comb;
+      this.curProSkuVolume = comb[0]["newData"]["total_volume"];
     },
     //添加商品界面-下方Tab-点击加载SKU信息，修改数量体积等
     proSkuRowClick(row) {
@@ -3360,14 +3369,9 @@ export default {
     quantityChg(value) {
       if (value > 0) {
         let proCRow = this.proCompRow;
-        //this.proSkuVal[0]['newData']['total_volume'];
         this.proSkuVal[0]["newData"]["total_volume"] =
-          this.proSkuVal[0]["newData"]["quantity"] *
-          this.curCombRowData[0]["newData"]["total_volume"];
-        this.$message({
-          message: this.curCombRowData,
-          type: "info"
-        });
+          (this.proSkuVal[0]["newData"]["quantity"] *
+          this.curProSkuVolume).toFixed(2);
         if (this.proIds.indexOf(proCRow.id) == -1) {
           this.proIds.push(proCRow.id);
           this.proSubmitData.push(proCRow);

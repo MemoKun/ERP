@@ -959,6 +959,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2976,6 +2980,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       this.proVal = [];
       this.proSkuVal = [];
       this.proIds = [];
+      this.proQueryClick();
     },
 
     //添加商品界面-上方按钮-查询商品
@@ -2992,6 +2997,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
       }).then(function (res) {
         _this6.proVal = res.data;
+        //只是处理了res.data的第一个数据
         var comb = res.data[0]["combinations"]["data"];
         _this6.curCombRowData = res.data[0]["combinations"]["data"];
         if (comb.length > 0) {
@@ -3020,6 +3026,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           comb["productComp"] = [];
         }
         _this6.proSkuVal = comb;
+        _this6.curProSkuVolume = comb[0]["newData"]["total_volume"];
       }, function (err) {});
     },
 
@@ -3057,6 +3064,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         comb["productComp"] = [];
       }
       this.proSkuVal = comb;
+      this.curProSkuVolume = comb[0]["newData"]["total_volume"];
     },
 
     //添加商品界面-下方Tab-点击加载SKU信息，修改数量体积等
@@ -3079,12 +3087,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 
       if (value > 0) {
         var proCRow = this.proCompRow;
-        //this.proSkuVal[0]['newData']['total_volume'];
-        this.proSkuVal[0]["newData"]["total_volume"] = this.proSkuVal[0]["newData"]["quantity"] * this.curCombRowData[0]["newData"]["total_volume"];
-        this.$message({
-          message: this.curCombRowData,
-          type: "info"
-        });
+        this.proSkuVal[0]["newData"]["total_volume"] = (this.proSkuVal[0]["newData"]["quantity"] * this.curProSkuVolume).toFixed(2);
         if (this.proIds.indexOf(proCRow.id) == -1) {
           this.proIds.push(proCRow.id);
           this.proSubmitData.push(proCRow);
@@ -7454,6 +7457,14 @@ var render = function() {
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("sku信息")]),
           _vm._v(" "),
           _c("label", [_vm._v(_vm._s(this.proSkuVal))]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v(_vm._s(this.curProSkuNum))]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v(_vm._s(this.curProSkuVolume))]),
           _vm._v(" "),
           _c(
             "el-table",
