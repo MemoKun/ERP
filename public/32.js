@@ -959,7 +959,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -1078,7 +1077,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         seller_remark: "",
         seller_flag: "",
         lock_status: "",
-        lockStatus: [{ label: "锁定", value: 1 }, { label: "未锁定", value: 1 }],
+        lockStatus: [{ label: "锁定", value: 1 }, { label: "未锁定", value: 0 }],
         shops_id: ""
       },
       /*获取数据*/
@@ -2361,7 +2360,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       InnerNoteData: {},
       InnerNoteHead: [],
 
-      curCombRowData: []
+      curCombRowData: [],
+      curProSkuNum: "",
+      curProSkuVolume: ""
     };
   },
 
@@ -2405,149 +2406,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       console.log(1);
     },
 
-    /***************************** 转 补 单 *******************************/
-    additionOrder: function additionOrder() {
-      var _this = this;
-
-      if (this.newOpt[10].nClick) {
-        return;
-      } else {
-        if (this.additionOrderIds.length != 2) {
-          this.$message({
-            message: "请选择要转补单的订单",
-            type: "info"
-          });
-        } else {
-          var ids = [];
-          this.additionOrderIds.map(function (item) {
-            ids.push(item.id);
-          });
-          this.$put(this.urls.customerservicedepts + "/additionorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-            _this.refresh();
-            _this.$message({
-              message: "转补单成功",
-              type: "success"
-            });
-          }, function (err) {
-            if (err.response) {
-              _this.$message.error("转补单出错");
-            }
-          });
-        }
-      }
-    },
-
-    /***************************** 转 补 款 *******************************/
-    additionMoney: function additionMoney() {
-      var _this2 = this;
-
-      if (this.newOpt[11].nclick) {
-        return;
-      } else {
-        if (this.additionOrderIds.length != 2) {
-          this.$message({
-            message: "请选择要转补款的订单",
-            type: "info"
-          });
-        } else {
-          var ids = [];
-          this.additionOrderIds.map(function (item) {
-            ids.push(item.id);
-          });
-          this.$put(this.urls.customerservicedepts + "/additionmoney" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-            _this2.refresh();
-            _this2.$message({
-              message: "转补款成功",
-              type: "success"
-            });
-            _this2.additionOrderIds = [];
-          }, function (err) {
-            if (err.response) {
-              _this2.$message.error("转补款出错");
-            }
-          });
-        }
-      }
-    },
-
-    /***************************** 合 并 *******************************/
-    handleMergerOrder: function handleMergerOrder() {
-      var _this3 = this;
-
-      if (this.newOpt[8].nClick) {
-        return;
-      } else {
-        if (this.mergerIds.length != 2) {
-          this.$message({
-            message: "请选择要合并的订单",
-            type: "info"
-          });
-        } else {
-          var ids = [];
-          this.mergerIds.map(function (item) {
-            ids.push(item.id);
-          });
-          this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-            _this3.refresh();
-            _this3.$message({
-              message: "订单合并成功",
-              type: "success"
-            });
-            _this3.mergerIds = [];
-          }, function (err) {
-            if (err.response) {
-              _this3.$message.error("合并订单出错");
-            }
-          });
-        }
-      }
-    },
-    isNotice: function isNotice() {
-      var _this4 = this;
-
-      if (this.newOpt[14].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/notice").then(function () {
-          _this4.newOpt[0].nClick = false;
-          _this4.newOpt[1].nClick = true;
-          _this4.newOpt[2].nClick = true;
-          _this4.newOpt[3].nClick = true;
-          _this4.newOpt[4].nClick = true;
-          _this4.newOpt[5].nClick = true;
-          _this4.newOpt[6].nClick = true;
-          _this4.newOpt[7].nClick = true;
-          _this4.newOpt[8].nClick = true;
-          _this4.newOpt[9].nClick = true;
-          _this4.newOpt[10].nClick = true;
-          _this4.newOpt[11].nClick = true;
-          _this4.newOpt[12].nClick = true;
-          _this4.newOpt[13].nClick = true;
-          _this4.newOpt[14].nClick = true;
-          _this4.newOpt[15].nClick = true;
-          _this4.newOpt[16].nClick = true;
-          _this4.newOpt[17].nClick = false;
-          _this4.refresh();
-          _this4.$message({
-            message: "通知发货成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this4.$message.error(str);
-          }
-        });
-      }
-    },
-
-    /*获取数据*/
+    /**************************** 获 取 数 据 *******************************/
     outerHandleClick: function outerHandleClick() {
       var index = this.activeName - 0;
       switch (index) {
@@ -2602,7 +2461,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       }
     },
     fetchData: function fetchData() {
-      var _this5 = this;
+      var _this = this;
 
       var index = this.leftTopActiveName - 0;
       switch (index) {
@@ -2621,15 +2480,15 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             cs_audited_at: this.searchBox.cs_audited_at,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
-            _this5.loading = false;
-            _this5.orderListData = res.data;
+            _this.loading = false;
+            _this.orderListData = res.data;
             var pg = res.meta.pagination;
-            _this5.$store.dispatch("currentPage", pg.current_page);
-            _this5.$store.commit("PER_PAGE", pg.per_page);
-            _this5.$store.commit("PAGE_TOTAL", pg.total);
-            _this5.$store.dispatch("paymentmethods", _this5.urls.paymentmethods);
-            _this5.$fetch(_this5.urls.customerservicedepts + "/create").then(function (res) {
-              _this5.addSubData = res;
+            _this.$store.dispatch("currentPage", pg.current_page);
+            _this.$store.commit("PER_PAGE", pg.per_page);
+            _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("paymentmethods", _this.urls.paymentmethods);
+            _this.$fetch(_this.urls.customerservicedepts + "/create").then(function (res) {
+              _this.addSubData = res;
             }, function (err) {});
           }, function (err) {
             if (err.response) {
@@ -2638,7 +2497,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this5.$message.error(arr1.join(","));
+              _this.$message.error(arr1.join(","));
             }
           });
           break;
@@ -2658,12 +2517,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             cs_audited_at: this.searchBox.cs_audited_at,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
-            _this5.loading = false;
-            _this5.alreadyHandle = res.data;
+            _this.loading = false;
+            _this.alreadyHandle = res.data;
             var pg = res.meta.pagination;
-            _this5.$store.dispatch("currentPage", pg.current_page);
-            _this5.$store.commit("PER_PAGE", pg.per_page);
-            _this5.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("currentPage", pg.current_page);
+            _this.$store.commit("PER_PAGE", pg.per_page);
+            _this.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -2671,7 +2530,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this5.$message.error(arr1.join(","));
+              _this.$message.error(arr1.join(","));
             }
           });
           break;
@@ -2680,12 +2539,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             order_status: "等通知发货",
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
-            _this5.loading = false;
-            _this5.orderListData = res.data;
+            _this.loading = false;
+            _this.orderListData = res.data;
             var pg = res.meta.pagination;
-            _this5.$store.dispatch("currentPage", pg.current_page);
-            _this5.$store.commit("PER_PAGE", pg.per_page);
-            _this5.$store.commit("PAGE_TOTAL", pg.total);
+            _this.$store.dispatch("currentPage", pg.current_page);
+            _this.$store.commit("PER_PAGE", pg.per_page);
+            _this.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -2693,18 +2552,35 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              _this5.$message.error(arr1.join(","));
+              _this.$message.error(arr1.join(","));
             }
           });
           break;
       }
     },
-    leftHandleClick: function leftHandleClick() {
+    handleClick: function handleClick() {
+      //首页未处理Tab-pane加载数据
       this.loading = true;
       this.fetchData();
     },
-    rightHandleClick: function rightHandleClick() {},
-    orderListRClick: function orderListRClick(row) {
+
+    /*页码*/
+    handlePagChg: function handlePagChg(page) {
+      var _this2 = this;
+
+      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      }).then(function (res) {
+        if (_this2.leftTopActiveName == "0") {
+          _this2.orderListData = res.data;
+        } else {
+          _this2.alreadyHandle = res.data;
+        }
+      });
+    },
+
+    /************************* 首 页 主 要 Tab ******************************/
+    orderListRowClick: function orderListRowClick(row) {
       if (row["order_status"] == "未处理") {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
@@ -2812,73 +2688,154 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       /*支付明细*/
       this.payDtlData = row["paymentDetails"]["data"];
     },
-    proDtlRClick: function proDtlRClick(row) {},
 
-    /*新增*/
+    /*批量删除-监听checkbox*/
+    handleSelectionChange: function handleSelectionChange(val) {
+      console.log(val);
+      /*拿到id集合*/
+      var delArr = [];
+      val.forEach(function (selectedItem) {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
+      this.additionOrderIds = val;
+    },
+
+    /*批量删除-删除 */
+    delBatch: function delBatch() {
+      var _this3 = this;
+
+      if (this.ids.length === 0) {
+        this.$message({
+          message: "没有选中数据",
+          type: "warning"
+        });
+      } else {
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          _this3.$del(_this3.urls.customerservicedepts, { ids: _this3.ids }).then(function () {
+            _this3.refresh();
+            _this3.$message({
+              message: "删除成功",
+              type: "success"
+            });
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this3.$message.error(str);
+            }
+          });
+        }).catch(function () {
+          _this3.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+      }
+    },
+
+    /*删除单条，打开询问窗口*/
+    delSingle: function delSingle(row, e) {
+      this.showDel = true;
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
+      this.delId = row.id;
+      this.delUrl = row["orderItems"] ? this.urls.customerservicedepts : row["payment"] ? this.urls["paymentdetails"] : this.urls.orderitems;
+    },
+
+    /*取消删除单条，关闭询问窗口*/
+    cancelD: function cancelD() {
+      this.showDel = false;
+      this.$message({
+        message: "取消删除",
+        type: "info"
+      });
+    },
+
+    /*确认删除单条 */
+    confirmD: function confirmD(url, id) {
+      var _this4 = this;
+
+      this.$del(url + "/" + id).then(function () {
+        _this4.showDel = false;
+        _this4.refresh();
+        _this4.$message({
+          message: "删除成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          _this4.showDel = false;
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this4.$message.error(str);
+        }
+      });
+    },
+
+    /*************************** 新 增 订 单 *****************************/
+    //打开新增订单界面
     addCustomer: function addCustomer() {
       this.addCustomerMask = true;
       this.addIds = [];
       this.proData = [];
       this.proRIndex = "";
     },
-    proQueryClick: function proQueryClick() {
-      var _this6 = this;
 
-      this.proSkuVal = [];
-      this.$fetch(this.urls.products, {
-        status: true,
-        commodity_code: this.proQuery.commodity_code,
-        component_code: this.proQuery.component_code,
-        shops_id: this.proQuery.shops_id,
-        short_name: this.proQuery.short_name,
-        include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
-      }).then(function (res) {
-        _this6.proVal = res.data;
-        var comb = res.data[0]["combinations"]["data"];
-        _this6.curCombRowData = res.data[0]["combinations"]["data"];
-        if (comb.length > 0) {
-          var total_volume = 0;
-          comb.map(function (item) {
-            item["productComp"] = item["productComponents"]["data"];
-            if (item["productComponents"]["data"].length > 0) {
-              item["productComponents"]["data"].map(function (list) {
-                total_volume += list.volume;
-              });
-            } else {
-              total_volume = 0;
-            }
-            _this6.$set(item, "newData", {
-              quantity: "",
-              paint: "",
-              is_printing: false,
-              printing_fee: "",
-              is_spot_goods: true,
-              under_line_univalent: "",
-              under_line_preferential: "",
-              total_volume: total_volume
-            });
-          });
-        } else {
-          comb["productComp"] = [];
-        }
-        _this6.proSkuVal = comb;
-      }, function (err) {});
-    },
-    addHandleClick: function addHandleClick() {},
-    addProRCName: function addProRCName(_ref) {
-      var row = _ref.row,
-          rowIndex = _ref.rowIndex;
+    //监听输入框变化，计算总运费
+    formChg: function formChg() {
+      var formVal = void 0;
+      if (this.addCustomerMask) {
+        formVal = this.addCustomerFormVal;
+      } else {
+        formVal = this.updateCustomerFormVal;
+      }
+      formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
 
-      row.index = rowIndex;
+      if (this.addCustomerMask) {
+        this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      } else {
+        this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
+      }
     },
+
+    //新建订单下方-商品信息-添加商品时的RowClick
     addProRowClick: function addProRowClick(row) {
       this.proRIndex = "index" + row.index;
     },
+
+    //新建订单下方-商品信息-删除单个商品
     addDelPro: function addDelPro(index) {
       this.proData.splice(index, 1);
     },
+
+    //取消新建订单-关闭新建订单页面
+    addCustomerCancel: function addCustomerCancel() {
+      this.addCustomerMask = false;
+      this.$message({
+        message: "取消新增订单明细",
+        type: "success"
+      });
+    },
+
+    //确认新增订单
     addCustomerConfirm: function addCustomerConfirm() {
-      var _this7 = this;
+      var _this5 = this;
 
       var forData = this.addCustomerFormVal;
       var submitData = {
@@ -2962,34 +2919,57 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         submitData.payment_details.push(expenseD);
       });
       this.$post(this.urls.customerservicedepts, submitData).then(function () {
-        _this7.addCustomerMask = false;
-        _this7.refresh();
-        _this7.$message({
+        _this5.addCustomerMask = false;
+        _this5.refresh();
+        _this5.$message({
           message: "添加成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this7.showDel = false;
+          _this5.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this7.$message.error(str);
+          _this5.$message.error(str);
         }
       });
     },
-    addCustomerCancel: function addCustomerCancel() {
-      this.addCustomerMask = false;
+
+    /*费用类型-新增行*/
+    addExpenseLine: function addExpenseLine() {
+      if (this.addCustomerMask) {
+        this.expenseData.push({
+          payment_methods_id: "",
+          payment: ""
+        });
+      } else {
+        this.updateExpenseData.push({
+          payment_methods_id: "",
+          payment: ""
+        });
+      }
+    },
+
+    /*费用类型-删除行 */
+    addDelExpense: function addDelExpense(index) {
+      this.expenseData.splice(index, 1);
       this.$message({
-        message: "取消新增订单明细",
+        message: "删除成功",
         type: "success"
       });
     },
 
-    /*商品明细*/
+    /*费用类型-行监听 */
+    addExpenseRClick: function addExpenseRClick(row) {
+      this.expenseRIndex = "index" + row.index;
+    },
+
+    /************************** 添 加 商 品 界 面 **************************/
+    //打开添加商品界面按钮
     addProDtl: function addProDtl() {
       this.proMask = true;
       Object.assign(this.proQuery, this.$options.data().proQuery);
@@ -2997,21 +2977,55 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       this.proSkuVal = [];
       this.proIds = [];
     },
-    toggleForm: function toggleForm() {
-      /*展开  partHide
-        * 折叠  没有partHide*/
-      this.clickFlag = !this.clickFlag;
-      this.toggleText = !this.toggleText;
-      if (this.clickFlag) {
-        $("#form").removeClass("hidePart");
-        $("#elTabs").removeClass("hidePart");
-      } else {
-        $("#form").addClass("hidePart");
-        $("#elTabs").addClass("hidePart");
-      }
+
+    //添加商品界面-上方按钮-查询商品
+    proQueryClick: function proQueryClick() {
+      var _this6 = this;
+
+      this.proSkuVal = [];
+      this.$fetch(this.urls.products, {
+        status: true,
+        commodity_code: this.proQuery.commodity_code,
+        component_code: this.proQuery.component_code,
+        shops_id: this.proQuery.shops_id,
+        short_name: this.proQuery.short_name,
+        include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+      }).then(function (res) {
+        _this6.proVal = res.data;
+        var comb = res.data[0]["combinations"]["data"];
+        _this6.curCombRowData = res.data[0]["combinations"]["data"];
+        if (comb.length > 0) {
+          var total_volume = 0;
+          comb.map(function (item) {
+            item["productComp"] = item["productComponents"]["data"];
+            if (item["productComponents"]["data"].length > 0) {
+              item["productComponents"]["data"].map(function (list) {
+                total_volume += list.volume;
+              });
+            } else {
+              total_volume = 0;
+            }
+            _this6.$set(item, "newData", {
+              quantity: "",
+              paint: "",
+              is_printing: false,
+              printing_fee: "",
+              is_spot_goods: true,
+              under_line_univalent: "",
+              under_line_preferential: "",
+              total_volume: total_volume
+            });
+          });
+        } else {
+          comb["productComp"] = [];
+        }
+        _this6.proSkuVal = comb;
+      }, function (err) {});
     },
+
+    //添加商品界面-上方Tab-点击获取产品信息，并将商品加载到下方
     proRowClick: function proRowClick(row) {
-      var _this8 = this;
+      var _this7 = this;
 
       this.proSkuVal = [];
       this.proCompRowIndex = "";
@@ -3028,7 +3042,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           } else {
             total_volume = 0;
           }
-          _this8.$set(item, "newData", {
+          _this7.$set(item, "newData", {
             quantity: "",
             paint: "",
             is_printing: false,
@@ -3044,24 +3058,21 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       }
       this.proSkuVal = comb;
     },
-    proCName: function proCName() {},
-    proSkuCName: function proSkuCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
 
-      row.index = rowIndex;
-    },
+    //添加商品界面-下方Tab-点击加载SKU信息，修改数量体积等
     proSkuRowClick: function proSkuRowClick(row) {
       this.proCompRowIndex = "index" + row.index;
       this.proCompRow = row;
     },
+
+    //监听sku数量变化，并修改总体积
     quantityChg: function quantityChg(value) {
-      var _this9 = this;
+      var _this8 = this;
 
       if (value > 0) {
         var proCRow = this.proCompRow;
         //this.proSkuVal[0]['newData']['total_volume'];
-        this.proSkuVal[0]['newData']['total_volume'] = this.proSkuVal[0]['newData']['quantity'] * this.curCombRowData[0]['newData']['total_volume'];
+        this.proSkuVal[0]["newData"]["total_volume"] = this.proSkuVal[0]["newData"]["quantity"] * this.curCombRowData[0]["newData"]["total_volume"];
         this.$message({
           message: this.curCombRowData,
           type: "info"
@@ -3072,46 +3083,33 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         } else {
           this.proSubmitData.map(function (list, index) {
             if (list.id == proCRow.id) {
-              _this9.proSubmitData.splice(index, 1);
-              _this9.proSubmitData.push(proCRow);
+              _this8.proSubmitData.splice(index, 1);
+              _this8.proSubmitData.push(proCRow);
             }
           });
         }
       }
     },
-    formChg: function formChg() {
-      var formVal = void 0;
-      if (this.addCustomerMask) {
-        formVal = this.addCustomerFormVal;
-      } else {
-        formVal = this.updateCustomerFormVal;
-      }
-      formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
 
-      if (this.addCustomerMask) {
-        this.addCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
-      } else {
-        this.updateCustomerFormVal.total_distribution_fee = formVal["total_distribution_fee"];
-      }
-    },
+    //确认添加商品到新建订单
     confirmAddProDtl: function confirmAddProDtl() {
-      var _this10 = this;
+      var _this9 = this;
 
       if (this.addCustomerMask) {
         this.proSubmitData.map(function (item) {
-          if (_this10.addIds.indexOf(item.id) == -1) {
-            _this10.proData.push(item);
-            _this10.addIds.push(item.id);
-            _this10.$message({
+          if (_this9.addIds.indexOf(item.id) == -1) {
+            _this9.proData.push(item);
+            _this9.addIds.push(item.id);
+            _this9.$message({
               message: "添加商品信息成功",
               type: "success"
             });
           } else {
-            _this10.proData.map(function (list, index) {
+            _this9.proData.map(function (list, index) {
               if (list.id == item.id) {
-                _this10.proData.splice(index, 1);
-                _this10.proData.push(item);
-                _this10.$message({
+                _this9.proData.splice(index, 1);
+                _this9.proData.push(item);
+                _this9.$message({
                   message: "添加商品信息成功",
                   type: "success"
                 });
@@ -3121,20 +3119,20 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         });
       } else {
         this.proSubmitData.map(function (item) {
-          if (_this10.updateProIds.indexOf(item.id) == -1) {
-            _this10.updateProData.push(item);
-            _this10.updateProIds.push(item.id);
-            _this10.$message({
+          if (_this9.updateProIds.indexOf(item.id) == -1) {
+            _this9.updateProData.push(item);
+            _this9.updateProIds.push(item.id);
+            _this9.$message({
               message: "添加商品信息成功",
               type: "success"
             });
           } else {
-            _this10.updateProData.map(function (list, index) {
+            _this9.updateProData.map(function (list, index) {
               if (list.combinations_id == item.id) {
-                _this10.$set(item, "originalId", list.id);
-                _this10.updateProData.splice(index, 1);
-                _this10.updateProData.push(item);
-                _this10.$message({
+                _this9.$set(item, "originalId", list.id);
+                _this9.updateProData.splice(index, 1);
+                _this9.updateProData.push(item);
+                _this9.$message({
                   message: "添加商品信息成功",
                   type: "success"
                 });
@@ -3144,248 +3142,10 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         });
       }
     },
-    cancelAddProDtl: function cancelAddProDtl() {
-      this.proMask = false;
-    },
-    addDelExpense: function addDelExpense(index) {
-      this.expenseData.splice(index, 1);
-      this.$message({
-        message: "删除成功",
-        type: "success"
-      });
-    },
-    addExpenseRCName: function addExpenseRCName(_ref3) {
-      var row = _ref3.row,
-          rowIndex = _ref3.rowIndex;
 
-      row.index = rowIndex;
-    },
-    addExpenseRClick: function addExpenseRClick(row) {
-      this.expenseRIndex = "index" + row.index;
-    },
-
-    /*新增行*/
-    addExpenseLine: function addExpenseLine() {
-      if (this.addCustomerMask) {
-        this.expenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      } else {
-        this.updateExpenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      }
-    },
-
-    /*删除单条*/
-    delSingle: function delSingle(row, e) {
-      this.showDel = true;
-      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
-      this.delId = row.id;
-      this.delUrl = row["orderItems"] ? this.urls.customerservicedepts : row["payment"] ? this.urls["paymentdetails"] : this.urls.orderitems;
-    },
-    cancelD: function cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: "取消删除",
-        type: "info"
-      });
-    },
-    confirmD: function confirmD(url, id) {
-      var _this11 = this;
-
-      this.$del(url + "/" + id).then(function () {
-        _this11.showDel = false;
-        _this11.refresh();
-        _this11.$message({
-          message: "删除成功",
-          type: "success"
-        });
-      }, function (err) {
-        if (err.response) {
-          _this11.showDel = false;
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(",");
-          _this11.$message.error(str);
-        }
-      });
-    },
-
-    /*批量删除*/
-    handleSelectionChange: function handleSelectionChange(val) {
-      console.log(val);
-      /*拿到id集合*/
-      var delArr = [];
-      val.forEach(function (selectedItem) {
-        delArr.push(selectedItem.id);
-      });
-      this.ids = delArr.join(",");
-      /*拿到当前id*/
-      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-      this.mergerIds = val;
-      this.additionOrderIds = val;
-    },
-    delBatch: function delBatch() {
-      var _this12 = this;
-
-      if (this.ids.length === 0) {
-        this.$message({
-          message: "没有选中数据",
-          type: "warning"
-        });
-      } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          _this12.$del(_this12.urls.customerservicedepts, { ids: _this12.ids }).then(function () {
-            _this12.refresh();
-            _this12.$message({
-              message: "删除成功",
-              type: "success"
-            });
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              var str = arr1.join(",");
-              _this12.$message.error(str);
-            }
-          });
-        }).catch(function () {
-          _this12.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-      }
-    },
-
-    /*页码*/
-    handlePagChg: function handlePagChg(page) {
-      var _this13 = this;
-
-      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
-        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-      }).then(function (res) {
-        if (_this13.leftTopActiveName == "0") {
-          _this13.orderListData = res.data;
-        } else {
-          _this13.alreadyHandle = res.data;
-        }
-      });
-    },
-    refresh: function refresh() {
-      this.loading = true;
-      this.fetchData();
-    },
-
-    /*锁定*/
-    lockOrder: function lockOrder() {
-      var _this14 = this;
-
-      if (this.newOpt[3].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
-          _this14.newOpt[0].nClick = false;
-          _this14.newOpt[1].nClick = false;
-          _this14.newOpt[2].nClick = false;
-          _this14.newOpt[3].nClick = true;
-          _this14.newOpt[4].nClick = false;
-          _this14.newOpt[5].nClick = false;
-          _this14.newOpt[6].nClick = true;
-          _this14.newOpt[7].nClick = false;
-          _this14.newOpt[8].nClick = false;
-          _this14.newOpt[9].nClick = false;
-          _this14.newOpt[10].nClick = false;
-          _this14.newOpt[11].nClick = false;
-          _this14.newOpt[12].nClick = true;
-          _this14.newOpt[13].nClick = false;
-          _this14.newOpt[14].nClick = false;
-          _this14.newOpt[15].nClick = false;
-          _this14.newOpt[16].nClick = false;
-          _this14.newOpt[17].nClick = false;
-          _this14.refresh();
-          _this14.$message({
-            message: "锁定成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this14.$message.error(str);
-          }
-        });
-      }
-    },
-
-    /*解锁*/
-    debLock: function debLock() {
-      var _this15 = this;
-
-      if (this.newOpt[4].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
-          _this15.newOpt[0].nClick = false;
-          _this15.newOpt[1].nClick = true;
-          _this15.newOpt[2].nClick = true;
-          _this15.newOpt[3].nClick = false;
-          _this15.newOpt[4].nClick = true;
-          _this15.newOpt[5].nClick = true;
-          _this15.newOpt[6].nClick = true;
-          _this15.newOpt[7].nClick = false;
-          _this15.newOpt[8].nClick = true;
-          _this15.newOpt[9].nClick = true;
-          _this15.newOpt[10].nClick = false;
-          _this15.newOpt[11].nClick = false;
-          _this15.newOpt[12].nClick = true;
-          _this15.newOpt[13].nClick = false;
-          _this15.newOpt[14].nClick = false;
-          _this15.newOpt[15].nClick = false;
-          _this15.newOpt[16].nClick = false;
-          _this15.newOpt[17].nClick = false;
-          _this15.refresh();
-          _this15.$message({
-            message: "解锁成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this15.$message.error(str);
-          }
-        });
-      }
-    },
-
-    /*修改*/
+    /**************************** 修 改 ***********************************/
     updateData: function updateData() {
-      var _this16 = this;
+      var _this10 = this;
 
       this.proIds = [];
       this.updateProIds = [];
@@ -3400,16 +3160,16 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       this.$fetch(this.urls.customerservicedepts + "/" + id, {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
       }).then(function (res) {
-        _this16.updateCustomerFormVal = res;
+        _this10.updateCustomerFormVal = res;
         if (res["orderItems"]["data"].length > 0) {
           res["orderItems"]["data"].map(function (item) {
-            _this16.updateProIds.push(item["combination"].id);
+            _this10.updateProIds.push(item["combination"].id);
             item["name"] = item["combination"]["name"];
             item["id"] = item.id;
             item["products_id"] = item.products_id;
             item["combinations_id"] = item.combinations_id;
             item["productComp"] = item["combination"]["productComponents"]["data"];
-            _this16.$set(item, "newData", {
+            _this10.$set(item, "newData", {
               quantity: item.quantity,
               paint: item.paint,
               is_printing: item.is_printing,
@@ -3421,8 +3181,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             });
           });
         }
-        _this16.updateProData = res["orderItems"]["data"];
-        _this16.updateReceiveInfo = {
+        _this10.updateProData = res["orderItems"]["data"];
+        _this10.updateReceiveInfo = {
           receiver_name: res.receiver_name,
           receiver_phone: res.receiver_phone,
           receiver_mobile: res.receiver_mobile,
@@ -3430,7 +3190,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           receiver_address: res.receiver_address,
           receiver_zip: res.receiver_zip
         };
-        _this16.updateExpenseData = res["paymentDetails"]["data"];
+        _this10.updateExpenseData = res["paymentDetails"]["data"];
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -3439,17 +3199,17 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this16.$message.error(str);
+          _this10.$message.error(str);
         }
       });
     },
     updateDelPro: function updateDelPro(row, index) {
-      var _this17 = this;
+      var _this11 = this;
 
       if (row["originalId"]) {
         this.$del(this.urls.orderitems + "/" + row["originalId"]).then(function () {
-          _this17.updateProData.splice(index, 1);
-          _this17.$message({
+          _this11.updateProData.splice(index, 1);
+          _this11.$message({
             message: "删除成功",
             type: "success"
           });
@@ -3461,13 +3221,13 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this17.$message.error(str);
+            _this11.$message.error(str);
           }
         });
       } else if (row.id) {
         this.$del(this.urls.orderitems + "/" + row.id).then(function () {
-          _this17.updateProData.splice(index, 1);
-          _this17.$message({
+          _this11.updateProData.splice(index, 1);
+          _this11.$message({
             message: "删除成功",
             type: "success"
           });
@@ -3479,7 +3239,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this17.$message.error(str);
+            _this11.$message.error(str);
           }
         });
       } else {
@@ -3491,12 +3251,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       }
     },
     updateDelExpense: function updateDelExpense(row, index) {
-      var _this18 = this;
+      var _this12 = this;
 
       if (row.id) {
         this.$del(this.urls.paymentdetails + "/" + row.id).then(function () {
-          _this18.updateExpenseData.splice(index, 1);
-          _this18.$message({
+          _this12.updateExpenseData.splice(index, 1);
+          _this12.$message({
             message: "删除成功",
             type: "success"
           });
@@ -3508,7 +3268,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this18.$message.error(str);
+            _this12.$message.error(str);
           }
         });
       } else {
@@ -3520,7 +3280,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       }
     },
     updateCustomerConfirm: function updateCustomerConfirm() {
-      var _this19 = this;
+      var _this13 = this;
 
       var forData = this.updateCustomerFormVal;
       var submitData = {
@@ -3649,22 +3409,22 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       });
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(function () {
-        _this19.updateCustomerMask = false;
-        _this19.refresh();
-        _this19.$message({
+        _this13.updateCustomerMask = false;
+        _this13.refresh();
+        _this13.$message({
           message: "修改成功",
           type: "success"
         });
       }, function (err) {
         if (err.response) {
-          _this19.showDel = false;
+          _this13.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this19.$message.error(str);
+          _this13.$message.error(str);
         }
       });
     },
@@ -3676,35 +3436,127 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       });
     },
 
-    /*审核*/
+    /****************************** 锁 定 ********************************/
+    lockOrder: function lockOrder() {
+      var _this14 = this;
+
+      if (this.newOpt[3].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
+          _this14.newOpt[0].nClick = false;
+          _this14.newOpt[1].nClick = false;
+          _this14.newOpt[2].nClick = false;
+          _this14.newOpt[3].nClick = true;
+          _this14.newOpt[4].nClick = false;
+          _this14.newOpt[5].nClick = false;
+          _this14.newOpt[6].nClick = true;
+          _this14.newOpt[7].nClick = false;
+          _this14.newOpt[8].nClick = false;
+          _this14.newOpt[9].nClick = false;
+          _this14.newOpt[10].nClick = false;
+          _this14.newOpt[11].nClick = false;
+          _this14.newOpt[12].nClick = true;
+          _this14.newOpt[13].nClick = false;
+          _this14.newOpt[14].nClick = false;
+          _this14.newOpt[15].nClick = false;
+          _this14.newOpt[16].nClick = false;
+          _this14.newOpt[17].nClick = false;
+          _this14.refresh();
+          _this14.$message({
+            message: "锁定成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this14.$message.error(str);
+          }
+        });
+      }
+    },
+
+    /***************************** 解 锁 *********************************/
+    debLock: function debLock() {
+      var _this15 = this;
+
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/lockorunlock").then(function () {
+          _this15.newOpt[0].nClick = false;
+          _this15.newOpt[1].nClick = true;
+          _this15.newOpt[2].nClick = true;
+          _this15.newOpt[3].nClick = false;
+          _this15.newOpt[4].nClick = true;
+          _this15.newOpt[5].nClick = true;
+          _this15.newOpt[6].nClick = true;
+          _this15.newOpt[7].nClick = false;
+          _this15.newOpt[8].nClick = true;
+          _this15.newOpt[9].nClick = true;
+          _this15.newOpt[10].nClick = false;
+          _this15.newOpt[11].nClick = false;
+          _this15.newOpt[12].nClick = true;
+          _this15.newOpt[13].nClick = false;
+          _this15.newOpt[14].nClick = false;
+          _this15.newOpt[15].nClick = false;
+          _this15.newOpt[16].nClick = false;
+          _this15.newOpt[17].nClick = false;
+          _this15.refresh();
+          _this15.$message({
+            message: "解锁成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this15.$message.error(str);
+          }
+        });
+      }
+    },
+
+    /************************ 审 核 与 解 锁********************************/
     handleAudit: function handleAudit() {
-      var _this20 = this;
+      var _this16 = this;
 
       if (this.newOpt[5].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(function () {
-          _this20.newOpt[0].nClick = false;
-          _this20.newOpt[1].nClick = true;
-          _this20.newOpt[2].nClick = true;
-          _this20.newOpt[3].nClick = true;
-          _this20.newOpt[4].nClick = true;
-          _this20.newOpt[5].nClick = true;
-          _this20.newOpt[6].nClick = false;
-          _this20.newOpt[7].nClick = false;
-          _this20.newOpt[8].nClick = false;
-          _this20.newOpt[9].nClick = false;
-          _this20.newOpt[10].nClick = true;
-          _this20.newOpt[11].nClick = false;
-          _this20.newOpt[12].nClick = false;
-          _this20.newOpt[13].nClick = false;
-          _this20.newOpt[14].nClick = false;
-          _this20.newOpt[15].nClick = false;
-          _this20.newOpt[16].nClick = true;
-          _this20.newOpt[17].nClick = false;
-          _this20.refresh();
-          _this20.$message({
+          _this16.newOpt[0].nClick = false;
+          _this16.newOpt[1].nClick = true;
+          _this16.newOpt[2].nClick = true;
+          _this16.newOpt[3].nClick = true;
+          _this16.newOpt[4].nClick = true;
+          _this16.newOpt[5].nClick = true;
+          _this16.newOpt[6].nClick = false;
+          _this16.newOpt[7].nClick = false;
+          _this16.newOpt[8].nClick = false;
+          _this16.newOpt[9].nClick = false;
+          _this16.newOpt[10].nClick = true;
+          _this16.newOpt[11].nClick = false;
+          _this16.newOpt[12].nClick = false;
+          _this16.newOpt[13].nClick = false;
+          _this16.newOpt[14].nClick = false;
+          _this16.newOpt[15].nClick = false;
+          _this16.newOpt[16].nClick = true;
+          _this16.newOpt[17].nClick = false;
+          _this16.refresh();
+          _this16.$message({
             message: "审核成功",
             type: "success"
           });
@@ -3716,39 +3568,39 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this20.$message.error(str);
+            _this16.$message.error(str);
           }
         });
       }
     },
     handleUnAudit: function handleUnAudit() {
-      var _this21 = this;
+      var _this17 = this;
 
       if (this.newOpt[6].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(function () {
-          _this21.newOpt[0].nClick = false;
-          _this21.newOpt[1].nClick = true;
-          _this21.newOpt[2].nClick = true;
-          _this21.newOpt[3].nClick = false;
-          _this21.newOpt[4].nClick = true;
-          _this21.newOpt[5].nClick = true;
-          _this21.newOpt[6].nClick = true;
-          _this21.newOpt[7].nClick = false;
-          _this21.newOpt[8].nClick = true;
-          _this21.newOpt[9].nClick = true;
-          _this21.newOpt[10].nClick = false;
-          _this21.newOpt[11].nClick = false;
-          _this21.newOpt[12].nClick = true;
-          _this21.newOpt[13].nClick = false;
-          _this21.newOpt[14].nClick = false;
-          _this21.newOpt[15].nClick = false;
-          _this21.newOpt[16].nClick = false;
-          _this21.newOpt[17].nClick = false;
-          _this21.refresh();
-          _this21.$message({
+          _this17.newOpt[0].nClick = false;
+          _this17.newOpt[1].nClick = true;
+          _this17.newOpt[2].nClick = true;
+          _this17.newOpt[3].nClick = false;
+          _this17.newOpt[4].nClick = true;
+          _this17.newOpt[5].nClick = true;
+          _this17.newOpt[6].nClick = true;
+          _this17.newOpt[7].nClick = false;
+          _this17.newOpt[8].nClick = true;
+          _this17.newOpt[9].nClick = true;
+          _this17.newOpt[10].nClick = false;
+          _this17.newOpt[11].nClick = false;
+          _this17.newOpt[12].nClick = true;
+          _this17.newOpt[13].nClick = false;
+          _this17.newOpt[14].nClick = false;
+          _this17.newOpt[15].nClick = false;
+          _this17.newOpt[16].nClick = false;
+          _this17.newOpt[17].nClick = false;
+          _this17.refresh();
+          _this17.$message({
             message: "退审成功",
             type: "success"
           });
@@ -3760,13 +3612,80 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this21.$message.error(str);
+            _this17.$message.error(str);
           }
         });
       }
     },
+
+    /***************************** 转 补 单 *******************************/
+    additionOrder: function additionOrder() {
+      var _this18 = this;
+
+      if (this.newOpt[10].nClick) {
+        return;
+      } else {
+        if (this.additionOrderIds.length != 2) {
+          this.$message({
+            message: "请选择要转补单的订单",
+            type: "info"
+          });
+        } else {
+          var ids = [];
+          this.additionOrderIds.map(function (item) {
+            ids.push(item.id);
+          });
+          this.$put(this.urls.customerservicedepts + "/additionorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
+            _this18.refresh();
+            _this18.$message({
+              message: "转补单成功",
+              type: "success"
+            });
+          }, function (err) {
+            if (err.response) {
+              _this18.$message.error("转补单出错");
+            }
+          });
+        }
+      }
+    },
+
+    /***************************** 转 补 款 *******************************/
+    additionMoney: function additionMoney() {
+      var _this19 = this;
+
+      if (this.newOpt[11].nclick) {
+        return;
+      } else {
+        if (this.additionOrderIds.length != 2) {
+          this.$message({
+            message: "请选择要转补款的订单",
+            type: "info"
+          });
+        } else {
+          var ids = [];
+          this.additionOrderIds.map(function (item) {
+            ids.push(item.id);
+          });
+          this.$put(this.urls.customerservicedepts + "/additionmoney" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
+            _this19.refresh();
+            _this19.$message({
+              message: "转补款成功",
+              type: "success"
+            });
+            _this19.additionOrderIds = [];
+          }, function (err) {
+            if (err.response) {
+              _this19.$message.error("转补款出错");
+            }
+          });
+        }
+      }
+    },
+
+    /***************************** 拆 分 **********************************/
     handleSplitOrder: function handleSplitOrder() {
-      var _this22 = this;
+      var _this20 = this;
 
       if (this.newOpt[9].nClick) {
         return;
@@ -3786,14 +3705,14 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
                 quantity: ""
               }
             };
-            _this22.splitVal.push(list);
+            _this20.splitVal.push(list);
           });
         }
       }
     },
-    splitCName: function splitCName(_ref4) {
-      var row = _ref4.row,
-          rowIndex = _ref4.rowIndex;
+    splitCName: function splitCName(_ref) {
+      var row = _ref.row,
+          rowIndex = _ref.rowIndex;
 
       row.index = rowIndex;
     },
@@ -3807,7 +3726,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       }
     },
     confirmSplit: function confirmSplit() {
-      var _this23 = this;
+      var _this21 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       var confSplit = {
@@ -3825,8 +3744,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         });
       }
       this.$put(this.urls.customerservicedepts + "/" + id + "/splitorder", confSplit).then(function () {
-        _this23.splitMask = false;
-        _this23.refresh();
+        _this21.splitMask = false;
+        _this21.refresh();
         /*   this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = true;
@@ -3839,7 +3758,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           this.newOpt[14].nClick = true;
           this.newOpt[15].nClick = false;
           this.newOpt[18].nClick = false;*/
-        _this23.$message({
+        _this21.$message({
           message: "订单拆分成功",
           type: "success"
         });
@@ -3851,19 +3770,94 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this23.$message.error(str);
+          _this21.$message.error(str);
         }
       });
     },
     cancelSplit: function cancelSplit() {
       this.splitMask = false;
     },
-    print: function print() {
-      this.$message({
-        message: "请先配置打印机",
-        type: "success"
-      });
+
+    /***************************** 合 并 **********************************/
+    handleMergerOrder: function handleMergerOrder() {
+      var _this22 = this;
+
+      if (this.newOpt[8].nClick) {
+        return;
+      } else {
+        if (this.mergerIds.length != 2) {
+          this.$message({
+            message: "请选择要合并的订单",
+            type: "info"
+          });
+        } else {
+          var ids = [];
+          this.mergerIds.map(function (item) {
+            ids.push(item.id);
+          });
+          this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
+            _this22.refresh();
+            _this22.$message({
+              message: "订单合并成功",
+              type: "success"
+            });
+            _this22.mergerIds = [];
+          }, function (err) {
+            if (err.response) {
+              _this22.$message.error("合并订单出错");
+            }
+          });
+        }
+      }
     },
+
+    /************************** 等 通 知 发 货 *****************************/
+    isNotice: function isNotice() {
+      var _this23 = this;
+
+      if (this.newOpt[14].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/notice").then(function () {
+          _this23.newOpt[0].nClick = false;
+          _this23.newOpt[1].nClick = true;
+          _this23.newOpt[2].nClick = true;
+          _this23.newOpt[3].nClick = true;
+          _this23.newOpt[4].nClick = true;
+          _this23.newOpt[5].nClick = true;
+          _this23.newOpt[6].nClick = true;
+          _this23.newOpt[7].nClick = true;
+          _this23.newOpt[8].nClick = true;
+          _this23.newOpt[9].nClick = true;
+          _this23.newOpt[10].nClick = true;
+          _this23.newOpt[11].nClick = true;
+          _this23.newOpt[12].nClick = true;
+          _this23.newOpt[13].nClick = true;
+          _this23.newOpt[14].nClick = true;
+          _this23.newOpt[15].nClick = true;
+          _this23.newOpt[16].nClick = true;
+          _this23.newOpt[17].nClick = false;
+          _this23.refresh();
+          _this23.$message({
+            message: "通知发货成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this23.$message.error(str);
+          }
+        });
+      }
+    },
+
+    /****************** 关 联 与 取 消 关 联 订 单 ***************************/
     associateOrder: function associateOrder() {
       if (this.mergerIds.length != 2) {
         this.$message({
@@ -3891,6 +3885,18 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         });
         this.refresh();
       }
+    },
+
+    /************************ 刷 新 导 出 与 打 印 ***************************/
+    refresh: function refresh() {
+      this.loading = true;
+      this.fetchData();
+    },
+    print: function print() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
     },
     excelExport: function excelExport() {
       var _this24 = this;
@@ -4332,7 +4338,7 @@ var render = function() {
                 "el-tabs",
                 {
                   staticStyle: { height: "400px" },
-                  on: { "tab-click": _vm.leftHandleClick },
+                  on: { "tab-click": _vm.handleClick },
                   model: {
                     value: _vm.leftTopActiveName,
                     callback: function($$v) {
@@ -4364,7 +4370,7 @@ var render = function() {
                           },
                           on: {
                             "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
+                            "row-click": _vm.orderListRowClick,
                             "row-dblclick": _vm.orderDbClick
                           }
                         },
@@ -4601,7 +4607,7 @@ var render = function() {
                           },
                           on: {
                             "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
+                            "row-click": _vm.orderListRowClick,
                             "row-dblclick": _vm.orderDbClick
                           }
                         },
@@ -4957,7 +4963,6 @@ var render = function() {
               _c(
                 "el-tabs",
                 {
-                  on: { "tab-click": _vm.rightHandleClick },
                   model: {
                     value: _vm.rightActiveName,
                     callback: function($$v) {
@@ -6256,7 +6261,6 @@ var render = function() {
             {
               staticClass: "hidePart",
               attrs: { id: "elTabs" },
-              on: { "tab-click": _vm.addHandleClick },
               model: {
                 value: _vm.addActiveName,
                 callback: function($$v) {
@@ -6273,11 +6277,7 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: {
-                        data: _vm.proData,
-                        fit: "",
-                        "row-class-name": _vm.addProRCName
-                      },
+                      attrs: { data: _vm.proData, fit: "" },
                       on: { "row-click": _vm.addProRowClick }
                     },
                     [
@@ -6833,11 +6833,7 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: {
-                        data: _vm.expenseData,
-                        fit: "",
-                        "row-class-name": _vm.addExpenseRCName
-                      },
+                      attrs: { data: _vm.expenseData, fit: "" },
                       on: { "row-click": _vm.addExpenseRClick }
                     },
                     [
@@ -7368,12 +7364,7 @@ var render = function() {
           _c(
             "el-table",
             {
-              attrs: {
-                data: _vm.proVal,
-                fit: "",
-                height: "250",
-                "row-class-name": _vm.proCName
-              },
+              attrs: { data: _vm.proVal, fit: "", height: "250" },
               on: { "row-click": _vm.proRowClick }
             },
             _vm._l(_vm.proHead, function(item) {
@@ -7459,12 +7450,7 @@ var render = function() {
           _c(
             "el-table",
             {
-              attrs: {
-                data: _vm.proSkuVal,
-                fit: "",
-                height: "230",
-                "row-class-name": _vm.proSkuCName
-              },
+              attrs: { data: _vm.proSkuVal, fit: "", height: "230" },
               on: { "row-click": _vm.proSkuRowClick }
             },
             [
@@ -7889,11 +7875,7 @@ var render = function() {
                   on: { click: _vm.confirmAddProDtl }
                 },
                 [_vm._v("确定")]
-              ),
-              _vm._v(" "),
-              _c("el-button", { on: { click: _vm.cancelAddProDtl } }, [
-                _vm._v("关闭")
-              ])
+              )
             ],
             1
           )
@@ -8231,7 +8213,6 @@ var render = function() {
             {
               staticClass: "hidePart",
               attrs: { id: "elTabs" },
-              on: { "tab-click": _vm.addHandleClick },
               model: {
                 value: _vm.updateActiveName,
                 callback: function($$v) {
@@ -8248,11 +8229,7 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: {
-                        data: _vm.updateProData,
-                        fit: "",
-                        "row-class-name": _vm.addProRCName
-                      },
+                      attrs: { data: _vm.updateProData, fit: "" },
                       on: { "row-click": _vm.addProRowClick }
                     },
                     [
@@ -8814,11 +8791,7 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: {
-                        data: _vm.updateExpenseData,
-                        fit: "",
-                        "row-class-name": _vm.addExpenseRCName
-                      },
+                      attrs: { data: _vm.updateExpenseData, fit: "" },
                       on: { "row-click": _vm.addExpenseRClick }
                     },
                     [

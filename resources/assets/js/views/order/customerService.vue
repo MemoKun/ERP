@@ -91,9 +91,9 @@
             <span></span>
           </div>
         </div>
-        <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
+        <el-tabs v-model="leftTopActiveName" @tab-click="handleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">
-            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -141,7 +141,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="已处理" name="1">
-            <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -212,7 +212,7 @@
             </span>
           </el-form-item>
         </el-form>
-        <el-tabs v-model="rightActiveName" @tab-click="rightHandleClick">
+        <el-tabs v-model="rightActiveName">
           <el-tab-pane label="商品明细" name="0">
             <el-table :data="proDtlData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -455,9 +455,9 @@
           </span>
         </el-form-item>
       </el-form>
-      <el-tabs v-model="addActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
+      <el-tabs v-model="addActiveName" id="elTabs" class="hidePart">
         <el-tab-pane label="商品信息" name="0">
-          <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
+          <el-table :data="proData" fit @row-click="addProRowClick">
             <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='newData'">
@@ -545,7 +545,7 @@
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="费用类型" name="2">
-          <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+          <el-table :data="expenseData" fit @row-click="addExpenseRClick">
             <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="expenseRIndex == 'index'+scope.$index">
@@ -626,7 +626,7 @@
         </span>
         <el-button type="primary" @click="proQueryClick">查询</el-button>
       </div>
-      <el-table :data="proVal" fit height="250" :row-class-name="proCName" @row-click="proRowClick">
+      <el-table :data="proVal" fit height="250" @row-click="proRowClick">
         <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop">
@@ -645,7 +645,7 @@
       </el-table>
       <el-button type="text">sku信息</el-button>
       <label>{{this.proSkuVal}}</label>
-      <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
+      <el-table :data="proSkuVal" fit height="230" @row-click="proSkuRowClick">
         <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
@@ -717,7 +717,6 @@
       </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="confirmAddProDtl">确定</el-button>
-        <el-button @click="cancelAddProDtl">关闭</el-button>
       </div>
     </el-dialog>
 
@@ -767,9 +766,9 @@
           </span>
         </el-form-item>
       </el-form>
-      <el-tabs v-model="updateActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
+      <el-tabs v-model="updateActiveName" id="elTabs" class="hidePart">
         <el-tab-pane label="商品信息" name="0">
-          <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
+          <el-table :data="updateProData" fit @row-click="addProRowClick">
             <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='newData'">
@@ -857,7 +856,7 @@
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="费用类型" name="2">
-          <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
+          <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick">
             <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="expenseRIndex == 'index'+scope.$index">
@@ -1094,7 +1093,7 @@ export default {
         seller_remark: "",
         seller_flag: "",
         lock_status: "",
-        lockStatus: [{ label: "锁定", value: 1 }, { label: "未锁定", value: 1 }],
+        lockStatus: [{ label: "锁定", value: 1 }, { label: "未锁定", value: 0 }],
         shops_id: ""
       },
       /*获取数据*/
@@ -2641,8 +2640,9 @@ export default {
       InnerNoteData: {},
       InnerNoteHead: [],
 
-
-      curCombRowData:[],
+      curCombRowData: [],
+      curProSkuNum: "",
+      curProSkuVolume: ""
     };
   },
   computed: {
@@ -2684,171 +2684,7 @@ export default {
     test() {
       console.log(1);
     },
-    /***************************** 转 补 单 *******************************/
-    additionOrder() {
-      if (this.newOpt[10].nClick) {
-        return;
-      } else {
-        if (this.additionOrderIds.length != 2) {
-          this.$message({
-            message: "请选择要转补单的订单",
-            type: "info"
-          });
-        } else {
-          let ids = [];
-          this.additionOrderIds.map(item => {
-            ids.push(item.id);
-          });
-          this.$put(
-            this.urls.customerservicedepts +
-              "/additionorder" +
-              "?order_id_one=" +
-              ids[0] +
-              "&order_id_two=" +
-              ids[1]
-          ).then(
-            () => {
-              this.refresh();
-              this.$message({
-                message: "转补单成功",
-                type: "success"
-              });
-            },
-            err => {
-              if (err.response) {
-                this.$message.error("转补单出错");
-              }
-            }
-          );
-        }
-      }
-    },
-    /***************************** 转 补 款 *******************************/
-    additionMoney() {
-      if (this.newOpt[11].nclick) {
-        return;
-      } else {
-        if (this.additionOrderIds.length != 2) {
-          this.$message({
-            message: "请选择要转补款的订单",
-            type: "info"
-          });
-        } else {
-          let ids = [];
-          this.additionOrderIds.map(item => {
-            ids.push(item.id);
-          });
-          this.$put(
-            this.urls.customerservicedepts +
-              "/additionmoney" +
-              "?order_id_one=" +
-              ids[0] +
-              "&order_id_two=" +
-              ids[1]
-          ).then(
-            () => {
-              this.refresh();
-              this.$message({
-                message: "转补款成功",
-                type: "success"
-              });
-              this.additionOrderIds = [];
-            },
-            err => {
-              if (err.response) {
-                this.$message.error("转补款出错");
-              }
-            }
-          );
-        }
-      }
-    },
-    /***************************** 合 并 *******************************/
-    handleMergerOrder() {
-      if (this.newOpt[8].nClick) {
-        return;
-      } else {
-        if (this.mergerIds.length != 2) {
-          this.$message({
-            message: "请选择要合并的订单",
-            type: "info"
-          });
-        } else {
-          let ids = [];
-          this.mergerIds.map(item => {
-            ids.push(item.id);
-          });
-          this.$put(
-            this.urls.customerservicedepts +
-              "/mergerorder" +
-              "?order_id_one=" +
-              ids[0] +
-              "&order_id_two=" +
-              ids[1]
-          ).then(
-            () => {
-              this.refresh();
-              this.$message({
-                message: "订单合并成功",
-                type: "success"
-              });
-              this.mergerIds = [];
-            },
-            err => {
-              if (err.response) {
-                this.$message.error("合并订单出错");
-              }
-            }
-          );
-        }
-      }
-    },
-    isNotice() {
-      if (this.newOpt[14].nClick) {
-        return;
-      } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/notice").then(
-          () => {
-            this.newOpt[0].nClick = false;
-            this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = true;
-            this.newOpt[3].nClick = true;
-            this.newOpt[4].nClick = true;
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = true;
-            this.newOpt[7].nClick = true;
-            this.newOpt[8].nClick = true;
-            this.newOpt[9].nClick = true;
-            this.newOpt[10].nClick = true;
-            this.newOpt[11].nClick = true;
-            this.newOpt[12].nClick = true;
-            this.newOpt[13].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = true;
-            this.newOpt[16].nClick = true;
-            this.newOpt[17].nClick = false;
-            this.refresh();
-            this.$message({
-              message: "通知发货成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
-      }
-    },
-    /*获取数据*/
+    /**************************** 获 取 数 据 *******************************/
     outerHandleClick() {
       let index = this.activeName - 0;
       switch (index) {
@@ -3016,12 +2852,25 @@ export default {
           break;
       }
     },
-    leftHandleClick() {
+    handleClick() {//首页未处理Tab-pane加载数据
       this.loading = true;
       this.fetchData();
     },
-    rightHandleClick() {},
-    orderListRClick(row) {
+    /*页码*/
+    handlePagChg(page) {
+      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
+        include:
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      }).then(res => {
+        if (this.leftTopActiveName == "0") {
+          this.orderListData = res.data;
+        } else {
+          this.alreadyHandle = res.data;
+        }
+      });
+    },
+    /************************* 首 页 主 要 Tab ******************************/
+    orderListRowClick(row) {
       if (row["order_status"] == "未处理") {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
@@ -3132,69 +2981,153 @@ export default {
       /*支付明细*/
       this.payDtlData = row["paymentDetails"]["data"];
     },
-    proDtlRClick(row) {},
-    /*新增*/
+    /*批量删除-监听checkbox*/
+    handleSelectionChange(val) {
+      console.log(val);
+      /*拿到id集合*/
+      let delArr = [];
+      val.forEach(selectedItem => {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
+      this.additionOrderIds = val;
+    },
+    /*批量删除-删除 */
+    delBatch() {
+      if (this.ids.length === 0) {
+        this.$message({
+          message: "没有选中数据",
+          type: "warning"
+        });
+      } else {
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$del(this.urls.customerservicedepts, { ids: this.ids }).then(
+              () => {
+                this.refresh();
+                this.$message({
+                  message: "删除成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
+              }
+            );
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
+          });
+      }
+    },
+    /*删除单条，打开询问窗口*/
+    delSingle(row, e) {
+      this.showDel = true;
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
+      this.delId = row.id;
+      this.delUrl = row["orderItems"]
+        ? this.urls.customerservicedepts
+        : row["payment"] ? this.urls["paymentdetails"] : this.urls.orderitems;
+    },
+    /*取消删除单条，关闭询问窗口*/
+    cancelD() {
+      this.showDel = false;
+      this.$message({
+        message: "取消删除",
+        type: "info"
+      });
+    },
+    /*确认删除单条 */
+    confirmD(url, id) {
+      this.$del(url + "/" + id).then(
+        () => {
+          this.showDel = false;
+          this.refresh();
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
+        },
+        err => {
+          if (err.response) {
+            this.showDel = false;
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error(str);
+          }
+        }
+      );
+    },
+    /*************************** 新 增 订 单 *****************************/
+    //打开新增订单界面
     addCustomer() {
       this.addCustomerMask = true;
       this.addIds = [];
       this.proData = [];
       this.proRIndex = "";
     },
-    proQueryClick() {
-      this.proSkuVal = [];
-      this.$fetch(this.urls.products, {
-        status: true,
-        commodity_code: this.proQuery.commodity_code,
-        component_code: this.proQuery.component_code,
-        shops_id: this.proQuery.shops_id,
-        short_name: this.proQuery.short_name,
-        include:
-          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
-      }).then(
-        res => {
-          this.proVal = res.data;
-          let comb = res.data[0]["combinations"]["data"];
-          this.curCombRowData = res.data[0]["combinations"]["data"];
-          if (comb.length > 0) {
-            let total_volume = 0;
-            comb.map(item => {
-              item["productComp"] = item["productComponents"]["data"];
-              if (item["productComponents"]["data"].length > 0) {
-                item["productComponents"]["data"].map(list => {
-                  total_volume += list.volume;
-                });
-              } else {
-                total_volume = 0;
-              }
-              this.$set(item, "newData", {
-                quantity: "",
-                paint: "",
-                is_printing: false,
-                printing_fee: "",
-                is_spot_goods: true,
-                under_line_univalent: "",
-                under_line_preferential: "",
-                total_volume: total_volume
-              });
-            });
-          } else {
-            comb["productComp"] = [];
-          }
-          this.proSkuVal = comb;
-        },
-        err => {}
-      );
+    //监听输入框变化，计算总运费
+    formChg() {
+      let formVal;
+      if (this.addCustomerMask) {
+        formVal = this.addCustomerFormVal;
+      } else {
+        formVal = this.updateCustomerFormVal;
+      }
+      formVal["total_distribution_fee"] =
+        formVal["deliver_goods_fee"] -
+        0 +
+        (formVal["move_upstairs_fee"] - 0) +
+        (formVal["installation_fee"] - 0);
+
+      if (this.addCustomerMask) {
+        this.addCustomerFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
+      } else {
+        this.updateCustomerFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
+      }
     },
-    addHandleClick() {},
-    addProRCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
+    //新建订单下方-商品信息-添加商品时的RowClick
     addProRowClick(row) {
       this.proRIndex = `index${row.index}`;
     },
+    //新建订单下方-商品信息-删除单个商品
     addDelPro(index) {
       this.proData.splice(index, 1);
     },
+    //取消新建订单-关闭新建订单页面
+    addCustomerCancel() {
+      this.addCustomerMask = false;
+      this.$message({
+        message: "取消新增订单明细",
+        type: "success"
+      });
+    },
+    //确认新增订单
     addCustomerConfirm() {
       let forData = this.addCustomerFormVal;
       let submitData = {
@@ -3300,14 +3233,34 @@ export default {
         }
       );
     },
-    addCustomerCancel() {
-      this.addCustomerMask = false;
+    /*费用类型-新增行*/
+    addExpenseLine() {
+      if (this.addCustomerMask) {
+        this.expenseData.push({
+          payment_methods_id: "",
+          payment: ""
+        });
+      } else {
+        this.updateExpenseData.push({
+          payment_methods_id: "",
+          payment: ""
+        });
+      }
+    },
+    /*费用类型-删除行 */
+    addDelExpense(index) {
+      this.expenseData.splice(index, 1);
       this.$message({
-        message: "取消新增订单明细",
+        message: "删除成功",
         type: "success"
       });
     },
-    /*商品明细*/
+    /*费用类型-行监听 */
+    addExpenseRClick(row) {
+      this.expenseRIndex = `index${row.index}`;
+    },
+    /************************** 添 加 商 品 界 面 **************************/
+    //打开添加商品界面按钮
     addProDtl() {
       this.proMask = true;
       Object.assign(this.proQuery, this.$options.data().proQuery);
@@ -3315,19 +3268,53 @@ export default {
       this.proSkuVal = [];
       this.proIds = [];
     },
-    toggleForm() {
-      /*展开  partHide
-        * 折叠  没有partHide*/
-      this.clickFlag = !this.clickFlag;
-      this.toggleText = !this.toggleText;
-      if (this.clickFlag) {
-        $("#form").removeClass("hidePart");
-        $("#elTabs").removeClass("hidePart");
-      } else {
-        $("#form").addClass("hidePart");
-        $("#elTabs").addClass("hidePart");
-      }
+    //添加商品界面-上方按钮-查询商品
+    proQueryClick() {
+      this.proSkuVal = [];
+      this.$fetch(this.urls.products, {
+        status: true,
+        commodity_code: this.proQuery.commodity_code,
+        component_code: this.proQuery.component_code,
+        shops_id: this.proQuery.shops_id,
+        short_name: this.proQuery.short_name,
+        include:
+          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+      }).then(
+        res => {
+          this.proVal = res.data;
+          let comb = res.data[0]["combinations"]["data"];
+          this.curCombRowData = res.data[0]["combinations"]["data"];
+          if (comb.length > 0) {
+            let total_volume = 0;
+            comb.map(item => {
+              item["productComp"] = item["productComponents"]["data"];
+              if (item["productComponents"]["data"].length > 0) {
+                item["productComponents"]["data"].map(list => {
+                  total_volume += list.volume;
+                });
+              } else {
+                total_volume = 0;
+              }
+              this.$set(item, "newData", {
+                quantity: "",
+                paint: "",
+                is_printing: false,
+                printing_fee: "",
+                is_spot_goods: true,
+                under_line_univalent: "",
+                under_line_preferential: "",
+                total_volume: total_volume
+              });
+            });
+          } else {
+            comb["productComp"] = [];
+          }
+          this.proSkuVal = comb;
+        },
+        err => {}
+      );
     },
+    //添加商品界面-上方Tab-点击获取产品信息，并将商品加载到下方
     proRowClick(row) {
       this.proSkuVal = [];
       this.proCompRowIndex = "";
@@ -3360,22 +3347,22 @@ export default {
       }
       this.proSkuVal = comb;
     },
-    proCName() {},
-    proSkuCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
+    //添加商品界面-下方Tab-点击加载SKU信息，修改数量体积等
     proSkuRowClick(row) {
       this.proCompRowIndex = `index${row.index}`;
       this.proCompRow = row;
     },
+    //监听sku数量变化，并修改总体积
     quantityChg(value) {
       if (value > 0) {
         let proCRow = this.proCompRow;
         //this.proSkuVal[0]['newData']['total_volume'];
-        this.proSkuVal[0]['newData']['total_volume']=this.proSkuVal[0]['newData']['quantity']*this.curCombRowData[0]['newData']['total_volume'];
+        this.proSkuVal[0]["newData"]["total_volume"] =
+          this.proSkuVal[0]["newData"]["quantity"] *
+          this.curCombRowData[0]["newData"]["total_volume"];
         this.$message({
-          message:this.curCombRowData,
-          type:"info"
+          message: this.curCombRowData,
+          type: "info"
         });
         if (this.proIds.indexOf(proCRow.id) == -1) {
           this.proIds.push(proCRow.id);
@@ -3390,27 +3377,7 @@ export default {
         }
       }
     },
-    formChg() {
-      let formVal;
-      if (this.addCustomerMask) {
-        formVal = this.addCustomerFormVal;
-      } else {
-        formVal = this.updateCustomerFormVal;
-      }
-      formVal["total_distribution_fee"] =
-        formVal["deliver_goods_fee"] -
-        0 +
-        (formVal["move_upstairs_fee"] - 0) +
-        (formVal["installation_fee"] - 0);
-
-      if (this.addCustomerMask) {
-        this.addCustomerFormVal.total_distribution_fee =
-          formVal["total_distribution_fee"];
-      } else {
-        this.updateCustomerFormVal.total_distribution_fee =
-          formVal["total_distribution_fee"];
-      }
-    },
+    //确认添加商品到新建订单
     confirmAddProDtl() {
       if (this.addCustomerMask) {
         this.proSubmitData.map(item => {
@@ -3459,247 +3426,7 @@ export default {
         });
       }
     },
-    cancelAddProDtl() {
-      this.proMask = false;
-    },
-    addDelExpense(index) {
-      this.expenseData.splice(index, 1);
-      this.$message({
-        message: "删除成功",
-        type: "success"
-      });
-    },
-    addExpenseRCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    addExpenseRClick(row) {
-      this.expenseRIndex = `index${row.index}`;
-    },
-    /*新增行*/
-    addExpenseLine() {
-      if (this.addCustomerMask) {
-        this.expenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      } else {
-        this.updateExpenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      }
-    },
-    /*删除单条*/
-    delSingle(row, e) {
-      this.showDel = true;
-      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
-      this.delId = row.id;
-      this.delUrl = row["orderItems"]
-        ? this.urls.customerservicedepts
-        : row["payment"] ? this.urls["paymentdetails"] : this.urls.orderitems;
-    },
-    cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: "取消删除",
-        type: "info"
-      });
-    },
-    confirmD(url, id) {
-      this.$del(url + "/" + id).then(
-        () => {
-          this.showDel = false;
-          this.refresh();
-          this.$message({
-            message: "删除成功",
-            type: "success"
-          });
-        },
-        err => {
-          if (err.response) {
-            this.showDel = false;
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error(str);
-          }
-        }
-      );
-    },
-    /*批量删除*/
-    handleSelectionChange(val) {
-      console.log(val);
-      /*拿到id集合*/
-      let delArr = [];
-      val.forEach(selectedItem => {
-        delArr.push(selectedItem.id);
-      });
-      this.ids = delArr.join(",");
-      /*拿到当前id*/
-      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-      this.mergerIds = val;
-      this.additionOrderIds = val;
-    },
-    delBatch() {
-      if (this.ids.length === 0) {
-        this.$message({
-          message: "没有选中数据",
-          type: "warning"
-        });
-      } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
-            this.$del(this.urls.customerservicedepts, { ids: this.ids }).then(
-              () => {
-                this.refresh();
-                this.$message({
-                  message: "删除成功",
-                  type: "success"
-                });
-              },
-              err => {
-                if (err.response) {
-                  let arr = err.response.data.errors;
-                  let arr1 = [];
-                  for (let i in arr) {
-                    arr1.push(arr[i]);
-                  }
-                  let str = arr1.join(",");
-                  this.$message.error(str);
-                }
-              }
-            );
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消删除"
-            });
-          });
-      }
-    },
-    /*页码*/
-    handlePagChg(page) {
-      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
-        include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-      }).then(res => {
-        if (this.leftTopActiveName == "0") {
-          this.orderListData = res.data;
-        } else {
-          this.alreadyHandle = res.data;
-        }
-      });
-    },
-    refresh() {
-      this.loading = true;
-      this.fetchData();
-    },
-    /*锁定*/
-    lockOrder() {
-      if (this.newOpt[3].nClick) {
-        return;
-      } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(
-          this.urls.customerservicedepts + "/" + id + "/lockorunlock"
-        ).then(
-          () => {
-            this.newOpt[0].nClick = false;
-            this.newOpt[1].nClick = false;
-            this.newOpt[2].nClick = false;
-            this.newOpt[3].nClick = true;
-            this.newOpt[4].nClick = false;
-            this.newOpt[5].nClick = false;
-            this.newOpt[6].nClick = true;
-            this.newOpt[7].nClick = false;
-            this.newOpt[8].nClick = false;
-            this.newOpt[9].nClick = false;
-            this.newOpt[10].nClick = false;
-            this.newOpt[11].nClick = false;
-            this.newOpt[12].nClick = true;
-            this.newOpt[13].nClick = false;
-            this.newOpt[14].nClick = false;
-            this.newOpt[15].nClick = false;
-            this.newOpt[16].nClick = false;
-            this.newOpt[17].nClick = false;
-            this.refresh();
-            this.$message({
-              message: "锁定成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
-      }
-    },
-    /*解锁*/
-    debLock() {
-      if (this.newOpt[4].nClick) {
-        return;
-      } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(
-          this.urls.customerservicedepts + "/" + id + "/lockorunlock"
-        ).then(
-          () => {
-            this.newOpt[0].nClick = false;
-            this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = true;
-            this.newOpt[3].nClick = false;
-            this.newOpt[4].nClick = true;
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = true;
-            this.newOpt[7].nClick = false;
-            this.newOpt[8].nClick = true;
-            this.newOpt[9].nClick = true;
-            this.newOpt[10].nClick = false;
-            this.newOpt[11].nClick = false;
-            this.newOpt[12].nClick = true;
-            this.newOpt[13].nClick = false;
-            this.newOpt[14].nClick = false;
-            this.newOpt[15].nClick = false;
-            this.newOpt[16].nClick = false;
-            this.newOpt[17].nClick = false;
-            this.refresh();
-            this.$message({
-              message: "解锁成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
-      }
-    },
-    /*修改*/
+    /**************************** 修 改 ***********************************/
     updateData() {
       this.proIds = [];
       this.updateProIds = [];
@@ -4006,7 +3733,103 @@ export default {
         type: "success"
       });
     },
-    /*审核*/
+    /****************************** 锁 定 ********************************/
+    lockOrder() {
+      if (this.newOpt[3].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(
+          this.urls.customerservicedepts + "/" + id + "/lockorunlock"
+        ).then(
+          () => {
+            this.newOpt[0].nClick = false;
+            this.newOpt[1].nClick = false;
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = false;
+            this.newOpt[5].nClick = false;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = true;
+            this.newOpt[13].nClick = false;
+            this.newOpt[14].nClick = false;
+            this.newOpt[15].nClick = false;
+            this.newOpt[16].nClick = false;
+            this.newOpt[17].nClick = false;
+            this.refresh();
+            this.$message({
+              message: "锁定成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    /***************************** 解 锁 *********************************/
+    debLock() {
+      if (this.newOpt[4].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(
+          this.urls.customerservicedepts + "/" + id + "/lockorunlock"
+        ).then(
+          () => {
+            this.newOpt[0].nClick = false;
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = false;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = true;
+            this.newOpt[13].nClick = false;
+            this.newOpt[14].nClick = false;
+            this.newOpt[15].nClick = false;
+            this.newOpt[16].nClick = false;
+            this.newOpt[17].nClick = false;
+            this.refresh();
+            this.$message({
+              message: "解锁成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    /************************ 审 核 与 解 锁********************************/
     handleAudit() {
       if (this.newOpt[5].nClick) {
         return;
@@ -4097,6 +3920,86 @@ export default {
         );
       }
     },
+    /***************************** 转 补 单 *******************************/
+    additionOrder() {
+      if (this.newOpt[10].nClick) {
+        return;
+      } else {
+        if (this.additionOrderIds.length != 2) {
+          this.$message({
+            message: "请选择要转补单的订单",
+            type: "info"
+          });
+        } else {
+          let ids = [];
+          this.additionOrderIds.map(item => {
+            ids.push(item.id);
+          });
+          this.$put(
+            this.urls.customerservicedepts +
+              "/additionorder" +
+              "?order_id_one=" +
+              ids[0] +
+              "&order_id_two=" +
+              ids[1]
+          ).then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "转补单成功",
+                type: "success"
+              });
+            },
+            err => {
+              if (err.response) {
+                this.$message.error("转补单出错");
+              }
+            }
+          );
+        }
+      }
+    },
+    /***************************** 转 补 款 *******************************/
+    additionMoney() {
+      if (this.newOpt[11].nclick) {
+        return;
+      } else {
+        if (this.additionOrderIds.length != 2) {
+          this.$message({
+            message: "请选择要转补款的订单",
+            type: "info"
+          });
+        } else {
+          let ids = [];
+          this.additionOrderIds.map(item => {
+            ids.push(item.id);
+          });
+          this.$put(
+            this.urls.customerservicedepts +
+              "/additionmoney" +
+              "?order_id_one=" +
+              ids[0] +
+              "&order_id_two=" +
+              ids[1]
+          ).then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "转补款成功",
+                type: "success"
+              });
+              this.additionOrderIds = [];
+            },
+            err => {
+              if (err.response) {
+                this.$message.error("转补款出错");
+              }
+            }
+          );
+        }
+      }
+    },
+    /***************************** 拆 分 **********************************/
     handleSplitOrder() {
       if (this.newOpt[9].nClick) {
         return;
@@ -4189,12 +4092,93 @@ export default {
     cancelSplit() {
       this.splitMask = false;
     },
-    print() {
-      this.$message({
-        message: "请先配置打印机",
-        type: "success"
-      });
+    /***************************** 合 并 **********************************/
+    handleMergerOrder() {
+      if (this.newOpt[8].nClick) {
+        return;
+      } else {
+        if (this.mergerIds.length != 2) {
+          this.$message({
+            message: "请选择要合并的订单",
+            type: "info"
+          });
+        } else {
+          let ids = [];
+          this.mergerIds.map(item => {
+            ids.push(item.id);
+          });
+          this.$put(
+            this.urls.customerservicedepts +
+              "/mergerorder" +
+              "?order_id_one=" +
+              ids[0] +
+              "&order_id_two=" +
+              ids[1]
+          ).then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "订单合并成功",
+                type: "success"
+              });
+              this.mergerIds = [];
+            },
+            err => {
+              if (err.response) {
+                this.$message.error("合并订单出错");
+              }
+            }
+          );
+        }
+      }
     },
+    /************************** 等 通 知 发 货 *****************************/
+    isNotice() {
+      if (this.newOpt[14].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/notice").then(
+          () => {
+            this.newOpt[0].nClick = false;
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.newOpt[10].nClick = true;
+            this.newOpt[11].nClick = true;
+            this.newOpt[12].nClick = true;
+            this.newOpt[13].nClick = true;
+            this.newOpt[14].nClick = true;
+            this.newOpt[15].nClick = true;
+            this.newOpt[16].nClick = true;
+            this.newOpt[17].nClick = false;
+            this.refresh();
+            this.$message({
+              message: "通知发货成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    /****************** 关 联 与 取 消 关 联 订 单 ***************************/
     associateOrder() {
       if (this.mergerIds.length != 2) {
         this.$message({
@@ -4222,6 +4206,17 @@ export default {
         });
         this.refresh();
       }
+    },
+    /************************ 刷 新 导 出 与 打 印 ***************************/
+    refresh() {
+      this.loading = true;
+      this.fetchData();
+    },
+    print() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
     },
     excelExport() {
       this.$fetch(this.urls.excel).then(res => {
