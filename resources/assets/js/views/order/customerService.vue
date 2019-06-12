@@ -645,7 +645,7 @@
       </el-table>
       <el-button type="text">sku信息</el-button>
       <label>{{this.proSkuVal}}</label>
-      <el-table :data="proSkuVal" fit height="230" @row-click="proSkuRowClick">
+      <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
         <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
@@ -3351,6 +3351,10 @@ export default {
     proSkuRowClick(row) {
       this.proCompRowIndex = `index${row.index}`;
       this.proCompRow = row;
+    },
+    //决定proSku的活跃行
+    proSkuCName({ row, rowIndex }) {
+      row.index = rowIndex;
     },
     //监听sku数量变化，并修改总体积
     quantityChg(value) {

@@ -3065,6 +3065,14 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       this.proCompRow = row;
     },
 
+    //决定proSku的活跃行
+    proSkuCName: function proSkuCName(_ref) {
+      var row = _ref.row,
+          rowIndex = _ref.rowIndex;
+
+      row.index = rowIndex;
+    },
+
     //监听sku数量变化，并修改总体积
     quantityChg: function quantityChg(value) {
       var _this8 = this;
@@ -3710,9 +3718,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         }
       }
     },
-    splitCName: function splitCName(_ref) {
-      var row = _ref.row,
-          rowIndex = _ref.rowIndex;
+    splitCName: function splitCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
 
       row.index = rowIndex;
     },
@@ -7450,7 +7458,12 @@ var render = function() {
           _c(
             "el-table",
             {
-              attrs: { data: _vm.proSkuVal, fit: "", height: "230" },
+              attrs: {
+                data: _vm.proSkuVal,
+                fit: "",
+                height: "230",
+                "row-class-name": _vm.proSkuCName
+              },
               on: { "row-click": _vm.proSkuRowClick }
             },
             [
