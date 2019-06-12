@@ -963,6 +963,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2539,8 +2579,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           });
           break;
         case 2:
-          this.$fetch(this.urls.customerservicedepts, {
-            order_status: "等通知发货",
+          this.$fetch(this.urls.customerservicedepts + "/searchisnotice", {
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
             _this.loading = false;
@@ -2572,15 +2611,67 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
     handlePagChg: function handlePagChg(page) {
       var _this2 = this;
 
-      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
-        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-      }).then(function (res) {
-        if (_this2.leftTopActiveName == "0") {
+      if (this.leftTopActiveName == "0") {
+        this.loading = true;
+        this.$fetch(this.urls.customerservicedepts + "/searchuntreated" + "?page=" + page, {
+          member_nick: this.searchBox.member_nick,
+          system_order_no: this.searchBox.system_order_no,
+          receiver_name: this.searchBox.receiver_name,
+          receiver_phone: this.searchBox.receiver_phone,
+          receiver_address: this.searchBox.receiver_address,
+          shops_id: this.searchBox.shops_id,
+          logistics_id: this.searchBox.logistics_id,
+          seller_remark: this.searchBox.seller_remark,
+          promise_ship_time: this.searchBox.promise_ship_time,
+          created_at: this.searchBox.created_at,
+          cs_audited_at: this.searchBox.cs_audited_at,
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        }).then(function (res) {
           _this2.orderListData = res.data;
-        } else {
+          _this2.loading = false;
+        });
+      }
+      if (this.leftTopActiveName == "1") {
+        this.loading = true;
+        this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
+          order_status: 30,
+          member_nick: this.searchBox.member_nick,
+          system_order_no: this.searchBox.system_order_no,
+          receiver_name: this.searchBox.receiver_name,
+          receiver_phone: this.searchBox.receiver_phone,
+          receiver_address: this.searchBox.receiver_address,
+          shops_id: this.searchBox.shops_id,
+          logistics_id: this.searchBox.logistics_id,
+          seller_remark: this.searchBox.seller_remark,
+          promise_ship_time: this.searchBox.promise_ship_time,
+          created_at: this.searchBox.created_at,
+          cs_audited_at: this.searchBox.cs_audited_at,
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        }).then(function (res) {
           _this2.alreadyHandle = res.data;
-        }
-      });
+          _this2.loading = false;
+        });
+      }
+      if (this.leftTopActiveName == "2") {
+        this.loading = true;
+        this.$fetch(this.urls.customerservicedepts + "/searchisnotice" + "?page=" + page, {
+          member_nick: this.searchBox.member_nick,
+          system_order_no: this.searchBox.system_order_no,
+          receiver_name: this.searchBox.receiver_name,
+          receiver_phone: this.searchBox.receiver_phone,
+          receiver_address: this.searchBox.receiver_address,
+          shops_id: this.searchBox.shops_id,
+          logistics_id: this.searchBox.logistics_id,
+          seller_remark: this.searchBox.seller_remark,
+          promise_ship_time: this.searchBox.promise_ship_time,
+          created_at: this.searchBox.created_at,
+          cs_audited_at: this.searchBox.cs_audited_at,
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        }).then(function (res) {
+          _this2.orderListData = res.data;
+          _this2.loading = false;
+        });
+      }
     },
 
     /************************* 首 页 主 要 Tab ******************************/
@@ -4613,6 +4704,243 @@ var render = function() {
                           ],
                           attrs: {
                             data: _vm.alreadyHandle,
+                            fit: "",
+                            height: "350"
+                          },
+                          on: {
+                            "selection-change": _vm.handleSelectionChange,
+                            "row-click": _vm.orderListRowClick,
+                            "row-dblclick": _vm.orderDbClick
+                          }
+                        },
+                        [
+                          _c("el-table-column", {
+                            attrs: {
+                              type: "selection",
+                              width: "95",
+                              align: "center",
+                              checked: _vm.checkboxInit
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._l(_vm.orderListHead, function(item) {
+                            return _c("el-table-column", {
+                              key: item.label,
+                              attrs: {
+                                label: item.label,
+                                align: "center",
+                                width: item.width
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "default",
+                                    fn: function(scope) {
+                                      return [
+                                        item.type == "checkbox"
+                                          ? _c("span", [
+                                              item.inProp
+                                                ? _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-checkbox", {
+                                                        attrs: { disabled: "" },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ][item.inProp],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row[
+                                                                item.prop
+                                                              ],
+                                                              item.inProp,
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop][item.inProp]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                                : _c(
+                                                    "span",
+                                                    [
+                                                      _c("el-checkbox", {
+                                                        attrs: { disabled: "" },
+                                                        model: {
+                                                          value:
+                                                            scope.row[
+                                                              item.prop
+                                                            ],
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              scope.row,
+                                                              item.prop,
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "scope.row[item.prop]"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  )
+                                            ])
+                                          : item.type == "flag"
+                                          ? _c("span", [
+                                              scope.row[item.prop] == 0
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "iconfont bf-flag"
+                                                    })
+                                                  ])
+                                                : scope.row[item.prop] == 1
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "iconfont bf-flag",
+                                                      staticStyle: {
+                                                        color: "red"
+                                                      }
+                                                    })
+                                                  ])
+                                                : scope.row[item.prop] == 2
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "iconfont bf-flag",
+                                                      staticStyle: {
+                                                        color: "yellow"
+                                                      }
+                                                    })
+                                                  ])
+                                                : scope.row[item.prop] == 3
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "iconfont bf-flag",
+                                                      staticStyle: {
+                                                        color: "green"
+                                                      }
+                                                    })
+                                                  ])
+                                                : scope.row[item.prop] == 4
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "iconfont bf-flag",
+                                                      staticStyle: {
+                                                        color: "blue"
+                                                      }
+                                                    })
+                                                  ])
+                                                : scope.row[item.prop] == 5
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "iconfont bf-flag",
+                                                      staticStyle: {
+                                                        color: "purple"
+                                                      }
+                                                    })
+                                                  ])
+                                                : _vm._e()
+                                            ])
+                                          : _c("span", [
+                                              scope.row[item.prop]
+                                                ? _c("span", [
+                                                    _vm._v(
+                                                      "\n                    " +
+                                                        _vm._s(
+                                                          item.inProp
+                                                            ? scope.row[
+                                                                item.prop
+                                                              ][item.inProp]
+                                                            : scope.row[
+                                                                item.prop
+                                                              ]
+                                                        ) +
+                                                        "\n                  "
+                                                    )
+                                                  ])
+                                                : _vm._e()
+                                            ])
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
+                              )
+                            })
+                          }),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: {
+                              label: "操作",
+                              width: "90",
+                              align: "center",
+                              fixed: "right"
+                            },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "default",
+                                fn: function(scope) {
+                                  return [
+                                    _c(
+                                      "el-button",
+                                      {
+                                        attrs: { size: "mini", type: "danger" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.delSingle(
+                                              scope.row,
+                                              $event
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("删除")]
+                                    )
+                                  ]
+                                }
+                              }
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-tab-pane",
+                    { attrs: { label: "等通知发货", name: "2" } },
+                    [
+                      _c(
+                        "el-table",
+                        {
+                          directives: [
+                            {
+                              name: "loading",
+                              rawName: "v-loading",
+                              value: _vm.loading,
+                              expression: "loading"
+                            }
+                          ],
+                          attrs: {
+                            data: _vm.orderListData,
                             fit: "",
                             height: "350"
                           },
@@ -7455,16 +7783,6 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("sku信息")]),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.proSkuVal))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.curProSkuNum))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.curProSkuVolume))]),
           _vm._v(" "),
           _c(
             "el-table",

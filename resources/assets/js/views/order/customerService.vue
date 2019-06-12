@@ -188,9 +188,54 @@
               </el-table-column>
             </el-table>
           </el-tab-pane>
-          <!--<el-tab-pane label="等通知发货" name="2">
-
-                    </el-tab-pane>-->
+          <el-tab-pane label="等通知发货" name="2">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="订单明细" name="1">
@@ -644,11 +689,6 @@
         </el-table-column>
       </el-table>
       <el-button type="text">sku信息</el-button>
-      <label>{{this.proSkuVal}}</label>
-      <br>
-      <label>{{this.curProSkuNum}}</label>
-      <br>
-      <label>{{this.curProSkuVolume}}</label>
       <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
         <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
@@ -2829,8 +2869,7 @@ export default {
           );
           break;
         case 2:
-          this.$fetch(this.urls.customerservicedepts, {
-            order_status: "等通知发货",
+          this.$fetch(this.urls.customerservicedepts + "/searchisnotice", {
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(
@@ -2863,16 +2902,76 @@ export default {
     },
     /*页码*/
     handlePagChg(page) {
-      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
-        include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-      }).then(res => {
-        if (this.leftTopActiveName == "0") {
+      if (this.leftTopActiveName == "0") {
+        this.loading=true;
+        this.$fetch(
+          this.urls.customerservicedepts + "/searchuntreated" + "?page=" + page,
+          {
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            logistics_id: this.searchBox.logistics_id,
+            seller_remark: this.searchBox.seller_remark,
+            promise_ship_time: this.searchBox.promise_ship_time,
+            created_at: this.searchBox.created_at,
+            cs_audited_at: this.searchBox.cs_audited_at,
+            include:
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+          }
+        ).then(res => {
           this.orderListData = res.data;
-        } else {
+          this.loading = false;
+        });
+      }
+      if (this.leftTopActiveName == "1") {
+        this.loading = true;
+        this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
+          order_status: 30,
+          member_nick: this.searchBox.member_nick,
+          system_order_no: this.searchBox.system_order_no,
+          receiver_name: this.searchBox.receiver_name,
+          receiver_phone: this.searchBox.receiver_phone,
+          receiver_address: this.searchBox.receiver_address,
+          shops_id: this.searchBox.shops_id,
+          logistics_id: this.searchBox.logistics_id,
+          seller_remark: this.searchBox.seller_remark,
+          promise_ship_time: this.searchBox.promise_ship_time,
+          created_at: this.searchBox.created_at,
+          cs_audited_at: this.searchBox.cs_audited_at,
+          include:
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        }).then(res => {
           this.alreadyHandle = res.data;
-        }
-      });
+          this.loading = false;
+        });
+      }
+      if (this.leftTopActiveName == "2") {
+        this.loading = true;
+        this.$fetch(
+          this.urls.customerservicedepts + "/searchisnotice" + "?page=" + page,
+          {
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            logistics_id: this.searchBox.logistics_id,
+            seller_remark: this.searchBox.seller_remark,
+            promise_ship_time: this.searchBox.promise_ship_time,
+            created_at: this.searchBox.created_at,
+            cs_audited_at: this.searchBox.cs_audited_at,
+            include:
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+          }
+        ).then(res => {
+          this.orderListData = res.data;
+          this.loading = false;
+        });
+      }
     },
     /************************* 首 页 主 要 Tab ******************************/
     orderListRowClick(row) {
@@ -3369,9 +3468,10 @@ export default {
     quantityChg(value) {
       if (value > 0) {
         let proCRow = this.proCompRow;
-        this.proSkuVal[0]["newData"]["total_volume"] =
-          (this.proSkuVal[0]["newData"]["quantity"] *
-          this.curProSkuVolume).toFixed(2);
+        this.proSkuVal[0]["newData"]["total_volume"] = (this.proSkuVal[0][
+          "newData"
+        ]["quantity"] * this.curProSkuVolume
+        ).toFixed(2);
         if (this.proIds.indexOf(proCRow.id) == -1) {
           this.proIds.push(proCRow.id);
           this.proSubmitData.push(proCRow);

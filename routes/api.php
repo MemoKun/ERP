@@ -642,19 +642,19 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.paymentmethods.editstatusbyids');
 
         //客户类型
-        $api->get('customertypes', 'CustomerTypesController@index')->middleware('permission:客服部')
+        $api->get('customertypes', 'CustomerTypesController@index')
             ->name('api.customertypes.index');
-        $api->get('customertypes/{customertype}', 'CustomerTypesController@show')->middleware('permission:客服部')
+        $api->get('customertypes/{customertype}', 'CustomerTypesController@show')
             ->name('api.customertypes.show');
-        $api->post('customertypes', 'CustomerTypesController@store')->middleware('permission:客服部')
+        $api->post('customertypes', 'CustomerTypesController@store')
             ->name('api.customertypes.store');
-        $api->patch('customertypes/{customertype}', 'CustomerTypesController@update')->middleware('permission:客服部')
+        $api->patch('customertypes/{customertype}', 'CustomerTypesController@update')
             ->name('api.customertypes.update');
-        $api->delete('customertypes/{customertype}', 'CustomerTypesController@destroy')->middleware('permission:客服部')
+        $api->delete('customertypes/{customertype}', 'CustomerTypesController@destroy')
             ->name('api.customertypes.destroy');
-        $api->delete('customertypes', 'CustomerTypesController@destroybyids')->middleware('permission:客服部')
+        $api->delete('customertypes', 'CustomerTypesController@destroybyids')
             ->name('api.customertypes.destroybyids');
-        $api->put('customertypes/editstatus', 'CustomerTypesController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('customertypes/editstatus', 'CustomerTypesController@editStatusByIds')
             ->name('api.customertypes.editstatusbyids');
 
         //客服部
@@ -662,6 +662,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.searchall');
         $api->get('customerservicedepts/searchuntreated', 'CustomerServiceDepartmentsController@searchUntreated')->middleware('permission:客服部')
             ->name('api.customerservicedepts.searchuntreated');
+        $api->get('customerservicedepts/searchisnotice', 'CustomerServiceDepartmentsController@searchIsNotice')->middleware('permission:客服部')
+            ->name('api.customerservicedepts.searchisnotice');
         $api->get('customerservicedepts', 'CustomerServiceDepartmentsController@index')->middleware('permission:客服部')
             ->name('api.customerservicedepts.index');
         $api->get('customerservicedepts/logisticsQuery', 'CustomerServiceDepartmentsController@logisticsQuery')->middleware('permission:客服部')
