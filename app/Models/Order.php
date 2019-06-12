@@ -697,7 +697,7 @@ class Order extends Model
         $orderTwo = $this->newQuery()->findOrFail($orderTwoId);
 
         //判断主订单数据是否匹配
-        if (collect($orderOne->toArray())->except(['id', 'system_order_no', 'created_at', 'updated_at'])->diffAssoc($orderTwo->toArray())->count()) {
+        if (collect($orderOne->toArray())->except(['id', 'system_order_no', 'locked_at','created_at', 'updated_at'])->diffAssoc($orderTwo->toArray())->count()) {
             throw new UpdateResourceFailedException('主订单数据不匹配，无法合并');
         }
 
