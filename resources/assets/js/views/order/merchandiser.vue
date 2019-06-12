@@ -88,6 +88,7 @@
               <el-date-picker v-model="searchBox.cs_audited_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
+            <span></span>
           </div>
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
