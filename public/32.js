@@ -2913,6 +2913,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
     addProRowClick: function addProRowClick(row) {
       this.proRIndex = "index" + row.index;
     },
+    addProRCName: function addProRCName(_ref) {
+      var row = _ref.row,
+          rowIndex = _ref.rowIndex;
+
+      row.index = rowIndex;
+    },
 
     //新建订单下方-商品信息-删除单个商品
     addDelPro: function addDelPro(index) {
@@ -3165,9 +3171,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
     },
 
     //决定proSku的活跃行
-    proSkuCName: function proSkuCName(_ref) {
-      var row = _ref.row,
-          rowIndex = _ref.rowIndex;
+    proSkuCName: function proSkuCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
 
       row.index = rowIndex;
     },
@@ -3812,9 +3818,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         }
       }
     },
-    splitCName: function splitCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
+    splitCName: function splitCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
 
       row.index = rowIndex;
     },
@@ -6616,7 +6622,11 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: { data: _vm.proData, fit: "" },
+                      attrs: {
+                        data: _vm.proData,
+                        fit: "",
+                        "row-class-name": _vm.addProRCName
+                      },
                       on: { "row-click": _vm.addProRowClick }
                     },
                     [
@@ -8571,7 +8581,11 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: { data: _vm.updateProData, fit: "" },
+                      attrs: {
+                        data: _vm.updateProData,
+                        fit: "",
+                        "row-class-name": _vm.addProRCName
+                      },
                       on: { "row-click": _vm.addProRowClick }
                     },
                     [

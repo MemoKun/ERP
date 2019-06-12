@@ -658,49 +658,49 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customertypes.editstatusbyids');
 
         //客服部
-        $api->get('customerservicedepts/searchall', 'CustomerServiceDepartmentsController@searchAll')->middleware('permission:客服部')
+        $api->get('customerservicedepts/searchall', 'CustomerServiceDepartmentsController@searchAll')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.searchall');
-        $api->get('customerservicedepts/searchuntreated', 'CustomerServiceDepartmentsController@searchUntreated')->middleware('permission:客服部')
+        $api->get('customerservicedepts/searchuntreated', 'CustomerServiceDepartmentsController@searchUntreated')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.searchuntreated');
-        $api->get('customerservicedepts/searchisnotice', 'CustomerServiceDepartmentsController@searchIsNotice')->middleware('permission:客服部')
+        $api->get('customerservicedepts/searchisnotice', 'CustomerServiceDepartmentsController@searchIsNotice')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.searchisnotice');
-        $api->get('customerservicedepts', 'CustomerServiceDepartmentsController@index')->middleware('permission:客服部')
+        $api->get('customerservicedepts', 'CustomerServiceDepartmentsController@index')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.index');
-        $api->get('customerservicedepts/logisticsQuery', 'CustomerServiceDepartmentsController@logisticsQuery')->middleware('permission:客服部')
+        $api->get('customerservicedepts/logisticsQuery', 'CustomerServiceDepartmentsController@logisticsQuery')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.logisticsQuery');
-        $api->get('customerservicedepts/orderCenter', 'CustomerServiceDepartmentsController@orderCenter')->middleware('permission:客服部')
+        $api->get('customerservicedepts/orderCenter', 'CustomerServiceDepartmentsController@orderCenter')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.orderCenter');
-        $api->get('customerservicedepts/searchordersettlement', 'CustomerServiceDepartmentsController@searchOrderSettlement')->middleware('permission:客服部')
+        $api->get('customerservicedepts/searchordersettlement', 'CustomerServiceDepartmentsController@searchOrderSettlement')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.searchordersettlement');
-        $api->get('customerservicedepts/create', 'CustomerServiceDepartmentsController@create')->middleware('permission:客服部')
+        $api->get('customerservicedepts/create', 'CustomerServiceDepartmentsController@create')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.create');
-        $api->get('customerservicedepts/{order}', 'CustomerServiceDepartmentsController@show')->middleware('permission:客服部')
+        $api->get('customerservicedepts/{order}', 'CustomerServiceDepartmentsController@show')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.show');
-        $api->post('customerservicedepts', 'CustomerServiceDepartmentsController@store')->middleware('permission:客服部')
+        $api->post('customerservicedepts', 'CustomerServiceDepartmentsController@store')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.store');
-        $api->patch('customerservicedepts/{order}', 'CustomerServiceDepartmentsController@update')->middleware('permission:客服部')
+        $api->patch('customerservicedepts/{order}', 'CustomerServiceDepartmentsController@update')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.update');
-        $api->delete('customerservicedepts/{order}', 'CustomerServiceDepartmentsController@destroy')->middleware('permission:客服部')
+        $api->delete('customerservicedepts/{order}', 'CustomerServiceDepartmentsController@destroy')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.destroy');
-        $api->delete('customerservicedepts', 'CustomerServiceDepartmentsController@destroybyids')->middleware('permission:客服部')
+        $api->delete('customerservicedepts', 'CustomerServiceDepartmentsController@destroybyids')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.destroybyids');
-        $api->put('customerservicedepts/editstatus', 'CustomerServiceDepartmentsController@editStatusByIds')->middleware('permission:客服部')
+        $api->put('customerservicedepts/editstatus', 'CustomerServiceDepartmentsController@editStatusByIds')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.editstatusbyids');
-        $api->put('customerservicedepts/{order}/lockorunlock', 'CustomerServiceDepartmentsController@isLockOrUnlock')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/lockorunlock', 'CustomerServiceDepartmentsController@isLockOrUnlock')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.islockorunlock');
-        $api->put('customerservicedepts/{order}/audit', 'CustomerServiceDepartmentsController@isAudit')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/audit', 'CustomerServiceDepartmentsController@isAudit')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.isaudit');
-        $api->put('customerservicedepts/{order}/unaudit', 'CustomerServiceDepartmentsController@isUnAudit')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/unaudit', 'CustomerServiceDepartmentsController@isUnAudit')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.isunaudit');
-        $api->put('customerservicedepts/{order}/splitorder', 'CustomerServiceDepartmentsController@isSplitOrder')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/splitorder', 'CustomerServiceDepartmentsController@isSplitOrder')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.issplitorder');
-        $api->put('customerservicedepts/mergerorder', 'CustomerServiceDepartmentsController@isMergerOrder')->middleware('permission:客服部')
+        $api->put('customerservicedepts/mergerorder', 'CustomerServiceDepartmentsController@isMergerOrder')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.ismergerorder');
-        $api->put('customerservicedepts/{order}/notice', 'CustomerServiceDepartmentsController@isNotice')->middleware('permission:客服部')
+        $api->put('customerservicedepts/{order}/notice', 'CustomerServiceDepartmentsController@isNotice')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.isnotice');
-        $api->put('customerservicedepts/additionorder', 'CustomerServiceDepartmentsController@isAdditionOrder')->middleware('permission:客服部')
+        $api->put('customerservicedepts/additionorder', 'CustomerServiceDepartmentsController@isAdditionOrder')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.isadditionorder');
-        $api->put('customerservicedepts/additionmoney', 'CustomerServiceDepartmentsController@isAdditionMoney')->middleware('permission:客服部')
+        $api->put('customerservicedepts/additionmoney', 'CustomerServiceDepartmentsController@isAdditionMoney')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.isadditionmoney');
 
         //订单结算

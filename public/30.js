@@ -5,8 +5,40 @@ webpackJsonp([30],{
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _methods;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -749,12 +781,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: "合并",
         icon: "bf-merge",
-        ent: this.test,
+        ent: this.handleMergerOrder,
         nClick: true
       }, {
         cnt: "拆分",
         icon: "bf-node",
-        ent: this.test,
+        ent: this.handleSplitOrder,
         nClick: true
       }, {
         cnt: "订单采购",
@@ -1817,7 +1849,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       receiver_district: "",
       receiver_address: "",
       receiver_zip: ""
-    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "apiData", {}), _ref;
+    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "apiData", {}), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "splitHead", [{
+      label: "商品编码",
+      prop: "commodity_code",
+      type: "text"
+    }, {
+      label: "商品简称",
+      prop: "short_name",
+      type: "text"
+    }, {
+      label: "数量",
+      prop: "quantity",
+      type: "number"
+    }, {
+      label: "实际拆分数量",
+      prop: "newData",
+      inProp: "quantity",
+      type: "number"
+    }]), _defineProperty(_ref, "splitRowIndex", ""), _defineProperty(_ref, "splitRow", {}), _defineProperty(_ref, "mergerIds", []), _ref;
   },
 
   computed: {
@@ -1834,7 +1883,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       set: function set() {}
     }
   },
-  methods: _defineProperty({
+  methods: (_methods = {
     test: function test() {
       console.log(1);
     },
@@ -2624,7 +2673,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
     }
-  }, "handlePagChg", function handlePagChg(page) {
+  }, _defineProperty(_methods, "handlePagChg", function handlePagChg(page) {
     var _this12 = this;
 
     this.$fetch(this.urls.merchandiserdepts + "?page=" + page, {
@@ -2636,7 +2685,124 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this12.alreadyHandle = res.data;
       }
     });
-  }),
+  }), _defineProperty(_methods, "handleSplitOrder", function handleSplitOrder() {
+    var _this13 = this;
+
+    if (this.newOpt[9].nClick) {
+      return;
+    } else {
+      this.splitMask = true;
+      this.splitRowIndex = "";
+      this.splitVal = [];
+      var orderData = this.curRowData["orderItems"]["data"];
+      if (orderData.length > 0) {
+        orderData.map(function (item) {
+          var list = {
+            id: item.id,
+            commodity_code: item.product["commodity_code"],
+            short_name: item.product["short_name"],
+            quantity: item["quantity"],
+            newData: {
+              quantity: ""
+            }
+          };
+          _this13.splitVal.push(list);
+        });
+      }
+    }
+  }), _defineProperty(_methods, "splitCName", function splitCName(_ref2) {
+    var row = _ref2.row,
+        rowIndex = _ref2.rowIndex;
+
+    row.index = rowIndex;
+  }), _defineProperty(_methods, "splitRowClick", function splitRowClick(row) {
+    this.splitRowIndex = "index" + row.index;
+    this.splitRow = row;
+  }), _defineProperty(_methods, "numChg", function numChg(value) {
+    if (value > this.splitRow["quantity"] - 0) {
+      this.splitRow["newData"]["quantity"] = this.splitRow["quantity"];
+    }
+  }), _defineProperty(_methods, "confirmSplit", function confirmSplit() {
+    var _this14 = this;
+
+    var id = this.checkboxId ? this.checkboxId : this.curRowId;
+    var confSplit = {
+      order_items: []
+    };
+    if (this.splitVal.length > 0) {
+      this.splitVal.map(function (item) {
+        if (item["newData"]["quantity"] > 0) {
+          var list = {
+            id: item.id,
+            quantity: item["newData"]["quantity"]
+          };
+          confSplit["order_items"].push(list);
+        }
+      });
+    }
+    this.$put(this.urls.customerservicedepts + "/" + id + "/splitorder", confSplit).then(function () {
+      _this14.splitMask = false;
+      _this14.refresh();
+      /*   this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = false;
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = true;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[13].nClick = false;
+        this.newOpt[14].nClick = true;
+        this.newOpt[15].nClick = false;
+        this.newOpt[18].nClick = false;*/
+      _this14.$message({
+        message: "订单拆分成功",
+        type: "success"
+      });
+    }, function (err) {
+      if (err.response) {
+        var arr = err.response.data.errors;
+        var arr1 = [];
+        for (var i in arr) {
+          arr1.push(arr[i]);
+        }
+        var str = arr1.join(",");
+        _this14.$message.error(str);
+      }
+    });
+  }), _defineProperty(_methods, "cancelSplit", function cancelSplit() {
+    this.splitMask = false;
+  }), _defineProperty(_methods, "handleMergerOrder", function handleMergerOrder() {
+    var _this15 = this;
+
+    if (this.newOpt[8].nClick) {
+      return;
+    } else {
+      if (this.mergerIds.length != 2) {
+        this.$message({
+          message: "请选择要合并的订单",
+          type: "info"
+        });
+      } else {
+        var ids = [];
+        this.mergerIds.map(function (item) {
+          ids.push(item.id);
+        });
+        this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
+          _this15.refresh();
+          _this15.$message({
+            message: "订单合并成功",
+            type: "success"
+          });
+          _this15.mergerIds = [];
+        }, function (err) {
+          if (err.response) {
+            _this15.$message.error("合并订单出错");
+          }
+        });
+      }
+    }
+  }), _methods),
   mounted: function mounted() {
     this.fetchData();
     this.$store.dispatch("setOpt", this.newOpt);
@@ -6055,6 +6221,159 @@ var render = function() {
               _vm._v(" "),
               _c("el-button", { on: { click: _vm.stockOutCancel } }, [
                 _vm._v("取消")
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          class: { "more-forms": _vm.moreForms, threeParts: _vm.threeParts },
+          attrs: { title: "拆分订单", visible: _vm.splitMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.splitMask = $event
+            }
+          }
+        },
+        [
+          _c("el-button", { attrs: { type: "text" } }, [
+            _vm._v("请选择拆出商品")
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-table",
+            {
+              attrs: {
+                data: _vm.splitVal,
+                fit: "",
+                height: "300",
+                "row-class-name": _vm.splitCName
+              },
+              on: { "row-click": _vm.splitRowClick }
+            },
+            _vm._l(_vm.splitHead, function(item) {
+              return _c("el-table-column", {
+                key: item.label,
+                attrs: {
+                  label: item.label,
+                  align: "center",
+                  width: item.width
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          item.prop == "newData"
+                            ? _c("span", [
+                                _vm.splitRowIndex == "index" + scope.$index
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-input", {
+                                          attrs: { size: "small" },
+                                          on: { input: _vm.numChg },
+                                          model: {
+                                            value:
+                                              scope.row[item.prop][item.inProp],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row[item.prop],
+                                                item.inProp,
+                                                typeof $$v === "string"
+                                                  ? $$v.trim()
+                                                  : $$v
+                                              )
+                                            },
+                                            expression:
+                                              "scope.row[item.prop][item.inProp]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      _vm._v(
+                                        "\n              " +
+                                          _vm._s(
+                                            scope.row[item.prop][item.inProp]
+                                          ) +
+                                          "\n            "
+                                      )
+                                    ])
+                              ])
+                            : item.prop
+                            ? _c("span", [
+                                item.type == "checkbox"
+                                  ? _c(
+                                      "span",
+                                      [
+                                        _c("el-checkbox", {
+                                          attrs: { disabled: "" },
+                                          model: {
+                                            value: scope.row[item.prop],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                scope.row,
+                                                item.prop,
+                                                $$v
+                                              )
+                                            },
+                                            expression: "scope.row[item.prop]"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _c("span", [
+                                      _vm._v(
+                                        "\n              " +
+                                          _vm._s(
+                                            item.inProp
+                                              ? scope.row[item.prop][
+                                                  item.inProp
+                                                ]
+                                              : scope.row[item.prop]
+                                          ) +
+                                          "\n            "
+                                      )
+                                    ])
+                              ])
+                            : _vm._e()
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.confirmSplit } },
+                [_vm._v("确定")]
+              ),
+              _vm._v(" "),
+              _c("el-button", { on: { click: _vm.cancelSplit } }, [
+                _vm._v("关闭")
               ])
             ],
             1

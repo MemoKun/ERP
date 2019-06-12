@@ -502,7 +502,7 @@
       </el-form>
       <el-tabs v-model="addActiveName" id="elTabs" class="hidePart">
         <el-tab-pane label="商品信息" name="0">
-          <el-table :data="proData" fit @row-click="addProRowClick">
+          <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
             <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='newData'">
@@ -812,7 +812,7 @@
       </el-form>
       <el-tabs v-model="updateActiveName" id="elTabs" class="hidePart">
         <el-tab-pane label="商品信息" name="0">
-          <el-table :data="updateProData" fit @row-click="addProRowClick">
+          <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
             <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='newData'">
@@ -3218,6 +3218,9 @@ export default {
     //新建订单下方-商品信息-添加商品时的RowClick
     addProRowClick(row) {
       this.proRIndex = `index${row.index}`;
+    },
+    addProRCName({ row, rowIndex }) {
+      row.index = rowIndex;
     },
     //新建订单下方-商品信息-删除单个商品
     addDelPro(index) {

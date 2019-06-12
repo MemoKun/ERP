@@ -687,6 +687,36 @@
       </div>
     </el-dialog>
 
+    <!--拆分-->
+    <el-dialog title="拆分订单" :visible.sync="splitMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
+      <el-button type="text">请选择拆出商品</el-button>
+      <el-table :data="splitVal" fit height="300" @row-click="splitRowClick" :row-class-name="splitCName">
+        <el-table-column v-for="item in splitHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+          <template slot-scope="scope">
+            <span v-if="item.prop=='newData'">
+              <span v-if="splitRowIndex == 'index'+scope.$index">
+                <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" @input="numChg"></el-input>
+              </span>
+              <span v-else>
+                {{scope.row[item.prop][item.inProp]}}
+              </span>
+            </span>
+            <span v-else-if="item.prop">
+              <span v-if="item.type=='checkbox'">
+                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+              </span>
+              <span v-else>
+                {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+              </span>
+            </span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="confirmSplit">确定</el-button>
+        <el-button @click="cancelSplit">关闭</el-button>
+      </div>
+    </el-dialog>
     <!--页码-->
     <Pagination :page-url="this.urls.merchandiserdepts" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
   </div>
@@ -747,13 +777,13 @@ export default {
         {
           cnt: "合并",
           icon: "bf-merge",
-          ent: this.test,
+          ent: this.handleMergerOrder,
           nClick: true
         },
         {
           cnt: "拆分",
           icon: "bf-node",
-          ent: this.test,
+          ent: this.handleSplitOrder,
           nClick: true
         },
         {
@@ -1525,7 +1555,7 @@ export default {
             label: "备注",
             prop: "remark",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1542,7 +1572,7 @@ export default {
             label: "驳回原因",
             prop: "reason",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1559,7 +1589,7 @@ export default {
             label: "优惠金额",
             prop: "preferential_cashback",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -2064,7 +2094,36 @@ export default {
       expenseData: [],
       expenseRIndex: "",
       addSubData: [],
-      apiData: {}
+      apiData: {},
+      mergerIds:[],
+      splitMask: false,
+      splitVal: [],
+      splitHead: [
+        {
+          label: "商品编码",
+          prop: "commodity_code",
+          type: "text"
+        },
+        {
+          label: "商品简称",
+          prop: "short_name",
+          type: "text"
+        },
+        {
+          label: "数量",
+          prop: "quantity",
+          type: "number"
+        },
+        {
+          label: "实际拆分数量",
+          prop: "newData",
+          inProp: "quantity",
+          type: "number"
+        }
+      ],
+      splitRowIndex: "",
+      splitRow: {},
+      mergerIds: [],
     };
   },
   computed: {
@@ -2924,7 +2983,140 @@ export default {
           this.alreadyHandle = res.data;
         }
       });
-    }
+    },
+    /***************************** 拆 分 **********************************/
+    handleSplitOrder() {
+      if (this.newOpt[9].nClick) {
+        return;
+      } else {
+        this.splitMask = true;
+        this.splitRowIndex = "";
+        this.splitVal = [];
+        let orderData = this.curRowData["orderItems"]["data"];
+        if (orderData.length > 0) {
+          orderData.map(item => {
+            let list = {
+              id: item.id,
+              commodity_code: item.product["commodity_code"],
+              short_name: item.product["short_name"],
+              quantity: item["quantity"],
+              newData: {
+                quantity: ""
+              }
+            };
+            this.splitVal.push(list);
+          });
+        }
+      }
+    },
+    splitCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    splitRowClick(row) {
+      this.splitRowIndex = `index${row.index}`;
+      this.splitRow = row;
+    },
+    numChg(value) {
+      if (value > this.splitRow["quantity"] - 0) {
+        this.splitRow["newData"]["quantity"] = this.splitRow["quantity"];
+      }
+    },
+    confirmSplit() {
+      let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      let confSplit = {
+        order_items: []
+      };
+      if (this.splitVal.length > 0) {
+        this.splitVal.map(item => {
+          if (item["newData"]["quantity"] > 0) {
+            let list = {
+              id: item.id,
+              quantity: item["newData"]["quantity"]
+            };
+            confSplit["order_items"].push(list);
+          }
+        });
+      }
+      this.$put(
+        this.urls.customerservicedepts + "/" + id + "/splitorder",
+        confSplit
+      ).then(
+        () => {
+          this.splitMask = false;
+          this.refresh();
+          /*   this.newOpt[1].nClick = false;
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = false;
+            this.newOpt[5].nClick = false;
+            this.newOpt[6].nClick = true;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[13].nClick = false;
+            this.newOpt[14].nClick = true;
+            this.newOpt[15].nClick = false;
+            this.newOpt[18].nClick = false;*/
+          this.$message({
+            message: "订单拆分成功",
+            type: "success"
+          });
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error(str);
+          }
+        }
+      );
+    },
+    cancelSplit() {
+      this.splitMask = false;
+    },
+    /***************************** 合 并 **********************************/
+    handleMergerOrder() {
+      if (this.newOpt[8].nClick) {
+        return;
+      } else {
+        if (this.mergerIds.length != 2) {
+          this.$message({
+            message: "请选择要合并的订单",
+            type: "info"
+          });
+        } else {
+          let ids = [];
+          this.mergerIds.map(item => {
+            ids.push(item.id);
+          });
+          this.$put(
+            this.urls.customerservicedepts +
+              "/mergerorder" +
+              "?order_id_one=" +
+              ids[0] +
+              "&order_id_two=" +
+              ids[1]
+          ).then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "订单合并成功",
+                type: "success"
+              });
+              this.mergerIds = [];
+            },
+            err => {
+              if (err.response) {
+                this.$message.error("合并订单出错");
+              }
+            }
+          );
+        }
+      }
+    },
   },
   mounted() {
     this.fetchData();
