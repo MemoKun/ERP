@@ -682,6 +682,78 @@ class Order extends Model
     }
 
     /**
+     * 仓储部拆单.
+     *
+     * @param $data       数据
+     *
+     * @return bool
+     */
+     public function cargoSplitOrder($data)
+     {
+         //获取出库数据
+         $order = $this->load('orderItems');
+         $order["order_status"] = intval($order["order_status"]);
+ 
+         $orderItemOne = $order->orderItems->map(function ($item) use ($data) {
+             $orderItem = collect($data)->where('id', $item->id);
+             if ($orderItem->count()) {
+                 $orderItem = $orderItem->first();
+                 if ($orderItem['quantity'] > 0 && $item->quantity - $orderItem['quantity'] > 0) {
+                     $item->quantity = $item->quantity - $orderItem['quantity'];
+                 } elseif ($orderItem['quantity'] > 0 && $item->quantity - $orderItem['quantity'] == 0) {
+                     $item = null;
+                 } else {
+                     throw new UpdateResourceFailedException('拆分出错');
+                 }
+             }
+             return $item;
+         })->toArray();
+ 
+         $orderItemTwo = $order->orderItems->map(function ($item) use ($data) {
+             $orderItem = collect($data)->where('id', $item->id);
+             if ($orderItem->count()) {
+                 $item->quantity = $orderItem->first()['quantity'];
+             } else {
+                 $item = null;
+             }
+             return $item;
+         })->toArray();
+         
+         $newOrderOne['order_status']=60;
+         $newOrderTwo['order_status']=60;
+ 
+         DB::transaction(function () use ($orderItemOne, $orderItemTwo) {
+             //新建订单
+             $newOrderOne = $this->newQuery()->create($this->toArray());
+             $newOrderTwo = $this->newQuery()->create($this->toArray());
+
+             //新增子单
+             collect($orderItemOne)->map(function ($item) use ($newOrderOne) {
+                 if (is_null($item)) {
+                     return;
+                 }
+                 $newOrderOne->orderItems()->create($item);
+             });
+ 
+             collect($orderItemTwo)->map(function ($item) use ($newOrderTwo) {
+                 if (is_null($item)) {
+                     return;
+                 }
+                 $newOrderTwo->orderItems()->create($item);
+             });
+ 
+             //删除旧单
+             $this->paymentDetails()->delete();
+             $this->orderItems()->delete();
+             $this->delete();
+ 
+             //记录拆分操作
+         });
+ 
+         return true;
+     }
+
+    /**
      * 合并订单.
      *
      * @param $data       数据

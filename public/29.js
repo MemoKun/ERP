@@ -931,7 +931,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: "作废",
         icon: "bf-void",
-        ent: this.test,
+        ent: this.cancel,
         nClick: true
       }, {
         cnt: "刷新",
@@ -1915,7 +1915,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: "text"
     }, {
       label: "业务员",
-      prop: "business_personnel_name",
+      prop: "business_personnel_id",
+      //inProp: "name",
       type: "text"
     }, {
       label: "物流公司",
@@ -3319,6 +3320,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
     this.curRowId = row.id;
     this.curRowData = row;
+    this.changeOrdersMainInfo = this.curRowData;
   }), _defineProperty(_methods, "deleteChanges", function deleteChanges() {
     console.log("deleteChanges");
   }), _defineProperty(_methods, "submitChanges", function submitChanges() {
@@ -3350,7 +3352,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), _defineProperty(_methods, "handleUnAudit", function handleUnAudit() {
     var _this15 = this;
 
-    if (this.newOpt[6].nClick) {
+    if (this.newOpt[5].nClick) {
       return;
     } else {
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -3415,6 +3417,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       message: "取消选择订单",
       type: "success"
     });
+  }), _defineProperty(_methods, "cancel", function cancel() {
+    var _this16 = this;
+
+    if (this.newOpt[6].nClick) {
+      return;
+    } else {
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$put(this.urls.changeorders + "/" + id + "/cancel").then(function () {
+        _this16.refresh();
+        _this16.$message({
+          message: "订单已作废",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this16.$message.error(str);
+        }
+      });
+    }
   }), _defineProperty(_methods, "resets", function resets() {
     this.searchBox = {};
   }), _methods),

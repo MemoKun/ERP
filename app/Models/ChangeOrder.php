@@ -288,6 +288,19 @@ class ChangeOrder extends Model
         $this->save();
     }
 
+    /**
+     * 退审
+     * @return bool
+     */
+     public function cancel()
+     {
+         $this->business_personnel_id = 0;
+         $this->locker_id = 0;
+         $this->change_status = self::CHANGE_STATUS_CANCEL;
+         $this->save();
+     }
+
+
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shops_id');

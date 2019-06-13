@@ -272,6 +272,7 @@ class CustomerServiceChangeOrdersController extends Controller
         return $this->response
             ->item($order, new ChangeOrderTransformer())
             ->setStatusCode(201);
+        //return $data;
     }
 
 
@@ -393,6 +394,16 @@ class CustomerServiceChangeOrdersController extends Controller
             !$order->status || $order->getOriginal('change_status') != $order::CHANGE_STATUS_SUBMIT,
             '退回提交出错',
             'unAudit'
+        );
+    }
+
+    public function isCanceled(ChangeOrder $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '作废出错',
+            'cancel'
         );
     }
 
