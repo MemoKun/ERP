@@ -864,6 +864,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.warehousingdepts.isstockouttocs');
         $api->put('warehousingdepts/{order}/isprintdispatchbill', 'WarehousingDepartmentsController@isPrintDispatchBill')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.isprintdispatchbill');
+        $api->put('warehousingdepts/{order}/cargosplitorder', 'WarehousingDepartmentsController@isCargoSplitOrder')->middleware('permission:仓储部')
+            ->name('api.warehousingdepts.iscargosplitorder');
 
         //客服退款申请
         $api->get('customerservicerefunds', 'CustomerServiceRefundsController@index')->middleware('permission:客服退款申请')

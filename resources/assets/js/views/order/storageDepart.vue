@@ -16,20 +16,12 @@
               <label>收货人</label>
               <el-input v-model="searchBox.order_man" clearable></el-input>
             </span>
-            <span v-if="filterBox">
+            <span>
               <label>收货手机</label>
               <el-input v-model="searchBox.order_phone" clearable></el-input>
             </span>
-            <span v-else>
-              <el-button type="primary">筛选</el-button>
-              <el-button>重置</el-button>
-              <span @click="toggleShow">
-                <el-button type="text">展开</el-button>
-                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-              </span>
-            </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>收货地址</label>
               <el-input v-model="searchBox.order_address" clearable></el-input>
@@ -50,7 +42,7 @@
               <el-input v-model="searchBox.order_staff" clearable></el-input>
             </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>产品类别</label>
               <el-select v-model="searchBox.order_type" clearable placeholder="请选择">
@@ -75,11 +67,11 @@
             <span class="transMoney">
               <label>交易金额</label>
               <el-input type="number" v-model="searchBox.order_transMStart" clearable></el-input>
-              至
+              <label>至</label>
               <el-input type="number" v-model="searchBox.order_transMEnd" clearable></el-input>
             </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>承诺日期</label>
               <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -100,28 +92,13 @@
               <el-date-picker v-model="searchBox.order_printDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
-
           </div>
-          <!--<div class="searchBox" v-show="filterBox">-->
-          <!---->
-          <!--<span style="float: right">-->
-          <!--<el-button type="primary">筛选</el-button>-->
-          <!--<el-button @click="resets">重置</el-button>-->
-          <!--<span @click="toggleShow" style="display: inline">-->
-          <!--<el-button type="text">收起</el-button>-->
-          <!--<i class="el-icon-arrow-up" style="color:#409EFF"></i>-->
-          <!--</span>-->
-          <!--</span>-->
-          <!--</div>-->
-          <div v-if="filterBox" style="text-align: right">
+          <div style="text-align: right">
             <el-button type="primary">筛选</el-button>
             <el-button @click="resets">重置</el-button>
-            <span @click="toggleShow" style="display: inline">
-              <el-button type="text">收起</el-button>
-              <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-            </span>
           </div>
         </div>
+
         <!--显示列表-未处理-->
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">
@@ -829,67 +806,67 @@ export default {
     return {
       newOpt: [
         {
-          cnt: "修改0",
+          cnt: "修改",
           icon: "bf-change",
           ent: this.updateData,
           nClick: true
         },
         {
-          cnt: "退审1",
+          cnt: "退审",
           icon: "bf-auditfaild",
           ent: this.handleunStockOut,
           nClick: true
         },
         {
-          cnt: "返回客审2",
+          cnt: "返回客审",
           icon: "bf-examination",
           ent: this.handleStockOutToCS,
           nClick: true
         },
         {
-          cnt: "导出3",
+          cnt: "导出",
           icon: "bf-out",
           ent: this.test,
           nClick: true
         },
         {
-          cnt: "物流单4",
+          cnt: "物流单",
           icon: "bf-logCode",
           ent: this.logisticsBill,
           nClick: true
         },
         {
-          cnt: "发货单5",
+          cnt: "发货单",
           icon: "bf-bill",
           ent: this.dispatchBill,
           nClick: true
         },
         {
-          cnt: "拆分6",
+          cnt: "拆分",
           icon: "bf-node",
-          ent: this.test,
+          ent: this.handleSplitOrder,
           nClick: true
         },
         {
-          cnt: "捡货单7",
+          cnt: "捡货单",
           icon: "bf-secSort",
           ent: this.pickGoodsBill,
           nClick: true
         },
         {
-          cnt: "打印8",
+          cnt: "打印",
           icon: "bf-printer",
           ent: this.print,
           nClick: true
         },
         {
-          cnt: "电子面单9",
+          cnt: "电子面单",
           icon: "bf-salesinvoice",
           ent: this.elecBill,
           nClick: true
         },
         {
-          cnt: "刷新10",
+          cnt: "刷新",
           icon: "bf-refresh",
           ent: this.refresh,
           nClick: true
@@ -1649,7 +1626,7 @@ export default {
             label: "备注",
             prop: "remark",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1666,7 +1643,7 @@ export default {
             label: "驳回原因",
             prop: "reason",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1683,7 +1660,7 @@ export default {
             label: "优惠金额",
             prop: "preferential_cashback",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -3485,7 +3462,7 @@ export default {
       }
     },
     handleSplitOrder() {
-      if (this.newOpt[9].nClick) {
+      if (this.newOpt[6].nClick) {
         return;
       } else {
         this.splitMask = true;
@@ -3537,7 +3514,7 @@ export default {
         });
       }
       this.$put(
-        this.urls.customerservicedepts + "/" + id + "/splitorder",
+        this.urls.warehousingdepts + "/" + id + "/cargosplitorder",
         confSplit
       ).then(
         () => {

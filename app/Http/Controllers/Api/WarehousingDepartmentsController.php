@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Order;
+use App\Http\Requests\Api\SplitOrderRequest;
 use App\Http\Requests\Api\WarehousingDepartmentRequest;
 use App\Transformers\OrderTransformer;
 use App\Transformers\WarehousingDepartmentTransformer;
@@ -359,6 +360,17 @@ class WarehousingDepartmentsController extends Controller
             !$order->status,
             '打印发货单出错',
             'printDispatchBill'
+        );
+    }
+
+    public function isCargoSplitOrder(SplitOrderRequest $splitOrderRequest, Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status || $order->getOriginal('order_status') > $order::ORDER_STATUS_CARGO_AUDIT,
+            '拆单出错',
+            'cargoSplitOrder',
+            $splitOrderRequest->validated()['order_items']
         );
     }
 
