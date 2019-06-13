@@ -53,12 +53,13 @@
           <label>买家昵称</label>
           <el-input v-model="searchBox.order_mark" clearable></el-input>
         </span>
-        <span style="text-align: right">
-          <el-button type="primary" @click="checks">筛选</el-button>
-          <el-button @click="resets">重置</el-button>
+        <span>
         </span>
       </div>
-
+      <div style="text-align: right">
+        <el-button type="primary" @click="checks">筛选</el-button>
+        <el-button @click="resets">重置</el-button>
+      </div>
     </div>
 
     <!--采购数据-->
