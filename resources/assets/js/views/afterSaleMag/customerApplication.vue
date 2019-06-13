@@ -2041,7 +2041,7 @@ export default {
           color: item.color,
           materials: item.materials,
           buy_number: list.quantity,
-          supplier_id: list.supplier_id,
+          supplier_id: list.product.supplier_id,
           };
           this.proDtlVal.push(defPro);
         })
@@ -2092,6 +2092,7 @@ export default {
     confirmAddAfterSPro() {
       this.addAfterSProMask = false;
       this.addAfterSaleForm.after_sale_def_pro = this.addAfterSProDtlVal;
+      console.log(this.addAfterSaleForm.after_sale_def_pro);
       this.addAfterSaleForm.order_no = this.addOrderDtlVal.system_order_no;
       this.addAfterSaleForm.shop_name = this.addOrderDtlVal.shops_id;
       this.addAfterSaleForm.after_sale_type = "";

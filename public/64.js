@@ -1,124 +1,10 @@
 webpackJsonp([64],{
 
-/***/ 1166:
+/***/ 1134:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -144,104 +30,144 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       newOpt: [{
-        cnt: "新增",
-        icon: "bf-add",
+        cnt: '新增',
+        icon: 'bf-add',
         ent: this.addNew
       }, {
-        cnt: "修改",
-        icon: "bf-change",
-        ent: this.edit
-      }, {
-        cnt: "删除",
-        icon: "bf-del",
+        cnt: '删除',
+        icon: 'bf-del',
         ent: this.delMore
       }, {
-        cnt: "刷新",
-        icon: "bf-refresh",
+        cnt: '刷新',
+        icon: 'bf-refresh',
         ent: this.refresh
       }],
-      searchBox: {
-        buyNick: "",
-        shopTitle: ""
-      },
-      allData: [],
-      currentPage: true,
+      getsInfo: [],
       tableHead: [{
-        label: "执行类型",
-        width: "200",
-        prop: "perform_type",
-        type: "text"
+        label: '部门代码',
+        width: '',
+        prop: "dept_no",
+        holder: '请输入部门代码',
+        type: 'text',
+        beAble: true
       }, {
-        label: "包含字符",
-        width: "220",
-        prop: "include_string",
-        type: "text"
+        label: '部门名称',
+        width: '',
+        prop: "name",
+        holder: '请输入部门名称',
+        type: 'text'
       }, {
-        label: "创建人",
-        width: "200",
-        prop: "user",
-        inProp: "username",
-        type: "text"
+        label: '所属部门',
+        width: '',
+        prop: "p_dept",
+        holder: '请输入所属部门',
+        type: 'text'
       }, {
-        label: "创建时间",
-        width: "220",
-        prop: "created_at",
-        nmProp: "date",
-        type: "text"
+        label: '是否验证',
+        width: '',
+        prop: "is_verify",
+        holder: '请选择是否验证',
+        type: 'select_def'
+      }, {
+        label: '备注',
+        width: '',
+        prop: "remark",
+        holder: '请输入备注',
+        type: 'textarea'
+      }, {
+        label: '状态',
+        width: '',
+        prop: "status",
+        holder: '状态',
+        type: 'select_stu',
+        doSort: true
       }],
       loading: true,
-      currentIndex: "",
-      url: "/brushlockconf",
-      // 新增
-      showMask: false,
-      selection: "",
+      currentIndex: '',
+      url: '/departments',
+      showMaskArr: false,
+      title: '新增部门',
       ruleForm: {
-        perform_type: "",
-        include_string: ""
+        dept_no: '',
+        name: '',
+        p_dept: '',
+        is_verify: '0',
+        remark: '',
+        status: '1'
       },
       rules: {
-        perform_type: [{ required: true, message: "请选择执行类型", trigger: "blur" }],
-        include_string: [{ required: true, message: "请输入包含字符", trigger: "blur" }]
+        dept_no: [{ required: true, message: '请输入部门代码', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入部门名称', trigger: 'blur' }],
+        p_dept: [{ required: true, message: '请输入所属部门', trigger: 'blur' }]
       },
       addArr: [{
-        label: "执行类型",
-        prop: "perform_type",
-        holder: "请选择执行类型",
-        stateVal: "perform_type",
-        type: "text"
+        label: '部门代码',
+        prop: 'dept_no',
+        holder: '请输入运费类型',
+        type: 'text'
       }, {
-        label: "包含字符",
-        prop: "include_string",
-        holder: "请输入包含字符",
-        type: "text"
+        label: '部门名称',
+        prop: 'name',
+        holder: '请输入部门名称',
+        type: 'text'
+      }, {
+        label: '所属部门',
+        prop: 'p_dept',
+        holder: '请输入所属部门',
+        type: 'text'
+      }, {
+        label: '是否验证',
+        prop: 'is_verify',
+        holder: '请选择是否验证',
+        type: 'select_def'
+      }, {
+        label: '备注',
+        prop: 'remark',
+        holder: '请输入备注',
+        type: 'textarea'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
+        type: 'select_stu'
       }],
-      // 删除
+      refArr: 'ruleDepart',
       showDel: false,
-      delId: "",
-      delArr: []
-    }, _defineProperty(_ref, "selection", ""), _defineProperty(_ref, "updateMask", false), _defineProperty(_ref, "updateId", ""), _defineProperty(_ref, "updateIndex", ""), _defineProperty(_ref, "updateForm", {}), _defineProperty(_ref, "componentShowChg", true), _defineProperty(_ref, "updateCompUpload", "upload0"), _defineProperty(_ref, "updateRwIndex", "0"), _ref;
+      delId: '',
+      inputChange: false,
+      multipleSelection: [],
+      delArr: [],
+      pagination: {
+        current_page: 1,
+        per_page: 0,
+        page_total: 0
+      }
+    };
   },
 
   methods: {
     test: function test() {
       console.log(1);
     },
-    getData: function getData(url) {
+    addNew: function addNew() {
+      this.ruleForm.name = '';
+      this.showMaskArr = true;
+    },
+    CB_dialog: function CB_dialog(val) {
+      this.showMaskArr = val;
+    },
+    submitForm: function submitForm() {
       var _this = this;
 
-      this.$fetch(url, {
-        include: "user"
-      }).then(function (res) {
-        _this.loading = false;
-        _this.allData = res.data;
-        var pg = res.meta.pagination;
-        _this.$store.dispatch("currentPage", pg.current_page);
-        _this.$store.commit("PER_PAGE", pg.per_page);
-        _this.$store.commit("PAGE_TOTAL", pg.total);
+      this.$post(this.url, this.ruleForm).then(function () {
+        _this.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+        _this.showMaskArr = false;
+        _this.refresh();
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -249,126 +175,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(",");
+          var str = arr1.join(',');
           _this.$message.error({
             message: str
           });
         }
       });
     },
+
+    /*处理批量删除*/
     handleSelectionChange: function handleSelectionChange(val) {
-      if (val.length != 0) {
-        this.updateId = val[0].id;
-      } else {
-        this.updateId = "";
-      }
-      this.selection = val;
+      this.multipleSelection = val;
       var del = [];
-      val.forEach(function (selectedItem) {
+      this.multipleSelection.forEach(function (selectedItem) {
         del.push(selectedItem.id);
       });
-      this.delArr = del.join(",");
-    },
-
-    // 新增
-    addNew: function addNew() {
-      this.ruleForm = {
-        perform_type: "",
-        include_string: ""
-      };
-      this.showMask = true;
-    },
-    submitForm: function submitForm() {
-      var _this2 = this;
-
-      this.$post(this.url, this.ruleForm).then(function () {
-        _this2.$message({
-          message: "添加成功",
-          type: "success"
-        });
-        _this2.showMask = false;
-        _this2.refresh();
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(",");
-          _this2.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    cancelAdd: function cancelAdd() {
-      this.showMask = false;
-      this.$message({
-        message: "取消新建刷单锁单配置",
-        type: "info"
-      });
-    },
-
-    // 单条删除
-    del: function del(row, e) {
-      this.showDel = true;
-      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
-      this.delId = row.id;
-    },
-    cancelD: function cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: "取消删除",
-        type: "info"
-      });
-    },
-    confirmD: function confirmD(id) {
-      var _this3 = this;
-
-      // console.log(id);
-      this.$del(this.url + "/" + id).then(function () {
-        _this3.$message({
-          message: "删除成功",
-          type: "success"
-        });
-        _this3.showDel = false;
-        _this3.refresh();
-      }, function (err) {
-        if (err.response) {
-          _this3.showDel = false;
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(",");
-          _this3.$message.error({
-            message: str
-          });
-        }
-      });
+      this.delArr = del.join(',');
     },
     delMore: function delMore() {
-      var _this4 = this;
+      var _this2 = this;
 
       if (this.delArr.length === 0) {
         this.$message({
-          message: "没有选中数据",
-          type: "warning"
+          message: '没有选中数据',
+          type: 'warning'
         });
       } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         }).then(function () {
-          _this4.$del(_this4.url, { ids: _this4.delArr }).then(function () {
-            _this4.$message({
-              message: "删除成功",
-              type: "success"
+          _this2.$del(_this2.url, { ids: _this2.delArr }).then(function () {
+            _this2.$message({
+              message: '删除成功',
+              type: 'success'
             });
-            _this4.refresh();
+            _this2.refresh();
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -376,43 +219,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              var str = arr1.join(",");
-              _this4.$message.error({
+              var str = arr1.join(',');
+              _this2.$message.error({
                 message: str
               });
             }
           });
         }).catch(function () {
-          _this4.$message({
-            type: "info",
-            message: "已取消删除"
+          _this2.$message({
+            type: 'info',
+            message: '已取消删除'
           });
         });
       }
     },
-    edit: function edit() {
-      var _this5 = this;
 
-      if (this.selection.length == 0) {
-        this.$message({
-          message: "没有选择要修改的数据",
-          type: "warning"
-        });
-        return;
-      } else if (this.selection.length >= 2) {
-        this.$message({
-          message: "只能修改单条数据",
-          type: "warning"
-        });
-        return;
-      } else {
-        this.updateMask = true;
-        this.updateIndex = "";
-        this.$fetch(this.url + "/" + this.updateId).then(function (res) {
-          _this5.updateForm = {
-            perform_type: res.perform_type,
-            include_string: res.include_string
-          };
+    /*修改保存*/
+    edit: function edit(index) {
+      this.currentIndex = 'index' + index;
+    },
+    editCancel: function editCancel() {
+      this.$message({
+        message: '取消修改',
+        type: 'info'
+      });
+      this.currentIndex = '';
+    },
+    editSave: function editSave(row) {
+      var _this3 = this;
+
+      var obj = {
+        id: row.id,
+        name: row.name,
+        is_default: row.is_default,
+        status: row.status
+      };
+      if (this.inputChange) {
+        this.$patch(this.url + '/' + row.id, obj).then(function () {
+          _this3.$message({
+            message: '修改成功',
+            type: 'success'
+          });
+          _this3.getInfo(_this3.url);
+          _this3.currentIndex = '';
+          _this3.inputChange = false;
         }, function (err) {
           if (err.response) {
             var arr = err.response.data.errors;
@@ -420,22 +270,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             for (var i in arr) {
               arr1.push(arr[i]);
             }
-            var str = arr1.join(",");
-            _this5.$message.error(str);
+            var str = arr1.join(',');
+            _this3.$message.error({
+              message: str
+            });
           }
+        });
+      } else {
+        this.$message({
+          message: '数据未改动',
+          type: 'info'
         });
       }
     },
-    confirmUpdate: function confirmUpdate() {
-      var _this6 = this;
+    handleEdit: function handleEdit() {
+      this.inputChange = true;
+    },
+    getInfo: function getInfo(url) {
+      var _this4 = this;
 
-      this.$patch(this.url + "/" + this.updateId, this.updateForm).then(function () {
-        _this6.updateMask = false;
-        _this6.$message({
-          message: "修改成功",
-          type: "success"
-        });
-        _this6.refresh();
+      this.showPage = true;
+      this.$fetch(url).then(function (res) {
+        _this4.getsInfo = res.data;
+        _this4.$store.dispatch('setFreights', res.data);
+        _this4.loading = false;
+        var pg = res.meta.pagination;
+        _this4.$store.dispatch('currentPage', pg.current_page);
+        _this4.$store.commit('PER_PAGE', pg.per_page);
+        _this4.$store.commit('PAGE_TOTAL', pg.total);
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -443,42 +305,73 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(",");
-          _this6.$message.error(str);
+          var str = arr1.join(',');
+          _this4.$message.error({
+            message: str
+          });
         }
       });
     },
-    cancelUpdate: function cancelUpdate() {
-      this.updateMask = false;
+    del: function del(row, e) {
+      this.showDel = true;
+      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
+      this.delId = row.id;
+    },
+    cancelD: function cancelD() {
+      this.showDel = false;
       this.$message({
-        message: "已取消修改",
-        type: "info"
+        message: '取消删除',
+        type: 'info'
       });
     },
+    confirmD: function confirmD(id) {
+      var _this5 = this;
 
-    // 刷新
+      this.$del(this.url + '/' + id).then(function () {
+        _this5.$message({
+          message: '删除成功',
+          type: 'success'
+        });
+        _this5.showDel = false;
+        _this5.refresh();
+      }, function (err) {
+        if (err.response) {
+          _this5.showDel = false;
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(',');
+          _this5.$message.error({
+            message: str
+          });
+        }
+      });
+    },
     refresh: function refresh() {
+      var _this6 = this;
+
       this.loading = true;
-      this.getData(this.url);
+      this.getInfo(this.url);
+      setTimeout(function () {
+        _this6.loading = false;
+      }, 2000);
     }
   },
   mounted: function mounted() {
-    this.getData(this.url);
-    this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit("change", this.newOpt);
+    this.getInfo(this.url);
+    this.$store.dispatch('setOpt', this.newOpt);
     var that = this;
     $(window).resize(function () {
-      return function () {
-        that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit("change", that.newOpt);
-      }();
+      that.$store.dispatch('setOpt', that.newOpt);
     });
   }
 });
 
 /***/ }),
 
-/***/ 1167:
+/***/ 1135:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -488,360 +381,35 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.currentPage
-        ? _c("div", { staticClass: "searchBox" }, [
-            _c(
-              "span",
-              [
-                _c("label", [_vm._v("执行类型")]),
-                _vm._v(" "),
-                _c("el-input", {
-                  staticClass: "half",
-                  attrs: { clearable: "" },
-                  nativeOn: {
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.getData($event)
-                    }
-                  },
-                  model: {
-                    value: _vm.searchBox.buyNick,
-                    callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "buyNick", $$v)
-                    },
-                    expression: "searchBox.buyNick"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              [
-                _c("label", [_vm._v("包含字符")]),
-                _vm._v(" "),
-                _c("el-input", {
-                  staticClass: "half",
-                  attrs: { clearable: "" },
-                  nativeOn: {
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.getData($event)
-                    }
-                  },
-                  model: {
-                    value: _vm.searchBox.shopTitle,
-                    callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "shopTitle", $$v)
-                    },
-                    expression: "searchBox.shopTitle"
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "el-tabs",
-        [
-          _c(
-            "el-tab-pane",
-            { attrs: { label: "所有数据" } },
-            [
-              _c(
-                "el-table",
-                {
-                  directives: [
-                    {
-                      name: "loading",
-                      rawName: "v-loading",
-                      value: _vm.loading,
-                      expression: "loading"
-                    }
-                  ],
-                  ref: "multipleTable",
-                  attrs: { data: _vm.allData, fit: "", height: "400" },
-                  on: { "selection-change": _vm.handleSelectionChange }
-                },
-                [
-                  _c("el-table-column", {
-                    attrs: {
-                      type: "selection",
-                      width: "95",
-                      align: "center",
-                      checked: _vm.checkboxInit
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.tableHead, function(item) {
-                    return _c("el-table-column", {
-                      key: item.prop,
-                      attrs: {
-                        label: item.label,
-                        align: "center",
-                        width: item.width
-                      },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(scope) {
-                              return [
-                                item.type == "select"
-                                  ? _c("span", [
-                                      scope.row[item.prop] == ""
-                                        ? _c("span")
-                                        : typeof scope.row[item.prop] ==
-                                            "object" && item.inProp
-                                        ? _c("span", [
-                                            _vm._v(
-                                              _vm._s(
-                                                scope.row[item.prop][
-                                                  item.inProp
-                                                ]
-                                              )
-                                            )
-                                          ])
-                                        : _vm._e()
-                                    ])
-                                  : item.type == "checkbox"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c("el-checkbox", {
-                                          attrs: { disabled: "" },
-                                          model: {
-                                            value: scope.row[item.prop],
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                scope.row,
-                                                item.prop,
-                                                $$v
-                                              )
-                                            },
-                                            expression: "scope.row[item.prop]"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : item.type == "img"
-                                  ? _c(
-                                      "span",
-                                      [
-                                        _c(
-                                          "el-popover",
-                                          {
-                                            attrs: {
-                                              placement: "right",
-                                              trigger: "hover",
-                                              "popper-class": "picture_detail"
-                                            }
-                                          },
-                                          [
-                                            _c("img", {
-                                              attrs: {
-                                                src: scope.row[item.prop]
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("img", {
-                                              attrs: {
-                                                slot: "reference",
-                                                src: scope.row[item.prop],
-                                                alt: scope.row[item.alt]
-                                              },
-                                              slot: "reference"
-                                            })
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  : _c("span", [
-                                      scope.row[item.prop]
-                                        ? _c("span", [
-                                            _vm._v(
-                                              _vm._s(
-                                                item.inProp
-                                                  ? scope.row[item.prop][
-                                                      item.inProp
-                                                    ]
-                                                  : scope.row[item.prop]
-                                              )
-                                            )
-                                          ])
-                                        : _vm._e()
-                                    ])
-                              ]
-                            }
-                          }
-                        ],
-                        null,
-                        true
-                      )
-                    })
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: {
-                      label: "操作",
-                      width: "180",
-                      align: "center",
-                      fixed: "right"
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function(scope) {
-                          return [
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { size: "mini", type: "danger" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.del(scope.row, $event)
-                                  }
-                                }
-                              },
-                              [_vm._v("删除")]
-                            )
-                          ]
-                        }
-                      }
-                    ])
-                  })
-                ],
-                2
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "新建", visible: _vm.showMask },
-          on: {
-            "update:visible": function($event) {
-              _vm.showMask = $event
-            }
-          }
+      _c("light-table", {
+        attrs: {
+          listData: _vm.getsInfo,
+          tableHead: _vm.tableHead,
+          loading: _vm.loading,
+          currentIndex: _vm.currentIndex
         },
-        [
-          _c(
-            "el-form",
-            {
-              ref: "ruleForm",
-              staticClass: "demo-ruleForm",
-              attrs: {
-                model: _vm.ruleForm,
-                rules: _vm.rules,
-                "label-width": "100px"
-              }
-            },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "执行类型" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { placeholder: "请选择执行类型" },
-                      model: {
-                        value: _vm.ruleForm.perform_type,
-                        callback: function($$v) {
-                          _vm.$set(_vm.ruleForm, "perform_type", $$v)
-                        },
-                        expression: "ruleForm.perform_type"
-                      }
-                    },
-                    [
-                      _c("el-option", {
-                        attrs: { label: "自动转刷单", value: "自动转刷单" }
-                      }),
-                      _vm._v(" "),
-                      _c("el-option", {
-                        attrs: { label: "自动转锁单", value: "自动转锁单" }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "包含字符", prop: "name" } },
-                [
-                  _c("el-input", {
-                    attrs: { placehold: "" },
-                    model: {
-                      value: _vm.ruleForm.include_string,
-                      callback: function($$v) {
-                        _vm.$set(_vm.ruleForm, "include_string", $$v)
-                      },
-                      expression: "ruleForm.include_string"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer clearfix",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "div",
-                { staticStyle: { float: "right" } },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: { click: _vm.submitForm }
-                    },
-                    [_vm._v("确定")]
-                  ),
-                  _vm._v(" "),
-                  _c("el-button", { on: { click: _vm.cancelAdd } }, [
-                    _vm._v("取消")
-                  ])
-                ],
-                1
-              )
-            ]
-          )
-        ],
-        1
-      ),
+        on: {
+          handleSelect: _vm.handleSelectionChange,
+          editSave: _vm.editSave,
+          handleEdit: _vm.handleEdit,
+          del: _vm.del,
+          edit: _vm.edit,
+          editCancel: _vm.editCancel
+        }
+      }),
+      _vm._v(" "),
+      _c("add-new", {
+        attrs: {
+          "visible-add": _vm.showMaskArr,
+          title: _vm.title,
+          "rule-form": _vm.ruleForm,
+          rules: _vm.rules,
+          "add-arr": _vm.addArr,
+          url: _vm.url,
+          "new-ref": _vm.refArr
+        },
+        on: { submitEvent: _vm.submitForm, "CB-dialog": _vm.CB_dialog }
+      }),
       _vm._v(" "),
       _c(
         "el-popover",
@@ -890,117 +458,7 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "修改", visible: _vm.updateMask },
-          on: {
-            "update:visible": function($event) {
-              _vm.updateMask = $event
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            {
-              ref: "updateForm",
-              staticClass: "demo-ruleForm",
-              attrs: {
-                model: _vm.updateForm,
-                rules: _vm.rules,
-                "label-width": "100px"
-              }
-            },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "执行类型" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { placeholder: "请选择执行类型" },
-                      model: {
-                        value: _vm.updateForm.perform_type,
-                        callback: function($$v) {
-                          _vm.$set(_vm.updateForm, "perform_type", $$v)
-                        },
-                        expression: "updateForm.perform_type"
-                      }
-                    },
-                    [
-                      _c("el-option", {
-                        attrs: { label: "自动转刷单", value: "自动转刷单" }
-                      }),
-                      _vm._v(" "),
-                      _c("el-option", {
-                        attrs: { label: "自动转锁单", value: "自动转锁单" }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "包含字符", prop: "name" } },
-                [
-                  _c("el-input", {
-                    attrs: { placehold: "" },
-                    model: {
-                      value: _vm.updateForm.include_string,
-                      callback: function($$v) {
-                        _vm.$set(_vm.updateForm, "include_string", $$v)
-                      },
-                      expression: "updateForm.include_string"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer clearfix",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "div",
-                { staticStyle: { float: "right" } },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: {
-                        click: function($event) {
-                          return _vm.confirmUpdate(_vm.updateIndex)
-                        }
-                      }
-                    },
-                    [_vm._v("确定")]
-                  ),
-                  _vm._v(" "),
-                  _c("el-button", { on: { click: _vm.cancelUpdate } }, [
-                    _vm._v("取消")
-                  ])
-                ],
-                1
-              )
-            ]
-          )
-        ],
-        1
-      )
+      _c("Pagination", { attrs: { "page-url": _vm.url } })
     ],
     1
   )
@@ -1011,21 +469,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-52becb00", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-bab69950", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 993:
+/***/ 978:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1166)
+var __vue_script__ = __webpack_require__(1134)
 /* template */
-var __vue_template__ = __webpack_require__(1167)
+var __vue_template__ = __webpack_require__(1135)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -1042,7 +500,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/brushLockConf.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/departmentMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -1051,9 +509,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-52becb00", Component.options)
+    hotAPI.createRecord("data-v-bab69950", Component.options)
   } else {
-    hotAPI.reload("data-v-52becb00", Component.options)
+    hotAPI.reload("data-v-bab69950", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

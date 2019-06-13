@@ -30,6 +30,12 @@ class ProblemProductRequest extends FormRequest
                     'problem_product.*.special' => 'string|max:255',
                     'problem_product.*.other' => 'string|max:255',
                     'problem_product.*.buy_number' => 'numeric|max:255',
+                    'problem_product.*.supplier_id' => [
+                        'required', 'integer',
+                        Rule::exists('suppliers', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
                     'problem_product.*.img_url' => 'string|max:255',
                     'problem_product.*.status' => 'boolean',
                 ];
@@ -46,6 +52,12 @@ class ProblemProductRequest extends FormRequest
                     'problem_product.*.special' => 'string|max:255',
                     'problem_product.*.other' => 'string|max:255',
                     'problem_product.*.buy_number' => 'numeric|max:255',
+                    'problem_product.*.supplier_id' => [
+                        'required', 'integer',
+                        Rule::exists('suppliers', 'id')->where(function ($query) {
+                            $query->where('status', 1);
+                        }),
+                    ],
                     'problem_product.*.img_url' => 'string|max:255',
                     'problem_product.*.status' => 'boolean',
                 ];
@@ -79,7 +91,7 @@ class ProblemProductRequest extends FormRequest
 
             'problem_product.*.special.string' => '特殊必须为string类型',
             'problem_product.*.special.max' => '特殊长度最大为255',
-            
+
             'problem_product.*.other.string' => '其他必须为string类型',
             'problem_product.*.other.max' => '其他长度最大为255',
 
@@ -96,19 +108,18 @@ class ProblemProductRequest extends FormRequest
     public function attributes()
     {
         return [
-            'after_compensation_order_id'=>'对应的是售后赔偿订单id',
-            'commodity_code'=>'商品编码',
-            'spec_code'=>'规格编码',
-            'short_name'=>'商品简称',
-            'spec'=>'规格',
-            'color'=>'颜色',
-            'materials'=>'材质',
-            'function'=>'功能',
-            'special'=>'特殊',
-            'other'=>'其他',
-            'buy_number'=>'购买数量',
-            'img_url'=>'图片地址'
-      
+            'after_compensation_order_id' => '对应的是售后赔偿订单id',
+            'commodity_code' => '商品编码',
+            'spec_code' => '规格编码',
+            'short_name' => '商品简称',
+            'spec' => '规格',
+            'color' => '颜色',
+            'materials' => '材质',
+            'function' => '功能',
+            'special' => '特殊',
+            'other' => '其他',
+            'buy_number' => '购买数量',
+            'img_url' => '图片地址',
         ];
     }
 }
