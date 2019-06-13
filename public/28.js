@@ -890,19 +890,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8198,30 +8185,6 @@ var render = function() {
         },
         [
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("订单列表")]),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.proData))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("-------------------------------------")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.proData))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("-------------------------------------")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.expenseData))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("-------------------------------------")]),
-          _vm._v(" "),
-          _c("br"),
           _vm._v(" "),
           _c(
             "el-table",

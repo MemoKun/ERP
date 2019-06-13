@@ -5495,72 +5495,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5926,7 +5860,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.purOrderMask = true;
         var obj = [];
         this.$fetch(this.urls.purchases, {
-          purchase_status: 'new',
+          purchase_status: "new",
           is_audit: true,
           status: true,
           include: "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.purchase,purchaseLists.combination.product"
@@ -5946,7 +5880,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         });
         this.$fetch(this.urls.purchases, {
-          purchase_status: 'section',
+          purchase_status: "section",
           is_audit: true,
           status: true,
           include: "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.purchase,purchaseLists.combination.product"
@@ -6868,7 +6802,9 @@ var render = function() {
             })
           ],
           1
-        )
+        ),
+        _vm._v(" "),
+        _c("span")
       ]),
       _vm._v(" "),
       _c(

@@ -24,7 +24,6 @@
     </div>
 
     <!--*****************************************中间主要的table*******************************-->
-
     <el-tabs v-model="middleActiveName" @tab-click="firstHandleClick" style="height: 250px;">
       <el-tab-pane label="新建" name="0">
         <el-table :data="newOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
@@ -727,18 +726,6 @@
     <!-- 选择订单 -->
     <el-dialog title="选择订单" :visible.sync="chooseOrderMask" :class="{'more-forms':moreForms}">
       <el-button type="text">订单列表</el-button>
-      <label>{{this.proData}}</label>
-      <br>
-      <label>-------------------------------------</label>
-      <br>
-      <label>{{this.proData}}</label>
-      <br>
-      <label>-------------------------------------</label>
-      <br>
-      <label>{{this.expenseData}}</label>
-      <br>
-      <label>-------------------------------------</label>
-      <br>
       <el-table :data="chooseOrderData" fit height="180" :row-class-name="addOrderRowCName" @row-click="chooseOrderRowClick">
         <el-table-column v-for="item in chooseOrderHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
@@ -3179,8 +3166,8 @@ export default {
             //this.submitData = res;
             this.submitData = res;
             let patchId = res.orders_id;
-            let patchItemId = res.order_items_id; 
-            let paymentDtlId = res.payment_details_id; 
+            let patchItemId = res.order_items_id;
+            let paymentDtlId = res.payment_details_id;
             let forData = this.submitData;
             let patchData = {
               shops_id: forData.shops_id,
@@ -3247,7 +3234,7 @@ export default {
               res["orderItems"]["data"].map(item => {
                 this.addChangeOrderProIds.push(item["combination"].id);
                 item["name"] = item["combination"]["name"];
-                item["id"] = patchItemId;//这里赋值的是change_orders的itemid，应该赋值为order的item id
+                item["id"] = patchItemId; //这里赋值的是change_orders的itemid，应该赋值为order的item id
                 item["products_id"] = item.products_id;
                 item["combinations_id"] = item.combinations_id;
                 item["productComp"] =

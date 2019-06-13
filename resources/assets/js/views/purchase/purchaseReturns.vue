@@ -7,47 +7,24 @@
       </span>
       <span>
         <label>退回供应商</label>
-        <el-select
-          v-model="searchBox.supplier"
-          clearable
-          placeholder="请选择"
-          @keyup.enter.native="handleQuery"
-        >
-          <el-option
-            v-for="item in resData.suppliers"
-            :key="item.value"
-            :label="item.name"
-            :value="item.id"
-          ></el-option>
+        <el-select v-model="searchBox.supplier" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
+          <el-option v-for="item in resData.suppliers" :key="item.value" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </span>
+      <span></span>
+      <span></span>
     </div>
 
     <!--采购退货-->
     <el-tabs v-model="topActiveName" @tab-click="clickTopTabs" id="subOutputRank-print">
       <el-tab-pane label="未提交" name="0">
-        <el-table
-          :data="noSubmitData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="300"
-          @row-click="purReturnRowClick"
-        >
+        <el-table :data="noSubmitData" fit @selection-change="handleSelectionChange" v-loading="loading" height="300" @row-click="purReturnRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in purReturnHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in purReturnHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">{{scope.row[item.prop][item.nmProp]}}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -59,9 +36,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -73,28 +48,13 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="未审核" name="1">
-        <el-table
-          :data="noAuditData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="300"
-          @row-click="purReturnRowClick"
-        >
+        <el-table :data="noAuditData" fit @selection-change="handleSelectionChange" v-loading="loading" height="300" @row-click="purReturnRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in purReturnHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in purReturnHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">{{scope.row[item.prop][item.nmProp]}}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -106,9 +66,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -120,28 +78,13 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="已审核" name="2">
-        <el-table
-          :data="alreadyAuditData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="300"
-          @row-click="purReturnRowClick"
-        >
+        <el-table :data="alreadyAuditData" fit @selection-change="handleSelectionChange" v-loading="loading" height="300" @row-click="purReturnRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in purReturnHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in purReturnHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type=='select'">
                 <span v-if="scope.row[item.prop]==''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">{{scope.row[item.prop][item.nmProp]}}</span>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -153,9 +96,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -175,13 +116,7 @@
     <el-tabs v-model="btmActiveName" @tab-click="clickBtmTabs">
       <el-tab-pane label="退货单明细" name="0">
         <el-table :data="purReturnDtl" fit>
-          <el-table-column
-            v-for="item in btmTableHead[this.btmActiveName]"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in btmTableHead[this.btmActiveName]" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type=='img'">
                 <el-popover placement="right" trigger="hover" popper-class="picture_detail">
@@ -205,47 +140,20 @@
     </el-tabs>
 
     <!--新增-->
-    <el-dialog
-      title="新增退货单"
-      :visible.sync="addPurReturnMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-    >
+    <el-dialog title="新增退货单" :visible.sync="addPurReturnMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
       <add-new :rule-form="addPurReturnFormVal" :add-arr="addPurReturnFormHead" :onlyInputs="true"></add-new>
       <el-button type="text">退货单明细</el-button>
-      <el-table
-        :data="addPurReturnTabVal"
-        fit
-        height="300"
-        :row-class-name="addPurReturnRCName"
-        @row-click="addPurReturnRClick"
-      >
-        <el-table-column
-          v-for="item in addPurReturnTabHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="addPurReturnTabVal" fit height="300" :row-class-name="addPurReturnRCName" @row-click="addPurReturnRClick">
+        <el-table-column v-for="item in addPurReturnTabHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="addPurReturnRIndex == 'index'+scope.$index">
                 <span v-if="item.type=='number'">
                   <span v-if="item.inProp=='purchase_return_quantity'">
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                      @input="inputChg"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="inputChg"></el-input>
                   </span>
                   <span v-else>
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                   </span>
                 </span>
                 <span v-else>
@@ -259,9 +167,7 @@
               <span v-else>
                 <span v-if="item.type=='select'">
                   <span v-for="(list,index) in resData[item.stateVal]" :key="index">
-                    <span
-                      v-if="list.id==scope.row[item.prop][item.inProp]"
-                    >{{list.name?list.name:list.nick}}</span>
+                    <span v-if="list.id==scope.row[item.prop][item.inProp]">{{list.name?list.name:list.nick}}</span>
                   </span>
                 </span>
                 <span v-else>{{scope.row[item.prop][item.inProp]}}</span>
@@ -275,9 +181,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </span>
           </template>
@@ -300,82 +204,35 @@
     </el-dialog>
 
     <!--商品明细-->
-    <el-dialog
-      title="请选择退货商品"
-      :visible.sync="proDtlMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-    >
+    <el-dialog title="请选择退货商品" :visible.sync="proDtlMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
       <div class="searchBox">
         <span>
           <label>商品编码</label>
-          <el-input
-            v-model.trim="proQuery.commodity_code"
-            clearable
-            placeholder="请输入商品编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.commodity_code" clearable placeholder="请输入商品编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>子件编码</label>
-          <el-input
-            v-model.trim="proQuery.component_code"
-            clearable
-            placeholder="请输入子件编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>所在仓库</label>
-          <el-select
-            v-model="proQuery.warehouse_id"
-            clearable
-            placeholder="请选择"
-            @keyup.enter.native="proQueryClick"
-          >
-            <el-option
-              v-for="item in resData.warehouses"
-              :key="item.value"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
+          <el-select v-model="proQuery.warehouse_id" clearable placeholder="请选择" @keyup.enter.native="proQueryClick">
+            <el-option v-for="item in resData.warehouses" :key="item.value" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </span>
         <el-button type="primary" @click="proQueryClick">刷新</el-button>
       </div>
-      <el-table
-        :data="proDtlVal"
-        fit
-        height="350"
-        :row-class-name="proDtlCName"
-        @row-click="proDtlRClick"
-      >
-        <el-table-column
-          v-for="item in addPurReturnTabHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="proDtlVal" fit height="350" :row-class-name="proDtlCName" @row-click="proDtlRClick">
+        <el-table-column v-for="item in addPurReturnTabHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="proDtlRIndex == 'index'+scope.$index">
                 <span v-if="item.type=='number'">
                   <span v-if="item.inProp=='purchase_return_quantity'">
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                      @input="proInputChg"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="proInputChg"></el-input>
                   </span>
                   <span v-else>
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                   </span>
                 </span>
                 <span v-else>
@@ -389,9 +246,7 @@
               <span v-else>
                 <span v-if="item.type=='select'">
                   <span v-for="(list,index) in resData[item.stateVal]" :key="index">
-                    <span
-                      v-if="list.id==scope.row[item.prop][item.inProp]"
-                    >{{list.name?list.name:list.nick}}</span>
+                    <span v-if="list.id==scope.row[item.prop][item.inProp]">{{list.name?list.name:list.nick}}</span>
                   </span>
                 </span>
                 <span v-else>{{scope.row[item.prop][item.inProp]}}</span>
@@ -405,9 +260,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </span>
           </template>
@@ -420,51 +273,20 @@
     </el-dialog>
 
     <!--修改-->
-    <el-dialog
-      title="修改退货单"
-      :visible.sync="updatePurReturnMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-    >
-      <add-new
-        :rule-form="updatePurReturnFormVal"
-        :add-arr="addPurReturnFormHead"
-        :onlyInputs="true"
-      ></add-new>
+    <el-dialog title="修改退货单" :visible.sync="updatePurReturnMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
+      <add-new :rule-form="updatePurReturnFormVal" :add-arr="addPurReturnFormHead" :onlyInputs="true"></add-new>
       <el-button type="text">退货单明细</el-button>
-      <el-table
-        :data="updatePurReturnTabVal"
-        fit
-        height="300"
-        :row-class-name="updatePurReturnRCName"
-        @row-click="updatePurReturnRClick"
-      >
-        <el-table-column
-          v-for="item in addPurReturnTabHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="updatePurReturnTabVal" fit height="300" :row-class-name="updatePurReturnRCName" @row-click="updatePurReturnRClick">
+        <el-table-column v-for="item in addPurReturnTabHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="updatePurReturnRIndex == 'index'+scope.$index">
                 <span v-if="item.type=='number'">
                   <span v-if="item.inProp=='purchase_return_quantity'">
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                      @input="inputChg"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="inputChg"></el-input>
                   </span>
                   <span v-else>
-                    <el-input
-                      size="small"
-                      type="number"
-                      v-model.trim="scope.row[item.prop][item.inProp]"
-                      :placeholder="item.holder"
-                    ></el-input>
+                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                   </span>
                 </span>
                 <span v-else>
@@ -478,9 +300,7 @@
               <span v-else>
                 <span v-if="item.type=='select'">
                   <span v-for="(list,index) in resData[item.stateVal]" :key="index">
-                    <span
-                      v-if="list.id==scope.row[item.prop][item.inProp]"
-                    >{{list.name?list.name:list.nick}}</span>
+                    <span v-if="list.id==scope.row[item.prop][item.inProp]">{{list.name?list.name:list.nick}}</span>
                   </span>
                 </span>
                 <span v-else>{{scope.row[item.prop][item.inProp]}}</span>
@@ -494,20 +314,14 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
               </span>
             </span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="90" align="center">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="danger"
-              @click="updatePurReturnDel(scope.row,scope.$index)"
-            >删除</el-button>
+            <el-button size="mini" type="danger" @click="updatePurReturnDel(scope.row,scope.$index)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -8,19 +8,11 @@
         </span>
         <span>
           <label>外部单号</label>
-          <el-input
-            v-model.trim="searchBox.external_no"
-            clearable
-            @keyup.enter.native="handleQuery"
-          ></el-input>
+          <el-input v-model.trim="searchBox.external_no" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
         <span>
           <label>商品编码</label>
-          <el-input
-            v-model.trim="searchBox.purchase_no"
-            clearable
-            @keyup.enter.native="handleQuery"
-          ></el-input>
+          <el-input v-model.trim="searchBox.purchase_no" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
         <span>
           <label>规格编码</label>
@@ -30,34 +22,17 @@
       <div class="searchBox">
         <span>
           <label>创建时间</label>
-          <el-date-picker
-            v-model="searchBox.create_time"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          ></el-date-picker>
+          <el-date-picker v-model="searchBox.create_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
         <span>
           <label>提交时间</label>
-          <el-date-picker
-            v-model="searchBox.commit_time"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          ></el-date-picker>
+          <el-date-picker v-model="searchBox.commit_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
         <span>
           <label>入库时间</label>
-          <el-date-picker
-            v-model="searchBox.storage_time"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          ></el-date-picker>
+          <el-date-picker v-model="searchBox.storage_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
+        <span></span>
       </div>
     </div>
 
@@ -67,19 +42,11 @@
         <!--表格-->
         <el-table :data="newStorage.data" fit v-loading="newStorage.loading" height="300">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in newStorage.table"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in newStorage.table" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type === 'select'">
                 <span v-if="scope.row[item.prop] === ''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">{{scope.row[item.prop][item.nmProp]}}</span>
               </span>
               <span v-else-if="item.type === 'checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -91,9 +58,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp ? scope.row[item.prop][item.inProp] : scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp ? scope.row[item.prop][item.inProp] : scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -104,19 +69,11 @@
         <!--表格-->
         <el-table :data="commitStorage.data" fit v-loading="commitStorage.loading" height="300">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in commitStorage.table"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in commitStorage.table" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type === 'select'">
                 <span v-if="scope.row[item.prop] === ''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">{{scope.row[item.prop][item.nmProp]}}</span>
               </span>
               <span v-else-if="item.type === 'checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -128,9 +85,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp ? scope.row[item.prop][item.inProp] : scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp ? scope.row[item.prop][item.inProp] : scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -141,19 +96,11 @@
         <!--表格-->
         <el-table :data="inStorage.data" fit v-loading="inStorage.loading" height="300">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in inStorage.table"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in inStorage.table" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type === 'select'">
                 <span v-if="scope.row[item.prop] === ''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">{{scope.row[item.prop][item.nmProp]}}</span>
               </span>
               <span v-else-if="item.type === 'checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -165,9 +112,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp ? scope.row[item.prop][item.inProp] : scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp ? scope.row[item.prop][item.inProp] : scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -181,19 +126,11 @@
       <el-tab-pane label="入库单明细" name="storageDetail">
         <el-table :data="storageDetail.data" fit v-loading="storageDetail.loading" height="300">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in storageDetail.table"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in storageDetail.table" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type === 'select'">
                 <span v-if="scope.row[item.prop] === ''"></span>
-                <span
-                  v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp"
-                >{{scope.row[item.prop][item.nmProp]}}</span>
+                <span v-else-if="typeof scope.row[item.prop] == 'object' && item.nmProp">{{scope.row[item.prop][item.nmProp]}}</span>
               </span>
               <span v-else-if="item.type === 'checkbox'">
                 <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -205,9 +142,7 @@
                 </el-popover>
               </span>
               <span v-else>
-                <span
-                  v-if="scope.row[item.prop]"
-                >{{item.inProp ? scope.row[item.prop][item.inProp] : scope.row[item.prop]}}</span>
+                <span v-if="scope.row[item.prop]">{{item.inProp ? scope.row[item.prop][item.inProp] : scope.row[item.prop]}}</span>
               </span>
             </template>
           </el-table-column>
@@ -232,34 +167,14 @@
         </span>
         <span>
           <label>入库仓库</label>
-          <el-select
-            v-model="newStorageDialog.data.shopName"
-            clearable
-            placeholder="请选择"
-            @keyup.enter.native="handleQuery"
-          >
-            <el-option
-              v-for="item in resData.shopNames"
-              :key="item.value"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
+          <el-select v-model="newStorageDialog.data.shopName" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
+            <el-option v-for="item in resData.shopNames" :key="item.value" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </span>
         <span>
           <label>供应商</label>
-          <el-select
-            v-model="newStorageDialog.data.supplier"
-            clearable
-            placeholder="请选择"
-            @keyup.enter.native="handleQuery"
-          >
-            <el-option
-              v-for="item in resData.suppliers"
-              :key="item.value"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
+          <el-select v-model="newStorageDialog.data.supplier" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
+            <el-option v-for="item in resData.suppliers" :key="item.value" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </span>
         <span>
@@ -268,20 +183,8 @@
         </span>
       </div>
       <el-button type="text">入库明细</el-button>
-      <el-table
-        :data="newStorageDialog.data.data"
-        fit
-        height="350"
-        :row-class-name="cancelRowCName"
-        @cell-click="addCellClick"
-      >
-        <el-table-column
-          v-for="(item,index) in newStorageDialog.data.tableHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="index"
-        >
+      <el-table :data="newStorageDialog.data.data" fit height="350" :row-class-name="cancelRowCName" @cell-click="addCellClick">
+        <el-table-column v-for="(item,index) in newStorageDialog.data.tableHead" :label="item.label" align="center" :width="item.width" :key="index">
           <template slot-scope="scope">
             <span v-if="item.prop == 'purchase_fabric'">
               <span v-if="addCurRow == 'index'+scope.$index">
@@ -327,56 +230,23 @@
       <div class="searchBox">
         <span>
           <label>商品编码</label>
-          <el-input
-            v-model.trim="proQuery.commodity_code"
-            clearable
-            placeholder="请输入商品编码"
-            @keyup.enter.native="proQueryClick"
-          ></el-input>
+          <el-input v-model.trim="proQuery.commodity_code" clearable placeholder="请输入商品编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
         <span>
           <label>供应商</label>
-          <el-select
-            v-model="proQuery.suppliers_id"
-            clearable
-            placeholder="请选择店铺名称"
-            @keyup.enter.native="proQueryClick"
-          >
-            <el-option
-              v-for="item in resData.suppliers"
-              :key="item.value"
-              :label="item.nick"
-              :value="item.id"
-            ></el-option>
+          <el-select v-model="proQuery.suppliers_id" clearable placeholder="请选择店铺名称" @keyup.enter.native="proQueryClick">
+            <el-option v-for="item in resData.suppliers" :key="item.value" :label="item.nick" :value="item.id"></el-option>
           </el-select>
         </span>
         <el-button type="primary" @click="proQueryClick">查询</el-button>
         <el-button type="primary" @click="proExport">导出</el-button>
       </div>
-      <el-table
-        :data="proDtlVal"
-        fit
-        height="350"
-        :row-class-name="proDtlCName"
-        @row-click="proDtlRClick"
-      >
-        <el-table-column
-          v-for="item in proDtlHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="proDtlVal" fit height="350" :row-class-name="proDtlCName" @row-click="proDtlRClick">
+        <el-table-column v-for="item in proDtlHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.prop=='newData'">
               <span v-if="proDtlRIndex == 'index'+scope.$index">
-                <el-input
-                  size="small"
-                  type="number"
-                  v-model.trim="scope.row[item.prop][item.inProp]"
-                  :placeholder="item.holder"
-                  @input="compValChg"
-                ></el-input>
+                <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="compValChg"></el-input>
               </span>
               <span v-else>{{scope.row[item.prop][item.inProp]}}</span>
             </span>

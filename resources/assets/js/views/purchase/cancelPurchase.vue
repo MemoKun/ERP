@@ -14,31 +14,19 @@
         <label>提交人</label>
         <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
       </span>
+      <span>
+        
+      </span>
     </div>
 
     <!--取消采购-->
     <el-tabs v-model="topActiveName" @tab-click="topTabsClick">
       <el-tab-pane label="新建" name="0">
-        <el-table
-          :data="newData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="350"
-          @row-click="cancelPRClick"
-        >
+        <el-table :data="newData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="cancelPRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in tabsHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in tabsHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
-              <span
-                v-if="scope.row[item.prop]"
-              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="90" align="center" fixed="right">
@@ -49,26 +37,11 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="已完成" name="1">
-        <el-table
-          :data="partData"
-          fit
-          @selection-change="handleSelectionChange"
-          v-loading="loading"
-          height="400"
-          @row-click="cancelPRClick"
-        >
+        <el-table :data="partData" fit @selection-change="handleSelectionChange" v-loading="loading" height="400" @row-click="cancelPRClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-          <el-table-column
-            v-for="item in tabsHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in tabsHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
-              <span
-                v-if="scope.row[item.prop]"
-              >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="90" align="center" fixed="right">
@@ -87,13 +60,7 @@
     <el-tabs v-model="btmActiveName">
       <el-tab-pane label="取消采购明细" name="0">
         <el-table :data="detailData" fit>
-          <el-table-column
-            v-for="item in detailHead"
-            :label="item.label"
-            align="center"
-            :width="item.width"
-            :key="item.prop"
-          >
+          <el-table-column v-for="item in detailHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
             <template slot-scope="scope">
               <span v-if="item.type == 'img'">
                 <el-popover placement="right" trigger="hover" popper-class="picture_detail">
@@ -135,20 +102,8 @@
         </span>
       </div>
       <el-button type="text">取消采购明细</el-button>
-      <el-table
-        :data="addStockVal"
-        fit
-        height="350"
-        :row-class-name="cancelRowCName"
-        @cell-click="addCellClick"
-      >
-        <el-table-column
-          v-for="(item,index) in cancelHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="index"
-        >
+      <el-table :data="addStockVal" fit height="350" :row-class-name="cancelRowCName" @cell-click="addCellClick">
+        <el-table-column v-for="(item,index) in cancelHead" :label="item.label" align="center" :width="item.width" :key="index">
           <template slot-scope="scope">
             <span v-if="item.prop == 'cancel_purchase_quantity'">
               <span v-if="addCurRow == 'index'+scope.$index">
@@ -201,21 +156,8 @@
         </span>
       </div>
       <el-button type="text">取消采购明细</el-button>
-      <el-table
-        :data="updateStockVal"
-        fit
-        highlight-current-row
-        :height="350"
-        :row-class-name="cancelRowCName"
-        @cell-click="addCellClick"
-      >
-        <el-table-column
-          v-for="(item,index) in cancelHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="index"
-        >
+      <el-table :data="updateStockVal" fit highlight-current-row :height="350" :row-class-name="cancelRowCName" @cell-click="addCellClick">
+        <el-table-column v-for="(item,index) in cancelHead" :label="item.label" align="center" :width="item.width" :key="index">
           <template slot-scope="scope">
             <span v-if="item.prop == 'cancel_purchase_quantity'">
               <span v-if="addCurRow == 'index'+scope.$index">
@@ -254,16 +196,8 @@
     <!--采购单数据-->
     <el-dialog title="选择采购单" :visible.sync="purOrderMask">
       <el-table :data="purVal" fit height="300" @row-click="selectPur">
-        <el-table-column
-          v-for="(item,index) in purHead"
-          :label="item.label"
-          align="center"
-          :key="index"
-          :width="item.width"
-        >
-          <template
-            slot-scope="scope"
-          >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</template>
+        <el-table-column v-for="(item,index) in purHead" :label="item.label" align="center" :key="index" :width="item.width">
+          <template slot-scope="scope">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</template>
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
@@ -283,7 +217,7 @@
   </div>
 </template>
 <script>
-import { finished } from 'stream';
+import { finished } from "stream";
 export default {
   data() {
     return {
@@ -697,7 +631,7 @@ export default {
         this.purOrderMask = true;
         let obj = [];
         this.$fetch(this.urls.purchases, {
-          purchase_status: 'new',
+          purchase_status: "new",
           is_audit: true,
           status: true,
           include:
@@ -721,7 +655,7 @@ export default {
           }
         );
         this.$fetch(this.urls.purchases, {
-          purchase_status: 'section',
+          purchase_status: "section",
           is_audit: true,
           status: true,
           include:
