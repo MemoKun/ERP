@@ -590,7 +590,7 @@
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="费用类型" name="2">
-          <el-table :data="expenseData" fit @row-click="addExpenseRClick">
+          <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
             <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="expenseRIndex == 'index'+scope.$index">
@@ -675,7 +675,6 @@
           <el-button type="primary" @click="proQueryClick" style="float: right">查询</el-button>
         </span>
         <span></span>
-
       </div>
       <el-table :data="proVal" fit height="250" @row-click="proRowClick">
         <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -906,7 +905,7 @@
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="费用类型" name="2">
-          <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick">
+          <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
             <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="expenseRIndex == 'index'+scope.$index">
@@ -3371,6 +3370,10 @@ export default {
     /*费用类型-行监听 */
     addExpenseRClick(row) {
       this.expenseRIndex = `index${row.index}`;
+    },
+    /*费用类型-决定费用类型是否能被编辑 */
+    addExpenseRCName({ row, rowIndex }) {
+      row.index = rowIndex;
     },
     /************************** 添 加 商 品 界 面 **************************/
     //打开添加商品界面按钮

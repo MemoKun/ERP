@@ -1008,7 +1008,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -3075,6 +3074,14 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       this.expenseRIndex = "index" + row.index;
     },
 
+    /*费用类型-决定费用类型是否能被编辑 */
+    addExpenseRCName: function addExpenseRCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
+
+      row.index = rowIndex;
+    },
+
     /************************** 添 加 商 品 界 面 **************************/
     //打开添加商品界面按钮
     addProDtl: function addProDtl() {
@@ -3177,9 +3184,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
     },
 
     //决定proSku的活跃行
-    proSkuCName: function proSkuCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
+    proSkuCName: function proSkuCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
 
       row.index = rowIndex;
     },
@@ -3824,9 +3831,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         }
       }
     },
-    splitCName: function splitCName(_ref3) {
-      var row = _ref3.row,
-          rowIndex = _ref3.rowIndex;
+    splitCName: function splitCName(_ref4) {
+      var row = _ref4.row,
+          rowIndex = _ref4.rowIndex;
 
       row.index = rowIndex;
     },
@@ -7188,7 +7195,11 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: { data: _vm.expenseData, fit: "" },
+                      attrs: {
+                        data: _vm.expenseData,
+                        fit: "",
+                        "row-class-name": _vm.addExpenseRCName
+                      },
                       on: { "row-click": _vm.addExpenseRClick }
                     },
                     [
@@ -9129,7 +9140,11 @@ var render = function() {
                   _c(
                     "el-table",
                     {
-                      attrs: { data: _vm.updateExpenseData, fit: "" },
+                      attrs: {
+                        data: _vm.updateExpenseData,
+                        fit: "",
+                        "row-class-name": _vm.addExpenseRCName
+                      },
                       on: { "row-click": _vm.addExpenseRClick }
                     },
                     [
