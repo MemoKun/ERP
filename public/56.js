@@ -1,10 +1,797 @@
 webpackJsonp([56],{
 
-/***/ 1144:
+/***/ 1133:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -28,88 +815,101 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       tableKey: [[{
-        label: '报表文件',
-        width: '220',
-        prop: "file",
-        holder: '请输入报表文件',
+        label: '标记代码',
+        width: '',
+        prop: "markcode",
+        holder: '请输入标记代码',
         type: 'text'
       }, {
-        label: '报表名称',
-        width: '220',
-        prop: "name",
-        holder: '请输入报表名称',
+        label: '标记名称',
+        width: '180',
+        prop: "markname",
+        holder: '请输入标记名称',
         type: 'text'
       }, {
-        label: '报表格式',
-        width: '200',
-        prop: "paper_format",
-        holder: '请输入报表格式',
-        type: 'text'
+        label: '颜色',
+        width: '180',
+        prop: "color",
+        holder: '颜色',
+        type: 'color'
+      }, {
+        label: '描述',
+        width: '180',
+        prop: "description",
+        holder: '描述',
+        type: 'textarea'
       }, {
         label: '状态',
-        width: '220',
+        width: '200',
         prop: "status",
-        holder: '请选择是否启用',
-        type: 'select_stu'
+        holder: '状态',
+        type: 'select_stu',
+        doSort: true
       }]],
-      url: ['/printreports'],
-      title: ['添加报表格式'],
+      url: ['/markcolors'],
+      title: ['新增颜色'],
       ruleForm: [{
-        file: '',
-        name: '',
-        paper_format: '',
-        status: '1'
+        markcode: '',
+        markname: '',
+        color: '',
+        status: '1',
+        description: ''
       }],
       rules: [{
-        file: [{ required: true, message: '请输入文件', trigger: 'blur' }],
-        name: [{ required: true, message: '请输入报表名', trigger: 'blur' }],
-        paper_format: [{ required: true, message: '请输入报表格式', trigger: 'blur' }]
+        markcode: [{ required: true, message: '请输入标记代码', trigger: 'blur' }],
+        markname: [{ required: true, message: '请输入标记名称', trigger: 'blur' }],
+        color: [{ required: true, message: '请选择颜色', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '报表文件',
-        prop: 'file',
-        holder: '请输入报表文件',
+        label: '标记代码',
+        prop: 'markcode',
+        holder: '请输入标记代码',
         type: 'text'
       }, {
-        label: '报表名称',
-        prop: 'name',
-        holder: '请输入报表名称',
+        label: '标记名称',
+        prop: 'markname',
+        holder: '请输入标记名称',
         type: 'text'
       }, {
-        label: '报表格式',
-        prop: 'paper_format',
-        holder: '请输入报表格式',
-        type: 'text'
+        label: '标记颜色',
+        prop: 'color',
+        type: 'pickColor'
       }, {
         label: '状态',
         prop: 'status',
         holder: '请选择状态',
         type: 'select_stu'
+      }, {
+        label: '描述',
+        prop: 'description',
+        holder: '请输入描述',
+        type: 'textarea'
       }]]
     };
   },
 
   methods: {
-    //新增
     addNew: function addNew() {
       this.$store.dispatch('setShowAdd', true);
-    },
-    edit: function edit(row) {
-      var obj = {
-        file: row.file,
-        name: row.name,
-        paper_format: row.paper_format,
-        status: row.status
-      };
-      this.$store.dispatch('setRow', row);
-      this.$store.dispatch('setUrl', this.url[0] + "/");
-      this.$store.dispatch('doEdit', obj);
     },
     doDelMore: function doDelMore() {
       this.$refs.tabs.$emit('delMore');
     },
     refresh: function refresh() {
       this.$store.dispatch('refresh');
+    },
+    edit: function edit(row) {
+      var obj = {
+        id: row.id,
+        markcode: row.markcode,
+        markname: row.markname,
+        color: row.color,
+        description: row.description,
+        status: row.status
+      };
+      this.$store.dispatch('setRow', row);
+      this.$store.dispatch('setUrl', this.url[0] + "/");
+      this.$store.dispatch('doEdit', obj);
     }
   },
   mounted: function mounted() {
@@ -124,7 +924,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1145:
+/***/ 1134:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -156,21 +956,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2971de68", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-39e633ba", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 982:
+/***/ 976:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1144)
+var __vue_script__ = __webpack_require__(1133)
 /* template */
-var __vue_template__ = __webpack_require__(1145)
+var __vue_template__ = __webpack_require__(1134)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -187,7 +987,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/invoiceConf.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/markerColorMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -196,9 +996,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2971de68", Component.options)
+    hotAPI.createRecord("data-v-39e633ba", Component.options)
   } else {
-    hotAPI.reload("data-v-2971de68", Component.options)
+    hotAPI.reload("data-v-39e633ba", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

@@ -748,6 +748,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.changeorders.isaudit');
         $api->put('changeorders/{order}/unaudit', 'CustomerServiceChangeOrdersController@isUnAudit')->middleware('permission:订单变更')
             ->name('api.changeorders.isunaudit');
+        $api->put('changeorders/{order}/cancel', 'CustomerServiceChangeOrdersController@isCanceled')->middleware('permission:订单变更')
+            ->name('api.changeorders.iscanceled');
         $api->put('changeorders/{order}/submit', 'CustomerServiceChangeOrdersController@isSubmit')->middleware('permission:订单变更')
             ->name('api.changeorders.issubmit');
         $api->get('changeorders/create', 'CustomerServiceChangeOrdersController@create')->middleware('permission:订单变更')

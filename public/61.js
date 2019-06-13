@@ -1,10 +1,16 @@
 webpackJsonp([61],{
 
-/***/ 1146:
+/***/ 1175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -33,97 +39,106 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
-        cnt: "新增",
-        icon: "bf-add",
+        cnt: '新增',
+        icon: 'bf-add',
         ent: this.addNew
       }, {
-        cnt: "删除",
-        icon: "bf-del",
+        cnt: '删除',
+        icon: 'bf-del',
         ent: this.delMore
       }, {
-        cnt: "刷新",
-        icon: "bf-refresh",
+        cnt: '刷新',
+        icon: 'bf-refresh',
         ent: this.refresh
       }],
       disHead: [{
-        label: "配送方式",
-        prop: "name",
-        holder: "配送方式",
-        type: "text"
+        label: '评价类别',
+        prop: "eval_category",
+        holder: '评价类别',
+        type: 'text'
       }, {
-        label: "状态",
+        label: '评价描述',
+        prop: "eval_description",
+        holder: '评价描述',
+        type: 'text'
+      }, {
+        label: '状态',
         prop: "status",
-        holder: "状态",
-        // type: 'select_stu',
-        type: "checkbox",
+        holder: '状态',
+        type: 'checkbox',
         doSort: true,
         chgAble: true,
         editChgAble: false
       }],
       stockHead: [{
-        label: "入库方式方式",
+        label: '入库方式方式',
         prop: "name",
-        holder: "配送方式",
-        type: "text"
+        holder: '配送方式',
+        type: 'text'
       }, {
-        label: "状态",
+        label: '状态',
         prop: "status",
-        holder: "状态",
+        holder: '状态',
         // type: 'select_stu',
-        type: "checkbox",
+        type: 'checkbox',
         doSort: true,
         chgAble: true,
         editChgAble: false
       }],
-      url: ["/distmets", "/stockintypes"],
-      title: ["新增配送方式", "新增入库方式"],
+      url: ['/evalcategorymag', '/stockintypes'],
+      title: ['新增用户评价类别', '新增入库方式'],
       ruleForm: [{
-        name: "",
+        name: '',
         status: true
       }, {
-        name: "",
+        name: '',
         status: true
       }],
       rules: [{
-        name: [{ required: true, message: "请输入配送方式", trigger: "blur" }]
+        name: [{ required: true, message: '请输入用户评价类别', trigger: 'blur' }]
       }, {
-        name: [{ required: true, message: "请输入入库方式", trigger: "blur" }]
+        name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: "配送方式",
-        prop: "name",
-        holder: "请输入配送方式",
-        type: "text"
+        label: '评价类别',
+        prop: 'eval_category',
+        holder: '请输入用户',
+        type: 'text'
       }, {
-        label: "状态",
-        prop: "status",
-        holder: "请选择状态",
+        label: '评价描述',
+        prop: 'eval_description',
+        holder: '请输入评价描述',
+        type: 'text'
+      }, {
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
         // type: 'select_stu'
-        type: "checkbox"
+        type: 'checkbox'
       }], [{
-        label: "入库方式",
-        prop: "name",
-        holder: "请输入入库方式",
-        type: "text"
+        label: '入库方式',
+        prop: 'name',
+        holder: '请输入入库方式',
+        type: 'text'
       }, {
-        label: "状态",
-        prop: "status",
-        holder: "请选择状态",
+        label: '状态',
+        prop: 'status',
+        holder: '请选择状态',
         // type: 'select_stu'
-        type: "checkbox"
+        type: 'checkbox'
       }]],
-      activeName: "0",
+      activeName: '0',
       getsData: [],
       loading: [true, true],
-      currentIndex: "",
+      currentIndex: '',
       /*新增*/
       showMask: false,
       showDel: false,
-      editId: "",
+      editId: '',
       inputChange: false,
       delArr: [],
       multipleSelection: [],
-      refArr: ["distri", "stock"]
+      refArr: ['mag', 'stock']
     };
   },
 
@@ -140,8 +155,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.$post(this.url[this.activeName], this.ruleForm[this.activeName]).then(function () {
         _this.$message({
-          message: "添加成功",
-          type: "success"
+          message: '添加成功',
+          type: 'success'
         });
         _this.showMask = false;
         _this.refresh();
@@ -152,7 +167,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(",");
+          var str = arr1.join(',');
           _this.$message.error({
             message: str
           });
@@ -170,9 +185,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this2.loading[_this2.activeName] = false;
         _this2.getsData = res.data;
         var pg = res.meta.pagination;
-        _this2.$store.dispatch("currentPage", pg.current_page);
-        _this2.$store.commit("PER_PAGE", pg.per_page);
-        _this2.$store.commit("PAGE_TOTAL", pg.total);
+        _this2.$store.dispatch('currentPage', pg.current_page);
+        _this2.$store.commit('PER_PAGE', pg.per_page);
+        _this2.$store.commit('PAGE_TOTAL', pg.total);
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -180,7 +195,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(",");
+          var str = arr1.join(',');
           _this2.$message.error({
             message: str
           });
@@ -188,27 +203,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     edit: function edit(index) {
-      this.currentIndex = "index" + index;
+      this.currentIndex = 'index' + index;
     },
     handleEdit: function handleEdit() {
       this.inputChange = true;
     },
     editCancel: function editCancel() {
       this.$message({
-        message: "取消修改",
-        type: "info"
+        message: '取消修改',
+        type: 'info'
       });
-      this.currentIndex = "";
+      this.currentIndex = '';
     },
     editSave: function editSave(row) {
       var _this3 = this;
 
-      this.$patch(this.url[this.activeName] + "/" + row.id, row).then(function () {
+      this.$patch(this.url[this.activeName] + '/' + row.id, row).then(function () {
         _this3.$message({
-          message: "修改成功",
-          type: "success"
+          message: '修改成功',
+          type: 'success'
         });
-        _this3.currentIndex = "";
+        _this3.currentIndex = '';
         _this3.inputChange = false;
         _this3.refresh();
       }, function (err) {
@@ -218,7 +233,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(",");
+          var str = arr1.join(',');
           _this3.$message.error({
             message: str
           });
@@ -227,23 +242,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     del: function del(row, e) {
       this.showDel = true;
-      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
+      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
       this.delId = row.id;
     },
     cancelD: function cancelD() {
       this.showDel = false;
       this.$message({
-        message: "取消删除",
-        type: "info"
+        message: '取消删除',
+        type: 'info'
       });
     },
     confirmD: function confirmD(id) {
       var _this4 = this;
 
-      this.$del(this.url[this.activeName] + "/" + id).then(function () {
+      this.$del(this.url[0] + '/' + id).then(function () {
         _this4.$message({
-          message: "删除成功",
-          type: "success"
+          message: '删除成功',
+          type: 'success'
         });
         _this4.showDel = false;
         _this4.refresh();
@@ -255,7 +270,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          var str = arr1.join(",");
+          var str = arr1.join(',');
           _this4.$message.error({
             message: str
           });
@@ -269,19 +284,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (this.delArr.length === 0) {
         this.$message({
-          message: "没有选中数据",
-          type: "warning"
+          message: '没有选中数据',
+          type: 'warning'
         });
       } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         }).then(function () {
           _this5.$del(_this5.url[_this5.activeName], { ids: _this5.delArr }).then(function () {
             _this5.$message({
-              message: "删除成功",
-              type: "success"
+              message: '删除成功',
+              type: 'success'
             });
             _this5.refresh();
           }, function (err) {
@@ -291,7 +306,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               for (var i in arr) {
                 arr1.push(arr[i]);
               }
-              var str = arr1.join(",");
+              var str = arr1.join(',');
               _this5.$message.error({
                 message: str
               });
@@ -299,8 +314,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
         }).catch(function () {
           _this5.$message({
-            type: "info",
-            message: "已取消删除"
+            type: 'info',
+            message: '已取消删除'
           });
         });
       }
@@ -309,14 +324,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (val.length != 0) {
         this.editId = val[0].id;
       } else {
-        this.editId = "";
+        this.editId = '';
       }
       this.multipleSelection = val;
       var del = [];
       this.multipleSelection.forEach(function (selectedItem) {
         del.push(selectedItem.id);
       });
-      this.delArr = del.join(",");
+      this.delArr = del.join(',');
     },
 
     /*页面刷新*/
@@ -327,17 +342,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     this.getData(this.url[this.activeName]);
-    this.$store.dispatch("setOpt", this.newOpt);
+    this.$store.dispatch('setOpt', this.newOpt);
     var that = this;
     $(window).resize(function () {
-      that.$store.dispatch("setOpt", that.newOpt);
+      that.$store.dispatch('setOpt', that.newOpt);
     });
   }
 });
 
 /***/ }),
 
-/***/ 1147:
+/***/ 1176:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -362,7 +377,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "配送方式管理", name: "0" } },
+            { attrs: { label: "用户评价类别管理", name: "0" } },
             [
               _c("light-table", {
                 attrs: {
@@ -458,21 +473,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-15000968", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-286e5fa0", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 983:
+/***/ 997:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1146)
+var __vue_script__ = __webpack_require__(1175)
 /* template */
-var __vue_template__ = __webpack_require__(1147)
+var __vue_template__ = __webpack_require__(1176)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -489,7 +504,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/distributeMthMag.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/evalCategoryMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -498,9 +513,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-15000968", Component.options)
+    hotAPI.createRecord("data-v-286e5fa0", Component.options)
   } else {
-    hotAPI.reload("data-v-15000968", Component.options)
+    hotAPI.reload("data-v-286e5fa0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

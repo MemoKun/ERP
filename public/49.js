@@ -1,6 +1,6 @@
 webpackJsonp([49],{
 
-/***/ 1138:
+/***/ 1135:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34,10 +34,620 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      //操作
       newOpt: [{
         cnt: '新增',
         icon: 'bf-add',
@@ -45,314 +655,112 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: '删除',
         icon: 'bf-del',
-        ent: this.delMore
+        ent: this.doDelMore
       }, {
         cnt: '刷新',
         icon: 'bf-refresh',
         ent: this.refresh
       }],
-      disHead: [{
-        label: '模块',
-        prop: "model",
-        holder: '模块',
-        type: 'text'
-      }, {
-        label: '打印机',
-        prop: "printer",
-        holder: '打印机',
-        type: 'text'
-      }, {
-        label: '使用人',
-        prop: "user",
-        holder: '模块',
-        type: 'text'
-      }, {
-        label: '状态',
-        prop: "status",
-        holder: '状态',
-        // type: 'select_stu',
-        type: 'checkbox',
-        doSort: true,
-        chgAble: true,
-        editChgAble: false
-      }],
-      stockHead: [{
-        label: '入库方式方式',
+      //表格
+      tableKey: [[{
+        label: '商品类别',
+        width: '180',
         prop: "name",
-        holder: '配送方式',
+        holder: '请输入商品类别',
+        type: 'text'
+      }, {
+        label: '类别代码',
+        width: '180',
+        prop: "code",
+        holder: '请输入类别代码',
         type: 'text'
       }, {
         label: '状态',
+        width: '200',
         prop: "status",
-        holder: '状态',
-        // type: 'select_stu',
-        type: 'checkbox',
-        doSort: true,
-        chgAble: true,
-        editChgAble: false
-      }],
-      url: ['/printerconf', '/stockintypes'],
-      title: ['新增打印机配置', '新增入库方式'],
-      ruleForm: [{
-        name: '',
-        status: true
+        holder: '请选择状态',
+        type: 'select_stu',
+        doSort: true
       }, {
+        label: '商品描述',
+        width: '200',
+        prop: "description",
+        holder: '请输入描述',
+        type: 'textarea'
+      }, {
+        label: '商品备注',
+        width: '200',
+        prop: "remark",
+        holder: '请输入备注',
+        type: 'textarea'
+      }]],
+      url: ['/goodscates'],
+      title: ['新增商品类别'],
+      ruleForm: [{
+        code: '',
         name: '',
-        status: true
+        description: '',
+        remark: '',
+        status: '1'
       }],
       rules: [{
-        name: [{ required: true, message: '请输入打印机配置', trigger: 'blur' }]
-      }, {
-        name: [{ required: true, message: '请输入入库方式', trigger: 'blur' }]
+        code: [{ required: true, message: '请输入标记代码', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入标记名称', trigger: 'blur' }]
       }],
       addArr: [[{
-        label: '模块',
-        prop: 'model',
-        holder: '请输入模块',
+        label: '类别代码',
+        prop: 'code',
+        holder: '请输入代码',
         type: 'text'
       }, {
-        label: '打印机',
-        prop: 'printer',
-        holder: '请输入打印机',
-        type: 'text'
-      }, {
-        label: '使用人',
-        prop: 'user',
-        holder: '请输入使用人',
-        type: 'text'
-      }, {
-        label: '状态',
-        prop: 'status',
-        holder: '请选择状态',
-        // type: 'select_stu'
-        type: 'checkbox'
-      }], [{
-        label: '入库方式',
+        label: '类别名称',
         prop: 'name',
-        holder: '请输入入库方式',
+        holder: '请输入名称',
         type: 'text'
+      }, {
+        label: '商品描述',
+        prop: 'description',
+        type: 'textarea'
+      }, {
+        label: '商品备注',
+        prop: 'remark',
+        type: 'textarea'
       }, {
         label: '状态',
         prop: 'status',
         holder: '请选择状态',
-        // type: 'select_stu'
-        type: 'checkbox'
-      }]],
-      activeName: '0',
-      getsData: [],
-      loading: [true, true],
-      currentIndex: '',
-      /*新增*/
-      showMask: false,
-      showDel: false,
-      editId: '',
-      inputChange: false,
-      delArr: [],
-      multipleSelection: [],
-      refArr: ['conf', 'stock']
+        type: 'select_stu'
+      }]]
     };
   },
 
   methods: {
     //新增
     addNew: function addNew() {
-      this.showMask = true;
+      this.$store.dispatch('setShowAdd', true);
     },
-    CB_dialog: function CB_dialog(val) {
-      this.showMask = val;
+    edit: function edit(row) {
+      var obj = {
+        id: row.id,
+        code: row.code,
+        name: row.name,
+        status: row.status,
+        remark: row.remark,
+        description: row.description
+      };
+      this.$store.dispatch('setRow', row);
+      this.$store.dispatch('setUrl', this.url[0] + "/");
+      this.$store.dispatch('doEdit', obj);
     },
-    submitForm: function submitForm() {
-      var _this = this;
-
-      this.$post(this.url[this.activeName], this.ruleForm[this.activeName]).then(function () {
-        _this.$message({
-          message: '添加成功',
-          type: 'success'
-        });
-        _this.showMask = false;
-        _this.refresh();
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this.$message.error({
-            message: str
-          });
-        }
-      });
+    doDelMore: function doDelMore() {
+      this.$refs.tabs.$emit('delMore');
     },
-    tabsClick: function tabsClick() {
-      this.loading = [true, true];
-      this.getData(this.url[this.activeName]);
-    },
-    getData: function getData(url) {
-      var _this2 = this;
-
-      this.$fetch(url).then(function (res) {
-        _this2.loading[_this2.activeName] = false;
-        _this2.getsData = res.data;
-        var pg = res.meta.pagination;
-        _this2.$store.dispatch('currentPage', pg.current_page);
-        _this2.$store.commit('PER_PAGE', pg.per_page);
-        _this2.$store.commit('PAGE_TOTAL', pg.total);
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this2.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    edit: function edit(index) {
-      this.currentIndex = 'index' + index;
-    },
-    handleEdit: function handleEdit() {
-      this.inputChange = true;
-    },
-    editCancel: function editCancel() {
-      this.$message({
-        message: '取消修改',
-        type: 'info'
-      });
-      this.currentIndex = '';
-    },
-    editSave: function editSave(row) {
-      var _this3 = this;
-
-      this.$patch(this.url[this.activeName] + '/' + row.id, row).then(function () {
-        _this3.$message({
-          message: '修改成功',
-          type: 'success'
-        });
-        _this3.currentIndex = '';
-        _this3.inputChange = false;
-        _this3.refresh();
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this3.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-    del: function del(row, e) {
-      this.showDel = true;
-      $('.el-popper').css({ left: e.x - 100 + 'px', top: e.y - 125 + 'px' });
-      this.delId = row.id;
-    },
-    cancelD: function cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: '取消删除',
-        type: 'info'
-      });
-    },
-    confirmD: function confirmD(id) {
-      var _this4 = this;
-
-      this.$del(this.url[0] + '/' + id).then(function () {
-        _this4.$message({
-          message: '删除成功',
-          type: 'success'
-        });
-        _this4.showDel = false;
-        _this4.refresh();
-      }, function (err) {
-        if (err.response) {
-          _this4.showDel = false;
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(',');
-          _this4.$message.error({
-            message: str
-          });
-        }
-      });
-    },
-
-    /*批量删除*/
-    delMore: function delMore() {
-      var _this5 = this;
-
-      if (this.delArr.length === 0) {
-        this.$message({
-          message: '没有选中数据',
-          type: 'warning'
-        });
-      } else {
-        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(function () {
-          _this5.$del(_this5.url[_this5.activeName], { ids: _this5.delArr }).then(function () {
-            _this5.$message({
-              message: '删除成功',
-              type: 'success'
-            });
-            _this5.refresh();
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              var str = arr1.join(',');
-              _this5.$message.error({
-                message: str
-              });
-            }
-          });
-        }).catch(function () {
-          _this5.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
-      }
-    },
-    handleSelectionChange: function handleSelectionChange(val) {
-      if (val.length != 0) {
-        this.editId = val[0].id;
-      } else {
-        this.editId = '';
-      }
-      this.multipleSelection = val;
-      var del = [];
-      this.multipleSelection.forEach(function (selectedItem) {
-        del.push(selectedItem.id);
-      });
-      this.delArr = del.join(',');
-    },
-
-    /*页面刷新*/
     refresh: function refresh() {
-      this.loading = [true, true];
-      this.getData(this.url[this.activeName]);
+      this.$store.dispatch('refresh');
     }
   },
   mounted: function mounted() {
-    this.getData(this.url[this.activeName]);
+    this.$store.dispatch('setTabs', false);
     this.$store.dispatch('setOpt', this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -363,7 +771,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1139:
+/***/ 1136:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -373,107 +781,18 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "el-tabs",
-        {
-          on: { "tab-click": _vm.tabsClick },
-          model: {
-            value: _vm.activeName,
-            callback: function($$v) {
-              _vm.activeName = $$v
-            },
-            expression: "activeName"
-          }
-        },
-        [
-          _c(
-            "el-tab-pane",
-            { attrs: { label: "打印机配置", name: "0" } },
-            [
-              _c("light-table", {
-                attrs: {
-                  listData: _vm.getsData,
-                  tableHead: _vm.disHead,
-                  loading: _vm.loading[_vm.activeName],
-                  currentIndex: _vm.currentIndex
-                },
-                on: {
-                  editSave: _vm.editSave,
-                  handleEdit: _vm.handleEdit,
-                  del: _vm.del,
-                  edit: _vm.edit,
-                  editCancel: _vm.editCancel,
-                  handleSelect: _vm.handleSelectionChange
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("add-new", {
+      _c("v-tabs", {
+        ref: "tabs",
         attrs: {
-          "visible-add": _vm.showMask,
-          title: _vm.title[_vm.activeName],
-          "rule-form": _vm.ruleForm[_vm.activeName],
-          rules: _vm.rules[_vm.activeName],
-          "add-arr": _vm.addArr[_vm.activeName],
-          url: _vm.url[_vm.activeName],
-          "new-ref": _vm.refArr[_vm.activeName]
+          "table-key": _vm.tableKey,
+          url: _vm.url,
+          title: _vm.title,
+          "rule-form": _vm.ruleForm,
+          rules: _vm.rules,
+          "add-arr": _vm.addArr
         },
-        on: { submitEvent: _vm.submitForm, "CB-dialog": _vm.CB_dialog }
-      }),
-      _vm._v(" "),
-      _c(
-        "el-popover",
-        {
-          attrs: { slot: "tip", placement: "top", width: "160" },
-          slot: "tip",
-          model: {
-            value: _vm.showDel,
-            callback: function($$v) {
-              _vm.showDel = $$v
-            },
-            expression: "showDel"
-          }
-        },
-        [
-          _c("p", [_vm._v("确定删除该条数据？")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticStyle: { "text-align": "right", margin: "0" } },
-            [
-              _c(
-                "el-button",
-                {
-                  attrs: { size: "mini", type: "text" },
-                  on: { click: _vm.cancelD }
-                },
-                [_vm._v("取消")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", size: "mini" },
-                  on: {
-                    click: function($event) {
-                      return _vm.confirmD(_vm.delId)
-                    }
-                  }
-                },
-                [_vm._v("确定")]
-              )
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("Pagination", { attrs: { "page-url": _vm.url[_vm.activeName] } })
+        on: { edit: _vm.edit }
+      })
     ],
     1
   )
@@ -484,21 +803,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-511fb356", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-01df3861", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 979:
+/***/ 977:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1138)
+var __vue_script__ = __webpack_require__(1135)
 /* template */
-var __vue_template__ = __webpack_require__(1139)
+var __vue_template__ = __webpack_require__(1136)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -515,7 +834,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/printerConf.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/proCategoryMag.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -524,9 +843,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-511fb356", Component.options)
+    hotAPI.createRecord("data-v-01df3861", Component.options)
   } else {
-    hotAPI.reload("data-v-511fb356", Component.options)
+    hotAPI.reload("data-v-01df3861", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

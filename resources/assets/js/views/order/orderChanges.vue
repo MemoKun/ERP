@@ -927,7 +927,7 @@ export default {
         {
           cnt: "作废",
           icon: "bf-void",
-          ent: this.test,
+          ent: this.cancel,
           nClick: true
         },
         {
@@ -2118,7 +2118,8 @@ export default {
         },
         {
           label: "业务员",
-          prop: "business_personnel_name",
+          prop: "business_personnel_id",
+          //inProp: "name",
           type: "text"
         },
         {
@@ -3344,7 +3345,6 @@ export default {
         );
       }
     },
-
     test() {
       console.log(1);
     },
@@ -3640,8 +3640,8 @@ export default {
       }
       this.curRowId = row.id;
       this.curRowData = row;
+      this.changeOrdersMainInfo = this.curRowData;
     },
-
     deleteChanges() {
       console.log("deleteChanges");
     },
@@ -3673,9 +3673,8 @@ export default {
         );
       }
     },
-
     handleUnAudit() {
-      if (this.newOpt[6].nClick) {
+      if (this.newOpt[5].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -3750,13 +3749,39 @@ export default {
       this.curRowData = val.length > 0 ? val[val.length - 1] : "";
       this.mergerIds = val;
     },
-
     chooseOrderCancel() {
       this.chooseOrderMask = false;
       this.$message({
         message: "取消选择订单",
         type: "success"
       });
+    },
+    cancel() {
+      if (this.newOpt[6].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.changeorders + "/" + id + "/cancel").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "订单已作废",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
     },
     resets() {
       this.searchBox = {};

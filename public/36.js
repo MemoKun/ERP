@@ -1,10 +1,18 @@
 webpackJsonp([36],{
 
-/***/ 1108:
+/***/ 1113:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -60,20 +68,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
+        cnt: "导出",
+        icon: "bf-out",
+        ent: this.downloadOrders
+      }, {
         cnt: "下载",
         icon: "bf-dwn",
         ent: this.downloadOrders
       }],
       searchBox: {
-        shop_name: "",
-        dwn_type: "",
-        pro_num: "",
-        order_num: "",
-        shopNames: [{ label: "简艺家具旗舰店", value: 0 }, { label: "迪洛家具旗舰店", value: 1 }],
-        work_date: ""
+        shop_id: "",
+        order_workDate: "",
+        buyer_nickname: "",
+        orderShops: [{ label: "简艺家具旗舰店", value: 0 }, { label: "迪洛家具旗舰店", value: 1 }]
       },
-      tableData3: [],
-      multipleSelection: []
+      loading: true,
+      downloadData: [],
+      checkboxInit: false,
+      orderListHead: [{
+        label: "退款单号",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
+      }, {
+        label: "淘宝交易单号",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
+      }, {
+        label: "子订单号",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
+      }, {
+        label: "交易金额",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
+      }, {
+        label: "买家昵称",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
+      }, {
+        label: "退款金额",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
+      }, {
+        label: "退款原因",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
+      }, {
+        label: "退款说明",
+        width: "150",
+        prop: "refund_num",
+        type: "text"
+      }]
     };
   },
 
@@ -103,7 +155,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1109:
+/***/ 1114:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -113,170 +165,241 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("el-tabs", [
-        _c("div", { staticClass: "searchBox" }, [
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("店铺名称")]),
-              _vm._v(" "),
-              _c(
-                "el-select",
-                {
-                  attrs: { clearable: "", placeholder: "请选择" },
-                  model: {
-                    value: _vm.searchBox.shop_name,
-                    callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "shop_name", $$v)
-                    },
-                    expression: "searchBox.shop_name"
-                  }
-                },
-                _vm._l(_vm.searchBox.shopNames, function(item) {
-                  return _c("el-option", {
-                    key: item.value,
-                    attrs: { label: item.label, value: item.value }
-                  })
-                }),
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("业务日期")]),
-              _vm._v(" "),
-              _c("el-date-picker", {
-                attrs: {
-                  type: "daterange",
-                  "range-separator": "至",
-                  "start-placeholder": "开始日期",
-                  "end-placeholder": "结束日期"
-                },
-                model: {
-                  value: _vm.searchBox.work_date,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "work_date", $$v)
-                  },
-                  expression: "searchBox.work_date"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("买家昵称")]),
-              _vm._v(" "),
-              _c("el-input", {
-                attrs: { clearable: "" },
-                model: {
-                  value: _vm.searchBox.pro_num,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "pro_num", $$v)
-                  },
-                  expression: "searchBox.pro_num"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("订单编号")]),
-              _vm._v(" "),
-              _c("el-input", {
-                attrs: { clearable: "" },
-                model: {
-                  value: _vm.searchBox.order_num,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_num", $$v)
-                  },
-                  expression: "searchBox.order_num"
-                }
-              })
-            ],
-            1
-          )
-        ])
-      ]),
+      _c(
+        "el-tabs",
+        [
+          _c("el-tab-pane", { attrs: { label: "退款单下载", name: "0" } }, [
+            _c("div", [
+              _c("div", { staticClass: "searchBox" }, [
+                _c(
+                  "span",
+                  [
+                    _c("label", [_vm._v("店铺")]),
+                    _vm._v(" "),
+                    _c(
+                      "el-select",
+                      {
+                        attrs: { clearable: "", placeholder: "请选择" },
+                        model: {
+                          value: _vm.searchBox.buyer_nickname,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "buyer_nickname", $$v)
+                          },
+                          expression: "searchBox.buyer_nickname"
+                        }
+                      },
+                      _vm._l(_vm.searchBox.orderShops, function(item) {
+                        return _c("el-option", {
+                          key: item.value,
+                          attrs: { label: item.label, value: item.value }
+                        })
+                      }),
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  [
+                    _c("label", [_vm._v("业务日期")]),
+                    _vm._v(" "),
+                    _c("el-date-picker", {
+                      attrs: {
+                        type: "daterange",
+                        "range-separator": "至",
+                        "start-placeholder": "开始日期",
+                        "end-placeholder": "结束日期"
+                      },
+                      model: {
+                        value: _vm.searchBox.order_workDate,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "order_workDate", $$v)
+                        },
+                        expression: "searchBox.order_workDate"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  [
+                    _c("label", [_vm._v("买家昵称")]),
+                    _vm._v(" "),
+                    _c("el-input", {
+                      attrs: { clearable: "" },
+                      model: {
+                        value: _vm.searchBox.buyer_nickname,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "buyer_nickname", $$v)
+                        },
+                        expression: "searchBox.buyer_nickname"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ])
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "el-tabs",
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "订单信息", name: "0" } },
+            { attrs: { label: "退款单下载", name: "0" } },
             [
               _c(
                 "el-table",
                 {
-                  ref: "multipleTable",
-                  staticStyle: { width: "100%" },
-                  attrs: { data: _vm.tableData3, "tooltip-effect": "dark" },
-                  on: { "selection-change": _vm.handleSelectionChange }
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.loading,
+                      expression: "loading"
+                    }
+                  ],
+                  attrs: { data: _vm.downloadData, fit: "", height: "350" }
                 },
                 [
                   _c("el-table-column", {
-                    attrs: { type: "selection", width: "55" }
+                    attrs: {
+                      type: "selection",
+                      width: "95",
+                      align: "center",
+                      checked: _vm.checkboxInit
+                    }
                   }),
                   _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: { label: "订单交易号", width: "120" }
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: { prop: "", label: "应付金额", width: "120" }
+                  _vm._l(_vm.orderListHead, function(item) {
+                    return _c("el-table-column", {
+                      key: item.label,
+                      attrs: {
+                        label: item.label,
+                        align: "center",
+                        width: item.width
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(scope) {
+                              return [
+                                item.type == "checkbox"
+                                  ? _c("span", [
+                                      item.inProp
+                                        ? _c(
+                                            "span",
+                                            [
+                                              _c("el-checkbox", {
+                                                attrs: { disabled: "" },
+                                                model: {
+                                                  value:
+                                                    scope.row[item.prop][
+                                                      item.inProp
+                                                    ],
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      scope.row[item.prop],
+                                                      item.inProp,
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression:
+                                                    "scope.row[item.prop][item.inProp]"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        : _c(
+                                            "span",
+                                            [
+                                              _c("el-checkbox", {
+                                                attrs: { disabled: "" },
+                                                model: {
+                                                  value: scope.row[item.prop],
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      scope.row,
+                                                      item.prop,
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression:
+                                                    "scope.row[item.prop]"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                    ])
+                                  : _c("span", [
+                                      scope.row[item.prop]
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                " +
+                                                _vm._s(
+                                                  item.inProp
+                                                    ? scope.row[item.prop][
+                                                        item.inProp
+                                                      ]
+                                                    : scope.row[item.prop]
+                                                ) +
+                                                "\n              "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
                     attrs: {
-                      prop: "",
-                      label: "实付金额",
-                      "show-overflow-tooltip": ""
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: {
-                      prop: "",
-                      label: "买家昵称",
-                      "show-overflow-tooltip": ""
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: {
-                      prop: "",
-                      label: "创建时间",
-                      "show-overflow-tooltip": ""
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: {
-                      prop: "",
-                      label: "订单状态",
-                      "show-overflow-tooltip": ""
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("el-table-column", {
-                    attrs: {
-                      prop: "",
-                      label: "分阶段状态",
-                      "show-overflow-tooltip": ""
-                    }
+                      label: "操作",
+                      width: "90",
+                      align: "center",
+                      fixed: "right"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.delSingle(scope.row, $event)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除")]
+                            )
+                          ]
+                        }
+                      }
+                    ])
                   })
                 ],
-                1
+                2
               )
             ],
             1
@@ -294,21 +417,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-592805bf", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-4619d63a", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 964:
+/***/ 966:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1108)
+var __vue_script__ = __webpack_require__(1113)
 /* template */
-var __vue_template__ = __webpack_require__(1109)
+var __vue_template__ = __webpack_require__(1114)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -325,7 +448,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/dwnCenter/orderDwn.vue"
+Component.options.__file = "resources/assets/js/views/dwnCenter/refundListDwn.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -334,9 +457,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-592805bf", Component.options)
+    hotAPI.createRecord("data-v-4619d63a", Component.options)
   } else {
-    hotAPI.reload("data-v-592805bf", Component.options)
+    hotAPI.reload("data-v-4619d63a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
