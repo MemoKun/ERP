@@ -1003,6 +1003,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -7448,17 +7454,84 @@ var render = function() {
         [
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("选择商品")]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "searchBox" },
-            [
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("商品编码")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "", placeholder: "请输入商品编码" },
+          _c("div", { staticClass: "searchBox" }, [
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("商品编码")]),
+                _vm._v(" "),
+                _c("el-input", {
+                  attrs: { clearable: "", placeholder: "请输入商品编码" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.proQueryClick($event)
+                    }
+                  },
+                  model: {
+                    value: _vm.proQuery.commodity_code,
+                    callback: function($$v) {
+                      _vm.$set(
+                        _vm.proQuery,
+                        "commodity_code",
+                        typeof $$v === "string" ? $$v.trim() : $$v
+                      )
+                    },
+                    expression: "proQuery.commodity_code"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("子件编码")]),
+                _vm._v(" "),
+                _c("el-input", {
+                  attrs: { clearable: "", placeholder: "请输入子件编码" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.proQueryClick($event)
+                    }
+                  },
+                  model: {
+                    value: _vm.proQuery.component_code,
+                    callback: function($$v) {
+                      _vm.$set(
+                        _vm.proQuery,
+                        "component_code",
+                        typeof $$v === "string" ? $$v.trim() : $$v
+                      )
+                    },
+                    expression: "proQuery.component_code"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("商品类别")]),
+                _vm._v(" "),
+                _c(
+                  "el-select",
+                  {
+                    attrs: { clearable: "", placeholder: "请选择商品类别" },
                     nativeOn: {
                       keyup: function($event) {
                         if (
@@ -7477,238 +7550,147 @@ var render = function() {
                       }
                     },
                     model: {
-                      value: _vm.proQuery.commodity_code,
+                      value: _vm.proQuery.shops_id,
                       callback: function($$v) {
-                        _vm.$set(
-                          _vm.proQuery,
-                          "commodity_code",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
+                        _vm.$set(_vm.proQuery, "shops_id", $$v)
                       },
-                      expression: "proQuery.commodity_code"
+                      expression: "proQuery.shops_id"
                     }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("子件编码")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "", placeholder: "请输入子件编码" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.proQueryClick($event)
+                  },
+                  _vm._l(_vm.resData.shops, function(item) {
+                    return _c("el-option", {
+                      key: item.value,
+                      attrs: { label: item.nick, value: item.id }
+                    })
+                  }),
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("商品简称")]),
+                _vm._v(" "),
+                _c("el-input", {
+                  attrs: { clearable: "", placeholder: "请输入子件编码" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
                       }
-                    },
-                    model: {
-                      value: _vm.proQuery.component_code,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.proQuery,
-                          "component_code",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "proQuery.component_code"
+                      return _vm.proQueryClick($event)
                     }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("商品类别")]),
-                  _vm._v(" "),
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { clearable: "", placeholder: "请选择商品类别" },
-                      nativeOn: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.proQueryClick($event)
-                        }
-                      },
-                      model: {
-                        value: _vm.proQuery.shops_id,
-                        callback: function($$v) {
-                          _vm.$set(_vm.proQuery, "shops_id", $$v)
-                        },
-                        expression: "proQuery.shops_id"
-                      }
+                  },
+                  model: {
+                    value: _vm.proQuery.short_name,
+                    callback: function($$v) {
+                      _vm.$set(
+                        _vm.proQuery,
+                        "short_name",
+                        typeof $$v === "string" ? $$v.trim() : $$v
+                      )
                     },
-                    _vm._l(_vm.resData.shops, function(item) {
-                      return _c("el-option", {
-                        key: item.value,
-                        attrs: { label: item.nick, value: item.id }
-                      })
-                    }),
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("商品简称")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "", placeholder: "请输入子件编码" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.proQueryClick($event)
+                    expression: "proQuery.short_name"
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "searchBox" }, [
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("组合筛选")]),
+                _vm._v(" "),
+                _c("el-input", {
+                  attrs: { clearable: "", placeholder: "请输入子件编码" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
                       }
-                    },
-                    model: {
-                      value: _vm.proQuery.short_name,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.proQuery,
-                          "short_name",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "proQuery.short_name"
+                      return _vm.proQueryClick($event)
                     }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("组合筛选")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "", placeholder: "请输入子件编码" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.proQueryClick($event)
-                      }
+                  },
+                  model: {
+                    value: _vm.proQuery.component_code,
+                    callback: function($$v) {
+                      _vm.$set(
+                        _vm.proQuery,
+                        "component_code",
+                        typeof $$v === "string" ? $$v.trim() : $$v
+                      )
                     },
-                    model: {
-                      value: _vm.proQuery.component_code,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.proQuery,
-                          "component_code",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "proQuery.component_code"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("成品筛选")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "", placeholder: "请输入子件编码" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.proQueryClick($event)
+                    expression: "proQuery.component_code"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
+                _c("label", [_vm._v("成品筛选")]),
+                _vm._v(" "),
+                _c("el-input", {
+                  attrs: { clearable: "", placeholder: "请输入子件编码" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
                       }
-                    },
-                    model: {
-                      value: _vm.proQuery.component_code,
-                      callback: function($$v) {
-                        _vm.$set(
-                          _vm.proQuery,
-                          "component_code",
-                          typeof $$v === "string" ? $$v.trim() : $$v
-                        )
-                      },
-                      expression: "proQuery.component_code"
+                      return _vm.proQueryClick($event)
                     }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary" },
-                  on: { click: _vm.proQueryClick }
-                },
-                [_vm._v("查询")]
-              )
-            ],
-            1
-          ),
+                  },
+                  model: {
+                    value: _vm.proQuery.component_code,
+                    callback: function($$v) {
+                      _vm.$set(
+                        _vm.proQuery,
+                        "component_code",
+                        typeof $$v === "string" ? $$v.trim() : $$v
+                      )
+                    },
+                    expression: "proQuery.component_code"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              [
+                _c(
+                  "el-button",
+                  {
+                    staticStyle: { float: "right" },
+                    attrs: { type: "primary" },
+                    on: { click: _vm.proQueryClick }
+                  },
+                  [_vm._v("查询")]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("span")
+          ]),
           _vm._v(" "),
           _c(
             "el-table",

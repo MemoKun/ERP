@@ -661,6 +661,8 @@
           <label>商品简称</label>
           <el-input v-model.trim="proQuery.short_name" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
+      </div>
+      <div class="searchBox">
         <span>
           <label>组合筛选</label>
           <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
@@ -669,7 +671,11 @@
           <label>成品筛选</label>
           <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
         </span>
-        <el-button type="primary" @click="proQueryClick">查询</el-button>
+        <span>
+          <el-button type="primary" @click="proQueryClick" style="float: right">查询</el-button>
+        </span>
+        <span></span>
+
       </div>
       <el-table :data="proVal" fit height="250" @row-click="proRowClick">
         <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -2903,7 +2909,7 @@ export default {
     /*页码*/
     handlePagChg(page) {
       if (this.leftTopActiveName == "0") {
-        this.loading=true;
+        this.loading = true;
         this.$fetch(
           this.urls.customerservicedepts + "/searchuntreated" + "?page=" + page,
           {
