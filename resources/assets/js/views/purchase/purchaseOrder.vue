@@ -15,22 +15,14 @@
           <label>规格名称</label>
           <el-input v-model.trim="searchBox.order_man" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
-        <span v-if="filterBox">
+        <span>
           <label>供应商</label>
           <el-select v-model="searchBox.order_shop" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
             <el-option v-for="item in resData.suppliers" :key="item.value" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </span>
-        <span v-else>
-          <el-button type="primary" @click="handleQuery">筛选</el-button>
-          <el-button @click="resets" style="margin-right: 5px">重置</el-button>
-          <span @click="toggleShow">
-            <el-button type="text">展开</el-button>
-            <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-          </span>
-        </span>
       </div>
-      <div class="searchBox" v-show="filterBox">
+      <div class="searchBox">
         <span>
           <label>创建时间</label>
           <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
@@ -43,12 +35,12 @@
           <label>承诺时间</label>
           <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
-      </div>
-      <div class="searchBox" v-show="filterBox">
         <span>
           <label>到货时间</label>
           <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
+      </div>
+      <div class="searchBox">
         <span>
           <label>色号</label>
           <el-input v-model="searchBox.order_mark" clearable></el-input>
@@ -61,15 +53,12 @@
           <label>买家昵称</label>
           <el-input v-model="searchBox.order_mark" clearable></el-input>
         </span>
-      </div>
-      <div class="opt" v-if="filterBox" style="text-align: right">
-        <el-button type="primary" @click="checks">筛选</el-button>
-        <el-button @click="resets">重置</el-button>
-        <span @click="toggleShow" style="display: inline">
-          <el-button type="text">收起</el-button>
-          <i class="el-icon-arrow-up" style="color:#409EFF"></i>
+        <span style="text-align: right">
+          <el-button type="primary" @click="checks">筛选</el-button>
+          <el-button @click="resets">重置</el-button>
         </span>
       </div>
+
     </div>
 
     <!--采购数据-->
