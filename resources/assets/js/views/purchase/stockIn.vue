@@ -34,7 +34,7 @@
 
       </span>
       <span>
-        
+
       </span>
     </div>
 
@@ -182,7 +182,7 @@
       </el-table>
       <div slot="footer" class="dialog-footer clearfix">
         <div style="float: left">
-          <el-button type="primary" @click="addProDtl">增加明细</el-button>
+          <el-button type="primary" @click="addProDtl">选择入库商品</el-button>
         </div>
         <div style="float: right">
           <el-button type="primary" @click="addStockConfirm">确定</el-button>

@@ -1,32 +1,10 @@
 webpackJsonp([66],{
 
-/***/ 1172:
+/***/ 1170:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -68,9 +46,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       disHead: [{
-        label: "售后类型",
+        label: "售后状态",
         prop: "name",
-        holder: "售后类型",
+        holder: "售后状态",
         type: "text"
       }, {
         label: "状态",
@@ -81,18 +59,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         chgAble: true,
         editChgAble: false
       }],
-      url: "/aftersaletype",
+      url: "/aftersalestate",
       ruleForm: {
         name: "",
         status: true
       },
       rules: {
-        name: [{ required: true, message: "请输入售后类型", trigger: "blur" }]
+        name: [{ required: true, message: "请输入售后状态", trigger: "blur" }]
       },
       addArr: [{
-        label: "售后类型",
+        label: "售后状态",
         prop: "name",
-        holder: "请输入售后类型",
+        holder: "请输入售后状态",
         type: "text"
       }, {
         label: "状态",
@@ -111,7 +89,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       inputChange: false,
       delArr: [],
       multipleSelection: [],
-      refArr: "type"
+      refArr: "state"
     };
   },
 
@@ -333,7 +311,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1173:
+/***/ 1171:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -358,7 +336,7 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "售后类型", name: "0" } },
+            { attrs: { label: "售后状态", name: "0" } },
             [
               _c("light-table", {
                 attrs: {
@@ -455,21 +433,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7e583baa", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-97f30a5e", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 996:
+/***/ 995:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1172)
+var __vue_script__ = __webpack_require__(1170)
 /* template */
-var __vue_template__ = __webpack_require__(1173)
+var __vue_template__ = __webpack_require__(1171)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -486,7 +464,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/basicInf/afterSType.vue"
+Component.options.__file = "resources/assets/js/views/basicInf/afterSState.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -495,9 +473,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7e583baa", Component.options)
+    hotAPI.createRecord("data-v-97f30a5e", Component.options)
   } else {
-    hotAPI.reload("data-v-7e583baa", Component.options)
+    hotAPI.reload("data-v-97f30a5e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

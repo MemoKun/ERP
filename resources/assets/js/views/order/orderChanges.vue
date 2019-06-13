@@ -3598,7 +3598,6 @@ export default {
       }
     },
     orderListRClick(row) {
-      console.log("orderListRClick");
       if (row["change_status"] == 10) {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;

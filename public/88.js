@@ -1,58 +1,88 @@
 webpackJsonp([88],{
 
-/***/ 1000:
+/***/ 1178:
 /***/ (function(module, exports, __webpack_require__) {
 
-var disposed = false
-var normalizeComponent = __webpack_require__(12)
-/* script */
-var __vue_script__ = __webpack_require__(1159)
-/* template */
-var __vue_template__ = __webpack_require__(1160)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/views/system/userMag.vue"
+// style-loader: Adds some css to the DOM by adding a <style> tag
 
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-bdb8fbca", Component.options)
-  } else {
-    hotAPI.reload("data-v-bdb8fbca", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
+// load the styles
+var content = __webpack_require__(1179);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(21)("24c76404", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4e8131e0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./roleMag.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4e8131e0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./roleMag.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
-module.exports = Component.exports
+/***/ }),
+
+/***/ 1179:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(16)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.newInput[data-v-4e8131e0] {\n  width: 500px;\n}\n", ""]);
+
+// exports
 
 
 /***/ }),
 
-/***/ 1159:
+/***/ 1180:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -120,113 +150,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       newOpt: [{
         cnt: "新增",
         icon: "bf-add",
-        ent: this.addNew
+        ent: this.addRole
       }, {
         cnt: "修改",
         icon: "bf-change",
-        ent: this.test
+        ent: this.updateRole
       }, {
         cnt: "删除",
         icon: "bf-del",
-        ent: this.test
+        ent: this.deleteRole
       }, {
         cnt: "刷新",
         icon: "bf-refresh",
         ent: this.refresh
       }],
-      loading: false,
+      /*获取数据*/
+      rolesList: [],
+      seriesVal: [],
       checkboxInit: false,
-      userListData: {},
-
-      tableHead: [[
-      /*{
-        label: "用户图片",
-        prop: "user_img",
-        type: "img"
-      },*/
-      {
-        label: "账号",
-        prop: "username",
+      tableHead: [[{
+        label: "角色名称",
+        width: "120",
+        prop: "name",
+        holder: "请输入名称",
         type: "text"
       }, {
-        label: "员工工号",
-        prop: "work_id",
+        label: "描述",
+        width: "250",
+        prop: "description",
+        holder: "请输入角色描述",
         type: "text"
       }, {
-        label: "员工姓名",
-        prop: "real_name",
-        type: "text"
-      }, {
-        label: "员工手机",
-        prop: "phone",
-        type: "text"
-      }, {
-        label: "身份证号",
-        prop: "id_no",
-        type: "text"
-      },
-      /*{
-        label: "入职时间",
-        prop: "hiredate",
-        type: "text"
-      },
-      {
-        label: "离职时间",
-        prop: "departure_time",
-        type: "text"
-      },*/
-      {
-        label: "家庭地址",
-        prop: "home_address",
-        type: "text"
-      }, {
-        label: "备注信息",
+        label: "备注",
+        width: "250",
         prop: "remark",
-        type: "text"
+        holder: "请输入备注"
       }, {
-        label: "创建日期",
-        prop: "created_at",
-        type: "text"
+        label: "状态",
+        width: "150",
+        prop: "status",
+        holder: "请选择状态",
+        type: "checkbox"
       }], [{
-        label: "账号",
-        prop: "username",
+        label: "角色名称",
+        prop: "name",
         type: "text"
       }, {
-        label: "密码",
-        prop: "password",
+        label: "描述",
+        prop: "description",
         type: "text"
       }, {
-        label: "邮箱",
-        prop: "email",
-        type: "text"
-      }, {
-        label: "员工工号",
-        prop: "work_id",
-        type: "text"
-      }, {
-        label: "员工姓名",
-        prop: "real_name",
-        type: "text"
-      }, {
-        label: "员工手机",
-        prop: "phone",
-        type: "text"
-      }, {
-        label: "身份证号",
-        prop: "id_no",
-        type: "text"
-      }, {
-        label: "家庭地址",
-        prop: "home_address",
-        type: "text"
-      }, {
-        label: "备注信息",
+        label: "备注",
         prop: "remark",
         type: "text"
+      }, {
+        label: "状态",
+        prop: "status",
+        type: "checkbox"
       }]],
-      /**新增 */
-      addUserMask: false,
-      addUserFormVal: {}
+      supplierRow: {},
+      seriesRow: {},
+      loading: true,
+      //添加
+      addRoleMask: false,
+      updateRoleMask: false,
+      addData: {
+        name: "",
+        role_group_id: "",
+        description: "",
+        remark: "",
+        permission: []
+      },
+      updateData: {},
+      groupOptions: [],
+      permissionList: [],
+      curRowId: "",
+      curRowData: {}
     };
   },
 
@@ -245,44 +244,135 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   methods: {
-    test: function test() {
-      console.log(1);
-    },
+    //获取数据
     fetchData: function fetchData() {
       var _this = this;
 
-      this.loading = true;
-      this.$fetch(this.urls.users).then(function (res) {
-        _this.userListData = res.data;
+      this.$fetch(this.urls.roles).then(function (res) {
         _this.loading = false;
+        _this.rolesList = res.data;
+        var pg = res.meta.pagination;
+        _this.$store.dispatch("currentPage", pg.current_page);
+        _this.$store.commit("PER_PAGE", pg.per_page);
+        _this.$store.commit("PAGE_TOTAL", pg.total);
+        _this.delBatchUrl = _this.urls.roledetails;
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this.$message.error({
+            message: str
+          });
+        }
       });
+      //    获取权限列表
+      this.$fetch(this.urls.permissions).then(function (res) {
+        console.log(res.data);
+        _this.permissionList = res.data;
+      }, function (err) {});
     },
 
-
-    /**新增 */
-    addNew: function addNew() {
-      this.addUserMask = true;
+    /**
+     * ********************************************  新  增  角  色  ***************************************************
+     * 
+     **/
+    addRole: function addRole() {
+      console.log("addRole");
+      this.addRoleMask = true;
     },
-    addUserConfirm: function addUserConfirm() {
+    addRoleConfirm: function addRoleConfirm() {
       var _this2 = this;
 
-      this.$post(this.urls.users + "/create", this.addUserFormVal).then(function () {
-        _this2.addUserMask = false;
-        _this2.refresh();
+      this.$post(this.urls.roles, this.addData).then(function (res) {
         _this2.$message({
-          message: "添加成功",
+          message: "添加角色成功",
           type: "success"
         });
+        _this2.addRoleMask = false;
+        _this2.refresh();
       });
     },
-    resetAddUser: function resetAddUser() {
-      this.addUserFormVal = {};
+
+    /**
+     * ********************************************  修  改  角  色  ***************************************************
+     * 
+     **/
+    updateRole: function updateRole() {
+      var _this3 = this;
+
+      if (this.ids.length == 0) {
+        this.$message({
+          message: "请至少选择一条",
+          type: "warning"
+        });
+      } else {
+        this.updateRoleMask = true;
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$fetch(this.urls.roles + "/" + id).then(function (res) {
+          _this3.updateData = res.data[0];
+        }, function (err) {});
+      }
+    },
+    updateRoleConfirm: function updateRoleConfirm() {
+      var _this4 = this;
+
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      var forData = this.updateData;
+      var submitData = {
+        id: forData.id,
+        name: forData.name,
+        description: forData.description,
+        remark: forData.remark,
+        created_at: forData.created_at,
+        updated_at: forData.updated_at
+      };
+      this.$patch(this.urls.roles + "/" + id, submitData).then(function (res) {
+        _this4.$message({
+          message: "修改角色成功",
+          type: "success"
+        });
+        _this4.refresh();
+        _this4.updateRoleMask = false;
+      }, function (err) {});
+    },
+    handleSelectionChange: function handleSelectionChange(val) {
+      console.log(val);
+      /*拿到id集合*/
+      var delArr = [];
+      val.forEach(function (selectedItem) {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.additionOrderIds = val;
+    },
+    deleteRole: function deleteRole() {
+      console.log("delete");
     },
 
-    /**修改 */
+
+    /**
+     * ********************************************  刷  新  ***************************************************
+     * 
+     **/
     refresh: function refresh() {
       this.loading = true;
       this.fetchData();
+    },
+
+    /*分页*/
+    handlePagChg: function handlePagChg(page) {
+      var _this5 = this;
+
+      this.$fetch(this.urls.roledetails + "?page=" + page, {}).then(function (res) {
+        _this5.supplierVal = res.data;
+      });
     }
   },
   mounted: function mounted() {
@@ -301,7 +391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1160:
+/***/ 1181:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -322,12 +412,8 @@ var render = function() {
               expression: "loading"
             }
           ],
-          attrs: {
-            data: _vm.userListData,
-            fit: "",
-            width: "1000",
-            height: "400"
-          }
+          attrs: { data: _vm.rolesList, fit: "", width: "1000", height: "400" },
+          on: { "selection-change": _vm.handleSelectionChange }
         },
         [
           _c("el-table-column", {
@@ -366,37 +452,6 @@ var render = function() {
                               ],
                               1
                             )
-                          : item.type == "img"
-                          ? _c(
-                              "span",
-                              [
-                                _c(
-                                  "el-popover",
-                                  {
-                                    attrs: {
-                                      placement: "right",
-                                      trigger: "hover",
-                                      "popper-class": "picture_detail"
-                                    }
-                                  },
-                                  [
-                                    _c("img", {
-                                      attrs: { src: scope.row[item.prop] }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("img", {
-                                      attrs: {
-                                        slot: "reference",
-                                        src: scope.row[item.prop],
-                                        alt: scope.row[item.alt]
-                                      },
-                                      slot: "reference"
-                                    })
-                                  ]
-                                )
-                              ],
-                              1
-                            )
                           : _c("span", [
                               _vm._v(
                                 "\n          " +
@@ -424,159 +479,178 @@ var render = function() {
       _c(
         "el-dialog",
         {
-          attrs: { title: "新增用户", visible: _vm.addUserMask },
+          attrs: { title: "新增角色", visible: _vm.addRoleMask },
           on: {
             "update:visible": function($event) {
-              _vm.addUserMask = $event
+              _vm.addRoleMask = $event
             }
           }
         },
         [
           _c(
-            "div",
-            [
-              _c(
-                "el-form",
-                {
-                  staticClass: "addChangeOrderForm",
-                  attrs: { model: _vm.addUserFormVal, id: "form" }
-                },
-                _vm._l(_vm.tableHead[1], function(item, index) {
-                  return _c(
-                    "el-form-item",
-                    {
-                      key: index,
-                      attrs: { label: item.label, prop: item.prop }
-                    },
-                    [
-                      item.type == "text"
-                        ? _c("span", [
-                            item.inProp
-                              ? _c(
-                                  "span",
-                                  [
-                                    _c("el-input", {
-                                      attrs: {
-                                        placeholder: item.holder,
-                                        disabled: item.addChgAble
-                                      },
-                                      model: {
-                                        value:
-                                          _vm.addUserFormVal[item.prop][
-                                            item.inProp
-                                          ],
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.addUserFormVal[item.prop],
-                                            item.inProp,
-                                            typeof $$v === "string"
-                                              ? $$v.trim()
-                                              : $$v
-                                          )
-                                        },
-                                        expression:
-                                          "addUserFormVal[item.prop][item.inProp]"
-                                      }
-                                    })
-                                  ],
-                                  1
+            "el-form",
+            {
+              staticClass: "addRoleForm",
+              attrs: { model: _vm.addData, id: "addRoleForm" }
+            },
+            _vm._l(_vm.tableHead[1], function(item, index) {
+              return _c(
+                "el-form-item",
+                { key: index, attrs: { label: item.label, prop: item.prop } },
+                [
+                  item.type == "text"
+                    ? _c("span", [
+                        item.inProp
+                          ? _c(
+                              "span",
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: item.addChgAble
+                                  },
+                                  model: {
+                                    value: _vm.addData[item.prop][item.inProp],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.addData[item.prop],
+                                        item.inProp,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression:
+                                      "addData[item.prop][item.inProp]"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _c(
+                              "span",
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: item.addChgAble
+                                  },
+                                  model: {
+                                    value: _vm.addData[item.prop],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.addData,
+                                        item.prop,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression: "addData[item.prop]"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                      ])
+                    : item.type == "textarea"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-input", {
+                            attrs: { type: "textarea", placehode: item.holder },
+                            model: {
+                              value: _vm.addData[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.addData,
+                                  item.prop,
+                                  typeof $$v === "string" ? $$v.trim() : $$v
                                 )
-                              : _c(
-                                  "span",
-                                  [
-                                    _c("el-input", {
-                                      attrs: {
-                                        placeholder: item.holder,
-                                        disabled: item.addChgAble
-                                      },
-                                      model: {
-                                        value: _vm.addUserFormVal[item.prop],
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.addUserFormVal,
-                                            item.prop,
-                                            typeof $$v === "string"
-                                              ? $$v.trim()
-                                              : $$v
-                                          )
-                                        },
-                                        expression: "addUserFormVal[item.prop]"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                          ])
-                        : item.type == "textarea"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-input", {
-                                attrs: {
-                                  type: "textarea",
-                                  placehode: item.holder
+                              },
+                              expression: "addData[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "select"
+                    ? _c(
+                        "span",
+                        [
+                          _c(
+                            "el-select",
+                            {
+                              attrs: { placeholder: item.holder },
+                              model: {
+                                value: _vm.addData[item.prop],
+                                callback: function($$v) {
+                                  _vm.$set(_vm.addData, item.prop, $$v)
                                 },
-                                model: {
-                                  value: _vm.addUserFormVal[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.addUserFormVal,
-                                      item.prop,
-                                      typeof $$v === "string" ? $$v.trim() : $$v
-                                    )
-                                  },
-                                  expression: "addUserFormVal[item.prop]"
-                                }
-                              })
-                            ],
-                            1
+                                expression: "addData[item.prop]"
+                              }
+                            },
+                            _vm._l(_vm.groupOptions, function(list) {
+                              return _c(
+                                "span",
+                                { key: list.id },
+                                [
+                                  _c("el-option", {
+                                    attrs: {
+                                      label: list.name ? list.name : list.nick,
+                                      value: list.id
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            }),
+                            0
                           )
-                        : item.type == "checkbox"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-checkbox", {
-                                attrs: { disabled: item.chgAble },
-                                model: {
-                                  value: _vm.addUserFormVal[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.addUserFormVal, item.prop, $$v)
-                                  },
-                                  expression: "addUserFormVal[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : item.type == "DatePicker"
-                        ? _c(
-                            "span",
-                            [
-                              _c("el-date-picker", {
-                                attrs: {
-                                  type: "date",
-                                  format: "yyyy-MM-dd",
-                                  "value-format": "yyyy-MM-dd",
-                                  placeholder: "选择日期"
-                                },
-                                model: {
-                                  value: _vm.addUserFormVal[item.prop],
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.addUserFormVal, item.prop, $$v)
-                                  },
-                                  expression: "addUserFormVal[item.prop]"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e()
-                    ]
-                  )
-                }),
-                1
+                        ],
+                        1
+                      )
+                    : item.type == "checkbox"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-checkbox", {
+                            attrs: { disabled: item.chgAble },
+                            model: {
+                              value: _vm.addData[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(_vm.addData, item.prop, $$v)
+                              },
+                              expression: "addData[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "transfer"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-transfer", {
+                            attrs: {
+                              data: _vm.permissionList,
+                              titles: ["未选", "已选"]
+                            },
+                            model: {
+                              value: _vm.addData.permission,
+                              callback: function($$v) {
+                                _vm.$set(_vm.addData, "permission", $$v)
+                              },
+                              expression: "addData.permission"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ]
               )
-            ],
+            }),
             1
           ),
           _vm._v(" "),
@@ -596,20 +670,227 @@ var render = function() {
                     "el-button",
                     {
                       attrs: { type: "primary" },
-                      on: { click: _vm.addUserConfirm }
+                      on: { click: _vm.addRoleConfirm }
                     },
-                    [_vm._v("确定")]
-                  ),
-                  _vm._v(" "),
-                  _c("el-button", { on: { click: _vm.resetAddUser } }, [
-                    _vm._v("重置")
-                  ])
+                    [_vm._v("提交")]
+                  )
                 ],
                 1
               )
             ]
           )
-        ]
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "修改信息", visible: _vm.updateRoleMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.updateRoleMask = $event
+            }
+          }
+        },
+        [
+          _c("label", [_vm._v(_vm._s(this.updateData))]),
+          _vm._v(" "),
+          _c(
+            "el-form",
+            {
+              staticClass: "updateRoleForm",
+              attrs: { model: _vm.updateData, id: "updateRoleForm" }
+            },
+            _vm._l(_vm.tableHead[1], function(item, index) {
+              return _c(
+                "el-form-item",
+                { key: index, attrs: { label: item.label, prop: item.prop } },
+                [
+                  item.type == "text"
+                    ? _c("span", [
+                        item.inProp
+                          ? _c(
+                              "span",
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: item.addChgAble
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.updateData[item.prop][item.inProp],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.updateData[item.prop],
+                                        item.inProp,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression:
+                                      "updateData[item.prop][item.inProp]"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _c(
+                              "span",
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: item.addChgAble
+                                  },
+                                  model: {
+                                    value: _vm.updateData[item.prop],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.updateData,
+                                        item.prop,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression: "updateData[item.prop]"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                      ])
+                    : item.type == "textarea"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-input", {
+                            attrs: { type: "textarea", placehode: item.holder },
+                            model: {
+                              value: _vm.updateData[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.updateData,
+                                  item.prop,
+                                  typeof $$v === "string" ? $$v.trim() : $$v
+                                )
+                              },
+                              expression: "updateData[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "select"
+                    ? _c(
+                        "span",
+                        [
+                          _c(
+                            "el-select",
+                            {
+                              attrs: { placeholder: item.holder },
+                              model: {
+                                value: _vm.updateData[item.prop],
+                                callback: function($$v) {
+                                  _vm.$set(_vm.updateData, item.prop, $$v)
+                                },
+                                expression: "updateData[item.prop]"
+                              }
+                            },
+                            _vm._l(_vm.groupOptions, function(list) {
+                              return _c(
+                                "span",
+                                { key: list.id },
+                                [
+                                  _c("el-option", {
+                                    attrs: {
+                                      label: list.name ? list.name : list.nick,
+                                      value: list.id
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            }),
+                            0
+                          )
+                        ],
+                        1
+                      )
+                    : item.type == "checkbox"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-checkbox", {
+                            attrs: { disabled: item.chgAble },
+                            model: {
+                              value: _vm.updateData[item.prop],
+                              callback: function($$v) {
+                                _vm.$set(_vm.updateData, item.prop, $$v)
+                              },
+                              expression: "updateData[item.prop]"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : item.type == "transfer"
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-transfer", {
+                            attrs: {
+                              data: _vm.permissionList,
+                              titles: ["未选", "已选"]
+                            },
+                            model: {
+                              value: _vm.updateData.permission,
+                              callback: function($$v) {
+                                _vm.$set(_vm.updateData, "permission", $$v)
+                              },
+                              expression: "updateData.permission"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ]
+              )
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer clearfix",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "div",
+                { staticStyle: { float: "right" } },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: { click: _vm.updateRoleConfirm }
+                    },
+                    [_vm._v("提交")]
+                  )
+                ],
+                1
+              )
+            ]
+          )
+        ],
+        1
       )
     ],
     1
@@ -621,9 +902,61 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-bdb8fbca", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-4e8131e0", module.exports)
   }
 }
+
+/***/ }),
+
+/***/ 999:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(1178)
+}
+var normalizeComponent = __webpack_require__(12)
+/* script */
+var __vue_script__ = __webpack_require__(1180)
+/* template */
+var __vue_template__ = __webpack_require__(1181)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-4e8131e0"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/views/system/roleMag.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4e8131e0", Component.options)
+  } else {
+    hotAPI.reload("data-v-4e8131e0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ })
 

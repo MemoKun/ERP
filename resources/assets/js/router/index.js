@@ -971,7 +971,7 @@ const constantRouterMap = [{
     name: 'ReportStatistics',
     path: '/reportStatistics',
     component: Layout,
-    redirect: '/reportStatistics/saleStat1',
+    redirect: '/reportStatistics/saleStat3',
     meta: {
       title: '报表统计',
       icon: 'report',
@@ -1017,7 +1017,7 @@ const constantRouterMap = [{
           icon: 'shS',
           requireAuth: true
         }
-      },
+      },*/
       {
         path: 'purchaseStat',
         name: 'PurchaseStatistics',
@@ -1028,7 +1028,7 @@ const constantRouterMap = [{
           requireAuth: true
         }
       },
-      {
+      /*{
         path: 'financeStat',
         name: 'FinanceStatistics',
         component: resolve => void(require(['../views/reportStatistics/financeStat.vue'], resolve)),

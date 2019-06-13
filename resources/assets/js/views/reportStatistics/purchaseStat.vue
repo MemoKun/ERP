@@ -1,6 +1,7 @@
 <template>
     <div>
         <h2>采购统计报表</h2>
+        <h2>此模块不在计划任务之内-仅为显示父级菜单而添加</h2>
     </div>
 </template>
 <script>
