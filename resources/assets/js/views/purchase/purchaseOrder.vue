@@ -816,6 +816,7 @@ export default {
           inProp: "",
           type: "number"
         },
+        /*
         {
           label: "在途数",
           width: "120",
@@ -829,7 +830,7 @@ export default {
           prop: "",
           inProp: "",
           type: "number"
-        },
+        },*/
         {
           label: "可用数",
           width: "120",
@@ -1139,6 +1140,7 @@ export default {
           inProp: "",
           type: "number"
         },
+        /*
         {
           label: "在途数",
           width: "120",
@@ -1152,7 +1154,7 @@ export default {
           prop: "",
           inProp: "",
           type: "number"
-        },
+        },*/
         {
           label: "可用数",
           width: "120",
@@ -1274,13 +1276,14 @@ export default {
           inProp: "",
           type: "number"
         },
+        /*
         {
           label: "在途数(提交)",
           width: "120",
           prop: "",
           inProp: "",
           type: "number"
-        },
+        },*/
         {
           label: "可用数",
           width: "120",
@@ -1497,6 +1500,7 @@ export default {
           prop: "",
           type: "number"
         },
+        /*
         {
           label: "在途数",
           width: "120",
@@ -1508,7 +1512,7 @@ export default {
           width: "130",
           prop: "",
           type: "number"
-        },
+        },*/
         {
           label: "可用数",
           width: "120",

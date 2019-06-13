@@ -787,19 +787,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },
+      /*
+      {
         label: "在途数",
         width: "120",
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },
+      {
         label: "在途数(提交)",
         width: "120",
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },*/
+      {
         label: "可用数",
         width: "120",
         prop: "",
@@ -1065,19 +1069,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },
+      /*
+      {
         label: "在途数",
         width: "120",
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },
+      {
         label: "在途数(提交)",
         width: "120",
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },*/
+      {
         label: "可用数",
         width: "120",
         prop: "",
@@ -1181,13 +1189,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },
+      /*
+      {
         label: "在途数(提交)",
         width: "120",
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },*/
+      {
         label: "可用数",
         width: "120",
         prop: "",
@@ -1384,17 +1395,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         width: "120",
         prop: "",
         type: "number"
-      }, {
+      },
+      /*
+      {
         label: "在途数",
         width: "120",
         prop: "",
         type: "number"
-      }, {
+      },
+      {
         label: "在途数(提交)",
         width: "130",
         prop: "",
         type: "number"
-      }, {
+      },*/
+      {
         label: "可用数",
         width: "120",
         prop: "",
