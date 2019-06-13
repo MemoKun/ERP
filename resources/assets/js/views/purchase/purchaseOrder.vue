@@ -330,6 +330,7 @@
           </el-select>
         </span>
         <el-button type="primary" @click="proQueryClick">查询</el-button>
+        <span></span>
       </div>
       <el-table :data="proDtlVal" highlight-current-row height="160" :row-class-name="proRowCName" @row-click="proRowClick">
         <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -1255,6 +1256,7 @@ export default {
           prop: "name",
           type: "text"
         },
+        /*
         {
           label: "组合件数",
           width: "120",
@@ -1275,7 +1277,7 @@ export default {
           prop: "",
           inProp: "",
           type: "number"
-        },
+        },*/
         /*
         {
           label: "在途数(提交)",

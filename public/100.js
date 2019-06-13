@@ -544,6 +544,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1171,25 +1172,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         width: "120",
         prop: "name",
         type: "text"
-      }, {
+      },
+      /*
+      {
         label: "组合件数",
         width: "120",
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },
+      {
         label: "库存数",
         width: "120",
         prop: "",
         inProp: "",
         type: "number"
-      }, {
+      },
+      {
         label: "订单数",
         width: "120",
         prop: "",
         inProp: "",
         type: "number"
-      },
+      },*/
       /*
       {
         label: "在途数(提交)",
@@ -4795,7 +4800,9 @@ var render = function() {
                   on: { click: _vm.proQueryClick }
                 },
                 [_vm._v("查询")]
-              )
+              ),
+              _vm._v(" "),
+              _c("span")
             ],
             1
           ),
