@@ -1286,7 +1286,7 @@ export default {
           type: "text"
         },
         {
-          label: "单号失联",
+          label: "单号关联",
           prop: "association_taobao_oid",
           type: "text"
         },
