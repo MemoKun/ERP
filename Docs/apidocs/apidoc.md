@@ -9258,7 +9258,7 @@ FORMAT: 1A
 
             []
 
-## 审核 [PUT /api/purchases/:id/audit]
+## 入库 [PUT /api/purchases/:id/audit]
 
 
 + Response 422 (application/json)
@@ -9266,22 +9266,6 @@ FORMAT: 1A
 
             {
                 "message": "审核出错，是否未提交或重复审核",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 入库 [PUT /api/purchases/:id/stockin]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "入库出错",
                 "status_code": 422
             }
 
@@ -9433,461 +9417,6 @@ FORMAT: 1A
 
 + Parameters
     + ids: (string, required) - 入库单详情id组 格式: 1,2,3,4 
-
-+ Response 500 (application/json)
-    + Body
-
-            {
-                "message": "删除错误",
-                "code": 500,
-                "status_code": 500
-            }
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "422 Unprocessable Entity",
-                "errors": {
-                    "ids": [
-                        "id组必填"
-                    ]
-                },
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-# otherotherstockins [/api]
-其他入库单资源
-
-## 获取所有其他入库单 [GET /api/otherstockins[?status=true&include=warehouse,stockInType,stockInDetails,supplier,submitter,auditor,warehouer]]
-
-
-+ Parameters
-    + status: (boolean, optional) - 获取的状态
-        + Default: all
-    + is_submit: (boolean, optional) - 是否提交
-    + is_stock_in: (boolean, optional) - 是否入库
-    + include: (string, optional) - 加载关联的数据
-
-+ Response 200 (application/json)
-    + Body
-
-            {
-                "data": [
-                    {
-                        "id": 1,
-                        "stock_in_no": "IS2018091417222582919",
-                        "external_sn": "外部单号",
-                        "warehouse_id": 1,
-                        "stock_in_types_id": 1,
-                        "suppliers_id": 0,
-                        "creator": 1,
-                        "is_submit": false,
-                        "submitter": 0,
-                        "submit_at": null,
-                        "is_print": false,
-                        "print_at": null,
-                        "is_audit": false,
-                        "auditor": 0,
-                        "audit_at": null,
-                        "is_stock_in": false,
-                        "warehouer": 0,
-                        "stock_in_at": null,
-                        "status": true,
-                        "created_at": "2018-09-14 17:22:25",
-                        "updated_at": "2018-09-14 17:22:25"
-                    }
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 10,
-                        "current_page": 1,
-                        "total_pages": 1,
-                        "links": {
-                            "previous": null,
-                            "next": "{{host}}/api/otherstockins?page=1"
-                        }
-                    }
-                }
-            }
-
-## 新增其他入库单 [POST /api/otherstockins]
-
-
-+ Parameters
-    + external_sn: (string, optional) - 外部单号
-    + warehouse_id: (integer, required) - 仓库id
-    + suppliers_id: (integer, required) - 供应商id
-    + stock_in_types_id: (integer, required) - 入库类型id
-    + status: (boolean, optional) - 状态(0:停用，1:启用)
-        + Default: 1
-    + other_stock_in_details[0][product_components_id]: (integer, required) - 子件id
-    + other_stock_in_details[0][stock_in_quantity]: (integer, required) - 入库数量
-    + other_stock_in_details[0][total_fee]: (number, required) - 总额
-    + other_stock_in_details[0][remark]: (string, optional) - 备注
-
-+ Request (application/json)
-    + Body
-
-            [
-                {
-                    "external_sn": "RT2121212121212",
-                    "warehouse_id": 1,
-                    "stock_in_types_id": 1,
-                    "suppliers_id": 1,
-                    "status": true,
-                    "stock_in_details[0][product_components_id]": 1,
-                    "stock_in_details[0][stock_in_quantity]": 1,
-                    "stock_in_details[0][total_fee]": 1,
-                    "stock_in_details[0][remark]": "备注"
-                }
-            ]
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "422 Unprocessable Entity",
-                "errors": {
-                    "warehouse_id": [
-                        "仓库id必填"
-                    ],
-                    "stock_in_types_id": [
-                        "需要添加的id在数据库中未找到或未启用"
-                    ]
-                },
-                "status_code": 422
-            }
-
-+ Response 201 (application/json)
-    + Body
-
-            {
-                "id": 1,
-                "stock_in_no": "IS2018091417222582919",
-                "external_sn": "外部单号",
-                "warehouse_id": 1,
-                "stock_in_types_id": 1,
-                "creator": 1,
-                "is_submit": false,
-                "submitter": 0,
-                "submit_at": null,
-                "is_print": false,
-                "print_at": null,
-                "is_audit": false,
-                "auditor": 0,
-                "audit_at": null,
-                "is_stock_in": false,
-                "warehouer": 0,
-                "stock_in_at": null,
-                "status": true,
-                "created_at": "2018-09-14 17:22:25",
-                "updated_at": "2018-09-14 17:22:25",
-                "meta": {
-                    "status_code": "201"
-                }
-            }
-
-## 显示单条其他入库单 [GET /api/otherstockins/:id]
-
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 200 (application/json)
-    + Body
-
-            {
-                "id": 1,
-                "stock_in_no": "IS2018091417222582919",
-                "external_sn": "外部单号",
-                "warehouse_id": 1,
-                "stock_in_types_id": 1,
-                "creator": 1,
-                "is_submit": false,
-                "submitter": 0,
-                "submit_at": null,
-                "is_print": false,
-                "print_at": null,
-                "is_audit": false,
-                "auditor": 0,
-                "audit_at": null,
-                "is_stock_in": false,
-                "warehouer": 0,
-                "stock_in_at": null,
-                "status": true,
-                "created_at": "2018-09-14 17:22:25",
-                "updated_at": "2018-09-14 17:22:25"
-            }
-
-## 修改其他入库单 [PATCH /api/otherstockins/:id]
-
-
-+ Parameters
-    + external_sn: (string, optional) - 外部单号
-    + warehouse_id: (integer, optional) - 仓库id
-    + suppliers_id: (integer, optional) - 供应商id
-    + stock_in_types_id: (integer, optional) - 入库类型id
-    + status: (boolean, optional) - 状态(0:停用，1:启用)
-        + Default: 
-    + other_stock_in_details[0][product_components_id]: (integer, optional) - 子件id
-    + other_stock_in_details[0][stock_in_quantity]: (integer, optional) - 入库数量
-    + other_stock_in_details[0][total_fee]: (number, optional) - 总额
-    + other_stock_in_details[0][remark]: (string, optional) - 备注
-
-+ Request (application/json)
-    + Body
-
-            [
-                {
-                    "external_sn": "RT2121212121212",
-                    "warehouse_id": 1,
-                    "stock_in_types_id": 1,
-                    "suppliers_id": 1,
-                    "status": true,
-                    "stock_in_details[0][product_components_id]": 1,
-                    "stock_in_details[0][stock_in_quantity]": 1,
-                    "stock_in_details[0][total_fee]": 1,
-                    "stock_in_details[0][remark]": "备注"
-                }
-            ]
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "422 Unprocessable Entity",
-                "errors": {
-                    "warehouse_id": [
-                        "仓库id必填"
-                    ],
-                    "stock_in_types_id": [
-                        "需要添加的id在数据库中未找到或未启用"
-                    ]
-                },
-                "status_code": 422
-            }
-
-+ Response 201 (application/json)
-    + Body
-
-            {
-                "id": 1,
-                "stock_in_no": "IS2018091417222582919",
-                "external_sn": "外部单号",
-                "warehouse_id": 1,
-                "stock_in_types_id": 1,
-                "creator": 1,
-                "is_submit": false,
-                "submitter": 0,
-                "submit_at": null,
-                "is_print": false,
-                "print_at": null,
-                "is_audit": false,
-                "auditor": 0,
-                "audit_at": null,
-                "is_stock_in": false,
-                "warehouer": 0,
-                "stock_in_at": null,
-                "status": true,
-                "created_at": "2018-09-14 17:22:25",
-                "updated_at": "2018-09-14 17:22:25"
-            }
-
-## 删除其他入库单 [DELETE /api/otherstockins/:id]
-
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 删除一组其他入库单 [DELETE /api/otherstockins]
-
-
-+ Parameters
-    + ids: (string, required) - 其他入库单id组 格式: 1,2,3,4 
-
-+ Response 500 (application/json)
-    + Body
-
-            {
-                "message": "删除错误",
-                "code": 500,
-                "status_code": 500
-            }
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "422 Unprocessable Entity",
-                "errors": {
-                    "ids": [
-                        "id组必填"
-                    ]
-                },
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 更改一组其他入库单状态 [PUT /api/otherstockins/editstatus]
-
-
-+ Parameters
-    + ids: (string, required) - 其他入库单id组 格式: 1,2,3,4 
-    + status: (boolean, required) - 状态(0:停用，1:启用)
-
-+ Response 500 (application/json)
-    + Body
-
-            {
-                "message": "更改错误",
-                "code": 500,
-                "status_code": 500
-            }
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "422 Unprocessable Entity",
-                "errors": {
-                    "ids": [
-                        "id组必填"
-                    ],
-                    "status": [
-                        "状态必填"
-                    ]
-                },
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 提交 [PUT /api/otherstockins/:id/submit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无需重复提交",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 打印 [PUT /api/otherstockins/:id/print]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "打印出错，是否未提交未审核或重复打印",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 审核 [PUT /api/otherstockins/:id/audit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "审核出错，是否未提交或重复审核",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 入库 [PUT /api/otherstockins/:id/stockin]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "入库出错",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-# otherstockindetails [/api]
-其他入库单详情资源
-
-## 删除其他入库单详情 [DELETE /api/otherstockindetails/:id]
-
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 删除一组其他入库单详情 [DELETE /api/otherstockindetails]
-
-
-+ Parameters
-    + ids: (string, required) - 其他入库单详情id组 格式: 1,2,3,4 
 
 + Response 500 (application/json)
     + Body
@@ -11032,6 +10561,22 @@ FORMAT: 1A
 
             []
 
+## 驳回 [PUT /api/purchasereturns/:id/reject]
+
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "驳回失败，可能未提交或者重复驳回",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
 ## 审核 [PUT /api/purchasereturns/:id/audit]
 
 
@@ -11040,6 +10585,22 @@ FORMAT: 1A
 
             {
                 "message": "审核出错，是否未提交或重复审核",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 退审 [PUT /api/purchasereturns/:id/unaudit]
+
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "退审失败，可能未审核或重复退审",
                 "status_code": 422
             }
 
@@ -12102,115 +11663,12 @@ FORMAT: 1A
             []
 
 # customerservicedepts [/api]
-客服部资源
+客服部资源.
 
-## 获取所有未处理的订单 [GET /api/customerservicedepts/searchuntreated[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
-
-
-## 获取所有客服部 [GET /api/customerservicedepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
+## 获取所有未处理的订单. [GET /api/customerservicedepts/searchuntreated[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
-+ Parameters
-    + status: (boolean, optional) - 获取的状态
-        + Default: all
-    + order_status: (boolean, optional) - 获取的状态
-        + Default: all
-
-+ Response 200 (application/json)
-    + Body
-
-            {
-                "data": [
-                    {
-                        "id": 1,
-                        "system_order_no": "DD2018082011365716512",
-                        "order_status": "未处理",
-                        "order_source": "system",
-                        "shops_id": 1,
-                        "logistics_id": 1,
-                        "billing_way": "weight",
-                        "promise_ship_time": "2018-08-20",
-                        "freight_types_id": 1,
-                        "expected_freight": "10.00",
-                        "distributions_id": 1,
-                        "distribution_methods_id": 15,
-                        "deliver_goods_fee": "10.00",
-                        "move_upstairs_fee": "10.00",
-                        "installation_fee": "10.00",
-                        "total_distribution_fee": "30.00",
-                        "distribution_phone": "配送电话",
-                        "distribution_no": "配送单号",
-                        "distribution_types_id": 1,
-                        "service_car_info": "服务车信息（配送信息）",
-                        "take_delivery_goods_fee": "10.00",
-                        "take_delivery_goods_ways_id": 1,
-                        "express_fee": "10.00",
-                        "service_car_fee": "10.00",
-                        "cancel_after_verification_code": "核销码",
-                        "wooden_frame_costs": "10.00",
-                        "preferential_cashback": "2.00",
-                        "favorable_cashback": "2.00",
-                        "customer_types_id": 1,
-                        "is_invoice": false,
-                        "invoice_express_fee": "5.00",
-                        "express_invoice_title": "快递发票抬头",
-                        "contract_no": "合同单号",
-                        "payment_methods_id": 1,
-                        "deposit": "10.00",
-                        "document_title": "单据头",
-                        "warehouses_id": 1,
-                        "payment_date": "2018-08-20",
-                        "interest_concessions": "10.00",
-                        "is_notice": true,
-                        "is_cancel_after_verification": false,
-                        "accept_order_user": "接单用户",
-                        "tax_number": "税号",
-                        "receipt": "收据",
-                        "logistics_remark": "物流备注",
-                        "seller_remark": "卖家备注",
-                        "customer_service_remark": "客服备注",
-                        "taobao_oid": 0,
-                        "taobao_tid": 0,
-                        "member_nick": "会员昵称",
-                        "shop_name": "",
-                        "seller_name": "",
-                        "seller_flag": 0,
-                        "created": null,
-                        "est_con_time": null,
-                        "buyer_message": "买家留言",
-                        "receiver_name": "",
-                        "receiver_phone": "",
-                        "receiver_mobile": "",
-                        "receiver_state": "",
-                        "receiver_city": "",
-                        "receiver_district": "",
-                        "receiver_address": "",
-                        "receiver_zip": "",
-                        "refund_info": "无退款",
-                        "business_personnel_id": 0,
-                        "locker_id": 0,
-                        "audit_at": null,
-                        "association_taobao_oid": "",
-                        "is_merge": false,
-                        "is_split": false,
-                        "is_association": false,
-                        "created_at": "2018-08-20 11:36:57",
-                        "updated_at": "2018-08-20 11:36:57"
-                    }
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 8,
-                        "current_page": 1,
-                        "total_pages": 1,
-                        "links": null
-                    }
-                }
-            }
-
-## 获取创建订单数据 [GET /api/customerservicedepts/create]
+## 获取创建订单数据. [GET /api/customerservicedepts/create]
 
 
 + Response 200 (application/json)
@@ -12519,7 +11977,7 @@ FORMAT: 1A
                 }
             }
 
-## 新增客服部(可选参数：include) [POST /api/customerservicedepts[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
+## 新增客服部(可选参数：include). [POST /api/customerservicedepts[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
 + Parameters
@@ -12770,7 +12228,7 @@ FORMAT: 1A
                 }
             }
 
-## 显示单条客服部 [GET /api/customerservicedepts/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
+## 显示单条客服部. [GET /api/customerservicedepts/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
 + Response 404 (application/json)
@@ -12861,7 +12319,7 @@ FORMAT: 1A
                 "updated_at": "2018-08-20 11:36:57"
             }
 
-## 修改客服部 [PATCH /api/customerservicedepts/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
+## 修改客服部. [PATCH /api/customerservicedepts/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
 + Parameters
@@ -13121,7 +12579,7 @@ FORMAT: 1A
                 "updated_at": "2018-08-20 11:36:57"
             }
 
-## 删除客服部 [DELETE /api/customerservicedepts/:id]
+## 删除客服部. [DELETE /api/customerservicedepts/:id]
 
 
 + Response 404 (application/json)
@@ -13137,7 +12595,7 @@ FORMAT: 1A
 
             []
 
-## 删除一组客服部 [DELETE /api/customerservicedepts]
+## 删除一组客服部. [DELETE /api/customerservicedepts]
 
 
 + Parameters
@@ -13197,6 +12655,116 @@ FORMAT: 1A
     + Body
 
             []
+
+## 锁定或释放. [PUT /api/customerservicedepts/:id/lockorunlock]
+
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "无法锁定",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 客审 [PUT /api/customerservicedepts/:id/audit]
+
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "客审出错",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 退审 [PUT /api/customerservicedepts/:id/unaudit]
+
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "退审出错",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 拆单(要及时修改新订单的价格数据). [PUT /api/customerservicedepts/:id/splitorder]
+
+
++ Parameters
+    + order_items[0][id]: (integer, required) - 子单id
+    + order_items[0][quantity]: (numeric, required) - 拆分数量
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "拆单",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 合并订单. [PUT /api/customerservicedepts/mergerorder?order_id_one=1&order_id_two=2]
+
+
++ Parameters
+    + order_id_one: (integer, required) - 订单一
+    + order_id_two: (integer, required) - 订单二
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "合并订单出错",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+# orderitems [/api]
+子订单资源
+
+## 删除子订单 [DELETE /api/orderitems/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+# customerservicedepts [/api]
+客服部资源
 
 ## 锁定或释放 [PUT /api/customerservicedepts/:id/lockorunlock]
 
@@ -13286,10 +12854,380 @@ FORMAT: 1A
 
             []
 
-# orderitems [/api]
-子订单资源
+# products [/api]
+产品资源
 
-## 删除子订单 [DELETE /api/orderitems/:id]
+## 获取所有产品 [GET /api/products[?status=true&include=productComponents,shop,supplier,goodsCategory,combinations.productComponents]]
+
+
++ Parameters
+    + status: (boolean, optional) - 获取的状态
+        + Default: all
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "data": [
+                    {
+                        "id": 24,
+                        "commodity_code": "产品编码",
+                        "jd_sn": "京东编码",
+                        "vips_sn": "唯品会编码",
+                        "factory_model": "工厂型号",
+                        "short_name": "商品简称",
+                        "shops_id": "1",
+                        "shop_nick": "卖家昵称",
+                        "supplier": {
+                            "id": 1,
+                            "name": "供应商名称",
+                            "company": "供应商公司",
+                            "code": "公司代码",
+                            "province": "省",
+                            "city": "市",
+                            "district": "区",
+                            "address": "地址",
+                            "zipcode": "邮编",
+                            "contacts": "联系人",
+                            "phone": "电话",
+                            "mobile": "手机",
+                            "fax": "传真",
+                            "email": "935661686@qq.com",
+                            "remark": "备注",
+                            "is_scan": true,
+                            "status": true,
+                            "auto_valuation": true,
+                            "created_at": "2018-08-06 16:27:02",
+                            "updated_at": "2018-08-06 16:27:02"
+                        },
+                        "category": {
+                            "id": 1,
+                            "code": "商品类别代码",
+                            "name": "商品类别名",
+                            "description": "详情",
+                            "remark": "备注",
+                            "status": true,
+                            "created_at": "2018-08-06 16:30:02",
+                            "updated_at": "2018-08-06 16:30:02"
+                        },
+                        "remark": "备注",
+                        "title": "商品标题",
+                        "img": "http://bferp.test/#/basicInf/goodsMag",
+                        "url": "http://bferp.test/#/basicInf/goodsMag",
+                        "status": true,
+                        "is_stop_pro": true,
+                        "product_components": {
+                            "data": [
+                                {
+                                    "id": 8,
+                                    "pid": 24,
+                                    "component_code": "子件编码1",
+                                    "jd_component_code": "京东子件编码",
+                                    "vips_component_code": "唯品会子件编码",
+                                    "tb_price": "10.00",
+                                    "cost": "10.00",
+                                    "price": "10.00",
+                                    "highest_price": "10.00",
+                                    "lowest_price": "10.00",
+                                    "warehouse_cost": "10.00",
+                                    "assembly_price": "10.00",
+                                    "discount": "1.00",
+                                    "commission": "1.00",
+                                    "is_common": true,
+                                    "package_quantity": 10,
+                                    "package_costs": "10.00",
+                                    "wooden_frame_costs": "10.00",
+                                    "purchase_freight": "10.00",
+                                    "inventory_warning": 10,
+                                    "purchase_days_warning": 10,
+                                    "available_warning": 10,
+                                    "distribution_method_id": 12,
+                                    "bar_code": "1010",
+                                    "img_url": "http://image.img.com/image",
+                                    "spec": "规格",
+                                    "color": "颜色",
+                                    "materials": "材质",
+                                    "function": "功能",
+                                    "special": "特殊",
+                                    "other": "其他",
+                                    "longness": 10,
+                                    "width": 10,
+                                    "height": 10,
+                                    "volume": 10,
+                                    "weight": 10,
+                                    "remark": "备注",
+                                    "finished_pro": true,
+                                    "is_stop_pro": true,
+                                    "created_at": "2018-08-13 11:55:43",
+                                    "updated_at": "2018-08-13 11:55:43"
+                                }
+                            ]
+                        },
+                        "productComponents": {
+                            "data": []
+                        },
+                        "created_at": "2018-08-13 11:55:43",
+                        "updated_at": "2018-08-13 11:55:43"
+                    }
+                ],
+                "meta": {
+                    "pagination": {
+                        "total": 1,
+                        "count": 1,
+                        "per_page": 10,
+                        "current_page": 1,
+                        "total_pages": 1,
+                        "links": {
+                            "previous": null,
+                            "next": "http://127.0.0.1:8000/api/products?page=1"
+                        }
+                    }
+                }
+            }
+
+## 新增产品 [POST /api/products]
+
+
++ Parameters
+    + commodity_code: (string, required) - 产品编码
+    + jd_sn: (string, optional) - 京东编码
+    + vips_sn: (string, optional) - 唯品会编码
+    + factory_model: (string, optional) - 工厂型号
+    + short_name: (string, required) - 产品简称
+    + shops_id: (integer, required) - 店铺id
+    + shop_nick: (string, required) - 卖家昵称（店铺昵称）
+    + supplier_id: (integer, required) - 供应商id
+    + category_id: (integer, required) - 产品类别id
+    + remark: (string, optional) - 备注
+    + title: (string, required) - 产品标题
+    + img: (string, optional) - 产品图片
+    + url: (url, optional) - 产品网址
+    + is_stop_pro: (boolean, optional) - 是否停产 默认 0 = 不停产  1 = 停产
+        + Default: 
+    + status: (boolean, optional) - 状态(0:停用，1:启用)
+        + Default: 1
+    + product_components[0][component_code]: (string, required) - 子件编码
+    + product_components[0][jd_component_code]: (string, optional) - 京东子件编码
+    + product_components[0][vips_component_code]: (string, optional) - 唯品会子件编码
+    + product_components[0][tb_price]: (numeric, required) - 淘宝价格
+    + product_components[0][cost]: (numeric, required) - 成本价格
+    + product_components[0][price]: (numeric, required) - 售价
+    + product_components[0][highest_price]: (numeric, required) - 最高售价
+    + product_components[0][lowest_price]: (numeric, required) - 最低售价
+    + product_components[0][warehouse_cost]: (numeric, optional) - 仓库成本
+    + product_components[0][assembly_price]: (numeric, optional) - 装配价格
+    + product_components[0][discount]: (numeric, optional) - 折扣
+    + product_components[0][commission]: (numeric, optional) - 佣金点
+    + product_components[0][is_common]: (boolean, required) - 是否通用子件
+    + product_components[0][package_quantity]: (integer, optional) - 包件数量
+    + product_components[0][package_costs]: (numeric, optional) - 打包费用
+    + product_components[0][wooden_frame_costs]: (numeric, optional) - 木架费
+    + product_components[0][purchase_freight]: (numeric, optional) - 采购运费
+    + product_components[0][inventory_warning]: (integer, required) - 库存预警(数量)
+    + product_components[0][purchase_days_warning]: (integer, required) - 采购预警天数
+    + product_components[0][available_warning]: (integer, required) - 可售数预警
+    + product_components[0][distribution_method_id]: (integer, required) - 配送类别
+    + product_components[0][bar_code]: (string, optional) - 条形码
+    + product_components[0][img_url]: (url, optional) - 图片地址
+    + product_components[0][spec]: (string, required) - 规格
+    + product_components[0][color]: (string, optional) - 颜色
+    + product_components[0][materials]: (string, optional) - 材质
+    + product_components[0][function]: (string, optional) - 功能
+    + product_components[0][special]: (string, optional) - 特殊
+    + product_components[0][other]: (string, optional) - 其他
+    + product_components[0][longness]: (numeric, optional) - 长度（mm）
+    + product_components[0][width]: (numeric, optional) - 宽度（mm）
+    + product_components[0][height]: (numeric, optional) - 高度（mm）
+    + product_components[0][volume]: (numeric, optional) - 体积(m²)
+    + product_components[0][weight]: (numeric, optional) - 重量
+    + product_components[0][remark]: (string, optional) - 备注
+    + product_components[0][finished_pro]: (integer, optional) - 是否成品 0 不是 1 是
+    + product_components[0][is_stop_pro]: (boolean, optional) - 是否停产 0 不是 1 是
+
++ Request (application/json)
+    + Body
+
+            {
+                "commodity_code": "产品编码",
+                "jd_sn": "京东编码",
+                "vips_sn": "唯品会编码",
+                "factory_model": "工厂型号",
+                "short_name": "产品简称",
+                "shops_id": 1,
+                "shop_nick": "卖家昵称",
+                "supplier_id": 1,
+                "category_id": 1,
+                "remark": "备注",
+                "title": "产品标题",
+                "img": "产品图片",
+                "url": "https://www.taobao.com/",
+                "status": true,
+                "nis_stop_proick": 1,
+                "product_components[0][component_code]": "子件编码1",
+                "product_components[0][jd_component_code]": "京东子件编码",
+                "product_components[0][vips_component_code]": "唯品会子件编码",
+                "product_components[0][tb_price]": "10",
+                "product_components[0][highest_price]": "10",
+                "product_components[0][price]": "10",
+                "product_components[0][lowest_price]": "10",
+                "product_components[0][warehouse_cost]": "10",
+                "product_components[0][assembly_price]": "10",
+                "product_components[0][discount]": "1",
+                "product_components[0][commission]": "1",
+                "product_components[0][is_common]": true,
+                "product_components[0][package_quantity]": "10",
+                "product_components[0][package_costs]": "10",
+                "product_components[0][wooden_frame_costs]": "10",
+                "product_components[0][purchase_freight]": "10",
+                "product_components[0][inventory_warning]": "10",
+                "product_components[0][purchase_days_warning]": "10",
+                "product_components[0][available_warning]": "10",
+                "product_components[0][distribution_method_id]": "1",
+                "product_components[0][bar_code]": "条形码",
+                "product_components[0][img_url]": "http://image.img.com/image",
+                "product_components[0][spec]": "规格",
+                "product_components[0][color]": "颜色",
+                "product_components[0][materials]": "材质",
+                "product_components[0][function]": "功能",
+                "product_components[0][special]": "特殊",
+                "product_components[0][other]": "其他",
+                "product_components[0][longness]": "10",
+                "product_components[0][width]": "10",
+                "product_components[0][height]": "10",
+                "product_components[0][volume]": "10",
+                "product_components[0][weight]": "10",
+                "product_components[0][remark]": "备注",
+                "product_components[0][finished_pro]": true,
+                "product_components[0][is_stop_pro]": false
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "url": [
+                        "产品网址必须有效的url"
+                    ],
+                    "category_id": [
+                        "需要添加的id在数据库中未找到或未启用"
+                    ],
+                    "supplier_id": [
+                        "供应商id必须int类型"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 24,
+                "commodity_code": "产品编码",
+                "jd_sn": "京东编码",
+                "vips_sn": "唯品会编码",
+                "factory_model": "工厂型号",
+                "short_name": "商品简称",
+                "shops_id": "1",
+                "shop_nick": "卖家昵称",
+                "supplier": {
+                    "id": 1,
+                    "name": "供应商名称",
+                    "company": "供应商公司",
+                    "code": "公司代码",
+                    "province": "省",
+                    "city": "市",
+                    "district": "区",
+                    "address": "地址",
+                    "zipcode": "邮编",
+                    "contacts": "联系人",
+                    "phone": "电话",
+                    "mobile": "手机",
+                    "fax": "传真",
+                    "email": "935661686@qq.com",
+                    "remark": "备注",
+                    "is_scan": true,
+                    "status": true,
+                    "auto_valuation": true,
+                    "created_at": "2018-08-06 16:27:02",
+                    "updated_at": "2018-08-06 16:27:02"
+                },
+                "category": {
+                    "id": 1,
+                    "code": "商品类别代码",
+                    "name": "商品类别名",
+                    "description": "详情",
+                    "remark": "备注",
+                    "status": true,
+                    "created_at": "2018-08-06 16:30:02",
+                    "updated_at": "2018-08-06 16:30:02"
+                },
+                "remark": "备注",
+                "title": "商品标题",
+                "img": "http://bferp.test/#/basicInf/goodsMag",
+                "url": "http://bferp.test/#/basicInf/goodsMag",
+                "status": true,
+                "is_stop_pro": true,
+                "product_components": {
+                    "data": [
+                        {
+                            "id": 8,
+                            "pid": 24,
+                            "component_code": "子件编码1",
+                            "jd_component_code": "京东子件编码",
+                            "vips_component_code": "唯品会子件编码",
+                            "tb_price": "10.00",
+                            "cost": "10.00",
+                            "price": "10.00",
+                            "highest_price": "10.00",
+                            "lowest_price": "10.00",
+                            "warehouse_cost": "10.00",
+                            "assembly_price": "10.00",
+                            "discount": "1.00",
+                            "commission": "1.00",
+                            "is_common": true,
+                            "package_quantity": 10,
+                            "package_costs": "10.00",
+                            "wooden_frame_costs": "10.00",
+                            "purchase_freight": "10.00",
+                            "inventory_warning": 10,
+                            "purchase_days_warning": 10,
+                            "available_warning": 10,
+                            "distribution_method_id": 12,
+                            "bar_code": "1010",
+                            "img_url": "http://image.img.com/image",
+                            "spec": "规格",
+                            "color": "颜色",
+                            "materials": "材质",
+                            "function": "功能",
+                            "special": "特殊",
+                            "other": "其他",
+                            "longness": 10,
+                            "width": 10,
+                            "height": 10,
+                            "volume": 10,
+                            "weight": 10,
+                            "remark": "备注",
+                            "finished_pro": true,
+                            "is_stop_pro": true,
+                            "created_at": "2018-08-13 11:55:43",
+                            "updated_at": "2018-08-13 11:55:43"
+                        }
+                    ]
+                },
+                "productComponents": {
+                    "data": []
+                },
+                "created_at": "2018-08-13 11:55:43",
+                "updated_at": "2018-08-13 11:55:43",
+                "meta": {
+                    "status_code": "201"
+                }
+            }
+
+## 显示单条产品 [GET /api/products/:id]
 
 
 + Response 404 (application/json)
@@ -13298,6 +13236,426 @@ FORMAT: 1A
             {
                 "message": "No query results for model ",
                 "status_code": 404
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "id": 24,
+                "commodity_code": "产品编码",
+                "jd_sn": "京东编码",
+                "vips_sn": "唯品会编码",
+                "factory_model": "工厂型号",
+                "short_name": "商品简称",
+                "shops_id": "1",
+                "shop_nick": "卖家昵称",
+                "supplier": {
+                    "id": 1,
+                    "name": "供应商名称",
+                    "company": "供应商公司",
+                    "code": "公司代码",
+                    "province": "省",
+                    "city": "市",
+                    "district": "区",
+                    "address": "地址",
+                    "zipcode": "邮编",
+                    "contacts": "联系人",
+                    "phone": "电话",
+                    "mobile": "手机",
+                    "fax": "传真",
+                    "email": "935661686@qq.com",
+                    "remark": "备注",
+                    "is_scan": true,
+                    "status": true,
+                    "auto_valuation": true,
+                    "created_at": "2018-08-06 16:27:02",
+                    "updated_at": "2018-08-06 16:27:02"
+                },
+                "category": {
+                    "id": 1,
+                    "code": "商品类别代码",
+                    "name": "商品类别名",
+                    "description": "详情",
+                    "remark": "备注",
+                    "status": true,
+                    "created_at": "2018-08-06 16:30:02",
+                    "updated_at": "2018-08-06 16:30:02"
+                },
+                "remark": "备注",
+                "title": "商品标题",
+                "img": "http://bferp.test/#/basicInf/goodsMag",
+                "url": "http://bferp.test/#/basicInf/goodsMag",
+                "status": true,
+                "is_stop_pro": true,
+                "product_components": {
+                    "data": [
+                        {
+                            "id": 8,
+                            "pid": 24,
+                            "component_code": "子件编码1",
+                            "jd_component_code": "京东子件编码",
+                            "vips_component_code": "唯品会子件编码",
+                            "tb_price": "10.00",
+                            "cost": "10.00",
+                            "price": "10.00",
+                            "highest_price": "10.00",
+                            "lowest_price": "10.00",
+                            "warehouse_cost": "10.00",
+                            "assembly_price": "10.00",
+                            "discount": "1.00",
+                            "commission": "1.00",
+                            "is_common": true,
+                            "package_quantity": 10,
+                            "package_costs": "10.00",
+                            "wooden_frame_costs": "10.00",
+                            "purchase_freight": "10.00",
+                            "inventory_warning": 10,
+                            "purchase_days_warning": 10,
+                            "available_warning": 10,
+                            "distribution_method_id": 12,
+                            "bar_code": "1010",
+                            "img_url": "http://image.img.com/image",
+                            "spec": "规格",
+                            "color": "颜色",
+                            "materials": "材质",
+                            "function": "功能",
+                            "special": "特殊",
+                            "other": "其他",
+                            "longness": 10,
+                            "width": 10,
+                            "height": 10,
+                            "volume": 10,
+                            "weight": 10,
+                            "remark": "备注",
+                            "finished_pro": true,
+                            "is_stop_pro": true,
+                            "created_at": "2018-08-13 11:55:43",
+                            "updated_at": "2018-08-13 11:55:43"
+                        }
+                    ]
+                },
+                "productComponents": {
+                    "data": []
+                },
+                "created_at": "2018-08-13 11:55:43",
+                "updated_at": "2018-08-13 11:55:43"
+            }
+
+## 修改产品 [PATCH /api/products/:id]
+
+
++ Parameters
+    + commodity_code: (string, optional) - 产品编码
+    + jd_sn: (string, optional) - 京东编码
+    + vips_sn: (string, optional) - 唯品会编码
+    + factory_model: (string, optional) - 工厂型号
+    + short_name: (string, optional) - 产品简称
+    + shops_id: (integer, optional) - 店铺id
+    + shop_nick: (string, optional) - 卖家昵称（店铺昵称）
+    + supplier_id: (integer, optional) - 供应商id
+    + category_id: (integer, optional) - 产品类别id
+    + remark: (string, optional) - 备注
+    + title: (string, optional) - 产品标题
+    + img: (string, optional) - 产品图片
+    + url: (url, optional) - 产品网址
+    + is_stop_pro: (boolean, optional) - 是否停产 默认 0 = 不停产  1 = 停产
+        + Default: 
+    + status: (boolean, optional) - 状态(0:停用，1:启用)
+        + Default: 
+    + product_components[0][component_code]: (string, optional) - 子件编码
+    + product_components[0][jd_component_code]: (string, optional) - 京东子件编码
+    + product_components[0][vips_component_code]: (string, optional) - 唯品会子件编码
+    + product_components[0][tb_price]: (numeric, optional) - 淘宝价格
+    + product_components[0][cost]: (numeric, optional) - 成本价格
+    + product_components[0][price]: (numeric, optional) - 售价
+    + product_components[0][highest_price]: (numeric, optional) - 最高售价
+    + product_components[0][lowest_price]: (numeric, optional) - 最低售价
+    + product_components[0][warehouse_cost]: (numeric, optional) - 仓库成本
+    + product_components[0][assembly_price]: (numeric, optional) - 装配价格
+    + product_components[0][discount]: (numeric, optional) - 折扣
+    + product_components[0][commission]: (numeric, optional) - 佣金点
+    + product_components[0][is_common]: (boolean, optional) - 是否通用子件
+    + product_components[0][package_quantity]: (integer, optional) - 包件数量
+    + product_components[0][package_costs]: (numeric, optional) - 打包费用
+    + product_components[0][wooden_frame_costs]: (numeric, optional) - 木架费
+    + product_components[0][purchase_freight]: (numeric, optional) - 采购运费
+    + product_components[0][inventory_warning]: (integer, optional) - 库存预警(数量)
+    + product_components[0][purchase_days_warning]: (integer, optional) - 采购预警天数
+    + product_components[0][available_warning]: (integer, optional) - 可售数预警
+    + product_components[0][distribution_method_id]: (integer, optional) - 配送类别
+    + product_components[0][bar_code]: (string, optional) - 条形码
+    + product_components[0][img_url]: (url, optional) - 图片地址
+    + product_components[0][spec]: (string, optional) - 规格
+    + product_components[0][color]: (string, optional) - 颜色
+    + product_components[0][materials]: (string, optional) - 材质
+    + product_components[0][function]: (string, optional) - 功能
+    + product_components[0][special]: (string, optional) - 特殊
+    + product_components[0][other]: (string, optional) - 其他
+    + product_components[0][longness]: (numeric, optional) - 长度（mm）
+    + product_components[0][width]: (numeric, optional) - 宽度（mm）
+    + product_components[0][height]: (numeric, optional) - 高度（mm）
+    + product_components[0][volume]: (numeric, optional) - 体积(m²)
+    + product_components[0][weight]: (numeric, optional) - 重量
+    + product_components[0][remark]: (string, optional) - 备注
+    + product_components[0][finished_pro]: (integer, optional) - 是否成品 0 不是 1 是
+    + product_components[0][is_stop_pro]: (boolean, optional) - 是否停产 0 不是 1 是
+
++ Request (application/json)
+    + Body
+
+            {
+                "commodity_code": "产品编码",
+                "jd_sn": "京东编码",
+                "vips_sn": "唯品会编码",
+                "factory_model": "工厂型号",
+                "short_name": "产品简称",
+                "shops_id": "店铺id",
+                "shop_nick": "卖家昵称",
+                "supplier_id": 1,
+                "category_id": 1,
+                "remark": "备注",
+                "title": "产品标题",
+                "img": "产品图片",
+                "url": "https://www.taobao.com/",
+                "status": true,
+                "nis_stop_proick": 1,
+                "product_components[0][id]": "2",
+                "product_components[0][spec_code]": "子件编码",
+                "product_components[0][jd_specs_code]": "京东子件编码",
+                "product_components[0][vips_specs_code]": "唯品会子件编码",
+                "product_components[0][tb_price]": "10",
+                "product_components[0][highest_price]": "10",
+                "product_components[0][price]": "10",
+                "product_components[0][lowest_price]": "10",
+                "product_components[0][warehouse_cost]": "10",
+                "product_components[0][assembly_price]": "10",
+                "product_components[0][discount]": "1",
+                "product_components[0][commission]": "1",
+                "product_components[0][is_common]": true,
+                "product_components[0][package_quantity]": "10",
+                "product_components[0][package_costs]": "10",
+                "product_components[0][wooden_frame_costs]": "10",
+                "product_components[0][purchase_freight]": "10",
+                "product_components[0][inventory_warning]": "10",
+                "product_components[0][purchase_days_warning]": "10",
+                "product_components[0][available_warning]": "10",
+                "product_components[0][distribution_method_id]": "1",
+                "product_components[0][bar_code]": "条形码",
+                "product_components[0][img_url]": "http://image.img.com/image",
+                "product_components[0][spec]": "规格",
+                "product_components[0][color]": "颜色",
+                "product_components[0][materials]": "材质",
+                "product_components[0][function]": "功能",
+                "product_components[0][special]": "特殊",
+                "product_components[0][other]": "其他",
+                "product_components[0][longness]": "10",
+                "product_components[0][width]": "10",
+                "product_components[0][height]": "10",
+                "product_components[0][volume]": "10",
+                "product_components[0][weight]": "10",
+                "product_components[0][remark]": "备注",
+                "product_components[0][finished_pro]": true,
+                "product_components[0][is_stop_pro]": false
+            }
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "url": [
+                        "产品网址必须有效的url"
+                    ],
+                    "category_id": [
+                        "需要添加的id在数据库中未找到或未启用"
+                    ],
+                    "supplier_id": [
+                        "供应商id必须int类型"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 24,
+                "commodity_code": "产品编码",
+                "jd_sn": "京东编码",
+                "vips_sn": "唯品会编码",
+                "factory_model": "工厂型号",
+                "short_name": "商品简称",
+                "shops_id": "1",
+                "shop_nick": "卖家昵称",
+                "supplier": {
+                    "id": 1,
+                    "name": "供应商名称",
+                    "company": "供应商公司",
+                    "code": "公司代码",
+                    "province": "省",
+                    "city": "市",
+                    "district": "区",
+                    "address": "地址",
+                    "zipcode": "邮编",
+                    "contacts": "联系人",
+                    "phone": "电话",
+                    "mobile": "手机",
+                    "fax": "传真",
+                    "email": "935661686@qq.com",
+                    "remark": "备注",
+                    "is_scan": true,
+                    "status": true,
+                    "auto_valuation": true,
+                    "created_at": "2018-08-06 16:27:02",
+                    "updated_at": "2018-08-06 16:27:02"
+                },
+                "category": {
+                    "id": 1,
+                    "code": "商品类别代码",
+                    "name": "商品类别名",
+                    "description": "详情",
+                    "remark": "备注",
+                    "status": true,
+                    "created_at": "2018-08-06 16:30:02",
+                    "updated_at": "2018-08-06 16:30:02"
+                },
+                "remark": "备注",
+                "title": "商品标题",
+                "img": "http://bferp.test/#/basicInf/goodsMag",
+                "url": "http://bferp.test/#/basicInf/goodsMag",
+                "status": true,
+                "is_stop_pro": true,
+                "product_components": [
+                    {
+                        "id": 8,
+                        "pid": 24,
+                        "component_code": "子件编码1",
+                        "jd_component_code": "京东子件编码",
+                        "vips_component_code": "唯品会子件编码",
+                        "tb_price": "10.00",
+                        "cost": "10.00",
+                        "price": "10.00",
+                        "highest_price": "10.00",
+                        "lowest_price": "10.00",
+                        "warehouse_cost": "10.00",
+                        "assembly_price": "10.00",
+                        "discount": "1.00",
+                        "commission": "1.00",
+                        "is_common": true,
+                        "package_quantity": 10,
+                        "package_costs": "10.00",
+                        "wooden_frame_costs": "10.00",
+                        "purchase_freight": "10.00",
+                        "inventory_warning": 10,
+                        "purchase_days_warning": 10,
+                        "available_warning": 10,
+                        "distribution_method_id": 12,
+                        "bar_code": "1010",
+                        "img_url": "http://image.img.com/image",
+                        "spec": "规格",
+                        "color": "颜色",
+                        "materials": "材质",
+                        "function": "功能",
+                        "special": "特殊",
+                        "other": "其他",
+                        "longness": 10,
+                        "width": 10,
+                        "height": 10,
+                        "volume": 10,
+                        "weight": 10,
+                        "remark": "备注",
+                        "finished_pro": true,
+                        "is_stop_pro": true,
+                        "created_at": "2018-08-13 11:55:43",
+                        "updated_at": "2018-08-13 11:55:43"
+                    }
+                ],
+                "combinations": [],
+                "created_at": "2018-08-13 11:55:43",
+                "updated_at": "2018-08-13 11:55:43"
+            }
+
+## 删除产品 [DELETE /api/products/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 删除一组产品 [DELETE /api/products]
+
+
++ Parameters
+    + ids: (string, required) - 产品id组 格式: 1,2,3,4 
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 更改一组产品状态 [PUT /api/products/editstatus]
+
+
++ Parameters
+    + ids: (string, required) - 产品id组 格式: 1,2,3,4 
+    + status: (boolean, required) - 状态(0:停用，1:启用)
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "更改错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ],
+                    "status": [
+                        "状态必填"
+                    ]
+                },
+                "status_code": 422
             }
 
 + Response 204 (application/json)
@@ -14524,9 +14882,9 @@ FORMAT: 1A
             []
 
 # customerservicerefunds [/api]
-客服退款资源
+客服退款资源.
 
-## 获取所有客服退款 [GET /api/customerservicerefunds{?status}[&include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial]]
+## 获取所有客服退款. [GET /api/customerservicerefunds{?status}[&include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial]]
 
 
 + Parameters
@@ -14553,7 +14911,7 @@ FORMAT: 1A
                         "address": "开户地址",
                         "refund_amount": "10.00",
                         "transaction_sn": "12345645",
-                        "refund_reasons_id": 1,
+                        "refund_reason_type_id": 1,
                         "buyer_nick": "买家昵称",
                         "buyer_name": "买家名称",
                         "payment": "10.00",
@@ -14587,7 +14945,7 @@ FORMAT: 1A
                 }
             }
 
-## 新增客服退款(可选参数：include) [POST /api/customerservicerefunds[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]]
+## 新增客服退款(可选参数：include). [POST /api/customerservicerefunds[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]]
 
 
 + Parameters
@@ -14600,7 +14958,7 @@ FORMAT: 1A
     + address: (string, optional) - 开户地址
     + refund_amount: (numeric, optional) - 退款金额
     + transaction_sn: (string, optional) - 交易单号
-    + refund_reasons_id: (integer, required) - 退款原因id
+    + refund_reason_type_id: (integer, required) - 退款原因id
     + buyer_nick: (string, optional) - 买家昵称
     + buyer_name: (string, optional) - 买家名称
     + payment: (numeric, optional) - 支付金额
@@ -14622,7 +14980,7 @@ FORMAT: 1A
                 "address": "开户地址",
                 "refund_amount": 10,
                 "transaction_sn": "12345645",
-                "refund_reasons_id": 1,
+                "refund_reason_type_id": 1,
                 "buyer_nick": "买家昵称",
                 "buyer_name": "买家名称",
                 "payment": 10,
@@ -14662,7 +15020,7 @@ FORMAT: 1A
                 "address": "开户地址",
                 "refund_amount": "10.00",
                 "transaction_sn": "12345645",
-                "refund_reasons_id": 1,
+                "refund_reason_type_id": 1,
                 "buyer_nick": "买家昵称",
                 "buyer_name": "买家名称",
                 "payment": "10.00",
@@ -14687,7 +15045,7 @@ FORMAT: 1A
                 }
             }
 
-## 显示单条客服退款 [GET /api/customerservicerefunds/:id[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]]
+## 显示单条客服退款. [GET /api/customerservicerefunds/:id[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]]
 
 
 + Response 404 (application/json)
@@ -14716,7 +15074,7 @@ FORMAT: 1A
                 "address": "开户地址",
                 "refund_amount": "10.00",
                 "transaction_sn": "12345645",
-                "refund_reasons_id": 1,
+                "refund_reason_type_id": 1,
                 "buyer_nick": "买家昵称",
                 "buyer_name": "买家名称",
                 "payment": "10.00",
@@ -14738,7 +15096,7 @@ FORMAT: 1A
                 "updated_at": "2018-09-01 10:41:11"
             }
 
-## 修改客服退款 [PATCH /api/customerservicerefunds/:id[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]]
+## 修改客服退款. [PATCH /api/customerservicerefunds/:id[?include=paymentMethod,shop,refundPaymentMethod,refundReason,businessPersonnel,locker,afterSale,financial,creator]]
 
 
 + Parameters
@@ -14751,7 +15109,7 @@ FORMAT: 1A
     + address: (string, optional) - 开户地址
     + refund_amount: (numeric, optional) - 退款金额
     + transaction_sn: (string, optional) - 交易单号
-    + refund_reasons_id: (integer, optional) - 退款原因id
+    + refund_reason_type_id: (integer, optional) - 退款原因id
     + buyer_nick: (string, optional) - 买家昵称
     + buyer_name: (string, optional) - 买家名称
     + payment: (numeric, optional) - 支付金额
@@ -14790,7 +15148,7 @@ FORMAT: 1A
 
             []
 
-## 删除客服退款 [DELETE /api/customerservicerefunds/:id]
+## 删除客服退款. [DELETE /api/customerservicerefunds/:id]
 
 
 + Response 404 (application/json)
@@ -14806,7 +15164,7 @@ FORMAT: 1A
 
             []
 
-## 删除一组客服退款 [DELETE /api/customerservicerefunds]
+## 删除一组客服退款. [DELETE /api/customerservicerefunds]
 
 
 + Parameters
@@ -14830,7 +15188,7 @@ FORMAT: 1A
 
             []
 
-## 锁定或释放 [PUT /api/customerservicerefunds/:id/lockorunlock]
+## 锁定或释放. [PUT /api/customerservicerefunds/:id/lockorunlock]
 
 
 + Response 422 (application/json)
@@ -15324,333 +15682,6 @@ FORMAT: 1A
 
             []
 
-# aftersalerefunds [/api]
-售后退款资源
-
-## 获取所有售后退款 [GET /api/aftersalerefunds{?status}[&include=paymentMethod,shop,refundPaymentMethod,returnReason,businessPersonnel,locker,afterSale,financial]]
-
-
-+ Parameters
-    + status: (boolean, optional) - 获取的状态
-        + Default: all
-
-+ Response 200 (application/json)
-    + Body
-
-            {
-                "data": [
-                    {
-                        "id": 1,
-                        "refund_sn": "RA2018090316285916495",
-                        "order_sn": "12345645",
-                        "refund_order_status": "售后锁定",
-                        "order_source": "system",
-                        "payment_methods_id": 1,
-                        "time_out_at": "2018-08-31 00:00:00",
-                        "shops_id": 1,
-                        "account": "10",
-                        "refund_payment_methods_id": 1,
-                        "bank": "开户银行",
-                        "address": "开户地址",
-                        "refund_amount": "10.00",
-                        "transaction_sn": "12345645",
-                        "return_reasons_id": 1,
-                        "buyer_nick": "买家昵称",
-                        "buyer_name": "买家名称",
-                        "payment": "10.00",
-                        "person_liable": "责任人",
-                        "liable_fee": "10",
-                        "undertaker": "承担人",
-                        "business_remark": "业务备注",
-                        "as_remark": "售后备注",
-                        "f_remark": "",
-                        "refund_description": "退款说明",
-                        "taobao_refund_status": "",
-                        "creator_id": 1,
-                        "business_personnel_id": 1,
-                        "cs_audit_at": "2018-09-03 16:29:55",
-                        "locker_id": 1,
-                        "after_sales_id": 0,
-                        "as_audit_at": null,
-                        "financial_id": 0,
-                        "f_audit_at": null,
-                        "status": true,
-                        "created_at": "2018-09-03 16:28:59",
-                        "updated_at": "2018-09-03 16:30:38"
-                    }
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 8,
-                        "current_page": 1,
-                        "total_pages": 1,
-                        "links": null
-                    }
-                }
-            }
-
-## 显示单条售后退款 [GET /api/aftersalerefunds/:id[?include=paymentMethod,shop,refundPaymentMethod,returnReason,businessPersonnel,locker,afterSale,financial,creator]]
-
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 200 (application/json)
-    + Body
-
-            {
-                "id": 1,
-                "refund_sn": "RA2018090316285916495",
-                "order_sn": "12345645",
-                "refund_order_status": "售后锁定",
-                "order_source": "system",
-                "payment_methods_id": 1,
-                "time_out_at": "2018-08-31 00:00:00",
-                "shops_id": 1,
-                "account": "10",
-                "refund_payment_methods_id": 1,
-                "bank": "开户银行",
-                "address": "开户地址",
-                "refund_amount": "10.00",
-                "transaction_sn": "12345645",
-                "return_reasons_id": 1,
-                "buyer_nick": "买家昵称",
-                "buyer_name": "买家名称",
-                "payment": "10.00",
-                "person_liable": "责任人",
-                "liable_fee": "10",
-                "undertaker": "承担人",
-                "business_remark": "业务备注",
-                "as_remark": "售后备注",
-                "f_remark": "",
-                "refund_description": "退款说明",
-                "taobao_refund_status": "",
-                "creator_id": 1,
-                "business_personnel_id": 1,
-                "cs_audit_at": "2018-09-03 16:29:55",
-                "locker_id": 1,
-                "after_sales_id": 0,
-                "as_audit_at": null,
-                "financial_id": 0,
-                "f_audit_at": null,
-                "status": true,
-                "created_at": "2018-09-03 16:28:59",
-                "updated_at": "2018-09-03 16:30:38"
-            }
-
-## 修改售后退款 [PATCH /api/aftersalerefunds/:id[?include=paymentMethod,shop,refundPaymentMethod,returnReason,businessPersonnel,locker,afterSale,financial,creator]]
-
-
-+ Parameters
-    + person_liable: (string, optional) - 责任人
-    + liable_fee: (numeric, optional) - 责任金额
-    + freight: (numeric, optional) - 运费
-    + undertaker: (string, optional) - 承担人
-    + as_remark: (string, optional) - 售后备注
-    + status: (boolean, optional) - 状态
-
-+ Request (application/json)
-    + Body
-
-            []
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "还未锁定无法修改",
-                "errors": {
-                    "shops_id": [
-                        "店铺id必填"
-                    ]
-                },
-                "status_code": 422
-            }
-
-+ Response 201 (application/json)
-    + Body
-
-            {
-                "id": 1,
-                "refund_sn": "RA2018090316285916495",
-                "order_sn": "12345645",
-                "refund_order_status": "售后锁定",
-                "order_source": "system",
-                "payment_methods_id": 1,
-                "time_out_at": "2018-08-31 00:00:00",
-                "shops_id": 1,
-                "account": "10",
-                "refund_payment_methods_id": 1,
-                "bank": "开户银行",
-                "address": "开户地址",
-                "refund_amount": "10.00",
-                "transaction_sn": "12345645",
-                "return_reasons_id": 1,
-                "buyer_nick": "买家昵称",
-                "buyer_name": "买家名称",
-                "payment": "10.00",
-                "person_liable": "责任人",
-                "liable_fee": "10",
-                "undertaker": "承担人",
-                "business_remark": "业务备注",
-                "as_remark": "售后备注",
-                "f_remark": "",
-                "refund_description": "退款说明",
-                "taobao_refund_status": "",
-                "creator_id": 1,
-                "business_personnel_id": 1,
-                "cs_audit_at": "2018-09-03 16:29:55",
-                "locker_id": 1,
-                "after_sales_id": 0,
-                "as_audit_at": null,
-                "financial_id": 0,
-                "f_audit_at": null,
-                "status": true,
-                "created_at": "2018-09-03 16:28:59",
-                "updated_at": "2018-09-03 16:30:38"
-            }
-
-## 删除售后退款 [DELETE /api/aftersalerefunds/:id]
-
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            {
-                "id": 1,
-                "refund_sn": "RA2018090316285916495",
-                "order_sn": "12345645",
-                "refund_order_status": "售后锁定",
-                "order_source": "system",
-                "payment_methods_id": 1,
-                "time_out_at": "2018-08-31 00:00:00",
-                "shops_id": 1,
-                "account": "10",
-                "refund_payment_methods_id": 1,
-                "bank": "开户银行",
-                "address": "开户地址",
-                "refund_amount": "10.00",
-                "transaction_sn": "12345645",
-                "return_reasons_id": 1,
-                "buyer_nick": "买家昵称",
-                "buyer_name": "买家名称",
-                "payment": "10.00",
-                "person_liable": "责任人",
-                "liable_fee": "10",
-                "undertaker": "承担人",
-                "business_remark": "业务备注",
-                "as_remark": "售后备注",
-                "f_remark": "",
-                "refund_description": "退款说明",
-                "taobao_refund_status": "",
-                "creator_id": 1,
-                "business_personnel_id": 1,
-                "cs_audit_at": "2018-09-03 16:29:55",
-                "locker_id": 1,
-                "after_sales_id": 0,
-                "as_audit_at": null,
-                "financial_id": 0,
-                "f_audit_at": null,
-                "status": true,
-                "created_at": "2018-09-03 16:28:59",
-                "updated_at": "2018-09-03 16:30:38"
-            }
-
-## 删除一组售后退款 [DELETE /api/aftersalerefunds]
-
-
-+ Parameters
-    + ids: (string, required) - 售后退款id组 格式: 1,2,3,4 
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "422 Unprocessable Entity",
-                "errors": {
-                    "ids": [
-                        "id组必填"
-                    ]
-                },
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 锁定或释放 [PUT /api/aftersalerefunds/:id/lockorunlock]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法锁定",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 售后审核 [PUT /api/aftersalerefunds/:id/audit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "售后审核出错",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 售后退审 [PUT /api/aftersalerefunds/:id/unaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "退审出错",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
 # financialrefunds [/api]
 财务退款资源
 
@@ -15974,112 +16005,162 @@ FORMAT: 1A
 
             []
 
-# customerservicereturns [/api]
-客服退货资源
+# aftercompensation [/api]
+售后赔偿资源.
 
-## 获取所有客服退货 [GET /api/customerservicereturns{?status}[&include=order,shop,customerService,returnReason,refundPaymentMethod,logistics,freightType,distributions,returnOrderItem]]
-
-
-+ Parameters
-    + status: (boolean, optional) - 获取的状态
-        + Default: all
-
-+ Response 200 (application/json)
-    + Body
-
-            {
-                "data": [
-                    {
-                        "id": 1,
-                        "refund_sn": "RA2018090110411131562",
-                        "order_sn": "12345645",
-                        "refund_order_status": "未处理",
-                        "order_source": "system",
-                        "payment_methods_id": 1,
-                        "time_out_at": "2018-08-31 00:00:00",
-                        "shops_id": 1,
-                        "account": "10",
-                        "refund_payment_methods_id": 1,
-                        "bank": "开户银行",
-                        "address": "开户地址",
-                        "refund_amount": "10.00",
-                        "transaction_sn": "12345645",
-                        "refund_reasons_id": 1,
-                        "seller_nick": "卖家昵称",
-                        "seller_name": "卖家昵称",
-                        "payment": "10.00",
-                        "business_remark": "业务备注",
-                        "as_remark": "",
-                        "f_remark": "",
-                        "refund_description": "退款说明",
-                        "taobao_refund_status": "",
-                        "creator_id": 1,
-                        "business_personnel_id": 0,
-                        "cs_audit_at": null,
-                        "locker_id": 0,
-                        "after_sales_id": 0,
-                        "as_audit_at": null,
-                        "financial_id": 0,
-                        "f_audit_at": null,
-                        "status": true,
-                        "created_at": "2018-09-01 10:41:11",
-                        "updated_at": "2018-09-01 10:41:11"
-                    }
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 8,
-                        "current_page": 1,
-                        "total_pages": 1,
-                        "links": null
-                    }
-                }
-            }
-
-## 新增客服退货(可选参数：include) [POST /api/customerservicereturns[?include=order,shop,customerService,returnReason,refundPaymentMethod,logistics,freightType,distributions,returnOrderItem]]
+## 新增客服部(可选参数：include). [POST /api/aftercompensation[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
 + Parameters
-    + order_sn: (string, optional) - 系统单号
-    + payment_methods_id: (integer, required) - 支付方式id
-    + time_out_at: (datetime, required) - 超时时间
-    + shops_id: (integer, optional) - 还款账号
-    + payment_methods_id: (integer, required) - 还款支付方式id
-    + bank: (string, optional) - 开户银行
-    + address: (string, optional) - 开户地址
-    + refund_amount: (numeric, optional) - 退款金额
-    + transaction_sn: (string, optional) - 交易单号
-    + refund_reasons_id: (integer, required) - 退款原因id
-    + seller_nick: (string, optional) - 卖家昵称
-    + seller_name: (string, optional) - 卖家名称
-    + payment: (numeric, optional) - 支付金额
-    + business_remark: (string, optional) - 业务备注
-    + refund_description: (string, optional) - 退款说明
-    + status: (boolean, optional) - 状态
+    + shops_id: (integer, required) - 店铺id
+    + member_nick: (string, optional) - 会员昵称
+    + logistics_id: (integer, required) - 物流id
+    + billing_way: (string, required) - 计费方式:weight、volume
+    + promise_ship_time: (date, optional) - 承诺发货时间
+    + freight_types_id: (integer, required) - 运费类型id
+    + expected_freight: (numeric, optional) - 预计运费
+    + distributions_id: (integer, required) - 配送id
+    + distribution_methods_id: (integer, optional) - 配送方式id
+    + deliver_goods_fee: (numeric, optional) - 送货费用
+    + move_upstairs_fee: (numeric, optional) - 搬楼费用
+    + installation_fee: (numeric, optional) - 安装费
+    + total_distribution_fee: (numeric, optional) - 配送总计(送货费用 + 搬楼费用 + 安装费)
+    + distribution_phone: (string, optional) - 配送电话
+    + distribution_no: (string, optional) - 配送单号
+    + distribution_types_id: (integer, optional) - 配送类型id
+    + service_car_info: (string, optional) - 服务车信息（配送信息）
+    + take_delivery_goods_fee: (numeric, required) - 提货费用
+    + take_delivery_goods_ways_id: (integer, optional) - 提货方式id
+    + express_fee: (integer, optional) - 快递费用
+    + service_car_fee: (numeric, optional) - 服务车金额（家装服务）
+    + cancel_after_verification_code: (string, optional) - 核销码
+    + wooden_frame_costs: (numeric, optional) - 木架费
+    + preferential_cashback: (numeric, optional) - 优惠返现
+    + favorable_cashback: (numeric, optional) - 好评返现
+    + customer_types_id: (string, required) - 客户类型id
+    + is_invoice: (boolean, optional) - 是否要发票
+    + invoice_express_fee: (numeric, optional) - 发票快递费
+    + express_invoice_title: (string, optional) - 快递发票抬头
+    + contract_no: (string, optional) - 合同单号
+    + payment_methods_id: (integer, required) - 付款方式id
+    + deposit: (numeric, optional) - 订金
+    + document_title: (string, optional) - 单据头
+    + warehouses_id: (integer, required) - 发货仓库id
+    + payment_date: (date, optional) - 支付日期
+    + interest_concessions: (numeric, optional) - 让利
+    + is_notice: (boolean, optional) - 是否等通知发货
+    + is_cancel_after_verification: (boolean, optional) - 是否核销
+    + accept_order_user: (string, optional) - 接单用户
+    + tax_number: (string, optional) - 税号
+    + receipt: (string, optional) - 收据
+    + logistics_remark: (string, optional) - 物流备注
+    + seller_remark: (string, optional) - 卖家备注
+    + customer_service_remark: (string, optional) - 客服备注
+    + buyer_message: (string, optional) - 买家留言
+    + status: (string, optional) - 订单是否开启
+    + receiver_name: (string, required) - 收货人
+    + receiver_phone: (string, required) - 收货人固定电话
+    + receiver_mobile: (string, required) - 收货人手机
+    + receiver_state: (string, required) - 收货人的所在省份
+    + receiver_city: (string, required) - 收货人的所在城市
+    + receiver_district: (string, required) - 收货人的所在地区
+    + receiver_address: (string, required) - 收货人的详细地址
+    + receiver_zip: (string, required) - 收货邮编
+    + order_items[0][products_id]: (integer, optional) - 产品id
+    + order_items[0][combinations_id]: (integer, optional) - 组合id
+    + order_items[0][quantity]: (integer, optional) - 数量
+    + order_items[0][total_volume]: (numeric, optional) - 总体积
+    + order_items[0][paint]: (string, optional) - 油漆
+    + order_items[0][is_printing]: (boolean, optional) - 是否需要印刷
+    + order_items[0][printing_fee]: (numeric, optional) - 印刷费用
+    + order_items[0][is_spot_goods]: (boolean, optional) - 是否现货
+    + order_items[0][under_line_univalent]: (numeric, optional) - 线下单价
+    + order_items[0][under_line_total_amount]: (numeric, optional) - 线下金额（数量*单价）
+    + order_items[0][under_line_preferential]: (numeric, optional) - 优惠（线下）
+    + order_items[0][under_line_payment]: (numeric, optional) - 实际支付金额（线下）（线下金额 - 优惠）
+    + payment_details[0][payment]: (numeric, optional) - 支付金额
+    + payment_details[0][payment_methods_id]: (integer, optional) - 支付方式id
+    + payment_details[0][taobao_tid]: (string, optional) - 交易号（获取淘宝的交易编号）
+    + payment_details[0][taobao_oid]: (string, optional) - 子订单编号（获取淘宝的订单号）
+    + payment_details[0][pay_time]: (datetime, optional) - 付款时间
+    + payment_details[0][remark]: (string, optional) - 备注
 
 + Request (application/json)
     + Body
 
             {
-                "order_sn": "12345645",
-                "payment_methods_id": 1,
-                "time_out_at": "2018-8-31 00:00:00",
                 "shops_id": 1,
-                "account": 10,
-                "refund_payment_methods_id": 1,
-                "bank": "开户银行",
-                "address": "开户地址",
-                "refund_amount": 10,
-                "transaction_sn": "12345645",
-                "refund_reasons_id": 1,
-                "seller_nick": "卖家昵称",
-                "seller_name": "卖家昵称",
-                "payment": 10,
-                "business_remark": "业务备注",
-                "refund_description": "退款说明",
-                "status": true
+                "member_nick": "会员昵称",
+                "logistics_id": 1,
+                "billing_way": "weight",
+                "promise_ship_time": "2018-8-20",
+                "freight_types_id": 1,
+                "expected_freight": 10,
+                "distributions_id": 1,
+                "distribution_methods_id": 15,
+                "deliver_goods_fee": 10,
+                "move_upstairs_fee": 10,
+                "installation_fee": 10,
+                "total_distribution_fee": 30,
+                "distribution_phone": "配送电话",
+                "distribution_no": "配送单号",
+                "distribution_types_id": 1,
+                "service_car_info": "服务车信息（配送信息）",
+                "take_delivery_goods_fee": 10,
+                "take_delivery_goods_ways_id": 1,
+                "express_fee": 10,
+                "service_car_fee": 10,
+                "cancel_after_verification_code": "核销码",
+                "wooden_frame_costs": 10,
+                "preferential_cashback": 2,
+                "favorable_cashback": 2,
+                "customer_types_id": 1,
+                "is_invoice": false,
+                "invoice_express_fee": 5,
+                "express_invoice_title": "快递发票抬头",
+                "contract_no": "合同单号",
+                "payment_methods_id": 1,
+                "deposit": 10,
+                "document_title": "单据头",
+                "warehouses_id": 1,
+                "payment_date": "2018-8-20",
+                "interest_concessions": 10,
+                "is_notice": true,
+                "is_cancel_after_verification": false,
+                "accept_order_user": "接单用户",
+                "tax_number": "税号",
+                "receipt": "收据",
+                "logistics_remark": "物流备注",
+                "seller_remark": "卖家备注",
+                "customer_service_remark": "客服备注",
+                "buyer_message": "买家留言",
+                "receiver_name": "收货人",
+                "receiver_phone": "收货人固定电话",
+                "receiver_mobile": "收货人手机",
+                "receiver_state": "收货人的所在省份",
+                "receiver_city": "收货人的所在城市",
+                "receiver_district": "收货人的所在地区",
+                "receiver_address": "收货人的详细地址",
+                "receiver_zip": "收货邮编",
+                "status": true,
+                "order_items[0][products_id]": 29,
+                "order_items[0][combinations_id]": 14,
+                "order_items[0][quantity]": 10,
+                "order_items[0][total_volume]": 100,
+                "order_items[0][paint]": "油漆",
+                "order_items[0][is_printing]": false,
+                "order_items[0][printing_fee]": 1,
+                "order_items[0][is_spot_goods]": false,
+                "order_items[0][under_line_univalent]": 10,
+                "order_items[0][under_line_total_amount]": 100,
+                "order_items[0][under_line_preferential]": 10,
+                "order_items[0][under_line_payment]": 90,
+                "payment_details[0][payment]": 100,
+                "payment_details[0][payment_methods_id]": 1,
+                "payment_details[0][taobao_tid]": "123456",
+                "payment_details[0][taobao_oid]": "123456",
+                "payment_details[0][pay_time]": "2018-8-18",
+                "payment_details[0][remark]": "备注"
             }
 
 + Response 422 (application/json)
@@ -16100,45 +16181,85 @@ FORMAT: 1A
 
             {
                 "id": 1,
-                "refund_sn": "RA2018090110411131562",
-                "order_sn": "12345645",
-                "refund_order_status": "未处理",
+                "system_order_no": "DD2018082011365716512",
+                "cmptn_status": "未处理",
                 "order_source": "system",
-                "payment_methods_id": 1,
-                "time_out_at": "2018-08-31 00:00:00",
                 "shops_id": 1,
-                "account": "10",
-                "refund_payment_methods_id": 1,
-                "bank": "开户银行",
-                "address": "开户地址",
-                "refund_amount": "10.00",
-                "transaction_sn": "12345645",
-                "refund_reasons_id": 1,
-                "seller_nick": "卖家昵称",
-                "seller_name": "卖家昵称",
-                "payment": "10.00",
-                "business_remark": "业务备注",
-                "as_remark": "",
-                "f_remark": "",
-                "refund_description": "退款说明",
-                "taobao_refund_status": "",
-                "creator_id": 1,
+                "logistics_id": 1,
+                "billing_way": "weight",
+                "promise_ship_time": "2018-08-20",
+                "freight_types_id": 1,
+                "expected_freight": "10.00",
+                "distributions_id": 1,
+                "distribution_methods_id": 15,
+                "deliver_goods_fee": "10.00",
+                "move_upstairs_fee": "10.00",
+                "installation_fee": "10.00",
+                "total_distribution_fee": "30.00",
+                "distribution_phone": "配送电话",
+                "distribution_no": "配送单号",
+                "distribution_types_id": 1,
+                "service_car_info": "服务车信息（配送信息）",
+                "take_delivery_goods_fee": "10.00",
+                "take_delivery_goods_ways_id": 1,
+                "express_fee": "10.00",
+                "service_car_fee": "10.00",
+                "cancel_after_verification_code": "核销码",
+                "wooden_frame_costs": "10.00",
+                "preferential_cashback": "2.00",
+                "favorable_cashback": "2.00",
+                "customer_types_id": 1,
+                "is_invoice": false,
+                "invoice_express_fee": "5.00",
+                "express_invoice_title": "快递发票抬头",
+                "contract_no": "合同单号",
+                "payment_methods_id": 1,
+                "deposit": "10.00",
+                "document_title": "单据头",
+                "warehouses_id": 1,
+                "payment_date": "2018-08-20",
+                "interest_concessions": "10.00",
+                "is_notice": true,
+                "is_cancel_after_verification": false,
+                "accept_order_user": "接单用户",
+                "tax_number": "税号",
+                "receipt": "收据",
+                "logistics_remark": "物流备注",
+                "seller_remark": "卖家备注",
+                "customer_service_remark": "客服备注",
+                "taobao_oid": 0,
+                "taobao_tid": 0,
+                "member_nick": "会员昵称",
+                "shop_name": "",
+                "seller_name": "",
+                "seller_flag": 0,
+                "created": null,
+                "est_con_time": null,
+                "buyer_message": "买家留言",
+                "receiver_name": "",
+                "receiver_phone": "",
+                "receiver_mobile": "",
+                "receiver_state": "",
+                "receiver_city": "",
+                "receiver_district": "",
+                "receiver_address": "",
+                "receiver_zip": "",
+                "refund_info": "无退款",
                 "business_personnel_id": 0,
-                "cs_audit_at": null,
                 "locker_id": 0,
-                "after_sales_id": 0,
-                "as_audit_at": null,
-                "financial_id": 0,
-                "f_audit_at": null,
-                "status": true,
-                "created_at": "2018-09-01 10:41:11",
-                "updated_at": "2018-09-01 10:41:11",
+                "audit_at": null,
+                "association_taobao_oid": "",
+                "is_merge": false,
+                "is_split": false,
+                "is_association": false,
+                "created_at": "2018-08-20 11:36:57",
+                "updated_at": "2018-08-20 11:36:57",
                 "meta": {
                     "status_code": "201"
                 }
             }
 
-## 显示单条客服退货 [GET /api/customerservicereturns/:id[?include=order,shop,customerService,returnReason,refundPaymentMethod,logistics,freightType,distributions,returnOrderItem]]
+## 显示单条客服部. [GET /api/aftercompensation/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
 + Response 404 (application/json)
@@ -16154,66 +16275,239 @@ FORMAT: 1A
 
             {
                 "id": 1,
-                "refund_sn": "RA2018090110411131562",
-                "order_sn": "12345645",
-                "refund_order_status": "未处理",
+                "system_order_no": "DD2018082011365716512",
+                "cmptn_status": "未处理",
                 "order_source": "system",
-                "payment_methods_id": 1,
-                "time_out_at": "2018-08-31 00:00:00",
                 "shops_id": 1,
-                "account": "10",
-                "refund_payment_methods_id": 1,
-                "bank": "开户银行",
-                "address": "开户地址",
-                "refund_amount": "10.00",
-                "transaction_sn": "12345645",
-                "refund_reasons_id": 1,
-                "seller_nick": "卖家昵称",
-                "seller_name": "卖家昵称",
-                "payment": "10.00",
-                "business_remark": "业务备注",
-                "as_remark": "",
-                "f_remark": "",
-                "refund_description": "退款说明",
-                "taobao_refund_status": "",
-                "creator_id": 1,
+                "logistics_id": 1,
+                "billing_way": "weight",
+                "promise_ship_time": "2018-08-20",
+                "freight_types_id": 1,
+                "expected_freight": "10.00",
+                "distributions_id": 1,
+                "distribution_methods_id": 15,
+                "deliver_goods_fee": "10.00",
+                "move_upstairs_fee": "10.00",
+                "installation_fee": "10.00",
+                "total_distribution_fee": "30.00",
+                "distribution_phone": "配送电话",
+                "distribution_no": "配送单号",
+                "distribution_types_id": 1,
+                "service_car_info": "服务车信息（配送信息）",
+                "take_delivery_goods_fee": "10.00",
+                "take_delivery_goods_ways_id": 1,
+                "express_fee": "10.00",
+                "service_car_fee": "10.00",
+                "cancel_after_verification_code": "核销码",
+                "wooden_frame_costs": "10.00",
+                "preferential_cashback": "2.00",
+                "favorable_cashback": "2.00",
+                "customer_types_id": 1,
+                "is_invoice": false,
+                "invoice_express_fee": "5.00",
+                "express_invoice_title": "快递发票抬头",
+                "contract_no": "合同单号",
+                "payment_methods_id": 1,
+                "deposit": "10.00",
+                "document_title": "单据头",
+                "warehouses_id": 1,
+                "payment_date": "2018-08-20",
+                "interest_concessions": "10.00",
+                "is_notice": true,
+                "is_cancel_after_verification": false,
+                "accept_order_user": "接单用户",
+                "tax_number": "税号",
+                "receipt": "收据",
+                "logistics_remark": "物流备注",
+                "seller_remark": "卖家备注",
+                "customer_service_remark": "客服备注",
+                "taobao_oid": 0,
+                "taobao_tid": 0,
+                "member_nick": "会员昵称",
+                "shop_name": "",
+                "seller_name": "",
+                "seller_flag": 0,
+                "created": null,
+                "est_con_time": null,
+                "buyer_message": "买家留言",
+                "receiver_name": "",
+                "receiver_phone": "",
+                "receiver_mobile": "",
+                "receiver_state": "",
+                "receiver_city": "",
+                "receiver_district": "",
+                "receiver_address": "",
+                "receiver_zip": "",
+                "refund_info": "无退款",
                 "business_personnel_id": 0,
-                "cs_audit_at": null,
                 "locker_id": 0,
-                "after_sales_id": 0,
-                "as_audit_at": null,
-                "financial_id": 0,
-                "f_audit_at": null,
-                "status": true,
-                "created_at": "2018-09-01 10:41:11",
-                "updated_at": "2018-09-01 10:41:11"
+                "audit_at": null,
+                "association_taobao_oid": "",
+                "is_merge": false,
+                "is_split": false,
+                "is_association": false,
+                "created_at": "2018-08-20 11:36:57",
+                "updated_at": "2018-08-20 11:36:57"
             }
 
-## 修改客服退货 [PATCH /api/customerservicereturns/:id[?include=order,shop,customerService,returnReason,refundPaymentMethod,logistics,freightType,distributions,returnOrderItem]]
+## 修改客服部. [PATCH /api/aftercompensation/:id[?include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
 + Parameters
-    + order_sn: (string, optional) - 系统单号
-    + payment_methods_id: (integer, optional) - 支付方式id
-    + time_out_at: (datetime, optional) - 超时时间
-    + shops_id: (integer, optional) - 还款账号
-    + payment_methods_id: (integer, optional) - 还款支付方式id
-    + bank: (string, optional) - 开户银行
-    + address: (string, optional) - 开户地址
-    + refund_amount: (numeric, optional) - 退款金额
-    + transaction_sn: (string, optional) - 交易单号
-    + refund_reasons_id: (integer, optional) - 退款原因id
-    + seller_nick: (string, optional) - 卖家昵称
-    + seller_name: (string, optional) - 卖家名称
-    + payment: (numeric, optional) - 支付金额
-    + business_remark: (string, optional) - 业务备注
-    + refund_description: (string, optional) - 退款说明
-    + status: (boolean, optional) - 状态
+    + shops_id: (integer, required) - 店铺id
+    + member_nick: (string, optional) - 会员昵称
+    + logistics_id: (integer, required) - 物流id
+    + billing_way: (string, required) - 计费方式:weight、volume
+    + promise_ship_time: (date, optional) - 承诺发货时间
+    + freight_types_id: (integer, required) - 运费类型id
+    + expected_freight: (numeric, optional) - 预计运费
+    + distributions_id: (integer, required) - 配送id
+    + distribution_methods_id: (integer, optional) - 配送方式id
+    + deliver_goods_fee: (numeric, optional) - 送货费用
+    + move_upstairs_fee: (numeric, optional) - 搬楼费用
+    + installation_fee: (numeric, optional) - 安装费
+    + total_distribution_fee: (numeric, optional) - 配送总计(送货费用 + 搬楼费用 + 安装费)
+    + distribution_phone: (string, optional) - 配送电话
+    + distribution_no: (string, optional) - 配送单号
+    + distribution_types_id: (integer, optional) - 配送类型id
+    + service_car_info: (string, optional) - 服务车信息（配送信息）
+    + take_delivery_goods_fee: (numeric, required) - 提货费用
+    + take_delivery_goods_ways_id: (integer, optional) - 提货方式id
+    + express_fee: (integer, optional) - 快递费用
+    + service_car_fee: (numeric, optional) - 服务车金额（家装服务）
+    + cancel_after_verification_code: (string, optional) - 核销码
+    + wooden_frame_costs: (numeric, optional) - 木架费
+    + preferential_cashback: (numeric, optional) - 优惠返现
+    + favorable_cashback: (numeric, optional) - 好评返现
+    + customer_types_id: (string, required) - 客户类型id
+    + is_invoice: (boolean, optional) - 是否要发票
+    + invoice_express_fee: (numeric, optional) - 发票快递费
+    + express_invoice_title: (string, optional) - 快递发票抬头
+    + contract_no: (string, optional) - 合同单号
+    + payment_methods_id: (integer, required) - 付款方式id
+    + deposit: (numeric, optional) - 订金
+    + document_title: (string, optional) - 单据头
+    + warehouses_id: (integer, required) - 发货仓库id
+    + payment_date: (date, optional) - 支付日期
+    + interest_concessions: (numeric, optional) - 让利
+    + is_notice: (boolean, optional) - 是否等通知发货
+    + is_cancel_after_verification: (boolean, optional) - 是否核销
+    + accept_order_user: (string, optional) - 接单用户
+    + tax_number: (string, optional) - 税号
+    + receipt: (string, optional) - 收据
+    + logistics_remark: (string, optional) - 物流备注
+    + seller_remark: (string, optional) - 卖家备注
+    + customer_service_remark: (string, optional) - 客服备注
+    + buyer_message: (string, optional) - 买家留言
+    + status: (string, optional) - 订单是否开启
+    + receiver_name: (string, required) - 收货人
+    + receiver_phone: (string, required) - 收货人固定电话
+    + receiver_mobile: (string, required) - 收货人手机
+    + receiver_state: (string, required) - 收货人的所在省份
+    + receiver_city: (string, required) - 收货人的所在城市
+    + receiver_district: (string, required) - 收货人的所在地区
+    + receiver_address: (string, required) - 收货人的详细地址
+    + receiver_zip: (string, required) - 收货邮编
+    + order_items[0][id]: (integer, optional) - 子订单id
+    + order_items[0][products_id]: (integer, optional) - 产品id
+    + order_items[0][combinations_id]: (integer, optional) - 组合id
+    + order_items[0][quantity]: (integer, optional) - 数量
+    + order_items[0][total_volume]: (numeric, optional) - 总体积
+    + order_items[0][paint]: (string, optional) - 油漆
+    + order_items[0][is_printing]: (boolean, optional) - 是否需要印刷
+    + order_items[0][printing_fee]: (numeric, optional) - 印刷费用
+    + order_items[0][is_spot_goods]: (boolean, optional) - 是否现货
+    + order_items[0][under_line_univalent]: (numeric, optional) - 线下单价
+    + order_items[0][under_line_total_amount]: (numeric, optional) - 线下金额（数量*单价）
+    + order_items[0][under_line_preferential]: (numeric, optional) - 优惠（线下）
+    + order_items[0][under_line_payment]: (numeric, optional) - 实际支付金额（线下）（线下金额 - 优惠）
+    + payment_details[0][id]: (integer, optional) - 支付明细id
+    + payment_details[0][payment]: (numeric, optional) - 支付金额
+    + payment_details[0][payment_methods_id]: (integer, optional) - 支付方式id
+    + payment_details[0][taobao_tid]: (string, optional) - 交易号（获取淘宝的交易编号）
+    + payment_details[0][taobao_oid]: (string, optional) - 子订单编号（获取淘宝的订单号）
+    + payment_details[0][pay_time]: (datetime, optional) - 付款时间
+    + payment_details[0][remark]: (string, optional) - 备注
 
 + Request (application/json)
     + Body
 
-            []
+            {
+                "shops_id": 1,
+                "member_nick": "会员昵称",
+                "logistics_id": 1,
+                "billing_way": "weight",
+                "promise_ship_time": "2018-8-20",
+                "freight_types_id": 1,
+                "expected_freight": 10,
+                "distributions_id": 1,
+                "distribution_methods_id": 15,
+                "deliver_goods_fee": 10,
+                "move_upstairs_fee": 10,
+                "installation_fee": 10,
+                "total_distribution_fee": 30,
+                "distribution_phone": "配送电话",
+                "distribution_no": "配送单号",
+                "distribution_types_id": 1,
+                "service_car_info": "服务车信息（配送信息）",
+                "take_delivery_goods_fee": 10,
+                "take_delivery_goods_ways_id": 1,
+                "express_fee": 10,
+                "service_car_fee": 10,
+                "cancel_after_verification_code": "核销码",
+                "wooden_frame_costs": 10,
+                "preferential_cashback": 2,
+                "favorable_cashback": 2,
+                "customer_types_id": 1,
+                "is_invoice": false,
+                "invoice_express_fee": 5,
+                "express_invoice_title": "快递发票抬头",
+                "contract_no": "合同单号",
+                "payment_methods_id": 1,
+                "deposit": 10,
+                "document_title": "单据头",
+                "warehouses_id": 1,
+                "payment_date": "2018-8-20",
+                "interest_concessions": 10,
+                "is_notice": true,
+                "is_cancel_after_verification": false,
+                "accept_order_user": "接单用户",
+                "tax_number": "税号",
+                "receipt": "收据",
+                "logistics_remark": "物流备注",
+                "seller_remark": "卖家备注",
+                "customer_service_remark": "客服备注",
+                "buyer_message": "买家留言",
+                "receiver_name": "收货人",
+                "receiver_phone": "收货人固定电话",
+                "receiver_mobile": "收货人手机",
+                "receiver_state": "收货人的所在省份",
+                "receiver_city": "收货人的所在城市",
+                "receiver_district": "收货人的所在地区",
+                "receiver_address": "收货人的详细地址",
+                "receiver_zip": "收货邮编",
+                "status": true,
+                "order_items[0][id]": 1,
+                "order_items[0][products_id]": 29,
+                "order_items[0][combinations_id]": 14,
+                "order_items[0][quantity]": 10,
+                "order_items[0][total_volume]": 100,
+                "order_items[0][paint]": "油漆",
+                "order_items[0][is_printing]": false,
+                "order_items[0][printing_fee]": 1,
+                "order_items[0][is_spot_goods]": false,
+                "order_items[0][under_line_univalent]": 10,
+                "order_items[0][under_line_total_amount]": 100,
+                "order_items[0][under_line_preferential]": 10,
+                "order_items[0][under_line_payment]": 90,
+                "payment_details[0][id]": 1,
+                "payment_details[0][payment]": 100,
+                "payment_details[0][payment_methods_id]": 1,
+                "payment_details[0][taobao_tid]": "123456",
+                "payment_details[0][taobao_oid]": "123456",
+                "payment_details[0][pay_time]": "2018-8-18",
+                "payment_details[0][remark]": "备注"
+            }
 
 + Response 404 (application/json)
     + Body
@@ -16239,9 +16533,84 @@ FORMAT: 1A
 + Response 201 (application/json)
     + Body
 
-            []
+            {
+                "id": 1,
+                "system_order_no": "DD2018082011365716512",
+                "cmptn_status": "未处理",
+                "order_source": "system",
+                "shops_id": 1,
+                "logistics_id": 1,
+                "billing_way": "weight",
+                "promise_ship_time": "2018-08-20",
+                "freight_types_id": 1,
+                "expected_freight": "10.00",
+                "distributions_id": 1,
+                "distribution_methods_id": 15,
+                "deliver_goods_fee": "10.00",
+                "move_upstairs_fee": "10.00",
+                "installation_fee": "10.00",
+                "total_distribution_fee": "30.00",
+                "distribution_phone": "配送电话",
+                "distribution_no": "配送单号",
+                "distribution_types_id": 1,
+                "service_car_info": "服务车信息（配送信息）",
+                "take_delivery_goods_fee": "10.00",
+                "take_delivery_goods_ways_id": 1,
+                "express_fee": "10.00",
+                "service_car_fee": "10.00",
+                "cancel_after_verification_code": "核销码",
+                "wooden_frame_costs": "10.00",
+                "preferential_cashback": "2.00",
+                "favorable_cashback": "2.00",
+                "customer_types_id": 1,
+                "is_invoice": false,
+                "invoice_express_fee": "5.00",
+                "express_invoice_title": "快递发票抬头",
+                "contract_no": "合同单号",
+                "payment_methods_id": 1,
+                "deposit": "10.00",
+                "document_title": "单据头",
+                "warehouses_id": 1,
+                "payment_date": "2018-08-20",
+                "interest_concessions": "10.00",
+                "is_notice": true,
+                "is_cancel_after_verification": false,
+                "accept_order_user": "接单用户",
+                "tax_number": "税号",
+                "receipt": "收据",
+                "logistics_remark": "物流备注",
+                "seller_remark": "卖家备注",
+                "customer_service_remark": "客服备注",
+                "taobao_oid": 0,
+                "taobao_tid": 0,
+                "member_nick": "会员昵称",
+                "shop_name": "",
+                "seller_name": "",
+                "seller_flag": 0,
+                "created": null,
+                "est_con_time": null,
+                "buyer_message": "买家留言",
+                "receiver_name": "",
+                "receiver_phone": "",
+                "receiver_mobile": "",
+                "receiver_state": "",
+                "receiver_city": "",
+                "receiver_district": "",
+                "receiver_address": "",
+                "receiver_zip": "",
+                "refund_info": "无退款",
+                "business_personnel_id": 0,
+                "locker_id": 0,
+                "audit_at": null,
+                "association_taobao_oid": "",
+                "is_merge": false,
+                "is_split": false,
+                "is_association": false,
+                "created_at": "2018-08-20 11:36:57",
+                "updated_at": "2018-08-20 11:36:57"
+            }
 
-## 删除客服退货 [DELETE /api/customerservicereturns/:id]
+## 删除客服部. [DELETE /api/aftercompensation/:id]
 
 
 + Response 404 (application/json)
@@ -16257,11 +16626,11 @@ FORMAT: 1A
 
             []
 
-## 删除一组客服退货 [DELETE /api/customerservicereturns]
+## 删除一组客服部. [DELETE /api/aftercompensation]
 
 
 + Parameters
-    + ids: (string, required) - 客服退货id组 格式: 1,2,3,4 
+    + ids: (string, required) - 客服部id组 格式: 1,2,3,4 
 
 + Response 422 (application/json)
     + Body
@@ -16281,208 +16650,35 @@ FORMAT: 1A
 
             []
 
-## 客服一审 [PUT /api/customerservicereturns/:id/oneaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法客服一审",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 客服一审退审 [PUT /api/customerservicereturns/:id/unoneaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法客服一审退审",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 客服二审 [PUT /api/customerservicereturns/:id/twoaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法客服二审",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 客服二审退审 [PUT /api/customerservicereturns/:id/untwoaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法客服二审退审",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-# aftersalereturns [/api]
-售后退货资源
-
-## 删除售后退货 [DELETE /api/aftersalereturns/:id]
-
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 售后一审 [PUT /api/aftersalereturns/:id/oneaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法售后一审",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 售后一审退审 [PUT /api/aftersalereturns/:id/unoneaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法售后一审退审",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 售后二审 [PUT /api/aftersalereturns/:id/twoaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法售后一审",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 售后二审退审 [PUT /api/aftersalereturns/:id/untwoaudit]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法售后一审退审",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-# warehousingreturns [/api]
-仓储退货资源
-
-## 获取所有仓储退货 [GET /api/warehousingreturns{?status}[&include=]]
+## 更改一组客服部状态 [PUT /api/aftercompensation/editstatus]
 
 
 + Parameters
-    + status: (boolean, optional) - 获取的状态
-        + Default: all
-    + order_status: (boolean, optional) - 获取的状态
-        + Default: all
+    + ids: (string, required) - 客服部id组 格式: 1,2,3,4 
+    + status: (boolean, required) - 状态(0:停用,1:启用)
 
-+ Response 200 (application/json)
++ Response 500 (application/json)
     + Body
 
             {
-                "data": [
-                    []
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 8,
-                        "current_page": 1,
-                        "total_pages": 1,
-                        "links": null
-                    }
-                }
+                "message": "更改错误",
+                "code": 500,
+                "status_code": 500
             }
-
-## 显示单条仓储退货 [GET /api/warehousingreturns/:id[?include=]]
-
-
-+ Response 404 (application/json)
-    + Body
-
-            {
-                "message": "No query results for model ",
-                "status_code": 404
-            }
-
-+ Response 200 (application/json)
-    + Body
-
-            []
-
-## 仓储审核 [PUT /api/warehousingreturns/:id/whaudit]
-
 
 + Response 422 (application/json)
     + Body
 
             {
-                "message": "无法仓储审核",
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ],
+                    "status": [
+                        "状态必填"
+                    ]
+                },
                 "status_code": 422
             }
 
@@ -16491,14 +16687,14 @@ FORMAT: 1A
 
             []
 
-## 仓储审核退审 [PUT /api/warehousingreturns/:id/whunaudit]
+## 锁定或释放. [PUT /api/aftercompensation/:id/lockorunlock]
 
 
 + Response 422 (application/json)
     + Body
 
             {
-                "message": "无法仓储审核退审",
+                "message": "无法锁定",
                 "status_code": 422
             }
 
@@ -16507,10 +16703,82 @@ FORMAT: 1A
 
             []
 
-# receipttypes [/api]
-收货方式资源
+## 客审 [PUT /api/aftercompensation/:id/audit]
 
-## 获取所有收货方式 [GET /api/paymentmethods{?status}]
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "客审出错",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 退审 [PUT /api/aftercompensation/:id/unaudit]
+
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "退审出错",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 拆单(要及时修改新订单的价格数据). [PUT /api/aftercompensation/:id/splitorder]
+
+
++ Parameters
+    + order_items[0][id]: (integer, required) - 子单id
+    + order_items[0][quantity]: (numeric, required) - 拆分数量
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "拆单",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 合并订单. [PUT /api/aftercompensation/mergerorder?order_id_one=1&order_id_two=2]
+
+
++ Parameters
+    + order_id_one: (integer, required) - 订单一
+    + order_id_two: (integer, required) - 订单二
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "合并订单出错",
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+# ShopGatheringMags [/api]
+配送方式资源
+
+## 获取所有配送方式 [GET /api/mags{?status}]
 
 
 + Parameters
@@ -16524,39 +16792,39 @@ FORMAT: 1A
                 "data": [
                     {
                         "id": 1,
-                        "name": "收货方式",
+                        "name": "配送方式",
                         "status": true,
-                        "created_at": "2018-06-14 16:55:32",
-                        "updated_at": "2018-06-14 16:55:32"
+                        "created_at": "2018-06-14 14:39:45",
+                        "updated_at": "2018-06-14 14:39:45"
                     },
                     {
                         "id": 2,
-                        "name": "收货方式2",
+                        "name": "配送方式2",
                         "status": true,
-                        "created_at": "2018-06-14 16:55:36",
-                        "updated_at": "2018-06-14 16:55:36"
+                        "created_at": "2018-06-14 14:42:23",
+                        "updated_at": "2018-06-14 14:42:23"
                     }
                 ],
                 "meta": {
                     "pagination": {
-                        "total": 2,
+                        "total": 3,
                         "count": 2,
                         "per_page": 10,
                         "current_page": 1,
                         "total_pages": 1,
                         "links": {
                             "previous": null,
-                            "next": "{{host}}/api/paymentmethods?page=1"
+                            "next": "{{host}}/api/mags?page=1"
                         }
                     }
                 }
             }
 
-## 新增收货方式 [POST /api/paymentmethods]
+## 新增配送方式 [POST /api/mags]
 
 
 + Parameters
-    + name: (string, required) - 收货方式名称
+    + name: (string, required) - 配送方式名
     + status: (boolean, optional) - 状态(0:停用，1:启用)
         + Default: 1
 
@@ -16567,7 +16835,7 @@ FORMAT: 1A
                 "message": "422 Unprocessable Entity",
                 "errors": {
                     "name": [
-                        "收货方式名称必填"
+                        "配送方式名称必填"
                     ]
                 },
                 "status_code": 422
@@ -16578,16 +16846,16 @@ FORMAT: 1A
 
             {
                 "id": 1,
-                "name": "收货方式",
+                "name": "配送方式",
                 "status": true,
-                "created_at": "2018-06-14 16:55:40",
-                "updated_at": "2018-06-14 16:55:40",
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:39:45",
                 "meta": {
                     "status_code": "201"
                 }
             }
 
-## 显示单条收货方式 [GET /api/paymentmethods/:id]
+## 显示单条配送方式 [GET /api/mags/:id]
 
 
 + Response 404 (application/json)
@@ -16603,13 +16871,13 @@ FORMAT: 1A
 
             {
                 "id": 1,
-                "name": "收货方式",
+                "name": "配送方式",
                 "status": true,
-                "created_at": "2018-06-14 16:55:32",
-                "updated_at": "2018-06-14 16:55:32"
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:45:14"
             }
 
-## 修改收货方式 [PATCH /api/paymentmethods/:id]
+## 修改配送方式 [PATCH /api/mags/:id]
 
 
 + Response 404 (application/json)
@@ -16627,7 +16895,7 @@ FORMAT: 1A
                 "message": "422 Unprocessable Entity",
                 "errors": {
                     "name": [
-                        "收货方式名称必须string类型"
+                        "配送方式名称必须string类型"
                     ]
                 },
                 "status_code": 422
@@ -16638,13 +16906,13 @@ FORMAT: 1A
 
             {
                 "id": 1,
-                "name": "收货方式10",
+                "name": "配送方式1",
                 "status": true,
-                "created_at": "2018-06-14 16:55:32",
-                "updated_at": "2018-06-14 16:58:55"
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:40:45"
             }
 
-## 删除收货方式 [DELETE /api/paymentmethods/:id]
+## 删除配送方式 [DELETE /api/mags/:id]
 
 
 + Response 404 (application/json)
@@ -16660,11 +16928,11 @@ FORMAT: 1A
 
             []
 
-## 删除一组收货方式 [DELETE /api/paymentmethods]
+## 删除一组配送方式 [DELETE /api/mags]
 
 
 + Parameters
-    + ids: (string, required) - 收货方式id组 格式: 1,2,3,4 
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
 
 + Response 500 (application/json)
     + Body
@@ -16693,11 +16961,11 @@ FORMAT: 1A
 
             []
 
-## 更改一组收货方式状态 [PUT /api/paymentmethods/editstatus]
+## 更改一组配送方式状态 [PUT /api/mags/editstatus]
 
 
 + Parameters
-    + ids: (string, required) - 收货方式id组 格式: 1,2,3,4 
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
     + status: (boolean, required) - 状态(0:停用，1:启用)
 
 + Response 500 (application/json)
@@ -16730,16 +16998,14 @@ FORMAT: 1A
 
             []
 
-# stocksyncreturn [/api]
-库存同步资源
+# EvalCategoryMags [/api]
+配送方式资源
 
-## 获取所有库存同步 [GET /api/stocksyncreturn{?status}[&include=]]
+## 获取所有配送方式 [GET /api/mags{?status}]
 
 
 + Parameters
     + status: (boolean, optional) - 获取的状态
-        + Default: all
-    + order_status: (boolean, optional) - 获取的状态
         + Default: all
 
 + Response 200 (application/json)
@@ -16747,21 +17013,72 @@ FORMAT: 1A
 
             {
                 "data": [
-                    []
+                    {
+                        "id": 1,
+                        "name": "配送方式",
+                        "status": true,
+                        "created_at": "2018-06-14 14:39:45",
+                        "updated_at": "2018-06-14 14:39:45"
+                    },
+                    {
+                        "id": 2,
+                        "name": "配送方式2",
+                        "status": true,
+                        "created_at": "2018-06-14 14:42:23",
+                        "updated_at": "2018-06-14 14:42:23"
+                    }
                 ],
                 "meta": {
                     "pagination": {
-                        "total": 1,
-                        "count": 1,
-                        "per_page": 8,
+                        "total": 3,
+                        "count": 2,
+                        "per_page": 10,
                         "current_page": 1,
                         "total_pages": 1,
-                        "links": null
+                        "links": {
+                            "previous": null,
+                            "next": "{{host}}/api/mags?page=1"
+                        }
                     }
                 }
             }
 
-## 显示单条库存同步 [GET /api/stocksyncreturn/:id[?include=]]
+## 新增配送方式 [POST /api/mags]
+
+
++ Parameters
+    + name: (string, required) - 配送方式名
+    + status: (boolean, optional) - 状态(0:停用，1:启用)
+        + Default: 1
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:39:45",
+                "meta": {
+                    "status_code": "201"
+                }
+            }
+
+## 显示单条配送方式 [GET /api/mags/:id]
 
 
 + Response 404 (application/json)
@@ -16775,44 +17092,15 @@ FORMAT: 1A
 + Response 200 (application/json)
     + Body
 
-            []
-
-## 库存提交 [PUT /api/stocksyncreturn/:id/stocksubmit]
-
-
-+ Response 422 (application/json)
-    + Body
-
             {
-                "message": "无法库存提交",
-                "status_code": 422
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:45:14"
             }
 
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-## 库存同步 [PUT /api/stocksyncreturn/:id/stocksync]
-
-
-+ Response 422 (application/json)
-    + Body
-
-            {
-                "message": "无法库存同步",
-                "status_code": 422
-            }
-
-+ Response 204 (application/json)
-    + Body
-
-            []
-
-# returnorderitems [/api]
-退货子单资源
-
-## 删除退货子单 [DELETE /api/returnorderitems/:id]
+## 修改配送方式 [PATCH /api/mags/:id]
 
 
 + Response 404 (application/json)
@@ -16821,6 +17109,1003 @@ FORMAT: 1A
             {
                 "message": "No query results for model ",
                 "status_code": 404
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必须string类型"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式1",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:40:45"
+            }
+
+## 删除配送方式 [DELETE /api/mags/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 删除一组配送方式 [DELETE /api/mags]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "删除错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 更改一组配送方式状态 [PUT /api/mags/editstatus]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+    + status: (boolean, required) - 状态(0:停用，1:启用)
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "更改错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ],
+                    "status": [
+                        "状态必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+# UserAstSuppliers [/api]
+配送方式资源
+
+## 获取所有配送方式 [GET /api/uass{?status}]
+
+
++ Parameters
+    + status: (boolean, optional) - 获取的状态
+        + Default: all
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "data": [
+                    {
+                        "id": 1,
+                        "name": "配送方式",
+                        "status": true,
+                        "created_at": "2018-06-14 14:39:45",
+                        "updated_at": "2018-06-14 14:39:45"
+                    },
+                    {
+                        "id": 2,
+                        "name": "配送方式2",
+                        "status": true,
+                        "created_at": "2018-06-14 14:42:23",
+                        "updated_at": "2018-06-14 14:42:23"
+                    }
+                ],
+                "meta": {
+                    "pagination": {
+                        "total": 3,
+                        "count": 2,
+                        "per_page": 10,
+                        "current_page": 1,
+                        "total_pages": 1,
+                        "links": {
+                            "previous": null,
+                            "next": "{{host}}/api/uass?page=1"
+                        }
+                    }
+                }
+            }
+
+## 新增配送方式 [POST /api/uass]
+
+
++ Parameters
+    + name: (string, required) - 配送方式名
+    + status: (boolean, optional) - 状态(0:停用，1:启用)
+        + Default: 1
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:39:45",
+                "meta": {
+                    "status_code": "201"
+                }
+            }
+
+## 显示单条配送方式 [GET /api/uass/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:45:14"
+            }
+
+## 修改配送方式 [PATCH /api/uass/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必须string类型"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式1",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:40:45"
+            }
+
+## 删除配送方式 [DELETE /api/uass/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 删除一组配送方式 [DELETE /api/uass]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "删除错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 更改一组配送方式状态 [PUT /api/uass/editstatus]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+    + status: (boolean, required) - 状态(0:停用，1:启用)
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "更改错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ],
+                    "status": [
+                        "状态必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+# UserAstWarehouses [/api]
+配送方式资源
+
+## 获取所有配送方式 [GET /api/uass{?status}]
+
+
++ Parameters
+    + status: (boolean, optional) - 获取的状态
+        + Default: all
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "data": [
+                    {
+                        "id": 1,
+                        "name": "配送方式",
+                        "status": true,
+                        "created_at": "2018-06-14 14:39:45",
+                        "updated_at": "2018-06-14 14:39:45"
+                    },
+                    {
+                        "id": 2,
+                        "name": "配送方式2",
+                        "status": true,
+                        "created_at": "2018-06-14 14:42:23",
+                        "updated_at": "2018-06-14 14:42:23"
+                    }
+                ],
+                "meta": {
+                    "pagination": {
+                        "total": 3,
+                        "count": 2,
+                        "per_page": 10,
+                        "current_page": 1,
+                        "total_pages": 1,
+                        "links": {
+                            "previous": null,
+                            "next": "{{host}}/api/uass?page=1"
+                        }
+                    }
+                }
+            }
+
+## 新增配送方式 [POST /api/uass]
+
+
++ Parameters
+    + name: (string, required) - 配送方式名
+    + status: (boolean, optional) - 状态(0:停用，1:启用)
+        + Default: 1
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:39:45",
+                "meta": {
+                    "status_code": "201"
+                }
+            }
+
+## 显示单条配送方式 [GET /api/uass/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:45:14"
+            }
+
+## 修改配送方式 [PATCH /api/uass/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必须string类型"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式1",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:40:45"
+            }
+
+## 删除配送方式 [DELETE /api/uass/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 删除一组配送方式 [DELETE /api/uass]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "删除错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 更改一组配送方式状态 [PUT /api/uass/editstatus]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+    + status: (boolean, required) - 状态(0:停用，1:启用)
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "更改错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ],
+                    "status": [
+                        "状态必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+# PrinterConfs [/api]
+配送方式资源
+
+## 获取所有配送方式 [GET /api/confs{?status}]
+
+
++ Parameters
+    + status: (boolean, optional) - 获取的状态
+        + Default: all
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "data": [
+                    {
+                        "id": 1,
+                        "name": "配送方式",
+                        "status": true,
+                        "created_at": "2018-06-14 14:39:45",
+                        "updated_at": "2018-06-14 14:39:45"
+                    },
+                    {
+                        "id": 2,
+                        "name": "配送方式2",
+                        "status": true,
+                        "created_at": "2018-06-14 14:42:23",
+                        "updated_at": "2018-06-14 14:42:23"
+                    }
+                ],
+                "meta": {
+                    "pagination": {
+                        "total": 3,
+                        "count": 2,
+                        "per_page": 10,
+                        "current_page": 1,
+                        "total_pages": 1,
+                        "links": {
+                            "previous": null,
+                            "next": "{{host}}/api/confs?page=1"
+                        }
+                    }
+                }
+            }
+
+## 新增配送方式 [POST /api/confs]
+
+
++ Parameters
+    + name: (string, required) - 配送方式名
+    + status: (boolean, optional) - 状态(0:停用，1:启用)
+        + Default: 1
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:39:45",
+                "meta": {
+                    "status_code": "201"
+                }
+            }
+
+## 显示单条配送方式 [GET /api/confs/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:45:14"
+            }
+
+## 修改配送方式 [PATCH /api/confs/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必须string类型"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式1",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:40:45"
+            }
+
+## 删除配送方式 [DELETE /api/confs/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 删除一组配送方式 [DELETE /api/confs]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "删除错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 更改一组配送方式状态 [PUT /api/confs/editstatus]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+    + status: (boolean, required) - 状态(0:停用，1:启用)
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "更改错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ],
+                    "status": [
+                        "状态必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+# NegativeInvConfs [/api]
+配送方式资源
+
+## 获取所有配送方式 [GET /api/confs{?status}]
+
+
++ Parameters
+    + status: (boolean, optional) - 获取的状态
+        + Default: all
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "data": [
+                    {
+                        "id": 1,
+                        "name": "配送方式",
+                        "status": true,
+                        "created_at": "2018-06-14 14:39:45",
+                        "updated_at": "2018-06-14 14:39:45"
+                    },
+                    {
+                        "id": 2,
+                        "name": "配送方式2",
+                        "status": true,
+                        "created_at": "2018-06-14 14:42:23",
+                        "updated_at": "2018-06-14 14:42:23"
+                    }
+                ],
+                "meta": {
+                    "pagination": {
+                        "total": 3,
+                        "count": 2,
+                        "per_page": 10,
+                        "current_page": 1,
+                        "total_pages": 1,
+                        "links": {
+                            "previous": null,
+                            "next": "{{host}}/api/confs?page=1"
+                        }
+                    }
+                }
+            }
+
+## 新增配送方式 [POST /api/confs]
+
+
++ Parameters
+    + name: (string, required) - 配送方式名
+    + status: (boolean, optional) - 状态(0:停用，1:启用)
+        + Default: 1
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:39:45",
+                "meta": {
+                    "status_code": "201"
+                }
+            }
+
+## 显示单条配送方式 [GET /api/confs/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:45:14"
+            }
+
+## 修改配送方式 [PATCH /api/confs/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "name": [
+                        "配送方式名称必须string类型"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+                "id": 1,
+                "name": "配送方式1",
+                "status": true,
+                "created_at": "2018-06-14 14:39:45",
+                "updated_at": "2018-06-14 14:40:45"
+            }
+
+## 删除配送方式 [DELETE /api/confs/:id]
+
+
++ Response 404 (application/json)
+    + Body
+
+            {
+                "message": "No query results for model ",
+                "status_code": 404
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 删除一组配送方式 [DELETE /api/confs]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "删除错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ]
+                },
+                "status_code": 422
+            }
+
++ Response 204 (application/json)
+    + Body
+
+            []
+
+## 更改一组配送方式状态 [PUT /api/confs/editstatus]
+
+
++ Parameters
+    + ids: (string, required) - 配送方式id组 格式: 1,2,3,4 
+    + status: (boolean, required) - 状态(0:停用，1:启用)
+
++ Response 500 (application/json)
+    + Body
+
+            {
+                "message": "更改错误",
+                "code": 500,
+                "status_code": 500
+            }
+
++ Response 422 (application/json)
+    + Body
+
+            {
+                "message": "422 Unprocessable Entity",
+                "errors": {
+                    "ids": [
+                        "id组必填"
+                    ],
+                    "status": [
+                        "状态必填"
+                    ]
+                },
+                "status_code": 422
             }
 
 + Response 204 (application/json)
