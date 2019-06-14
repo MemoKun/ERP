@@ -22,7 +22,6 @@
       <el-button type="primary">筛选</el-button>
       <el-button @click="resets">重置</el-button>
     </div>
-
     <!--*****************************************中间主要的table*******************************-->
     <el-tabs v-model="middleActiveName" @tab-click="firstHandleClick" style="height: 250px;">
       <el-tab-pane label="新建" name="0">

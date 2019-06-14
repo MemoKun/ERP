@@ -1454,7 +1454,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         prop: "taobao_tid",
         type: "text"
       }, {
-        label: "单号失联",
+        label: "单号关联",
         prop: "association_taobao_oid",
         type: "text"
       }, {

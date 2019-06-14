@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class OrderOperaionRecord extends Model
+class OrderOperationRecord extends Model
 {
     protected $table = 'order_operation_records';
 

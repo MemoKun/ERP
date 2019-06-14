@@ -328,6 +328,16 @@ class Order extends Model
             $this->locker_id = Auth::guard('api')->id();
             $this->locked_at = date('Y-m-d h:i:s');
             $this->order_status = self::ORDER_STATUS_LOCK;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new OrderOperationRecord;
+            $operationData->orders_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "锁定";
+            $operationData->description = "订单锁定";
+            $operationData->save();
         } else {
             $this->locker_id = 0;
             $this->order_status = self::ORDER_STATUS_NEW;
@@ -937,6 +947,6 @@ class Order extends Model
 
     public function orderOperationRecord()
     {
-        return $this->hasMany(orderOperationRecord::class, 'orders_id');
+        return $this->hasMany(OrderOperationRecord::class, 'orders_id');
     }
 }

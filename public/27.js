@@ -1214,7 +1214,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prop: "taobao_tid",
         type: "text"
       }, {
-        label: "单号失联",
+        label: "单号关联",
         prop: "association_taobao_oid",
         type: "text"
       }, {
