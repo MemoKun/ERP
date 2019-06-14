@@ -1,6 +1,6 @@
 webpackJsonp([31],{
 
-/***/ 1064:
+/***/ 1063:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9,6 +9,19 @@ var _methods;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -818,23 +831,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         system_order_no: "",
         receiver_name: "",
         receiver_phone: "",
-        order_money: "",
         receiver_address: "",
-        order_goods: "",
+        shops_id: "",
         business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
         promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        orderCompany: [{ label: "ceshi", value: 0 }],
-        cs_audited_at: ["0000-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        seller_remark: "",
-        seller_flag: "",
-        ordertbFlag: [{ label: "ceshi", value: 0 }],
-        order_lock: "",
-        orderLock: [{ label: "ceshi", value: 0 }],
-        logistics_id: "",
-        shops_id: "",
-        orderShops: [{ label: "ceshi", value: 0 }]
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: ""
       },
+      threeParts: true,
       activeName: "0",
       leftTopActiveName: "0",
       rightActiveName: "0",
@@ -1960,6 +1969,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 0:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 30,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -1978,6 +1997,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 1:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 60,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -1993,6 +2022,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 2:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 70,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -2008,6 +2047,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 3:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 80,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -2166,9 +2215,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.payDtlData = row["paymentDetails"]["data"];
     },
     proDtlRClick: function proDtlRClick(row) {},
-    resets: function resets() {
-      this.searchBox = {};
-    },
     delBatch: function delBatch() {
       var _this2 = this;
 
@@ -2776,6 +2822,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this14.$message.error(str);
       }
     });
+  }), _defineProperty(_methods, "addProRowClick", function addProRowClick(row) {
+    this.proRIndex = "index" + row.index;
+  }), _defineProperty(_methods, "stockOutCancel", function stockOutCancel() {
+    this.stockOutMask = false;
   }), _defineProperty(_methods, "cancelSplit", function cancelSplit() {
     this.splitMask = false;
   }), _defineProperty(_methods, "handleMergerOrder", function handleMergerOrder() {
@@ -2808,6 +2858,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     }
+  }), _defineProperty(_methods, "searchData", function searchData() {
+    this.loading = true;
+    this.fetchData();
+  }), _defineProperty(_methods, "resets", function resets() {
+    this.searchBox = {
+      member_nick: "",
+      system_order_no: "",
+      receiver_name: "",
+      receiver_phone: "",
+      receiver_address: "",
+      shops_id: "",
+      business_personnel_id: "",
+      seller_remark: "",
+      logistics_id: "",
+      seller_flag: "",
+      promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+      created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+      audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+      order_transMStart: "",
+      order_order_transMEndmark: ""
+    };
   }), _methods),
   mounted: function mounted() {
     this.fetchData();
@@ -2821,7 +2892,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ 1065:
+/***/ 1064:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -2988,25 +3059,6 @@ var render = function() {
                   _c(
                     "span",
                     [
-                      _c("label", [_vm._v("包含商品")]),
-                      _vm._v(" "),
-                      _c("el-input", {
-                        attrs: { clearable: "" },
-                        model: {
-                          value: _vm.searchBox.products_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "products_id", $$v)
-                          },
-                          expression: "searchBox.products_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    [
                       _c("label", [_vm._v("业务员")]),
                       _vm._v(" "),
                       _c(
@@ -3044,10 +3096,8 @@ var render = function() {
                       )
                     ],
                     1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "searchBox" }, [
+                  ),
+                  _vm._v(" "),
                   _c(
                     "span",
                     [
@@ -3065,8 +3115,10 @@ var render = function() {
                       })
                     ],
                     1
-                  ),
-                  _vm._v(" "),
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "searchBox" }, [
                   _c(
                     "span",
                     [
@@ -3110,51 +3162,86 @@ var render = function() {
                     [
                       _c("label", [_vm._v("淘宝旗帜")]),
                       _vm._v(" "),
-                      _c("el-input", {
-                        attrs: { clearable: "" },
-                        model: {
-                          value: _vm.searchBox.seller_flag,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "seller_flag", $$v)
-                          },
-                          expression: "searchBox.seller_flag"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    [
-                      _c("label", [_vm._v("锁定状态")]),
-                      _vm._v(" "),
                       _c(
                         "el-select",
                         {
                           attrs: { clearable: "", placeholder: "请选择" },
                           model: {
-                            value: _vm.searchBox.lock_status,
+                            value: _vm.searchBox.seller_flag,
                             callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "lock_status", $$v)
+                              _vm.$set(_vm.searchBox, "seller_flag", $$v)
                             },
-                            expression: "searchBox.lock_status"
+                            expression: "searchBox.seller_flag"
                           }
                         },
-                        _vm._l(_vm.searchBox.lockStatus, function(item) {
-                          return _c("el-option", {
-                            key: item.value,
-                            attrs: { label: item.label, value: item.value }
-                          })
-                        }),
+                        [
+                          _c(
+                            "el-option",
+                            { key: 0, attrs: { label: "黑旗", value: 0 } },
+                            [_c("i", { staticClass: "iconfont bf-flag" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 1, attrs: { label: "红旗", value: 1 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "red" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 2, attrs: { label: "黄旗", value: 2 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "yellow" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 3, attrs: { label: "绿旗", value: 3 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "green" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 4, attrs: { label: "蓝旗", value: 4 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "blue" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 5, attrs: { label: "紫旗", value: 5 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "purple" }
+                              })
+                            ]
+                          )
+                        ],
                         1
                       )
                     ],
                     1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "searchBox" }, [
+                  ),
+                  _vm._v(" "),
                   _c(
                     "span",
                     [
@@ -3177,8 +3264,10 @@ var render = function() {
                       })
                     ],
                     1
-                  ),
-                  _vm._v(" "),
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "searchBox" }, [
                   _c(
                     "span",
                     [
@@ -3216,18 +3305,49 @@ var render = function() {
                           "end-placeholder": "结束日期"
                         },
                         model: {
-                          value: _vm.searchBox.cs_audited_at,
+                          value: _vm.searchBox.audit_at,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "cs_audited_at", $$v)
+                            _vm.$set(_vm.searchBox, "audit_at", $$v)
                           },
-                          expression: "searchBox.cs_audited_at"
+                          expression: "searchBox.audit_at"
                         }
                       })
                     ],
                     1
                   ),
                   _vm._v(" "),
-                  _c("span")
+                  _c(
+                    "span",
+                    { staticClass: "transMoney" },
+                    [
+                      _c("label", [_vm._v("交易金额")]),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        attrs: { type: "number", clearable: "" },
+                        model: {
+                          value: _vm.searchBox.order_transMStart,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "order_transMStart", $$v)
+                          },
+                          expression: "searchBox.order_transMStart"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", [_vm._v("至")]),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        attrs: { type: "number", clearable: "" },
+                        model: {
+                          value: _vm.searchBox.order_transMEnd,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "order_transMEnd", $$v)
+                          },
+                          expression: "searchBox.order_transMEnd"
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ]),
                 _vm._v(" "),
                 _c(
@@ -3238,7 +3358,7 @@ var render = function() {
                       "el-button",
                       {
                         attrs: { type: "primary" },
-                        on: { click: _vm.fetchData }
+                        on: { click: _vm.searchData }
                       },
                       [_vm._v("筛选")]
                     ),
@@ -6438,9 +6558,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1064)
+var __vue_script__ = __webpack_require__(1063)
 /* template */
-var __vue_template__ = __webpack_require__(1065)
+var __vue_template__ = __webpack_require__(1064)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

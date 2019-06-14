@@ -145,8 +145,18 @@ class MerchandiserDepartmentsController extends Controller
     
     public function index(MerchandiserDepartmentRequest $request)
     {
-        $warehouses_id = $order_status = $status =  null;
-        $order_status = $request->input("");
+        $warehouses_id =  null;
+        $order_status = $request->input('order_status');
+        $member_nick = $request->input('member_nick');
+        $system_order_no = $request->input('system_order_no');
+        $receiver_name = $request->input('receiver_name');
+        $receiver_phone = $request->input('receiver_phone');
+        $receiver_address = $request->input('receiver_address');
+        $shops_id = $request->input('shops_id');
+        $business_personnel_id = $request->input('business_personnel_id');
+        $seller_remark = $request->input('seller_remark');
+        $logistics_id = $request->input('logistics_id');
+        $seller_flag = $request->input('seller_flag');
 
         extract($request->validated());
 
@@ -155,31 +165,19 @@ class MerchandiserDepartmentsController extends Controller
 
                 return $query->where('warehouses_id', $warehouses_id);
 
-            })->when(!is_null($status), function ($query) use ($status) {
-
-                return $query->where('status', $status);
-
-            })->when($order_status, function ($query) use ($order_status) {
-
-                if($order_status == Order::ORDER_STATUS_CS_AUDIT){//待跟单一审,待货审 30 
-                    return $query->whereIn('order_status', [Order::ORDER_STATUS_CS_AUDIT,Order::ORDER_STATUS_FD_AUDIT]);
-                }
-
-                if($order_status == Order::ORDER_STATUS_CARGO_AUDIT){//已货审 60
-                    return $query->whereIn('order_status', [Order::ORDER_STATUS_CARGO_AUDIT]);
-                }
-
-                if($order_status == Order::ORDER_STATUS_READY_STOCK_OUT){//待货审 70
-                    return $query->whereIn('order_status', [Order::ORDER_STATUS_READY_STOCK_OUT]);
-                }
-
-                if($order_status == Order::ORDER_STATUS_STOCK_OUT){//已发货 80
-                    return $query->whereIn('order_status', [Order::ORDER_STATUS_STOCK_OUT]);
-                }
-
-                return $query->where('order_status', $order_status);
-
-            });
+            })
+            ->where('order_status', 'like', '%'.$order_status.'%')
+            ->where('member_nick', 'like', '%'.$member_nick.'%')
+            ->where('system_order_no', 'like', '%'.$system_order_no.'%')
+            ->where('receiver_name', 'like', '%'.$receiver_name.'%')
+            ->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+            ->where('receiver_address', 'like', '%'.$receiver_address.'%')
+            ->where('shops_id', 'like', '%'.$shops_id.'%')
+            ->where('business_personnel_id', 'like', '%'.$business_personnel_id.'%')
+            ->where('seller_remark', 'like', '%'.$seller_remark.'%')
+            ->where('logistics_id', 'like', '%'.$logistics_id.'%')
+            ->where('seller_flag', 'like', '%'.$seller_flag.'%')
+            ->orderBy('updated_at', 'desc');
 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }

@@ -1,10 +1,28 @@
 webpackJsonp([35],{
 
-/***/ 1074:
+/***/ 1073:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -479,30 +497,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: "bf-refresh",
         ent: this.refresh
       }],
+      addSubData: [],
       filterBox: false,
       searchBox: {
         member_nick: "",
         system_order_no: "",
         receiver_name: "",
         receiver_phone: "",
-        order_money: "",
         receiver_address: "",
-        order_goods: "",
-        business_personnel_id: "",
-        order_promiseDate: "",
-        order_workDate: "",
-        order_transMStart: "",
-        order_transMEnd: "",
-        orderCompany: [{ label: "ceshi", value: 0 }],
-        order_customerInves: "",
-        seller_remark: "",
-        order_flag: "",
-        ordertbFlag: [{ label: "ceshi", value: 0 }],
-        order_lock: "",
-        orderLock: [{ label: "ceshi", value: 0 }],
-        logistics_id: "",
         shops_id: "",
-        orderShops: [{ label: "ceshi", value: 0 }]
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: ""
       },
       /*获取数据*/
       activeName: "0",
@@ -1279,8 +1291,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts, {
+          this.$fetch(this.urls.customerservicedepts + '/getAuditDepartment', {
             order_status: 5,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -1304,8 +1326,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 1:
-          this.$fetch(this.urls.customerservicedepts, {
+          this.$fetch(this.urls.customerservicedepts + '/getAuditDepartment', {
             order_status: 10,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -1643,10 +1675,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this9.$message.error(str);
         }
       });
+    },
+
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
+    resets: function resets() {
+      this.searchBox = {
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_address: "",
+        shops_id: "",
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: ""
+      };
     }
   },
   mounted: function mounted() {
+    var _this10 = this;
+
     this.fetchData();
+    this.$fetch(this.urls.customerservicedepts + "/create").then(function (res) {
+      _this10.addSubData = res;
+    }, function (err) {});
     this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -1657,7 +1719,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1075:
+/***/ 1074:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1689,7 +1751,7 @@ var render = function() {
                   _c(
                     "span",
                     [
-                      _c("label", [_vm._v("会员名称")]),
+                      _c("label", [_vm._v("买家昵称")]),
                       _vm._v(" "),
                       _c("el-input", {
                         attrs: { clearable: "" },
@@ -1800,33 +1862,23 @@ var render = function() {
                             expression: "searchBox.shops_id"
                           }
                         },
-                        _vm._l(_vm.searchBox.orderShops, function(item) {
-                          return _c("el-option", {
-                            key: item.value,
-                            attrs: { label: item.label, value: item.value }
-                          })
+                        _vm._l(_vm.addSubData["shop"], function(list) {
+                          return _c(
+                            "span",
+                            { key: list.id },
+                            [
+                              _c("el-option", {
+                                attrs: {
+                                  label: list.name ? list.name : list.nick,
+                                  value: list.id
+                                }
+                              })
+                            ],
+                            1
+                          )
                         }),
-                        1
+                        0
                       )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    [
-                      _c("label", [_vm._v("包含商品")]),
-                      _vm._v(" "),
-                      _c("el-input", {
-                        attrs: { clearable: "" },
-                        model: {
-                          value: _vm.searchBox.order_goods,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_goods", $$v)
-                          },
-                          expression: "searchBox.order_goods"
-                        }
-                      })
                     ],
                     1
                   ),
@@ -1836,18 +1888,56 @@ var render = function() {
                     [
                       _c("label", [_vm._v("业务员")]),
                       _vm._v(" "),
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.business_personnel_id,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.searchBox,
+                                "business_personnel_id",
+                                $$v
+                              )
+                            },
+                            expression: "searchBox.business_personnel_id"
+                          }
+                        },
+                        _vm._l(_vm.addSubData["user"], function(list) {
+                          return _c(
+                            "span",
+                            { key: list.id },
+                            [
+                              _c("el-option", {
+                                attrs: {
+                                  label: list["username"],
+                                  value: list.id
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        }),
+                        0
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("卖家备注")]),
+                      _vm._v(" "),
                       _c("el-input", {
                         attrs: { clearable: "" },
                         model: {
-                          value: _vm.searchBox.business_personnel_id,
+                          value: _vm.searchBox.seller_remark,
                           callback: function($$v) {
-                            _vm.$set(
-                              _vm.searchBox,
-                              "business_personnel_id",
-                              $$v
-                            )
+                            _vm.$set(_vm.searchBox, "seller_remark", $$v)
                           },
-                          expression: "searchBox.business_personnel_id"
+                          expression: "searchBox.seller_remark"
                         }
                       })
                     ],
@@ -1855,129 +1945,130 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.filterBox,
-                        expression: "filterBox"
-                      }
-                    ],
-                    staticClass: "searchBox"
-                  },
-                  [
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("卖家备注")]),
-                        _vm._v(" "),
-                        _c("el-input", {
-                          attrs: { clearable: "" },
-                          model: {
-                            value: _vm.searchBox.seller_remark,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "seller_remark", $$v)
-                            },
-                            expression: "searchBox.seller_remark"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("物流公司")]),
-                        _vm._v(" "),
-                        _c(
-                          "el-select",
-                          {
-                            attrs: { clearable: "", placeholder: "请选择" },
-                            model: {
-                              value: _vm.searchBox.logistics_id,
-                              callback: function($$v) {
-                                _vm.$set(_vm.searchBox, "logistics_id", $$v)
-                              },
-                              expression: "searchBox.logistics_id"
-                            }
-                          },
-                          _vm._l(_vm.searchBox.orderCompany, function(item) {
-                            return _c("el-option", {
-                              key: item.value,
-                              attrs: { label: item.label, value: item.value }
-                            })
-                          }),
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("淘宝旗帜")]),
-                        _vm._v(" "),
-                        _c(
-                          "el-select",
-                          {
-                            attrs: { clearable: "", placeholder: "请选择" },
-                            model: {
-                              value: _vm.searchBox.order_flag,
-                              callback: function($$v) {
-                                _vm.$set(_vm.searchBox, "order_flag", $$v)
-                              },
-                              expression: "searchBox.order_flag"
-                            }
-                          },
-                          _vm._l(_vm.searchBox.ordertbFlag, function(item) {
-                            return _c("el-option", {
-                              key: item.value,
-                              attrs: { label: item.label, value: item.value }
-                            })
-                          }),
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("锁定状态")]),
-                        _vm._v(" "),
-                        _c(
-                          "el-select",
-                          {
-                            attrs: { clearable: "", placeholder: "请选择" },
-                            model: {
-                              value: _vm.searchBox.order_lock,
-                              callback: function($$v) {
-                                _vm.$set(_vm.searchBox, "order_lock", $$v)
-                              },
-                              expression: "searchBox.order_lock"
-                            }
-                          },
-                          _vm._l(_vm.searchBox.orderLock, function(item) {
-                            return _c("el-option", {
-                              key: item.value,
-                              attrs: { label: item.label, value: item.value }
-                            })
-                          }),
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
                 _c("div", { staticClass: "searchBox" }, [
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("物流公司")]),
+                      _vm._v(" "),
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.logistics_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.searchBox, "logistics_id", $$v)
+                            },
+                            expression: "searchBox.logistics_id"
+                          }
+                        },
+                        _vm._l(_vm.addSubData["logistics"], function(list) {
+                          return _c(
+                            "span",
+                            { key: list.id },
+                            [
+                              _c("el-option", {
+                                attrs: {
+                                  label: list.name ? list.name : list.nick,
+                                  value: list.id
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        }),
+                        0
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("淘宝旗帜")]),
+                      _vm._v(" "),
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.seller_flag,
+                            callback: function($$v) {
+                              _vm.$set(_vm.searchBox, "seller_flag", $$v)
+                            },
+                            expression: "searchBox.seller_flag"
+                          }
+                        },
+                        [
+                          _c(
+                            "el-option",
+                            { key: 0, attrs: { label: "黑旗", value: 0 } },
+                            [_c("i", { staticClass: "iconfont bf-flag" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 1, attrs: { label: "红旗", value: 1 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "red" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 2, attrs: { label: "黄旗", value: 2 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "yellow" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 3, attrs: { label: "绿旗", value: 3 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "green" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 4, attrs: { label: "蓝旗", value: 4 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "blue" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-option",
+                            { key: 5, attrs: { label: "紫旗", value: 5 } },
+                            [
+                              _c("i", {
+                                staticClass: "iconfont bf-flag",
+                                staticStyle: { color: "purple" }
+                              })
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
                     "span",
                     [
@@ -1991,17 +2082,19 @@ var render = function() {
                           "end-placeholder": "结束日期"
                         },
                         model: {
-                          value: _vm.searchBox.order_promiseDate,
+                          value: _vm.searchBox.promise_ship_time,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_promiseDate", $$v)
+                            _vm.$set(_vm.searchBox, "promise_ship_time", $$v)
                           },
-                          expression: "searchBox.order_promiseDate"
+                          expression: "searchBox.promise_ship_time"
                         }
                       })
                     ],
                     1
-                  ),
-                  _vm._v(" "),
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "searchBox" }, [
                   _c(
                     "span",
                     [
@@ -2015,11 +2108,11 @@ var render = function() {
                           "end-placeholder": "结束日期"
                         },
                         model: {
-                          value: _vm.searchBox.order_workDate,
+                          value: _vm.searchBox.created_at,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_workDate", $$v)
+                            _vm.$set(_vm.searchBox, "created_at", $$v)
                           },
-                          expression: "searchBox.order_workDate"
+                          expression: "searchBox.created_at"
                         }
                       })
                     ],
@@ -2039,11 +2132,11 @@ var render = function() {
                           "end-placeholder": "结束日期"
                         },
                         model: {
-                          value: _vm.searchBox.order_customerInves,
+                          value: _vm.searchBox.audit_at,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchBox, "order_customerInves", $$v)
+                            _vm.$set(_vm.searchBox, "audit_at", $$v)
                           },
-                          expression: "searchBox.order_customerInves"
+                          expression: "searchBox.audit_at"
                         }
                       })
                     ],
@@ -2092,7 +2185,7 @@ var render = function() {
                       "el-button",
                       {
                         attrs: { type: "primary" },
-                        on: { click: _vm.fetchData }
+                        on: { click: _vm.searchData }
                       },
                       [_vm._v("筛选")]
                     ),
@@ -3925,9 +4018,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1074)
+var __vue_script__ = __webpack_require__(1073)
 /* template */
-var __vue_template__ = __webpack_require__(1075)
+var __vue_template__ = __webpack_require__(1074)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

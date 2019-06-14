@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Order;
-
 use App\Http\Requests\Api\FinancialDepartmentRequest;
-
 use App\Transformers\OrderTransformer;
 use App\Http\Controllers\Traits\ProcedureTrait;
 
 /**
- * 财务部资源
+ * 财务部资源.
+ *
  * @Resource("financialdepts",uri="/api")
  */
 class FinancialDepartmentsController extends Controller
@@ -22,7 +21,7 @@ class FinancialDepartmentsController extends Controller
     const PerPage = 8;
 
     /**
-     * 获取所有财务部订单
+     * 获取所有财务部订单.
      *
      * @Get("/financialdepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -126,26 +125,49 @@ class FinancialDepartmentsController extends Controller
      */
     public function index(FinancialDepartmentRequest $request)
     {
-        $order_status = $status =  null;
+        // $order_status = $status =  null;
 
-        extract($request->validated());
+        // extract($request->validated());
 
-        $order = Order::query()
-            ->when(!is_null($status), function ($query) use ($status) {
+        // $order = Order::query()
+        //     ->when(!is_null($status), function ($query) use ($status) {
 
-                return $query->where('status', $status);
+        //         return $query->where('status', $status);
 
-            })->when($order_status, function ($query) use ($order_status) {
+        //     })->when($order_status, function ($query) use ($order_status) {
 
-                return $query->where('order_status', $order_status);
+        //         return $query->where('order_status', $order_status);
 
-            });
+        //     });
+        $order_status = $request->input('order_status');
+        $member_nick = $request->input('member_nick');
+        $system_order_no = $request->input('system_order_no');
+        $receiver_name = $request->input('receiver_name');
+        $receiver_phone = $request->input('receiver_phone');
+        $receiver_address = $request->input('receiver_address');
+        $shops_id = $request->input('shops_id');
+        $business_personnel_id = $request->input('business_personnel_id');
+        $seller_remark = $request->input('seller_remark');
+        $logistics_id = $request->input('logistics_id');
+        $seller_flag = $request->input('seller_flag');
+        $order = Order::query()->where('order_status', 'like', '%'.$order_status.'%')
+        ->where('member_nick', 'like', '%'.$member_nick.'%')
+        ->where('system_order_no', 'like', '%'.$system_order_no.'%')
+        ->where('receiver_name', 'like', '%'.$receiver_name.'%')
+        ->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+        ->where('receiver_address', 'like', '%'.$receiver_address.'%')
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('business_personnel_id', 'like', '%'.$business_personnel_id.'%')
+        ->where('seller_remark', 'like', '%'.$seller_remark.'%')
+        ->where('logistics_id', 'like', '%'.$logistics_id.'%')
+        ->where('seller_flag', 'like', '%'.$seller_flag.'%')
+        ->orderBy('updated_at', 'desc');
 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
 
     /**
-     * 财务驳回
+     * 财务驳回.
      *
      * @PUT("/financialdepts/:id/reject")
      * @Versions({"v1"})
@@ -166,7 +188,6 @@ class FinancialDepartmentsController extends Controller
             'unOneAudit'
         );
     }
-
 
     /**
      * 财审
@@ -213,5 +234,4 @@ class FinancialDepartmentsController extends Controller
             'unFinancialAudit'
         );
     }
-
 }

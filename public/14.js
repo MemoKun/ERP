@@ -1,12 +1,12 @@
 webpackJsonp([14],{
 
-/***/ 1058:
+/***/ 1057:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(1059);
+var content = __webpack_require__(1058);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -27,7 +27,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 1059:
+/***/ 1058:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(16)(false);
@@ -42,7 +42,7 @@ exports.push([module.i, "\n.dashboard-container[data-v-366eba34] {\n  margin: 30
 
 /***/ }),
 
-/***/ 1060:
+/***/ 1059:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -833,7 +833,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_resource__["a" /* default */]);
 
 /***/ }),
 
-/***/ 1061:
+/***/ 1060:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -936,13 +936,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(1058)
+  __webpack_require__(1057)
 }
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1060)
+var __vue_script__ = __webpack_require__(1059)
 /* template */
-var __vue_template__ = __webpack_require__(1061)
+var __vue_template__ = __webpack_require__(1060)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

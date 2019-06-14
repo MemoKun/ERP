@@ -15,8 +15,12 @@
         <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
       </span>
       <span>
-        
+
       </span>
+    </div>
+    <div style="text-align: right">
+      <el-button type="primary" @click="fetchData">筛选</el-button>
+      <el-button @click="resets">重置</el-button>
     </div>
 
     <!--取消采购-->
@@ -1106,6 +1110,9 @@ export default {
     refresh() {
       this.loading = true;
       this.fetchData();
+    },
+    resets(){
+      this.searchBox = {};
     }
   },
   mounted() {

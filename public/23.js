@@ -1,10 +1,14 @@
 webpackJsonp([23],{
 
-/***/ 1084:
+/***/ 1083:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -782,10 +786,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     /*获取数据*/
     clickTopTabs: function clickTopTabs() {
       this.loading = true;
-      this.fetchStockData();
+      this.fetchData();
       this.stockDtlData = [];
     },
-    fetchStockData: function fetchStockData() {
+    fetchData: function fetchData() {
       var _this = this;
 
       this.multipleSelection = "";
@@ -1531,7 +1535,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     /*刷新*/
     refresh: function refresh() {
       this.loading = true;
-      this.fetchStockData();
+      this.fetchData();
     },
 
     /*提交*/
@@ -1637,12 +1641,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this15.$message.error(err.response.data.message);
         });
       }
+    },
+    resets: function resets() {
+      this.searchBox = {};
     }
     /*入库*/
 
   },
   mounted: function mounted() {
-    this.fetchStockData();
+    this.fetchData();
     this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -1653,7 +1660,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1085:
+/***/ 1084:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1849,6 +1856,21 @@ var render = function() {
         _vm._v(" "),
         _c("span")
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticStyle: { "text-align": "right" } },
+        [
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.fetchData } },
+            [_vm._v("筛选")]
+          ),
+          _vm._v(" "),
+          _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -3215,9 +3237,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1084)
+var __vue_script__ = __webpack_require__(1083)
 /* template */
-var __vue_template__ = __webpack_require__(1085)
+var __vue_template__ = __webpack_require__(1084)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

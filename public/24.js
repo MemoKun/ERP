@@ -1,10 +1,14 @@
 webpackJsonp([24],{
 
-/***/ 1098:
+/***/ 1097:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -1585,6 +1589,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     refresh: function refresh() {
       this.loading = true;
       this.fetchData();
+    },
+    resets: function resets() {
+      this.searchBox = {};
     }
   },
   mounted: function mounted() {
@@ -1599,7 +1606,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1099:
+/***/ 1098:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1688,6 +1695,21 @@ var render = function() {
         _vm._v(" "),
         _c("span")
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticStyle: { "text-align": "right" } },
+        [
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.fetchData } },
+            [_vm._v("筛选")]
+          ),
+          _vm._v(" "),
+          _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -3627,9 +3649,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1098)
+var __vue_script__ = __webpack_require__(1097)
 /* template */
-var __vue_template__ = __webpack_require__(1099)
+var __vue_template__ = __webpack_require__(1098)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

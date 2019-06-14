@@ -1,10 +1,14 @@
 webpackJsonp([26],{
 
-/***/ 1100:
+/***/ 1099:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -908,6 +912,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     addOtherStorage: function addOtherStorage() {
       this.newStorageDialog.show = true;
+    },
+    fetchData: function fetchData() {},
+    resets: function resets() {
+      this.searchBox = {};
     }
   },
   watch: {
@@ -943,7 +951,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1101:
+/***/ 1100:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1166,7 +1174,22 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("span")
-        ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticStyle: { "text-align": "right" } },
+          [
+            _c(
+              "el-button",
+              { attrs: { type: "primary" }, on: { click: _vm.fetchData } },
+              [_vm._v("筛选")]
+            ),
+            _vm._v(" "),
+            _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
+          ],
+          1
+        )
       ]),
       _vm._v(" "),
       _c(
@@ -2448,9 +2471,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1100)
+var __vue_script__ = __webpack_require__(1099)
 /* template */
-var __vue_template__ = __webpack_require__(1101)
+var __vue_template__ = __webpack_require__(1100)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

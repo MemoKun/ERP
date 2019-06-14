@@ -12,7 +12,8 @@ use App\Http\Controllers\Traits\ProcedureTrait;
 use Dingo\Api\Exception\ResourceException;
 
 /**
- * 仓储部资源
+ * 仓储部资源.
+ *
  * @Resource("warehousingdepts",uri="/api")
  */
 class WarehousingDepartmentsController extends Controller
@@ -25,7 +26,7 @@ class WarehousingDepartmentsController extends Controller
     const PerPage = 8;
 
     /**
-     * 获取仓储部所有订单
+     * 获取仓储部所有订单.
      *
      * @Get("/warehousingdepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]")
      * @Versions({"v1"})
@@ -129,30 +130,38 @@ class WarehousingDepartmentsController extends Controller
      */
     public function index(WarehousingDepartmentRequest $request)
     {
-        $order_status = $request->input("order_status");
-        extract($request->validated());
+        // $order_status = $request->input("order_status");
+        // extract($request->validated());
 
-        $order = Order::query()->whereIn('order_status', [$order_status])
-        //->where('member_nick', 'like', '%'.$member_nick.'%')
-        //->where('system_order_no', 'like', '%'.$system_order_no.'%')
-        //->where('receiver_name', 'like', '%'.$receiver_name.'%')
-        //->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
-        //->where('receiver_address', 'like', '%'.$receiver_address.'%')
-        //->where('shops_id', 'like', '%'.$shops_id.'%')
-        //->where('logistics_id', 'like', '%'.$logistics_id.'%')
-        //->where('seller_remark', 'like', '%'.$seller_remark.'%')
-        //->where('seller_flag', 'like', '%'.$seller_flag.'%')
-        //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
+        $order_status = $request->input('order_status');
+        $member_nick = $request->input('member_nick');
+        $system_order_no = $request->input('system_order_no');
+        $receiver_name = $request->input('receiver_name');
+        $receiver_phone = $request->input('receiver_phone');
+        $receiver_address = $request->input('receiver_address');
+        $shops_id = $request->input('shops_id');
+        $business_personnel_id = $request->input('business_personnel_id');
+        $seller_remark = $request->input('seller_remark');
+        $logistics_id = $request->input('logistics_id');
+        $seller_flag = $request->input('seller_flag');
+        $order = Order::query()->where('order_status', 'like', '%'.$order_status.'%')
+        ->where('member_nick', 'like', '%'.$member_nick.'%')
+        ->where('system_order_no', 'like', '%'.$system_order_no.'%')
+        ->where('receiver_name', 'like', '%'.$receiver_name.'%')
+        ->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+        ->where('receiver_address', 'like', '%'.$receiver_address.'%')
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('business_personnel_id', 'like', '%'.$business_personnel_id.'%')
+        ->where('seller_remark', 'like', '%'.$seller_remark.'%')
+        ->where('logistics_id', 'like', '%'.$logistics_id.'%')
+        ->where('seller_flag', 'like', '%'.$seller_flag.'%')
         ->orderBy('created_at', 'desc');
 
         return $this->response->paginator($order->paginate(self::PerPage), new OrderTransformer());
     }
 
-    
-
-
     /**
-     * 显示单条仓储订单
+     * 显示单条仓储订单.
      *
      * @Get("/warehousingdepts/:id[?include=logistic,distribution]")
      * @Versions({"v1"})
@@ -204,14 +213,15 @@ class WarehousingDepartmentsController extends Controller
     public function show(Order $order)
     {
         //是否已经货审
-        if(!$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_CARGO_AUDIT)
+        if (!$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_CARGO_AUDIT) {
             throw new ResourceException('未货审');
+        }
 
         return $this->response->item($order, self::TRANSFORMER);
     }
 
     /**
-     * 仓储修改
+     * 仓储修改.
      *
      * @PATCH("/warehousingdepts/:id")
      * @Versions({"v1"})
@@ -276,14 +286,15 @@ class WarehousingDepartmentsController extends Controller
     public function update(WarehousingDepartmentRequest $warehousingDepartmentRequest, Order $order)
     {
         //是否已经货审
-        if(!$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_CARGO_AUDIT)
+        if (!$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_CARGO_AUDIT) {
             throw new ResourceException('未货审');
+        }
 
         return $this->traitUpdate($warehousingDepartmentRequest, $order, self::TRANSFORMER);
     }
 
     /**
-     * 仓储发货
+     * 仓储发货.
      *
      * @PUT("/warehousingdepts/:id/stockout")
      * @Versions({"v1"})
@@ -328,9 +339,8 @@ class WarehousingDepartmentsController extends Controller
         );
     }
 
-
     /**
-     * 仓储出库退回
+     * 仓储出库退回.
      *
      * @PUT("/warehousingdepts/:id/stockoutunaudit")
      * @Versions({"v1"})
@@ -373,5 +383,4 @@ class WarehousingDepartmentsController extends Controller
             $splitOrderRequest->validated()['order_items']
         );
     }
-
 }

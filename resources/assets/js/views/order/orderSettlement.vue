@@ -14,20 +14,22 @@
             </span>
             <span>
               <label>物流公司</label>
-              <el-select v-model="searchBox.logistics_id" clearable clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.logistics_id" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
+              <el-select v-model="searchBox.logistics_id" clearable placeholder="请选择">
+                <span v-for="list in resData['logistics']" :key="list.id">
+                  <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                </span>
               </el-select>
             </span>
             <span v-if="filterBox">
-              <label>供应商</label>
-              <el-select v-model="searchBox.supplier_id" clearable clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
+              <label>店铺名称</label>
+              <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
+                <span v-for="list in resData['shops']" :key="list.id">
+                  <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                </span>
               </el-select>
             </span>
             <span v-else>
-              <el-button type="primary">筛选</el-button>
+              <el-button type="primary" @click="searchData">筛选</el-button>
               <el-button>重置</el-button>
               <span @click="toggleShow">
                 <el-button type="text">展开</el-button>
@@ -36,13 +38,6 @@
             </span>
           </div>
           <div class="searchBox" v-show="filterBox">
-            <span>
-              <label>店铺名称</label>
-              <el-select v-model="searchBox.shops_id" clearable clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.orderShops" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </span>
             <span>
               <label>结算日期</label>
               <el-date-picker v-model="searchBox.checked_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -396,11 +391,10 @@ export default {
         system_order_no: "",
         receiver_name: "",
         logistics_id: "",
-        supplier_id: "",
         shops_id: "",
-        checked_at: "",
-        stockout_at: "",
-        audit_at: ""
+        checked_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        stockout_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"]
       },
       /*获取数据*/
       activeName: "0",
@@ -1890,6 +1884,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_logistics_checked: 0,
+              system_order_no:this.searchBox.system_order_no,
+              receiver_name:this.searchBox.receiver_name,
+              logistics_id:this.searchBox.logistics_id,
+              shops_id:this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
             }
@@ -1927,6 +1925,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_logistics_checked: 1,
+              system_order_no:this.searchBox.system_order_no,
+              receiver_name:this.searchBox.receiver_name,
+              logistics_id:this.searchBox.logistics_id,
+              shops_id:this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
             }
@@ -1957,6 +1959,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_goods_checked:0,
+              system_order_no:this.searchBox.system_order_no,
+              receiver_name:this.searchBox.receiver_name,
+              logistics_id:this.searchBox.logistics_id,
+              shops_id:this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
             }
@@ -1987,6 +1993,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_goods_checked:1,
+              system_order_no:this.searchBox.system_order_no,
+              receiver_name:this.searchBox.receiver_name,
+              logistics_id:this.searchBox.logistics_id,
+              shops_id:this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
             }
@@ -2017,6 +2027,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_distribution_checked: 0,
+              system_order_no:this.searchBox.system_order_no,
+              receiver_name:this.searchBox.receiver_name,
+              logistics_id:this.searchBox.logistics_id,
+              shops_id:this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
             }
@@ -2047,6 +2061,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_distribution_checked: 1,
+              system_order_no:this.searchBox.system_order_no,
+              receiver_name:this.searchBox.receiver_name,
+              logistics_id:this.searchBox.logistics_id,
+              shops_id:this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
             }
@@ -3335,8 +3353,21 @@ export default {
         }
       }
     },
+    //筛选
+    searchData(){
+      this.loading=true;
+      this.fetchData();
+    },
     resets() {
-      this.searchBox = {};
+      this.searchBox = {
+        system_order_no: "",
+        receiver_name: "",
+        logistics_id: "",
+        shops_id: "",
+        checked_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        stockout_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"]
+      };
     }
   },
   mounted() {
@@ -3350,6 +3381,9 @@ export default {
     //   })()
     // })
     this.fetchData();
+    this.$store.dispatch('logistics', '/logistics');
+    this.$store.dispatch('suppliers', '/suppliers');
+    this.$store.dispatch('shops', '/shops');
     this.$store.dispatch("setOpt", this.newOpt);
     let that = this;
     $(window).resize(() => {
