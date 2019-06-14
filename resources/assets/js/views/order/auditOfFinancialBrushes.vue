@@ -96,18 +96,14 @@
             <span class="transMoney">
               <label>交易金额</label>
               <el-input type="number" v-model="searchBox.order_transMStart" clearable></el-input>
-              至
+              <label>至</label>
               <el-input type="number" v-model="searchBox.order_transMEnd" clearable></el-input>
             </span>
           </div>
-          <!--<div v-if="filterBox" style="text-align: right">
-            <el-button type="primary">筛选</el-button>
+          <div style="text-align: right">
+            <el-button type="primary" @click="fetchData">筛选</el-button>
             <el-button @click="resets">重置</el-button>
-            <span @click="toggleShow" style="display: inline">
-              <el-button type="text">收起</el-button>
-              <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-            </span>
-          </div>-->
+          </div>
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">

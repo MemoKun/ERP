@@ -90,6 +90,10 @@
             </span>
             <span></span>
           </div>
+          <div style="text-align: right">
+            <el-button type="primary" @click="fetchData">筛选</el-button>
+            <el-button @click="resets">重置</el-button>
+          </div>
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="handleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">

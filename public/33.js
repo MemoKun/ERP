@@ -1008,6 +1008,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -4452,7 +4456,27 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("span")
-                ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticStyle: { "text-align": "right" } },
+                  [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "primary" },
+                        on: { click: _vm.fetchData }
+                      },
+                      [_vm._v("筛选")]
+                    ),
+                    _vm._v(" "),
+                    _c("el-button", { on: { click: _vm.resets } }, [
+                      _vm._v("重置")
+                    ])
+                  ],
+                  1
+                )
               ]),
               _vm._v(" "),
               _c(
