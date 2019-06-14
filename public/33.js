@@ -1,13 +1,15 @@
 webpackJsonp([33],{
 
-/***/ 1061:
+/***/ 1058:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_resource__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_resource__ = __webpack_require__(291);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1018,7 +1020,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    return _defineProperty({
       newOpt: [{
         cnt: "新增",
         icon: "bf-add",
@@ -2421,9 +2423,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 
       curCombRowData: [],
       curProSkuNum: "",
-      curProSkuVolume: "",
-      operationData: []
-    };
+      curProSkuVolume: ""
+    }, "operationData", []);
   },
 
   computed: {
@@ -2932,9 +2933,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
     addProRowClick: function addProRowClick(row) {
       this.proRIndex = "index" + row.index;
     },
-    addProRCName: function addProRCName(_ref) {
-      var row = _ref.row,
-          rowIndex = _ref.rowIndex;
+    addProRCName: function addProRCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
 
       row.index = rowIndex;
     },
@@ -3089,9 +3090,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
     },
 
     /*费用类型-决定费用类型是否能被编辑 */
-    addExpenseRCName: function addExpenseRCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
+    addExpenseRCName: function addExpenseRCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
 
       row.index = rowIndex;
     },
@@ -3198,9 +3199,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
     },
 
     //决定proSku的活跃行
-    proSkuCName: function proSkuCName(_ref3) {
-      var row = _ref3.row,
-          rowIndex = _ref3.rowIndex;
+    proSkuCName: function proSkuCName(_ref4) {
+      var row = _ref4.row,
+          rowIndex = _ref4.rowIndex;
 
       row.index = rowIndex;
     },
@@ -3845,9 +3846,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         }
       }
     },
-    splitCName: function splitCName(_ref4) {
-      var row = _ref4.row,
-          rowIndex = _ref4.rowIndex;
+    splitCName: function splitCName(_ref5) {
+      var row = _ref5.row,
+          rowIndex = _ref5.rowIndex;
 
       row.index = rowIndex;
     },
@@ -4059,7 +4060,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 
 /***/ }),
 
-/***/ 1062:
+/***/ 1059:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -9655,15 +9656,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 947:
+/***/ 944:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1061)
+var __vue_script__ = __webpack_require__(1058)
 /* template */
-var __vue_template__ = __webpack_require__(1062)
+var __vue_template__ = __webpack_require__(1059)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
