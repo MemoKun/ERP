@@ -1155,7 +1155,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         prop: "taobao_tid",
         type: "text"
       }, {
-        label: "单号失联",
+        label: "单号关联",
         prop: "association_taobao_oid",
         type: "text"
       }, {
