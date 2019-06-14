@@ -1996,7 +1996,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       addChgAble: false
     }]), _defineProperty(_ref, "operationData", {}), _defineProperty(_ref, "operationHead", [{
       label: "用户",
-      prop: "user",
+      prop: "user_name",
       type: "text"
     }, {
       label: "操作",
@@ -2004,7 +2004,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: "text"
     }, {
       label: "操作描述",
-      prop: "operation_description",
+      prop: "description",
       type: "text"
     }, {
       label: "创建时间",
@@ -2093,7 +2093,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       switch (index) {
         case 0:
           this.$fetch(this.urls.changeorders + "/searchnew", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.newOrderListData = [];
@@ -2120,7 +2120,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 1:
           this.$fetch(this.urls.changeorders + "/searchuntreated", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.untreatedOrderListData = [];
@@ -2146,7 +2146,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 2:
           this.$fetch(this.urls.changeorders + "/searchtreated", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.treatedOrderListData = [];
@@ -2172,7 +2172,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 3:
           this.$fetch(this.urls.changeorders + "/searchcanceled", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.canceledOrderListData = [];
@@ -2552,7 +2552,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.updateOrderChangesMask = true;
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$fetch(this.urls.changeorders + "/" + id, {
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
         }).then(function (res) {
           _this5.updateChangeOrderFormVal = res;
           if (res["orderItems"]["data"].length > 0) {
@@ -2845,7 +2845,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$fetch(this.urls.changeorders + "/" + id, {
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
         }).then(function (res) {
           /*请求选中的数据并拼接用于patch Order的submit*/
           //this.submitData = res;
@@ -3203,7 +3203,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       component_code: this.proQuery.component_code,
       shops_id: this.proQuery.shops_id,
       short_name: this.proQuery.short_name,
-      include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+      include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents,orderOperationRecord"
     }).then(function (res) {
       _this12.proVal = res.data;
       var comb = res.data[0]["combinations"]["data"];
@@ -3238,7 +3238,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this13 = this;
 
     this.$fetch(this.urls.changeorders + "?page=" + page, {
-      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
     }).then(function (res) {
       var index = _this13.middleActiveName - 0;
       switch (index) {
@@ -3276,7 +3276,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(index);
         break;
     }
-  }), _defineProperty(_methods, "orderListRClick", function orderListRClick(row) {
+  }), _defineProperty(_methods, "orderListRowClick", function orderListRowClick(row) {
+    this.curRowId = row.id;
+    this.curRowData = row;
+    this.operationData = row["orderOperationRecord"].data;
+    this.changeOrdersMainInfo = this.curRowData;
     if (row["change_status"] == 10) {
       this.newOpt[0].nClick = false;
       this.newOpt[1].nClick = false;
@@ -3317,9 +3321,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.newOpt[6].nClick = false;
       this.newOpt[7].nClick = false;
     }
-    this.curRowId = row.id;
-    this.curRowData = row;
-    this.changeOrdersMainInfo = this.curRowData;
   }), _defineProperty(_methods, "deleteChanges", function deleteChanges() {
     console.log("deleteChanges");
   }), _defineProperty(_methods, "submitChanges", function submitChanges() {
@@ -3590,8 +3591,8 @@ var render = function() {
                   attrs: { data: _vm.newOrderListData, fit: "", height: "200" },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.orderListRClick,
-                    "row-dbclick": _vm.orderListRClick
+                    "row-click": _vm.orderListRowClick,
+                    "row-dbclick": _vm.orderListRowClick
                   }
                 },
                 [
@@ -3716,8 +3717,8 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.orderListRClick,
-                    "row-dbclick": _vm.orderListRClick
+                    "row-click": _vm.orderListRowClick,
+                    "row-dbclick": _vm.orderListRowClick
                   }
                 },
                 [
@@ -3842,8 +3843,8 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.orderListRClick,
-                    "row-dbclick": _vm.orderListRClick
+                    "row-click": _vm.orderListRowClick,
+                    "row-dbclick": _vm.orderListRowClick
                   }
                 },
                 [
@@ -3968,8 +3969,8 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.orderListRClick,
-                    "row-dbclick": _vm.orderListRClick
+                    "row-click": _vm.orderListRowClick,
+                    "row-dbclick": _vm.orderListRowClick
                   }
                 },
                 [

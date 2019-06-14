@@ -1379,7 +1379,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "text"
       }], [{
         label: "用户",
-        prop: "user",
+        prop: "user_name",
         type: "text"
       }, {
         label: "操作",
@@ -1387,7 +1387,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "text"
       }, {
         label: "操作描述",
-        prop: "operation_description",
+        prop: "description",
         type: "text"
       }, {
         label: "操作时间",
@@ -1872,7 +1872,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       prop: "newData",
       inProp: "quantity",
       type: "number"
-    }]), _defineProperty(_ref, "splitRowIndex", ""), _defineProperty(_ref, "splitRow", {}), _defineProperty(_ref, "mergerIds", []), _ref;
+    }]), _defineProperty(_ref, "splitRowIndex", ""), _defineProperty(_ref, "splitRow", {}), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "operationData", []), _ref;
   },
 
   computed: {
@@ -1961,7 +1961,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 0:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 30,
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.orderListData = res.data;
@@ -1979,7 +1979,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 1:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 60,
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.alreadyHandle = res.data;
@@ -1994,7 +1994,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 2:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 70,
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.waitingStockOut = res.data;
@@ -2009,7 +2009,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 3:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 80,
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.alreadyStockOut = res.data;
@@ -2028,9 +2028,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchData();
     },
     rightHandleClick: function rightHandleClick() {},
-    orderListRClick: function orderListRClick(row) {
+    orderListRowClick: function orderListRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
       if (row["order_status"] == "已客审") {
         this.newOpt[0].nClick = true;
         this.newOpt[1].nClick = false;
@@ -2454,7 +2455,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.proRIndex = "";
           var id = this.checkboxId ? this.checkboxId : this.curRowId;
           this.$fetch(this.urls.customerservicedepts + "/" + id, {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails,orderOperationRecord"
           }).then(function (res) {
             var _this10$updateReceive;
 
@@ -3292,7 +3293,7 @@ var render = function() {
                           },
                           on: {
                             "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
+                            "row-click": _vm.orderListRowClick,
                             "row-dblclick": _vm.orderDbClick
                           }
                         },
@@ -3496,7 +3497,7 @@ var render = function() {
                           },
                           on: {
                             "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
+                            "row-click": _vm.orderListRowClick,
                             "row-dblclick": _vm.orderDbClick
                           }
                         },
@@ -3700,7 +3701,7 @@ var render = function() {
                           },
                           on: {
                             "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
+                            "row-click": _vm.orderListRowClick,
                             "row-dblclick": _vm.orderDbClick
                           }
                         },
@@ -3904,7 +3905,7 @@ var render = function() {
                           },
                           on: {
                             "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
+                            "row-click": _vm.orderListRowClick,
                             "row-dblclick": _vm.orderDbClick
                           }
                         },
@@ -4718,7 +4719,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.operationData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {

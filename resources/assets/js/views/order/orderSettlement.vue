@@ -19,23 +19,15 @@
                 </el-option>
               </el-select>
             </span>
-            <span v-if="filterBox">
+            <span>
               <label>供应商</label>
               <el-select v-model="searchBox.supplier_id" clearable clearable placeholder="请选择">
                 <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
             </span>
-            <span v-else>
-              <el-button type="primary">筛选</el-button>
-              <el-button>重置</el-button>
-              <span @click="toggleShow">
-                <el-button type="text">展开</el-button>
-                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-              </span>
-            </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>店铺名称</label>
               <el-select v-model="searchBox.shops_id" clearable clearable placeholder="请选择">
@@ -61,13 +53,9 @@
             </span>
 
           </div>
-          <div v-if="filterBox" style="text-align: right">
+          <div style="text-align: right">
             <el-button type="primary">筛选</el-button>
             <el-button @click="resets">重置</el-button>
-            <span @click="toggleShow" style="display: inline">
-              <el-button type="text">收起</el-button>
-              <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-            </span>
           </div>
         </div>
 

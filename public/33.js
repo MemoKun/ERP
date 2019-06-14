@@ -1678,7 +1678,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         type: "text"
       }], [{
         label: "用户",
-        prop: "user",
+        prop: "user_name",
         type: "text"
       }, {
         label: "操作",
@@ -1686,7 +1686,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         type: "text"
       }, {
         label: "操作描述",
-        prop: "operation_description",
+        prop: "description",
         type: "text"
       }, {
         label: "操作时间",
@@ -2415,7 +2415,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 
       curCombRowData: [],
       curProSkuNum: "",
-      curProSkuVolume: ""
+      curProSkuVolume: "",
+      operationData: []
     };
   },
 
@@ -2531,7 +2532,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             promise_ship_time: this.searchBox.promise_ship_time,
             created_at: this.searchBox.created_at,
             cs_audited_at: this.searchBox.cs_audited_at,
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.orderListData = res.data;
@@ -2568,7 +2569,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             promise_ship_time: this.searchBox.promise_ship_time,
             created_at: this.searchBox.created_at,
             cs_audited_at: this.searchBox.cs_audited_at,
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.alreadyHandle = res.data;
@@ -2589,7 +2590,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           break;
         case 2:
           this.$fetch(this.urls.customerservicedepts + "/searchisnotice", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.orderListData = res.data;
@@ -2634,7 +2635,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           promise_ship_time: this.searchBox.promise_ship_time,
           created_at: this.searchBox.created_at,
           cs_audited_at: this.searchBox.cs_audited_at,
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
         }).then(function (res) {
           _this2.orderListData = res.data;
           _this2.loading = false;
@@ -2655,7 +2656,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           promise_ship_time: this.searchBox.promise_ship_time,
           created_at: this.searchBox.created_at,
           cs_audited_at: this.searchBox.cs_audited_at,
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
         }).then(function (res) {
           _this2.alreadyHandle = res.data;
           _this2.loading = false;
@@ -2675,7 +2676,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           promise_ship_time: this.searchBox.promise_ship_time,
           created_at: this.searchBox.created_at,
           cs_audited_at: this.searchBox.cs_audited_at,
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
         }).then(function (res) {
           _this2.orderListData = res.data;
           _this2.loading = false;
@@ -2685,6 +2686,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 
     /************************* 首 页 主 要 Tab ******************************/
     orderListRowClick: function orderListRowClick(row) {
+      this.curRowId = row.id;
+      this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
       if (row["order_status"] == "未处理") {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
@@ -2745,8 +2749,6 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         this.newOpt[16].nClick = false;
         this.newOpt[17].nClick = false;
       }
-      this.curRowId = row.id;
-      this.curRowData = row;
     },
     orderDbClick: function orderDbClick(row) {
       this.activeName = "1";
@@ -5835,7 +5837,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.operationData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {

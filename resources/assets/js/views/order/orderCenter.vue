@@ -370,7 +370,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="操作记录" name="5">
-            <el-table :data="operationRecordData" fit>
+            <el-table :data="operationData" fit>
               <el-table-column v-for="item in operationRecordHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span>
@@ -1899,7 +1899,7 @@ export default {
         }
       ],
       /**底部tab 操作记录 */
-      operationRecordData: [],
+      operationData: [],
       operationRecordHead: [
         {
           label: "用户",
@@ -1908,7 +1908,7 @@ export default {
         },
         {
           label: "操作",
-          prop: "operated",
+          prop: "operation",
           type: "text"
         },
         {
@@ -2557,7 +2557,7 @@ export default {
         //audit_at: this.searchBox.audit_at,
         auditor_id: this.searchBox.auditor_id,
         include:
-          "resupplieOrder,shop,customerType,businessPersonnel,logistic,freightType,distribution,distributionType,distributionMethod,orderItems,paymentMethod,warehouses,orderItems.combination,orderItems.product.supplier,orderItems.product.productComponents,paymentDetails,paymentDetails.paymentMethod,paymentDetails.order,resupplieOrder.resupplieInnerNote,resupplieOrder.resupplieOperationRecord,logistic.orders,logistic.freightType,resupplieOrder.resupplieCategory,resupplieOrder.order,resupplieOrder.refundMethod,resupplieOrder.logistic,resupplieOrder.resupplieEsheet"
+          "resupplieOrder,shop,customerType,businessPersonnel,logistic,freightType,distribution,distributionType,distributionMethod,orderItems,paymentMethod,warehouses,orderItems.combination,orderItems.product.supplier,orderItems.product.productComponents,paymentDetails,paymentDetails.paymentMethod,paymentDetails.order,resupplieOrder.resupplieInnerNote,resupplieOrder.resupplieOperationRecord,logistic.orders,logistic.freightType,resupplieOrder.resupplieCategory,resupplieOrder.order,resupplieOrder.refundMethod,resupplieOrder.logistic,resupplieOrder.resupplieEsheet,orderOperationRecord"
       }).then(
         res => {
           this.loading = false;
@@ -2576,7 +2576,7 @@ export default {
           this.cargoAuditData = res.data;
           this.payDtlData = res.data[0] ? res.data["paymentDetails"].data : [];
           /*this.innerNoteData = [];
-          this.operationRecordData = [];
+          this.operationData = [];
           this.checkDtlData = [];*/
           this.logisticsData = res.data[0]
             ? [
@@ -2669,11 +2669,11 @@ export default {
     rightHandleClick() {},
     orderListRClick(row) {
       this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
       this.proDtlData = row["orderItems"].data;
       this.cargoAuditData = row["orderItems"].data;
       this.payDtlData = row["paymentDetails"].data;
       this.innerNoteData = [];
-      this.operationRecordData = [];
       this.checkDtlData = [];
       this.logisticsData = [
         {
@@ -2730,7 +2730,7 @@ export default {
       this.cargoAuditData = row["orderItems"].data;
       this.payDtlData = row["paymentDetails"].data;
       this.innerNoteData = [];
-      this.operationRecordData = [];
+      this.operationData = [];
       this.checkDtlData = [];
       this.logisticsData = [
         {
@@ -2756,7 +2756,7 @@ export default {
         shops_id: this.proQuery.shops_id,
         short_name: this.proQuery.short_name,
         include:
-          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents,orderOperationRecord"
       }).then(
         res => {
           this.proVal = res.data;
@@ -2982,7 +2982,7 @@ export default {
     handlePagChg(page) {
       this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
         include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
       }).then(res => {
         if (this.leftTopActiveName == "0") {
           this.orderListData = res.data;

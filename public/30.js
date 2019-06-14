@@ -1674,14 +1674,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }],
       /**底部tab 操作记录 */
-      operationRecordData: [],
+      operationData: [],
       operationRecordHead: [{
         label: "用户",
         prop: "user_name",
         type: "text"
       }, {
         label: "操作",
-        prop: "operated",
+        prop: "operation",
         type: "text"
       }, {
         label: "操作描述",
@@ -2247,7 +2247,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //esheet_no: this.searchBox.esheet_no,
         //audit_at: this.searchBox.audit_at,
         auditor_id: this.searchBox.auditor_id,
-        include: "resupplieOrder,shop,customerType,businessPersonnel,logistic,freightType,distribution,distributionType,distributionMethod,orderItems,paymentMethod,warehouses,orderItems.combination,orderItems.product.supplier,orderItems.product.productComponents,paymentDetails,paymentDetails.paymentMethod,paymentDetails.order,resupplieOrder.resupplieInnerNote,resupplieOrder.resupplieOperationRecord,logistic.orders,logistic.freightType,resupplieOrder.resupplieCategory,resupplieOrder.order,resupplieOrder.refundMethod,resupplieOrder.logistic,resupplieOrder.resupplieEsheet"
+        include: "resupplieOrder,shop,customerType,businessPersonnel,logistic,freightType,distribution,distributionType,distributionMethod,orderItems,paymentMethod,warehouses,orderItems.combination,orderItems.product.supplier,orderItems.product.productComponents,paymentDetails,paymentDetails.paymentMethod,paymentDetails.order,resupplieOrder.resupplieInnerNote,resupplieOrder.resupplieOperationRecord,logistic.orders,logistic.freightType,resupplieOrder.resupplieCategory,resupplieOrder.order,resupplieOrder.refundMethod,resupplieOrder.logistic,resupplieOrder.resupplieEsheet,orderOperationRecord"
       }).then(function (res) {
         _this.loading = false;
         _this.orderListData = res.data;
@@ -2262,7 +2262,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.cargoAuditData = res.data;
         _this.payDtlData = res.data[0] ? res.data["paymentDetails"].data : [];
         /*this.innerNoteData = [];
-        this.operationRecordData = [];
+        this.operationData = [];
         this.checkDtlData = [];*/
         _this.logisticsData = res.data[0] ? [{
           orders: res.data["logistic"]["orders"],
@@ -2334,11 +2334,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     rightHandleClick: function rightHandleClick() {},
     orderListRClick: function orderListRClick(row) {
       this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
       this.proDtlData = row["orderItems"].data;
       this.cargoAuditData = row["orderItems"].data;
       this.payDtlData = row["paymentDetails"].data;
       this.innerNoteData = [];
-      this.operationRecordData = [];
       this.checkDtlData = [];
       this.logisticsData = [{
         orders: row["logistic"]["orders"],
@@ -2391,7 +2391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.cargoAuditData = row["orderItems"].data;
       this.payDtlData = row["paymentDetails"].data;
       this.innerNoteData = [];
-      this.operationRecordData = [];
+      this.operationData = [];
       this.checkDtlData = [];
       this.logisticsData = [{
         orders: row["logistic"]["orders"],
@@ -2416,7 +2416,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         component_code: this.proQuery.component_code,
         shops_id: this.proQuery.shops_id,
         short_name: this.proQuery.short_name,
-        include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+        include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents,orderOperationRecord"
       }).then(function (res) {
         _this2.proVal = res.data;
         var comb = res.data[0]["combinations"]["data"];
@@ -2638,7 +2638,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this7 = this;
 
       this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
-        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
       }).then(function (res) {
         if (_this7.leftTopActiveName == "0") {
           _this7.orderListData = res.data;
@@ -4313,7 +4313,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.operationRecordData, fit: "" } },
+                        { attrs: { data: _vm.operationData, fit: "" } },
                         _vm._l(_vm.operationRecordHead, function(item) {
                           return _c("el-table-column", {
                             key: item.label,

@@ -347,7 +347,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="操作记录" name="3">
-            <el-table :data="curRowData" fit>
+            <el-table :data="operationData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -1805,7 +1805,7 @@ export default {
         [
           {
             label: "用户",
-            prop: "user",
+            prop: "user_name",
             type: "text"
           },
           {
@@ -1815,7 +1815,7 @@ export default {
           },
           {
             label: "操作描述",
-            prop: "operation_description",
+            prop: "description",
             type: "text"
           },
           {
@@ -2695,7 +2695,8 @@ export default {
 
       curCombRowData: [],
       curProSkuNum: "",
-      curProSkuVolume: ""
+      curProSkuVolume: "",
+      operationData:[],
     };
   },
   computed: {
@@ -2811,7 +2812,7 @@ export default {
             created_at: this.searchBox.created_at,
             cs_audited_at: this.searchBox.cs_audited_at,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2855,7 +2856,7 @@ export default {
             created_at: this.searchBox.created_at,
             cs_audited_at: this.searchBox.cs_audited_at,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2880,7 +2881,7 @@ export default {
         case 2:
           this.$fetch(this.urls.customerservicedepts + "/searchisnotice", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2928,7 +2929,7 @@ export default {
             created_at: this.searchBox.created_at,
             cs_audited_at: this.searchBox.cs_audited_at,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }
         ).then(res => {
           this.orderListData = res.data;
@@ -2951,7 +2952,7 @@ export default {
           created_at: this.searchBox.created_at,
           cs_audited_at: this.searchBox.cs_audited_at,
           include:
-            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
         }).then(res => {
           this.alreadyHandle = res.data;
           this.loading = false;
@@ -2974,7 +2975,7 @@ export default {
             created_at: this.searchBox.created_at,
             cs_audited_at: this.searchBox.cs_audited_at,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }
         ).then(res => {
           this.orderListData = res.data;
@@ -2984,6 +2985,9 @@ export default {
     },
     /************************* 首 页 主 要 Tab ******************************/
     orderListRowClick(row) {
+      this.curRowId = row.id;
+      this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
       if (row["order_status"] == "未处理") {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
@@ -3044,8 +3048,7 @@ export default {
         this.newOpt[16].nClick = false;
         this.newOpt[17].nClick = false;
       }
-      this.curRowId = row.id;
-      this.curRowData = row;
+      
     },
     orderDbClick(row) {
       this.activeName = "1";

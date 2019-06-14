@@ -25,7 +25,7 @@
     <!--*****************************************中间主要的table*******************************-->
     <el-tabs v-model="middleActiveName" @tab-click="firstHandleClick" style="height: 250px;">
       <el-tab-pane label="新建" name="0">
-        <el-table :data="newOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
+        <el-table :data="newOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRowClick" @row-dbclick="orderListRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
           <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
@@ -45,7 +45,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="待处理" name="1">
-        <el-table :data="untreatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
+        <el-table :data="untreatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRowClick" @row-dbclick="orderListRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
           <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
@@ -65,7 +65,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="已处理" name="2">
-        <el-table :data="treatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
+        <el-table :data="treatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRowClick" @row-dbclick="orderListRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
           <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
@@ -85,7 +85,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="作废" name="3">
-        <el-table :data="canceledOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRClick" @row-dbclick="orderListRClick">
+        <el-table :data="canceledOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRowClick" @row-dbclick="orderListRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
           <el-table-column v-for="item in middleTableHead" :label="item.label" :width="item.width" :key="item.label">
             <template slot-scope="scope">
@@ -2219,7 +2219,7 @@ export default {
       operationHead: [
         {
           label: "用户",
-          prop: "user",
+          prop: "user_name",
           type: "text"
         },
         {
@@ -2229,7 +2229,7 @@ export default {
         },
         {
           label: "操作描述",
-          prop: "operation_description",
+          prop: "description",
           type: "text"
         },
         {
@@ -2341,7 +2341,7 @@ export default {
         case 0:
           this.$fetch(this.urls.changeorders + "/searchnew", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2375,7 +2375,7 @@ export default {
         case 1:
           this.$fetch(this.urls.changeorders + "/searchuntreated", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2408,7 +2408,7 @@ export default {
         case 2:
           this.$fetch(this.urls.changeorders + "/searchtreated", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2441,7 +2441,7 @@ export default {
         case 3:
           this.$fetch(this.urls.changeorders + "/searchcanceled", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2863,7 +2863,7 @@ export default {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$fetch(this.urls.changeorders + "/" + id, {
           include:
-            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
         }).then(
           res => {
             this.updateChangeOrderFormVal = res;
@@ -3159,7 +3159,7 @@ export default {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$fetch(this.urls.changeorders + "/" + id, {
           include:
-            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
         }).then(
           res => {
             /*请求选中的数据并拼接用于patch Order的submit*/
@@ -3516,7 +3516,7 @@ export default {
         shops_id: this.proQuery.shops_id,
         short_name: this.proQuery.short_name,
         include:
-          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents,orderOperationRecord"
       }).then(
         res => {
           this.proVal = res.data;
@@ -3555,7 +3555,7 @@ export default {
     handlePagChg(page) {
       this.$fetch(this.urls.changeorders + "?page=" + page, {
         include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
       }).then(res => {
         let index = this.middleActiveName - 0;
         switch (index) {
@@ -3596,7 +3596,11 @@ export default {
           break;
       }
     },
-    orderListRClick(row) {
+    orderListRowClick(row) {
+      this.curRowId = row.id;
+      this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
+      this.changeOrdersMainInfo = this.curRowData;
       if (row["change_status"] == 10) {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;
@@ -3637,9 +3641,7 @@ export default {
         this.newOpt[6].nClick = false;
         this.newOpt[7].nClick = false;
       }
-      this.curRowId = row.id;
-      this.curRowData = row;
-      this.changeOrdersMainInfo = this.curRowData;
+      
     },
     deleteChanges() {
       console.log("deleteChanges");

@@ -97,7 +97,7 @@
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未货审" name="0">
-            <el-table :data="orderListData" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="orderListData" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -145,7 +145,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="已货审" name="1">
-            <el-table :data="alreadyHandle" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="alreadyHandle" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -193,7 +193,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="可发货" name="2">
-            <el-table :data="waitingStockOut" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="waitingStockOut" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -241,7 +241,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="已发货" name="3">
-            <el-table :data="alreadyStockOut" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="alreadyStockOut" fit v-loading="loading" height="350" @selection-change="handleSelectionChange" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -395,7 +395,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="操作记录" name="3">
-            <el-table :data="curRowData" fit>
+            <el-table :data="operationData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -1494,7 +1494,7 @@ export default {
         [
           {
             label: "用户",
-            prop: "user",
+            prop: "user_name",
             type: "text"
           },
           {
@@ -1504,7 +1504,7 @@ export default {
           },
           {
             label: "操作描述",
-            prop: "operation_description",
+            prop: "description",
             type: "text"
           },
           {
@@ -2130,6 +2130,7 @@ export default {
       splitRowIndex: "",
       splitRow: {},
       mergerIds: [],
+      operationData:[],
     };
   },
   computed: {
@@ -2219,7 +2220,7 @@ export default {
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 30,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2244,7 +2245,7 @@ export default {
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 60,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2263,7 +2264,7 @@ export default {
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 70,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2282,7 +2283,7 @@ export default {
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 80,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2304,9 +2305,10 @@ export default {
       this.fetchData();
     },
     rightHandleClick() {},
-    orderListRClick(row) {
+    orderListRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
       if (row["order_status"] == "已客审") {
         this.newOpt[0].nClick = true;
         this.newOpt[1].nClick = false;
@@ -2397,6 +2399,7 @@ export default {
         this.newOpt[11].nClick = false;
         this.newOpt[12].nClick = false;
       }
+      
     },
     orderDbClick(row) {
       this.activeName = "1";
@@ -2744,7 +2747,7 @@ export default {
           let id = this.checkboxId ? this.checkboxId : this.curRowId;
           this.$fetch(this.urls.customerservicedepts + "/" + id, {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails,orderOperationRecord"
           }).then(
             res => {
               this.updateCustomerFormVal = res;

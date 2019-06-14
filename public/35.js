@@ -991,7 +991,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }], [{
         label: "用户",
-        prop: "user",
+        prop: "user_name",
         type: "text"
       }, {
         label: "操作",
@@ -999,7 +999,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }, {
         label: "操作描述",
-        prop: "operation_description",
+        prop: "description",
         type: "text"
       }, {
         label: "操作时间",
@@ -1281,7 +1281,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         case 0:
           this.$fetch(this.urls.customerservicedepts, {
             order_status: 5,
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.orderListData = res.data;
@@ -1306,7 +1306,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         case 1:
           this.$fetch(this.urls.customerservicedepts, {
             order_status: 10,
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.curRowId = res.data[0].id;
@@ -1334,7 +1334,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.fetchData();
     },
     rightHandleClick: function rightHandleClick() {},
-    orderListRClick: function orderListRClick(row) {
+    orderListRowClick: function orderListRowClick(row) {
+      this.curRowId = row.id;
+      this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
       if (row["order_status"] == "待审计") {
         this.newOpt[0].nClick = true;
         this.newOpt[1].nClick = false;
@@ -1344,8 +1347,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.newOpt[1].nClick = true;
         this.newOpt[2].nClick = false;
       }
-      this.curRowId = row.id;
-      this.curRowData = row;
     },
     orderDbClick: function orderDbClick(row) {
       this.activeName = "1";
@@ -1452,7 +1453,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this3 = this;
 
       this.$fetch(this.urls.financialdepts + "?page=" + page, {
-        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails,orderOperationRecord"
       }).then(function (res) {
         if (_this3.leftTopActiveName == "0") {
           _this3.orderListData = res.data;
@@ -2141,7 +2142,7 @@ var render = function() {
                           },
                           on: {
                             "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
+                            "row-click": _vm.orderListRowClick,
                             "row-dblclick": _vm.orderDbClick
                           }
                         },
@@ -2341,7 +2342,7 @@ var render = function() {
                           },
                           on: {
                             "selection-change": _vm.handleSelectionChange,
-                            "row-click": _vm.orderListRClick,
+                            "row-click": _vm.orderListRowClick,
                             "row-dblclick": _vm.orderDbClick
                           }
                         },
@@ -3151,7 +3152,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.operationData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {

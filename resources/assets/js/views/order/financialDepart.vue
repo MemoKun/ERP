@@ -99,7 +99,7 @@
         </div>
         <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
           <el-tab-pane label="未处理" name="0">
-            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -147,7 +147,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="已处理" name="1">
-            <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
+            <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
               </el-table-column>
               <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -301,7 +301,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="操作记录" name="3">
-            <el-table :data="curRowData" fit>
+            <el-table :data="operationData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -1185,7 +1185,7 @@ export default {
         [
           {
             label: "用户",
-            prop: "user",
+            prop: "user_name",
             type: "text"
           },
           {
@@ -1195,7 +1195,7 @@ export default {
           },
           {
             label: "操作描述",
-            prop: "operation_description",
+            prop: "description",
             type: "text"
           },
           {
@@ -1530,7 +1530,7 @@ export default {
           this.$fetch(this.urls.financialdepts, {
             order_status: 40,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -1559,7 +1559,7 @@ export default {
           this.$fetch(this.urls.financialdepts, {
             order_status: 50,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -1590,7 +1590,7 @@ export default {
       this.fetchData();
     },
     rightHandleClick() {},
-    orderListRClick(row) {
+    orderListRowClick(row) {
       if (row["order_status"] == "已跟单一审") {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;
@@ -1609,6 +1609,7 @@ export default {
       }
       this.curRowId = row.id;
       this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
     },
     orderDbClick(row) {
       this.activeName = "1";
@@ -1718,7 +1719,7 @@ export default {
     handlePagChg(page) {
       this.$fetch(this.urls.financialdepts + "?page=" + page, {
         include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails,orderOperationRecord"
       }).then(res => {
         if (this.leftTopActiveName == "0") {
           this.orderListData = res.data;
