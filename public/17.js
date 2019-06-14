@@ -157,7 +157,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         monthSales: "8901",
         monthOrderNum: "2341",
         monthCustomerOrderPrice: "652123"
-      }]
+      }],
+      provinceSales: []
     };
   },
 
@@ -183,7 +184,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       this.$fetch(this.urls.reportstatistics + "/orderAmount").then(function (res) {
-        _this.salesAmount = res;
+        _this.salesAmount = res[0];
+        _this.provinceSales = res[1];
+        _this.regionSale();
       }, function (err) {});
     },
     salesPrediction: function salesPrediction() {
@@ -329,9 +332,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     regionSale: function regionSale() {
       // 基于准备好的dom，初始化echarts实例
       var myChart = this.$echarts.init(document.getElementById("regionSale"), "light");
-      var dataAxis = ["北京", "上海", "广东", "广西", "湖北", "湖南", "四川", "江苏", "浙江", "河南", "福建", "贵州", "重庆", "新疆", "西藏", "陕西", "天津", "河北", "海南", "江西"];
-      var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-      var yMax = 500;
+      var dataAxis = ["北京", "上海", "重庆", "天津", "山东", "江苏", "浙江", "安徽", "福建", "江西", "广东", "广西", "海南", "河南", "湖南", "湖北", "河北", "山西", "内蒙", "宁夏", "青海", "陕西", "甘肃", "新疆", "四川", "贵州", "云南", "西藏", "辽宁", "吉林", "黑龙江"];
+      var data = this.provinceSales;
+      var yMax = 50;
       var dataShadow = [];
 
       for (var i = 0; i < data.length; i++) {
@@ -346,7 +349,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           axisLabel: {
             inside: true,
             textStyle: {
-              color: "#fff"
+              color: "#000"
             }
           },
           axisTick: {
@@ -366,7 +369,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           },
           axisLabel: {
             textStyle: {
-              color: "#999"
+              color: "#000"
             }
           }
         },
@@ -454,7 +457,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.fetchData();
     this.salesPrediction();
     this.shopsPercent();
-    this.regionSale();
     this.aftersales();
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit("change", this.newOpt);
@@ -575,13 +577,13 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", {
-      style: { width: "1300px", height: "400px" },
-      attrs: { id: "salesPrediction" }
+      style: { width: "2000px", height: "400px" },
+      attrs: { id: "regionSale" }
     }),
     _vm._v(" "),
     _c("div", {
       style: { width: "1300px", height: "400px" },
-      attrs: { id: "regionSale" }
+      attrs: { id: "salesPrediction" }
     })
   ])
 }

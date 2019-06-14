@@ -129,12 +129,52 @@ class ReportStatisticsController extends Controller
             "monthCustomerOrderPrice" => $monthlySalesAmountAverageRatio
         );
 
-        $data = array($staticLabel, $amountData, $rateData);
 
+        $beijingOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'北京市'.'%')->get());
+        $shanghaiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'上海市'.'%')->get());
+        $chongqingNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'重庆市'.'%')->get());
+        $tianjinOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'天津市'.'%')->get());
+        $shandongOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'山东省'.'%')->get());
+        $jiangsuOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'江苏省'.'%')->get());
+        $zhejiangOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'浙江省'.'%')->get());
+        $anhuiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'安徽省'.'%')->get());
+        $fujianOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'福建省'.'%')->get());
+        $jiangxiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'江西省'.'%')->get());
+        $guangdongOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'广东省'.'%')->get());
+        $guangxiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'广西省'.'%')->get());
+        $hainanOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'海南省'.'%')->get());
+        $henanOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'河南省'.'%')->get());
+        $hunanOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'湖南省'.'%')->get());
+        $hubeiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'湖北省'.'%')->get());
+        $hebeiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'河北省'.'%')->get());
+        $shan1xiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'山西省'.'%')->get());
+        $neimengguOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'内蒙古'.'%')->get());
+        $ningxiaOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'宁夏'.'%')->get());
+        $qinghaiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'青海'.'%')->get());
+        $shan3xiOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'陕西省'.'%')->get());
+        $gansuOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'甘肃省'.'%')->get());
+        $xinjiangOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'新疆'.'%')->get());
+        $sichuanOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'四川省'.'%')->get());
+        $guizhouOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'贵州'.'%')->get());
+        $yunnanOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'云南省'.'%')->get());
+        $xizangOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'西藏'.'%')->get());
+        $liaoningOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'辽宁省'.'%')->get());
+        $jilinOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'吉林省'.'%')->get());
+        $heilongjiangOrderNum = count(DB::table("orders")->where('receiver_state', 'like', '%'.'黑龙江省'.'%')->get());
 
+        $provinceSales = array($beijingOrderNum,$shanghaiOrderNum,$chongqingNum,$tianjinOrderNum,$shandongOrderNum,
+                               $jiangsuOrderNum,$zhejiangOrderNum,$anhuiOrderNum,$fujianOrderNum,$jiangxiOrderNum,
+                               $guangdongOrderNum,$guangxiOrderNum,$hainanOrderNum,$henanOrderNum,$hunanOrderNum,
+                               $hubeiOrderNum,$hebeiOrderNum,$shan1xiOrderNum,$neimengguOrderNum,$ningxiaOrderNum,
+                               $qinghaiOrderNum,$shan3xiOrderNum,$gansuOrderNum,$xinjiangOrderNum,$sichuanOrderNum,
+                               $guizhouOrderNum,$yunnanOrderNum,$xizangOrderNum,$liaoningOrderNum,$jilinOrderNum,
+                               $heilongjiangOrderNum);
+
+        $salesdata = array($staticLabel, $amountData, $rateData);
+        $data = array($salesdata,$provinceSales);
 
         $data_json = json_encode($data);
-        return $data_json;
+        return $data;
     }
 
     public function indexReport(CustomerServiceDepartmentRequest $request)
@@ -271,6 +311,7 @@ class ReportStatisticsController extends Controller
         $CMPTN_STATUS_CANCEL_NUM = count($CMPTN_STATUS_CANCEL);
 
         $cmptnOrderNum = array($CMPTN_STATUS_NEW_NUM,$CMPTN_STATUS_ONE_AUDIT_NUM,$CMPTN_STATUS_SEC_AUDIT_NUM,$CMPTN_STATUS_CANCEL_NUM);
+
 
         $reportData = array($salesOrderNumArray,$changeOrderNumArray,$refundOrderNumArray,$purchaseOrderNumArray,$cancelPurchaseOrderNum,$stockInOrderNum,$reSupplieOrderNum,$aftersaleOrderNum,$cmptnOrderNum);
         return $reportData;
