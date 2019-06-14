@@ -37,6 +37,10 @@
 
       </span>
     </div>
+    <div style="text-align: right">
+      <el-button type="primary" @click="fetchData">筛选</el-button>
+      <el-button @click="resets">重置</el-button>
+    </div>
 
     <!--入库-->
     <el-tabs v-model="topActiveName" @tab-click="clickTopTabs">
@@ -862,10 +866,10 @@ export default {
     /*获取数据*/
     clickTopTabs() {
       this.loading = true;
-      this.fetchStockData();
+      this.fetchData();
       this.stockDtlData = [];
     },
-    fetchStockData() {
+    fetchData() {
       this.multipleSelection = "";
       let index = this.topActiveName - 0;
       switch (index) {
@@ -1640,7 +1644,7 @@ export default {
     /*刷新*/
     refresh() {
       this.loading = true;
-      this.fetchStockData();
+      this.fetchData();
     },
     /*提交*/
     doCommit() {
@@ -1747,11 +1751,14 @@ export default {
           }
         );
       }
+    },
+    resets(){
+      this.searchBox={};
     }
     /*入库*/
   },
   mounted() {
-    this.fetchStockData();
+    this.fetchData();
     this.$store.dispatch("setOpt", this.newOpt);
     const that = this;
     $(window).resize(() => {

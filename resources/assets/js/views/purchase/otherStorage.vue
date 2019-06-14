@@ -34,6 +34,10 @@
         </span>
         <span></span>
       </div>
+      <div style="text-align: right">
+        <el-button type="primary" @click="fetchData">筛选</el-button>
+        <el-button @click="resets">重置</el-button>
+      </div>
     </div>
 
     <el-tabs v-model="topActiveName" @tab-click="clickTopTabs">
@@ -1002,7 +1006,11 @@ export default {
     },
     addOtherStorage() {
       this.newStorageDialog.show = true;
-    }
+    },
+    fetchData(){},
+    resets(){
+      this.searchBox = {};
+    },
   },
   watch: {
     newOpt: {

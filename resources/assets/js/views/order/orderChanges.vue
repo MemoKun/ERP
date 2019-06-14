@@ -17,10 +17,10 @@
         <label>申请人</label>
         <el-input v-model="searchBox.applier_id"></el-input>
       </span>
-      <div style="text-align: left">
-        <el-button type="primary">筛选</el-button>
-        <el-button @click="resets">重置</el-button>
-      </div>
+    </div>
+    <div style="text-align: right">
+      <el-button type="primary">筛选</el-button>
+      <el-button @click="resets">重置</el-button>
     </div>
 
     <!--*****************************************中间主要的table*******************************-->

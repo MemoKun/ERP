@@ -3545,19 +3545,19 @@ var render = function() {
             })
           ],
           1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticStyle: { "text-align": "left" } },
-          [
-            _c("el-button", { attrs: { type: "primary" } }, [_vm._v("筛选")]),
-            _vm._v(" "),
-            _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
-          ],
-          1
         )
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticStyle: { "text-align": "right" } },
+        [
+          _c("el-button", { attrs: { type: "primary" } }, [_vm._v("筛选")]),
+          _vm._v(" "),
+          _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "el-tabs",
