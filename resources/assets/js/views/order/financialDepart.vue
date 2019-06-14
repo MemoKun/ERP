@@ -1913,6 +1913,32 @@ export default {
           }
         }
       );
+    },
+    resets() {
+      this.searchBox =  {
+        vip_name: "",
+        order_num: "",
+        order_man: "",
+        order_phone: "",
+        order_money: "",
+        order_address: "",
+        order_goods: "",
+        order_staff: "",
+        order_promiseDate: "",
+        order_workDate: "",
+        order_transMStart: "",
+        order_transMEnd: "",
+        orderCompany: [{ label: "ceshi", value: 0 }],
+        order_customerInves: "",
+        order_mark: "",
+        order_flag: "",
+        ordertbFlag: [{ label: "ceshi", value: 0 }],
+        order_lock: "",
+        orderLock: [{ label: "ceshi", value: 0 }],
+        order_company: "",
+        order_shop: "",
+        orderShops: [{ label: "ceshi", value: 0 }]
+      };
     }
   },
   mounted() {

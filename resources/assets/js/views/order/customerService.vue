@@ -347,7 +347,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="操作记录" name="3">
-            <el-table :data="curRowData" fit>
+            <el-table :data="operationData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -1690,6 +1690,7 @@ export default {
       proDtlData: [],
       curRowId: "",
       curRowData: {},
+      operationData:[],
       orderDtlHead: [
         [
           {
