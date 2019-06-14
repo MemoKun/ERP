@@ -474,32 +474,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newOpt: [{
-        cnt: "驳回0",
+        cnt: "驳回",
         icon: "bf-reject",
         ent: this.handleReject,
         nClick: true
       }, {
-        cnt: "财审1",
+        cnt: "财审",
         icon: "bf-audit",
         ent: this.handleFinancialAudit,
         nClick: true
       }, {
-        cnt: "退审2",
+        cnt: "退审",
         icon: "bf-auditfaild",
         ent: this.handleUnFinancialAudit,
         nClick: true
       }, {
-        cnt: "导出3",
+        cnt: "导出",
         icon: "bf-out",
         ent: this.test,
         nClick: true
       }, {
-        cnt: "打印4",
+        cnt: "打印",
         icon: "bf-printer",
         ent: this.test,
         nClick: true
       }, {
-        cnt: "刷新5",
+        cnt: "刷新",
         icon: "bf-refresh",
         ent: this.refresh,
         nClick: true
