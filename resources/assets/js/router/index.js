@@ -1440,7 +1440,7 @@ const constantRouterMap = [{
   }]
 
   },*/
-  {
+  /*{
     path: '/index',
     component: Layout,
     children: [{
@@ -1453,7 +1453,7 @@ const constantRouterMap = [{
         requireAuth: true
       }
     }]
-  },
+  },*/
   /*{
     path: '/test',
     component: Layout,

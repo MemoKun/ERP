@@ -839,6 +839,7 @@ export default {
         shops_id: "",
         orderShops: [{ label: "ceshi", value: 0 }]
       },
+      threeParts: true,
       activeName: "0",
       leftTopActiveName: "0",
       rightActiveName: "0",
@@ -3079,6 +3080,12 @@ export default {
           }
         }
       );
+    },
+    addProRowClick(row) {
+      this.proRIndex = `index${row.index}`;
+    },
+    stockOutCancel(){
+      this.stockOutMask = false;
     },
     cancelSplit() {
       this.splitMask = false;

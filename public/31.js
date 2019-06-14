@@ -1,6 +1,6 @@
 webpackJsonp([31],{
 
-/***/ 1061:
+/***/ 1060:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -835,6 +835,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         shops_id: "",
         orderShops: [{ label: "ceshi", value: 0 }]
       },
+      threeParts: true,
       activeName: "0",
       leftTopActiveName: "0",
       rightActiveName: "0",
@@ -2776,6 +2777,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this14.$message.error(str);
       }
     });
+  }), _defineProperty(_methods, "addProRowClick", function addProRowClick(row) {
+    this.proRIndex = "index" + row.index;
+  }), _defineProperty(_methods, "stockOutCancel", function stockOutCancel() {
+    this.stockOutMask = false;
   }), _defineProperty(_methods, "cancelSplit", function cancelSplit() {
     this.splitMask = false;
   }), _defineProperty(_methods, "handleMergerOrder", function handleMergerOrder() {
@@ -2821,7 +2826,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ 1062:
+/***/ 1061:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6438,9 +6443,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1061)
+var __vue_script__ = __webpack_require__(1060)
 /* template */
-var __vue_template__ = __webpack_require__(1062)
+var __vue_template__ = __webpack_require__(1061)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
