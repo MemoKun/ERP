@@ -51,6 +51,8 @@ class CustomerServiceDepartmentsController extends Controller
         $logistics_id = $request->input('logistics_id');
         $seller_remark = $request->input('seller_remark');
         $seller_flag = $request->input('seller_flag');
+        $business_personnel_id = $request->input('business_personnel_id');
+        
 
         $order = Order::query()->whereIn('order_status', [ORDER::ORDER_STATUS_NEW, ORDER::ORDER_STATUS_LOCK])
         ->where('member_nick', 'like', '%'.$member_nick.'%')
@@ -62,6 +64,7 @@ class CustomerServiceDepartmentsController extends Controller
         ->where('logistics_id', 'like', '%'.$logistics_id.'%')
         ->where('seller_remark', 'like', '%'.$seller_remark.'%')
         ->where('seller_flag', 'like', '%'.$seller_flag.'%')
+        ->where('business_personnel_id', 'like', '%'.$business_personnel_id.'%')
         ->whereBetween('promise_ship_time', [$promise_ship_time[0], $promise_ship_time[1]])
         ->whereBetween('created_at', [$created_at[0], $created_at[1]])
         //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
@@ -160,6 +163,35 @@ class CustomerServiceDepartmentsController extends Controller
 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
+    //审计部-获取数据
+    public function getAuditDepartment(CustomerServiceDepartmentRequest $request)
+    {
+        $order_status = $request->input('order_status');
+        $member_nick = $request->input('member_nick');
+        $system_order_no = $request->input('system_order_no');
+        $receiver_name = $request->input('receiver_name');
+        $receiver_phone = $request->input('receiver_phone');
+        $receiver_address = $request->input('receiver_address');
+        $shops_id = $request->input('shops_id');
+        $business_personnel_id = $request->input('business_personnel_id');
+        $seller_remark = $request->input('seller_remark');
+        $logistics_id = $request->input('logistics_id');
+        $seller_flag = $request->input('seller_flag');
+        $order = Order::query()->where('order_status', 'like', '%'.$order_status.'%')
+        ->where('member_nick', 'like', '%'.$member_nick.'%')
+        ->where('system_order_no', 'like', '%'.$system_order_no.'%')
+        ->where('receiver_name', 'like', '%'.$receiver_name.'%')
+        ->where('receiver_phone', 'like', '%'.$receiver_phone.'%')
+        ->where('receiver_address', 'like', '%'.$receiver_address.'%')
+        ->where('shops_id', 'like', '%'.$shops_id.'%')
+        ->where('business_personnel_id', 'like', '%'.$business_personnel_id.'%')
+        ->where('seller_remark', 'like', '%'.$seller_remark.'%')
+        ->where('logistics_id', 'like', '%'.$logistics_id.'%')
+        ->where('seller_flag', 'like', '%'.$seller_flag.'%')
+        ->orderBy('updated_at', 'desc');
+
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
 
     public function searchOrderSettlement(CustomerServiceDepartmentRequest $request)
     {
@@ -167,6 +199,7 @@ class CustomerServiceDepartmentsController extends Controller
         $is_logistics_checked = $request->input('is_logistics_checked');
         $is_distribution_checked = $request->input('is_distribution_checked');
         $is_goods_checked = $request->input('is_goods_checked');
+        $system_order_no = $request->input('system_order_no');
         $receiver_name = $request->input('receiver_name');
         $receiver_address = $request->input('receiver_address');
         $logistics_id = $request->input('logistics_id');
@@ -177,6 +210,7 @@ class CustomerServiceDepartmentsController extends Controller
          ->where('is_logistics_checked', 'like', '%'.$is_logistics_checked.'%')
          ->where('is_distribution_checked', 'like', '%'.$is_distribution_checked.'%')
          ->where('is_goods_checked', 'like', '%'.$is_goods_checked.'%')
+         ->where('system_order_no', 'like', '%'.$system_order_no.'%')
          ->where('receiver_name', 'like', '%'.$receiver_name.'%')
          ->where('receiver_address', 'like', '%'.$receiver_address.'%')
          ->where('shops_id', 'like', '%'.$shops_id.'%')

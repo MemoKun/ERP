@@ -35,10 +35,6 @@
               </el-select>
             </span>
             <span>
-              <label>包含商品</label>
-              <el-input v-model="searchBox.products_id" clearable></el-input>
-            </span>
-            <span>
               <label>业务员</label>
               <el-select v-model="searchBox.business_personnel_id" clearable placeholder="请选择">
                 <span v-for="list in addSubData['user']" :key="list.id">
@@ -46,12 +42,12 @@
                 </span>
               </el-select>
             </span>
-          </div>
-          <div class="searchBox">
             <span>
               <label>卖家备注</label>
               <el-input v-model="searchBox.seller_remark" clearable></el-input>
             </span>
+            </div>
+            <div class="searchBox">
             <span>
               <label>物流公司</label>
               <el-select v-model="searchBox.logistics_id" clearable placeholder="请选择">
@@ -62,22 +58,34 @@
             </span>
             <span>
               <label>淘宝旗帜</label>
-              <el-input v-model="searchBox.seller_flag" clearable></el-input>
-            </span>
-            <span>
-              <label>锁定状态</label>
-              <el-select v-model="searchBox.lock_status" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.lockStatus" :key="item.value" :label="item.label" :value="item.value">
+              <el-select v-model="searchBox.seller_flag" clearable placeholder="请选择">
+                <el-option :key="0" label="黑旗" :value="0">
+                  <i class="iconfont bf-flag"></i>
+                </el-option>
+                <el-option :key="1" label="红旗" :value="1">
+                  <i class="iconfont bf-flag" style="color:red"></i>
+                </el-option>
+                <el-option :key="2" label="黄旗" :value="2">
+                  <i class="iconfont bf-flag" style="color:yellow"></i>
+                </el-option>
+                <el-option :key="3" label="绿旗" :value="3">
+                  <i class="iconfont bf-flag" style="color:green"></i>
+                </el-option>
+                <el-option :key="4" label="蓝旗" :value="4">
+                  <i class="iconfont bf-flag" style="color:blue"></i>
+                </el-option>
+                <el-option :key="5" label="紫旗" :value="5">
+                  <i class="iconfont bf-flag" style="color:purple"></i>
                 </el-option>
               </el-select>
             </span>
-          </div>
-          <div class="searchBox">
             <span>
               <label>承诺日期</label>
               <el-date-picker v-model="searchBox.promise_ship_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
+            </div>
+            <div class="searchBox">
             <span>
               <label>业务日期</label>
               <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -85,13 +93,18 @@
             </span>
             <span>
               <label>客审日期</label>
-              <el-date-picker v-model="searchBox.cs_audited_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
-            <span></span>
+            <span class="transMoney">
+              <label>交易金额</label>
+              <el-input type="number" v-model="searchBox.order_transMStart" clearable></el-input>
+              <label>至</label>
+              <el-input type="number" v-model="searchBox.order_transMEnd" clearable></el-input>
+            </span>
           </div>
           <div style="text-align: right">
-            <el-button type="primary" @click="fetchData">筛选</el-button>
+            <el-button type="primary" @click="searchData">筛选</el-button>
             <el-button @click="resets">重置</el-button>
           </div>
         </div>
@@ -819,25 +832,17 @@ export default {
         system_order_no: "",
         receiver_name: "",
         receiver_phone: "",
-        order_money: "",
         receiver_address: "",
-        order_goods: "",
-        business_personnel_id: "",
-        promise_ship_time: [
-          "2018-12-31T16:00:00.000Z",
-          "2099-12-31T16:00:00.000Z"
-        ],
-        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        orderCompany: [{ label: "ceshi", value: 0 }],
-        cs_audited_at: ["0000-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        seller_remark: "",
-        seller_flag: "",
-        ordertbFlag: [{ label: "ceshi", value: 0 }],
-        order_lock: "",
-        orderLock: [{ label: "ceshi", value: 0 }],
-        logistics_id: "",
         shops_id: "",
-        orderShops: [{ label: "ceshi", value: 0 }]
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: "",
       },
       threeParts: true,
       activeName: "0",
@@ -2219,6 +2224,16 @@ export default {
         case 0:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 30,
+            member_nick:this.searchBox.member_nick,
+            system_order_no:this.searchBox.system_order_no,
+            receiver_name:this.searchBox.receiver_name,
+            receiver_phone:this.searchBox.receiver_phone,
+            receiver_address:this.searchBox.receiver_address,
+            shops_id:this.searchBox.shops_id,
+            business_personnel_id:this.searchBox.business_personnel_id,
+            seller_remark:this.searchBox.seller_remark,
+            logistics_id:this.searchBox.logistics_id,
+            seller_flag:this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -2244,6 +2259,16 @@ export default {
         case 1:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 60,
+            member_nick:this.searchBox.member_nick,
+            system_order_no:this.searchBox.system_order_no,
+            receiver_name:this.searchBox.receiver_name,
+            receiver_phone:this.searchBox.receiver_phone,
+            receiver_address:this.searchBox.receiver_address,
+            shops_id:this.searchBox.shops_id,
+            business_personnel_id:this.searchBox.business_personnel_id,
+            seller_remark:this.searchBox.seller_remark,
+            logistics_id:this.searchBox.logistics_id,
+            seller_flag:this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -2263,6 +2288,16 @@ export default {
         case 2:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 70,
+            member_nick:this.searchBox.member_nick,
+            system_order_no:this.searchBox.system_order_no,
+            receiver_name:this.searchBox.receiver_name,
+            receiver_phone:this.searchBox.receiver_phone,
+            receiver_address:this.searchBox.receiver_address,
+            shops_id:this.searchBox.shops_id,
+            business_personnel_id:this.searchBox.business_personnel_id,
+            seller_remark:this.searchBox.seller_remark,
+            logistics_id:this.searchBox.logistics_id,
+            seller_flag:this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -2282,6 +2317,16 @@ export default {
         case 3:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 80,
+            member_nick:this.searchBox.member_nick,
+            system_order_no:this.searchBox.system_order_no,
+            receiver_name:this.searchBox.receiver_name,
+            receiver_phone:this.searchBox.receiver_phone,
+            receiver_address:this.searchBox.receiver_address,
+            shops_id:this.searchBox.shops_id,
+            business_personnel_id:this.searchBox.business_personnel_id,
+            seller_remark:this.searchBox.seller_remark,
+            logistics_id:this.searchBox.logistics_id,
+            seller_flag:this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -2449,9 +2494,6 @@ export default {
       this.payDtlData = row["paymentDetails"]["data"];
     },
     proDtlRClick(row) {},
-    resets() {
-      this.searchBox = {};
-    },
     delBatch() {
       if (this.ids.length === 0) {
         this.$message({
@@ -3133,6 +3175,30 @@ export default {
         }
       }
     },
+    //筛选
+    searchData(){
+      this.loading=true;
+      this.fetchData();
+    },
+    resets() {
+      this.searchBox =  {
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_address: "",
+        shops_id: "",
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: "",
+      };
+    }
   },
   mounted() {
     this.fetchData();

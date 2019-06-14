@@ -670,6 +670,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.logisticsQuery');
         $api->get('customerservicedepts/orderCenter', 'CustomerServiceDepartmentsController@orderCenter')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.orderCenter');
+        $api->get('customerservicedepts/getAuditDepartment', 'CustomerServiceDepartmentsController@getAuditDepartment')->middleware('permission:审计部')
+            ->name('api.customerservicedepts.getAuditDepartment');
         $api->get('customerservicedepts/searchordersettlement', 'CustomerServiceDepartmentsController@searchOrderSettlement')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.searchordersettlement');
         $api->get('customerservicedepts/create', 'CustomerServiceDepartmentsController@create')->middleware('permission:客服部|跟单部')

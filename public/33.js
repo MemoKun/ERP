@@ -1,13 +1,13 @@
 webpackJsonp([33],{
 
-/***/ 1058:
+/***/ 1061:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_resource__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_resource__ = __webpack_require__(296);
 //
 //
 //
@@ -1590,6 +1590,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       proDtlData: [],
       curRowId: "",
       curRowData: {},
+      operationData: [], //操作记录
+      relatedInfoData: [], //关联信息
+      otherFeeData: [], //其他费用
+      rejectReasonData: [], //驳回原因
+      offListData: [], //优惠列表
+      imageData: [], //订单图片
       orderDtlHead: [[{
         label: "sku名称",
         width: "160",
@@ -2410,7 +2416,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       additionOrderIds: [],
 
       /** 内部便签InnerNote*/
-      InnerNoteData: {},
+      InnerNoteData: [],
       InnerNoteHead: [],
 
       curCombRowData: [],
@@ -2511,6 +2517,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           this.proDtlData = data["orderItems"]["data"];
           /*支付明细*/
           this.payDtlData = data["paymentDetails"]["data"];
+          //操作记录
+          this.operationData = data['orderOperationRecord']['data'];
           break;
       }
     },
@@ -4051,7 +4059,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 
 /***/ }),
 
-/***/ 1059:
+/***/ 1062:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -5756,7 +5764,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.orderDtlFormVal, fit: "" } },
+                        { attrs: { data: _vm.InnerNoteData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5918,7 +5926,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.relatedInfoData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5999,7 +6007,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.otherFeeData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -6080,7 +6088,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.rejectReasonData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -6161,7 +6169,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.offListData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -6242,7 +6250,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.imageData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -9647,15 +9655,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 944:
+/***/ 947:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1058)
+var __vue_script__ = __webpack_require__(1061)
 /* template */
-var __vue_template__ = __webpack_require__(1059)
+var __vue_template__ = __webpack_require__(1062)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

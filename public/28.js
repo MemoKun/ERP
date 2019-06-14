@@ -340,12 +340,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -383,11 +377,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         system_order_no: "",
         receiver_name: "",
         logistics_id: "",
-        supplier_id: "",
         shops_id: "",
-        checked_at: "",
-        stockout_at: "",
-        audit_at: ""
+        checked_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        stockout_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"]
       },
       /*获取数据*/
       activeName: "0",
@@ -1656,6 +1649,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.orderListData = {};
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_logistics_checked: 0,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            logistics_id: this.searchBox.logistics_id,
+            shops_id: this.searchBox.shops_id,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -1683,6 +1680,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.orderListData = {};
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_logistics_checked: 1,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            logistics_id: this.searchBox.logistics_id,
+            shops_id: this.searchBox.shops_id,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
           }).then(function (res) {
             _this.loading = false;
@@ -1706,6 +1707,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.orderListData = {};
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_goods_checked: 0,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            logistics_id: this.searchBox.logistics_id,
+            shops_id: this.searchBox.shops_id,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
             _this.loading = false;
@@ -1729,6 +1734,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.orderListData = {};
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_goods_checked: 1,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            logistics_id: this.searchBox.logistics_id,
+            shops_id: this.searchBox.shops_id,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
             _this.loading = false;
@@ -1752,6 +1761,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.orderListData = {};
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_distribution_checked: 0,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            logistics_id: this.searchBox.logistics_id,
+            shops_id: this.searchBox.shops_id,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
             _this.loading = false;
@@ -1775,6 +1788,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.orderListData = {};
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_distribution_checked: 1,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            logistics_id: this.searchBox.logistics_id,
+            shops_id: this.searchBox.shops_id,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
           }).then(function (res) {
             _this.loading = false;
@@ -3014,8 +3031,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       }
     },
+
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
     resets: function resets() {
-      this.searchBox = {};
+      this.searchBox = {
+        system_order_no: "",
+        receiver_name: "",
+        logistics_id: "",
+        shops_id: "",
+        checked_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        stockout_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"]
+      };
     }
   },
   mounted: function mounted() {
@@ -3029,6 +3060,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //   })()
     // })
     this.fetchData();
+    this.$store.dispatch('logistics', '/logistics');
+    this.$store.dispatch('suppliers', '/suppliers');
+    this.$store.dispatch('shops', '/shops');
     this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -3114,11 +3148,7 @@ var render = function() {
                       _c(
                         "el-select",
                         {
-                          attrs: {
-                            clearable: "",
-                            clearable: "",
-                            placeholder: "请选择"
-                          },
+                          attrs: { clearable: "", placeholder: "请选择" },
                           model: {
                             value: _vm.searchBox.logistics_id,
                             callback: function($$v) {
@@ -3127,13 +3157,22 @@ var render = function() {
                             expression: "searchBox.logistics_id"
                           }
                         },
-                        _vm._l(_vm.searchBox.logistics_id, function(item) {
-                          return _c("el-option", {
-                            key: item.value,
-                            attrs: { label: item.label, value: item.value }
-                          })
+                        _vm._l(_vm.resData["logistics"], function(list) {
+                          return _c(
+                            "span",
+                            { key: list.id },
+                            [
+                              _c("el-option", {
+                                attrs: {
+                                  label: list.name ? list.name : list.nick,
+                                  value: list.id
+                                }
+                              })
+                            ],
+                            1
+                          )
                         }),
-                        1
+                        0
                       )
                     ],
                     1
@@ -3174,39 +3213,6 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "searchBox" }, [
-                  _c(
-                    "span",
-                    [
-                      _c("label", [_vm._v("店铺名称")]),
-                      _vm._v(" "),
-                      _c(
-                        "el-select",
-                        {
-                          attrs: {
-                            clearable: "",
-                            clearable: "",
-                            placeholder: "请选择"
-                          },
-                          model: {
-                            value: _vm.searchBox.shops_id,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "shops_id", $$v)
-                            },
-                            expression: "searchBox.shops_id"
-                          }
-                        },
-                        _vm._l(_vm.searchBox.orderShops, function(item) {
-                          return _c("el-option", {
-                            key: item.value,
-                            attrs: { label: item.label, value: item.value }
-                          })
-                        }),
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
                   _c(
                     "span",
                     [

@@ -5,7 +5,7 @@
         <div>
           <div class="searchBox">
             <span>
-              <label>会员名称</label>
+              <label>买家昵称</label>
               <el-input v-model="searchBox.member_nick" clearable></el-input>
             </span>
             <span>
@@ -29,54 +29,72 @@
             <span>
               <label>所属店铺</label>
               <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.orderShops" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                <span v-for="list in addSubData['shop']" :key="list.id">
+                  <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                </span>
               </el-select>
             </span>
             <span>
-              <label>包含商品</label>
-              <el-input v-model="searchBox.order_goods" clearable></el-input>
-            </span>
-            <span>
               <label>业务员</label>
-              <el-input v-model="searchBox.business_personnel_id" clearable></el-input>
+              <el-select v-model="searchBox.business_personnel_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
             </span>
-          </div>
-          <div class="searchBox" v-show="filterBox">
             <span>
               <label>卖家备注</label>
               <el-input v-model="searchBox.seller_remark" clearable></el-input>
             </span>
+            </div>
+            <div class="searchBox">
             <span>
               <label>物流公司</label>
               <el-select v-model="searchBox.logistics_id" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                <span v-for="list in addSubData['logistics']" :key="list.id">
+                  <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                </span>
               </el-select>
             </span>
             <span>
               <label>淘宝旗帜</label>
-              <el-select v-model="searchBox.order_flag" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.ordertbFlag" :key="item.value" :label="item.label" :value="item.value"></el-option>
+              <el-select v-model="searchBox.seller_flag" clearable placeholder="请选择">
+                <el-option :key="0" label="黑旗" :value="0">
+                  <i class="iconfont bf-flag"></i>
+                </el-option>
+                <el-option :key="1" label="红旗" :value="1">
+                  <i class="iconfont bf-flag" style="color:red"></i>
+                </el-option>
+                <el-option :key="2" label="黄旗" :value="2">
+                  <i class="iconfont bf-flag" style="color:yellow"></i>
+                </el-option>
+                <el-option :key="3" label="绿旗" :value="3">
+                  <i class="iconfont bf-flag" style="color:green"></i>
+                </el-option>
+                <el-option :key="4" label="蓝旗" :value="4">
+                  <i class="iconfont bf-flag" style="color:blue"></i>
+                </el-option>
+                <el-option :key="5" label="紫旗" :value="5">
+                  <i class="iconfont bf-flag" style="color:purple"></i>
+                </el-option>
               </el-select>
             </span>
-            <span>
-              <label>锁定状态</label>
-              <el-select v-model="searchBox.order_lock" clearable placeholder="请选择">
-                <el-option v-for="item in searchBox.orderLock" :key="item.value" :label="item.label" :value="item.value"></el-option>
-              </el-select>
-            </span>
-          </div>
-          <div class="searchBox">
             <span>
               <label>承诺日期</label>
-              <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+              <el-date-picker v-model="searchBox.promise_ship_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              </el-date-picker>
             </span>
+            </div>
+            <div class="searchBox">
             <span>
               <label>业务日期</label>
-              <el-date-picker v-model="searchBox.order_workDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+              <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              </el-date-picker>
             </span>
             <span>
               <label>客审日期</label>
-              <el-date-picker v-model="searchBox.order_customerInves" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+              <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              </el-date-picker>
             </span>
             <span class="transMoney">
               <label>交易金额</label>
@@ -86,7 +104,7 @@
             </span>
           </div>
           <div style="text-align: right">
-            <el-button type="primary" @click="fetchData">筛选</el-button>
+            <el-button type="primary" @click="searchData">筛选</el-button>
             <el-button @click="resets">重置</el-button>
           </div>
         </div>
@@ -477,30 +495,24 @@ export default {
           ent: this.refresh
         }
       ],
+      addSubData:[],
       filterBox: false,
       searchBox: {
         member_nick: "",
         system_order_no: "",
         receiver_name: "",
         receiver_phone: "",
-        order_money: "",
         receiver_address: "",
-        order_goods: "",
-        business_personnel_id: "",
-        order_promiseDate: "",
-        order_workDate: "",
-        order_transMStart: "",
-        order_transMEnd: "",
-        orderCompany: [{ label: "ceshi", value: 0 }],
-        order_customerInves: "",
-        seller_remark: "",
-        order_flag: "",
-        ordertbFlag: [{ label: "ceshi", value: 0 }],
-        order_lock: "",
-        orderLock: [{ label: "ceshi", value: 0 }],
-        logistics_id: "",
         shops_id: "",
-        orderShops: [{ label: "ceshi", value: 0 }]
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: "",
       },
       /*获取数据*/
       activeName: "0",
@@ -1431,8 +1443,18 @@ export default {
       let index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts, {
+          this.$fetch(this.urls.customerservicedepts+'/getAuditDepartment', {
             order_status: 5,
+            member_nick:this.searchBox.member_nick,
+            system_order_no:this.searchBox.system_order_no,
+            receiver_name:this.searchBox.receiver_name,
+            receiver_phone:this.searchBox.receiver_phone,
+            receiver_address:this.searchBox.receiver_address,
+            shops_id:this.searchBox.shops_id,
+            business_personnel_id:this.searchBox.business_personnel_id,
+            seller_remark:this.searchBox.seller_remark,
+            logistics_id:this.searchBox.logistics_id,
+            seller_flag:this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -1460,8 +1482,18 @@ export default {
           );
           break;
         case 1:
-          this.$fetch(this.urls.customerservicedepts, {
+          this.$fetch(this.urls.customerservicedepts +'/getAuditDepartment', {
             order_status: 10,
+            member_nick:this.searchBox.member_nick,
+            system_order_no:this.searchBox.system_order_no,
+            receiver_name:this.searchBox.receiver_name,
+            receiver_phone:this.searchBox.receiver_phone,
+            receiver_address:this.searchBox.receiver_address,
+            shops_id:this.searchBox.shops_id,
+            business_personnel_id:this.searchBox.business_personnel_id,
+            seller_remark:this.searchBox.seller_remark,
+            logistics_id:this.searchBox.logistics_id,
+            seller_flag:this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -1812,10 +1844,40 @@ export default {
           }
         }
       );
+    },
+    //筛选
+    searchData(){
+      this.loading=true;
+      this.fetchData();
+    },
+    resets() {
+      this.searchBox =  {
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_address: "",
+        shops_id: "",
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: "",
+      };
     }
   },
   mounted() {
     this.fetchData();
+    this.$fetch(this.urls.customerservicedepts + "/create").then(
+      res => {
+        this.addSubData = res;
+      },
+      err => {}
+    );
     this.$store.dispatch("setOpt", this.newOpt);
     let that = this;
     $(window).resize(() => {
