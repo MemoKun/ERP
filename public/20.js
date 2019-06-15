@@ -752,7 +752,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         label: '操作',
         width: '160',
-        prop: 'operated',
+        prop: 'operation',
         type: 'text'
       }, {
         label: '操作描述',

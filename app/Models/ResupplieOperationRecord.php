@@ -7,7 +7,12 @@ class ResupplieOperationRecord extends Model
     protected $table = 're_supplie_operation_records';
 
     protected $fillable = [
-        'user_name', 'operated', 'description', 'status',
+        're_supplie_orders_id','user_id','user_name', 'operation', 'description', 'status',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at'
     ];
 
     //设置类型
@@ -22,6 +27,6 @@ class ResupplieOperationRecord extends Model
 
     public function resupplieOrder()
     {
-        return $this->belongsTo(ResupplieOrder::class, 're_supplie_responsibles_id');
+        return $this->belongsTo(ResupplieOrder::class, 're_supplie_orders_id');
     }
 }

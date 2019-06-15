@@ -929,7 +929,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         label: '操作',
         width: '160',
-        prop: 'operated',
+        prop: 'operation',
         type: 'text'
       }, {
         label: '操作描述',

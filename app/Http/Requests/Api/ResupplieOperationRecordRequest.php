@@ -20,7 +20,7 @@ class ResupplieOperationRecordRequest extends FormRequest
             case 'POST':
                 return [
                     'user_name' => 'required|string',
-                    'operated' => 'required|string',
+                    'operation' => 'required|string',
                     'description' => 'required|string',
                     'status' => 'boolean',
                 ];
@@ -34,8 +34,8 @@ class ResupplieOperationRecordRequest extends FormRequest
             'user_name.required' => '用户必填',
             'user_name.string' => '用户必须string类型',
 
-            'operated.required' => '操作必填',
-            'operated.string' => '操作必须string类型',
+            'operation.required' => '操作必填',
+            'operation.string' => '操作必须string类型',
 
             'description.required' => '操作描述必填',
             'description.string' => '操作描述必须string类型',
@@ -49,7 +49,7 @@ class ResupplieOperationRecordRequest extends FormRequest
     {
         return [
             'user_name' => '用户',
-            'operated' => '操作',
+            'operation' => '操作',
             'description' => '操作描述',
             'status' => '状态',
         ];
