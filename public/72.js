@@ -945,15 +945,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         order_no: "",
         vip_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
-        client_name: "",
-        after_sale_sort: "",
-        afterSaleSort: [{ label: "售后", value: 0 }, { label: "售中", value: 1 }],
+        after_sale_status: "",
         after_sale_type: "",
         order_phone: "",
-        created_at: "",
-        after_sale_status: "",
-        afterSaleStatus: [{ label: "ceshi", value: 0 }]
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        after_sale_group: ""
       },
       /* 中间tabs */
       topActiveName: "0",
@@ -1410,7 +1406,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     /* 搜索框 */
     handleQuery: function handleQuery() {
-      console.log(666);
+      this.newLoading = true;
+      this.fetchAfterSaleData();
     },
     toggleShow: function toggleShow() {
       this.filterBox = !this.filterBox;
@@ -1421,15 +1418,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         order_no: "",
         vip_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
-        client_name: "",
-        after_sale_sort: "",
-        afterSaleSort: [{ label: "售后", value: 0 }, { label: "售中", value: 1 }],
+        after_sale_status: "",
         after_sale_type: "",
         order_phone: "",
         created_at: "",
-        after_sale_status: "",
-        afterSaleStatus: [{ label: "ceshi", value: 0 }]
+        after_sale_group: ""
       };
     },
 
@@ -1451,6 +1444,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
+            after_sale_order_no: this.searchBox.after_sale_order_no,
+            order_no: this.searchBox.order_no,
+            vip_name: this.searchBox.vip_name,
+            user_id: this.searchBox.user_id,
+            after_sale_status: this.searchBox.after_sale_status,
+            after_sale_type: this.searchBox.after_sale_type,
+            order_phone: this.searchBox.order_phone,
+            after_sale_group: this.searchBox.after_sale_group,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.unsubmitLoading = false;
@@ -1489,6 +1490,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 40,
+            after_sale_order_no: this.searchBox.after_sale_order_no,
+            order_no: this.searchBox.order_no,
+            vip_name: this.searchBox.vip_name,
+            user_id: this.searchBox.user_id,
+            after_sale_status: this.searchBox.after_sale_status,
+            after_sale_type: this.searchBox.after_sale_type,
+            order_phone: this.searchBox.order_phone,
+            after_sale_group: this.searchBox.after_sale_group,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.submitLoading = false;
@@ -2031,7 +2040,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
+    var _this12 = this;
+
     this.fetchAfterSaleData();
+    this.$fetch(this.urls.customerservicedepts + "/create").then(function (res) {
+      _this12.addSubData = res;
+    }, function (err) {});
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit("change", this.newOpt);
     var that = this;
@@ -2158,23 +2172,6 @@ var render = function() {
                     "el-select",
                     {
                       attrs: { clearable: "", placeholder: "请选择" },
-                      nativeOn: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.handleQuery($event)
-                        }
-                      },
                       model: {
                         value: _vm.searchBox.user_id,
                         callback: function($$v) {
@@ -2183,13 +2180,19 @@ var render = function() {
                         expression: "searchBox.user_id"
                       }
                     },
-                    _vm._l(_vm.searchBox.orderStaff, function(item) {
-                      return _c("el-option", {
-                        key: item.value,
-                        attrs: { label: item.label, value: item.value }
-                      })
+                    _vm._l(_vm.addSubData["user"], function(list) {
+                      return _c(
+                        "span",
+                        { key: list.id },
+                        [
+                          _c("el-option", {
+                            attrs: { label: list["username"], value: list.id }
+                          })
+                        ],
+                        1
+                      )
                     }),
-                    1
+                    0
                   )
                 ],
                 1
@@ -2240,43 +2243,7 @@ var render = function() {
               _c(
                 "span",
                 [
-                  _c("label", [_vm._v("客户姓名")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.handleQuery($event)
-                      }
-                    },
-                    model: {
-                      value: _vm.searchBox.client_name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "client_name", $$v)
-                      },
-                      expression: "searchBox.client_name"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("售后分类")]),
+                  _c("label", [_vm._v("售后状态")]),
                   _vm._v(" "),
                   _c(
                     "el-select",
@@ -2300,17 +2267,17 @@ var render = function() {
                         }
                       },
                       model: {
-                        value: _vm.searchBox.after_sale_sort,
+                        value: _vm.searchBox.after_sale_status,
                         callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "after_sale_sort", $$v)
+                          _vm.$set(_vm.searchBox, "after_sale_status", $$v)
                         },
-                        expression: "searchBox.after_sale_sort"
+                        expression: "searchBox.after_sale_status"
                       }
                     },
-                    _vm._l(_vm.searchBox.afterSaleSort, function(item) {
+                    _vm._l(_vm.resData.aftersalestate, function(item) {
                       return _c("el-option", {
                         key: item.value,
-                        attrs: { label: item.label, value: item.value }
+                        attrs: { label: item.name, value: item.id }
                       })
                     }),
                     1
@@ -2324,33 +2291,43 @@ var render = function() {
                 [
                   _c("label", [_vm._v("售后类型")]),
                   _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      nativeOn: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.handleQuery($event)
                         }
-                        return _vm.handleQuery($event)
+                      },
+                      model: {
+                        value: _vm.searchBox.after_sale_type,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "after_sale_type", $$v)
+                        },
+                        expression: "searchBox.after_sale_type"
                       }
                     },
-                    model: {
-                      value: _vm.searchBox.after_sale_type,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "after_sale_type", $$v)
-                      },
-                      expression: "searchBox.after_sale_type"
-                    }
-                  })
+                    _vm._l(_vm.searchBox.afterSaleSort, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.label, value: item.value }
+                      })
+                    }),
+                    1
+                  )
                 ],
                 1
               )
@@ -2422,7 +2399,7 @@ var render = function() {
               _c(
                 "span",
                 [
-                  _c("label", [_vm._v("售后状态")]),
+                  _c("label", [_vm._v("售后分类")]),
                   _vm._v(" "),
                   _c(
                     "el-select",
@@ -2446,17 +2423,17 @@ var render = function() {
                         }
                       },
                       model: {
-                        value: _vm.searchBox.after_sale_status,
+                        value: _vm.searchBox.after_sale_group,
                         callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "after_sale_status", $$v)
+                          _vm.$set(_vm.searchBox, "after_sale_group", $$v)
                         },
-                        expression: "searchBox.after_sale_status"
+                        expression: "searchBox.after_sale_group"
                       }
                     },
-                    _vm._l(_vm.searchBox.afterSaleStatus, function(item) {
+                    _vm._l(_vm.resData.aftersaletype, function(item) {
                       return _c("el-option", {
                         key: item.value,
-                        attrs: { label: item.label, value: item.value }
+                        attrs: { label: item.name, value: item.id }
                       })
                     }),
                     1

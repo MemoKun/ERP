@@ -21,19 +21,11 @@
         </span>
         <span v-if="filterBox">
           <label>业务员</label>
-          <el-select
-            v-model="searchBox.user_id"
-            clearable
-            placeholder="请选择"
-            @keyup.enter.native="handleQuery"
-          >
-            <el-option
-              v-for="item in searchBox.orderStaff"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <el-select v-model="searchBox.user_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
         </span>
         <span v-else>
           <el-button type="primary" @click="handleQuery">筛选</el-button>
@@ -43,7 +35,7 @@
             <i class="el-icon-arrow-down" style="color:#409EFF"></i>
           </span>
         </span>
-      </div>
+        </div>
       <div v-if="filterBox" class="searchBox">
         <span>
           <label>售后状态</label>
@@ -54,23 +46,35 @@
             @keyup.enter.native="handleQuery"
           >
             <el-option
-              v-for="item in searchBox.afterSaleStatus"
+              v-for="item in resData.aftersalestate"
+              :key="item.value"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </span>
+        <span>
+          <label>售后类型</label>
+          <el-select
+            v-model="searchBox.after_sale_type"
+            clearable
+            placeholder="请选择"
+            @keyup.enter.native="handleQuery"
+          >
+            <el-option
+              v-for="item in searchBox.afterSaleSort"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
         </span>
-        <span>
-          <label>售后类型</label>
-          <el-input v-model="searchBox.after_sale_type" clearable @keyup.enter.native="handleQuery"></el-input>
-        </span>
+        </div>
+        <div v-if="filterBox" class="searchBox">
         <span>
           <label>联系方式</label>
           <el-input v-model="searchBox.order_phone" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
-      </div>
-      <div v-if="filterBox" class="searchBox">
         <span>
           <label>创建时间</label>
           <el-date-picker
@@ -84,32 +88,16 @@
         <span>
           <label>售后分类</label>
           <el-select
-            v-model="searchBox.after_sale_sort"
+            v-model="searchBox.after_sale_group"
             clearable
             placeholder="请选择"
             @keyup.enter.native="handleQuery"
           >
             <el-option
-              v-for="item in searchBox.afterSaleSort"
+              v-for="item in resData.aftersaletype"
               :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </span>
-        <span>
-          <label>补件责任方</label>
-          <el-select
-            v-model="searchBox.parts_duty"
-            clearable
-            placeholder="请选择"
-            @keyup.enter.native="handleQuery"
-          >
-            <el-option
-              v-for="item in searchBox.partsDuty"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :label="item.name"
+              :value="item.id"
             ></el-option>
           </el-select>
         </span>
@@ -1835,7 +1823,8 @@ export default {
     },
     /* 搜索框 */
     handleQuery() {
-      console.log(666);
+      this.newLoading=true;
+      this.fetchAfterSaleData();
     },
     toggleShow() {
       this.filterBox = !this.filterBox;
@@ -1846,25 +1835,11 @@ export default {
         order_no: "",
         vip_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
         after_sale_status: "",
-        afterSaleStatus: [{ label: "ceshi", value: 0 }],
         after_sale_type: "",
         order_phone: "",
         created_at: "",
-        after_sale_sort: "",
-        afterSaleSort: [
-          { label: "售后", value: 0 },
-          { label: "售中", value: 1 }
-        ],
-        parts_duty: "",
-        partsDuty: [
-          { label: "物流", value: 0 },
-          { label: "工厂", value: 1 },
-          { label: "公司", value: 2 },
-          { label: "员工", value: 3 },
-          { label: "其他", value: 4 }
-        ]
+        after_sale_group: "",
       };
     },
     /* 中间tabs */
@@ -1883,6 +1858,14 @@ export default {
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 20,
+            after_sale_order_no:this.searchBox.after_sale_order_no,
+            order_no:this.searchBox.order_no,
+            vip_name:this.searchBox.vip_name,
+            user_id:this.searchBox.user_id,
+            after_sale_status:this.searchBox.after_sale_status,
+            after_sale_type:this.searchBox.after_sale_type,
+            order_phone:this.searchBox.order_phone,
+            after_sale_group:this.searchBox.after_sale_group,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
@@ -1934,6 +1917,14 @@ export default {
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
+            after_sale_order_no:this.searchBox.after_sale_order_no,
+            order_no:this.searchBox.order_no,
+            vip_name:this.searchBox.vip_name,
+            user_id:this.searchBox.user_id,
+            after_sale_status:this.searchBox.after_sale_status,
+            after_sale_type:this.searchBox.after_sale_type,
+            order_phone:this.searchBox.order_phone,
+            after_sale_group:this.searchBox.after_sale_group,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
@@ -2494,6 +2485,12 @@ export default {
   mounted() {
     this.fetchAfterSaleData();
     this.$store.state.opt.opts = this.newOpt;
+    this.$fetch(this.urls.customerservicedepts + "/create").then(
+      res => {
+        this.addSubData = res;
+      },
+      err => {}
+    );
     this.$store.commit("change", this.newOpt);
     const that = this;
     $(window).resize(() => {

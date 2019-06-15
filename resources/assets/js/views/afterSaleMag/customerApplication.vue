@@ -19,7 +19,7 @@
           <label>会员昵称</label>
           <el-input v-model="searchBox.vip_name" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
-        <span>
+        <span v-if="filterBox">
           <label>业务员</label>
           <el-select v-model="searchBox.user_id" clearable placeholder="请选择">
                 <span v-for="list in addSubData['user']" :key="list.id">
@@ -27,7 +27,17 @@
                 </span>
               </el-select>
         </span>
-        <span v-if="filterBox">
+        <span v-else>
+          <el-button type="primary" @click="handleQuery">筛选</el-button>
+          <el-button @click="resets" style="margin-right: 5px">重置</el-button>
+          <span @click="toggleShow">
+            <el-button type="text">展开</el-button>
+            <i class="el-icon-arrow-down" style="color:#409EFF"></i>
+          </span>
+        </span>
+        </div>
+      <div v-if="filterBox" class="searchBox">
+        <span>
           <label>售后状态</label>
           <el-select
             v-model="searchBox.after_sale_status"
@@ -43,20 +53,10 @@
             ></el-option>
           </el-select>
         </span>
-        <span v-else>
-          <el-button type="primary" @click="handleQuery">筛选</el-button>
-          <el-button @click="resets" style="margin-right: 5px">重置</el-button>
-          <span @click="toggleShow">
-            <el-button type="text">展开</el-button>
-            <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-          </span>
-        </span>
-      </div>
-      <div v-if="filterBox" class="searchBox">
         <span>
           <label>售后类型</label>
           <el-select
-            v-model="searchBox.after_sale_sort"
+            v-model="searchBox.after_sale_type"
             clearable
             placeholder="请选择"
             @keyup.enter.native="handleQuery"
@@ -69,6 +69,8 @@
             ></el-option>
           </el-select>
         </span>
+        </div>
+        <div v-if="filterBox" class="searchBox">
         <span>
           <label>联系方式</label>
           <el-input v-model="searchBox.order_phone" clearable @keyup.enter.native="handleQuery"></el-input>
@@ -86,7 +88,7 @@
         <span>
           <label>售后分类</label>
           <el-select
-            v-model="searchBox.after_sale_type"
+            v-model="searchBox.after_sale_group"
             clearable
             placeholder="请选择"
             @keyup.enter.native="handleQuery"
@@ -768,17 +770,12 @@ export default {
         after_sale_order_no: "",
         order_no: "",
         vip_name: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
-        user_id:'',
+        user_id: "",
         after_sale_status: "",
         after_sale_type: "",
         order_phone: "",
-        created_at: "",
-        after_sale_sort: "",
-        afterSaleSort: [
-          { label: "售后", value: 0 },
-          { label: "售中", value: 1 }
-        ]
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        after_sale_group: "",
       },
       topActiveName: "0",
       tableHead: [
@@ -1542,7 +1539,8 @@ export default {
     },
     /* 查询 */
     handleQuery() {
-      console.log(666);
+      this.newLoading=true;
+      this.fetchAfterSaleData();
     },
     toggleShow() {
       this.filterBox = !this.filterBox;
@@ -1553,16 +1551,11 @@ export default {
         order_no: "",
         vip_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
         after_sale_status: "",
         after_sale_type: "",
         order_phone: "",
         created_at: "",
-        after_sale_sort: "",
-        afterSaleSort: [
-          { label: "售后", value: 0 },
-          { label: "售中", value: 1 }
-        ]
+        after_sale_group: "",
       };
     },
     // 获取售后订单数据
@@ -1582,12 +1575,18 @@ export default {
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 10,
+            after_sale_order_no:this.searchBox.after_sale_order_no,
+            order_no:this.searchBox.order_no,
+            vip_name:this.searchBox.vip_name,
+            user_id:this.searchBox.user_id,
+            after_sale_status:this.searchBox.after_sale_status,
+            after_sale_type:this.searchBox.after_sale_type,
+            order_phone:this.searchBox.order_phone,
+            after_sale_group:this.searchBox.after_sale_group,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
               this.newLoading = false;
-              this.addSubData=res;
-              console.log(this.addSubData);
               this.newData = res.data;
               this.scheduleData = res.data[0]
                 ? res.data[0]["afterSaleSchedules"].data
@@ -1636,6 +1635,14 @@ export default {
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 20,
+            after_sale_order_no:this.searchBox.after_sale_order_no,
+            order_no:this.searchBox.order_no,
+            vip_name:this.searchBox.vip_name,
+            user_id:this.searchBox.user_id,
+            after_sale_status:this.searchBox.after_sale_status,
+            after_sale_type:this.searchBox.after_sale_type,
+            order_phone:this.searchBox.order_phone,
+            after_sale_group:this.searchBox.after_sale_group,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
@@ -2308,6 +2315,12 @@ export default {
   },
   mounted() {
     this.fetchAfterSaleData();
+    this.$fetch(this.urls.customerservicedepts + "/create").then(
+      res => {
+        this.addSubData = res;
+      },
+      err => {}
+    );
     this.$store.dispatch("setOpt", this.newOpt);
     const that = this;
     $(window).resize(() => {

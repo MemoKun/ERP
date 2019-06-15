@@ -891,14 +891,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -931,18 +923,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         vip_name: "",
         client_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
         order_phone: "",
         after_sale_type: "",
-        order_schedule: "",
-        created_at: "",
-        charge_checkDate: "",
-        order_submitDate: "",
-        after_sale_sort: "",
-        afterSaleSort: [{ label: "售后", value: 0 }, { label: "售中", value: 1 }],
-        after_sale_checkDate: "",
-        tag_name: "",
-        deliveryDate: ""
+        problem_description: "",
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        director_check_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        service_submit_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        after_sale_group: "",
+        after_sale_check_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        deliver_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        tag_name: ""
       },
       /* 中间tabs */
       topActiveName: "0",
@@ -1397,8 +1387,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     /* 搜索框 */
     handleQuery: function handleQuery() {
-      //查询
-      console.log(666);
+      this.allLoading = true;
+      this.fetchAfterSaleData();
     },
     toggleShow: function toggleShow() {
       this.filterBox = !this.filterBox;
@@ -1410,18 +1400,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         vip_name: "",
         client_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
         order_phone: "",
         after_sale_type: "",
-        order_schedule: "",
-        created_at: "",
-        charge_checkDate: "",
-        order_submitDate: "",
-        after_sale_sort: "",
-        afterSaleSort: [{ label: "售后", value: 0 }, { label: "售中", value: 1 }],
-        after_sale_checkDate: "",
-        tag_name: "",
-        deliveryDate: ""
+        problem_description: "",
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        director_check_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        service_submit_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        after_sale_group: "",
+        after_sale_check_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        deliver_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        tag_name: ""
       };
     },
 
@@ -1437,6 +1425,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       switch (index) {
         case 0:
           this.$fetch(this.urls.aftersale, {
+            after_sale_order_no: this.searchBox.after_sale_order_no,
+            order_no: this.searchBox.order_no,
+            vip_name: this.searchBox.vip_name,
+            client_name: this.searchBox.client_name,
+            user_id: this.searchBox.user_id,
+            order_phone: this.searchBox.order_phone,
+            after_sale_type: this.searchBox.after_sale_type,
+            problem_description: this.searchBox.problem_description,
+            after_sale_group: this.searchBox.after_sale_group,
+            tag_name: this.searchBox.tag_name,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.allLoading = false;
@@ -1470,7 +1468,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 1:
           this.$fetch(this.urls.aftersale, {
-            is_finish: false,
+            is_finish: 0,
+            after_sale_order_no: this.searchBox.after_sale_order_no,
+            order_no: this.searchBox.order_no,
+            vip_name: this.searchBox.vip_name,
+            client_name: this.searchBox.client_name,
+            user_id: this.searchBox.user_id,
+            order_phone: this.searchBox.order_phone,
+            after_sale_type: this.searchBox.after_sale_type,
+            problem_description: this.searchBox.problem_description,
+            after_sale_group: this.searchBox.after_sale_group,
+            tag_name: this.searchBox.tag_name,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.unfinishLoading = false;
@@ -1504,6 +1512,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 2:
           this.$fetch(this.urls.aftersale, {
             order_status: 50,
+            after_sale_order_no: this.searchBox.after_sale_order_no,
+            order_no: this.searchBox.order_no,
+            vip_name: this.searchBox.vip_name,
+            client_name: this.searchBox.client_name,
+            user_id: this.searchBox.user_id,
+            order_phone: this.searchBox.order_phone,
+            after_sale_type: this.searchBox.after_sale_type,
+            problem_description: this.searchBox.problem_description,
+            after_sale_group: this.searchBox.after_sale_group,
+            tag_name: this.searchBox.tag_name,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.finishLoading = false;
@@ -1809,7 +1827,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
+    var _this9 = this;
+
     this.fetchAfterSaleData();
+    this.$fetch(this.urls.customerservicedepts + "/create").then(function (res) {
+      _this9.addSubData = res;
+    }, function (err) {});
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit("change", this.newOpt);
     var that = this;
@@ -2014,23 +2037,6 @@ var render = function() {
                     "el-select",
                     {
                       attrs: { clearable: "", placeholder: "请选择" },
-                      nativeOn: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.handleQuery($event)
-                        }
-                      },
                       model: {
                         value: _vm.searchBox.user_id,
                         callback: function($$v) {
@@ -2039,13 +2045,19 @@ var render = function() {
                         expression: "searchBox.user_id"
                       }
                     },
-                    _vm._l(_vm.searchBox.orderStaff, function(item) {
-                      return _c("el-option", {
-                        key: item.value,
-                        attrs: { label: item.label, value: item.value }
-                      })
+                    _vm._l(_vm.addSubData["user"], function(list) {
+                      return _c(
+                        "span",
+                        { key: list.id },
+                        [
+                          _c("el-option", {
+                            attrs: { label: list["username"], value: list.id }
+                          })
+                        ],
+                        1
+                      )
                     }),
-                    1
+                    0
                   )
                 ],
                 1
@@ -2126,7 +2138,7 @@ var render = function() {
               _c(
                 "span",
                 [
-                  _c("label", [_vm._v("进度描述")]),
+                  _c("label", [_vm._v("问题描述")]),
                   _vm._v(" "),
                   _c("el-input", {
                     attrs: { clearable: "" },
@@ -2148,11 +2160,11 @@ var render = function() {
                       }
                     },
                     model: {
-                      value: _vm.searchBox.order_schedule,
+                      value: _vm.searchBox.problem_description,
                       callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "order_schedule", $$v)
+                        _vm.$set(_vm.searchBox, "problem_description", $$v)
                       },
-                      expression: "searchBox.order_schedule"
+                      expression: "searchBox.problem_description"
                     }
                   })
                 ],
@@ -2200,11 +2212,11 @@ var render = function() {
                       "end-placeholder": "结束日期"
                     },
                     model: {
-                      value: _vm.searchBox.charge_checkDate,
+                      value: _vm.searchBox.director_check_date,
                       callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "charge_checkDate", $$v)
+                        _vm.$set(_vm.searchBox, "director_check_date", $$v)
                       },
-                      expression: "searchBox.charge_checkDate"
+                      expression: "searchBox.director_check_date"
                     }
                   })
                 ],
@@ -2224,11 +2236,11 @@ var render = function() {
                       "end-placeholder": "结束日期"
                     },
                     model: {
-                      value: _vm.searchBox.order_submitDate,
+                      value: _vm.searchBox.service_submit_date,
                       callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "order_submitDate", $$v)
+                        _vm.$set(_vm.searchBox, "service_submit_date", $$v)
                       },
-                      expression: "searchBox.order_submitDate"
+                      expression: "searchBox.service_submit_date"
                     }
                   })
                 ],
@@ -2262,11 +2274,11 @@ var render = function() {
                         }
                       },
                       model: {
-                        value: _vm.searchBox.after_sale_sort,
+                        value: _vm.searchBox.after_sale_group,
                         callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "after_sale_sort", $$v)
+                          _vm.$set(_vm.searchBox, "after_sale_group", $$v)
                         },
-                        expression: "searchBox.after_sale_sort"
+                        expression: "searchBox.after_sale_group"
                       }
                     },
                     _vm._l(_vm.resData.aftersaletype, function(item) {
@@ -2298,11 +2310,11 @@ var render = function() {
                       "end-placeholder": "结束日期"
                     },
                     model: {
-                      value: _vm.searchBox.after_sale_checkDate,
+                      value: _vm.searchBox.after_sale_check_date,
                       callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "after_sale_checkDate", $$v)
+                        _vm.$set(_vm.searchBox, "after_sale_check_date", $$v)
                       },
-                      expression: "searchBox.after_sale_checkDate"
+                      expression: "searchBox.after_sale_check_date"
                     }
                   })
                 ],
@@ -2358,11 +2370,11 @@ var render = function() {
                       "end-placeholder": "结束日期"
                     },
                     model: {
-                      value: _vm.searchBox.deliveryDate,
+                      value: _vm.searchBox.deliver_date,
                       callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "deliveryDate", $$v)
+                        _vm.$set(_vm.searchBox, "deliver_date", $$v)
                       },
-                      expression: "searchBox.deliveryDate"
+                      expression: "searchBox.deliver_date"
                     }
                   })
                 ],

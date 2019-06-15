@@ -35,19 +35,11 @@
       <div v-if="filterBox" class="searchBox">
         <span>
           <label>业务员</label>
-          <el-select
-            v-model="searchBox.user_id"
-            clearable
-            placeholder="请选择"
-            @keyup.enter.native="handleQuery"
-          >
-            <el-option
-              v-for="item in searchBox.orderStaff"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <el-select v-model="searchBox.user_id" clearable placeholder="请选择">
+                <span v-for="list in addSubData['user']" :key="list.id">
+                  <el-option :label="list['username']" :value="list.id"></el-option>
+                </span>
+              </el-select>
         </span>
         <span>
           <label>联系方式</label>
@@ -58,8 +50,8 @@
           <el-input v-model="searchBox.after_sale_type" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
         <span>
-          <label>进度描述</label>
-          <el-input v-model="searchBox.order_schedule" clearable @keyup.enter.native="handleQuery"></el-input>
+          <label>问题描述</label>
+          <el-input v-model="searchBox.problem_description" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
       </div>
       <div v-if="filterBox" class="searchBox">
@@ -76,7 +68,7 @@
         <span>
           <label>主管审核时间</label>
           <el-date-picker
-            v-model="searchBox.charge_checkDate"
+            v-model="searchBox.director_check_date"
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
@@ -86,7 +78,7 @@
         <span>
           <label>客服提交时间</label>
           <el-date-picker
-            v-model="searchBox.order_submitDate"
+            v-model="searchBox.service_submit_date"
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
@@ -96,7 +88,7 @@
         <span>
           <label>售后分类</label>
           <el-select
-            v-model="searchBox.after_sale_sort"
+            v-model="searchBox.after_sale_group"
             clearable
             placeholder="请选择"
             @keyup.enter.native="handleQuery"
@@ -114,7 +106,7 @@
         <span>
           <label>售后审核时间</label>
           <el-date-picker
-            v-model="searchBox.after_sale_checkDate"
+            v-model="searchBox.after_sale_check_date"
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
@@ -128,7 +120,7 @@
         <span>
           <label>发货时间</label>
           <el-date-picker
-            v-model="searchBox.deliveryDate"
+            v-model="searchBox.deliver_date"
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
@@ -877,21 +869,16 @@ export default {
         vip_name: "",
         client_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
         order_phone: "",
         after_sale_type: "",
-        order_schedule: "",
-        created_at: "",
-        charge_checkDate: "",
-        order_submitDate: "",
-        after_sale_sort: "",
-        afterSaleSort: [
-          { label: "售后", value: 0 },
-          { label: "售中", value: 1 }
-        ],
-        after_sale_checkDate: "",
+        problem_description: "",
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        director_check_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        service_submit_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        after_sale_group: "",
+        after_sale_check_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        deliver_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         tag_name: "",
-        deliveryDate: ""
       },
       /* 中间tabs */
       topActiveName: "0",
@@ -1493,8 +1480,8 @@ export default {
     },
     /* 搜索框 */
     handleQuery() {
-      //查询
-      console.log(666);
+      this.allLoading=true;
+      this.fetchAfterSaleData();
     },
     toggleShow() {
       this.filterBox = !this.filterBox;
@@ -1506,21 +1493,16 @@ export default {
         vip_name: "",
         client_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
         order_phone: "",
         after_sale_type: "",
-        order_schedule: "",
-        created_at: "",
-        charge_checkDate: "",
-        order_submitDate: "",
-        after_sale_sort: "",
-        afterSaleSort: [
-          { label: "售后", value: 0 },
-          { label: "售中", value: 1 }
-        ],
-        after_sale_checkDate: "",
+        problem_description: "",
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        director_check_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        service_submit_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        after_sale_group: "",
+        after_sale_check_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        deliver_date: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         tag_name: "",
-        deliveryDate: ""
       };
     },
     /* 中间tabs */
@@ -1533,6 +1515,16 @@ export default {
       switch (index) {
         case 0:
           this.$fetch(this.urls.aftersale, {
+            after_sale_order_no:this.searchBox.after_sale_order_no,
+            order_no:this.searchBox.order_no,
+            vip_name:this.searchBox.vip_name,
+            client_name:this.searchBox.client_name,
+            user_id:this.searchBox.user_id,
+            order_phone:this.searchBox.order_phone,
+            after_sale_type:this.searchBox.after_sale_type,
+            problem_description:this.searchBox.problem_description,
+            after_sale_group:this.searchBox.after_sale_group,
+            tag_name:this.searchBox.tag_name,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
@@ -1579,7 +1571,17 @@ export default {
           break;
         case 1:
           this.$fetch(this.urls.aftersale, {
-            is_finish: false,
+            is_finish: 0,
+            after_sale_order_no:this.searchBox.after_sale_order_no,
+            order_no:this.searchBox.order_no,
+            vip_name:this.searchBox.vip_name,
+            client_name:this.searchBox.client_name,
+            user_id:this.searchBox.user_id,
+            order_phone:this.searchBox.order_phone,
+            after_sale_type:this.searchBox.after_sale_type,
+            problem_description:this.searchBox.problem_description,
+            after_sale_group:this.searchBox.after_sale_group,
+            tag_name:this.searchBox.tag_name,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
@@ -1626,6 +1628,16 @@ export default {
         case 2:
           this.$fetch(this.urls.aftersale, {
             order_status: 50,
+            after_sale_order_no:this.searchBox.after_sale_order_no,
+            order_no:this.searchBox.order_no,
+            vip_name:this.searchBox.vip_name,
+            client_name:this.searchBox.client_name,
+            user_id:this.searchBox.user_id,
+            order_phone:this.searchBox.order_phone,
+            after_sale_type:this.searchBox.after_sale_type,
+            problem_description:this.searchBox.problem_description,
+            after_sale_group:this.searchBox.after_sale_group,
+            tag_name:this.searchBox.tag_name,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(
             res => {
@@ -1941,6 +1953,12 @@ export default {
   },
   mounted() {
     this.fetchAfterSaleData();
+    this.$fetch(this.urls.customerservicedepts + "/create").then(
+      res => {
+        this.addSubData = res;
+      },
+      err => {}
+    );
     this.$store.state.opt.opts = this.newOpt;
     this.$store.commit("change", this.newOpt);
     const that = this;

@@ -29,10 +29,37 @@ class AfterSaleController extends Controller
 
     const TRANSFORMER = AfterSaleTransformer::class;
     const MODEL = AfterSale::class;
+    const PerPage = 8;
 
     public function index(AfterSaleRequest $request)
     {
-        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        //return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        $order_status = $request->input('order_status');
+        $is_finish = $request->input('is_finish');
+        $after_sale_order_no = $request->input('after_sale_order_no');
+        $order_no = $request->input('order_no');
+        $vip_name = $request->input('vip_name');
+        $user_id = $request->input('user_id');
+        $after_sale_status = $request->input('after_sale_status');
+        $after_sale_type = $request->input('after_sale_type');
+        $order_phone = $request->input('order_phone');
+        $after_sale_group = $request->input('after_sale_group');
+        $problem_description = $request->input('problem_description');
+        $tag_name = $request->input('tag_name');
+        $afterSale = AfterSale::query()->where('order_status', 'like', '%'.$order_status.'%')
+        ->where('is_finish', 'like', '%'.$is_finish.'%')
+        ->where('after_sale_order_no', 'like', '%'.$after_sale_order_no.'%')
+        ->where('order_no', 'like', '%'.$order_no.'%')
+        ->where('vip_name', 'like', '%'.$vip_name.'%')
+        ->where('user_id', 'like', '%'.$user_id.'%')
+        ->where('after_sale_status', 'like', '%'.$after_sale_status.'%')
+        ->where('after_sale_type', 'like', '%'.$after_sale_type.'%')
+        ->where('order_phone', 'like', '%'.$order_phone.'%')
+        ->where('after_sale_group', 'like', '%'.$after_sale_group.'%')
+        ->where('problem_description', 'like', '%'.$problem_description.'%')
+        ->where('tag_name', 'like', '%'.$tag_name.'%')
+        ->orderBy('updated_at', 'desc');
+        return $this->response->paginator($afterSale->paginate(self::PerPage), self::TRANSFORMER);
     }
 
     public function store(AfterSaleRequest $request, AfterSaleDefProRequest $defprorequest)

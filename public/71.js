@@ -923,18 +923,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1721,7 +1709,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     /* 搜索框 */
     handleQuery: function handleQuery() {
-      console.log(666);
+      this.newLoading = true;
+      this.fetchAfterSaleData();
     },
     toggleShow: function toggleShow() {
       this.filterBox = !this.filterBox;
@@ -1732,16 +1721,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         order_no: "",
         vip_name: "",
         user_id: "",
-        orderStaff: [{ label: "ceshi", value: 0 }],
         after_sale_status: "",
-        afterSaleStatus: [{ label: "ceshi", value: 0 }],
         after_sale_type: "",
         order_phone: "",
         created_at: "",
-        after_sale_sort: "",
-        afterSaleSort: [{ label: "售后", value: 0 }, { label: "售中", value: 1 }],
-        parts_duty: "",
-        partsDuty: [{ label: "物流", value: 0 }, { label: "工厂", value: 1 }, { label: "公司", value: 2 }, { label: "员工", value: 3 }, { label: "其他", value: 4 }]
+        after_sale_group: ""
       };
     },
 
@@ -1763,6 +1747,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 20,
+            after_sale_order_no: this.searchBox.after_sale_order_no,
+            order_no: this.searchBox.order_no,
+            vip_name: this.searchBox.vip_name,
+            user_id: this.searchBox.user_id,
+            after_sale_status: this.searchBox.after_sale_status,
+            after_sale_type: this.searchBox.after_sale_type,
+            order_phone: this.searchBox.order_phone,
+            after_sale_group: this.searchBox.after_sale_group,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.unsubmitLoading = false;
@@ -1801,6 +1793,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
+            after_sale_order_no: this.searchBox.after_sale_order_no,
+            order_no: this.searchBox.order_no,
+            vip_name: this.searchBox.vip_name,
+            user_id: this.searchBox.user_id,
+            after_sale_status: this.searchBox.after_sale_status,
+            after_sale_type: this.searchBox.after_sale_type,
+            order_phone: this.searchBox.order_phone,
+            after_sale_group: this.searchBox.after_sale_group,
             include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
           }).then(function (res) {
             _this.submitLoading = false;
@@ -2349,8 +2349,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
+    var _this15 = this;
+
     this.fetchAfterSaleData();
     this.$store.state.opt.opts = this.newOpt;
+    this.$fetch(this.urls.customerservicedepts + "/create").then(function (res) {
+      _this15.addSubData = res;
+    }, function (err) {});
     this.$store.commit("change", this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -2476,23 +2481,6 @@ var render = function() {
                     "el-select",
                     {
                       attrs: { clearable: "", placeholder: "请选择" },
-                      nativeOn: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.handleQuery($event)
-                        }
-                      },
                       model: {
                         value: _vm.searchBox.user_id,
                         callback: function($$v) {
@@ -2501,13 +2489,19 @@ var render = function() {
                         expression: "searchBox.user_id"
                       }
                     },
-                    _vm._l(_vm.searchBox.orderStaff, function(item) {
-                      return _c("el-option", {
-                        key: item.value,
-                        attrs: { label: item.label, value: item.value }
-                      })
+                    _vm._l(_vm.addSubData["user"], function(list) {
+                      return _c(
+                        "span",
+                        { key: list.id },
+                        [
+                          _c("el-option", {
+                            attrs: { label: list["username"], value: list.id }
+                          })
+                        ],
+                        1
+                      )
                     }),
-                    1
+                    0
                   )
                 ],
                 1
@@ -2589,10 +2583,10 @@ var render = function() {
                         expression: "searchBox.after_sale_status"
                       }
                     },
-                    _vm._l(_vm.searchBox.afterSaleStatus, function(item) {
+                    _vm._l(_vm.resData.aftersalestate, function(item) {
                       return _c("el-option", {
                         key: item.value,
-                        attrs: { label: item.label, value: item.value }
+                        attrs: { label: item.name, value: item.id }
                       })
                     }),
                     1
@@ -2606,37 +2600,51 @@ var render = function() {
                 [
                   _c("label", [_vm._v("售后类型")]),
                   _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { clearable: "", placeholder: "请选择" },
+                      nativeOn: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.handleQuery($event)
                         }
-                        return _vm.handleQuery($event)
+                      },
+                      model: {
+                        value: _vm.searchBox.after_sale_type,
+                        callback: function($$v) {
+                          _vm.$set(_vm.searchBox, "after_sale_type", $$v)
+                        },
+                        expression: "searchBox.after_sale_type"
                       }
                     },
-                    model: {
-                      value: _vm.searchBox.after_sale_type,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "after_sale_type", $$v)
-                      },
-                      expression: "searchBox.after_sale_type"
-                    }
-                  })
+                    _vm._l(_vm.searchBox.afterSaleSort, function(item) {
+                      return _c("el-option", {
+                        key: item.value,
+                        attrs: { label: item.label, value: item.value }
+                      })
+                    }),
+                    1
+                  )
                 ],
                 1
-              ),
-              _vm._v(" "),
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.filterBox
+          ? _c("div", { staticClass: "searchBox" }, [
               _c(
                 "span",
                 [
@@ -2671,12 +2679,8 @@ var render = function() {
                   })
                 ],
                 1
-              )
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.filterBox
-          ? _c("div", { staticClass: "searchBox" }, [
+              ),
+              _vm._v(" "),
               _c(
                 "span",
                 [
@@ -2728,63 +2732,17 @@ var render = function() {
                         }
                       },
                       model: {
-                        value: _vm.searchBox.after_sale_sort,
+                        value: _vm.searchBox.after_sale_group,
                         callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "after_sale_sort", $$v)
+                          _vm.$set(_vm.searchBox, "after_sale_group", $$v)
                         },
-                        expression: "searchBox.after_sale_sort"
+                        expression: "searchBox.after_sale_group"
                       }
                     },
-                    _vm._l(_vm.searchBox.afterSaleSort, function(item) {
+                    _vm._l(_vm.resData.aftersaletype, function(item) {
                       return _c("el-option", {
                         key: item.value,
-                        attrs: { label: item.label, value: item.value }
-                      })
-                    }),
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("补件责任方")]),
-                  _vm._v(" "),
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { clearable: "", placeholder: "请选择" },
-                      nativeOn: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.handleQuery($event)
-                        }
-                      },
-                      model: {
-                        value: _vm.searchBox.parts_duty,
-                        callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "parts_duty", $$v)
-                        },
-                        expression: "searchBox.parts_duty"
-                      }
-                    },
-                    _vm._l(_vm.searchBox.partsDuty, function(item) {
-                      return _c("el-option", {
-                        key: item.value,
-                        attrs: { label: item.label, value: item.value }
+                        attrs: { label: item.name, value: item.id }
                       })
                     }),
                     1
