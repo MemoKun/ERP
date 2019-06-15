@@ -1,6 +1,6 @@
 webpackJsonp([23],{
 
-/***/ 1080:
+/***/ 1083:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -337,9 +337,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       searchBox: {
-        goodsName: "",
-        shopNames: "",
-        vip_name: ""
+        stock_in_no: "",
+        external_sn: "",
+        warehouse_id: "",
+        suppliers_id: "",
+        stock_in_types_id: ""
       },
       /*获取数据*/
       checkboxInit: false,
@@ -801,6 +803,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[5].nClick = true;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 10,
+            stock_in_no: this.searchBox.stock_in_no,
+            external_sn: this.searchBox.external_sn,
+            warehouse_id: this.searchBox.warehouse_id,
+            suppliers_id: this.searchBox.suppliers_id,
+            stock_in_types_id: this.searchBox.stock_in_types_id,
             include: "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(function (res) {
             _this.stockDtlData = [];
@@ -810,10 +817,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
             _this.$store.commit("PAGE_TOTAL", pg.total);
-            _this.$store.dispatch("suppliers", "/suppliers");
             _this.$store.dispatch("shops", "/shops");
-            _this.$store.dispatch("warehouses", "/warehouses");
-            _this.$store.dispatch("stockintypes", "/stockintypes");
             if (res.data[0]["stockInDetails"]["data"].length > 0) {
               res.data[0]["stockInDetails"]["data"].map(function (item) {
                 var productComponent = item.productComponent;
@@ -860,6 +864,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[5].nClick = false;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 20,
+            stock_in_no: this.searchBox.stock_in_no,
+            external_sn: this.searchBox.external_sn,
+            warehouse_id: this.searchBox.warehouse_id,
+            suppliers_id: this.searchBox.suppliers_id,
+            stock_in_types_id: this.searchBox.stock_in_types_id,
             include: "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(function (res) {
             _this.loading = false;
@@ -914,6 +923,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[5].nClick = false;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 30,
+            stock_in_no: this.searchBox.stock_in_no,
+            external_sn: this.searchBox.external_sn,
+            warehouse_id: this.searchBox.warehouse_id,
+            suppliers_id: this.searchBox.suppliers_id,
+            stock_in_types_id: this.searchBox.stock_in_types_id,
             include: "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(function (res) {
             _this.loading = false;
@@ -1642,14 +1656,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
     },
+
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
     resets: function resets() {
-      this.searchBox = {};
+      this.searchBox = {
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_address: "",
+        shops_id: "",
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: ""
+      };
     }
     /*入库*/
 
   },
   mounted: function mounted() {
     this.fetchData();
+    this.$store.dispatch('warehouses', '/warehouses');
+    this.$store.dispatch('suppliers', '/suppliers');
+    this.$store.dispatch("stockintypes", "/stockintypes");
     this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -1660,7 +1699,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1081:
+/***/ 1084:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1690,11 +1729,11 @@ var render = function() {
                 }
               },
               model: {
-                value: _vm.searchBox.goodsName,
+                value: _vm.searchBox.stock_in_no,
                 callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "goodsName", $$v)
+                  _vm.$set(_vm.searchBox, "stock_in_no", $$v)
                 },
-                expression: "searchBox.goodsName"
+                expression: "searchBox.stock_in_no"
               }
             })
           ],
@@ -1720,11 +1759,11 @@ var render = function() {
                 }
               },
               model: {
-                value: _vm.searchBox.goodsName,
+                value: _vm.searchBox.external_sn,
                 callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "goodsName", $$v)
+                  _vm.$set(_vm.searchBox, "external_sn", $$v)
                 },
-                expression: "searchBox.goodsName"
+                expression: "searchBox.external_sn"
               }
             })
           ],
@@ -1734,59 +1773,37 @@ var render = function() {
         _c(
           "span",
           [
-            _c("label", [_vm._v("商品编码")]),
+            _c("label", [_vm._v("所属仓库")]),
             _vm._v(" "),
-            _c("el-input", {
-              attrs: { clearable: "" },
-              nativeOn: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.getData($event)
+            _c(
+              "el-select",
+              {
+                attrs: { clearable: "", placeholder: "请选择" },
+                model: {
+                  value: _vm.searchBox.warehouse_id,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "warehouse_id", $$v)
+                  },
+                  expression: "searchBox.warehouse_id"
                 }
               },
-              model: {
-                value: _vm.searchBox.goodsName,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "goodsName", $$v)
-                },
-                expression: "searchBox.goodsName"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          [
-            _c("label", [_vm._v("规格编码")]),
-            _vm._v(" "),
-            _c("el-input", {
-              attrs: { clearable: "" },
-              nativeOn: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.getData($event)
-                }
-              },
-              model: {
-                value: _vm.searchBox.goodsName,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "goodsName", $$v)
-                },
-                expression: "searchBox.goodsName"
-              }
-            })
+              _vm._l(_vm.resData["warehouses"], function(list) {
+                return _c(
+                  "span",
+                  { key: list.id },
+                  [
+                    _c("el-option", {
+                      attrs: {
+                        label: list.name ? list.name : list.nick,
+                        value: list.id
+                      }
+                    })
+                  ],
+                  1
+                )
+              }),
+              0
+            )
           ],
           1
         )
@@ -1796,29 +1813,37 @@ var render = function() {
         _c(
           "span",
           [
-            _c("label", [_vm._v("采购单号")]),
+            _c("label", [_vm._v("供应商")]),
             _vm._v(" "),
-            _c("el-input", {
-              attrs: { clearable: "" },
-              nativeOn: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.getData($event)
+            _c(
+              "el-select",
+              {
+                attrs: { clearable: "", placeholder: "请选择" },
+                model: {
+                  value: _vm.searchBox.suppliers_id,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "suppliers_id", $$v)
+                  },
+                  expression: "searchBox.suppliers_id"
                 }
               },
-              model: {
-                value: _vm.searchBox.goodsName,
-                callback: function($$v) {
-                  _vm.$set(_vm.searchBox, "goodsName", $$v)
-                },
-                expression: "searchBox.goodsName"
-              }
-            })
+              _vm._l(_vm.resData["suppliers"], function(list) {
+                return _c(
+                  "span",
+                  { key: list.id },
+                  [
+                    _c("el-option", {
+                      attrs: {
+                        label: list.name ? list.name : list.nick,
+                        value: list.id
+                      }
+                    })
+                  ],
+                  1
+                )
+              }),
+              0
+            )
           ],
           1
         ),
@@ -1826,51 +1851,56 @@ var render = function() {
         _c(
           "span",
           [
-            _c("label", [_vm._v("入库仓库")]),
+            _c("label", [_vm._v("入库类型")]),
             _vm._v(" "),
             _c(
               "el-select",
               {
                 attrs: { clearable: "", placeholder: "请选择" },
                 model: {
-                  value: _vm.searchBox.shopNames,
+                  value: _vm.searchBox.stock_in_types_id,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "shopNames", $$v)
+                    _vm.$set(_vm.searchBox, "stock_in_types_id", $$v)
                   },
-                  expression: "searchBox.shopNames"
+                  expression: "searchBox.stock_in_types_id"
                 }
               },
-              _vm._l(_vm.searchBox.shopNames, function(item) {
-                return _c("el-option", {
-                  key: item.value,
-                  attrs: { label: item.label, value: item.value }
-                })
+              _vm._l(_vm.resData["stockintypes"], function(list) {
+                return _c(
+                  "span",
+                  { key: list.id },
+                  [
+                    _c("el-option", {
+                      attrs: {
+                        label: list.name ? list.name : list.nick,
+                        value: list.id
+                      }
+                    })
+                  ],
+                  1
+                )
               }),
-              1
+              0
             )
           ],
           1
         ),
         _vm._v(" "),
-        _c("span"),
-        _vm._v(" "),
-        _c("span")
+        _c(
+          "div",
+          { staticStyle: { "text-align": "right" } },
+          [
+            _c(
+              "el-button",
+              { attrs: { type: "primary" }, on: { click: _vm.searchData } },
+              [_vm._v("筛选")]
+            ),
+            _vm._v(" "),
+            _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
+          ],
+          1
+        )
       ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticStyle: { "text-align": "right" } },
-        [
-          _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.fetchData } },
-            [_vm._v("筛选")]
-          ),
-          _vm._v(" "),
-          _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
-        ],
-        1
-      ),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -3231,15 +3261,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 955:
+/***/ 958:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1080)
+var __vue_script__ = __webpack_require__(1083)
 /* template */
-var __vue_template__ = __webpack_require__(1081)
+var __vue_template__ = __webpack_require__(1084)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

@@ -1,16 +1,10 @@
 webpackJsonp([25],{
 
-/***/ 1078:
+/***/ 1081:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -593,30 +587,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: "bf-refresh",
         ent: this.refresh
       }],
+      addSubData: [],
       filterBox: false,
       searchBox: {
-        vip_name: "",
-        order_num: "",
-        order_man: "",
-        order_phone: "",
-        order_money: "",
-        order_address: "",
-        order_goods: "",
-        order_staff: "",
-        order_promiseDate: "",
-        order_workDate: "",
-        order_transMStart: "",
-        order_transMEnd: "",
-        orderCompany: [{ label: "ceshi", value: 0 }],
-        order_customerInves: "",
-        order_mark: "",
-        order_flag: "",
-        ordertbFlag: [{ label: "ceshi", value: 0 }],
-        order_lock: "",
-        orderLock: [{ label: "ceshi", value: 0 }],
-        order_company: "",
-        order_shop: "",
-        orderShops: [{ label: "ceshi", value: 0 }]
+        purchase_order_no: "",
+        receiver: "",
+        receiver_address: "",
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        arrival_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        print_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        user_id: "",
+        buyer_nick: ""
       },
       topActiveName: "0",
       tableHead: [{
@@ -1470,10 +1452,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     toggleShow: function toggleShow() {
       this.filterBox = !this.filterBox;
     },
-    resets: function resets() {
-      this.searchBox = {};
-    },
-    checks: function checks() {},
 
     /*获取采购数据*/
     clickTopTabs: function clickTopTabs() {
@@ -1492,6 +1470,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.purchases, {
             purchase_status: "new",
+            receiver: this.searchBox.receiver,
+            receiver_address: this.searchBox.receiver_address,
+            user_id: this.searchBox.user_id,
+            buyer_nick: this.searchBox.buyer_nick,
             include: "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(function (res) {
             _this.newLoading = false;
@@ -1527,6 +1509,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.purchases, {
             purchase_status: "section",
+            receiver: this.searchBox.receiver,
+            receiver_address: this.searchBox.receiver_address,
+            user_id: this.searchBox.user_id,
+            buyer_nick: this.searchBox.buyer_nick,
             include: "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(function (res) {
             _this.partLoading = false;
@@ -1560,6 +1546,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[3].nClick = true;
           this.$fetch(this.urls.purchases, {
             purchase_status: "finish",
+            receiver: this.searchBox.receiver,
+            receiver_address: this.searchBox.receiver_address,
+            user_id: this.searchBox.user_id,
+            buyer_nick: this.searchBox.buyer_nick,
             include: "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(function (res) {
             _this.finishLoading = false;
@@ -2820,10 +2810,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this19.$message.error(err.response.data.message);
         });
       }
+    },
+
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchPurchaseData();
+    },
+    resets: function resets() {
+      this.searchBox = {
+        purchase_order_no: "",
+        receiver: "",
+        receiver_address: "",
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        arrival_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        print_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        user_id: "",
+        buyer_nick: ""
+      };
     }
   },
   mounted: function mounted() {
+    var _this20 = this;
+
     this.fetchPurchaseData();
+    this.$fetch(this.urls.customerservicedepts + "/create").then(function (res) {
+      _this20.addSubData = res;
+    }, function (err) {});
     this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
     $(window).resize(function () {
@@ -2834,7 +2848,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1079:
+/***/ 1082:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -2865,15 +2879,15 @@ var render = function() {
                   }
                 },
                 model: {
-                  value: _vm.searchBox.vip_name,
+                  value: _vm.searchBox.purchase_order_no,
                   callback: function($$v) {
                     _vm.$set(
                       _vm.searchBox,
-                      "vip_name",
+                      "purchase_order_no",
                       typeof $$v === "string" ? $$v.trim() : $$v
                     )
                   },
-                  expression: "searchBox.vip_name"
+                  expression: "searchBox.purchase_order_no"
                 }
               })
             ],
@@ -2883,7 +2897,7 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("商品名称")]),
+              _c("label", [_vm._v("收货人")]),
               _vm._v(" "),
               _c("el-input", {
                 attrs: { clearable: "" },
@@ -2899,15 +2913,15 @@ var render = function() {
                   }
                 },
                 model: {
-                  value: _vm.searchBox.order_num,
+                  value: _vm.searchBox.receiver,
                   callback: function($$v) {
                     _vm.$set(
                       _vm.searchBox,
-                      "order_num",
+                      "receiver",
                       typeof $$v === "string" ? $$v.trim() : $$v
                     )
                   },
-                  expression: "searchBox.order_num"
+                  expression: "searchBox.receiver"
                 }
               })
             ],
@@ -2917,7 +2931,7 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("规格名称")]),
+              _c("label", [_vm._v("收货地址")]),
               _vm._v(" "),
               _c("el-input", {
                 attrs: { clearable: "" },
@@ -2933,57 +2947,17 @@ var render = function() {
                   }
                 },
                 model: {
-                  value: _vm.searchBox.order_man,
+                  value: _vm.searchBox.receiver_address,
                   callback: function($$v) {
                     _vm.$set(
                       _vm.searchBox,
-                      "order_man",
+                      "receiver_address",
                       typeof $$v === "string" ? $$v.trim() : $$v
                     )
                   },
-                  expression: "searchBox.order_man"
+                  expression: "searchBox.receiver_address"
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("供应商")]),
-              _vm._v(" "),
-              _c(
-                "el-select",
-                {
-                  attrs: { clearable: "", placeholder: "请选择" },
-                  nativeOn: {
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.handleQuery($event)
-                    }
-                  },
-                  model: {
-                    value: _vm.searchBox.order_shop,
-                    callback: function($$v) {
-                      _vm.$set(_vm.searchBox, "order_shop", $$v)
-                    },
-                    expression: "searchBox.order_shop"
-                  }
-                },
-                _vm._l(_vm.resData.suppliers, function(item) {
-                  return _c("el-option", {
-                    key: item.value,
-                    attrs: { label: item.name, value: item.id }
-                  })
-                }),
-                1
-              )
             ],
             1
           )
@@ -3003,35 +2977,11 @@ var render = function() {
                   "end-placeholder": "结束日期"
                 },
                 model: {
-                  value: _vm.searchBox.order_promiseDate,
+                  value: _vm.searchBox.created_at,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_promiseDate", $$v)
+                    _vm.$set(_vm.searchBox, "created_at", $$v)
                   },
-                  expression: "searchBox.order_promiseDate"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            [
-              _c("label", [_vm._v("打印时间")]),
-              _vm._v(" "),
-              _c("el-date-picker", {
-                attrs: {
-                  type: "daterange",
-                  "range-separator": "至",
-                  "start-placeholder": "开始日期",
-                  "end-placeholder": "结束日期"
-                },
-                model: {
-                  value: _vm.searchBox.order_promiseDate,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_promiseDate", $$v)
-                  },
-                  expression: "searchBox.order_promiseDate"
+                  expression: "searchBox.created_at"
                 }
               })
             ],
@@ -3051,11 +3001,11 @@ var render = function() {
                   "end-placeholder": "结束日期"
                 },
                 model: {
-                  value: _vm.searchBox.order_promiseDate,
+                  value: _vm.searchBox.promise_ship_time,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_promiseDate", $$v)
+                    _vm.$set(_vm.searchBox, "promise_ship_time", $$v)
                   },
-                  expression: "searchBox.order_promiseDate"
+                  expression: "searchBox.promise_ship_time"
                 }
               })
             ],
@@ -3075,11 +3025,11 @@ var render = function() {
                   "end-placeholder": "结束日期"
                 },
                 model: {
-                  value: _vm.searchBox.order_promiseDate,
+                  value: _vm.searchBox.arrival_time,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_promiseDate", $$v)
+                    _vm.$set(_vm.searchBox, "arrival_time", $$v)
                   },
-                  expression: "searchBox.order_promiseDate"
+                  expression: "searchBox.arrival_time"
                 }
               })
             ],
@@ -3091,16 +3041,21 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("色号")]),
+              _c("label", [_vm._v("打印时间")]),
               _vm._v(" "),
-              _c("el-input", {
-                attrs: { clearable: "" },
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
                 model: {
-                  value: _vm.searchBox.order_mark,
+                  value: _vm.searchBox.print_at,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_mark", $$v)
+                    _vm.$set(_vm.searchBox, "print_at", $$v)
                   },
-                  expression: "searchBox.order_mark"
+                  expression: "searchBox.print_at"
                 }
               })
             ],
@@ -3110,18 +3065,34 @@ var render = function() {
           _c(
             "span",
             [
-              _c("label", [_vm._v("合同编号")]),
+              _c("label", [_vm._v("创建人")]),
               _vm._v(" "),
-              _c("el-input", {
-                attrs: { clearable: "" },
-                model: {
-                  value: _vm.searchBox.order_mark,
-                  callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_mark", $$v)
-                  },
-                  expression: "searchBox.order_mark"
-                }
-              })
+              _c(
+                "el-select",
+                {
+                  attrs: { clearable: "", placeholder: "请选择" },
+                  model: {
+                    value: _vm.searchBox.user_id,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "user_id", $$v)
+                    },
+                    expression: "searchBox.user_id"
+                  }
+                },
+                _vm._l(_vm.addSubData["user"], function(list) {
+                  return _c(
+                    "span",
+                    { key: list.id },
+                    [
+                      _c("el-option", {
+                        attrs: { label: list["username"], value: list.id }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
             ],
             1
           ),
@@ -3134,11 +3105,11 @@ var render = function() {
               _c("el-input", {
                 attrs: { clearable: "" },
                 model: {
-                  value: _vm.searchBox.order_mark,
+                  value: _vm.searchBox.buyer_nick,
                   callback: function($$v) {
-                    _vm.$set(_vm.searchBox, "order_mark", $$v)
+                    _vm.$set(_vm.searchBox, "buyer_nick", $$v)
                   },
-                  expression: "searchBox.order_mark"
+                  expression: "searchBox.buyer_nick"
                 }
               })
             ],
@@ -3154,7 +3125,7 @@ var render = function() {
           [
             _c(
               "el-button",
-              { attrs: { type: "primary" }, on: { click: _vm.checks } },
+              { attrs: { type: "primary" }, on: { click: _vm.searchData } },
               [_vm._v("筛选")]
             ),
             _vm._v(" "),
@@ -4446,17 +4417,12 @@ var render = function() {
                       })
                     }),
                     _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: { label: "状态", width: "90" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [_vm._v(_vm._s("新建"))]
-                          }
-                        }
-                      ])
-                    }),
+                    _c(
+                      "el-table-column",
+                      { attrs: { label: "状态", width: "90" } },
+                      [[_vm._v(_vm._s("新建"))]],
+                      2
+                    ),
                     _vm._v(" "),
                     _c("el-table-column", {
                       attrs: {
@@ -5838,17 +5804,12 @@ var render = function() {
                       })
                     }),
                     _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: { label: "状态", width: "90" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [_vm._v(_vm._s("新建"))]
-                          }
-                        }
-                      ])
-                    }),
+                    _c(
+                      "el-table-column",
+                      { attrs: { label: "状态", width: "90" } },
+                      [[_vm._v(_vm._s("新建"))]],
+                      2
+                    ),
                     _vm._v(" "),
                     _c("el-table-column", {
                       attrs: {
@@ -6005,15 +5966,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 954:
+/***/ 957:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1078)
+var __vue_script__ = __webpack_require__(1081)
 /* template */
-var __vue_template__ = __webpack_require__(1079)
+var __vue_template__ = __webpack_require__(1082)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

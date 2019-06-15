@@ -5,59 +5,53 @@
       <div class="searchBox">
         <span>
           <label>采购单号</label>
-          <el-input v-model.trim="searchBox.vip_name" clearable @keyup.enter.native="handleQuery"></el-input>
+          <el-input v-model.trim="searchBox.purchase_order_no" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
         <span>
-          <label>商品名称</label>
-          <el-input v-model.trim="searchBox.order_num" clearable @keyup.enter.native="handleQuery"></el-input>
+          <label>收货人</label>
+          <el-input v-model.trim="searchBox.receiver" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
         <span>
-          <label>规格名称</label>
-          <el-input v-model.trim="searchBox.order_man" clearable @keyup.enter.native="handleQuery"></el-input>
-        </span>
-        <span>
-          <label>供应商</label>
-          <el-select v-model="searchBox.order_shop" clearable placeholder="请选择" @keyup.enter.native="handleQuery">
-            <el-option v-for="item in resData.suppliers" :key="item.value" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+          <label>收货地址</label>
+          <el-input v-model.trim="searchBox.receiver_address" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
       </div>
       <div class="searchBox">
         <span>
           <label>创建时间</label>
-          <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
-        </span>
-        <span>
-          <label>打印时间</label>
-          <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+          <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
         <span>
           <label>承诺时间</label>
-          <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+          <el-date-picker v-model="searchBox.promise_ship_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
         <span>
           <label>到货时间</label>
-          <el-date-picker v-model="searchBox.order_promiseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+          <el-date-picker v-model="searchBox.arrival_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
       </div>
       <div class="searchBox">
         <span>
-          <label>色号</label>
-          <el-input v-model="searchBox.order_mark" clearable></el-input>
+          <label>打印时间</label>
+          <el-date-picker v-model="searchBox.print_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
         <span>
-          <label>合同编号</label>
-          <el-input v-model="searchBox.order_mark" clearable></el-input>
+          <label>创建人</label>
+          <el-select v-model="searchBox.user_id" clearable placeholder="请选择">
+            <span v-for="list in addSubData['user']" :key="list.id">
+              <el-option :label="list['username']" :value="list.id"></el-option>
+            </span>
+          </el-select>
         </span>
         <span>
           <label>买家昵称</label>
-          <el-input v-model="searchBox.order_mark" clearable></el-input>
+          <el-input v-model="searchBox.buyer_nick" clearable></el-input>
         </span>
         <span>
         </span>
       </div>
       <div style="text-align: right">
-        <el-button type="primary" @click="checks">筛选</el-button>
+        <el-button type="primary" @click="searchData">筛选</el-button>
         <el-button @click="resets">重置</el-button>
       </div>
     </div>
@@ -280,7 +274,7 @@
               </template>
             </el-table-column>
             <el-table-column label="状态" width="90">
-              <template slot-scope="scope">{{"新建"}}</template>
+              <template>{{"新建"}}</template>
             </el-table-column>
             <el-table-column label="操作" width="90" align="center" fixed="right">
               <template slot-scope="scope">
@@ -497,7 +491,7 @@
               </template>
             </el-table-column>
             <el-table-column label="状态" width="90">
-              <template slot-scope="scope">{{"新建"}}</template>
+              <template>{{"新建"}}</template>
             </el-table-column>
             <el-table-column label="操作" width="90" align="center" fixed="right">
               <template slot-scope="scope">
@@ -599,30 +593,18 @@ export default {
           ent: this.refresh
         }
       ],
+      addSubData:[],
       filterBox: false,
       searchBox: {
-        vip_name: "",
-        order_num: "",
-        order_man: "",
-        order_phone: "",
-        order_money: "",
-        order_address: "",
-        order_goods: "",
-        order_staff: "",
-        order_promiseDate: "",
-        order_workDate: "",
-        order_transMStart: "",
-        order_transMEnd: "",
-        orderCompany: [{ label: "ceshi", value: 0 }],
-        order_customerInves: "",
-        order_mark: "",
-        order_flag: "",
-        ordertbFlag: [{ label: "ceshi", value: 0 }],
-        order_lock: "",
-        orderLock: [{ label: "ceshi", value: 0 }],
-        order_company: "",
-        order_shop: "",
-        orderShops: [{ label: "ceshi", value: 0 }]
+        purchase_order_no: "",
+        receiver: "",
+        receiver_address: "",
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        arrival_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        print_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        user_id: "",
+        buyer_nick: "",
       },
       topActiveName: "0",
       tableHead: [
@@ -1575,10 +1557,6 @@ export default {
     toggleShow() {
       this.filterBox = !this.filterBox;
     },
-    resets() {
-      this.searchBox = {};
-    },
-    checks() {},
     /*获取采购数据*/
     clickTopTabs() {
       this.purListVal = [];
@@ -1594,6 +1572,10 @@ export default {
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.purchases, {
             purchase_status: "new",
+            receiver:this.searchBox.receiver,
+            receiver_address:this.searchBox.receiver_address,
+            user_id:this.searchBox.user_id,
+            buyer_nick:this.searchBox.buyer_nick,
             include:
               "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(
@@ -1634,6 +1616,10 @@ export default {
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.purchases, {
             purchase_status: "section",
+            receiver:this.searchBox.receiver,
+            receiver_address:this.searchBox.receiver_address,
+            user_id:this.searchBox.user_id,
+            buyer_nick:this.searchBox.buyer_nick,
             include:
               "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(
@@ -1672,6 +1658,10 @@ export default {
           this.newOpt[3].nClick = true;
           this.$fetch(this.urls.purchases, {
             purchase_status: "finish",
+            receiver:this.searchBox.receiver,
+            receiver_address:this.searchBox.receiver_address,
+            user_id:this.searchBox.user_id,
+            buyer_nick:this.searchBox.buyer_nick,
             include:
               "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(
@@ -2956,10 +2946,34 @@ export default {
           }
         );
       }
+    },
+    //筛选
+    searchData(){
+      this.loading=true;
+      this.fetchPurchaseData();
+    },
+    resets() {
+      this.searchBox =  {
+        purchase_order_no: "",
+        receiver: "",
+        receiver_address: "",
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        arrival_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        print_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        user_id: "",
+        buyer_nick: "",
+      };
     }
   },
   mounted() {
     this.fetchPurchaseData();
+    this.$fetch(this.urls.customerservicedepts + "/create").then(
+      res => {
+        this.addSubData = res;
+      },
+      err => {}
+    );
     this.$store.dispatch("setOpt", this.newOpt);
     const that = this;
     $(window).resize(() => {

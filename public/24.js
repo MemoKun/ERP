@@ -1,6 +1,6 @@
 webpackJsonp([24],{
 
-/***/ 1094:
+/***/ 1097:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -409,7 +409,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       searchBox: {
-        returnOrder: "",
+        purchase_return_no: "",
         supplier: ""
       },
       /*获取数据*/
@@ -719,6 +719,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[6].nClick = true;
           this.$fetch(this.urls.purchasereturns, {
             purchase_return_status: 10,
+            purchase_return_no: this.searchBox.purchase_return_no,
             include: "creator,submitter,auditor,purchaseReturnDetails.stock.productComponent,purchaseReturnDetails.stock.product,purchaseReturnDetails.stock.warehouse,purchaseReturnDetails.supplier,purchaseReturnDetails.purchaseReturnType"
           }).then(function (res) {
             _this2.noSubmitData = res.data;
@@ -773,6 +774,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[6].nClick = true;
           this.$fetch(this.urls.purchasereturns, {
             purchase_return_status: 20,
+            purchase_return_no: this.searchBox.purchase_return_no,
             include: "creator,submitter,auditor,purchaseReturnDetails.stock.productComponent,purchaseReturnDetails.stock.product,purchaseReturnDetails.stock.warehouse,purchaseReturnDetails.supplier,purchaseReturnDetails.purchaseReturnType"
           }).then(function (res) {
             _this2.noAuditData = res.data;
@@ -825,6 +827,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[6].nClick = false;
           this.$fetch(this.urls.purchasereturns, {
             purchase_return_status: 30,
+            purchase_return_no: this.searchBox.purchase_return_no,
             include: "creator,submitter,auditor,purchaseReturnDetails.stock.productComponent,purchaseReturnDetails.stock.product,purchaseReturnDetails.stock.warehouse,purchaseReturnDetails.stock.warehouse,purchaseReturnDetails.supplier,purchaseReturnDetails.purchaseReturnType"
           }).then(function (res) {
             _this2.alreadyAuditData = res.data;
@@ -1590,8 +1593,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.loading = true;
       this.fetchData();
     },
+
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
     resets: function resets() {
-      this.searchBox = {};
+      this.searchBox = {
+        purchase_return_no: "",
+        supplier: ""
+      };
     }
   },
   mounted: function mounted() {
@@ -1606,7 +1618,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1095:
+/***/ 1098:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1636,15 +1648,15 @@ var render = function() {
                 }
               },
               model: {
-                value: _vm.searchBox.returnOrder,
+                value: _vm.searchBox.purchase_return_no,
                 callback: function($$v) {
                   _vm.$set(
                     _vm.searchBox,
-                    "returnOrder",
+                    "purchase_return_no",
                     typeof $$v === "string" ? $$v.trim() : $$v
                   )
                 },
-                expression: "searchBox.returnOrder"
+                expression: "searchBox.purchase_return_no"
               }
             })
           ],
@@ -1702,7 +1714,7 @@ var render = function() {
         [
           _c(
             "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.fetchData } },
+            { attrs: { type: "primary" }, on: { click: _vm.searchData } },
             [_vm._v("筛选")]
           ),
           _vm._v(" "),
@@ -3643,15 +3655,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 957:
+/***/ 960:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1094)
+var __vue_script__ = __webpack_require__(1097)
 /* template */
-var __vue_template__ = __webpack_require__(1095)
+var __vue_template__ = __webpack_require__(1098)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

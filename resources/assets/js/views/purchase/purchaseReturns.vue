@@ -3,7 +3,7 @@
     <div class="searchBox">
       <span>
         <label>退货单号</label>
-        <el-input v-model.trim="searchBox.returnOrder" clearable @keyup.enter.native="handleQuery"></el-input>
+        <el-input v-model.trim="searchBox.purchase_return_no" clearable @keyup.enter.native="handleQuery"></el-input>
       </span>
       <span>
         <label>退回供应商</label>
@@ -15,7 +15,7 @@
       <span></span>
     </div>
     <div style="text-align: right">
-      <el-button type="primary" @click="fetchData">筛选</el-button>
+      <el-button type="primary" @click="searchData">筛选</el-button>
       <el-button @click="resets">重置</el-button>
     </div>
 
@@ -413,7 +413,7 @@ export default {
         }
       ],
       searchBox: {
-        returnOrder: "",
+        purchase_return_no: "",
         supplier: ""
       },
       /*获取数据*/
@@ -754,6 +754,7 @@ export default {
           this.newOpt[6].nClick = true;
           this.$fetch(this.urls.purchasereturns, {
             purchase_return_status: 10,
+            purchase_return_no:this.searchBox.purchase_return_no,
             include:
               "creator,submitter,auditor,purchaseReturnDetails.stock.productComponent,purchaseReturnDetails.stock.product,purchaseReturnDetails.stock.warehouse,purchaseReturnDetails.supplier,purchaseReturnDetails.purchaseReturnType"
           }).then(
@@ -815,6 +816,7 @@ export default {
           this.newOpt[6].nClick = true;
           this.$fetch(this.urls.purchasereturns, {
             purchase_return_status: 20,
+            purchase_return_no:this.searchBox.purchase_return_no,
             include:
               "creator,submitter,auditor,purchaseReturnDetails.stock.productComponent,purchaseReturnDetails.stock.product,purchaseReturnDetails.stock.warehouse,purchaseReturnDetails.supplier,purchaseReturnDetails.purchaseReturnType"
           }).then(
@@ -871,6 +873,7 @@ export default {
           this.newOpt[6].nClick = false;
           this.$fetch(this.urls.purchasereturns, {
             purchase_return_status: 30,
+            purchase_return_no:this.searchBox.purchase_return_no,
             include:
               "creator,submitter,auditor,purchaseReturnDetails.stock.productComponent,purchaseReturnDetails.stock.product,purchaseReturnDetails.stock.warehouse,purchaseReturnDetails.stock.warehouse,purchaseReturnDetails.supplier,purchaseReturnDetails.purchaseReturnType"
           }).then(
@@ -1653,8 +1656,16 @@ export default {
       this.loading = true;
       this.fetchData();
     },
-    resets(){
-      this.searchBox = {};
+    //筛选
+    searchData(){
+      this.loading=true;
+      this.fetchData();
+    },
+    resets() {
+      this.searchBox =  {
+        purchase_return_no: "",
+        supplier: ""
+      };
     }
   },
   mounted() {

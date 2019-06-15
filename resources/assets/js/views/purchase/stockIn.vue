@@ -4,44 +4,44 @@
     <div class="searchBox">
       <span>
         <label>入库单号</label>
-        <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
+        <el-input v-model="searchBox.stock_in_no" clearable @keyup.enter.native="getData"></el-input>
       </span>
       <span>
         <label>外部单号</label>
-        <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
+        <el-input v-model="searchBox.external_sn" clearable @keyup.enter.native="getData"></el-input>
       </span>
       <span>
-        <label>商品编码</label>
-        <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
-      </span>
-      <span>
-        <label>规格编码</label>
-        <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
+        <label>所属仓库</label>
+        <el-select v-model="searchBox.warehouse_id" clearable placeholder="请选择">
+          <span v-for="list in resData['warehouses']" :key="list.id">
+            <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+          </span>
+        </el-select>
       </span>
     </div>
     <div class="searchBox">
       <span>
-        <label>采购单号</label>
-        <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
-      </span>
-      <span>
-        <label>入库仓库</label>
-        <el-select v-model="searchBox.shopNames" clearable placeholder="请选择">
-          <el-option v-for="item in searchBox.shopNames" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        <label>供应商</label>
+        <el-select v-model="searchBox.suppliers_id" clearable placeholder="请选择">
+          <span v-for="list in resData['suppliers']" :key="list.id">
+            <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+          </span>
         </el-select>
       </span>
       <span>
-
+        <label>入库类型</label>
+        <el-select v-model="searchBox.stock_in_types_id" clearable placeholder="请选择">
+          <span v-for="list in resData['stockintypes']" :key="list.id">
+            <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+          </span>
+        </el-select>
       </span>
-      <span>
-
-      </span>
+      <div style="text-align: right">
+        <el-button type="primary" @click="searchData">筛选</el-button>
+        <el-button @click="resets">重置</el-button>
+      </div>
     </div>
-    <div style="text-align: right">
-      <el-button type="primary" @click="fetchData">筛选</el-button>
-      <el-button @click="resets">重置</el-button>
-    </div>
-
+    
     <!--入库-->
     <el-tabs v-model="topActiveName" @tab-click="clickTopTabs">
       <el-tab-pane label="新建" name="0">
@@ -340,9 +340,11 @@ export default {
         }
       ],
       searchBox: {
-        goodsName: "",
-        shopNames: "",
-        vip_name: ""
+        stock_in_no: "",
+        external_sn: "",
+        warehouse_id: "",
+        suppliers_id: "",
+        stock_in_types_id: "",
       },
       /*获取数据*/
       checkboxInit: false,
@@ -879,6 +881,11 @@ export default {
           this.newOpt[5].nClick = true;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 10,
+            stock_in_no:this.searchBox.stock_in_no,
+            external_sn:this.searchBox.external_sn,
+            warehouse_id:this.searchBox.warehouse_id,
+            suppliers_id:this.searchBox.suppliers_id,
+            stock_in_types_id:this.searchBox.stock_in_types_id,
             include:
               "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
@@ -890,10 +897,7 @@ export default {
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
-              this.$store.dispatch("suppliers", "/suppliers");
               this.$store.dispatch("shops", "/shops");
-              this.$store.dispatch("warehouses", "/warehouses");
-              this.$store.dispatch("stockintypes", "/stockintypes");
               if (res.data[0]["stockInDetails"]["data"].length > 0) {
                 res.data[0]["stockInDetails"]["data"].map(item => {
                   let productComponent = item.productComponent;
@@ -943,6 +947,11 @@ export default {
           this.newOpt[5].nClick = false;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 20,
+            stock_in_no:this.searchBox.stock_in_no,
+            external_sn:this.searchBox.external_sn,
+            warehouse_id:this.searchBox.warehouse_id,
+            suppliers_id:this.searchBox.suppliers_id,
+            stock_in_types_id:this.searchBox.stock_in_types_id,
             include:
               "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
@@ -1002,6 +1011,11 @@ export default {
           this.newOpt[5].nClick = false;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 30,
+            stock_in_no:this.searchBox.stock_in_no,
+            external_sn:this.searchBox.external_sn,
+            warehouse_id:this.searchBox.warehouse_id,
+            suppliers_id:this.searchBox.suppliers_id,
+            stock_in_types_id:this.searchBox.stock_in_types_id,
             include:
               "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
@@ -1752,13 +1766,37 @@ export default {
         );
       }
     },
-    resets(){
-      this.searchBox={};
+    //筛选
+    searchData(){
+      this.loading=true;
+      this.fetchData();
+    },
+    resets() {
+      this.searchBox =  {
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_address: "",
+        shops_id: "",
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: "",
+      };
     }
     /*入库*/
   },
   mounted() {
     this.fetchData();
+    this.$store.dispatch('warehouses', '/warehouses');
+    this.$store.dispatch('suppliers', '/suppliers');
+    this.$store.dispatch("stockintypes", "/stockintypes");
     this.$store.dispatch("setOpt", this.newOpt);
     const that = this;
     $(window).resize(() => {

@@ -29,6 +29,7 @@ class StockInsContoller extends Controller
 
     const TRANSFORMER = StockInTransformer::class;
     const MODEL = StockIn::class;
+    const PerPage = 8;
 
     /**
      * 获取所有入库单
@@ -104,7 +105,22 @@ class StockInsContoller extends Controller
      */
     public function index(StockInRequest $request)
     {
-        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        //return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        $stock_in_status = $request->input('stock_in_status');
+        $stock_in_no = $request->input('stock_in_no');
+        $external_sn = $request->input('external_sn');
+        $warehouse_id = $request->input('warehouse_id');
+        $suppliers_id = $request->input('suppliers_id');
+        $stock_in_types_id = $request->input('stock_in_types_id');
+        $stockIn=StockIn::query()
+        ->where('stock_in_status', 'like', '%'.$stock_in_status.'%')
+        ->where('stock_in_no', 'like', '%'.$stock_in_no.'%')
+        ->where('external_sn', 'like', '%'.$external_sn.'%')
+        ->where('warehouse_id', 'like', '%'.$warehouse_id.'%')
+        ->where('suppliers_id', 'like', '%'.$suppliers_id.'%')
+        ->where('stock_in_types_id', 'like', '%'.$stock_in_types_id.'%')
+        ->orderBy('updated_at', 'desc');
+        return $this->response->paginator($stockIn->paginate(self::PerPage), self::TRANSFORMER);
     }
 
 
