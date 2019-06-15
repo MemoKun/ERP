@@ -29,6 +29,7 @@ class PurchaseReturnsController extends Controller
 
     const TRANSFORMER = PurchaseReturnTransformer::class;
     const MODEL = PurchaseReturn::class;
+    const PerPage = 8;
 
     /**
      * 获取所有采购退货
@@ -131,7 +132,14 @@ class PurchaseReturnsController extends Controller
      */
     public function index(PurchaseReturnRequest $request)
     {
-        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        //return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        $purchase_return_status = $request->input('purchase_return_status');
+        $purchase_return_no = $request->input('purchase_return_no');
+        $purchaseReturn = PurchaseReturn::query()->where('purchase_return_status', 'like', '%'.$purchase_return_status.'%')
+        ->where('purchase_return_no', 'like', '%'.$purchase_return_no.'%')
+        ->orderBy('updated_at', 'desc');
+
+        return $this->response->paginator($purchaseReturn->paginate(self::PerPage), self::TRANSFORMER);
     }
 
 

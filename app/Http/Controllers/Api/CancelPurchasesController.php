@@ -30,6 +30,7 @@ class CancelPurchasesController extends Controller
 
     const TRANSFORMER = CancelPurchaseTransformer::class;
     const MODEL = CancelPurchase::class;
+    const PerPage = 8;
 
     /**
      * 获取所有取消采购
@@ -107,7 +108,19 @@ class CancelPurchasesController extends Controller
      */
     public function index(CancelPurchaseRequest $request)
     {
-        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        //return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        $is_submit = $request->input('is_submit');
+        $cancel_purchases_no = $request->input('cancel_purchases_no');
+        $creator = $request->input('creator');
+        $submitter = $request->input('submitter');
+        $cancelPurchase = CancelPurchase::query()
+        ->where('is_submit', 'like', '%'.$is_submit.'%')
+        ->where('cancel_purchases_no', 'like', '%'.$cancel_purchases_no.'%')
+        ->where('creator', 'like', '%'.$creator.'%')
+        ->where('submitter', 'like', '%'.$submitter.'%')
+        ->orderBy('updated_at', 'desc');
+
+        return $this->response->paginator($cancelPurchase->paginate(self::PerPage), self::TRANSFORMER);
     }
 
 

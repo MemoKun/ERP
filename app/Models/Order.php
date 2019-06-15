@@ -48,8 +48,8 @@ class Order extends Model
         self::ORDER_STATUS_ONE_AUDIT => '已跟单一审',
         self::ORDER_STATUS_FD_AUDIT => '已财审',
         self::ORDER_STATUS_CARGO_AUDIT => '已货审',
-        self::ORDER_STATUS_READY_STOCK_OUT=> '准备出库',
-        self::ORDER_STATUS_STOCK_OUT => '已出库'
+        self::ORDER_STATUS_READY_STOCK_OUT => '准备出库',
+        self::ORDER_STATUS_STOCK_OUT => '已出库',
     ];
 
     //订单操作
@@ -203,7 +203,6 @@ class Order extends Model
         'status',
         'created_at',
         'updated_at',
-
     ];
 
     protected $dates = [
@@ -218,7 +217,6 @@ class Order extends Model
         'cs_audited_at',
         'fd_audited_at',
         'ca_audited_at',
-
     ];
 
     //设置类型
@@ -274,16 +272,16 @@ class Order extends Model
                 // 如果生成失败，则终止创建订单
                 $userId = Auth::guard('api')->id();
                 $userName = User::find($userId)->real_name;
-                $operationData = new OrderOperationRecord;
-                $operationData->orders_id = $this->id;
-                $operationData->user_id = Auth::guard('api')->id();
-                $operationData->user_name = $userName;
-                $operationData->operation = "创建订单";
-                $operationData->description = "创建订单";
-                $operationData->save();
-                if (!$model->business_personnel_id) {
-                    return false;
-                }
+                // $operationData = new OrderOperationRecord;
+                // $operationData->orders_id = $this->id;
+                // $operationData->user_id = Auth::guard('api')->id();
+                // $operationData->user_name = $userName;
+                // $operationData->operation = "创建订单";
+                // $operationData->description = "创建订单";
+                // $operationData->save();
+                // if (!$model->business_personnel_id) {
+                //     return false;
+                // }
             }
         });
     }
@@ -318,14 +316,14 @@ class Order extends Model
      */
     public function unlock()
     {
-        return ($this->getOriginal('order_status') != self::ORDER_STATUS_LOCK);
+        return $this->getOriginal('order_status') != self::ORDER_STATUS_LOCK;
     }
 
     public function unReadyStockOut()
     {
-        return ($this->getOriginal('order_status') != self::ORDER_STATUS_READY_STOCK_OUT);
+        return $this->getOriginal('order_status') != self::ORDER_STATUS_READY_STOCK_OUT;
     }
-    
+
     /**
      * 订单锁定或释放.
      *
@@ -340,12 +338,12 @@ class Order extends Model
 
             $userId = Auth::guard('api')->id();
             $userName = User::find($userId)->real_name;
-            $operationData = new OrderOperationRecord;
+            $operationData = new OrderOperationRecord();
             $operationData->orders_id = $this->id;
             $operationData->user_id = Auth::guard('api')->id();
             $operationData->user_name = $userName;
-            $operationData->operation = "锁定";
-            $operationData->description = "订单锁定";
+            $operationData->operation = '锁定';
+            $operationData->description = '订单锁定';
             $operationData->save();
         } else {
             $this->locker_id = 0;
@@ -354,12 +352,12 @@ class Order extends Model
 
             $userId = Auth::guard('api')->id();
             $userName = User::find($userId)->real_name;
-            $operationData = new OrderOperationRecord;
+            $operationData = new OrderOperationRecord();
             $operationData->orders_id = $this->id;
             $operationData->user_id = Auth::guard('api')->id();
             $operationData->user_name = $userName;
-            $operationData->operation = "解锁";
-            $operationData->description = "订单解锁";
+            $operationData->operation = '解锁';
+            $operationData->description = '订单解锁';
             $operationData->save();
         }
 
@@ -380,12 +378,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "客审";
-        $operationData->description = "客审";
+        $operationData->operation = '客审';
+        $operationData->description = '客审';
         $operationData->save();
     }
 
@@ -401,12 +399,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "打印发货单";
-        $operationData->description = "打印发货单";
+        $operationData->operation = '打印发货单';
+        $operationData->description = '打印发货单';
         $operationData->save();
     }
 
@@ -419,17 +417,17 @@ class Order extends Model
     {
         $this->cs_auditor_id = 0;
         $this->order_status = self::ORDER_STATUS_NEW;
-        $this->cs_audited_at = "2000-01-01 00:00:01";
+        $this->cs_audited_at = '2000-01-01 00:00:01';
         $this->save();
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "客审退审";
-        $operationData->description = "客审退审";
+        $operationData->operation = '客审退审';
+        $operationData->description = '客审退审';
         $operationData->save();
     }
 
@@ -467,12 +465,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "财审";
-        $operationData->description = "财审";
+        $operationData->operation = '财审';
+        $operationData->description = '财审';
         $operationData->save();
     }
 
@@ -488,12 +486,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "财审-退回";
-        $operationData->description = "财审-退回";
+        $operationData->operation = '财审-退回';
+        $operationData->description = '财审-退回';
         $operationData->save();
     }
 
@@ -509,12 +507,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "跟单货审";
-        $operationData->description = "跟单货审";
+        $operationData->operation = '跟单货审';
+        $operationData->description = '跟单货审';
         $operationData->save();
     }
 
@@ -530,12 +528,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "仓储退回客审";
-        $operationData->description = "仓储退回客审";
+        $operationData->operation = '仓储退回客审';
+        $operationData->description = '仓储退回客审';
         $operationData->save();
     }
 
@@ -551,17 +549,17 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "仓储发货退审";
-        $operationData->description = "仓储发货退审";
+        $operationData->operation = '仓储发货退审';
+        $operationData->description = '仓储发货退审';
         $operationData->save();
     }
 
     /**
-     *运费结算
+     *运费结算.
      *
      * @return bool
      */
@@ -573,12 +571,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "运费结算";
-        $operationData->description = "运费结算";
+        $operationData->operation = '运费结算';
+        $operationData->description = '运费结算';
         $operationData->save();
     }
 
@@ -590,22 +588,22 @@ class Order extends Model
     public function logUncheck()
     {
         $this->is_logistics_checked = 0;
-        $this->logistics_checked_at =null;
+        $this->logistics_checked_at = null;
         $this->save();
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "运费结算退审";
-        $operationData->description = "运费结算退审";
+        $operationData->operation = '运费结算退审';
+        $operationData->description = '运费结算退审';
         $operationData->save();
     }
 
     /**
-     *货款结算
+     *货款结算.
      *
      * @return bool
      */
@@ -617,12 +615,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "贷款结算";
-        $operationData->description = "贷款结算";
+        $operationData->operation = '贷款结算';
+        $operationData->description = '贷款结算';
         $operationData->save();
     }
 
@@ -639,17 +637,17 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "贷款结算退审";
-        $operationData->description = "贷款结算退审";
+        $operationData->operation = '贷款结算退审';
+        $operationData->description = '贷款结算退审';
         $operationData->save();
     }
 
     /**
-     *配送结算
+     *配送结算.
      *
      * @return bool
      */
@@ -661,12 +659,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "配送结算";
-        $operationData->description = "配送结算";
+        $operationData->operation = '配送结算';
+        $operationData->description = '配送结算';
         $operationData->save();
     }
 
@@ -678,17 +676,17 @@ class Order extends Model
     public function disUncheck()
     {
         $this->is_distribution_checked = 0;
-        $this->distribution_checked_at =null;
+        $this->distribution_checked_at = null;
         $this->save();
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "配送结算退审";
-        $operationData->description = "配送结算退审";
+        $operationData->operation = '配送结算退审';
+        $operationData->description = '配送结算退审';
         $operationData->save();
     }
 
@@ -699,40 +697,40 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "通知发货";
-        $operationData->description = "通知发货";
+        $operationData->operation = '通知发货';
+        $operationData->description = '通知发货';
         $operationData->save();
     }
 
     /**
-     *审计部-审核驳回
+     *审计部-审核驳回.
      *
      * @return bool
      */
     public function rejectDeptsAudit()
     {
         $this->auditor_id = 0;
-        $this->audit_at =null;
-        $this->order_status = 5;//填入驳回后的订单状态
+        $this->audit_at = null;
+        $this->order_status = 5; //填入驳回后的订单状态
         $this->save();
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "审计部-审核驳回";
-        $operationData->description = "审计部-审核驳回";
+        $operationData->operation = '审计部-审核驳回';
+        $operationData->description = '审计部-审核驳回';
         $operationData->save();
     }
 
     /**
-     *审计部-审核
+     *审计部-审核.
      *
      * @return bool
      */
@@ -740,17 +738,17 @@ class Order extends Model
     {
         $this->auditor_id = Auth::guard('api')->id();
         $this->audit_at = date('Y-m-d h:i:s');
-        $this->order_status = 10;//填入审核后的订单状态
+        $this->order_status = 10; //填入审核后的订单状态
         $this->save();
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "审计部-审核";
-        $operationData->description = "审计部-审核";
+        $operationData->operation = '审计部-审核';
+        $operationData->description = '审计部-审核';
         $operationData->save();
     }
 
@@ -810,12 +808,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "仓储发货";
-        $operationData->description = "仓储发货";
+        $operationData->operation = '仓储发货';
+        $operationData->description = '仓储发货';
         $operationData->save();
     }
 
@@ -830,7 +828,7 @@ class Order extends Model
     {
         //获取出库数据
         $order = $this->load('orderItems');
-        $order["order_status"] = intval($order["order_status"]);
+        $order['order_status'] = intval($order['order_status']);
 
         $orderItemOne = $order->orderItems->map(function ($item) use ($data) {
             $orderItem = collect($data)->where('id', $item->id);
@@ -888,12 +886,12 @@ class Order extends Model
 
             $userId = Auth::guard('api')->id();
             $userName = User::find($userId)->real_name;
-            $operationData = new OrderOperationRecord;
+            $operationData = new OrderOperationRecord();
             $operationData->orders_id = $this->id;
             $operationData->user_id = Auth::guard('api')->id();
             $operationData->user_name = $userName;
-            $operationData->operation = "客服-拆单";
-            $operationData->description = "客服-拆单";
+            $operationData->operation = '客服-拆单';
+            $operationData->description = '客服-拆单';
             $operationData->save();
         });
 
@@ -911,8 +909,8 @@ class Order extends Model
     {
         //获取出库数据
         $order = $this->load('orderItems');
-        $order["order_status"] = intval($order["order_status"]);
- 
+        $order['order_status'] = intval($order['order_status']);
+
         $orderItemOne = $order->orderItems->map(function ($item) use ($data) {
             $orderItem = collect($data)->where('id', $item->id);
             if ($orderItem->count()) {
@@ -925,9 +923,10 @@ class Order extends Model
                     throw new UpdateResourceFailedException('拆分出错');
                 }
             }
+
             return $item;
         })->toArray();
- 
+
         $orderItemTwo = $order->orderItems->map(function ($item) use ($data) {
             $orderItem = collect($data)->where('id', $item->id);
             if ($orderItem->count()) {
@@ -935,12 +934,13 @@ class Order extends Model
             } else {
                 $item = null;
             }
+
             return $item;
         })->toArray();
-         
-        $newOrderOne['order_status']=60;
-        $newOrderTwo['order_status']=60;
- 
+
+        $newOrderOne['order_status'] = 60;
+        $newOrderTwo['order_status'] = 60;
+
         DB::transaction(function () use ($orderItemOne, $orderItemTwo) {
             //新建订单
             $newOrderOne = $this->newQuery()->create($this->toArray());
@@ -953,31 +953,31 @@ class Order extends Model
                 }
                 $newOrderOne->orderItems()->create($item);
             });
- 
+
             collect($orderItemTwo)->map(function ($item) use ($newOrderTwo) {
                 if (is_null($item)) {
                     return;
                 }
                 $newOrderTwo->orderItems()->create($item);
             });
- 
+
             //删除旧单
             $this->paymentDetails()->delete();
             $this->orderItems()->delete();
             $this->delete();
- 
+
             //记录拆分操作
             $userId = Auth::guard('api')->id();
             $userName = User::find($userId)->real_name;
-            $operationData = new OrderOperationRecord;
+            $operationData = new OrderOperationRecord();
             $operationData->orders_id = $this->id;
             $operationData->user_id = Auth::guard('api')->id();
             $operationData->user_name = $userName;
-            $operationData->operation = "仓储部-拆单";
-            $operationData->description = "仓储部-拆单";
+            $operationData->operation = '仓储部-拆单';
+            $operationData->description = '仓储部-拆单';
             $operationData->save();
         });
- 
+
         return true;
     }
 
@@ -997,13 +997,13 @@ class Order extends Model
         $orderTwo = $this->newQuery()->findOrFail($orderTwoId);
 
         //判断主订单数据是否匹配
-        if (collect($orderOne->toArray())->except(['id', 'system_order_no', 'locked_at','created_at', 'updated_at'])->diffAssoc($orderTwo->toArray())->count()) {
+        if (collect($orderOne->toArray())->except(['id', 'system_order_no', 'locked_at', 'created_at', 'updated_at'])->diffAssoc($orderTwo->toArray())->count()) {
             throw new UpdateResourceFailedException('主订单数据不匹配，无法合并');
         }
 
         //提取数据
         $order = $orderOne->toArray();
-        $order["order_status"] = intval($order["order_status"]);
+        $order['order_status'] = intval($order['order_status']);
         $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
 
         DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
@@ -1023,12 +1023,12 @@ class Order extends Model
             //记录合并操作
             $userId = Auth::guard('api')->id();
             $userName = User::find($userId)->real_name;
-            $operationData = new OrderOperationRecord;
+            $operationData = new OrderOperationRecord();
             $operationData->orders_id = $this->id;
             $operationData->user_id = Auth::guard('api')->id();
             $operationData->user_name = $userName;
-            $operationData->operation = "客服部-合并订单";
-            $operationData->description = "客服部-合并订单";
+            $operationData->operation = '客服部-合并订单';
+            $operationData->description = '客服部-合并订单';
             $operationData->save();
         });
     }
@@ -1044,7 +1044,7 @@ class Order extends Model
 
         //提取数据
         $order = $orderOne->toArray();
-        $order["order_status"] = intval($order["order_status"]);
+        $order['order_status'] = intval($order['order_status']);
         $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
 
         DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
@@ -1064,12 +1064,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "客服部-转补单";
-        $operationData->description = "客服部-转补单";
+        $operationData->operation = '客服部-转补单';
+        $operationData->description = '客服部-转补单';
         $operationData->save();
     }
 
@@ -1083,7 +1083,7 @@ class Order extends Model
 
         //提取数据
         $order = $orderOne->toArray();
-        $order["order_status"] = intval($order["order_status"]);
+        $order['order_status'] = intval($order['order_status']);
         $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
 
         DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
@@ -1103,12 +1103,12 @@ class Order extends Model
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
-        $operationData = new OrderOperationRecord;
+        $operationData = new OrderOperationRecord();
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = "客服-转补款";
-        $operationData->description = "客服-转补款";
+        $operationData->operation = '客服-转补款';
+        $operationData->description = '客服-转补款';
         $operationData->save();
     }
 

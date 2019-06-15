@@ -4,22 +4,22 @@
     <div class="searchBox">
       <span>
         <label>取消单号</label>
-        <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
+        <el-input v-model="searchBox.cancel_purchases_no" clearable @keyup.enter.native="getData"></el-input>
       </span>
       <span>
         <label>创建人</label>
-        <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
+        <el-input v-model="searchBox.creator" clearable @keyup.enter.native="getData"></el-input>
       </span>
       <span>
         <label>提交人</label>
-        <el-input v-model="searchBox.goodsName" clearable @keyup.enter.native="getData"></el-input>
+        <el-input v-model="searchBox.submitter" clearable @keyup.enter.native="getData"></el-input>
       </span>
       <span>
 
       </span>
     </div>
     <div style="text-align: right">
-      <el-button type="primary" @click="fetchData">筛选</el-button>
+      <el-button type="primary" @click="searchData">筛选</el-button>
       <el-button @click="resets">重置</el-button>
     </div>
 
@@ -258,7 +258,9 @@ export default {
         }
       ],
       searchBox: {
-        goodsName: ""
+        cancel_purchases_no: "",
+        creator: "",
+        submitter: "",
       },
       /*获取*/
       topActiveName: "0",
@@ -496,8 +498,10 @@ export default {
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.cancelpurchases, {
-            status: true,
-            is_submit: false,
+            is_submit: 0,
+            cancel_purchases_no:this.searchBox.cancel_purchases_no,
+            creator:this.searchBox.creator,
+            submitter:this.searchBox.submitter,
             include:
               "purchase,cancelPurchaseDetails.cancelPurchase,cancelPurchaseDetails.purchaseDetail,cancelPurchaseDetails.purchaseDetail.productComponent.product"
           }).then(
@@ -551,8 +555,10 @@ export default {
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = true;
           this.$fetch(this.urls.cancelpurchases, {
-            status: true,
-            is_submit: true,
+            is_submit: 1,
+            cancel_purchases_no:this.searchBox.cancel_purchases_no,
+            creator:this.searchBox.creator,
+            submitter:this.searchBox.submitter,
             include:
               "purchase,cancelPurchaseDetails.cancelPurchase,cancelPurchaseDetails.purchaseDetail,cancelPurchaseDetails.purchaseDetail.productComponent.product"
           }).then(
@@ -1111,8 +1117,17 @@ export default {
       this.loading = true;
       this.fetchData();
     },
-    resets(){
-      this.searchBox = {};
+    //筛选
+    searchData(){
+      this.loading=true;
+      this.fetchData();
+    },
+    resets() {
+      this.searchBox =  {
+        cancel_purchases_no: "",
+        creator: "",
+        submitter: "",
+      };
     }
   },
   mounted() {

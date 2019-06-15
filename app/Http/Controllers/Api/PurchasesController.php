@@ -4,26 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\PurchaseList;
 use Illuminate\Support\Facades\DB;
-
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
-
 use App\Http\Requests\Api\PurchaseRequest;
 use App\Http\Requests\Api\PurchaseListRequest;
 use App\Http\Requests\Api\PurchaseDetailRequest;
 use App\Http\Requests\Api\EditStatuRequest;
 use App\Http\Requests\Api\DestroyRequest;
-
 use App\Transformers\PurchaseTransformer;
-
 use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Controllers\Traits\ProcedureTrait;
-
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 
 /**
- * 采购单资源
+ * 采购单资源.
+ *
  * @Resource("purchases",uri="/api")
  */
 class PurchasesController extends Controller
@@ -33,9 +29,10 @@ class PurchasesController extends Controller
 
     const TRANSFORMER = PurchaseTransformer::class;
     const MODEL = Purchase::class;
+    const PerPage = 8;
 
     /**
-     * 获取所有采购单
+     * 获取所有采购单.
      *
      * @Get("/purchases[?status=true&include=user,purchaseLists,cancelPurchases]")
      * @Versions({"v1"})
@@ -178,11 +175,24 @@ class PurchasesController extends Controller
      */
     public function index(PurchaseRequest $request)
     {
-        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        //return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, 10);
+        $purchase_status = $request->input('purchase_status');
+        $receiver = $request->input('receiver');
+        $receiver_address = $request->input('receiver_address');
+        $user_id = $request->input('user_id');
+        $buyer_nick = $request->input('buyer_nick');
+        $purchase = Purchase::query()->where('purchase_status', 'like', '%'.$purchase_status.'%')
+        ->where('receiver', 'like', '%'.$receiver.'%')
+        ->where('receiver_address', 'like', '%'.$receiver_address.'%')
+        ->where('user_id', 'like', '%'.$user_id.'%')
+        ->where('buyer_nick', 'like', '%'.$buyer_nick.'%')
+        ->orderBy('created_at', 'desc');
+
+        return $this->response->paginator($purchase->paginate(self::PerPage), self::TRANSFORMER);
     }
 
     /**
-     * 新增采购单
+     * 新增采购单.
      *
      * @Post("/purchases")
      * @Versions({"v1"})
@@ -374,13 +384,10 @@ class PurchasesController extends Controller
                           \App\Handlers\ValidatedHandler $validatedHandler)
     {
         $purchase = DB::transaction(function () use ($purchaseRequest, $purchaseListRequest, $purchaseDetailRequest, $validatedHandler) {
-
             $purchase = Purchase::create($purchaseRequest->validated());
 
             if ($purchaseLists = $purchaseRequest->input('purchase_lists')) {
-
                 foreach ($purchaseLists as $purchaseList) {
-
                     $purchaseListModel = $purchase->purchaseLists()->create(
                         $validatedHandler->getValidatedData($purchaseListRequest->rules(), $purchaseList)
                     );
@@ -392,9 +399,9 @@ class PurchasesController extends Controller
                             );
                         }
                     }
-
                 }
             }
+
             return $purchase->id;
         });
         //从新获取存入的数据去除有些的null数据，方便前端判断
@@ -407,7 +414,7 @@ class PurchasesController extends Controller
     }
 
     /**
-     * 显示单条采购单
+     * 显示单条采购单.
      *
      * @Get("/purchases/:id")
      * @Versions({"v1"})
@@ -537,7 +544,7 @@ class PurchasesController extends Controller
     }
 
     /**
-     * 修改采购单
+     * 修改采购单.
      *
      * @Patch("/purchases/:id")
      * @Versions({"v1"})
@@ -738,19 +745,17 @@ class PurchasesController extends Controller
                            \App\Handlers\ValidatedHandler $validatedHandler)
     {
         //判断是否提交
-        if ($purchase->is_submit)
+        if ($purchase->is_submit) {
             throw new UpdateResourceFailedException('已提交无法修改');
-
+        }
         $purchase = DB::transaction(function () use ($purchaseRequest,
                                                      $purchaseListRequest,
                                                      $purchaseDetailRequest,
                                                      $purchase,
                                                      $validatedHandler) {
-
             $purchase->update($purchaseRequest->validated());
 
             if ($purchaseLists = $purchaseRequest->input('purchase_lists')) {
-
                 foreach ($purchaseLists as $purchaseList) {
                     //过滤出经过验证的数据
                     $data = $validatedHandler->getValidatedData($purchaseListRequest->rules(), $purchaseList);
@@ -787,6 +792,7 @@ class PurchasesController extends Controller
                     }
                 }
             }
+
             return $purchase;
         });
 
@@ -796,7 +802,7 @@ class PurchasesController extends Controller
     }
 
     /**
-     * 删除采购单
+     * 删除采购单.
      *
      * @Delete("/purchases/:id")
      * @Versions({"v1"})
@@ -830,7 +836,7 @@ class PurchasesController extends Controller
     }
 
     /**
-     * 删除一组采购单
+     * 删除一组采购单.
      *
      * @Delete("/purchases")
      * @Versions({"v1"})
@@ -859,7 +865,6 @@ class PurchasesController extends Controller
         $ids = explode(',', $request->input('ids'));
 
         DB::transaction(function () use ($ids) {
-
             //删除
             $purchaseList = PurchaseList::whereIn('purchases_id', $ids);
             $purchaseDetail = PurchaseDetail::whereIn('purchase_lists_id', $purchaseList->pluck('id')->toArray())->delete();
@@ -914,7 +919,7 @@ class PurchasesController extends Controller
     }
 
     /**
-     * 提交
+     * 提交.
      *
      * @PUT("/purchases/:id/submit")
      * @Versions({"v1"})
@@ -932,7 +937,7 @@ class PurchasesController extends Controller
     }
 
     /**
-     * 打印
+     * 打印.
      *
      * @PUT("/purchases/:id/print")
      * @Versions({"v1"})
@@ -950,7 +955,7 @@ class PurchasesController extends Controller
     }
 
     /**
-     * 审核
+     * 审核.
      *
      * @PUT("/purchases/:id/audit")
      * @Versions({"v1"})
@@ -971,5 +976,4 @@ class PurchasesController extends Controller
     {
         return $this->traitAction($purchase, !$purchase->status || !$purchase->is_submit || !$purchase->is_audit, '审核出错，是否未审核或重复退审', 'unAudit');
     }
-
 }

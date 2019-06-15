@@ -22,7 +22,7 @@
             </span>
             <span>
               <label>供应商</label>
-              <el-select v-model="searchBox.supplier_id" clearable clearable placeholder="请选择">
+              <el-select v-model="searchBox.supplier_id" clearable  placeholder="请选择">
                 <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
