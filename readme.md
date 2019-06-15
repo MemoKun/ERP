@@ -109,5 +109,7 @@
  ```
  * 注：children中至少有两个子路由才会展示子级，否则按一个父级路由处理；
  
- 
+ ## Migration文件
+ php artisan migrate:generate 自动生成migration文件
+
  
