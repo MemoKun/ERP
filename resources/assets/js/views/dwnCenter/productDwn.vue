@@ -19,6 +19,7 @@
             <label>商品编码</label>
             <el-input v-model="searchBox.pro_num" clearable></el-input>
           </span>
+          <span></span>
         </div>
       </el-tab-pane>
     </el-tabs>

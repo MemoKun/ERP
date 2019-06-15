@@ -1,14 +1,14 @@
 webpackJsonp([9],{
 
-/***/ 1017:
+/***/ 1014:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1213)
+var __vue_script__ = __webpack_require__(1210)
 /* template */
-var __vue_template__ = __webpack_require__(1214)
+var __vue_template__ = __webpack_require__(1211)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 1018:
+/***/ 1015:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62,9 +62,9 @@ module.exports = Component.exports
 
 
 
-var base64 = __webpack_require__(1023)
-var ieee754 = __webpack_require__(1024)
-var isArray = __webpack_require__(1022)
+var base64 = __webpack_require__(1020)
+var ieee754 = __webpack_require__(1021)
+var isArray = __webpack_require__(1019)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -1846,7 +1846,7 @@ function isnan (val) {
 
 /***/ }),
 
-/***/ 1019:
+/***/ 1016:
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -1856,7 +1856,7 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 
-/***/ 1020:
+/***/ 1017:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {/* cpexcel.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -3365,18 +3365,18 @@ if (typeof module !== 'undefined' && module.exports && typeof DO_NOT_EXPORT_CODE
   return cpt;
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1018).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1015).Buffer))
 
 /***/ }),
 
-/***/ 1021:
+/***/ 1018:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 1022:
+/***/ 1019:
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -3388,7 +3388,7 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ 1023:
+/***/ 1020:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3547,7 +3547,7 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ 1024:
+/***/ 1021:
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -3638,7 +3638,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 /***/ }),
 
-/***/ 1025:
+/***/ 1022:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* FileSaver.js
@@ -3824,7 +3824,7 @@ var saveAs = saveAs || (function(view) {
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports.saveAs = saveAs;
-} else if (("function" !== "undefined" && __webpack_require__(1026) !== null) && (__webpack_require__(1019) !== null)) {
+} else if (("function" !== "undefined" && __webpack_require__(1023) !== null) && (__webpack_require__(1016) !== null)) {
   !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
     return saveAs;
   }).call(exports, __webpack_require__, exports, module),
@@ -3834,7 +3834,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 /***/ }),
 
-/***/ 1026:
+/***/ 1023:
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -3844,7 +3844,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 1027:
+/***/ 1024:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, Buffer, process) {/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -3858,8 +3858,8 @@ var current_codepage = 1200, current_ansi = 1252;
 /*global cptable:true, window */
 if(true) {
 	if(typeof cptable === 'undefined') {
-		if(typeof global !== 'undefined') global.cptable = __webpack_require__(1020);
-		else if(typeof window !== 'undefined') window.cptable = __webpack_require__(1020);
+		if(typeof global !== 'undefined') global.cptable = __webpack_require__(1017);
+		else if(typeof window !== 'undefined') window.cptable = __webpack_require__(1017);
 	}
 }
 
@@ -5008,7 +5008,7 @@ function filename(p) {
 	return (c === -1) ? p : p.slice(c+1);
 }
 var fs;
-function get_fs() { return fs || (fs = __webpack_require__(1021)); }
+function get_fs() { return fs || (fs = __webpack_require__(1018)); }
 function parse(file, options) {
 if(file.length < 512) throw new Error("CFB file size " + file.length + " < 512");
 var mver = 3;
@@ -5696,7 +5696,7 @@ return exports;
 
 if("function" !== 'undefined' && typeof module !== 'undefined' && typeof DO_NOT_EXPORT_CFB === 'undefined') { module.exports = CFB; }
 var _fs;
-if(true) try { _fs = __webpack_require__(1021); } catch(e) {}
+if(true) try { _fs = __webpack_require__(1018); } catch(e) {}
 
 /* normalize data for blob ctor */
 function blobify(data) {
@@ -5957,7 +5957,7 @@ var jszip;
 if(typeof JSZipSync !== 'undefined') jszip = JSZipSync;
 if(true) {
 	if(typeof module !== 'undefined' && module.exports) {
-		if(typeof jszip === 'undefined') jszip = __webpack_require__(1028);
+		if(typeof jszip === 'undefined') jszip = __webpack_require__(1025);
 	}
 }
 
@@ -6578,7 +6578,7 @@ var make_offcrypto = function(O, _crypto) {
 	var crypto;
 	if(typeof _crypto !== 'undefined') crypto = _crypto;
 	else if(true) {
-		try { crypto = __webpack_require__(1029); }
+		try { crypto = __webpack_require__(1026); }
 		catch(e) { crypto = null; }
 	}
 
@@ -23949,7 +23949,7 @@ return utils;
 })(utils);
 
 if(has_buf && "function" != 'undefined') (function() {
-	var Readable = __webpack_require__(1030).Readable;
+	var Readable = __webpack_require__(1027).Readable;
 
 	var write_csv_stream = function(sheet, opts) {
 		var stream = Readable();
@@ -24094,11 +24094,11 @@ else make_xlsx_lib(XLSX);
 /*exported XLS, ODS */
 var XLS = XLSX, ODS = XLSX;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(1018).Buffer, __webpack_require__(184)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(1015).Buffer, __webpack_require__(179)))
 
 /***/ }),
 
-/***/ 1028:
+/***/ 1025:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*
@@ -24117,7 +24117,7 @@ Note: since JSZip 3 removed critical functionality, this version assigns to the
 */
 (function(e){
 	if("object"==typeof exports&&"undefined"!=typeof module&&"undefined"==typeof DO_NOT_EXPORT_JSZIP)module.exports=e();
-	else if("function"=="function"&&__webpack_require__(1019)&&"undefined"==typeof DO_NOT_EXPORT_JSZIP){JSZipSync=e();!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (e),
+	else if("function"=="function"&&__webpack_require__(1016)&&"undefined"==typeof DO_NOT_EXPORT_JSZIP){JSZipSync=e();!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (e),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}
@@ -33104,53 +33104,42 @@ module.exports = ZStream;
 (9)
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1018).Buffer, __webpack_require__(34)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1015).Buffer, __webpack_require__(34)))
 
 /***/ }),
 
-/***/ 1029:
+/***/ 1026:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 1030:
+/***/ 1027:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 1213:
+/***/ 1210:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver__ = __webpack_require__(1025);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver__ = __webpack_require__(1022);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_file_saver__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx__ = __webpack_require__(1027);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx__ = __webpack_require__(1024);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_xlsx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_qs__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_qs__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_qs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_qs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_china_area_data__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_china_area_data__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_china_area_data__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -33555,15 +33544,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         customer_address: "",
         order_stuff: "",
         cmptn_direction: "",
-        cmptn_directions: [{ label: "我们赔偿", value: '我们赔偿' }, { label: "赔偿我们", value: '赔偿我们' }],
+        cmptn_directions: [{ label: "我们赔偿", value: "我们赔偿" }, { label: "赔偿我们", value: "赔偿我们" }],
         responsible_party: "",
-        responsible_partys: [{ label: "物流", value: '物流' }, { label: "工厂", value: '工厂' }, { label: "服务商", value: '服务商' }, { label: "客户", value: '客户' }, { label: "公司", value: '公司' }, { label: "仓库", value: '仓库' }, { label: "其他", value: '其他' }],
+        responsible_partys: [{ label: "物流", value: "物流" }, { label: "工厂", value: "工厂" }, { label: "服务商", value: "服务商" }, { label: "客户", value: "客户" }, { label: "公司", value: "公司" }, { label: "仓库", value: "仓库" }, { label: "其他", value: "其他" }],
         responsible_person: "",
         logistics_company: "",
-        logistics_companys: [{ label: "顺丰速运", value: '顺丰速运' }, { label: "韵达快递", value: '韵达快递' }],
+        logistics_companys: [{ label: "顺丰速运", value: "顺丰速运" }, { label: "韵达快递", value: "韵达快递" }],
         logistics_tracking_number: "",
         cmptn_shop: "",
-        cmptn_shops: [{ label: "Dreasylife家居旗舰店", value: 'Dreasylife家居旗舰店' }, { label: "思享家官方旗舰店", value: '思享家官方旗舰店' }],
+        cmptn_shops: [{ label: "Dreasylife家居旗舰店", value: "Dreasylife家居旗舰店" }, { label: "思享家官方旗舰店", value: "思享家官方旗舰店" }],
         negotiation_date: "",
         created_at: "",
         submited_at: "",
@@ -35276,15 +35265,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         customer_address: "",
         order_stuff: "",
         cmptn_direction: "",
-        cmptn_directions: [{ label: "我们赔偿", value: '我们赔偿' }, { label: "赔偿我们", value: '赔偿我们' }],
+        cmptn_directions: [{ label: "我们赔偿", value: "我们赔偿" }, { label: "赔偿我们", value: "赔偿我们" }],
         responsible_party: "",
-        responsible_partys: [{ label: "物流", value: '物流' }, { label: "工厂", value: '工厂' }, { label: "服务商", value: '服务商' }, { label: "客户", value: '客户' }, { label: "公司", value: '公司' }, { label: "仓库", value: '仓库' }, { label: "其他", value: '其他' }],
+        responsible_partys: [{ label: "物流", value: "物流" }, { label: "工厂", value: "工厂" }, { label: "服务商", value: "服务商" }, { label: "客户", value: "客户" }, { label: "公司", value: "公司" }, { label: "仓库", value: "仓库" }, { label: "其他", value: "其他" }],
         responsible_person: "",
         logistics_company: "",
-        logistics_companys: [{ label: "顺丰速运", value: '顺丰速运' }, { label: "韵达快递", value: '韵达快递' }],
+        logistics_companys: [{ label: "顺丰速运", value: "顺丰速运" }, { label: "韵达快递", value: "韵达快递" }],
         logistics_tracking_number: "",
         cmptn_shop: "",
-        cmptn_shops: [{ label: "Dreasylife家居旗舰店", value: 'Dreasylife家居旗舰店' }, { label: "思享家官方旗舰店", value: '思享家官方旗舰店' }],
+        cmptn_shops: [{ label: "Dreasylife家居旗舰店", value: "Dreasylife家居旗舰店" }, { label: "思享家官方旗舰店", value: "思享家官方旗舰店" }],
         negotiation_date: "",
         created_at: "",
         submited_at: "",
@@ -35304,7 +35293,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ 1214:
+/***/ 1211:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -35390,435 +35379,329 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _vm.filterBox
-                    ? _c(
-                        "span",
-                        [
-                          _c("label", [_vm._v("买家地址")]),
-                          _vm._v(" "),
-                          _c("el-input", {
-                            attrs: { clearable: "" },
-                            model: {
-                              value: _vm.searchBox.customer_address,
-                              callback: function($$v) {
-                                _vm.$set(_vm.searchBox, "customer_address", $$v)
-                              },
-                              expression: "searchBox.customer_address"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    : _c(
-                        "span",
-                        [
-                          _c(
-                            "el-button",
-                            {
-                              attrs: { type: "primary" },
-                              on: { click: _vm.searchData }
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("买家地址")]),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        attrs: { clearable: "" },
+                        model: {
+                          value: _vm.searchBox.customer_address,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "customer_address", $$v)
+                          },
+                          expression: "searchBox.customer_address"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "searchBox" }, [
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("业务员")]),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        attrs: { clearable: "" },
+                        model: {
+                          value: _vm.searchBox.order_stuff,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "order_stuff", $$v)
+                          },
+                          expression: "searchBox.order_stuff"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("赔偿方向")]),
+                      _vm._v(" "),
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.cmptn_direction,
+                            callback: function($$v) {
+                              _vm.$set(_vm.searchBox, "cmptn_direction", $$v)
                             },
-                            [_vm._v("筛选")]
-                          ),
-                          _vm._v(" "),
-                          _c("el-button", { on: { click: _vm.resets } }, [
-                            _vm._v("重置")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            { on: { click: _vm.toggleShow } },
-                            [
-                              _c("el-button", { attrs: { type: "text" } }, [
-                                _vm._v("展开")
-                              ]),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "el-icon-arrow-down",
-                                staticStyle: { color: "#409EFF" }
-                              })
-                            ],
-                            1
-                          )
-                        ],
+                            expression: "searchBox.cmptn_direction"
+                          }
+                        },
+                        _vm._l(_vm.searchBox.cmptn_directions, function(item) {
+                          return _c("el-option", {
+                            key: item.value,
+                            attrs: { label: item.label, value: item.value }
+                          })
+                        }),
                         1
                       )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("责任方")]),
+                      _vm._v(" "),
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.responsible_party,
+                            callback: function($$v) {
+                              _vm.$set(_vm.searchBox, "responsible_party", $$v)
+                            },
+                            expression: "searchBox.responsible_party"
+                          }
+                        },
+                        _vm._l(_vm.searchBox.responsible_partys, function(
+                          item
+                        ) {
+                          return _c("el-option", {
+                            key: item.value,
+                            attrs: { label: item.label, value: item.value }
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("责任人")]),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        attrs: { clearable: "" },
+                        model: {
+                          value: _vm.searchBox.responsible_person,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "responsible_person", $$v)
+                          },
+                          expression: "searchBox.responsible_person"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "searchBox" }, [
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("发货物流")]),
+                      _vm._v(" "),
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.logistics_company,
+                            callback: function($$v) {
+                              _vm.$set(_vm.searchBox, "logistics_company", $$v)
+                            },
+                            expression: "searchBox.logistics_company"
+                          }
+                        },
+                        _vm._l(_vm.searchBox.logistics_companys, function(
+                          item
+                        ) {
+                          return _c("el-option", {
+                            key: item.value,
+                            attrs: { label: item.label, value: item.value }
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("物流单号")]),
+                      _vm._v(" "),
+                      _c("el-input", {
+                        model: {
+                          value: _vm.searchBox.logistics_tracking_number,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.searchBox,
+                              "logistics_tracking_number",
+                              $$v
+                            )
+                          },
+                          expression: "searchBox.logistics_tracking_number"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("所属店铺")]),
+                      _vm._v(" "),
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { clearable: "", placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchBox.cmptn_shop,
+                            callback: function($$v) {
+                              _vm.$set(_vm.searchBox, "cmptn_shop", $$v)
+                            },
+                            expression: "searchBox.cmptn_shop"
+                          }
+                        },
+                        _vm._l(_vm.searchBox.cmptn_shops, function(item) {
+                          return _c("el-option", {
+                            key: item.value,
+                            attrs: { label: item.label, value: item.value }
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("协商日期")]),
+                      _vm._v(" "),
+                      _c("el-date-picker", {
+                        attrs: {
+                          type: "daterange",
+                          "range-separator": "至",
+                          "start-placeholder": "开始日期",
+                          "end-placeholeder": "结束日期"
+                        },
+                        model: {
+                          value: _vm.searchBox.negotiation_date,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "negotiation_date", $$v)
+                          },
+                          expression: "searchBox.negotiation_date"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "searchBox" }, [
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("创建日期")]),
+                      _vm._v(" "),
+                      _c("el-date-picker", {
+                        attrs: {
+                          type: "daterange",
+                          "range-separator": "至",
+                          "start-placeholder": "开始日期",
+                          "end-placeholeder": "结束日期"
+                        },
+                        model: {
+                          value: _vm.searchBox.created_at,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "created_at", $$v)
+                          },
+                          expression: "searchBox.created_at"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("提交日期")]),
+                      _vm._v(" "),
+                      _c("el-date-picker", {
+                        attrs: {
+                          type: "daterange",
+                          "range-separator": "至",
+                          "start-placeholder": "开始日期",
+                          "end-placeholeder": "结束日期"
+                        },
+                        model: {
+                          value: _vm.searchBox.submited_at,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "submited_at", $$v)
+                          },
+                          expression: "searchBox.submited_at"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    [
+                      _c("label", [_vm._v("审核日期")]),
+                      _vm._v(" "),
+                      _c("el-date-picker", {
+                        attrs: {
+                          type: "daterange",
+                          "range-separator": "至",
+                          "start-placeholder": "开始日期",
+                          "end-placeholeder": "结束日期"
+                        },
+                        model: {
+                          value: _vm.searchBox.audited_at,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchBox, "audited_at", $$v)
+                          },
+                          expression: "searchBox.audited_at"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("span")
                 ]),
                 _vm._v(" "),
                 _c(
                   "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.filterBox,
-                        expression: "filterBox"
-                      }
-                    ],
-                    staticClass: "searchBox"
-                  },
+                  { staticStyle: { "text-align": "right" } },
                   [
                     _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("业务员")]),
-                        _vm._v(" "),
-                        _c("el-input", {
-                          attrs: { clearable: "" },
-                          model: {
-                            value: _vm.searchBox.order_stuff,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "order_stuff", $$v)
-                            },
-                            expression: "searchBox.order_stuff"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("赔偿方向")]),
-                        _vm._v(" "),
-                        _c(
-                          "el-select",
-                          {
-                            attrs: { clearable: "", placeholder: "请选择" },
-                            model: {
-                              value: _vm.searchBox.cmptn_direction,
-                              callback: function($$v) {
-                                _vm.$set(_vm.searchBox, "cmptn_direction", $$v)
-                              },
-                              expression: "searchBox.cmptn_direction"
-                            }
-                          },
-                          _vm._l(_vm.searchBox.cmptn_directions, function(
-                            item
-                          ) {
-                            return _c("el-option", {
-                              key: item.value,
-                              attrs: { label: item.label, value: item.value }
-                            })
-                          }),
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("责任方")]),
-                        _vm._v(" "),
-                        _c(
-                          "el-select",
-                          {
-                            attrs: { clearable: "", placeholder: "请选择" },
-                            model: {
-                              value: _vm.searchBox.responsible_party,
-                              callback: function($$v) {
-                                _vm.$set(
-                                  _vm.searchBox,
-                                  "responsible_party",
-                                  $$v
-                                )
-                              },
-                              expression: "searchBox.responsible_party"
-                            }
-                          },
-                          _vm._l(_vm.searchBox.responsible_partys, function(
-                            item
-                          ) {
-                            return _c("el-option", {
-                              key: item.value,
-                              attrs: { label: item.label, value: item.value }
-                            })
-                          }),
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("责任人")]),
-                        _vm._v(" "),
-                        _c("el-input", {
-                          attrs: { clearable: "" },
-                          model: {
-                            value: _vm.searchBox.responsible_person,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "responsible_person", $$v)
-                            },
-                            expression: "searchBox.responsible_person"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
+                      "el-button",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.filterBox,
-                        expression: "filterBox"
-                      }
-                    ],
-                    staticClass: "searchBox"
-                  },
-                  [
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("发货物流")]),
-                        _vm._v(" "),
-                        _c(
-                          "el-select",
-                          {
-                            attrs: { clearable: "", placeholder: "请选择" },
-                            model: {
-                              value: _vm.searchBox.logistics_company,
-                              callback: function($$v) {
-                                _vm.$set(
-                                  _vm.searchBox,
-                                  "logistics_company",
-                                  $$v
-                                )
-                              },
-                              expression: "searchBox.logistics_company"
-                            }
-                          },
-                          _vm._l(_vm.searchBox.logistics_companys, function(
-                            item
-                          ) {
-                            return _c("el-option", {
-                              key: item.value,
-                              attrs: { label: item.label, value: item.value }
-                            })
-                          }),
-                          1
-                        )
-                      ],
-                      1
+                        attrs: { type: "primary" },
+                        on: { click: _vm.searchData }
+                      },
+                      [_vm._v("筛选")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("物流单号")]),
-                        _vm._v(" "),
-                        _c("el-input", {
-                          model: {
-                            value: _vm.searchBox.logistics_tracking_number,
-                            callback: function($$v) {
-                              _vm.$set(
-                                _vm.searchBox,
-                                "logistics_tracking_number",
-                                $$v
-                              )
-                            },
-                            expression: "searchBox.logistics_tracking_number"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("所属店铺")]),
-                        _vm._v(" "),
-                        _c(
-                          "el-select",
-                          {
-                            attrs: { clearable: "", placeholder: "请选择" },
-                            model: {
-                              value: _vm.searchBox.cmptn_shop,
-                              callback: function($$v) {
-                                _vm.$set(_vm.searchBox, "cmptn_shop", $$v)
-                              },
-                              expression: "searchBox.cmptn_shop"
-                            }
-                          },
-                          _vm._l(_vm.searchBox.cmptn_shops, function(item) {
-                            return _c("el-option", {
-                              key: item.value,
-                              attrs: { label: item.label, value: item.value }
-                            })
-                          }),
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("协商日期")]),
-                        _vm._v(" "),
-                        _c("el-date-picker", {
-                          attrs: {
-                            type: "daterange",
-                            "range-separator": "至",
-                            "start-placeholder": "开始日期",
-                            "end-placeholeder": "结束日期"
-                          },
-                          model: {
-                            value: _vm.searchBox.negotiation_date,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "negotiation_date", $$v)
-                            },
-                            expression: "searchBox.negotiation_date"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.filterBox,
-                        expression: "filterBox"
-                      }
-                    ],
-                    staticClass: "searchBox"
-                  },
-                  [
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("创建日期")]),
-                        _vm._v(" "),
-                        _c("el-date-picker", {
-                          attrs: {
-                            type: "daterange",
-                            "range-separator": "至",
-                            "start-placeholder": "开始日期",
-                            "end-placeholeder": "结束日期"
-                          },
-                          model: {
-                            value: _vm.searchBox.created_at,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "created_at", $$v)
-                            },
-                            expression: "searchBox.created_at"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("提交日期")]),
-                        _vm._v(" "),
-                        _c("el-date-picker", {
-                          attrs: {
-                            type: "daterange",
-                            "range-separator": "至",
-                            "start-placeholder": "开始日期",
-                            "end-placeholeder": "结束日期"
-                          },
-                          model: {
-                            value: _vm.searchBox.submited_at,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "submited_at", $$v)
-                            },
-                            expression: "searchBox.submited_at"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      [
-                        _c("label", [_vm._v("审核日期")]),
-                        _vm._v(" "),
-                        _c("el-date-picker", {
-                          attrs: {
-                            type: "daterange",
-                            "range-separator": "至",
-                            "start-placeholder": "开始日期",
-                            "end-placeholeder": "结束日期"
-                          },
-                          model: {
-                            value: _vm.searchBox.audited_at,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchBox, "audited_at", $$v)
-                            },
-                            expression: "searchBox.audited_at"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm.filterBox
-                  ? _c(
-                      "div",
-                      { staticStyle: { "text-align": "right" } },
-                      [
-                        _c(
-                          "el-button",
-                          {
-                            attrs: { type: "primary" },
-                            on: { click: _vm.searchData }
-                          },
-                          [_vm._v("筛选")]
-                        ),
-                        _vm._v(" "),
-                        _c("el-button", { on: { click: _vm.resets } }, [
-                          _vm._v("重置")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticStyle: { display: "inline" },
-                            on: { click: _vm.toggleShow }
-                          },
-                          [
-                            _c("el-button", { attrs: { type: "text" } }, [
-                              _vm._v("收起")
-                            ]),
-                            _vm._v(" "),
-                            _c("i", {
-                              staticClass: "el-icon-arrow-up",
-                              staticStyle: { color: "#409EFF" }
-                            })
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  : _vm._e()
+                    _c("el-button", { on: { click: _vm.resets } }, [
+                      _vm._v("重置")
+                    ])
+                  ],
+                  1
+                )
               ]),
               _vm._v(" "),
               _c(

@@ -15,7 +15,7 @@
           <label>买家姓名</label>
           <el-input v-model="searchBox.member_name" clearable class="half"></el-input>
         </span>
-        <span v-if="filterBox">
+        <span>
           <label>补件类别</label>
           <el-select v-model="searchBox.re_supplie_categories_id" clearable placeholder="请选择">
             <span v-for="list in resData['resupplieCategory']" :key="list.id">
@@ -23,16 +23,8 @@
             </span>
           </el-select>
         </span>
-        <span v-else>
-          <el-button type="primary" @click="searchData">筛选</el-button>
-          <el-button @click="resets">重置</el-button>
-          <span @click="toggleShow">
-            <el-button type="text">展开</el-button>
-            <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-          </span>
-        </span>
       </div>
-      <div class="searchBox" v-show="filterBox">
+      <div class="searchBox">
         <span>
           <label>省</label>
           <el-input v-model="searchBox.receiver_state" clearable class="half"></el-input>
@@ -53,14 +45,10 @@
             </span>
           </el-select>
         </span>
-        <div v-if="filterBox" style="text-align: right">
-          <el-button type="primary" @click="searchData">筛选</el-button>
-          <el-button @click="resets">重置</el-button>
-          <span @click="toggleShow" style="display: inline">
-            <el-button type="text">收起</el-button>
-            <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-          </span>
-        </div>
+      </div>
+      <div style="text-align: right">
+        <el-button type="primary" @click="searchData">筛选</el-button>
+        <el-button @click="resets">重置</el-button>
       </div>
     </div>
     <!--审核信息tab-->
@@ -338,64 +326,64 @@
   </div>
 </template>
 <script>
-import { regionDataPlus } from 'element-china-area-data';
+import { regionDataPlus } from "element-china-area-data";
 export default {
   data() {
     return {
       newOpt: [
         {
-          cnt: '驳回',
-          icon: 'bf-reject',
+          cnt: "驳回",
+          icon: "bf-reject",
           ent: this.reject,
           nClick: false
         },
         {
-          cnt: '审核',
-          icon: 'bf-audit',
+          cnt: "审核",
+          icon: "bf-audit",
           ent: this.audit
         },
         {
-          cnt: '退审',
-          icon: 'bf-auditfaild',
+          cnt: "退审",
+          icon: "bf-auditfaild",
           ent: this.auditfaild,
           nClick: true
         },
         {
-          cnt: '结算',
-          icon: 'bf-finSettle',
+          cnt: "结算",
+          icon: "bf-finSettle",
           ent: this.settle,
           nClick: true
         },
         {
-          cnt: '导出',
-          icon: 'bf-out',
+          cnt: "导出",
+          icon: "bf-out",
           ent: this.test
         },
         {
-          cnt: '打印',
-          icon: 'bf-printer',
+          cnt: "打印",
+          icon: "bf-printer",
           ent: this.test
         },
         {
-          cnt: '刷新',
-          icon: 'bf-refresh',
+          cnt: "刷新",
+          icon: "bf-refresh",
           ent: this.refresh
         }
       ],
       checkboxInit: false,
       currentPage: true,
       filterBox: false,
-      activeName: '0',
-      bottomActiveName: '0',
+      activeName: "0",
+      bottomActiveName: "0",
       searchBox: {
-        resupply_order_no: '',
-        member_nick: '',
-        member_name: '',
-        re_supplie_categories_id: '',
-        receiver_state: '',
-        receiver_city: '',
-        receiver_district: '',
-        suppliers_id:'',
+        resupply_order_no: "",
+        member_nick: "",
+        member_name: "",
+        re_supplie_categories_id: "",
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        suppliers_id: ""
       },
       //分页
       pagination: {
@@ -408,210 +396,210 @@ export default {
       reviewData: [],
       reviewHead: [
         {
-          label: '补件单号',
-          width: '220',
-          prop: 'resupply_order_no',
-          type: 'text'
+          label: "补件单号",
+          width: "220",
+          prop: "resupply_order_no",
+          type: "text"
         },
         {
-          label: '系统单号',
-          width: '220',
-          prop: 'system_order_no',
-          type: 'text'
+          label: "系统单号",
+          width: "220",
+          prop: "system_order_no",
+          type: "text"
         },
         {
-          label: '包件类型',
-          width: '140',
-          prop: 'packageType',
-          inProp: 'name',
-          type: 'text'
+          label: "包件类型",
+          width: "140",
+          prop: "packageType",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '补件类别',
-          width: '140',
-          prop: 'resupplieCategory',
-          inProp: 'name',
-          type: 'text'
+          label: "补件类别",
+          width: "140",
+          prop: "resupplieCategory",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '补件金额',
-          width: '130',
-          prop: 'resupply_money',
-          type: 'number'
+          label: "补件金额",
+          width: "130",
+          prop: "resupply_money",
+          type: "number"
         },
         {
-          label: '补件原因',
-          width: '300',
-          prop: 'resupply_reason',
-          type: 'text'
+          label: "补件原因",
+          width: "300",
+          prop: "resupply_reason",
+          type: "text"
         },
         {
-          label: '补件责任方',
-          width: '160',
-          prop: 'resupplieResponsible',
-          inProp: 'name',
-          type: 'text'
+          label: "补件责任方",
+          width: "160",
+          prop: "resupplieResponsible",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '店铺昵称',
-          width: '130',
-          prop: 'shop_nick',
-          type: 'text'
+          label: "店铺昵称",
+          width: "130",
+          prop: "shop_nick",
+          type: "text"
         },
         {
-          label: '买家昵称',
-          width: '130',
-          prop: 'member_nick',
-          type: 'text'
+          label: "买家昵称",
+          width: "130",
+          prop: "member_nick",
+          type: "text"
         },
         {
-          label: '店铺分组',
-          width: '140',
-          prop: 'shop_group',
-          type: 'text'
+          label: "店铺分组",
+          width: "140",
+          prop: "shop_group",
+          type: "text"
         },
         {
-          label: '买家姓名',
-          width: '130',
-          prop: 'member_name',
-          type: 'text'
+          label: "买家姓名",
+          width: "130",
+          prop: "member_name",
+          type: "text"
         },
         {
-          label: '买家电话',
-          width: '160',
-          prop: 'member_telephone',
-          type: 'number'
+          label: "买家电话",
+          width: "160",
+          prop: "member_telephone",
+          type: "number"
         },
         {
-          label: '物流公司',
-          width: '140',
-          prop: 'logistics',
-          inProp: 'name',
-          type: 'text'
+          label: "物流公司",
+          width: "140",
+          prop: "logistics",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '预计运费',
-          width: '130',
-          prop: 'estimated_fee',
-          type: 'number'
+          label: "预计运费",
+          width: "130",
+          prop: "estimated_fee",
+          type: "number"
         },
         {
-          label: '物流赔偿费用',
-          width: '130',
-          prop: 'compensate_fee',
-          type: 'number'
+          label: "物流赔偿费用",
+          width: "130",
+          prop: "compensate_fee",
+          type: "number"
         },
         {
-          label: '运费类型',
-          width: '140',
-          prop: 'freightType',
-          inProp: 'name',
-          type: 'text'
+          label: "运费类型",
+          width: "140",
+          prop: "freightType",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '供应商',
-          width: '130',
-          prop: 'supplier',
-          inProp: 'name',
-          type: 'text'
+          label: "供应商",
+          width: "130",
+          prop: "supplier",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '配送方式',
-          width: '160',
-          prop: 'distributionMethod',
-          inProp: 'name',
-          type: 'text'
+          label: "配送方式",
+          width: "160",
+          prop: "distributionMethod",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '送装费',
-          width: '130',
-          prop: 'load_fee',
-          type: 'number'
+          label: "送装费",
+          width: "130",
+          prop: "load_fee",
+          type: "number"
         },
         {
-          label: '承诺时间',
-          width: '140',
-          prop: 'promise_time',
-          type: 'text'
+          label: "承诺时间",
+          width: "140",
+          prop: "promise_time",
+          type: "text"
         },
         {
-          label: '补款方式',
-          width: '140',
-          prop: 'refundMethod',
-          inProp: 'name',
-          type: 'text'
+          label: "补款方式",
+          width: "140",
+          prop: "refundMethod",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '补款账号',
-          width: '160',
-          prop: 'refund_account',
-          type: 'text'
+          label: "补款账号",
+          width: "160",
+          prop: "refund_account",
+          type: "text"
         },
         {
-          label: '开户银行',
-          width: '140',
-          prop: 'bank',
-          type: 'text'
+          label: "开户银行",
+          width: "140",
+          prop: "bank",
+          type: "text"
         },
         {
-          label: '省',
-          width: '120',
-          prop: 'receiver_state',
-          type: 'text'
+          label: "省",
+          width: "120",
+          prop: "receiver_state",
+          type: "text"
         },
         {
-          label: '市',
-          width: '120',
-          prop: 'receiver_city',
-          type: 'text'
+          label: "市",
+          width: "120",
+          prop: "receiver_city",
+          type: "text"
         },
         {
-          label: '区',
-          width: '120',
-          prop: 'receiver_district',
-          type: 'text'
+          label: "区",
+          width: "120",
+          prop: "receiver_district",
+          type: "text"
         },
         {
-          label: '创建人',
-          width: '140',
-          prop: 'creator',
-          type: 'text'
+          label: "创建人",
+          width: "140",
+          prop: "creator",
+          type: "text"
         },
         {
-          label: '创建时间',
-          width: '140',
-          prop: 'created_at',
-          type: 'text'
+          label: "创建时间",
+          width: "140",
+          prop: "created_at",
+          type: "text"
         },
         {
-          label: '备注',
-          width: '300',
-          prop: 'remark',
-          type: 'text'
+          label: "备注",
+          width: "300",
+          prop: "remark",
+          type: "text"
         },
         {
-          label: '标记名称',
-          width: '140',
-          prop: 'mark_name',
-          type: 'text'
+          label: "标记名称",
+          width: "140",
+          prop: "mark_name",
+          type: "text"
         },
         {
-          label: '标记人',
-          width: '140',
-          prop: 'marker',
-          type: 'text'
+          label: "标记人",
+          width: "140",
+          prop: "marker",
+          type: "text"
         },
         {
-          label: '标记时间',
-          width: '140',
-          prop: 'mark_time',
-          type: 'text'
+          label: "标记时间",
+          width: "140",
+          prop: "mark_time",
+          type: "text"
         },
         {
-          label: '补件申请的标记名称',
-          width: '200',
-          prop: 'application_mark_name',
-          type: 'text'
+          label: "补件申请的标记名称",
+          width: "200",
+          prop: "application_mark_name",
+          type: "text"
         }
       ],
       //补件信息
@@ -624,217 +612,217 @@ export default {
       resupplyInfoHead: [
         //补件产品
         {
-          label: '商品编码',
-          width: '160',
-          prop: 'product',
-          inProp: 'commodity_code',
-          type: 'text'
+          label: "商品编码",
+          width: "160",
+          prop: "product",
+          inProp: "commodity_code",
+          type: "text"
         },
         {
-          label: '子件编码',
-          width: '160',
-          prop: 'productComponent',
-          inProp: 'component_code',
-          type: 'text'
+          label: "子件编码",
+          width: "160",
+          prop: "productComponent",
+          inProp: "component_code",
+          type: "text"
         },
         {
-          label: '商品简称',
-          width: '160',
-          prop: 'product',
-          inProp: 'short_name',
-          type: 'text'
+          label: "商品简称",
+          width: "160",
+          prop: "product",
+          inProp: "short_name",
+          type: "text"
         },
         {
-          label: '规格名称',
-          width: '160',
-          prop: 'productComponent',
-          inProp: 'spec',
-          type: 'text'
+          label: "规格名称",
+          width: "160",
+          prop: "productComponent",
+          inProp: "spec",
+          type: "text"
         },
         {
-          label: '数量',
-          width: '120',
-          prop: 'quantity',
-          type: 'number'
+          label: "数量",
+          width: "120",
+          prop: "quantity",
+          type: "number"
         },
         {
-          label: '商品成本',
-          width: '120',
-          prop: 'productComponent',
-          inProp: 'cost',
-          type: 'number'
+          label: "商品成本",
+          width: "120",
+          prop: "productComponent",
+          inProp: "cost",
+          type: "number"
         },
         {
-          label: '实际售价',
-          width: '120',
-          prop: 'actual_price',
-          type: 'number'
+          label: "实际售价",
+          width: "120",
+          prop: "actual_price",
+          type: "number"
         },
         {
-          label: '备注',
-          width: '200',
-          prop: 'remark',
-          type: 'text'
+          label: "备注",
+          width: "200",
+          prop: "remark",
+          type: "text"
         }
       ],
       problemProHead: [
         //问题产品
         {
-          label: '商品编码',
-          width: '160',
-          prop: 'commodity_code',
-          type: 'text'
+          label: "商品编码",
+          width: "160",
+          prop: "commodity_code",
+          type: "text"
         },
         {
-          label: '子件编码',
-          width: '160',
-          prop: 'spec_code',
-          type: 'text'
+          label: "子件编码",
+          width: "160",
+          prop: "spec_code",
+          type: "text"
         },
         {
-          label: '商品简称',
-          width: '160',
-          prop: 'short_name',
-          type: 'text'
+          label: "商品简称",
+          width: "160",
+          prop: "short_name",
+          type: "text"
         },
         {
-          label: '规格名称',
-          width: '160',
-          prop: 'spec',
-          type: 'text'
+          label: "规格名称",
+          width: "160",
+          prop: "spec",
+          type: "text"
         },
         {
-          label: '供应商',
-          width: '130',
-          prop: 'supplier',
-          inProp: 'name',
-          type: 'text'
+          label: "供应商",
+          width: "130",
+          prop: "supplier",
+          inProp: "name",
+          type: "text"
         },
         {
-          label: '问题描述',
-          width: '200',
-          prop: 'problem_description',
-          type: 'text'
+          label: "问题描述",
+          width: "200",
+          prop: "problem_description",
+          type: "text"
         }
       ],
       imageHead: [
         //图片信息
         {
-          prop: 'img_url',
-          tyep: 'img'
+          prop: "img_url",
+          tyep: "img"
         }
       ],
       rejectReasonHead: [
         //驳回原因
         {
-          label: '驳回人',
-          width: '130',
-          prop: 'rejecter',
-          type: 'text'
+          label: "驳回人",
+          width: "130",
+          prop: "rejecter",
+          type: "text"
         },
         {
-          label: '驳回时间',
-          width: '130',
-          prop: 'created_at',
-          type: 'text'
+          label: "驳回时间",
+          width: "130",
+          prop: "created_at",
+          type: "text"
         },
         {
-          label: '驳回原因',
-          width: '200',
-          prop: 'reason',
-          type: 'text'
+          label: "驳回原因",
+          width: "200",
+          prop: "reason",
+          type: "text"
         }
       ],
       operationHead: [
         //操作记录
         {
-          label: '用户',
-          width: '130',
-          prop: 'user_name',
-          type: 'text'
+          label: "用户",
+          width: "130",
+          prop: "user_name",
+          type: "text"
         },
         {
-          label: '操作',
-          width: '160',
-          prop: 'operation',
-          type: 'text'
+          label: "操作",
+          width: "160",
+          prop: "operation",
+          type: "text"
         },
         {
-          label: '操作描述',
-          width: '200',
-          prop: 'description',
-          type: 'text'
+          label: "操作描述",
+          width: "200",
+          prop: "description",
+          type: "text"
         },
         {
-          label: '创建时间',
-          width: '130',
-          prop: 'created_at',
-          type: 'text'
+          label: "创建时间",
+          width: "130",
+          prop: "created_at",
+          type: "text"
         }
       ],
       progressHead: [
         //补件进度
         {
-          label: '进度描述',
-          width: '200',
-          prop: 'description',
-          type: 'text'
+          label: "进度描述",
+          width: "200",
+          prop: "description",
+          type: "text"
         },
         {
-          label: '创建人',
-          width: '150',
-          prop: 'creator',
-          type: 'text'
+          label: "创建人",
+          width: "150",
+          prop: "creator",
+          type: "text"
         },
         {
-          label: '创建时间',
-          width: '200',
-          prop: 'created_at',
-          type: 'text'
+          label: "创建时间",
+          width: "200",
+          prop: "created_at",
+          type: "text"
         }
       ],
       orderRow: {},
-      currentId: '',
+      currentId: "",
       delArr: [],
       //驳回
       rejectMask: false,
       rejectForm: {
-        rejecter: '',
-        reason: ''
+        rejecter: "",
+        reason: ""
       },
       rejectHead: [
         {
-          label: '驳回人',
-          holder: '请输入驳回人',
-          prop: 'rejecter',
-          type: 'text'
+          label: "驳回人",
+          holder: "请输入驳回人",
+          prop: "rejecter",
+          type: "text"
         },
         {
-          label: '驳回原因',
-          holder: '请输入驳回原因',
-          prop: 'reason',
-          type: 'textarea'
+          label: "驳回原因",
+          holder: "请输入驳回原因",
+          prop: "reason",
+          type: "textarea"
         }
       ],
       //补件进度
       addProgressMask: false,
       addProgressForm: {
-        creator: '',
-        description: ''
+        creator: "",
+        description: ""
       },
       addProgressHead: [
         {
-          label: '创建人',
-          holder: '请输入创建人',
-          prop: 'creator',
-          type: 'text',
+          label: "创建人",
+          holder: "请输入创建人",
+          prop: "creator",
+          type: "text",
           updateChgAble: true
         },
         {
-          label: '进度描述',
-          holder: '请输入进度描述',
-          prop: 'description',
-          type: 'textarea'
+          label: "进度描述",
+          holder: "请输入进度描述",
+          prop: "description",
+          type: "textarea"
         }
       ],
       updateProgressMask: false,
@@ -874,7 +862,7 @@ export default {
       let index = this.activeName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.resupplieReview + '/searchBigPackage', {
+          this.$fetch(this.urls.resupplieReview + "/searchBigPackage", {
             resupply_order_no: this.searchBox.resupply_order_no,
             member_nick: this.searchBox.member_nick,
             member_name: this.searchBox.member_name,
@@ -882,36 +870,36 @@ export default {
             receiver_state: this.searchBox.receiver_state,
             receiver_city: this.searchBox.receiver_city,
             receiver_district: this.searchBox.receiver_district,
-            suppliers_id:this.searchBox.suppliers_id,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress'
+              "packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
           }).then(
             res => {
               this.orderLoading = false;
               this.reviewData = res.data;
               let pg = res.meta.pagination;
-              this.$store.dispatch('currentPage', pg.current_page);
-              this.$store.commit('PER_PAGE', pg.per_page);
-              this.$store.commit('PAGE_TOTAL', pg.total);
-              this.$store.dispatch('suppliers', '/suppliers');
-              this.$store.dispatch('resupplieCategory', '/resupplieCategory');
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("resupplieCategory", "/resupplieCategory");
               this.resupplyInfoData = res.data[0]
-                ? res.data[0]['resupplieOrderItem'].data
+                ? res.data[0]["resupplieOrderItem"].data
                 : [];
               this.problemProData = res.data[0]
-                ? res.data[0]['resupplieProblemProduct'].data
+                ? res.data[0]["resupplieProblemProduct"].data
                 : [];
               this.imageData = res.data[0]
-                ? res.data[0]['resupplieImage'].data
+                ? res.data[0]["resupplieImage"].data
                 : [];
               this.rejectReasonData = res.data[0]
-                ? res.data[0]['resupplieRejectReason'].data
+                ? res.data[0]["resupplieRejectReason"].data
                 : [];
               this.operationData = res.data[0]
-                ? res.data[0]['resupplieOperationRecord'].data
+                ? res.data[0]["resupplieOperationRecord"].data
                 : [];
               this.progressData = res.data[0]
-                ? res.data[0]['resupplieProgress'].data
+                ? res.data[0]["resupplieProgress"].data
                 : [];
             },
             err => {
@@ -921,13 +909,13 @@ export default {
                 for (let i in arr) {
                   arr1.push(arr[i]);
                 }
-                this.$message.error(arr1.join(','));
+                this.$message.error(arr1.join(","));
               }
             }
           );
           break;
         case 1:
-          this.$fetch(this.urls.resupplieReview + '/searchPartPackage', {
+          this.$fetch(this.urls.resupplieReview + "/searchPartPackage", {
             resupply_order_no: this.searchBox.resupply_order_no,
             member_nick: this.searchBox.member_nick,
             member_name: this.searchBox.member_name,
@@ -935,34 +923,34 @@ export default {
             receiver_state: this.searchBox.receiver_state,
             receiver_city: this.searchBox.receiver_city,
             receiver_district: this.searchBox.receiver_district,
-            suppliers_id:this.searchBox.suppliers_id,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress'
+              "packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
           }).then(
             res => {
               this.orderLoading = false;
               this.reviewData = res.data;
               let pg = res.meta.pagination;
-              this.$store.dispatch('currentPage', pg.current_page);
-              this.$store.commit('PER_PAGE', pg.per_page);
-              this.$store.commit('PAGE_TOTAL', pg.total);
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
               this.resupplyInfoData = res.data[0]
-                ? res.data[0]['resupplieOrderItem'].data
+                ? res.data[0]["resupplieOrderItem"].data
                 : [];
               this.problemProData = res.data[0]
-                ? res.data[0]['resupplieProblemProduct'].data
+                ? res.data[0]["resupplieProblemProduct"].data
                 : [];
               this.imageData = res.data[0]
-                ? res.data[0]['resupplieImage'].data
+                ? res.data[0]["resupplieImage"].data
                 : [];
               this.rejectReasonData = res.data[0]
-                ? res.data[0]['resupplieRejectReason'].data
+                ? res.data[0]["resupplieRejectReason"].data
                 : [];
               this.operationData = res.data[0]
-                ? res.data[0]['resupplieOperationRecord'].data
+                ? res.data[0]["resupplieOperationRecord"].data
                 : [];
               this.progressData = res.data[0]
-                ? res.data[0]['resupplieProgress'].data
+                ? res.data[0]["resupplieProgress"].data
                 : [];
             },
             err => {
@@ -972,13 +960,13 @@ export default {
                 for (let i in arr) {
                   arr1.push(arr[i]);
                 }
-                this.$message.error(arr1.join(','));
+                this.$message.error(arr1.join(","));
               }
             }
           );
           break;
         case 2:
-          this.$fetch(this.urls.resupplieReview + '/searchMoneyPackage', {
+          this.$fetch(this.urls.resupplieReview + "/searchMoneyPackage", {
             resupply_order_no: this.searchBox.resupply_order_no,
             member_nick: this.searchBox.member_nick,
             member_name: this.searchBox.member_name,
@@ -986,34 +974,34 @@ export default {
             receiver_state: this.searchBox.receiver_state,
             receiver_city: this.searchBox.receiver_city,
             receiver_district: this.searchBox.receiver_district,
-            suppliers_id:this.searchBox.suppliers_id,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress'
+              "packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
           }).then(
             res => {
               this.orderLoading = false;
               this.reviewData = res.data;
               let pg = res.meta.pagination;
-              this.$store.dispatch('currentPage', pg.current_page);
-              this.$store.commit('PER_PAGE', pg.per_page);
-              this.$store.commit('PAGE_TOTAL', pg.total);
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
               this.resupplyInfoData = res.data[0]
-                ? res.data[0]['resupplieOrderItem'].data
+                ? res.data[0]["resupplieOrderItem"].data
                 : [];
               this.problemProData = res.data[0]
-                ? res.data[0]['resupplieProblemProduct'].data
+                ? res.data[0]["resupplieProblemProduct"].data
                 : [];
               this.imageData = res.data[0]
-                ? res.data[0]['resupplieImage'].data
+                ? res.data[0]["resupplieImage"].data
                 : [];
               this.rejectReasonData = res.data[0]
-                ? res.data[0]['resupplieRejectReason'].data
+                ? res.data[0]["resupplieRejectReason"].data
                 : [];
               this.operationData = res.data[0]
-                ? res.data[0]['resupplieOperationRecord'].data
+                ? res.data[0]["resupplieOperationRecord"].data
                 : [];
               this.progressData = res.data[0]
-                ? res.data[0]['resupplieProgress'].data
+                ? res.data[0]["resupplieProgress"].data
                 : [];
             },
             err => {
@@ -1023,13 +1011,13 @@ export default {
                 for (let i in arr) {
                   arr1.push(arr[i]);
                 }
-                this.$message.error(arr1.join(','));
+                this.$message.error(arr1.join(","));
               }
             }
           );
           break;
         case 3:
-          this.$fetch(this.urls.resupplieReview + '/searchReview', {
+          this.$fetch(this.urls.resupplieReview + "/searchReview", {
             resupply_order_no: this.searchBox.resupply_order_no,
             member_nick: this.searchBox.member_nick,
             member_name: this.searchBox.member_name,
@@ -1037,34 +1025,34 @@ export default {
             receiver_state: this.searchBox.receiver_state,
             receiver_city: this.searchBox.receiver_city,
             receiver_district: this.searchBox.receiver_district,
-            suppliers_id:this.searchBox.suppliers_id,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress'
+              "packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
           }).then(
             res => {
               this.orderLoading = false;
               this.reviewData = res.data;
               let pg = res.meta.pagination;
-              this.$store.dispatch('currentPage', pg.current_page);
-              this.$store.commit('PER_PAGE', pg.per_page);
-              this.$store.commit('PAGE_TOTAL', pg.total);
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
               this.resupplyInfoData = res.data[0]
-                ? res.data[0]['resupplieOrderItem'].data
+                ? res.data[0]["resupplieOrderItem"].data
                 : [];
               this.problemProData = res.data[0]
-                ? res.data[0]['resupplieProblemProduct'].data
+                ? res.data[0]["resupplieProblemProduct"].data
                 : [];
               this.imageData = res.data[0]
-                ? res.data[0]['resupplieImage'].data
+                ? res.data[0]["resupplieImage"].data
                 : [];
               this.rejectReasonData = res.data[0]
-                ? res.data[0]['resupplieRejectReason'].data
+                ? res.data[0]["resupplieRejectReason"].data
                 : [];
               this.operationData = res.data[0]
-                ? res.data[0]['resupplieOperationRecord'].data
+                ? res.data[0]["resupplieOperationRecord"].data
                 : [];
               this.progressData = res.data[0]
-                ? res.data[0]['resupplieProgress'].data
+                ? res.data[0]["resupplieProgress"].data
                 : [];
             },
             err => {
@@ -1074,13 +1062,13 @@ export default {
                 for (let i in arr) {
                   arr1.push(arr[i]);
                 }
-                this.$message.error(arr1.join(','));
+                this.$message.error(arr1.join(","));
               }
             }
           );
           break;
         case 4:
-          this.$fetch(this.urls.resupplieReview + '/searchSettle', {
+          this.$fetch(this.urls.resupplieReview + "/searchSettle", {
             resupply_order_no: this.searchBox.resupply_order_no,
             member_nick: this.searchBox.member_nick,
             member_name: this.searchBox.member_name,
@@ -1088,34 +1076,34 @@ export default {
             receiver_state: this.searchBox.receiver_state,
             receiver_city: this.searchBox.receiver_city,
             receiver_district: this.searchBox.receiver_district,
-            suppliers_id:this.searchBox.suppliers_id,
+            suppliers_id: this.searchBox.suppliers_id,
             include:
-              'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress'
+              "packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
           }).then(
             res => {
               this.orderLoading = false;
               this.reviewData = res.data;
               let pg = res.meta.pagination;
-              this.$store.dispatch('currentPage', pg.current_page);
-              this.$store.commit('PER_PAGE', pg.per_page);
-              this.$store.commit('PAGE_TOTAL', pg.total);
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
               this.resupplyInfoData = res.data[0]
-                ? res.data[0]['resupplieOrderItem'].data
+                ? res.data[0]["resupplieOrderItem"].data
                 : [];
               this.problemProData = res.data[0]
-                ? res.data[0]['resupplieProblemProduct'].data
+                ? res.data[0]["resupplieProblemProduct"].data
                 : [];
               this.imageData = res.data[0]
-                ? res.data[0]['resupplieImage'].data
+                ? res.data[0]["resupplieImage"].data
                 : [];
               this.rejectReasonData = res.data[0]
-                ? res.data[0]['resupplieRejectReason'].data
+                ? res.data[0]["resupplieRejectReason"].data
                 : [];
               this.operationData = res.data[0]
-                ? res.data[0]['resupplieOperationRecord'].data
+                ? res.data[0]["resupplieOperationRecord"].data
                 : [];
               this.progressData = res.data[0]
-                ? res.data[0]['resupplieProgress'].data
+                ? res.data[0]["resupplieProgress"].data
                 : [];
             },
             err => {
@@ -1125,45 +1113,45 @@ export default {
                 for (let i in arr) {
                   arr1.push(arr[i]);
                 }
-                this.$message.error(arr1.join(','));
+                this.$message.error(arr1.join(","));
               }
             }
           );
           break;
       }
     },
-    searchData(){
-      this.orderLoading=true;
+    searchData() {
+      this.orderLoading = true;
       this.fetchData();
     },
     /*审核信息tab */
     handleTabsClick() {
       switch (this.activeName) {
-        case '0':
+        case "0":
           this.newOpt[0].nClick = false;
           this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = true;
           break;
-        case '1':
+        case "1":
           this.newOpt[0].nClick = false;
           this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = true;
           break;
-        case '2':
+        case "2":
           this.newOpt[0].nClick = false;
           this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = true;
           break;
-        case '3':
+        case "3":
           this.newOpt[0].nClick = true;
           this.newOpt[1].nClick = true;
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = false;
           break;
-        case '4':
+        case "4":
           this.newOpt[0].nClick = true;
           this.newOpt[1].nClick = true;
           this.newOpt[2].nClick = true;
@@ -1179,18 +1167,18 @@ export default {
       val.forEach(selectedItem => {
         arr.push(selectedItem.id);
       });
-      this.delArr = arr.join(',');
-      this.currentId = val.length > 0 ? val[val.length - 1].id : '';
+      this.delArr = arr.join(",");
+      this.currentId = val.length > 0 ? val[val.length - 1].id : "";
     },
     orderRClick(row) {
       //点击上方tab的某行底部tab更新
       this.orderId = row.id;
-      this.resupplyInfoData = row['resupplieOrderItem'].data;
-      this.problemProData = row['resupplieProblemProduct'].data;
-      this.imageData = row['resupplieImage'].data;
-      this.rejectReasonData = row['resupplieRejectReason'].data;
-      this.operationData = row['resupplieOperationRecord'].data;
-      this.progressData = row['resupplieProgress'].data;
+      this.resupplyInfoData = row["resupplieOrderItem"].data;
+      this.problemProData = row["resupplieProblemProduct"].data;
+      this.imageData = row["resupplieImage"].data;
+      this.rejectReasonData = row["resupplieRejectReason"].data;
+      this.operationData = row["resupplieOperationRecord"].data;
+      this.progressData = row["resupplieProgress"].data;
       this.orderRow = row;
     },
     //驳回
@@ -1209,13 +1197,13 @@ export default {
       };
       this.$post(this.urls.resupplieRejectReason, rejectData).then(
         () => {
-          this.$put(this.urls.resupplieApplication + '/' + id + '/reject').then(
+          this.$put(this.urls.resupplieApplication + "/" + id + "/reject").then(
             () => {
               this.rejectMask = false;
               this.refresh();
               this.$message({
-                message: '驳回成功',
-                type: 'success'
+                message: "驳回成功",
+                type: "success"
               });
             },
             err => {
@@ -1225,7 +1213,7 @@ export default {
                 for (let i in arr) {
                   arr1.push(arr[i]);
                 }
-                let str = arr1.join(',');
+                let str = arr1.join(",");
                 this.$message.error(str);
               }
             }
@@ -1238,7 +1226,7 @@ export default {
             for (let i in arr) {
               arr1.push(arr[i]);
             }
-            let str = arr1.join(',');
+            let str = arr1.join(",");
             this.$message.error(str);
           }
         }
@@ -1266,8 +1254,8 @@ export default {
           this.addProgressMask = false;
           this.refresh();
           this.$message({
-            message: '添加进度成功',
-            type: 'success'
+            message: "添加进度成功",
+            type: "success"
           });
         },
         err => {
@@ -1277,7 +1265,7 @@ export default {
             for (let i in arr) {
               arr1.push(arr[i]);
             }
-            let str = arr1.join(',');
+            let str = arr1.join(",");
             this.$message.error(str);
           }
         }
@@ -1286,14 +1274,14 @@ export default {
     addProgressCancel() {
       this.addProgressMask = false;
       this.$message({
-        message: '取消添加',
-        type: 'info'
+        message: "取消添加",
+        type: "info"
       });
     },
     updateProgress() {
       this.updateProgressMask = true;
       let id = this.currentId;
-      this.$fetch(this.urls.resupplieProgress + '/' + id).then(
+      this.$fetch(this.urls.resupplieProgress + "/" + id).then(
         res => {
           this.updateProgressFrom = {
             description: res.description,
@@ -1309,13 +1297,13 @@ export default {
         description: this.updateProgressFrom.description,
         creator: this.updateProgressFrom.creator
       };
-      this.$patch(this.urls.resupplieProgress + '/' + id, data).then(
+      this.$patch(this.urls.resupplieProgress + "/" + id, data).then(
         () => {
           this.updateProgressMask = false;
           this.refresh();
           this.$message({
-            message: '修改成功',
-            type: 'success'
+            message: "修改成功",
+            type: "success"
           });
         },
         err => {
@@ -1325,7 +1313,7 @@ export default {
             for (let i in arr) {
               arr1.push(arr[i]);
             }
-            let str = arr1.join(',');
+            let str = arr1.join(",");
             this.$message.error(str);
           }
         }
@@ -1334,28 +1322,28 @@ export default {
     updateProgressCancel() {
       this.updateMask = false;
       this.$message({
-        message: '取消修改',
-        type: 'info'
+        message: "取消修改",
+        type: "info"
       });
     },
     delProgress() {
       if (this.delArr.length === 0) {
         this.$message({
-          message: '没有选中数据',
-          type: 'warning'
+          message: "没有选中数据",
+          type: "warning"
         });
       } else {
-        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
         })
           .then(() => {
             this.$del(this.urls.resupplieProgress, { ids: this.delArr }).then(
               () => {
                 this.$message({
-                  message: '删除成功',
-                  type: 'success'
+                  message: "删除成功",
+                  type: "success"
                 });
                 this.refresh();
               },
@@ -1366,7 +1354,7 @@ export default {
                   for (let i in arr) {
                     arr1.push(arr[i]);
                   }
-                  let str = arr1.join(',');
+                  let str = arr1.join(",");
                   this.$message.error(str);
                 }
               }
@@ -1374,8 +1362,8 @@ export default {
           })
           .catch(() => {
             this.$message({
-              type: 'info',
-              message: '已取消删除'
+              type: "info",
+              message: "已取消删除"
             });
           });
       }
@@ -1383,12 +1371,12 @@ export default {
     //审核
     audit() {
       let id = this.currentId ? this.currentId : this.orderRow.id;
-      this.$put(this.urls.resupplieReview + '/' + id + '/audit').then(
+      this.$put(this.urls.resupplieReview + "/" + id + "/audit").then(
         () => {
           this.refresh();
           this.$message({
-            message: '审核成功',
-            type: 'success'
+            message: "审核成功",
+            type: "success"
           });
         },
         err => {
@@ -1398,7 +1386,7 @@ export default {
             for (let i in arr) {
               arr1.push(arr[i]);
             }
-            let str = arr1.join(',');
+            let str = arr1.join(",");
             this.$message.error(str);
           }
         }
@@ -1407,12 +1395,12 @@ export default {
     //退审
     auditfaild() {
       let id = this.currentId ? this.currentId : this.orderRow.id;
-      this.$put(this.urls.resupplieReview + '/' + id + '/auditfaild').then(
+      this.$put(this.urls.resupplieReview + "/" + id + "/auditfaild").then(
         () => {
           this.refresh();
           this.$message({
-            message: '退审成功',
-            type: 'success'
+            message: "退审成功",
+            type: "success"
           });
         },
         err => {
@@ -1422,7 +1410,7 @@ export default {
             for (let i in arr) {
               arr1.push(arr[i]);
             }
-            let str = arr1.join(',');
+            let str = arr1.join(",");
             this.$message.error(str);
           }
         }
@@ -1431,12 +1419,12 @@ export default {
     //结算
     settle() {
       let id = this.currentId ? this.currentId : this.orderRow.id;
-      this.$put(this.urls.resupplieReview + '/' + id + '/settle').then(
+      this.$put(this.urls.resupplieReview + "/" + id + "/settle").then(
         () => {
           this.refresh();
           this.$message({
-            message: '结算成功',
-            type: 'success'
+            message: "结算成功",
+            type: "success"
           });
         },
         err => {
@@ -1446,7 +1434,7 @@ export default {
             for (let i in arr) {
               arr1.push(arr[i]);
             }
-            let str = arr1.join(',');
+            let str = arr1.join(",");
             this.$message.error(str);
           }
         }
@@ -1454,9 +1442,9 @@ export default {
     },
     //分页
     handlePagChg(page) {
-      this.$fetch(this.urls.resupplieReview + '?page=' + page, {
+      this.$fetch(this.urls.resupplieReview + "?page=" + page, {
         include:
-          'packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress'
+          "packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
       }).then(res => {
         this.orderData = res.data;
       });
@@ -1471,12 +1459,12 @@ export default {
   mounted() {
     this.fetchData();
     this.$store.state.opt.opts = this.newOpt;
-    this.$store.commit('change', this.newOpt);
+    this.$store.commit("change", this.newOpt);
     const that = this;
     $(window).resize(() => {
       return (() => {
         that.$store.state.opt.opts = that.newOpt;
-        that.$store.commit('change', that.newOpt);
+        that.$store.commit("change", that.newOpt);
       })();
     });
   }

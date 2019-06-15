@@ -1,14 +1,14 @@
 webpackJsonp([72],{
 
-/***/ 1013:
+/***/ 1010:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1205)
+var __vue_script__ = __webpack_require__(1202)
 /* template */
-var __vue_template__ = __webpack_require__(1206)
+var __vue_template__ = __webpack_require__(1203)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,52 +48,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 1205:
+/***/ 1202:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -892,7 +853,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         prop: "is_solve",
         type: "checkbox"
       }]
-    }, _defineProperty(_ref, "submitData", []), _defineProperty(_ref, "unsubmitData", []), _defineProperty(_ref, "submitLoading", true), _defineProperty(_ref, "unsubmitLoading", true), _defineProperty(_ref, "addScheduleMask", false), _defineProperty(_ref, "updateScheduleMask", false), _defineProperty(_ref, "scheduleFrom", {}), _defineProperty(_ref, "addId", ""), _defineProperty(_ref, "bottomActiveName", "0"), _defineProperty(_ref, "showBtmDel", false), _defineProperty(_ref, "scheduleData", []), _defineProperty(_ref, "defProData", []), _defineProperty(_ref, "refundData", []), _defineProperty(_ref, "returnData", []), _defineProperty(_ref, "patchData", []), _defineProperty(_ref, "scheduleRuleFormVal", {
+    }, _defineProperty(_ref, "submitData", []), _defineProperty(_ref, "unsubmitData", []), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "submitLoading", true), _defineProperty(_ref, "unsubmitLoading", true), _defineProperty(_ref, "addScheduleMask", false), _defineProperty(_ref, "updateScheduleMask", false), _defineProperty(_ref, "scheduleFrom", {}), _defineProperty(_ref, "addId", ""), _defineProperty(_ref, "bottomActiveName", "0"), _defineProperty(_ref, "showBtmDel", false), _defineProperty(_ref, "scheduleData", []), _defineProperty(_ref, "defProData", []), _defineProperty(_ref, "refundData", []), _defineProperty(_ref, "returnData", []), _defineProperty(_ref, "patchData", []), _defineProperty(_ref, "scheduleRuleFormVal", {
       schedule_description: "",
       subscribed_at: ""
     }), _defineProperty(_ref, "updateScheduleRuleFormVal", {
@@ -1826,7 +1787,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ 1206:
+/***/ 1203:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1928,333 +1889,247 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.filterBox
-            ? _c(
-                "span",
-                [
-                  _c("label", [_vm._v("业务员")]),
-                  _vm._v(" "),
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { clearable: "", placeholder: "请选择" },
-                      model: {
-                        value: _vm.searchBox.user_id,
-                        callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "user_id", $$v)
-                        },
-                        expression: "searchBox.user_id"
-                      }
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("业务员")]),
+              _vm._v(" "),
+              _c(
+                "el-select",
+                {
+                  attrs: { clearable: "", placeholder: "请选择" },
+                  model: {
+                    value: _vm.searchBox.user_id,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "user_id", $$v)
                     },
-                    _vm._l(_vm.addSubData["user"], function(list) {
-                      return _c(
-                        "span",
-                        { key: list.id },
-                        [
-                          _c("el-option", {
-                            attrs: { label: list["username"], value: list.id }
-                          })
-                        ],
-                        1
-                      )
-                    }),
-                    0
-                  )
-                ],
-                1
-              )
-            : _c(
-                "span",
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: { click: _vm.handleQuery }
-                    },
-                    [_vm._v("筛选")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-button",
-                    {
-                      staticStyle: { "margin-right": "5px" },
-                      on: { click: _vm.resets }
-                    },
-                    [_vm._v("重置")]
-                  ),
-                  _vm._v(" "),
-                  _c(
+                    expression: "searchBox.user_id"
+                  }
+                },
+                _vm._l(_vm.addSubData["user"], function(list) {
+                  return _c(
                     "span",
-                    { on: { click: _vm.toggleShow } },
+                    { key: list.id },
                     [
-                      _c("el-button", { attrs: { type: "text" } }, [
-                        _vm._v("展开")
-                      ]),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "el-icon-arrow-down",
-                        staticStyle: { color: "#409EFF" }
+                      _c("el-option", {
+                        attrs: { label: list["username"], value: list.id }
                       })
                     ],
                     1
                   )
-                ],
-                1
+                }),
+                0
               )
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
-        _vm.filterBox
-          ? _c("div", { staticClass: "searchBox" }, [
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("售后状态")]),
-                  _vm._v(" "),
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { clearable: "", placeholder: "请选择" },
-                      nativeOn: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.handleQuery($event)
-                        }
-                      },
-                      model: {
-                        value: _vm.searchBox.after_sale_status,
-                        callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "after_sale_status", $$v)
-                        },
-                        expression: "searchBox.after_sale_status"
-                      }
-                    },
-                    _vm._l(_vm.resData.aftersalestate, function(item) {
-                      return _c("el-option", {
-                        key: item.value,
-                        attrs: { label: item.name, value: item.id }
-                      })
-                    }),
-                    1
-                  )
-                ],
-                1
-              ),
+        _c("div", { staticClass: "searchBox" }, [
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("售后状态")]),
               _vm._v(" "),
               _c(
-                "span",
-                [
-                  _c("label", [_vm._v("售后类型")]),
-                  _vm._v(" "),
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { clearable: "", placeholder: "请选择" },
-                      nativeOn: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.handleQuery($event)
-                        }
-                      },
-                      model: {
-                        value: _vm.searchBox.after_sale_type,
-                        callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "after_sale_type", $$v)
-                        },
-                        expression: "searchBox.after_sale_type"
+                "el-select",
+                {
+                  attrs: { clearable: "", placeholder: "请选择" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
                       }
+                      return _vm.handleQuery($event)
+                    }
+                  },
+                  model: {
+                    value: _vm.searchBox.after_sale_status,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "after_sale_status", $$v)
                     },
-                    _vm._l(_vm.searchBox.afterSaleSort, function(item) {
-                      return _c("el-option", {
-                        key: item.value,
-                        attrs: { label: item.label, value: item.value }
-                      })
-                    }),
-                    1
-                  )
-                ],
+                    expression: "searchBox.after_sale_status"
+                  }
+                },
+                _vm._l(_vm.resData.aftersalestate, function(item) {
+                  return _c("el-option", {
+                    key: item.value,
+                    attrs: { label: item.name, value: item.id }
+                  })
+                }),
                 1
               )
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.filterBox
-          ? _c("div", { staticClass: "searchBox" }, [
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("联系方式")]),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { clearable: "" },
-                    nativeOn: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.handleQuery($event)
-                      }
-                    },
-                    model: {
-                      value: _vm.searchBox.order_phone,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "order_phone", $$v)
-                      },
-                      expression: "searchBox.order_phone"
-                    }
-                  })
-                ],
-                1
-              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("售后类型")]),
               _vm._v(" "),
               _c(
-                "span",
-                [
-                  _c("label", [_vm._v("创建时间")]),
-                  _vm._v(" "),
-                  _c("el-date-picker", {
-                    attrs: {
-                      type: "daterange",
-                      "range-separator": "至",
-                      "start-placeholder": "开始日期",
-                      "end-placeholder": "结束日期"
-                    },
-                    model: {
-                      value: _vm.searchBox.created_at,
-                      callback: function($$v) {
-                        _vm.$set(_vm.searchBox, "created_at", $$v)
-                      },
-                      expression: "searchBox.created_at"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                [
-                  _c("label", [_vm._v("售后分类")]),
-                  _vm._v(" "),
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { clearable: "", placeholder: "请选择" },
-                      nativeOn: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.handleQuery($event)
-                        }
-                      },
-                      model: {
-                        value: _vm.searchBox.after_sale_group,
-                        callback: function($$v) {
-                          _vm.$set(_vm.searchBox, "after_sale_group", $$v)
-                        },
-                        expression: "searchBox.after_sale_group"
+                "el-select",
+                {
+                  attrs: { clearable: "", placeholder: "请选择" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
                       }
+                      return _vm.handleQuery($event)
+                    }
+                  },
+                  model: {
+                    value: _vm.searchBox.after_sale_type,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "after_sale_type", $$v)
                     },
-                    _vm._l(_vm.resData.aftersaletype, function(item) {
-                      return _c("el-option", {
-                        key: item.value,
-                        attrs: { label: item.name, value: item.id }
-                      })
-                    }),
-                    1
-                  )
-                ],
+                    expression: "searchBox.after_sale_type"
+                  }
+                },
+                _vm._l(_vm.searchBox.afterSaleSort, function(item) {
+                  return _c("el-option", {
+                    key: item.value,
+                    attrs: { label: item.label, value: item.value }
+                  })
+                }),
                 1
               )
-            ])
-          : _vm._e(),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("联系方式")]),
+              _vm._v(" "),
+              _c("el-input", {
+                attrs: { clearable: "" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.handleQuery($event)
+                  }
+                },
+                model: {
+                  value: _vm.searchBox.order_phone,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "order_phone", $$v)
+                  },
+                  expression: "searchBox.order_phone"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("创建时间")]),
+              _vm._v(" "),
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
+                model: {
+                  value: _vm.searchBox.created_at,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchBox, "created_at", $$v)
+                  },
+                  expression: "searchBox.created_at"
+                }
+              })
+            ],
+            1
+          )
+        ]),
         _vm._v(" "),
-        _vm.filterBox
-          ? _c(
-              "div",
-              { staticClass: "opt", staticStyle: { "text-align": "right" } },
-              [
-                _c(
-                  "el-button",
-                  {
-                    attrs: { type: "primary" },
-                    on: { click: _vm.handleQuery }
+        _c("div", { staticClass: "searchBox" }, [
+          _c(
+            "span",
+            [
+              _c("label", [_vm._v("售后分类")]),
+              _vm._v(" "),
+              _c(
+                "el-select",
+                {
+                  attrs: { clearable: "", placeholder: "请选择" },
+                  nativeOn: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.handleQuery($event)
+                    }
                   },
-                  [_vm._v("筛选")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "el-button",
-                  {
-                    staticStyle: { "margin-right": "5px" },
-                    on: { click: _vm.resets }
-                  },
-                  [_vm._v("重置")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticStyle: { display: "inline" },
-                    on: { click: _vm.toggleShow }
-                  },
-                  [
-                    _c("el-button", { attrs: { type: "text" } }, [
-                      _vm._v("收起")
-                    ]),
-                    _vm._v(" "),
-                    _c("i", {
-                      staticClass: "el-icon-arrow-up",
-                      staticStyle: { color: "#409EFF" }
-                    })
-                  ],
-                  1
-                )
-              ],
-              1
+                  model: {
+                    value: _vm.searchBox.after_sale_group,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchBox, "after_sale_group", $$v)
+                    },
+                    expression: "searchBox.after_sale_group"
+                  }
+                },
+                _vm._l(_vm.resData.aftersaletype, function(item) {
+                  return _c("el-option", {
+                    key: item.value,
+                    attrs: { label: item.name, value: item.id }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("span"),
+          _vm._v(" "),
+          _c("span"),
+          _vm._v(" "),
+          _c("span")
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticStyle: { "text-align": "right" } },
+          [
+            _c(
+              "el-button",
+              { attrs: { type: "primary" }, on: { click: _vm.handleQuery } },
+              [_vm._v("筛选")]
+            ),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              {
+                staticStyle: { "margin-right": "5px" },
+                on: { click: _vm.resets }
+              },
+              [_vm._v("重置")]
             )
-          : _vm._e()
+          ],
+          1
+        )
       ]),
       _vm._v(" "),
       _c(

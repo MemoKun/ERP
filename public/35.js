@@ -1,10 +1,12 @@
 webpackJsonp([35],{
 
-/***/ 1073:
+/***/ 1070:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -1291,7 +1293,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts + '/getAuditDepartment', {
+          this.$fetch(this.urls.customerservicedepts + "/getAuditDepartment", {
             order_status: 5,
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
@@ -1326,7 +1328,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 1:
-          this.$fetch(this.urls.customerservicedepts + '/getAuditDepartment', {
+          this.$fetch(this.urls.customerservicedepts + "/getAuditDepartment", {
             order_status: 10,
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
@@ -1720,7 +1722,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1074:
+/***/ 1071:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -2092,10 +2094,8 @@ var render = function() {
                       })
                     ],
                     1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "searchBox" }, [
+                  ),
+                  _vm._v(" "),
                   _c(
                     "span",
                     [
@@ -2118,8 +2118,10 @@ var render = function() {
                       })
                     ],
                     1
-                  ),
-                  _vm._v(" "),
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "searchBox" }, [
                   _c(
                     "span",
                     [
@@ -2175,7 +2177,11 @@ var render = function() {
                       })
                     ],
                     1
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("span"),
+                  _vm._v(" "),
+                  _c("span")
                 ]),
                 _vm._v(" "),
                 _c(
@@ -4013,15 +4019,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 953:
+/***/ 950:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1073)
+var __vue_script__ = __webpack_require__(1070)
 /* template */
-var __vue_template__ = __webpack_require__(1074)
+var __vue_template__ = __webpack_require__(1071)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

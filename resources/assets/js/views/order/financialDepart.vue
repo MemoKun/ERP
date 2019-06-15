@@ -46,8 +46,8 @@
               <label>卖家备注</label>
               <el-input v-model="searchBox.seller_remark" clearable></el-input>
             </span>
-            </div>
-            <div class="searchBox">
+          </div>
+          <div class="searchBox">
             <span>
               <label>物流公司</label>
               <el-select v-model="searchBox.logistics_id" clearable placeholder="请选择">
@@ -84,13 +84,13 @@
               <el-date-picker v-model="searchBox.promise_ship_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
-            </div>
-            <div class="searchBox">
             <span>
               <label>业务日期</label>
               <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
+          </div>
+          <div class="searchBox">
             <span>
               <label>客审日期</label>
               <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -102,6 +102,8 @@
               <label>至</label>
               <el-input type="number" v-model="searchBox.order_transMEnd" clearable></el-input>
             </span>
+            <span></span>
+            <span></span>
           </div>
           <div style="text-align: right">
             <el-button type="primary" @click="searchData">筛选</el-button>
@@ -515,7 +517,7 @@ export default {
           nClick: true
         }
       ],
-      addSubData:[],
+      addSubData: [],
       filterBox: false,
       searchBox: {
         member_nick: "",
@@ -528,11 +530,14 @@ export default {
         seller_remark: "",
         logistics_id: "",
         seller_flag: "",
-        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: [
+          "2018-12-31T16:00:00.000Z",
+          "2099-12-31T16:00:00.000Z"
+        ],
         created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         order_transMStart: "",
-        order_order_transMEndmark: "",
+        order_order_transMEndmark: ""
       },
       /*获取数据*/
       activeName: "0",
@@ -1257,7 +1262,7 @@ export default {
             label: "备注",
             prop: "remark",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1274,7 +1279,7 @@ export default {
             label: "驳回原因",
             prop: "reason",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1291,7 +1296,7 @@ export default {
             label: "优惠金额",
             prop: "preferential_cashback",
             type: "text"
-          },
+          }
         ],
         [
           {
@@ -1534,16 +1539,16 @@ export default {
         case 0:
           this.$fetch(this.urls.financialdepts, {
             order_status: 40,
-            member_nick:this.searchBox.member_nick,
-            system_order_no:this.searchBox.system_order_no,
-            receiver_name:this.searchBox.receiver_name,
-            receiver_phone:this.searchBox.receiver_phone,
-            receiver_address:this.searchBox.receiver_address,
-            shops_id:this.searchBox.shops_id,
-            business_personnel_id:this.searchBox.business_personnel_id,
-            seller_remark:this.searchBox.seller_remark,
-            logistics_id:this.searchBox.logistics_id,
-            seller_flag:this.searchBox.seller_flag,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -1573,16 +1578,16 @@ export default {
         case 1:
           this.$fetch(this.urls.financialdepts, {
             order_status: 50,
-            member_nick:this.searchBox.member_nick,
-            system_order_no:this.searchBox.system_order_no,
-            receiver_name:this.searchBox.receiver_name,
-            receiver_phone:this.searchBox.receiver_phone,
-            receiver_address:this.searchBox.receiver_address,
-            shops_id:this.searchBox.shops_id,
-            business_personnel_id:this.searchBox.business_personnel_id,
-            seller_remark:this.searchBox.seller_remark,
-            logistics_id:this.searchBox.logistics_id,
-            seller_flag:this.searchBox.seller_flag,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -1941,12 +1946,12 @@ export default {
       );
     },
     //筛选
-    searchData(){
-      this.loading=true;
+    searchData() {
+      this.loading = true;
       this.fetchData();
     },
     resets() {
-      this.searchBox =  {
+      this.searchBox = {
         member_nick: "",
         system_order_no: "",
         receiver_name: "",
@@ -1957,11 +1962,14 @@ export default {
         seller_remark: "",
         logistics_id: "",
         seller_flag: "",
-        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: [
+          "2018-12-31T16:00:00.000Z",
+          "2099-12-31T16:00:00.000Z"
+        ],
         created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         order_transMStart: "",
-        order_order_transMEndmark: "",
+        order_order_transMEndmark: ""
       };
     }
   },

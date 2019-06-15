@@ -260,7 +260,7 @@ export default {
       searchBox: {
         cancel_purchases_no: "",
         creator: "",
-        submitter: "",
+        submitter: ""
       },
       /*获取*/
       topActiveName: "0",
@@ -499,9 +499,9 @@ export default {
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.cancelpurchases, {
             is_submit: 0,
-            cancel_purchases_no:this.searchBox.cancel_purchases_no,
-            creator:this.searchBox.creator,
-            submitter:this.searchBox.submitter,
+            cancel_purchases_no: this.searchBox.cancel_purchases_no,
+            creator: this.searchBox.creator,
+            submitter: this.searchBox.submitter,
             include:
               "purchase,cancelPurchaseDetails.cancelPurchase,cancelPurchaseDetails.purchaseDetail,cancelPurchaseDetails.purchaseDetail.productComponent.product"
           }).then(
@@ -556,9 +556,9 @@ export default {
           this.newOpt[3].nClick = true;
           this.$fetch(this.urls.cancelpurchases, {
             is_submit: 1,
-            cancel_purchases_no:this.searchBox.cancel_purchases_no,
-            creator:this.searchBox.creator,
-            submitter:this.searchBox.submitter,
+            cancel_purchases_no: this.searchBox.cancel_purchases_no,
+            creator: this.searchBox.creator,
+            submitter: this.searchBox.submitter,
             include:
               "purchase,cancelPurchaseDetails.cancelPurchase,cancelPurchaseDetails.purchaseDetail,cancelPurchaseDetails.purchaseDetail.productComponent.product"
           }).then(
@@ -1118,15 +1118,15 @@ export default {
       this.fetchData();
     },
     //筛选
-    searchData(){
-      this.loading=true;
+    searchData() {
+      this.loading = true;
       this.fetchData();
     },
     resets() {
-      this.searchBox =  {
+      this.searchBox = {
         cancel_purchases_no: "",
         creator: "",
-        submitter: "",
+        submitter: ""
       };
     }
   },

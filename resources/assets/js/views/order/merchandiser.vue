@@ -46,8 +46,8 @@
               <label>卖家备注</label>
               <el-input v-model="searchBox.seller_remark" clearable></el-input>
             </span>
-            </div>
-            <div class="searchBox">
+          </div>
+          <div class="searchBox">
             <span>
               <label>物流公司</label>
               <el-select v-model="searchBox.logistics_id" clearable placeholder="请选择">
@@ -84,13 +84,13 @@
               <el-date-picker v-model="searchBox.promise_ship_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
-            </div>
-            <div class="searchBox">
             <span>
               <label>业务日期</label>
               <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
+          </div>
+          <div class="searchBox">
             <span>
               <label>客审日期</label>
               <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -102,6 +102,8 @@
               <label>至</label>
               <el-input type="number" v-model="searchBox.order_transMEnd" clearable></el-input>
             </span>
+            <span></span>
+            <span></span>
           </div>
           <div style="text-align: right">
             <el-button type="primary" @click="searchData">筛选</el-button>
@@ -838,11 +840,14 @@ export default {
         seller_remark: "",
         logistics_id: "",
         seller_flag: "",
-        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: [
+          "2018-12-31T16:00:00.000Z",
+          "2099-12-31T16:00:00.000Z"
+        ],
         created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         order_transMStart: "",
-        order_order_transMEndmark: "",
+        order_order_transMEndmark: ""
       },
       threeParts: true,
       activeName: "0",
@@ -2106,7 +2111,7 @@ export default {
       expenseRIndex: "",
       addSubData: [],
       apiData: {},
-      mergerIds:[],
+      mergerIds: [],
       splitMask: false,
       splitVal: [],
       splitHead: [
@@ -2135,7 +2140,7 @@ export default {
       splitRowIndex: "",
       splitRow: {},
       mergerIds: [],
-      operationData:[],
+      operationData: []
     };
   },
   computed: {
@@ -2224,16 +2229,16 @@ export default {
         case 0:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 30,
-            member_nick:this.searchBox.member_nick,
-            system_order_no:this.searchBox.system_order_no,
-            receiver_name:this.searchBox.receiver_name,
-            receiver_phone:this.searchBox.receiver_phone,
-            receiver_address:this.searchBox.receiver_address,
-            shops_id:this.searchBox.shops_id,
-            business_personnel_id:this.searchBox.business_personnel_id,
-            seller_remark:this.searchBox.seller_remark,
-            logistics_id:this.searchBox.logistics_id,
-            seller_flag:this.searchBox.seller_flag,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -2259,16 +2264,16 @@ export default {
         case 1:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 60,
-            member_nick:this.searchBox.member_nick,
-            system_order_no:this.searchBox.system_order_no,
-            receiver_name:this.searchBox.receiver_name,
-            receiver_phone:this.searchBox.receiver_phone,
-            receiver_address:this.searchBox.receiver_address,
-            shops_id:this.searchBox.shops_id,
-            business_personnel_id:this.searchBox.business_personnel_id,
-            seller_remark:this.searchBox.seller_remark,
-            logistics_id:this.searchBox.logistics_id,
-            seller_flag:this.searchBox.seller_flag,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -2288,16 +2293,16 @@ export default {
         case 2:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 70,
-            member_nick:this.searchBox.member_nick,
-            system_order_no:this.searchBox.system_order_no,
-            receiver_name:this.searchBox.receiver_name,
-            receiver_phone:this.searchBox.receiver_phone,
-            receiver_address:this.searchBox.receiver_address,
-            shops_id:this.searchBox.shops_id,
-            business_personnel_id:this.searchBox.business_personnel_id,
-            seller_remark:this.searchBox.seller_remark,
-            logistics_id:this.searchBox.logistics_id,
-            seller_flag:this.searchBox.seller_flag,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -2317,16 +2322,16 @@ export default {
         case 3:
           this.$fetch(this.urls.merchandiserdepts, {
             order_status: 80,
-            member_nick:this.searchBox.member_nick,
-            system_order_no:this.searchBox.system_order_no,
-            receiver_name:this.searchBox.receiver_name,
-            receiver_phone:this.searchBox.receiver_phone,
-            receiver_address:this.searchBox.receiver_address,
-            shops_id:this.searchBox.shops_id,
-            business_personnel_id:this.searchBox.business_personnel_id,
-            seller_remark:this.searchBox.seller_remark,
-            logistics_id:this.searchBox.logistics_id,
-            seller_flag:this.searchBox.seller_flag,
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include:
               "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
@@ -2444,7 +2449,6 @@ export default {
         this.newOpt[11].nClick = false;
         this.newOpt[12].nClick = false;
       }
-      
     },
     orderDbClick(row) {
       this.activeName = "1";
@@ -3129,7 +3133,7 @@ export default {
     addProRowClick(row) {
       this.proRIndex = `index${row.index}`;
     },
-    stockOutCancel(){
+    stockOutCancel() {
       this.stockOutMask = false;
     },
     cancelSplit() {
@@ -3176,12 +3180,12 @@ export default {
       }
     },
     //筛选
-    searchData(){
-      this.loading=true;
+    searchData() {
+      this.loading = true;
       this.fetchData();
     },
     resets() {
-      this.searchBox =  {
+      this.searchBox = {
         member_nick: "",
         system_order_no: "",
         receiver_name: "",
@@ -3192,11 +3196,14 @@ export default {
         seller_remark: "",
         logistics_id: "",
         seller_flag: "",
-        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: [
+          "2018-12-31T16:00:00.000Z",
+          "2099-12-31T16:00:00.000Z"
+        ],
         created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         order_transMStart: "",
-        order_order_transMEndmark: "",
+        order_order_transMEndmark: ""
       };
     }
   },

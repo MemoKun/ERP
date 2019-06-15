@@ -22,7 +22,7 @@
             </span>
             <span>
               <label>供应商</label>
-              <el-select v-model="searchBox.supplier_id" clearable  placeholder="请选择">
+              <el-select v-model="searchBox.supplier_id" clearable placeholder="请选择">
                 <el-option v-for="item in searchBox.orderCompany" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -39,13 +39,12 @@
               <el-date-picker v-model="searchBox.stockout_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
-
             <span>
               <label>客审日期</label>
               <el-date-picker v-model="searchBox.audit_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </span>
-
+            <span></span>
           </div>
           <div style="text-align: right">
             <el-button type="primary">筛选</el-button>
@@ -611,7 +610,7 @@ export default {
           width: "150",
           prop: "customer_service_remark",
           type: "text"
-        },
+        }
       ],
       distributionFeeHead: [
         //订单表头标签
@@ -1871,10 +1870,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_logistics_checked: 0,
-              system_order_no:this.searchBox.system_order_no,
-              receiver_name:this.searchBox.receiver_name,
-              logistics_id:this.searchBox.logistics_id,
-              shops_id:this.searchBox.shops_id,
+              system_order_no: this.searchBox.system_order_no,
+              receiver_name: this.searchBox.receiver_name,
+              logistics_id: this.searchBox.logistics_id,
+              shops_id: this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
             }
@@ -1912,10 +1911,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_logistics_checked: 1,
-              system_order_no:this.searchBox.system_order_no,
-              receiver_name:this.searchBox.receiver_name,
-              logistics_id:this.searchBox.logistics_id,
-              shops_id:this.searchBox.shops_id,
+              system_order_no: this.searchBox.system_order_no,
+              receiver_name: this.searchBox.receiver_name,
+              logistics_id: this.searchBox.logistics_id,
+              shops_id: this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
             }
@@ -1945,11 +1944,11 @@ export default {
           this.$fetch(
             this.urls.customerservicedepts + "/searchordersettlement",
             {
-              is_goods_checked:0,
-              system_order_no:this.searchBox.system_order_no,
-              receiver_name:this.searchBox.receiver_name,
-              logistics_id:this.searchBox.logistics_id,
-              shops_id:this.searchBox.shops_id,
+              is_goods_checked: 0,
+              system_order_no: this.searchBox.system_order_no,
+              receiver_name: this.searchBox.receiver_name,
+              logistics_id: this.searchBox.logistics_id,
+              shops_id: this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
             }
@@ -1979,11 +1978,11 @@ export default {
           this.$fetch(
             this.urls.customerservicedepts + "/searchordersettlement",
             {
-              is_goods_checked:1,
-              system_order_no:this.searchBox.system_order_no,
-              receiver_name:this.searchBox.receiver_name,
-              logistics_id:this.searchBox.logistics_id,
-              shops_id:this.searchBox.shops_id,
+              is_goods_checked: 1,
+              system_order_no: this.searchBox.system_order_no,
+              receiver_name: this.searchBox.receiver_name,
+              logistics_id: this.searchBox.logistics_id,
+              shops_id: this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
             }
@@ -2014,10 +2013,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_distribution_checked: 0,
-              system_order_no:this.searchBox.system_order_no,
-              receiver_name:this.searchBox.receiver_name,
-              logistics_id:this.searchBox.logistics_id,
-              shops_id:this.searchBox.shops_id,
+              system_order_no: this.searchBox.system_order_no,
+              receiver_name: this.searchBox.receiver_name,
+              logistics_id: this.searchBox.logistics_id,
+              shops_id: this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
             }
@@ -2048,10 +2047,10 @@ export default {
             this.urls.customerservicedepts + "/searchordersettlement",
             {
               is_distribution_checked: 1,
-              system_order_no:this.searchBox.system_order_no,
-              receiver_name:this.searchBox.receiver_name,
-              logistics_id:this.searchBox.logistics_id,
-              shops_id:this.searchBox.shops_id,
+              system_order_no: this.searchBox.system_order_no,
+              receiver_name: this.searchBox.receiver_name,
+              logistics_id: this.searchBox.logistics_id,
+              shops_id: this.searchBox.shops_id,
               include:
                 "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
             }
@@ -2086,48 +2085,48 @@ export default {
     orderListRClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
-      if(this.leftTopActiveName==0){
+      if (this.leftTopActiveName == 0) {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
         this.newOpt[2].nClick = false;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = false;
-      };
-      if(this.leftTopActiveName==1){
+      }
+      if (this.leftTopActiveName == 1) {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = true;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = false;
-      };
-      if(this.leftTopActiveName==2){
+      }
+      if (this.leftTopActiveName == 2) {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
         this.newOpt[2].nClick = false;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = false;
-      };
-      if(this.leftTopActiveName==3){
+      }
+      if (this.leftTopActiveName == 3) {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = true;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = false;
-      };
-      if(this.leftTopActiveName==4){
+      }
+      if (this.leftTopActiveName == 4) {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = true;
         this.newOpt[2].nClick = false;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = false;
-      };
-      if(this.leftTopActiveName==5){
+      }
+      if (this.leftTopActiveName == 5) {
         this.newOpt[0].nClick = false;
         this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = true;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = false;
-      };
+      }
     },
     orderDbClick(row) {
       this.activeName = "1";
@@ -3341,8 +3340,8 @@ export default {
       }
     },
     //筛选
-    searchData(){
-      this.loading=true;
+    searchData() {
+      this.loading = true;
       this.fetchData();
     },
     resets() {
@@ -3368,9 +3367,9 @@ export default {
     //   })()
     // })
     this.fetchData();
-    this.$store.dispatch('logistics', '/logistics');
-    this.$store.dispatch('suppliers', '/suppliers');
-    this.$store.dispatch('shops', '/shops');
+    this.$store.dispatch("logistics", "/logistics");
+    this.$store.dispatch("suppliers", "/suppliers");
+    this.$store.dispatch("shops", "/shops");
     this.$store.dispatch("setOpt", this.newOpt);
     let that = this;
     $(window).resize(() => {

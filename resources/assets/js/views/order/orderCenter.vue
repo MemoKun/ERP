@@ -62,7 +62,7 @@
             <span class="transMoney">
               <label>交易金额</label>
               <el-input type="number" v-model="searchBox.order_transMStart" clearable></el-input>
-              至
+              <label>至</label>
               <el-input type="number" v-model="searchBox.order_transMEnd" clearable></el-input>
             </span>
             <span>

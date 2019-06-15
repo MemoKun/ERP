@@ -24,10 +24,13 @@
           <label>收货地址</label>
           <el-input v-model="searchBox.receiver_address" clearable></el-input>
         </span>
-        <div style="text-align: right">
-          <el-button type="primary" @click="searchData">筛选</el-button>
-          <el-button @click="resets">重置</el-button>
-        </div>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div style="text-align: right">
+        <el-button type="primary" @click="searchData">筛选</el-button>
+        <el-button @click="resets">重置</el-button>
       </div>
     </div>
 

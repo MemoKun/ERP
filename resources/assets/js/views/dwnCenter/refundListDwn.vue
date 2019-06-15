@@ -20,6 +20,7 @@
               <label>买家昵称</label>
               <el-input v-model="searchBox.buyer_nickname" clearable></el-input>
             </span>
+            <span></span>
           </div>
         </div>
       </el-tab-pane>

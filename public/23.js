@@ -1,10 +1,13 @@
 webpackJsonp([23],{
 
-/***/ 1083:
+/***/ 1080:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -1686,8 +1689,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     this.fetchData();
-    this.$store.dispatch('warehouses', '/warehouses');
-    this.$store.dispatch('suppliers', '/suppliers');
+    this.$store.dispatch("warehouses", "/warehouses");
+    this.$store.dispatch("suppliers", "/suppliers");
     this.$store.dispatch("stockintypes", "/stockintypes");
     this.$store.dispatch("setOpt", this.newOpt);
     var that = this;
@@ -1699,7 +1702,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1084:
+/***/ 1081:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1806,10 +1809,8 @@ var render = function() {
             )
           ],
           1
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "searchBox" }, [
+        ),
+        _vm._v(" "),
         _c(
           "span",
           [
@@ -1846,8 +1847,10 @@ var render = function() {
             )
           ],
           1
-        ),
-        _vm._v(" "),
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "searchBox" }, [
         _c(
           "span",
           [
@@ -1886,21 +1889,27 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticStyle: { "text-align": "right" } },
-          [
-            _c(
-              "el-button",
-              { attrs: { type: "primary" }, on: { click: _vm.searchData } },
-              [_vm._v("筛选")]
-            ),
-            _vm._v(" "),
-            _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
-          ],
-          1
-        )
+        _c("span"),
+        _vm._v(" "),
+        _c("span"),
+        _vm._v(" "),
+        _c("span")
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticStyle: { "text-align": "right" } },
+        [
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.searchData } },
+            [_vm._v("筛选")]
+          ),
+          _vm._v(" "),
+          _c("el-button", { on: { click: _vm.resets } }, [_vm._v("重置")])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -3261,15 +3270,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 958:
+/***/ 955:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1083)
+var __vue_script__ = __webpack_require__(1080)
 /* template */
-var __vue_template__ = __webpack_require__(1084)
+var __vue_template__ = __webpack_require__(1081)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

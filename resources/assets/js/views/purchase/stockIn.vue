@@ -18,8 +18,6 @@
           </span>
         </el-select>
       </span>
-    </div>
-    <div class="searchBox">
       <span>
         <label>供应商</label>
         <el-select v-model="searchBox.suppliers_id" clearable placeholder="请选择">
@@ -28,6 +26,8 @@
           </span>
         </el-select>
       </span>
+    </div>
+    <div class="searchBox">
       <span>
         <label>入库类型</label>
         <el-select v-model="searchBox.stock_in_types_id" clearable placeholder="请选择">
@@ -36,12 +36,15 @@
           </span>
         </el-select>
       </span>
-      <div style="text-align: right">
-        <el-button type="primary" @click="searchData">筛选</el-button>
-        <el-button @click="resets">重置</el-button>
-      </div>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-    
+    <div style="text-align: right">
+      <el-button type="primary" @click="searchData">筛选</el-button>
+      <el-button @click="resets">重置</el-button>
+    </div>
+
     <!--入库-->
     <el-tabs v-model="topActiveName" @tab-click="clickTopTabs">
       <el-tab-pane label="新建" name="0">
@@ -344,7 +347,7 @@ export default {
         external_sn: "",
         warehouse_id: "",
         suppliers_id: "",
-        stock_in_types_id: "",
+        stock_in_types_id: ""
       },
       /*获取数据*/
       checkboxInit: false,
@@ -881,11 +884,11 @@ export default {
           this.newOpt[5].nClick = true;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 10,
-            stock_in_no:this.searchBox.stock_in_no,
-            external_sn:this.searchBox.external_sn,
-            warehouse_id:this.searchBox.warehouse_id,
-            suppliers_id:this.searchBox.suppliers_id,
-            stock_in_types_id:this.searchBox.stock_in_types_id,
+            stock_in_no: this.searchBox.stock_in_no,
+            external_sn: this.searchBox.external_sn,
+            warehouse_id: this.searchBox.warehouse_id,
+            suppliers_id: this.searchBox.suppliers_id,
+            stock_in_types_id: this.searchBox.stock_in_types_id,
             include:
               "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
@@ -947,11 +950,11 @@ export default {
           this.newOpt[5].nClick = false;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 20,
-            stock_in_no:this.searchBox.stock_in_no,
-            external_sn:this.searchBox.external_sn,
-            warehouse_id:this.searchBox.warehouse_id,
-            suppliers_id:this.searchBox.suppliers_id,
-            stock_in_types_id:this.searchBox.stock_in_types_id,
+            stock_in_no: this.searchBox.stock_in_no,
+            external_sn: this.searchBox.external_sn,
+            warehouse_id: this.searchBox.warehouse_id,
+            suppliers_id: this.searchBox.suppliers_id,
+            stock_in_types_id: this.searchBox.stock_in_types_id,
             include:
               "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
@@ -1011,11 +1014,11 @@ export default {
           this.newOpt[5].nClick = false;
           this.$fetch(this.urls.stockins, {
             stock_in_status: 30,
-            stock_in_no:this.searchBox.stock_in_no,
-            external_sn:this.searchBox.external_sn,
-            warehouse_id:this.searchBox.warehouse_id,
-            suppliers_id:this.searchBox.suppliers_id,
-            stock_in_types_id:this.searchBox.stock_in_types_id,
+            stock_in_no: this.searchBox.stock_in_no,
+            external_sn: this.searchBox.external_sn,
+            warehouse_id: this.searchBox.warehouse_id,
+            suppliers_id: this.searchBox.suppliers_id,
+            stock_in_types_id: this.searchBox.stock_in_types_id,
             include:
               "creator,submitter,auditor,warehouer,warehouse,stockInType,stockInDetails.productComponent.product,stockInDetails.purchaseDetail.purchaseList.purchase,stockInDetails.stockIn"
           }).then(
@@ -1767,12 +1770,12 @@ export default {
       }
     },
     //筛选
-    searchData(){
-      this.loading=true;
+    searchData() {
+      this.loading = true;
       this.fetchData();
     },
     resets() {
-      this.searchBox =  {
+      this.searchBox = {
         member_nick: "",
         system_order_no: "",
         receiver_name: "",
@@ -1783,19 +1786,22 @@ export default {
         seller_remark: "",
         logistics_id: "",
         seller_flag: "",
-        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: [
+          "2018-12-31T16:00:00.000Z",
+          "2099-12-31T16:00:00.000Z"
+        ],
         created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         order_transMStart: "",
-        order_order_transMEndmark: "",
+        order_order_transMEndmark: ""
       };
     }
     /*入库*/
   },
   mounted() {
     this.fetchData();
-    this.$store.dispatch('warehouses', '/warehouses');
-    this.$store.dispatch('suppliers', '/suppliers');
+    this.$store.dispatch("warehouses", "/warehouses");
+    this.$store.dispatch("suppliers", "/suppliers");
     this.$store.dispatch("stockintypes", "/stockintypes");
     this.$store.dispatch("setOpt", this.newOpt);
     const that = this;

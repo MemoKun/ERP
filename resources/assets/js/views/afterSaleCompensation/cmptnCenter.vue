@@ -16,20 +16,12 @@
               <label>买家电话</label>
               <el-input v-model="searchBox.customer_phone" clearable></el-input>
             </span>
-            <span v-if="filterBox">
+            <span>
               <label>买家地址</label>
               <el-input v-model="searchBox.customer_address" clearable></el-input>
             </span>
-            <span v-else>
-              <el-button type="primary" @click="searchData">筛选</el-button>
-              <el-button @click="resets">重置</el-button>
-              <span @click="toggleShow">
-                <el-button type="text">展开</el-button>
-                <i class="el-icon-arrow-down" style="color:#409EFF"></i>
-              </span>
-            </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>业务员</label>
               <el-input v-model="searchBox.order_stuff" clearable></el-input>
@@ -53,7 +45,7 @@
               <el-input v-model="searchBox.responsible_person" clearable></el-input>
             </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>发货物流</label>
               <el-select v-model="searchBox.logistics_company" clearable placeholder="请选择">
@@ -77,7 +69,7 @@
               <el-date-picker v-model="searchBox.negotiation_date" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
             </span>
           </div>
-          <div class="searchBox" v-show="filterBox">
+          <div class="searchBox">
             <span>
               <label>创建日期</label>
               <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
@@ -90,14 +82,11 @@
               <label>审核日期</label>
               <el-date-picker v-model="searchBox.audited_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholeder="结束日期"></el-date-picker>
             </span>
+            <span></span>
           </div>
-          <div v-if="filterBox" style="text-align: right">
+          <div style="text-align: right">
             <el-button type="primary" @click="searchData">筛选</el-button>
-            <el-button @click="resets" >重置</el-button>
-            <span @click="toggleShow" style="display: inline">
-              <el-button type="text">收起</el-button>
-              <i class="el-icon-arrow-up" style="color:#409EFF"></i>
-            </span>
+            <el-button @click="resets">重置</el-button>
           </div>
         </div>
 
@@ -424,30 +413,30 @@ export default {
         order_stuff: "",
         cmptn_direction: "",
         cmptn_directions: [
-          { label: "我们赔偿", value: '我们赔偿' },
-          { label: "赔偿我们", value: '赔偿我们' }
+          { label: "我们赔偿", value: "我们赔偿" },
+          { label: "赔偿我们", value: "赔偿我们" }
         ],
         responsible_party: "",
         responsible_partys: [
-          { label: "物流", value: '物流' },
-          { label: "工厂", value: '工厂' },
-          { label: "服务商", value: '服务商' },
-          { label: "客户", value: '客户' },
-          { label: "公司", value: '公司' },
-          { label: "仓库", value: '仓库' },
-          { label: "其他", value: '其他' }
+          { label: "物流", value: "物流" },
+          { label: "工厂", value: "工厂" },
+          { label: "服务商", value: "服务商" },
+          { label: "客户", value: "客户" },
+          { label: "公司", value: "公司" },
+          { label: "仓库", value: "仓库" },
+          { label: "其他", value: "其他" }
         ],
         responsible_person: "",
         logistics_company: "",
         logistics_companys: [
-          { label: "顺丰速运", value: '顺丰速运' },
-          { label: "韵达快递", value: '韵达快递' }
+          { label: "顺丰速运", value: "顺丰速运" },
+          { label: "韵达快递", value: "韵达快递" }
         ],
         logistics_tracking_number: "",
         cmptn_shop: "",
         cmptn_shops: [
-          { label: "Dreasylife家居旗舰店", value: 'Dreasylife家居旗舰店' },
-          { label: "思享家官方旗舰店", value: '思享家官方旗舰店' }
+          { label: "Dreasylife家居旗舰店", value: "Dreasylife家居旗舰店" },
+          { label: "思享家官方旗舰店", value: "思享家官方旗舰店" }
         ],
         negotiation_date: "",
         created_at: "",
@@ -2412,30 +2401,30 @@ export default {
         order_stuff: "",
         cmptn_direction: "",
         cmptn_directions: [
-          { label: "我们赔偿", value: '我们赔偿' },
-          { label: "赔偿我们", value: '赔偿我们' }
+          { label: "我们赔偿", value: "我们赔偿" },
+          { label: "赔偿我们", value: "赔偿我们" }
         ],
         responsible_party: "",
         responsible_partys: [
-          { label: "物流", value: '物流' },
-          { label: "工厂", value: '工厂' },
-          { label: "服务商", value: '服务商' },
-          { label: "客户", value: '客户' },
-          { label: "公司", value: '公司' },
-          { label: "仓库", value: '仓库' },
-          { label: "其他", value: '其他' }
+          { label: "物流", value: "物流" },
+          { label: "工厂", value: "工厂" },
+          { label: "服务商", value: "服务商" },
+          { label: "客户", value: "客户" },
+          { label: "公司", value: "公司" },
+          { label: "仓库", value: "仓库" },
+          { label: "其他", value: "其他" }
         ],
         responsible_person: "",
         logistics_company: "",
         logistics_companys: [
-          { label: "顺丰速运", value: '顺丰速运' },
-          { label: "韵达快递", value: '韵达快递' }
+          { label: "顺丰速运", value: "顺丰速运" },
+          { label: "韵达快递", value: "韵达快递" }
         ],
         logistics_tracking_number: "",
         cmptn_shop: "",
         cmptn_shops: [
-          { label: "Dreasylife家居旗舰店", value: 'Dreasylife家居旗舰店' },
-          { label: "思享家官方旗舰店", value: '思享家官方旗舰店' }
+          { label: "Dreasylife家居旗舰店", value: "Dreasylife家居旗舰店" },
+          { label: "思享家官方旗舰店", value: "思享家官方旗舰店" }
         ],
         negotiation_date: "",
         created_at: "",

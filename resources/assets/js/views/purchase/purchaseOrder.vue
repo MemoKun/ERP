@@ -15,12 +15,13 @@
           <label>收货地址</label>
           <el-input v-model.trim="searchBox.receiver_address" clearable @keyup.enter.native="handleQuery"></el-input>
         </span>
-      </div>
-      <div class="searchBox">
         <span>
           <label>创建时间</label>
           <el-date-picker v-model="searchBox.created_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
+      </div>
+      <div class="searchBox">
+
         <span>
           <label>承诺时间</label>
           <el-date-picker v-model="searchBox.promise_ship_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
@@ -29,8 +30,6 @@
           <label>到货时间</label>
           <el-date-picker v-model="searchBox.arrival_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
         </span>
-      </div>
-      <div class="searchBox">
         <span>
           <label>打印时间</label>
           <el-date-picker v-model="searchBox.print_at" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
@@ -43,12 +42,15 @@
             </span>
           </el-select>
         </span>
+      </div>
+      <div class="searchBox">
         <span>
           <label>买家昵称</label>
           <el-input v-model="searchBox.buyer_nick" clearable></el-input>
         </span>
-        <span>
-        </span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
       <div style="text-align: right">
         <el-button type="primary" @click="searchData">筛选</el-button>
@@ -593,18 +595,21 @@ export default {
           ent: this.refresh
         }
       ],
-      addSubData:[],
+      addSubData: [],
       filterBox: false,
       searchBox: {
         purchase_order_no: "",
         receiver: "",
         receiver_address: "",
         created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: [
+          "2018-12-31T16:00:00.000Z",
+          "2099-12-31T16:00:00.000Z"
+        ],
         arrival_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         print_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         user_id: "",
-        buyer_nick: "",
+        buyer_nick: ""
       },
       topActiveName: "0",
       tableHead: [
@@ -1572,10 +1577,10 @@ export default {
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.purchases, {
             purchase_status: "new",
-            receiver:this.searchBox.receiver,
-            receiver_address:this.searchBox.receiver_address,
-            user_id:this.searchBox.user_id,
-            buyer_nick:this.searchBox.buyer_nick,
+            receiver: this.searchBox.receiver,
+            receiver_address: this.searchBox.receiver_address,
+            user_id: this.searchBox.user_id,
+            buyer_nick: this.searchBox.buyer_nick,
             include:
               "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(
@@ -1616,10 +1621,10 @@ export default {
           this.newOpt[3].nClick = false;
           this.$fetch(this.urls.purchases, {
             purchase_status: "section",
-            receiver:this.searchBox.receiver,
-            receiver_address:this.searchBox.receiver_address,
-            user_id:this.searchBox.user_id,
-            buyer_nick:this.searchBox.buyer_nick,
+            receiver: this.searchBox.receiver,
+            receiver_address: this.searchBox.receiver_address,
+            user_id: this.searchBox.user_id,
+            buyer_nick: this.searchBox.buyer_nick,
             include:
               "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(
@@ -1658,10 +1663,10 @@ export default {
           this.newOpt[3].nClick = true;
           this.$fetch(this.urls.purchases, {
             purchase_status: "finish",
-            receiver:this.searchBox.receiver,
-            receiver_address:this.searchBox.receiver_address,
-            user_id:this.searchBox.user_id,
-            buyer_nick:this.searchBox.buyer_nick,
+            receiver: this.searchBox.receiver,
+            receiver_address: this.searchBox.receiver_address,
+            user_id: this.searchBox.user_id,
+            buyer_nick: this.searchBox.buyer_nick,
             include:
               "user,purchaseLists.purchaseDetails.productComponent,purchaseLists.combination"
           }).then(
@@ -2948,21 +2953,24 @@ export default {
       }
     },
     //筛选
-    searchData(){
-      this.loading=true;
+    searchData() {
+      this.loading = true;
       this.fetchPurchaseData();
     },
     resets() {
-      this.searchBox =  {
+      this.searchBox = {
         purchase_order_no: "",
         receiver: "",
         receiver_address: "",
         created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        promise_ship_time: [
+          "2018-12-31T16:00:00.000Z",
+          "2099-12-31T16:00:00.000Z"
+        ],
         arrival_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         print_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
         user_id: "",
-        buyer_nick: "",
+        buyer_nick: ""
       };
     }
   },
