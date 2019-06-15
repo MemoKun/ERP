@@ -17,7 +17,7 @@ class CreateOrderOperationRecordsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->comment('用户id');
             $table->string('user_name')->commetn('用户名');
-            $table->string('operated')->comment('操作');
+            $table->string('operation')->comment('操作');
             $table->string('description')->comment('操作描述');
             $table->timestamps();
         });

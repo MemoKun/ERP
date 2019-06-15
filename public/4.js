@@ -33423,7 +33423,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
     };
-    return {
+    return _defineProperty({
       newOpt: [{
         cnt: "锁定",
         icon: "bf-lock",
@@ -34017,16 +34017,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       /**
        * 底部tab
        */
-      logData: [],
-      logTableHead: [{
+      operationData: [],
+      operationRecordHead: [{
+        label: "用户",
+        prop: "user_name",
+        type: "text"
+      }, {
         label: "操作",
-        width: "400",
         prop: "operation",
         type: "text"
       }, {
-        label: "操作人",
-        width: "150",
-        prop: "operator_id",
+        label: "操作描述",
+        prop: "description",
+        type: "text"
+      }, {
+        label: "操作时间",
+        prop: "created_at",
         type: "text"
       }],
       refundReasonTabData: [],
@@ -34071,7 +34077,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
        * 驳回
        */
       refuseMask: false
-    };
+    }, "operationData", []);
   },
 
   computed: {
@@ -34182,7 +34188,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             buyer_nick: this.searchBox.buyer_nick,
             buyer_name: this.searchBox.buyer_name,
             locker_id: this.searchBox.locker_id,
-            include: "refundReason,refundReasonType"
+            include: "refundReason,refundReasonType,refundOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.untreatedOrderListData = res.data;
@@ -34210,7 +34216,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             order_sn: this.searchBox.order_sn,
             buyer_nick: this.searchBox.buyer_nick,
             buyer_name: this.searchBox.buyer_name,
-            locker_id: this.searchBox.locker_id
+            locker_id: this.searchBox.locker_id,
+            include: "refundReason,refundReasonType,refundOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.treatedOrderListData = res.data;
@@ -34240,6 +34247,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.orderListTabCurRowId = row.id;
       this.OrderListCurRowData = row;
       this.detailRefundOrderData = row;
+      this.operationData = row["refundOperationRecord"].data;
       this.refundReasonTabData = row["refundReason"].data;
       this.responsiblePartyData[0].responsible_party = row.responsible_party;
       this.responsiblePartyData[0].responsible_person = row.responsible_person;
@@ -34291,9 +34299,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     /*新增*/
-    addProRCName: function addProRCName(_ref) {
-      var row = _ref.row,
-          rowIndex = _ref.rowIndex;
+    addProRCName: function addProRCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
 
       row.index = rowIndex;
     },
@@ -35198,7 +35206,7 @@ var render = function() {
                                           scope.row[item.prop]
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                                    " +
+                                                  "\n                  " +
                                                     _vm._s(
                                                       item.inProp
                                                         ? scope.row[item.prop][
@@ -35206,7 +35214,7 @@ var render = function() {
                                                           ]
                                                         : scope.row[item.prop]
                                                     ) +
-                                                    "\n                                "
+                                                    "\n                "
                                                 )
                                               ])
                                             : _vm._e()
@@ -35418,7 +35426,7 @@ var render = function() {
                                           scope.row[item.prop]
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                                    " +
+                                                  "\n                  " +
                                                     _vm._s(
                                                       item.inProp
                                                         ? scope.row[item.prop][
@@ -35426,7 +35434,7 @@ var render = function() {
                                                           ]
                                                         : scope.row[item.prop]
                                                     ) +
-                                                    "\n                                "
+                                                    "\n                "
                                                 )
                                               ])
                                             : _vm._e()
@@ -35876,12 +35884,12 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-tab-pane",
-                { attrs: { label: "操作日志", name: "1" } },
+                { attrs: { label: "操作记录", name: "1" } },
                 [
                   _c(
                     "el-table",
-                    { attrs: { data: _vm.logData } },
-                    _vm._l(_vm.logTableHead, function(item) {
+                    { attrs: { data: _vm.operationData } },
+                    _vm._l(_vm.operationRecordHead, function(item) {
                       return _c("el-table-column", {
                         key: item.prop,
                         attrs: {
@@ -35953,7 +35961,7 @@ var render = function() {
                                         scope.row[item.prop]
                                           ? _c("span", [
                                               _vm._v(
-                                                "\n                                    " +
+                                                "\n                  " +
                                                   _vm._s(
                                                     item.inProp
                                                       ? scope.row[item.prop][
@@ -35961,7 +35969,7 @@ var render = function() {
                                                         ]
                                                       : scope.row[item.prop]
                                                   ) +
-                                                  "\n                                "
+                                                  "\n                "
                                               )
                                             ])
                                           : _vm._e()
@@ -36060,7 +36068,7 @@ var render = function() {
                                         scope.row[item.prop]
                                           ? _c("span", [
                                               _vm._v(
-                                                "\n                                    " +
+                                                "\n                  " +
                                                   _vm._s(
                                                     item.inProp
                                                       ? scope.row[item.prop][
@@ -36068,7 +36076,7 @@ var render = function() {
                                                         ]
                                                       : scope.row[item.prop]
                                                   ) +
-                                                  "\n                                "
+                                                  "\n                "
                                               )
                                             ])
                                           : _vm._e()
@@ -36167,7 +36175,7 @@ var render = function() {
                                         scope.row[item.prop]
                                           ? _c("span", [
                                               _vm._v(
-                                                "\n                                    " +
+                                                "\n                  " +
                                                   _vm._s(
                                                     item.inProp
                                                       ? scope.row[item.prop][
@@ -36175,7 +36183,7 @@ var render = function() {
                                                         ]
                                                       : scope.row[item.prop]
                                                   ) +
-                                                  "\n                                "
+                                                  "\n                "
                                               )
                                             ])
                                           : _vm._e()

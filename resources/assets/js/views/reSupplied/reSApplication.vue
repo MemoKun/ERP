@@ -925,7 +925,7 @@ export default {
         {
           label: '操作',
           width: '160',
-          prop: 'operated',
+          prop: 'operation',
           type: 'text'
         },
         {

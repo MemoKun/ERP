@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use Dingo\Api\Exception\UpdateResourceFailedException;
+use Illuminate\Support\Facades\Auth;
 
 class ResupplieOrder extends Model
 {
@@ -110,6 +112,16 @@ class ResupplieOrder extends Model
     {
         $this->is_submit = self::RESUPPLIE_SUBMITED;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "提交";
+        $operationData->description = "提交";
+        $operationData->save();
     }
 
     //驳回，点击后需重新提交
@@ -117,6 +129,16 @@ class ResupplieOrder extends Model
     {
         $this->is_submit = self::RESUPPLIE_UNSUBMITED;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "驳回";
+        $operationData->description = "驳回";
+        $operationData->save();
     }
 
     //审核，点击后在补件发货可见，可结算
@@ -124,6 +146,16 @@ class ResupplieOrder extends Model
     {
         $this->is_review = self::RESUPPLIE_REVIEW;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "审核";
+        $operationData->description = "审核";
+        $operationData->save();
     }
 
     //退审，退审后需重新审核
@@ -132,6 +164,16 @@ class ResupplieOrder extends Model
         $this->is_review = self::RESUPPLIE_UNREVIEW;
         $this->is_print = self::RESUPPLIE_UNPRINT;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "退审";
+        $operationData->description = "退审";
+        $operationData->save();
     }
 
     //结算
@@ -139,6 +181,16 @@ class ResupplieOrder extends Model
     {
         $this->is_settle = self::RESUPPLIE_SETTLE;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "结算";
+        $operationData->description = "结算";
+        $operationData->save();
     }
 
     //返回客审
@@ -147,6 +199,16 @@ class ResupplieOrder extends Model
         $this->is_submit = self::RESUPPLIE_UNSUBMITED;
         $this->is_review = self::RESUPPLIE_UNREVIEW;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "返回客审";
+        $operationData->description = "返回客审";
+        $operationData->save();
     }
 
     //打印，打印后可发货
@@ -154,6 +216,16 @@ class ResupplieOrder extends Model
     {
         $this->is_print = self::RESUPPLIE_PRINT;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "打印";
+        $operationData->description = "打印后可发货";
+        $operationData->save();
     }
 
     //发货
@@ -161,6 +233,16 @@ class ResupplieOrder extends Model
     {
         $this->is_consign = self::RESUPPLIE_CONSIGN;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "发货";
+        $operationData->description = "发货";
+        $operationData->save();
     }
 
     //作废
@@ -168,6 +250,16 @@ class ResupplieOrder extends Model
     {
         $this->is_invalid = self::RESUPPLIE_INVALID;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ResupplieOperationRecord;
+        $operationData->re_supplie_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "作废";
+        $operationData->description = "作废";
+        $operationData->save();
     }
 
     public function order()

@@ -17,7 +17,7 @@ class ResupplieOperationRecordTransformer extends TransformerAbstract
             'id' => $resupplieOperationRecord->id,
             're_supplie_orders_id' => $resupplieOperationRecord->re_supplie_orders_id,
             'user_name' => $resupplieOperationRecord->user_name,
-            'operated' => $resupplieOperationRecord->operated,
+            'operation' => $resupplieOperationRecord->operation,
             'description' => $resupplieOperationRecord->description,
             'status' => $resupplieOperationRecord->status,
             'created_at' => $resupplieOperationRecord->created_at->toDateTimeString(),

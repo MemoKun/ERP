@@ -6,10 +6,10 @@
           <span>
             <label>店铺昵称</label>
             <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
-                <span v-for="list in resData['shops']" :key="list.id">
-                  <el-option :label="list['nick']" :value="list.id"></el-option>
-                </span>
-              </el-select>
+              <span v-for="list in resData['shops']" :key="list.id">
+                <el-option :label="list['nick']" :value="list.id"></el-option>
+              </span>
+            </el-select>
           </span>
           <span>
             <label>订单编号</label>
@@ -28,48 +28,28 @@
           <span>
             <label>锁定人</label>
             <el-select v-model="searchBox.locker_id" clearable placeholder="请选择">
-                <span v-for="list in addSubData['user']" :key="list.id">
-                  <el-option :label="list['username']" :value="list.id"></el-option>
-                </span>
-              </el-select>
+              <span v-for="list in addSubData['user']" :key="list.id">
+                <el-option :label="list['username']" :value="list.id"></el-option>
+              </span>
+            </el-select>
           </span>
           <span>
             <label>还款时间</label>
-            <el-date-picker
-              v-model="searchBox.refund_time"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            ></el-date-picker>
+            <el-date-picker v-model="searchBox.refund_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
           </span>
         </div>
         <div style="text-align: right">
-            <el-button type="primary" @click="searchData">筛选</el-button>
-            <el-button @click="resets">重置</el-button>
+          <el-button type="primary" @click="searchData">筛选</el-button>
+          <el-button @click="resets">重置</el-button>
         </div>
       </div>
 
       <!--显示列表-未处理-->
       <el-tabs v-model="orderListActiveName" @tab-click="leftHandleClick" style="height: 400px;">
         <el-tab-pane label="未处理" name="0">
-          <el-table
-            :data="untreatedOrderListData"
-            fit
-            @selection-change="handleSelectionChange"
-            v-loading="loading"
-            height="350"
-            @row-click="orderListRowClick"
-            @row-dblclick="orderDbClick"
-          >
+          <el-table :data="untreatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
             <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-            <el-table-column
-              v-for="item in orderListHead"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-              :key="item.label"
-            >
+            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.type=='checkbox'">
                   <span v-if="item.inProp">
@@ -100,9 +80,7 @@
                   </span>
                 </span>
                 <span v-else>
-                  <span
-                    v-if="scope.row[item.prop]"
-                  >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                 </span>
               </template>
             </el-table-column>
@@ -114,23 +92,9 @@
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="已处理" name="1">
-          <el-table
-            :data="treatedOrderListData"
-            fit
-            @selection-change="handleSelectionChange"
-            v-loading="loading"
-            height="350"
-            @row-click="orderListRowClick"
-            @row-dblclick="orderDbClick"
-          >
+          <el-table :data="treatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
             <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
-            <el-table-column
-              v-for="item in orderListHead"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-              :key="item.label"
-            >
+            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.type=='checkbox'">
                   <span v-if="item.inProp">
@@ -161,9 +125,7 @@
                   </span>
                 </span>
                 <span v-else>
-                  <span
-                    v-if="scope.row[item.prop]"
-                  >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                 </span>
               </template>
             </el-table-column>
@@ -176,67 +138,32 @@
         </el-tab-pane>
       </el-tabs>
       <!--页码-->
-      <Pagination
-        :page-url="this.urls.customerservicerefunds"
-        @handlePagChg="handlePagChg"
-        v-if="activeName=='0'"
-      ></Pagination>
+      <Pagination :page-url="this.urls.customerservicerefunds" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
 
       <!--底部Tab-->
       <el-tabs>
         <el-tab-pane label="详细信息" name="0">
           <el-form :model="detailRefundOrderData" class="quarter_turn">
-            <el-form-item
-              v-for="(item,index) in detailRefundOrderHead"
-              :label="item.label"
-              align="center"
-              :prop="item.prop"
-              :key="index"
-            >
+            <el-form-item v-for="(item,index) in detailRefundOrderHead" :label="item.label" align="center" :prop="item.prop" :key="index">
               <span v-if="item.type=='text'">
                 <span v-if="item.inProp">
-                  <el-input
-                    v-model.trim="detailRefundOrderData[item.prop][item.inProp]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input v-model.trim="detailRefundOrderData[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
                 <span v-else>
-                  <el-input
-                    v-model.trim="detailRefundOrderData[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
               <span v-else-if="item.type=='number'">
-                <span
-                  v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'"
-                >
-                  <el-input
-                    type="number"
-                    v-model.trim="detailRefundOrderData[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                    @input="formChg"
-                  ></el-input>
+                <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+                  <el-input type="number" v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
                 </span>
                 <span v-else>
-                  <el-input
-                    type="number"
-                    v-model.trim="detailRefundOrderData[item.prop]"
-                    :placeholder="item.holder"
-                    :disabled="item.addChgAble"
-                  ></el-input>
+                  <el-input type="number" v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
                 </span>
               </span>
               <!--选择框拉取数据库数据-->
               <span v-else-if="item.type=='select'">
-                <el-select
-                  v-model="detailRefundOrderData[item.prop]"
-                  :placeholder="item.holder"
-                  :disabled="item.addChgAble"
-                >
+                <el-select v-model="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
                   <span v-for="list in resData[item.stateVal]" :key="list.id">
                     <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
                   </span>
@@ -250,47 +177,24 @@
                 </el-select>
               </span>
               <span v-else-if="item.type=='textarea'">
-                <el-input
-                  type="textarea"
-                  v-model.trim="detailRefundOrderData[item.prop]"
-                  :placehode="item.holder"
-                  :disabled="item.addChgAble"
-                ></el-input>
+                <el-input type="textarea" v-model.trim="detailRefundOrderData[item.prop]" :placehode="item.holder" :disabled="item.addChgAble"></el-input>
               </span>
               <span v-else-if="item.type=='checkbox'">
                 <el-checkbox v-model="detailRefundOrderData[item.prop]" :disabled="item.chgAble"></el-checkbox>
               </span>
               <span v-else-if="item.type=='radio'">
-                <el-radio
-                  v-model="detailRefundOrderData[item.prop]"
-                  label="volume"
-                >{{item.choiceName[0]}}</el-radio>
-                <el-radio
-                  v-model="detailRefundOrderData[item.prop]"
-                  label="weight"
-                >{{item.choiceName[1]}}</el-radio>
+                <el-radio v-model="detailRefundOrderData[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="detailRefundOrderData[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
               </span>
               <span v-else-if="item.type=='DatePicker'">
-                <el-date-picker
-                  v-model="detailRefundOrderData[item.prop]"
-                  type="date"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期"
-                ></el-date-picker>
+                <el-date-picker v-model="detailRefundOrderData[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
               </span>
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane label="操作日志" name="1">
-          <el-table :data="logData">
-            <el-table-column
-              v-for="item in logTableHead"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-              :key="item.prop"
-            >
+        <el-tab-pane label="操作记录" name="1">
+          <el-table :data="operationData">
+            <el-table-column v-for="item in operationRecordHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
               <template slot-scope="scope">
                 <span v-if="item.type=='checkbox'">
                   <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -302,9 +206,7 @@
                   </el-popover>
                 </span>
                 <span v-else>
-                  <span
-                    v-if="scope.row[item.prop]"
-                  >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                 </span>
               </template>
             </el-table-column>
@@ -312,13 +214,7 @@
         </el-tab-pane>
         <el-tab-pane label="多张图片" name="2">
           <el-table :data="refundReasonTabData">
-            <el-table-column
-              v-for="item in refundReasonTabHead"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-              :key="item.prop"
-            >
+            <el-table-column v-for="item in refundReasonTabHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
               <template slot-scope="scope">
                 <span v-if="item.type=='checkbox'">
                   <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -330,9 +226,7 @@
                   </el-popover>
                 </span>
                 <span v-else>
-                  <span
-                    v-if="scope.row[item.prop]"
-                  >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                  <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                 </span>
               </template>
             </el-table-column>
@@ -342,145 +236,63 @@
     </el-tabs>
 
     <!--新增-->
-    <el-dialog
-      title="新增退款单"
-      :visible.sync="addRefundOrderMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-      class="bigDialog"
-    >
+    <el-dialog title="新增退款单" :visible.sync="addRefundOrderMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <div class="clearfix">
         <el-button type="text" style="float: left">新增退款单信息</el-button>
       </div>
-      <el-form
-        :model="addRefundOrderFormVal"
-        :rules="addRefundFormRules"
-        class="customerAddForm"
-        id="form"
-      >
-        <el-form-item
-          v-for="(item,index) in addRefundFormHead"
-          :key="index"
-          :label="item.label"
-          :prop="item.prop"
-        >
+      <el-form :model="addRefundOrderFormVal" :rules="addRefundFormRules" class="customerAddForm" id="form">
+        <el-form-item v-for="(item,index) in addRefundFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">
-              <el-input
-                v-model.trim="addRefundOrderFormVal[item.prop][item.inProp]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input v-model.trim="addRefundOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
             <span v-else>
-              <el-input
-                v-model.trim="addRefundOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input v-model.trim="addRefundOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='number'">
-            <span
-              v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'"
-            >
-              <el-input
-                type="number"
-                v-model.trim="addRefundOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-                @input="formChg"
-              ></el-input>
+            <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+              <el-input type="number" v-model.trim="addRefundOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
             </span>
             <span v-else>
-              <el-input
-                type="number"
-                v-model.trim="addRefundOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input type="number" v-model.trim="addRefundOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='select'">
-            <el-select
-              v-model="addRefundOrderFormVal[item.prop]"
-              :placeholder="item.holder"
-              :disabled="item.addChgAble"
-            >
+            <el-select v-model="addRefundOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
               <span v-for="list in resData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
           </span>
           <span v-else-if="item.type=='textarea'">
-            <el-input
-              type="textarea"
-              v-model.trim="addRefundOrderFormVal[item.prop]"
-              :placehode="item.holder"
-            ></el-input>
+            <el-input type="textarea" v-model.trim="addRefundOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
           </span>
           <span v-else-if="item.type=='checkbox'">
             <el-checkbox v-model="addRefundOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
           </span>
           <span v-else-if="item.type=='radio'">
-            <el-radio
-              v-model="addRefundOrderFormVal[item.prop]"
-              label="volume"
-            >{{item.choiceName[0]}}</el-radio>
-            <el-radio
-              v-model="addRefundOrderFormVal[item.prop]"
-              label="weight"
-            >{{item.choiceName[1]}}</el-radio>
+            <el-radio v-model="addRefundOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+            <el-radio v-model="addRefundOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker
-              v-model="addRefundOrderFormVal[item.prop]"
-              type="date"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              placeholder="选择日期"
-            ></el-date-picker>
+            <el-date-picker v-model="addRefundOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
           </span>
         </el-form-item>
       </el-form>
       <el-button type="text">退款原因</el-button>
-      <el-table
-        :data="addRefundOrderFormVal.refund_reason"
-        fit
-        @row-click="refundReasonRowClick"
-        :row-class-name="addProRCName"
-      >
-        <el-table-column
-          v-for="(item,index) in refundReasonHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="index"
-        >
+      <el-table :data="addRefundOrderFormVal.refund_reason" fit @row-click="refundReasonRowClick" :row-class-name="addProRCName">
+        <el-table-column v-for="(item,index) in refundReasonHead" :label="item.label" align="center" :width="item.width" :key="index">
           <template slot-scope="scope">
             <span v-if="addRefundReasonCurIndex =='index'+scope.$index">
               <span v-if="item.type=='number'">
-                <el-input
-                  size="small"
-                  type="number"
-                  v-model.trim="scope.row[item.prop]"
-                  :placeholder="item.holder"
-                ></el-input>
+                <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
               </span>
               <span v-else-if="item.type=='url'">
-                <el-input
-                  size="small"
-                  type="url"
-                  v-model.trim="scope.row[item.prop]"
-                  :placeholder="item.holder"
-                ></el-input>
+                <el-input size="small" type="url" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
               </span>
               <span v-else-if="item.type == 'textarea'">
-                <el-input
-                  type="textarea"
-                  size="small"
-                  v-model.trim="scope.row[item.prop]"
-                  :placeholder="item.holder"
-                ></el-input>
+                <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
               </span>
               <span v-else-if="item.type == 'select'">
                 <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
@@ -501,22 +313,12 @@
                 <span v-else>
                   <img :src="scope.row[item.prop]">
                   <el-upload class="chgDiv" action :before-upload="beforeAddUpload">
-                    <el-button
-                      type="primary"
-                      icon="el-icon-edit"
-                      size="mini"
-                      class="chg"
-                      v-show="tableChgBtn=='show'+scope.$index"
-                    ></el-button>
+                    <el-button type="primary" icon="el-icon-edit" size="mini" class="chg" v-show="tableChgBtn=='show'+scope.$index"></el-button>
                   </el-upload>
                 </span>
               </span>
               <span v-else>
-                <el-input
-                  size="small"
-                  v-model.trim="scope.row[item.prop]"
-                  :placeholder="item.holder"
-                ></el-input>
+                <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
               </span>
             </span>
             <span v-else>
@@ -553,145 +355,63 @@
     </el-dialog>
 
     <!--修改-->
-    <el-dialog
-      title="修改退款单"
-      :visible.sync="updateRefundOrderMask"
-      :class="{'more-forms':moreForms,'threeParts':threeParts}"
-      class="bigDialog"
-    >
+    <el-dialog title="修改退款单" :visible.sync="updateRefundOrderMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <div class="clearfix">
         <el-button type="text" style="float: left">退款单信息</el-button>
       </div>
-      <el-form
-        :model="updateRefundOrderFormVal"
-        :rules="addRefundFormRules"
-        class="customerUpdateForm"
-        id="form"
-      >
-        <el-form-item
-          v-for="(item,index) in addRefundFormHead"
-          :key="index"
-          :label="item.label"
-          :prop="item.prop"
-        >
+      <el-form :model="updateRefundOrderFormVal" :rules="addRefundFormRules" class="customerUpdateForm" id="form">
+        <el-form-item v-for="(item,index) in addRefundFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">
-              <el-input
-                v-model.trim="updateRefundOrderFormVal[item.prop][item.inProp]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input v-model.trim="updateRefundOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
             <span v-else>
-              <el-input
-                v-model.trim="updateRefundOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input v-model.trim="updateRefundOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='number'">
-            <span
-              v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'"
-            >
-              <el-input
-                type="number"
-                v-model.trim="updateRefundOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-                @input="formChg"
-              ></el-input>
+            <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+              <el-input type="number" v-model.trim="updateRefundOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
             </span>
             <span v-else>
-              <el-input
-                type="number"
-                v-model.trim="updateRefundOrderFormVal[item.prop]"
-                :placeholder="item.holder"
-                :disabled="item.addChgAble"
-              ></el-input>
+              <el-input type="number" v-model.trim="updateRefundOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='select'">
-            <el-select
-              v-model="updateRefundOrderFormVal[item.prop]"
-              :placeholder="item.holder"
-              :disabled="item.addChgAble"
-            >
+            <el-select v-model="updateRefundOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
               <span v-for="list in resData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
           </span>
           <span v-else-if="item.type=='textarea'">
-            <el-input
-              type="textarea"
-              v-model.trim="updateRefundOrderFormVal[item.prop]"
-              :placehode="item.holder"
-            ></el-input>
+            <el-input type="textarea" v-model.trim="updateRefundOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
           </span>
           <span v-else-if="item.type=='checkbox'">
             <el-checkbox v-model="updateRefundOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
           </span>
           <span v-else-if="item.type=='radio'">
-            <el-radio
-              v-model="updateRefundOrderFormVal[item.prop]"
-              label="volume"
-            >{{item.choiceName[0]}}</el-radio>
-            <el-radio
-              v-model="updateRefundOrderFormVal[item.prop]"
-              label="weight"
-            >{{item.choiceName[1]}}</el-radio>
+            <el-radio v-model="updateRefundOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+            <el-radio v-model="updateRefundOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker
-              v-model="updateRefundOrderFormVal[item.prop]"
-              type="date"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              placeholder="选择日期"
-            ></el-date-picker>
+            <el-date-picker v-model="updateRefundOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
           </span>
         </el-form-item>
       </el-form>
       <el-button type="text">退款原因</el-button>
-      <el-table
-        :data="updateRefundOrderFormVal.refund_reason"
-        fit
-        @row-click="refundReasonRowClick"
-        :row-class-name="addProRCName"
-      >
-        <el-table-column
-          v-for="(item,index) in refundReasonHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="index"
-        >
+      <el-table :data="updateRefundOrderFormVal.refund_reason" fit @row-click="refundReasonRowClick" :row-class-name="addProRCName">
+        <el-table-column v-for="(item,index) in refundReasonHead" :label="item.label" align="center" :width="item.width" :key="index">
           <template slot-scope="scope">
             <span v-if="updateRefundReasonCurIndex =='index'+scope.$index">
               <span v-if="item.type=='number'">
-                <el-input
-                  size="small"
-                  type="number"
-                  v-model.trim="scope.row[item.prop]"
-                  :placeholder="item.holder"
-                ></el-input>
+                <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
               </span>
               <span v-else-if="item.type=='url'">
-                <el-input
-                  size="small"
-                  type="url"
-                  v-model.trim="scope.row[item.prop]"
-                  :placeholder="item.holder"
-                ></el-input>
+                <el-input size="small" type="url" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
               </span>
               <span v-else-if="item.type == 'textarea'">
-                <el-input
-                  type="textarea"
-                  size="small"
-                  v-model.trim="scope.row[item.prop]"
-                  :placeholder="item.holder"
-                ></el-input>
+                <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
               </span>
               <span v-else-if="item.type == 'select'">
                 <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
@@ -712,22 +432,12 @@
                 <span v-else>
                   <img :src="scope.row[item.prop]">
                   <el-upload class="chgDiv" action :before-upload="beforeUpdateUpload">
-                    <el-button
-                      type="primary"
-                      icon="el-icon-edit"
-                      size="mini"
-                      class="chg"
-                      v-show="tableChgBtn=='show'+scope.$index"
-                    ></el-button>
+                    <el-button type="primary" icon="el-icon-edit" size="mini" class="chg" v-show="tableChgBtn=='show'+scope.$index"></el-button>
                   </el-upload>
                 </span>
               </span>
               <span v-else>
-                <el-input
-                  size="small"
-                  v-model.trim="scope.row[item.prop]"
-                  :placeholder="item.holder"
-                ></el-input>
+                <el-input size="small" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
               </span>
             </span>
             <span v-else>
@@ -765,20 +475,8 @@
     <!-- 选择订单 -->
     <el-dialog title="选择订单" :visible.sync="addProMask" :class="{'more-forms':moreForms}">
       <el-button type="text">订单列表</el-button>
-      <el-table
-        :data="orderDtlVal"
-        fit
-        height="180"
-        :row-class-name="addOrderRowCName"
-        @row-click="addOrderRowClick"
-      >
-        <el-table-column
-          v-for="item in addOrderProHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="orderDtlVal" fit height="180" :row-class-name="addOrderRowCName" @row-click="addOrderRowClick">
+        <el-table-column v-for="item in addOrderProHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
             <span v-if="item.type=='img'">
               <el-popover placement="right" trigger="hover" popper-class="picture_detail">
@@ -791,24 +489,10 @@
         </el-table-column>
       </el-table>
       <el-button type="text">明细列表</el-button>
-      <el-table
-        :data="proDtlVal"
-        fit
-        height="180"
-        :row-class-name="addDefProRowCName"
-        @row-click="addDefProRowClick"
-      >
-        <el-table-column
-          v-for="item in addProHead"
-          :label="item.label"
-          align="center"
-          :width="item.width"
-          :key="item.label"
-        >
+      <el-table :data="proDtlVal" fit height="180" :row-class-name="addDefProRowCName" @row-click="addDefProRowClick">
+        <el-table-column v-for="item in addProHead" :label="item.label" align="center" :width="item.width" :key="item.label">
           <template slot-scope="scope">
-            <span
-              v-if="scope.row[item.prop]"
-            >{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+            <span v-if="scope.row[item.prop]">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -1195,21 +879,15 @@ export default {
       },
       addRefundFormRules: {
         //新建订单的要求格式
-        order_sn: [
-          { required: true, message: "系统单号必选", trigger: "blur" }
-        ],
+        order_sn: [{ required: true, message: "系统单号必选", trigger: "blur" }],
         refund_payment_methods_id: [
           { required: true, message: "退款方式必选", trigger: "blur" }
         ],
-        shops_id: [
-          { required: true, message: "所属店铺必选", trigger: "blur" }
-        ],
+        shops_id: [{ required: true, message: "所属店铺必选", trigger: "blur" }],
         refund_reason_type_id: [
           { required: true, message: "退款原因必选", trigger: "blur" }
         ],
-        buyer_nick: [
-          { required: true, message: "买家昵称必填", trigger: "blur" }
-        ]
+        buyer_nick: [{ required: true, message: "买家昵称必填", trigger: "blur" }]
       },
       addRefundFormHead: [
         //新建订单的文本框表头
@@ -1243,7 +921,7 @@ export default {
           holder: "请选择所属店铺",
           width: "200",
           type: "select",
-          stateVal:'shops'
+          stateVal: "shops"
         },
         {
           label: "退款账号",
@@ -1600,18 +1278,26 @@ export default {
       /**
        * 底部tab
        */
-      logData: [],
-      logTableHead: [
+      operationData: [],
+      operationRecordHead: [
+        {
+          label: "用户",
+          prop: "user_name",
+          type: "text"
+        },
         {
           label: "操作",
-          width: "400",
           prop: "operation",
           type: "text"
         },
         {
-          label: "操作人",
-          width: "150",
-          prop: "operator_id",
+          label: "操作描述",
+          prop: "description",
+          type: "text"
+        },
+        {
+          label: "操作时间",
+          prop: "created_at",
           type: "text"
         }
       ],
@@ -1748,7 +1434,8 @@ export default {
           width: "150",
           type: "text"
         }
-      ]
+      ],
+      operationData: []
     };
   },
   computed: {
@@ -1859,17 +1546,17 @@ export default {
           this.newOpt[5].nClick = false;
           this.newOpt[6].nClick = true;
           this.$fetch(this.urls.customerservicerefunds + "/searchuntreated", {
-            shops_id:this.searchBox.shops_id,
-            order_sn:this.searchBox.order_sn,
-            buyer_nick:this.searchBox.buyer_nick,
-            buyer_name:this.searchBox.buyer_name,
-            locker_id:this.searchBox.locker_id,
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
             include:
-              "shop,locker,refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial"
+              "shop,locker,refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial,refundOperationRecord"
           }).then(
             res => {
               this.loading = false;
-               this.$fetch(this.urls.customerservicedepts + "/create").then(
+              this.$fetch(this.urls.customerservicedepts + "/create").then(
                 res => {
                   this.addSubData = res;
                 },
@@ -1904,12 +1591,14 @@ export default {
           this.newOpt[4].nClick = true;
           this.newOpt[5].nClick = true;
           this.newOpt[6].nClick = false;
-          this.$fetch(this.urls.customerservicerefunds + "/searchtreated",{
-            shops_id:this.searchBox.shops_id,
-            order_sn:this.searchBox.order_sn,
-            buyer_nick:this.searchBox.buyer_nick,
-            buyer_name:this.searchBox.buyer_name,
-            locker_id:this.searchBox.locker_id,
+          this.$fetch(this.urls.customerservicerefunds + "/searchtreated", {
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
+            include:
+              "shop,locker,refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial,refundOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -1937,13 +1626,13 @@ export default {
         case 2:
           this.$fetch(this.urls.customerservicerefunds, {
             order_status: "等通知发货",
-            shops_id:this.searchBox.shops_id,
-            order_sn:this.searchBox.order_sn,
-            buyer_nick:this.searchBox.buyer_nick,
-            buyer_name:this.searchBox.buyer_name,
-            locker_id:this.searchBox.locker_id,
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
             include:
-              "shop,creator,businessPersonnel,locker,afterSale,financial,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+              "shop,creator,businessPersonnel,locker,afterSale,financial,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,warehouses,orderItems,businessPersonnel,locker,paymentDetails,refundOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -1985,6 +1674,7 @@ export default {
       this.orderListTabCurRowId = row.id;
       this.OrderListCurRowData = row;
       this.detailRefundOrderData = row;
+      this.operationData = row["refundOperationRecord"].data;
       this.refundReasonTabData = row["refundReason"].data;
       let index = this.orderListActiveName - 0;
       if (index == 0) {
@@ -2118,9 +1808,8 @@ export default {
     },
     updateTabAddMoreRefundReason() {
       this.updateRefundReasonCurIndexNum = this.updateRefundOrderFormVal.refund_reason.length;
-      this.updateRefundReasonUploadIndex = `upload${
-        this.updateRefundReasonCurIndexNum
-      }`;
+      this.updateRefundReasonUploadIndex = `upload${this
+        .updateRefundReasonCurIndexNum}`;
       let refundReasonKey = {
         img_url: "",
         refund_reason: "",
@@ -2215,7 +1904,7 @@ export default {
       this.addOrderDtlVal = [];
       this.$fetch(this.urls.customerservicedepts, {
         include:
-          "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+          "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,refundOperationRecord"
       }).then(
         res => {
           this.orderDtlVal = res.data;
@@ -2305,7 +1994,8 @@ export default {
             //将上传图片后的地址赋值给变量
             this.addRefundOrderFormVal.refund_reason[
               this.addRefundReasonCurIndexNum
-            ].img_url = res.data.path;
+            ].img_url =
+              res.data.path;
           }
         })
         .catch(err => {});
@@ -2324,7 +2014,8 @@ export default {
             this.tableChgBtn = "show" + this.updateRefundReasonCurIndexNum;
             this.updateRefundOrderFormVal.refund_reason[
               this.updateRefundReasonCurIndexNum
-            ].img_url = res.data.path;
+            ].img_url =
+              res.data.path;
           }
         })
         .catch(err => {});
@@ -2351,7 +2042,8 @@ export default {
             this.showChgBtn = true;
             this.addRefundOrderFormVal.refund_reason[
               this.addRefundReasonCurIndexNum
-            ].img_url = res.data.path;
+            ].img_url =
+              res.data.path;
           }
         })
         .catch(err => {});
@@ -2369,7 +2061,8 @@ export default {
             this.showChgBtn = true;
             this.updateRefundOrderFormVal.refund_reason[
               this.updateRefundReasonCurIndexNum
-            ].img_url = res.data.path;
+            ].img_url =
+              res.data.path;
           }
         })
         .catch(err => {});
@@ -2503,15 +2196,15 @@ export default {
     },
     /*页码*/
     handlePagChg(page) {
-      this.$fetch(this.urls.customerservicerefunds + "?page=" + page).then(
-        res => {
-          if (this.orderListActiveName == "0") {
-            this.untreatedOrderListData = res.data;
-          } else {
-            this.treatedOrderListData = res.data;
-          }
+      this.$fetch(
+        this.urls.customerservicerefunds + "?page=" + page
+      ).then(res => {
+        if (this.orderListActiveName == "0") {
+          this.untreatedOrderListData = res.data;
+        } else {
+          this.treatedOrderListData = res.data;
         }
-      );
+      });
     },
     refresh() {
       this.loading = true;

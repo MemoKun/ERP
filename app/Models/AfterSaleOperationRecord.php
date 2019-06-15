@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-class ResupplieOperationRecord extends Model
+class AfterSaleOperationRecord extends Model
 {
-    protected $table = 're_supplie_operation_records';
+    protected $table = 'after_sale_operation_records';
 
     protected $fillable = [
-        're_supplie_orders_id','user_id','user_name', 'operation', 'description', 'status',
+        'after_sale_orders_id','user_id','user_name', 'operation', 'description', 'status',
     ];
 
     protected $dates = [
@@ -25,8 +25,8 @@ class ResupplieOperationRecord extends Model
         parent::boot();
     }
 
-    public function resupplieOrder()
+    public function afterSale()
     {
-        return $this->belongsTo(ResupplieOrder::class, 're_supplie_orders_id');
+        return $this->belongsTo(AfterSale::class, 'after_sale_orders_id');
     }
 }

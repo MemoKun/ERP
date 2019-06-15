@@ -17,7 +17,7 @@ class CreateReSupplieOperationRecordsTable extends Migration {
 			$table->increments('id');
 			$table->integer('re_supplie_orders_id')->unsigned()->default(0)->comment('补件单id');
 			$table->string('user_name')->comment('用户');
-			$table->string('operated')->comment('操作');
+			$table->string('operation')->comment('操作');
 			$table->string('description')->comment('操作描述');
 			$table->boolean('status')->default(1)->comment('状态：0=停用，1=启用');
 			$table->timestamps();

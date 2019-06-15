@@ -6,10 +6,10 @@
           <span>
             <label>店铺昵称</label>
             <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
-                <span v-for="list in resData['shops']" :key="list.id">
-                  <el-option :label="list['nick']" :value="list.id"></el-option>
-                </span>
-              </el-select>
+              <span v-for="list in resData['shops']" :key="list.id">
+                <el-option :label="list['nick']" :value="list.id"></el-option>
+              </span>
+            </el-select>
           </span>
           <span>
             <label>订单编号</label>
@@ -28,10 +28,10 @@
           <span>
             <label>锁定人</label>
             <el-select v-model="searchBox.locker_id" clearable placeholder="请选择">
-                <span v-for="list in addSubData['user']" :key="list.id">
-                  <el-option :label="list['username']" :value="list.id"></el-option>
-                </span>
-              </el-select>
+              <span v-for="list in addSubData['user']" :key="list.id">
+                <el-option :label="list['username']" :value="list.id"></el-option>
+              </span>
+            </el-select>
           </span>
           <span>
             <label>还款时间</label>
@@ -39,8 +39,8 @@
           </span>
         </div>
         <div style="text-align: right">
-            <el-button type="primary" @click="searchData">筛选</el-button>
-            <el-button @click="resets">重置</el-button>
+          <el-button type="primary" @click="searchData">筛选</el-button>
+          <el-button @click="resets">重置</el-button>
         </div>
       </div>
 
@@ -294,9 +294,9 @@
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane label="操作日志" name="1">
-          <el-table :data="logData">
-            <el-table-column v-for="item in logTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
+        <el-tab-pane label="操作记录" name="1">
+          <el-table :data="operationData">
+            <el-table-column v-for="item in operationRecordHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
               <template slot-scope="scope">
                 <span v-if="item.type=='checkbox'">
                   <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
@@ -456,7 +456,7 @@ export default {
         locker_id: "",
         refund_time: ""
       },
-      addSubData:[],
+      addSubData: [],
       /**订单列表Tab
        * 订单列表的相关参数
        * */
@@ -1097,8 +1097,8 @@ export default {
       /**
        * 底部tab
        */
-      logData: [],
-      logTableHead: [
+      operationData: [],
+      operationRecordHead: [
         {
           label: "操作",
           width: "400",
@@ -1162,7 +1162,9 @@ export default {
       /**
        * 驳回
        */
-      refuseMask: false
+      refuseMask: false,
+
+      operationData: []
     };
   },
   computed: {
@@ -1266,12 +1268,12 @@ export default {
       switch (index) {
         case 0:
           this.$fetch(this.urls.customerservicerefunds + "/searchuntreated", {
-            shops_id:this.searchBox.shops_id,
-            order_sn:this.searchBox.order_sn,
-            buyer_nick:this.searchBox.buyer_nick,
-            buyer_name:this.searchBox.buyer_name,
-            locker_id:this.searchBox.locker_id,
-            include: "refundReason,refundReasonType"
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
+            include: "refundReason,refundReasonType,refundOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -1298,15 +1300,14 @@ export default {
           );
           break;
         case 1:
-          this.$fetch(
-            this.urls.customerservicerefunds + "/searchasuntreated",{
-              shops_id:this.searchBox.shops_id,
-              order_sn:this.searchBox.order_sn,
-              buyer_nick:this.searchBox.buyer_nick,
-              buyer_name:this.searchBox.buyer_name,
-              locker_id:this.searchBox.locker_id,
-            }
-          ).then(
+          this.$fetch(this.urls.customerservicerefunds + "/searchasuntreated", {
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
+            include: "refundReason,refundReasonType,refundOperationRecord"
+          }).then(
             res => {
               this.loading = false;
               this.asUntreatedOrderListData = res.data;
@@ -1332,12 +1333,12 @@ export default {
           break;
         case 2:
           this.$fetch(this.urls.customerservicerefunds + "/searchfduntreated", {
-            shops_id:this.searchBox.shops_id,
-            order_sn:this.searchBox.order_sn,
-            buyer_nick:this.searchBox.buyer_nick,
-            buyer_name:this.searchBox.buyer_name,
-            locker_id:this.searchBox.locker_id,
-            include: "refundReason,refundReasonType"
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
+            include: "refundReason,refundReasonType,refundOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -1365,12 +1366,12 @@ export default {
           break;
         case 3:
           this.$fetch(this.urls.customerservicerefunds + "/searchfdtreated", {
-            shops_id:this.searchBox.shops_id,
-            order_sn:this.searchBox.order_sn,
-            buyer_nick:this.searchBox.buyer_nick,
-            buyer_name:this.searchBox.buyer_name,
-            locker_id:this.searchBox.locker_id,
-            include: "refundReason,refundReasonType"
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
+            include: "refundReason,refundReasonType,refundOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -1407,6 +1408,7 @@ export default {
       this.orderListTabCurRowId = row.id;
       this.OrderListCurRowData = row;
       this.detailRefundOrderData = row;
+      this.operationData = row["refundOperationRecord"].data;
       this.refundReasonTabData = row["refundReason"].data;
       this.responsiblePartyData[0].responsible_party = row.responsible_party;
       this.responsiblePartyData[0].responsible_person = row.responsible_person;

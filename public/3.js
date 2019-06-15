@@ -33090,322 +33090,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_china_area_data__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_china_area_data__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -33968,7 +33654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       }
     };
-    return {
+    return _defineProperty({
       newOpt: [{
         cnt: "新增",
         icon: "bf-add",
@@ -34277,7 +33963,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         holder: "请选择所属店铺",
         width: "200",
         type: "select",
-        stateVal: 'shops'
+        stateVal: "shops"
       }, {
         label: "退款账号",
         prop: "refund_account",
@@ -34589,16 +34275,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       /**
        * 底部tab
        */
-      logData: [],
-      logTableHead: [{
+      operationData: [],
+      operationRecordHead: [{
+        label: "用户",
+        prop: "user_name",
+        type: "text"
+      }, {
         label: "操作",
-        width: "400",
         prop: "operation",
         type: "text"
       }, {
-        label: "操作人",
-        width: "150",
-        prop: "operator_id",
+        label: "操作描述",
+        prop: "description",
+        type: "text"
+      }, {
+        label: "操作时间",
+        prop: "created_at",
         type: "text"
       }],
       refundReasonTabData: [],
@@ -34712,7 +34404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         width: "150",
         type: "text"
       }]
-    };
+    }, "operationData", []);
   },
 
   computed: {
@@ -34828,7 +34520,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             buyer_nick: this.searchBox.buyer_nick,
             buyer_name: this.searchBox.buyer_name,
             locker_id: this.searchBox.locker_id,
-            include: "shop,locker,refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial"
+            include: "shop,locker,refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial,refundOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.$fetch(_this.urls.customerservicedepts + "/create").then(function (res) {
@@ -34866,7 +34558,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             order_sn: this.searchBox.order_sn,
             buyer_nick: this.searchBox.buyer_nick,
             buyer_name: this.searchBox.buyer_name,
-            locker_id: this.searchBox.locker_id
+            locker_id: this.searchBox.locker_id,
+            include: "shop,locker,refundReason,refundReasonType,creator,businessPersonnel,locker,afterSale,financial,refundOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.treatedOrderListData = res.data;
@@ -34896,7 +34589,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             buyer_nick: this.searchBox.buyer_nick,
             buyer_name: this.searchBox.buyer_name,
             locker_id: this.searchBox.locker_id,
-            include: "shop,creator,businessPersonnel,locker,afterSale,financial,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+            include: "shop,creator,businessPersonnel,locker,afterSale,financial,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,warehouses,orderItems,businessPersonnel,locker,paymentDetails,refundOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.$fetch(_this.urls.customerservicedepts + "/create").then(function (res) {
@@ -34932,6 +34625,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.orderListTabCurRowId = row.id;
       this.OrderListCurRowData = row;
       this.detailRefundOrderData = row;
+      this.operationData = row["refundOperationRecord"].data;
       this.refundReasonTabData = row["refundReason"].data;
       var index = this.orderListActiveName - 0;
       if (index == 0) {
@@ -35016,9 +34710,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.addRefundReasonCurIndex = "index0";
     },
     addHandleClick: function addHandleClick() {},
-    addProRCName: function addProRCName(_ref) {
-      var row = _ref.row,
-          rowIndex = _ref.rowIndex;
+    addProRCName: function addProRCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
 
       row.index = rowIndex;
     },
@@ -35104,17 +34798,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.addProMask = true;
       this.proQueryClick();
     },
-    addOrderRowCName: function addOrderRowCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
+    addOrderRowCName: function addOrderRowCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
 
       row.index = rowIndex;
     },
-    addDefProRowCName: function addDefProRowCName(_ref3) {
+    addDefProRowCName: function addDefProRowCName(_ref4) {
       // row.index = rowIndex;
 
-      var row = _ref3.row,
-          rowIndex = _ref3.rowIndex;
+      var row = _ref4.row,
+          rowIndex = _ref4.rowIndex;
     },
     addDefProRowClick: function addDefProRowClick(row) {},
     addOrderRowClick: function addOrderRowClick(row) {
@@ -35148,7 +34842,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proDtlVal = [];
       this.addOrderDtlVal = [];
       this.$fetch(this.urls.customerservicedepts, {
-        include: "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+        include: "orderItems.combination.productComponents,orderItems.product,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,refundOperationRecord"
       }).then(function (res) {
         _this4.orderDtlVal = res.data;
       }, function (err) {
@@ -36691,12 +36385,12 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-tab-pane",
-                { attrs: { label: "操作日志", name: "1" } },
+                { attrs: { label: "操作记录", name: "1" } },
                 [
                   _c(
                     "el-table",
-                    { attrs: { data: _vm.logData } },
-                    _vm._l(_vm.logTableHead, function(item) {
+                    { attrs: { data: _vm.operationData } },
+                    _vm._l(_vm.operationRecordHead, function(item) {
                       return _c("el-table-column", {
                         key: item.prop,
                         attrs: {
