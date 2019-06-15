@@ -184,11 +184,31 @@ class AfterSale extends Model
             $this->locking_people = Auth::guard('api')->id();
             $this->is_locked = 1;
             $this->after_sale_status = self::AFTERSALE_STATUS_LOCK;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new AfterSaleOperationRecord;
+            $operationData->after_sale_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "锁定";
+            $operationData->description = "锁定";
+            $operationData->save();
         }else{
             $this->locking_at = date('Y-m-d h:i:s', time());
             $this->locking_people = 0;
             $this->is_locked = 0;
             $this->after_sale_status = self::AFTERSALE_RETURN_LOCK;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new AfterSaleOperationRecord;
+            $operationData->after_sale_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "解锁";
+            $operationData->description = "解锁";
+            $operationData->save();
         } 
 
         $this->save();
@@ -205,6 +225,16 @@ class AfterSale extends Model
         $this->service_submit_person = Auth::guard('api')->id();
         $this->is_service_submit = 1;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new AfterSaleOperationRecord;
+        $operationData->after_sale_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "客服审核";
+        $operationData->description = "客服审核";
+        $operationData->save();
     }
 
     /**
@@ -218,6 +248,16 @@ class AfterSale extends Model
         $this->service_submit_person = 0;
         $this->is_service_submit = 0;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new AfterSaleOperationRecord;
+        $operationData->after_sale_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "客服退审";
+        $operationData->description = "客服退审";
+        $operationData->save();
     }
 
     /**
@@ -231,6 +271,16 @@ class AfterSale extends Model
         $this->after_sale_check_person = Auth::guard('api')->id();
         $this->is_after_sale_check = 1;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new AfterSaleOperationRecord;
+        $operationData->after_sale_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "售后一审提交";
+        $operationData->description = "售后一审提交";
+        $operationData->save();
     }
 
     /**
@@ -244,6 +294,16 @@ class AfterSale extends Model
         $this->after_sale_check_person = 0;
         $this->is_after_sale_check = 0;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new AfterSaleOperationRecord;
+        $operationData->after_sale_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "退回客服一审";
+        $operationData->description = "退回客服一审";
+        $operationData->save();
     }
 
     /**
@@ -257,6 +317,16 @@ class AfterSale extends Model
         $this->director_check_person = Auth::guard('api')->id();
         $this->is_director_check = 1;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new AfterSaleOperationRecord;
+        $operationData->after_sale_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "售后二审";
+        $operationData->description = "售后二审";
+        $operationData->save();
     }
 
     /**
@@ -270,6 +340,16 @@ class AfterSale extends Model
         $this->director_check_person = 0;
         $this->is_director_check = 0;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new AfterSaleOperationRecord;
+        $operationData->after_sale_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "退回售后二审";
+        $operationData->description = "退回售后二审";
+        $operationData->save();
     }
 
     
@@ -282,6 +362,16 @@ class AfterSale extends Model
         $this->order_status = self::AFTERSALE_REJECT;
         $this->is_reject = 1;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new AfterSaleOperationRecord;
+        $operationData->after_sale_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "驳回";
+        $operationData->description = "驳回";
+        $operationData->save();
     }
 
     /**
@@ -293,6 +383,16 @@ class AfterSale extends Model
         $this->order_status = self::AFTERSALE_STATUS_FINISH;
         $this->is_finish = 1;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new AfterSaleOperationRecord;
+        $operationData->after_sale_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "结算";
+        $operationData->description = "结算";
+        $operationData->save();
     }
 
     public function user()
@@ -333,5 +433,10 @@ class AfterSale extends Model
     public function afterSalePatchs()
     {
         return $this->hasMany(AfterSalePatch::class, 'after_sale_id');
+    }
+
+    public function afterSaleOperationRecord()
+    {
+        return $this->hasMany(AfterSaleOperationRecord::class, 'after_sale_id');
     }
 }

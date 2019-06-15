@@ -9,10 +9,10 @@ class AfterSaleTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'afterSaleState','afterSaleType','afterSaleSchedules','user','afterSaleDefPros',
-        'afterSaleRefunds','afterSaleReturns','afterSalePatchs'
+        'afterSaleRefunds','afterSaleReturns','afterSalePatchs','afterSaleOperationRecord'
     ];
 
-    public function transform(AfterSale $afterSale) 
+    public function transform(AfterSale $afterSale)
     {
         return [
             'id' => $afterSale->id,
@@ -122,5 +122,10 @@ class AfterSaleTransformer extends TransformerAbstract
     public function includeUser(AfterSale $afterSale)
     {
         return $this->item($afterSale->user, new UserTransformer());
+    }
+
+    public function includeAfterSaleOperationRecord(AfterSale $afterSale)
+    {
+        return $this->collection($afterSale->afterSaleOperationRecord, new AfterSaleOperationRecordTransformer());
     }
 }

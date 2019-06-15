@@ -625,280 +625,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -923,6 +649,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ent: this.refresh
       }],
       Data: [],
+      operationData: [],
       /* 搜索框 */
       filterBox: false,
       searchBox: {
@@ -1352,22 +1079,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: "text"
     }], [{
       label: "用户",
-      width: "150",
-      prop: "user",
+      prop: "user_name",
       type: "text"
     }, {
       label: "操作",
-      width: "150",
-      prop: "operate",
+      prop: "operation",
       type: "text"
     }, {
       label: "操作描述",
-      width: "150",
-      prop: "operate_description",
+      prop: "description",
       type: "text"
     }, {
-      label: "创建时间",
-      width: "150",
+      label: "操作时间",
       prop: "created_at",
       type: "text"
     }]]), _ref;
@@ -1437,7 +1160,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       switch (index) {
         case 0:
           this.$fetch(this.urls.aftersale, {
-            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs,afterSaleOperationRecord"
           }).then(function (res) {
             _this.allLoading = false;
             _this.allData = res.data;
@@ -1471,7 +1194,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 1:
           this.$fetch(this.urls.aftersale, {
             is_finish: false,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs,afterSaleOperationRecord"
           }).then(function (res) {
             _this.unfinishLoading = false;
             _this.unfinishData = res.data;
@@ -1504,7 +1227,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         case 2:
           this.$fetch(this.urls.aftersale, {
             order_status: 50,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs,afterSaleOperationRecord"
           }).then(function (res) {
             _this.finishLoading = false;
             _this.finishData = res.data;
@@ -1542,11 +1265,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       row.index = rowIndex;
     },
-    afterSCenterRowClick: function afterSCenterRowClick(row) {
+    orderListRowClick: function orderListRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
       this.scheduleData = row["afterSaleSchedules"].data;
       this.defProData = row["afterSaleDefPros"].data;
+      this.operationData = row["afterSaleOperationRecord"].data;
     },
 
     // 单条删除
@@ -2450,7 +2174,7 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.afterSCenterRowClick
+                    "row-click": _vm.orderListRowClick
                   }
                 },
                 [
@@ -2646,7 +2370,7 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.afterSCenterRowClick
+                    "row-click": _vm.orderListRowClick
                   }
                 },
                 [
@@ -2836,7 +2560,7 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.afterSCenterRowClick
+                    "row-click": _vm.orderListRowClick
                   }
                 },
                 [
@@ -4263,7 +3987,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.operationData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,

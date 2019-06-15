@@ -1,290 +1,290 @@
 <template>
-    <div>
-        <el-tabs v-model="activeName" @tab-click="outerHandleClick">
-            <div>
-                <div class="searchBox">
-                    <span>
-                        <label>店铺昵称</label>
-                        <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
-                <span v-for="list in resData['shops']" :key="list.id">
-                  <el-option :label="list['nick']" :value="list.id"></el-option>
-                </span>
-              </el-select>
-                    </span>
-                    <span>
-                        <label>订单编号</label>
-                        <el-input v-model.trim="searchBox.order_no" clearable></el-input>
-                    </span>
-                    <span>
-                        <label>买家昵称</label>
-                        <el-input v-model.trim="searchBox.buyer_nick" clearable></el-input>
-                    </span>
-                    <span>
-                        <label>买家姓名</label>
-                        <el-input v-model.trim="searchBox.buyer_name" clearable></el-input>
-                    </span>
-                </div>
-                <div class="searchBox">
-                    <span>
-                        <label>锁定人</label>
-                        <el-select v-model="searchBox.locker_id" clearable placeholder="请选择">
-                <span v-for="list in addSubData['user']" :key="list.id">
-                  <el-option :label="list['username']" :value="list.id"></el-option>
-                </span>
-              </el-select>
-                    </span>
-                    <span>
-                        <label>还款时间</label>
-                        <el-date-picker v-model="searchBox.refund_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
-                    </span>
-                </div>
-                <div style="text-align: right">
-            <el-button type="primary" @click="searchData">筛选</el-button>
-            <el-button @click="resets">重置</el-button>
+  <div>
+    <el-tabs v-model="activeName" @tab-click="outerHandleClick">
+      <div>
+        <div class="searchBox">
+          <span>
+            <label>店铺昵称</label>
+            <el-select v-model="searchBox.shops_id" clearable placeholder="请选择">
+              <span v-for="list in resData['shops']" :key="list.id">
+                <el-option :label="list['nick']" :value="list.id"></el-option>
+              </span>
+            </el-select>
+          </span>
+          <span>
+            <label>订单编号</label>
+            <el-input v-model.trim="searchBox.order_no" clearable></el-input>
+          </span>
+          <span>
+            <label>买家昵称</label>
+            <el-input v-model.trim="searchBox.buyer_nick" clearable></el-input>
+          </span>
+          <span>
+            <label>买家姓名</label>
+            <el-input v-model.trim="searchBox.buyer_name" clearable></el-input>
+          </span>
         </div>
-            </div>
+        <div class="searchBox">
+          <span>
+            <label>锁定人</label>
+            <el-select v-model="searchBox.locker_id" clearable placeholder="请选择">
+              <span v-for="list in addSubData['user']" :key="list.id">
+                <el-option :label="list['username']" :value="list.id"></el-option>
+              </span>
+            </el-select>
+          </span>
+          <span>
+            <label>还款时间</label>
+            <el-date-picker v-model="searchBox.refund_time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+          </span>
+        </div>
+        <div style="text-align: right">
+          <el-button type="primary" @click="searchData">筛选</el-button>
+          <el-button @click="resets">重置</el-button>
+        </div>
+      </div>
 
-            <!--显示列表-未处理-->
-            <el-tabs v-model="orderListActiveName" @tab-click="leftHandleClick" style="height: 400px;">
-                <el-tab-pane label="未处理" name="0">
-                    <el-table :data="untreatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
-                        <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-                        </el-table-column>
-                        <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                            <template slot-scope="scope">
-                                <span v-if="item.type=='checkbox'">
-                                    <span v-if="item.inProp">
-                                        <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                    </span>
-                                    <span v-else>
-                                        <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                    </span>
-                                </span>
-                                <span v-else-if="item.type=='flag'">
-                                    <span v-if="scope.row[item.prop]==0">
-                                        <i class="iconfont bf-flag"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==1">
-                                        <i class="iconfont bf-flag" style="color:red"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==2">
-                                        <i class="iconfont bf-flag" style="color:yellow"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==3">
-                                        <i class="iconfont bf-flag" style="color:green"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==4">
-                                        <i class="iconfont bf-flag" style="color:blue"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==5">
-                                        <i class="iconfont bf-flag" style="color:purple"></i>
-                                    </span>
-                                </span>
-                                <span v-else>
-                                    <span v-if="scope.row[item.prop]">
-                                        {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                    </span>
-                                </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="90" align="center" fixed="right">
-                            <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="已处理" name="1">
-                    <el-table :data="treatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
-                        <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-                        </el-table-column>
-                        <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                            <template slot-scope="scope">
-                                <span v-if="item.type=='checkbox'">
-                                    <span v-if="item.inProp">
-                                        <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                                    </span>
-                                    <span v-else>
-                                        <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                    </span>
-                                </span>
-                                <span v-else-if="item.type=='flag'">
-                                    <span v-if="scope.row[item.prop]==0">
-                                        <i class="iconfont bf-flag"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==1">
-                                        <i class="iconfont bf-flag" style="color:red"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==2">
-                                        <i class="iconfont bf-flag" style="color:yellow"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==3">
-                                        <i class="iconfont bf-flag" style="color:green"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==4">
-                                        <i class="iconfont bf-flag" style="color:blue"></i>
-                                    </span>
-                                    <span v-else-if="scope.row[item.prop]==5">
-                                        <i class="iconfont bf-flag" style="color:purple"></i>
-                                    </span>
-                                </span>
-                                <span v-else>
-                                    <span v-if="scope.row[item.prop]">
-                                        {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                    </span>
-                                </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" width="90" align="center" fixed="right">
-                            <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-            </el-tabs>
-            <!--页码-->
-            <Pagination :page-url="this.urls.customerservicerefunds" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
+      <!--显示列表-未处理-->
+      <el-tabs v-model="orderListActiveName" @tab-click="leftHandleClick" style="height: 400px;">
+        <el-tab-pane label="未处理" name="0">
+          <el-table :data="untreatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
+            <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+            </el-table-column>
+            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <span v-if="item.inProp">
+                    <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                  </span>
+                  <span v-else>
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='flag'">
+                  <span v-if="scope.row[item.prop]==0">
+                    <i class="iconfont bf-flag"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==1">
+                    <i class="iconfont bf-flag" style="color:red"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==2">
+                    <i class="iconfont bf-flag" style="color:yellow"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==3">
+                    <i class="iconfont bf-flag" style="color:green"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==4">
+                    <i class="iconfont bf-flag" style="color:blue"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==5">
+                    <i class="iconfont bf-flag" style="color:purple"></i>
+                  </span>
+                </span>
+                <span v-else>
+                  <span v-if="scope.row[item.prop]">
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="90" align="center" fixed="right">
+              <template slot-scope="scope">
+                <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="已处理" name="1">
+          <el-table :data="treatedOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
+            <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+            </el-table-column>
+            <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <span v-if="item.inProp">
+                    <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                  </span>
+                  <span v-else>
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                </span>
+                <span v-else-if="item.type=='flag'">
+                  <span v-if="scope.row[item.prop]==0">
+                    <i class="iconfont bf-flag"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==1">
+                    <i class="iconfont bf-flag" style="color:red"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==2">
+                    <i class="iconfont bf-flag" style="color:yellow"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==3">
+                    <i class="iconfont bf-flag" style="color:green"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==4">
+                    <i class="iconfont bf-flag" style="color:blue"></i>
+                  </span>
+                  <span v-else-if="scope.row[item.prop]==5">
+                    <i class="iconfont bf-flag" style="color:purple"></i>
+                  </span>
+                </span>
+                <span v-else>
+                  <span v-if="scope.row[item.prop]">
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="90" align="center" fixed="right">
+              <template slot-scope="scope">
+                <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
+      <!--页码-->
+      <Pagination :page-url="this.urls.customerservicerefunds" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
 
-            <!--底部Tab-->
-            <el-tabs>
-                <el-tab-pane label="详细信息" name="0">
-                    <el-form :model="detailRefundOrderData"  class="quarter_turn">
-                        <el-form-item v-for="(item,index) in detailRefundOrderHead" :label="item.label" align="center" :prop="item.prop" :key="index">
-                            <span v-if="item.type=='text'">
-                                <span v-if="item.inProp">
-                                    <el-input v-model.trim="detailRefundOrderData[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                                </span>
-                                <span v-else>
-                                    <el-input v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                                </span>
-                            </span>
-                            <span v-else-if="item.type=='number'">
-                                <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-                                    <el-input type="number" v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
-                                </span>
-                                <span v-else>
-                                    <el-input type="number" v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-                                </span>
-                            </span>
-                            <span v-else-if="item.type=='select'">
-                                <el-select v-model="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-                                    <span v-for="list in resData[item.stateVal]" :key="list.id">
-                                        <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
-                                    </span>
-                                </el-select>
-                            </span>
-                            <span v-else-if="item.type == 'selects'">
-                                <el-select v-model="detailRefundOrderData[item.prop]" :placeholder="item.holder">
-                                    <span v-for="list in selectVal[item.prop]" :key="list.value">
-                                        <el-option :label="list.label" :value="list.value"></el-option>
-                                    </span>
-                                </el-select>
-                            </span>
-                            <span v-else-if="item.type=='textarea'">
-                                <el-input type="textarea" v-model.trim="detailRefundOrderData[item.prop]" :placehode="item.holder" :disabled="item.addChgAble"></el-input>
-                            </span>
-                            <span v-else-if="item.type=='checkbox'">
-                                <el-checkbox v-model="detailRefundOrderData[item.prop]" :disabled="item.chgAble"></el-checkbox>
-                            </span>
-                            <span v-else-if="item.type=='radio'">
-                                <el-radio v-model="detailRefundOrderData[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-                                <el-radio v-model="detailRefundOrderData[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
-                            </span>
-                            <span v-else-if="item.type=='DatePicker'">
-                                <el-date-picker v-model="detailRefundOrderData[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
-                            </span>
-                        </el-form-item>
-                    </el-form>
-                </el-tab-pane>
-                <el-tab-pane label="操作日志" name="1">
-                    <el-table :data="logData">
-                        <el-table-column v-for="item in logTableHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
-                            <template slot-scope="scope">
-                                <span v-if="item.type=='checkbox'">
-                                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                </span>
-                                <span v-else-if="item.type=='img'">
-                                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                                        <img :src="scope.row[item.prop]">
-                                        <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                                    </el-popover>
-                                </span>
-                                <span v-else>
-                                    <span v-if="scope.row[item.prop]">
-                                        {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                    </span>
-                                </span>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="退款责任方" name="2">
-                    <el-table :data="responsiblePartyData" fit>
-                        <el-table-column v-for="item in refundResponsiblePartyHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
-                            <template slot-scope="scope">
-                                <span v-if="item.type=='checkbox'">
-                                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                </span>
-                                <span v-else-if="item.type=='img'">
-                                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                                        <img :src="scope.row[item.prop]">
-                                        <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                                    </el-popover>
-                                </span>
-                                <span v-else>
-                                    <span v-if="scope.row[item.prop]">
-                                        {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                    </span>
-                                </span>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="多张图片" name="3">
-                    <el-table :data="refundReasonTabData">
-                        <el-table-column v-for="item in refundReasonTabHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
-                            <template slot-scope="scope">
-                                <span v-if="item.type=='checkbox'">
-                                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                                </span>
-                                <span v-else-if="item.type=='img'">
-                                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                                        <img :src="scope.row[item.prop]">
-                                        <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                                    </el-popover>
-                                </span>
-                                <span v-else>
-                                    <span v-if="scope.row[item.prop]">
-                                        {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                                    </span>
-                                </span>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-            </el-tabs>
-        </el-tabs>
+      <!--底部Tab-->
+      <el-tabs>
+        <el-tab-pane label="详细信息" name="0">
+          <el-form :model="detailRefundOrderData" class="quarter_turn">
+            <el-form-item v-for="(item,index) in detailRefundOrderHead" :label="item.label" align="center" :prop="item.prop" :key="index">
+              <span v-if="item.type=='text'">
+                <span v-if="item.inProp">
+                  <el-input v-model.trim="detailRefundOrderData[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+                <span v-else>
+                  <el-input v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+              </span>
+              <span v-else-if="item.type=='number'">
+                <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+                  <el-input type="number" v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+                </span>
+                <span v-else>
+                  <el-input type="number" v-model.trim="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+              </span>
+              <span v-else-if="item.type=='select'">
+                <el-select v-model="detailRefundOrderData[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+                  <span v-for="list in resData[item.stateVal]" :key="list.id">
+                    <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                  </span>
+                </el-select>
+              </span>
+              <span v-else-if="item.type == 'selects'">
+                <el-select v-model="detailRefundOrderData[item.prop]" :placeholder="item.holder">
+                  <span v-for="list in selectVal[item.prop]" :key="list.value">
+                    <el-option :label="list.label" :value="list.value"></el-option>
+                  </span>
+                </el-select>
+              </span>
+              <span v-else-if="item.type=='textarea'">
+                <el-input type="textarea" v-model.trim="detailRefundOrderData[item.prop]" :placehode="item.holder" :disabled="item.addChgAble"></el-input>
+              </span>
+              <span v-else-if="item.type=='checkbox'">
+                <el-checkbox v-model="detailRefundOrderData[item.prop]" :disabled="item.chgAble"></el-checkbox>
+              </span>
+              <span v-else-if="item.type=='radio'">
+                <el-radio v-model="detailRefundOrderData[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="detailRefundOrderData[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+              </span>
+              <span v-else-if="item.type=='DatePicker'">
+                <el-date-picker v-model="detailRefundOrderData[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+              </span>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="操作记录" name="1">
+          <el-table :data="operationData">
+            <el-table-column v-for="item in operationRecordHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                </span>
+                <span v-else-if="item.type=='img'">
+                  <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                    <img :src="scope.row[item.prop]">
+                    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                  </el-popover>
+                </span>
+                <span v-else>
+                  <span v-if="scope.row[item.prop]">
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="退款责任方" name="2">
+          <el-table :data="responsiblePartyData" fit>
+            <el-table-column v-for="item in refundResponsiblePartyHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                </span>
+                <span v-else-if="item.type=='img'">
+                  <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                    <img :src="scope.row[item.prop]">
+                    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                  </el-popover>
+                </span>
+                <span v-else>
+                  <span v-if="scope.row[item.prop]">
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="多张图片" name="3">
+          <el-table :data="refundReasonTabData">
+            <el-table-column v-for="item in refundReasonTabHead" :label="item.label" align="center" :width="item.width" :key="item.prop">
+              <template slot-scope="scope">
+                <span v-if="item.type=='checkbox'">
+                  <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                </span>
+                <span v-else-if="item.type=='img'">
+                  <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                    <img :src="scope.row[item.prop]">
+                    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                  </el-popover>
+                </span>
+                <span v-else>
+                  <span v-if="scope.row[item.prop]">
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
+    </el-tabs>
 
-        <!--删除单条-->
-        <el-popover placement="top" width="160" v-model="showDel" slot="tip">
-            <p>确定删除该条数据？</p>
-            <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="cancelD">取消</el-button>
-                <el-button type="primary" size="mini" @click="confirmD(delUrl,delId)">确定</el-button>
-            </div>
-        </el-popover>
+    <!--删除单条-->
+    <el-popover placement="top" width="160" v-model="showDel" slot="tip">
+      <p>确定删除该条数据？</p>
+      <div style="text-align: right; margin: 0">
+        <el-button size="mini" type="text" @click="cancelD">取消</el-button>
+        <el-button type="primary" size="mini" @click="confirmD(delUrl,delId)">确定</el-button>
+      </div>
+    </el-popover>
 
-        <el-dialog title="驳回原因" :visible.sync="refuseMask">
-            <label>{{this.updateRefundOrderFormVal.refund_order_status}}</label>
-            <el-input type="textarea" v-model="updateRefundOrderFormVal.as_remark"></el-input>
-            <div slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="refuseConfirm">确定</el-button>
-                <el-button @click="refuseCancel">取消</el-button>
-            </div>
-        </el-dialog>
+    <el-dialog title="驳回原因" :visible.sync="refuseMask">
+      <label>{{this.updateRefundOrderFormVal.refund_order_status}}</label>
+      <el-input type="textarea" v-model="updateRefundOrderFormVal.as_remark"></el-input>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="refuseConfirm">确定</el-button>
+        <el-button @click="refuseCancel">取消</el-button>
+      </div>
+    </el-dialog>
 
-    </div>
+  </div>
 </template>
 <script>
 import FileSaver from "file-saver";
@@ -365,7 +365,7 @@ export default {
           ent: this.refresh
         }
       ],
-      addSubData:[],
+      addSubData: [],
       /**SearchBox
        * 搜索框相关参数
       */
@@ -1017,18 +1017,26 @@ export default {
       /**
        * 底部tab
        */
-      logData: [],
-      logTableHead: [
+      operationData: [],
+      operationRecordHead: [
+        {
+          label: "用户",
+          prop: "user_name",
+          type: "text"
+        },
         {
           label: "操作",
-          width: "400",
           prop: "operation",
           type: "text"
         },
         {
-          label: "操作人",
-          width: "150",
-          prop: "operator_id",
+          label: "操作描述",
+          prop: "description",
+          type: "text"
+        },
+        {
+          label: "操作时间",
+          prop: "created_at",
           type: "text"
         }
       ],
@@ -1082,7 +1090,9 @@ export default {
       /**
        * 驳回
        */
-      refuseMask: false
+      refuseMask: false,
+      //操作记录
+      operationData: []
     };
   },
   computed: {
@@ -1188,12 +1198,12 @@ export default {
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = true;
           this.$fetch(this.urls.customerservicerefunds + "/searchalltreated", {
-            shops_id:this.searchBox.shops_id,
-            order_sn:this.searchBox.order_sn,
-            buyer_nick:this.searchBox.buyer_nick,
-            buyer_name:this.searchBox.buyer_name,
-            locker_id:this.searchBox.locker_id,
-            include: "refundReason,refundReasonType"
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
+            include: "refundReason,refundReasonType,refundOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -1219,15 +1229,14 @@ export default {
         case 1:
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = false;
-          this.$fetch(
-            this.urls.customerservicerefunds + "/searchfdtreated",{
-              shops_id:this.searchBox.shops_id,
-              order_sn:this.searchBox.order_sn,
-              buyer_nick:this.searchBox.buyer_nick,
-              buyer_name:this.searchBox.buyer_name,
-              locker_id:this.searchBox.locker_id,
-            }
-          ).then(
+          this.$fetch(this.urls.customerservicerefunds + "/searchfdtreated", {
+            shops_id: this.searchBox.shops_id,
+            order_sn: this.searchBox.order_sn,
+            buyer_nick: this.searchBox.buyer_nick,
+            buyer_name: this.searchBox.buyer_name,
+            locker_id: this.searchBox.locker_id,
+            include: "refundReason,refundReasonType,refundOperationRecord"
+          }).then(
             res => {
               this.loading = false;
               this.treatedOrderListData = res.data;
@@ -1259,6 +1268,7 @@ export default {
       this.orderListTabCurRowId = row.id;
       this.OrderListCurRowData = row;
       this.detailRefundOrderData = row;
+      this.operationData = row["refundOperationRecord"].data;
       this.refundReasonTabData = row["refundReason"].data;
       this.responsiblePartyData[0].responsible_party = row.responsible_party;
       this.responsiblePartyData[0].responsible_person = row.responsible_person;
@@ -1550,14 +1560,22 @@ export default {
       let index = this.orderListActiveName - 0;
       if (index == 0) {
         if (this.mergerIds.length == 1) {
-          if (val[0].refund_order_status == "订单锁定"||val[0].refund_order_status == "售后锁定"||val[0].refund_order_status == "财务锁定") {
+          if (
+            val[0].refund_order_status == "订单锁定" ||
+            val[0].refund_order_status == "售后锁定" ||
+            val[0].refund_order_status == "财务锁定"
+          ) {
             this.newOpt[0].nClick = true;
             this.newOpt[1].nClick = false;
           } else {
             this.newOpt[0].nClick = false;
             this.newOpt[1].nClick = true;
           }
-          if (val[0].refund_order_status == "已客审"||val[0].refund_order_status == "已后审"||val[0].refund_order_status == "已财审") {
+          if (
+            val[0].refund_order_status == "已客审" ||
+            val[0].refund_order_status == "已后审" ||
+            val[0].refund_order_status == "已财审"
+          ) {
             this.newOpt[2].nClick = true;
             this.newOpt[3].nClick = false;
           } else {

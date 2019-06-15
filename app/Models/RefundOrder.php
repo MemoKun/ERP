@@ -516,4 +516,9 @@ class RefundOrder extends Model
     {
         return $this->belongsTo(User::class, 'financial_id');
     }
+
+    public function refundOperationRecord()
+    {
+        return $this->hasMany(RefundOperationRecord::class, 'refund_orders_id');
+    }
 }

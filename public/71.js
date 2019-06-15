@@ -627,314 +627,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -970,6 +662,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ent: this.refresh
       }],
       Data: [],
+      operationData: [],
       /* 搜索框 */
       filterBox: false,
       searchBox: {
@@ -1390,22 +1083,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }], [{
         label: "用户",
-        width: "150",
-        prop: "user",
+        prop: "user_name",
         type: "text"
       }, {
         label: "操作",
-        width: "150",
-        prop: "operate",
+        prop: "operation",
         type: "text"
       }, {
         label: "操作描述",
-        width: "150",
-        prop: "operate_description",
+        prop: "description",
         type: "text"
       }, {
-        label: "创建时间",
-        width: "150",
+        label: "操作时间",
         prop: "created_at",
         type: "text"
       }]],
@@ -1763,7 +1452,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 20,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs,afterSaleOperationRecord"
           }).then(function (res) {
             _this.unsubmitLoading = false;
             _this.unsubmitData = res.data;
@@ -1801,7 +1490,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs,afterSaleOperationRecord"
           }).then(function (res) {
             _this.submitLoading = false;
             _this.submitData = res.data;
@@ -1839,8 +1528,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       row.index = rowIndex;
     },
-    afterSSubmissionRowClick: function afterSSubmissionRowClick(row) {
+    orderListRowClick: function orderListRowClick(row) {
       var index = this.topActiveName - 0;
+      this.curRowId = row.id;
+      this.curRowData = row;
+      this.scheduleData = row["afterSaleSchedules"].data;
+      this.defProData = row["afterSaleDefPros"].data;
+      this.operationData = row["afterSaleOperationRecord"].data;
       if (index == 0) {
         if (row.is_locked == 1) {
           this.newOpt[1].nClick = true;
@@ -1850,12 +1544,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = false;
-        };
-      };
-      this.curRowId = row.id;
-      this.curRowData = row;
-      this.scheduleData = row["afterSaleSchedules"].data;
-      this.defProData = row["afterSaleDefPros"].data;
+        }
+      }
     },
     handleSelectionChange: function handleSelectionChange(val) {
       if (val.length != 0) {
@@ -1875,13 +1565,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.newOpt[1].nClick = false;
             this.newOpt[2].nClick = true;
             this.newOpt[3].nClick = false;
-          };
+          }
         } else if (this.selection.length >= 2) {
           this.newOpt[1].nClick = true;
           this.newOpt[2].nClick = true;
           this.newOpt[3].nClick = true;
         }
-      };
+      }
       var del = [];
       val.forEach(function (selectedItem) {
         del.push(selectedItem.id);
@@ -2879,7 +2569,7 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.afterSSubmissionRowClick
+                    "row-click": _vm.orderListRowClick
                   }
                 },
                 [
@@ -3056,7 +2746,7 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.afterSSubmissionRowClick
+                    "row-click": _vm.orderListRowClick
                   }
                 },
                 [
@@ -4467,7 +4157,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.operationData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,

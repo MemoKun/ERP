@@ -9,7 +9,7 @@ class RefundOrderTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
         'paymentMethod', 'shop', 'refundPaymentMethod', 'refundReason', 'businessPersonnel',
-        'locker', 'afterSale', 'financial', 'creator', 'user',
+        'locker', 'afterSale', 'financial', 'creator', 'user','refundOperationRecord'
     ];
 
     public function transform(RefundOrder $refundOrder)
@@ -134,5 +134,10 @@ class RefundOrderTransformer extends TransformerAbstract
     public function includeUser(RefundOrder $refundOrder)
     {
         return $this->item($refundOrder->user, new UserTransformer());
+    }
+
+    public function includeRefundOperationRecord(RefundOrder $refundOrder)
+    {
+        return $this->collection($refundOrder->refundOperationRecord, new RefundOperationRecordTransformer());
     }
 }

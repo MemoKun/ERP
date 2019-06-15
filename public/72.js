@@ -639,268 +639,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -938,6 +676,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ent: this.refresh
       }],
       Data: [],
+      operationData: [],
       /* 搜索框 */
       filterBox: false,
       searchBox: {
@@ -1293,22 +1032,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: "text"
     }], [{
       label: "用户",
-      width: "150",
-      prop: "user",
+      prop: "user_name",
       type: "text"
     }, {
       label: "操作",
-      width: "150",
-      prop: "operate",
+      prop: "operation",
       type: "text"
     }, {
       label: "操作描述",
-      width: "150",
-      prop: "operate_description",
+      prop: "description",
       type: "text"
     }, {
-      label: "创建时间",
-      width: "150",
+      label: "操作时间",
       prop: "created_at",
       type: "text"
     }]]), _defineProperty(_ref, "addActiveName", "0"), _defineProperty(_ref, "moreForms", true), _defineProperty(_ref, "selection", ""), _defineProperty(_ref, "updateMask", false), _defineProperty(_ref, "updateId", ""), _defineProperty(_ref, "updateIndex", ""), _defineProperty(_ref, "updateSchIndex", ""), _defineProperty(_ref, "updateForm", {
@@ -1451,7 +1186,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[4].nClick = true;
           this.$fetch(this.urls.aftersale, {
             order_status: 30,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs,afterSaleOperationRecord"
           }).then(function (res) {
             _this.unsubmitLoading = false;
             _this.unsubmitData = res.data;
@@ -1489,7 +1224,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[4].nClick = false;
           this.$fetch(this.urls.aftersale, {
             order_status: 40,
-            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs"
+            include: "afterSaleSchedules.user,afterSaleDefPros,user,afterSaleRefunds,afterSaleReturns,afterSalePatchs,afterSaleOperationRecord"
           }).then(function (res) {
             _this.submitLoading = false;
             _this.submitData = res.data;
@@ -1527,7 +1262,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       row.index = rowIndex;
     },
-    afterSReviewRowClick: function afterSReviewRowClick(row) {
+    orderListRowClick: function orderListRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
       this.scheduleData = row["afterSaleSchedules"].data;
@@ -1535,6 +1270,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.returnData = row["afterSaleReturns"].data;
       this.patchData = row["afterSalePatchs"].data;
       this.defProData = row["afterSaleDefPros"].data;
+      this.operationData = row["afterSaleOperationRecord"].data;
     },
     handleSelectionChange: function handleSelectionChange(val) {
       if (val.length != 0) {
@@ -1828,7 +1564,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.updateMask = false;
         this.updateForm.refund_data = [];
         this.refresh();
-      };
+      }
       if (this.ruleForm.is_return) {
         this.updateForm.return_data.map(function (item) {
           _this6.$post(_this6.urls.aftersalereturn, item).then(function () {}, function (err) {
@@ -1848,7 +1584,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.updateMask = false;
         this.updateForm.return_data = [];
         this.refresh();
-      };
+      }
       if (this.ruleForm.is_patch) {
         this.updateForm.patch_data.map(function (item) {
           _this6.$post(_this6.urls.aftersalepatch, item).then(function () {}, function (err) {
@@ -1867,13 +1603,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
         this.updateMask = false;
         this.refresh();
-      };
+      }
       if (!this.ruleForm.is_refund && !this.ruleForm.is_return && !this.ruleForm.is_patch) {
         this.$message({
           message: "没有选中责任方",
           type: "warning"
         });
-      };
+      }
       this.updateForm.patch_data = [];
     },
     edit: function edit() {
@@ -2551,7 +2287,7 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.afterSReviewRowClick
+                    "row-click": _vm.orderListRowClick
                   }
                 },
                 [
@@ -2728,7 +2464,7 @@ var render = function() {
                   },
                   on: {
                     "selection-change": _vm.handleSelectionChange,
-                    "row-click": _vm.afterSReviewRowClick
+                    "row-click": _vm.orderListRowClick
                   }
                 },
                 [
@@ -4091,7 +3827,7 @@ var render = function() {
             [
               _c(
                 "el-table",
-                { attrs: { data: _vm.Data } },
+                { attrs: { data: _vm.operationData } },
                 _vm._l(_vm.btmTableHead[this.bottomActiveName], function(item) {
                   return _c("el-table-column", {
                     key: item.label,
