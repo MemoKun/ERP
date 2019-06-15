@@ -161,10 +161,30 @@ class RefundOrder extends Model
             $this->business_personnel_id = Auth::guard('api')->id();
             $this->locker_id = Auth::guard('api')->id();
             $this->refund_order_status = self::REFUND_STATUS_LOCK;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new RefundOperationRecord;
+            $operationData->refund_orders_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "锁定";
+            $operationData->description = "订单锁定";
+            $operationData->save();
         } else {
             $this->business_personnel_id = 0;
             $this->locker_id = 0;
             $this->refund_order_status = self::REFUND_STATUS_NEW;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new RefundOperationRecord;
+            $operationData->refund_orders_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "解锁";
+            $operationData->description = "订单解锁";
+            $operationData->save();
         }
 
         $this->save();
@@ -181,14 +201,34 @@ class RefundOrder extends Model
         $this->refund_order_status = self::REFUND_STATUS_CS_AUDIT;
         $this->cs_audit_at = Carbon::now();
         $this->save();
-    }
 
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new RefundOperationRecord;
+        $operationData->refund_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "客审";
+        $operationData->description = "客审";
+        $operationData->save();
+    }
+    /**售后驳回*/
     public function asDoRefuse()
     {
         $this->locker_id = 0;
         $this->refund_order_status = self::REFUND_STATUS_NEW;
         $this->locked_at = null;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new RefundOperationRecord;
+        $operationData->refund_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "售后驳回";
+        $operationData->description = "售后驳回";
+        $operationData->save();
     }
 
     /**
@@ -202,6 +242,16 @@ class RefundOrder extends Model
         $this->refund_order_status = self::REFUND_STATUS_NEW;
         $this->cs_audit_at = null;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new RefundOperationRecord;
+        $operationData->refund_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "客服退审";
+        $operationData->description = "客服退审";
+        $operationData->save();
     }
 
     /**
@@ -224,9 +274,29 @@ class RefundOrder extends Model
         if ($this->asUnlock()) {
             $this->locker_id = Auth::guard('api')->id();
             $this->refund_order_status = self::REFUND_STATUS_AS_LOCK;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new RefundOperationRecord;
+            $operationData->refund_orders_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "售后锁定";
+            $operationData->description = "售后锁定";
+            $operationData->save();
         } else {
             $this->locker_id = 0;
             $this->refund_order_status = self::REFUND_STATUS_CS_AUDIT;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new RefundOperationRecord;
+            $operationData->refund_orders_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "售后解锁";
+            $operationData->description = "售后解锁";
+            $operationData->save();
         }
 
         $this->save();
@@ -244,6 +314,16 @@ class RefundOrder extends Model
         $this->refund_order_status = self::REFUND_STATUS_AS_AUDIT;
         $this->as_audit_at = Carbon::now();
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new RefundOperationRecord;
+        $operationData->refund_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "售后审核";
+        $operationData->description = "售后审核";
+        $operationData->save();
     }
 
     /**
@@ -257,6 +337,16 @@ class RefundOrder extends Model
         $this->refund_order_status = self::REFUND_STATUS_CS_AUDIT;
         $this->as_audit_at = null;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new RefundOperationRecord;
+        $operationData->refund_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "售后退审";
+        $operationData->description = "售后退审";
+        $operationData->save();
     }
 
     /**
@@ -279,9 +369,29 @@ class RefundOrder extends Model
         if ($this->fdUnlock()) {
             $this->locker_id = Auth::guard('api')->id();
             $this->refund_order_status = self::REFUND_STATUS_FD_LOCK;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new RefundOperationRecord;
+            $operationData->refund_orders_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "财务锁定";
+            $operationData->description = "财务锁定";
+            $operationData->save();
         } else {
             $this->locker_id = 0;
             $this->refund_order_status = self::REFUND_STATUS_AS_AUDIT;
+
+            $userId = Auth::guard('api')->id();
+            $userName = User::find($userId)->real_name;
+            $operationData = new RefundOperationRecord;
+            $operationData->refund_orders_id = $this->id;
+            $operationData->user_id = Auth::guard('api')->id();
+            $operationData->user_name = $userName;
+            $operationData->operation = "财务解锁";
+            $operationData->description = "财务解锁";
+            $operationData->save();
         }
 
         $this->save();
@@ -299,6 +409,16 @@ class RefundOrder extends Model
         $this->refund_order_status = self::REFUND_STATUS_FD_AUDIT;
         $this->f_audit_at = Carbon::now();
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new RefundOperationRecord;
+        $operationData->refund_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "财务审核";
+        $operationData->description = "财务审核";
+        $operationData->save();
     }
 
     /**
@@ -312,6 +432,16 @@ class RefundOrder extends Model
         $this->refund_order_status = self::REFUND_STATUS_AS_AUDIT;
         $this->f_audit_at = null;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new RefundOperationRecord;
+        $operationData->refund_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = "财务退审";
+        $operationData->description = "财务退审";
+        $operationData->save();
     }
 
     /**
