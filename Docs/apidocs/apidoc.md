@@ -7571,9 +7571,9 @@ FORMAT: 1A
             }
 
 # purchases [/api]
-采购单资源
+采购单资源.
 
-## 获取所有采购单 [GET /api/purchases[?status=true&include=user,purchaseLists,cancelPurchases]]
+## 获取所有采购单. [GET /api/purchases[?status=true&include=user,purchaseLists,cancelPurchases]]
 
 
 + Parameters
@@ -7718,7 +7718,7 @@ FORMAT: 1A
                 }
             }
 
-## 新增采购单 [POST /api/purchases]
+## 新增采购单. [POST /api/purchases]
 
 
 + Parameters
@@ -7901,7 +7901,7 @@ FORMAT: 1A
                 }
             }
 
-## 显示单条采购单 [GET /api/purchases/:id]
+## 显示单条采购单. [GET /api/purchases/:id]
 
 
 + Response 404 (application/json)
@@ -8029,7 +8029,7 @@ FORMAT: 1A
                 }
             }
 
-## 修改采购单 [PATCH /api/purchases/:id]
+## 修改采购单. [PATCH /api/purchases/:id]
 
 
 + Parameters
@@ -8224,7 +8224,7 @@ FORMAT: 1A
                 }
             }
 
-## 删除采购单 [DELETE /api/purchases/:id]
+## 删除采购单. [DELETE /api/purchases/:id]
 
 
 + Response 404 (application/json)
@@ -8240,7 +8240,7 @@ FORMAT: 1A
 
             []
 
-## 删除一组采购单 [DELETE /api/purchases]
+## 删除一组采购单. [DELETE /api/purchases]
 
 
 + Parameters
@@ -8310,7 +8310,7 @@ FORMAT: 1A
 
             []
 
-## 提交 [PUT /api/purchases/:id/submit]
+## 提交. [PUT /api/purchases/:id/submit]
 
 
 + Response 422 (application/json)
@@ -8326,7 +8326,7 @@ FORMAT: 1A
 
             []
 
-## 打印 [PUT /api/purchases/:id/print]
+## 打印. [PUT /api/purchases/:id/print]
 
 
 + Response 422 (application/json)
@@ -8342,7 +8342,7 @@ FORMAT: 1A
 
             []
 
-## 审核 [PUT /api/purchases/:id/audit]
+## 审核. [PUT /api/purchases/:id/audit]
 
 
 + Response 422 (application/json)
@@ -14305,9 +14305,9 @@ FORMAT: 1A
             }
 
 # financialdepts [/api]
-财务部资源
+财务部资源.
 
-## 获取所有财务部订单 [GET /api/financialdepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
+## 获取所有财务部订单. [GET /api/financialdepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
 + Parameters
@@ -14413,7 +14413,7 @@ FORMAT: 1A
                 }
             }
 
-## 财务驳回 [PUT /api/financialdepts/:id/reject]
+## 财务驳回. [PUT /api/financialdepts/:id/reject]
 
 
 + Response 422 (application/json)
@@ -14595,9 +14595,9 @@ FORMAT: 1A
             []
 
 # warehousingdepts [/api]
-仓储部资源
+仓储部资源.
 
-## 获取仓储部所有订单 [GET /api/warehousingdepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
+## 获取仓储部所有订单. [GET /api/warehousingdepts{?status}[&include=shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails]]
 
 
 + Parameters
@@ -14703,7 +14703,7 @@ FORMAT: 1A
                 }
             }
 
-## 显示单条仓储订单 [GET /api/warehousingdepts/:id[?include=logistic,distribution]]
+## 显示单条仓储订单. [GET /api/warehousingdepts/:id[?include=logistic,distribution]]
 
 
 + Response 404 (application/json)
@@ -14756,7 +14756,7 @@ FORMAT: 1A
                 }
             }
 
-## 仓储修改 [PATCH /api/warehousingdepts/:id]
+## 仓储修改. [PATCH /api/warehousingdepts/:id]
 
 
 + Parameters
@@ -14833,7 +14833,7 @@ FORMAT: 1A
                 }
             }
 
-## 仓储发货 [PUT /api/warehousingdepts/:id/stockout]
+## 仓储发货. [PUT /api/warehousingdepts/:id/stockout]
 
 
 + Response 422 (application/json)
@@ -14865,7 +14865,7 @@ FORMAT: 1A
 
             []
 
-## 仓储出库退回 [PUT /api/warehousingdepts/:id/stockoutunaudit]
+## 仓储出库退回. [PUT /api/warehousingdepts/:id/stockoutunaudit]
 
 
 + Response 422 (application/json)
