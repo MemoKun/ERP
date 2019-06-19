@@ -1608,7 +1608,7 @@ export default {
       checkboxInit: false,
       orderListIndex: "",
       alreadyHandle: [],
-      orderDtlFormVal: {},
+      orderDtlFormVal: [],
       orderDtlFormHead: [
         {
           label: "系统单号",
@@ -1783,7 +1783,7 @@ export default {
       ],
       proDtlData: [],
       curRowId: "",
-      curRowData: {},
+      curRowData: [],
       orderDtlHead: [
         [
           {
@@ -2410,7 +2410,7 @@ export default {
       toggleText: true,
       toggleHeight: true,
       clickFlag: false,
-      proCurSkuData: {},
+      proCurSkuData: [],
       proSkuVal: [],
       proSkuHead: [
         {
@@ -2579,7 +2579,7 @@ export default {
       proSubmitData: [],
       proIds: [],
       addIds: [],
-      proCompRow: {},
+      proCompRow: [],
       proRIndex: "",
       receiveInfo: {
         receiver_name: "",
@@ -2598,10 +2598,10 @@ export default {
       addSubData: [],
       /*修改*/
       updateCustomerMask: false,
-      updateCustomerFormVal: {},
+      updateCustomerFormVal: [],
       updateActiveName: "0",
       updateProData: [],
-      updateReceiveInfo: {},
+      updateReceiveInfo: [],
       updateExpenseData: [],
       updateProIds: [],
       /*删除单条*/
@@ -2636,7 +2636,7 @@ export default {
         }
       ],
       splitRowIndex: "",
-      splitRow: {},
+      splitRow: [],
       mergerIds: []
     };
   },

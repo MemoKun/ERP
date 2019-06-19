@@ -1690,12 +1690,12 @@ export default {
       proDtlData: [],
       curRowId: "",
       curRowData: {},
-      operationData:[],//操作记录
-      relatedInfoData:[],//关联信息
-      otherFeeData:[],//其他费用
-      rejectReasonData:[],//驳回原因
-      offListData:[],//优惠列表
-      imageData:[],//订单图片
+      operationData: [], //操作记录
+      relatedInfoData: [], //关联信息
+      otherFeeData: [], //其他费用
+      rejectReasonData: [], //驳回原因
+      offListData: [], //优惠列表
+      imageData: [], //订单图片
       orderDtlHead: [
         [
           {
@@ -2698,12 +2698,11 @@ export default {
       /** 内部便签InnerNote*/
       InnerNoteData: [],
       InnerNoteHead: [],
-      
 
       curCombRowData: [],
       curProSkuNum: "",
       curProSkuVolume: "",
-      operationData:[],
+      operationData: []
     };
   },
   computed: {
@@ -2800,7 +2799,7 @@ export default {
           /*支付明细*/
           this.payDtlData = data["paymentDetails"]["data"];
           //操作记录
-          this.operationData=data['orderOperationRecord']['data'];
+          this.operationData = data["orderOperationRecord"]["data"];
           break;
       }
     },
@@ -3057,7 +3056,6 @@ export default {
         this.newOpt[16].nClick = false;
         this.newOpt[17].nClick = false;
       }
-      
     },
     orderDbClick(row) {
       this.activeName = "1";

@@ -2519,7 +2519,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           /*支付明细*/
           this.payDtlData = data["paymentDetails"]["data"];
           //操作记录
-          this.operationData = data['orderOperationRecord']['data'];
+          this.operationData = data["orderOperationRecord"]["data"];
           break;
       }
     },

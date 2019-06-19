@@ -750,8 +750,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -824,8 +822,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ent: this.refresh,
         nClick: false
       }],
-      waitingStockOut: {},
-      alreadyStockOut: {},
+      waitingStockOut: [],
+      alreadyStockOut: [],
       /*获取数据*/
       filterBox: false,
       searchBox: {
@@ -1300,7 +1298,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       proDtlData: [],
       curRowId: "",
-      curRowData: {},
+      curRowData: [],
       orderDtlHead: [[{
         label: "sku名称",
         width: "160",
@@ -1625,7 +1623,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "number"
       }],
       cargoAuditMask: false,
-      cargoAuditTableVal: [],
+      cargoAuditTableVal: {},
       cargoAuditTableHead: [{
         label: "仓库",
         prop: "warehouses_id",
@@ -1854,8 +1852,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "checkbox"
       }],
       addSubData: [],
-      updateCustomerMask: false
-    }, _defineProperty(_ref, "updateCustomerFormVal", {}), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "updateProIds", []), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "proRIndex", ""), _defineProperty(_ref, "proCompRowIndex", ""), _defineProperty(_ref, "proSubmitData", []), _defineProperty(_ref, "proIds", []), _defineProperty(_ref, "addIds", []), _defineProperty(_ref, "proCompRow", {}), _defineProperty(_ref, "proRIndex", ""), _defineProperty(_ref, "receiveInfo", {
+      updateCustomerMask: false,
+      updateActiveName: "0",
+      updateProData: [],
+      updateReceiveInfo: [],
+      updateExpenseData: [],
+      updateProIds: [],
+      expenseData: [],
+      proRIndex: "",
+      proCompRowIndex: "",
+      proSubmitData: [],
+      proIds: [],
+      addIds: [],
+      proCompRow: []
+    }, _defineProperty(_ref, "proRIndex", ""), _defineProperty(_ref, "receiveInfo", {
       receiver_name: "",
       receiver_phone: "",
       receiver_mobile: "",
@@ -1865,7 +1875,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       receiver_district: "",
       receiver_address: "",
       receiver_zip: ""
-    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "apiData", {}), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "splitHead", [{
+    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "apiData", []), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "splitHead", [{
       label: "商品编码",
       prop: "commodity_code",
       type: "text"
@@ -1882,7 +1892,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       prop: "newData",
       inProp: "quantity",
       type: "number"
-    }]), _defineProperty(_ref, "splitRowIndex", ""), _defineProperty(_ref, "splitRow", {}), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "operationData", []), _ref;
+    }]), _defineProperty(_ref, "splitRowIndex", ""), _defineProperty(_ref, "splitRow", []), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "operationData", []), _defineProperty(_ref, "innerNote", []), _ref;
   },
 
   computed: {
@@ -4759,7 +4769,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.orderDtlFormVal, fit: "" } },
+                        { attrs: { data: _vm.innerNote, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5749,10 +5759,6 @@ var render = function() {
           _c(
             "el-tabs",
             [
-              _c("label", [_vm._v(_vm._s(this.updateReceiveInfo))]),
-              _vm._v(" "),
-              _c("label", [_vm._v(_vm._s(this.updateExpenseData))]),
-              _vm._v(" "),
               _c(
                 "el-tab-pane",
                 { attrs: { label: "发货明细", name: "0" } },

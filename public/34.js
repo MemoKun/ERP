@@ -1544,7 +1544,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       checkboxInit: false,
       orderListIndex: "",
       alreadyHandle: [],
-      orderDtlFormVal: {},
+      orderDtlFormVal: [],
       orderDtlFormHead: [{
         label: "系统单号",
         prop: "system_order_no",
@@ -1693,7 +1693,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       proDtlData: [],
       curRowId: "",
-      curRowData: {},
+      curRowData: [],
       orderDtlHead: [[{
         label: "sku名称",
         width: "160",
@@ -2210,7 +2210,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       toggleText: true,
       toggleHeight: true,
       clickFlag: false,
-      proCurSkuData: {},
+      proCurSkuData: [],
       proSkuVal: [],
       proSkuHead: [{
         label: "sku名称",
@@ -2352,7 +2352,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       proSubmitData: [],
       proIds: [],
       addIds: [],
-      proCompRow: {},
+      proCompRow: [],
       proRIndex: "",
       receiveInfo: {
         receiver_name: "",
@@ -2371,10 +2371,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       addSubData: [],
       /*修改*/
       updateCustomerMask: false,
-      updateCustomerFormVal: {},
+      updateCustomerFormVal: [],
       updateActiveName: "0",
       updateProData: [],
-      updateReceiveInfo: {},
+      updateReceiveInfo: [],
       updateExpenseData: [],
       updateProIds: [],
       /*删除单条*/
@@ -2404,7 +2404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "number"
       }],
       splitRowIndex: "",
-      splitRow: {},
+      splitRow: [],
       mergerIds: []
     };
   },

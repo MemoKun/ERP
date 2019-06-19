@@ -392,7 +392,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="内部便签" name="2">
-            <el-table :data="orderDtlFormVal" fit>
+            <el-table :data="innerNote" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -605,8 +605,6 @@
     <!--发货-->
     <el-dialog title="订单发货" :visible.sync="stockOutMask" :class="{'more-forms':moreForms}">
       <el-tabs>
-        <label>{{this.updateReceiveInfo}}</label>
-        <label>{{this.updateExpenseData}}</label>
         <el-tab-pane label="发货明细" name="0">
           <el-form :model="updateCustomerFormVal" :rules="addStockOutDtlRules" class="storageUpdateForm" id="form">
             <el-form-item v-for="(item,index) in stockOutDtlHead" :key="index" :label="item.label" :prop="item.prop">
@@ -825,8 +823,8 @@ export default {
           nClick: false
         }
       ],
-      waitingStockOut: {},
-      alreadyStockOut: {},
+      waitingStockOut: [],
+      alreadyStockOut: [],
       /*获取数据*/
       filterBox: false,
       searchBox: {
@@ -1388,7 +1386,7 @@ export default {
       ],
       proDtlData: [],
       curRowId: "",
-      curRowData: {},
+      curRowData: [],
       orderDtlHead: [
         [
           {
@@ -1801,7 +1799,7 @@ export default {
         }
       ],
       cargoAuditMask: false,
-      cargoAuditTableVal: [],
+      cargoAuditTableVal: {},
       cargoAuditTableHead: [
         {
           label: "仓库",
@@ -2081,10 +2079,9 @@ export default {
       ],
       addSubData: [],
       updateCustomerMask: false,
-      updateCustomerFormVal: {},
       updateActiveName: "0",
       updateProData: [],
-      updateReceiveInfo: {},
+      updateReceiveInfo: [],
       updateExpenseData: [],
       updateProIds: [],
       expenseData: [],
@@ -2093,7 +2090,7 @@ export default {
       proSubmitData: [],
       proIds: [],
       addIds: [],
-      proCompRow: {},
+      proCompRow: [],
       proRIndex: "",
       receiveInfo: {
         receiver_name: "",
@@ -2110,7 +2107,7 @@ export default {
       expenseData: [],
       expenseRIndex: "",
       addSubData: [],
-      apiData: {},
+      apiData: [],
       mergerIds: [],
       splitMask: false,
       splitVal: [],
@@ -2138,9 +2135,10 @@ export default {
         }
       ],
       splitRowIndex: "",
-      splitRow: {},
+      splitRow: [],
       mergerIds: [],
-      operationData: []
+      operationData: [],
+      innerNote:[],
     };
   },
   computed: {
