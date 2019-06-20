@@ -423,7 +423,10 @@
         this.filterBox = !this.filterBox;
       },
       test() {
-        console.log(1);
+        this.$message({
+        message:"此功能处于开发调试中",
+        type:"success"
+      })
       },
       handleClick(tab, event) {
         console.log(tab, event);

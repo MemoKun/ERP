@@ -2162,7 +2162,10 @@ export default {
   },
   methods: {
     test() {
-      console.log(1);
+      this.$message({
+        message:"此功能处于开发调试中",
+        type:"success"
+      })
     },
     /*获取数据*/
     toggleShow() {

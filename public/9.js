@@ -34255,7 +34255,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.filterBox = !this.filterBox;
     },
     test: function test() {
-      console.log(1);
+      this.$message({
+        message: "此功能处于开发调试中",
+        type: "success"
+      });
     },
     handleRemove: function handleRemove(file, fileList) {
       console.log(file, fileList);

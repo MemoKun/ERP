@@ -1911,7 +1911,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: (_methods = {
     test: function test() {
-      console.log(1);
+      this.$message({
+        message: "此功能处于开发调试中",
+        type: "success"
+      });
     },
 
     /*获取数据*/

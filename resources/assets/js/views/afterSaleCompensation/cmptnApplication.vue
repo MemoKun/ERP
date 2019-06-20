@@ -1727,7 +1727,10 @@ export default {
       this.filterBox = !this.filterBox;
     },
     test() {
-      console.log(1);
+      this.$message({
+        message:"此功能处于开发调试中",
+        type:"success"
+      })
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
