@@ -359,7 +359,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="内部便签" name="4">
-            <el-table :data="innerNoteData" fit>
+            <el-table :data="innerNote" fit>
               <el-table-column v-for="item in innerNoteHead" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span>
@@ -1875,7 +1875,7 @@ export default {
         }
       ],
       /**内部便签 */
-      innerNoteData: [],
+      innerNote: [],
       innerNoteHead: [
         {
           label: "主题",
@@ -2575,7 +2575,7 @@ export default {
           this.proDtlData = res.data[0] ? res.data["orderItems"].data : [];
           this.cargoAuditData = res.data;
           this.payDtlData = res.data[0] ? res.data["paymentDetails"].data : [];
-          /*this.innerNoteData = [];
+          /*this.innerNote = [];
           this.operationData = [];
           this.checkDtlData = [];*/
           this.logisticsData = res.data[0]
@@ -2673,7 +2673,7 @@ export default {
       this.proDtlData = row["orderItems"].data;
       this.cargoAuditData = row["orderItems"].data;
       this.payDtlData = row["paymentDetails"].data;
-      this.innerNoteData = [];
+      this.innerNote = [];
       this.checkDtlData = [];
       this.logisticsData = [
         {
@@ -2729,7 +2729,7 @@ export default {
       this.proDtlData = row["orderItems"].data;
       this.cargoAuditData = row["orderItems"].data;
       this.payDtlData = row["paymentDetails"].data;
-      this.innerNoteData = [];
+      this.innerNote = [];
       this.operationData = [];
       this.checkDtlData = [];
       this.logisticsData = [

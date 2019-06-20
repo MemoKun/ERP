@@ -1865,7 +1865,7 @@ export default {
       let index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(
             this.urls.customerservicedepts + "/searchordersettlement",
             {
@@ -1906,7 +1906,7 @@ export default {
           );
           break;
         case 1:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(
             this.urls.customerservicedepts + "/searchordersettlement",
             {
@@ -1940,7 +1940,7 @@ export default {
           );
           break;
         case 2:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(
             this.urls.customerservicedepts + "/searchordersettlement",
             {
@@ -1974,7 +1974,7 @@ export default {
           );
           break;
         case 3:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(
             this.urls.customerservicedepts + "/searchordersettlement",
             {
@@ -2008,7 +2008,7 @@ export default {
           );
           break;
         case 4:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(
             this.urls.customerservicedepts + "/searchordersettlement",
             {
@@ -2042,7 +2042,7 @@ export default {
           );
           break;
         case 5:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(
             this.urls.customerservicedepts + "/searchordersettlement",
             {

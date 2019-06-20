@@ -375,4 +375,9 @@ class ChangeOrder extends Model
     {
         return $this->hasMany(PaymentDetail::class, 'change_orders_id');
     }
+
+    public function orderOperationRecord()
+    {
+        return $this->hasMany(OrderOperationRecord::class, 'orders_id');
+    }
 }

@@ -945,7 +945,7 @@ export default {
 
       /**选择订单界面Dialog 订单列表*/
       chooseOrderMask: false,
-      chooseOrderData: {},
+      chooseOrderData: [],
       chooseOrderHead: [
         {
           label: "订单编号",
@@ -996,7 +996,7 @@ export default {
         }
       ],
       /**选择订单界面Dialog 产品列表*/
-      proData: {},
+      proData: [],
       chooseOrderProListHead: [
         {
           label: "sku名称",
@@ -2024,7 +2024,6 @@ export default {
 
       /*修改*/
       updateCustomerMask: false,
-      addChangeOrderFormVal: {},
       updateActiveName: "0",
       updateProData: [],
       updateReceiveInfo: {},
@@ -2037,7 +2036,7 @@ export default {
       delId: "",
 
       /**底部变更明细*/
-      changeDetails: {},
+      changeDetails: [],
       changeDetailsHead: [
         {
           label: "组合商品",
@@ -2215,7 +2214,6 @@ export default {
           addChgAble: false
         }
       ],
-      operationData: {},
       operationHead: [
         {
           label: "用户",
@@ -2238,6 +2236,13 @@ export default {
           type: "text"
         }
       ],
+      operationData: [], //操作记录
+      relatedInfoData: [], //关联信息
+      otherFeeData: [], //其他费用
+      rejectReasonData: [], //驳回原因
+      offListData: [], //优惠列表
+      imageData: [], //订单图片
+      innerNote:[],//内部便签
 
       //批量选择 批量删除
       ids: [],
@@ -2478,7 +2483,6 @@ export default {
      **/
     //1、新增订单变更，功能主要为打开新增变更Dialog
     addChanges() {
-      console.log("addChanges");
       this.addOrderChangesMask = true;
       this.addIds = [];
       this.proData = [];
@@ -2855,7 +2859,6 @@ export default {
      **/
     //1、点击提交按钮，fetch数据并加载到update窗口里
     updateChanges() {
-      console.log("updateChanges");
       if (this.newOpt[1].nClick) {
         return;
       } else {
@@ -3119,7 +3122,6 @@ export default {
      * 
      **/
     handleSubmit() {
-      console.log("handleSubmit");
       if (this.newOpt[3].nClick) {
         return;
       } else {
@@ -3152,7 +3154,6 @@ export default {
      * 
      **/
     handleAudit() {
-      console.log("handleAudit");
       if (this.newOpt[4].nClick) {
         return;
       } else {
@@ -3345,7 +3346,7 @@ export default {
       }
     },
     test() {
-      console.log(1);
+      console.log("test");
     },
     confirmAddProDtl() {
       if (this.addOrderChangesMask) {

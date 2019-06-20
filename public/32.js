@@ -1283,7 +1283,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       /*删除单条*/
       showDel: false,
       delUrl: "",
-      delId: ""
+      delId: "",
+      innerNote: [],
+      operationData: [], //操作记录
+      relatedInfoData: [], //关联信息
+      otherFeeData: [], //其他费用
+      rejectReasonData: [], //驳回原因
+      offListData: [], //优惠列表
+      imageData: [] //订单图片
     };
   },
 
@@ -3264,7 +3271,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.orderDtlFormVal, fit: "" } },
+                        { attrs: { data: _vm.innerNote, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -3426,7 +3433,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.relatedInfoData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -3507,7 +3514,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.otherFeeData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -3588,7 +3595,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.rejectReasonData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -3669,7 +3676,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.offListData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -3750,7 +3757,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.imageData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {

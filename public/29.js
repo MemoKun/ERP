@@ -947,7 +947,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       /**选择订单界面Dialog 订单列表*/
       chooseOrderMask: false,
-      chooseOrderData: {},
+      chooseOrderData: [],
       chooseOrderHead: [{
         label: "订单编号",
         width: "220",
@@ -988,7 +988,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "text"
       }],
       /**选择订单界面Dialog 产品列表*/
-      proData: {},
+      proData: [],
       chooseOrderProListHead: [{
         label: "sku名称",
         width: "160",
@@ -1852,7 +1852,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       receiver_district: "",
       receiver_address: "",
       receiver_zip: ""
-    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "updateCustomerMask", false), _defineProperty(_ref, "addChangeOrderFormVal", {}), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "addChangeOrderProIds", []), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delUrl", ""), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "changeDetails", {}), _defineProperty(_ref, "changeDetailsHead", [{
+    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "updateCustomerMask", false), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "addChangeOrderProIds", []), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delUrl", ""), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "changeDetails", []), _defineProperty(_ref, "changeDetailsHead", [{
       label: "组合商品",
       prop: "combinations",
       type: "checkbox"
@@ -1994,7 +1994,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: "textarea",
       editChgAble: false,
       addChgAble: false
-    }]), _defineProperty(_ref, "operationData", {}), _defineProperty(_ref, "operationHead", [{
+    }]), _defineProperty(_ref, "operationHead", [{
       label: "用户",
       prop: "user_name",
       type: "text"
@@ -2010,7 +2010,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       label: "创建时间",
       prop: "created_at",
       type: "text"
-    }]), _defineProperty(_ref, "ids", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "splitHead", [{
+    }]), _defineProperty(_ref, "operationData", []), _defineProperty(_ref, "relatedInfoData", []), _defineProperty(_ref, "otherFeeData", []), _defineProperty(_ref, "rejectReasonData", []), _defineProperty(_ref, "offListData", []), _defineProperty(_ref, "imageData", []), _defineProperty(_ref, "innerNote", []), _defineProperty(_ref, "ids", []), _defineProperty(_ref, "splitMask", false), _defineProperty(_ref, "splitVal", []), _defineProperty(_ref, "splitHead", [{
       label: "商品编码",
       prop: "commodity_code",
       type: "text"
@@ -2204,7 +2204,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      **/
     //1、新增订单变更，功能主要为打开新增变更Dialog
     addChanges: function addChanges() {
-      console.log("addChanges");
       this.addOrderChangesMask = true;
       this.addIds = [];
       this.proData = [];
@@ -2545,7 +2544,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     updateChanges: function updateChanges() {
       var _this5 = this;
 
-      console.log("updateChanges");
       if (this.newOpt[1].nClick) {
         return;
       } else {
@@ -2806,7 +2804,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleSubmit: function handleSubmit() {
       var _this7 = this;
 
-      console.log("handleSubmit");
       if (this.newOpt[3].nClick) {
         return;
       } else {
@@ -2839,7 +2836,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleAudit: function handleAudit() {
       var _this8 = this;
 
-      console.log("handleAudit");
       if (this.newOpt[4].nClick) {
         return;
       } else {
@@ -3013,7 +3009,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     test: function test() {
-      console.log(1);
+      console.log("test");
     },
     confirmAddProDtl: function confirmAddProDtl() {
       var _this9 = this;

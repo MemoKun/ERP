@@ -1655,7 +1655,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         type: "text"
       }],
       /**内部便签 */
-      innerNoteData: [],
+      innerNote: [],
       innerNoteHead: [{
         label: "主题",
         prop: "theme",
@@ -2261,7 +2261,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.proDtlData = res.data[0] ? res.data["orderItems"].data : [];
         _this.cargoAuditData = res.data;
         _this.payDtlData = res.data[0] ? res.data["paymentDetails"].data : [];
-        /*this.innerNoteData = [];
+        /*this.innerNote = [];
         this.operationData = [];
         this.checkDtlData = [];*/
         _this.logisticsData = res.data[0] ? [{
@@ -2338,7 +2338,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proDtlData = row["orderItems"].data;
       this.cargoAuditData = row["orderItems"].data;
       this.payDtlData = row["paymentDetails"].data;
-      this.innerNoteData = [];
+      this.innerNote = [];
       this.checkDtlData = [];
       this.logisticsData = [{
         orders: row["logistic"]["orders"],
@@ -2390,7 +2390,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proDtlData = row["orderItems"].data;
       this.cargoAuditData = row["orderItems"].data;
       this.payDtlData = row["paymentDetails"].data;
-      this.innerNoteData = [];
+      this.innerNote = [];
       this.operationData = [];
       this.checkDtlData = [];
       this.logisticsData = [{
@@ -4266,7 +4266,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.innerNoteData, fit: "" } },
+                        { attrs: { data: _vm.innerNote, fit: "" } },
                         _vm._l(_vm.innerNoteHead, function(item) {
                           return _c("el-table-column", {
                             key: item.label,

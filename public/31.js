@@ -1892,7 +1892,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       prop: "newData",
       inProp: "quantity",
       type: "number"
-    }]), _defineProperty(_ref, "splitRowIndex", ""), _defineProperty(_ref, "splitRow", []), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "operationData", []), _defineProperty(_ref, "innerNote", []), _ref;
+    }]), _defineProperty(_ref, "splitRowIndex", ""), _defineProperty(_ref, "splitRow", []), _defineProperty(_ref, "mergerIds", []), _defineProperty(_ref, "operationData", []), _defineProperty(_ref, "relatedInfoData", []), _defineProperty(_ref, "otherFeeData", []), _defineProperty(_ref, "rejectReasonData", []), _defineProperty(_ref, "offListData", []), _defineProperty(_ref, "imageData", []), _defineProperty(_ref, "innerNote", []), _ref;
   },
 
   computed: {
@@ -4931,7 +4931,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.relatedInfoData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5012,7 +5012,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.otherFeeData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5093,7 +5093,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.rejectReasonData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5174,7 +5174,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.offListData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {
@@ -5255,7 +5255,7 @@ var render = function() {
                     [
                       _c(
                         "el-table",
-                        { attrs: { data: _vm.curRowData, fit: "" } },
+                        { attrs: { data: _vm.imageData, fit: "" } },
                         _vm._l(_vm.orderDtlHead[_vm.rightActiveName], function(
                           item
                         ) {

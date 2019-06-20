@@ -290,7 +290,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="内部便签" name="2">
-            <el-table :data="orderDtlFormVal" fit>
+            <el-table :data="innerNote" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -326,7 +326,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="关联信息" name="4">
-            <el-table :data="curRowData" fit>
+            <el-table :data="relatedInfoData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -344,7 +344,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="其他费用" name="5">
-            <el-table :data="curRowData" fit>
+            <el-table :data="otherFeeData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -362,7 +362,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="驳回原因" name="6">
-            <el-table :data="curRowData" fit>
+            <el-table :data="rejectReasonData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -380,7 +380,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="优惠列表" name="7">
-            <el-table :data="curRowData" fit>
+            <el-table :data="offListData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -398,7 +398,7 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="订单图片" name="8">
-            <el-table :data="curRowData" fit>
+            <el-table :data="imageData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                 <template slot-scope="scope">
                   <span v-if="item.type=='select'">
@@ -1363,7 +1363,14 @@ export default {
       /*删除单条*/
       showDel: false,
       delUrl: "",
-      delId: ""
+      delId: "",
+      operationData: [], //操作记录
+      relatedInfoData: [], //关联信息
+      otherFeeData: [], //其他费用
+      rejectReasonData: [], //驳回原因
+      offListData: [], //优惠列表
+      imageData: [], //订单图片
+      innerNote:[],//内部便签
     };
   },
   computed: {

@@ -1645,7 +1645,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_logistics_checked: 0,
             system_order_no: this.searchBox.system_order_no,
@@ -1676,7 +1676,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 1:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_logistics_checked: 1,
             system_order_no: this.searchBox.system_order_no,
@@ -1703,7 +1703,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 2:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_goods_checked: 0,
             system_order_no: this.searchBox.system_order_no,
@@ -1730,7 +1730,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 3:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_goods_checked: 1,
             system_order_no: this.searchBox.system_order_no,
@@ -1757,7 +1757,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 4:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_distribution_checked: 0,
             system_order_no: this.searchBox.system_order_no,
@@ -1784,7 +1784,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           break;
         case 5:
-          this.orderListData = {};
+          this.orderListData = [];
           this.$fetch(this.urls.customerservicedepts + "/searchordersettlement", {
             is_distribution_checked: 1,
             system_order_no: this.searchBox.system_order_no,
