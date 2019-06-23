@@ -738,12 +738,6 @@
 
     <!--订单采购-->
     <el-dialog title="根据订单生成采购单" :visible.sync="orderPurchaseMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
-      <label>{{this.addPurchaseForm}}</label>
-      <br>
-      <br>
-      <br>
-      <br>
-      <label>{{this.proSkuVal}}</label>
       <el-button type="text">订单信息</el-button>
       <el-form :model="orderPurchaseFormVal" class="orderPurchaseForm" id="form">
         <el-form-item v-for="(item,index) in orderPurchaseFormHead" :key="index" :label="item.label" :prop="item.prop">
@@ -788,7 +782,7 @@
       </el-form>
       <el-tabs v-model="orderPurchaseActiveName" id="orderPurchaseSkuId">
         <el-tab-pane label="订单SKU信息">
-          <el-table :data="proSkuVal" fit height="160" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
+          <el-table :data="purchaseSkuVal" fit height="160" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
             <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='skuEditVal'">
@@ -833,7 +827,7 @@
       </el-tabs>
       <el-tabs v-model="orderPurchaseActiveName" id="orderPurchaseCompId">
         <el-tab-pane label="产品包件明细" name="0">
-          <el-table :data="proCompVal" fit height="230" :row-class-name="proCompCName" @row-click="proCompRowClick">
+          <el-table :data="purchaseCompVal" fit height="230" :row-class-name="proCompCName" @row-click="proCompRowClick">
             <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
                 <span v-if="item.prop=='proPurchaseData'">
@@ -897,6 +891,7 @@
 export default {
   data() {
     return {
+      /****************** 操 作 按 钮 ********************/
       newOpt: [
         {
           cnt: "修改",
@@ -979,7 +974,9 @@ export default {
       ],
       waitingStockOut: [],
       alreadyStockOut: [],
-      /*获取数据*/
+      /****************** 获 取 数 据 *********************/
+
+
       filterBox: false,
       searchBox: {
         member_nick: "",
@@ -1920,7 +1917,7 @@ export default {
           type: "textarea"
         }
       ],
-      proCompVal: [],
+      purchaseCompVal: [],
       payDtlData: [],
       /*货审*/
       moreForms: true,
@@ -2618,7 +2615,7 @@ export default {
       ],
       addPurchaseCompIndex: "",
 
-      proSkuVal: [],
+      purchaseSkuVal: [],
       proSkuHead: [
         {
           label: "sku名称",
@@ -2803,7 +2800,7 @@ export default {
       proCurSkuData: {},
       proIndex: "",
       proDtlVal: [],
-      proCompValChg: false,
+      purchaseCompValChg: false,
       proCompIndex: "",
       skuRowIndex: "",
       skuIndex: "",
@@ -2876,10 +2873,68 @@ export default {
         type: "success"
       });
     },
-    /*获取数据*/
-    toggleShow() {
-      this.filterBox = !this.filterBox;
+    /**
+     * 操作相关
+     * 这些函数通常包含Click与选择checkbox
+     */
+    /**点击与选择框 */
+    handleSelectionChange(val) {
+      console.log(val);
+      /*拿到id集合*/
+      let delArr = [];
+      val.forEach(selectedItem => {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
     },
+    /**单个删除数据 */
+    delBatch() {
+      if (this.ids.length === 0) {
+        this.$message({
+          message: "没有选中数据",
+          type: "warning"
+        });
+      } else {
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$del(this.urls.customerservicedepts, { ids: this.ids }).then(
+              () => {
+                this.refresh();
+                this.$message({
+                  message: "删除成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
+              }
+            );
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
+          });
+      }
+    },
+    /****************** 获 取 数 据 ********************/
     outerHandleClick() {
       let index = this.activeName - 0;
       switch (index) {
@@ -3221,61 +3276,27 @@ export default {
       this.payDtlData = row["paymentDetails"]["data"];
     },
     proDtlRClick(row) {},
-    delBatch() {
-      if (this.ids.length === 0) {
-        this.$message({
-          message: "没有选中数据",
-          type: "warning"
-        });
-      } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
-            this.$del(this.urls.customerservicedepts, { ids: this.ids }).then(
-              () => {
-                this.refresh();
-                this.$message({
-                  message: "删除成功",
-                  type: "success"
-                });
-              },
-              err => {
-                if (err.response) {
-                  let arr = err.response.data.errors;
-                  let arr1 = [];
-                  for (let i in arr) {
-                    arr1.push(arr[i]);
-                  }
-                  let str = arr1.join(",");
-                  this.$message.error(str);
-                }
-              }
-            );
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消删除"
-            });
-          });
-      }
-    },
+    
+    /******************** 页 码 **********************/
     /*页码*/
     handlePagChg(page) {
-      this.$fetch(this.urls.logistics + "?page=" + page, {
-        include: "cityInfos.logistics,printReport,freightType"
+      this.$fetch(this.urls.merchandiserdepts + "?page=" + page, {
+        include:
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(res => {
-        this.logisticsData = res.data;
+        if (this.leftTopActiveName == "0") {
+          this.orderListData = res.data;
+        } else {
+          this.alreadyHandle = res.data;
+        }
       });
     },
+    /******************** 刷 新 **********************/
     refresh() {
       this.loading = true;
       this.fetchData();
     },
-    /*驳回*/
+    /******************** 驳 回 **********************/
     handleUnAudit() {
       if (this.newOpt[0].nClick) {
         return;
@@ -3299,7 +3320,7 @@ export default {
         }
       }
     },
-    /*跟单一审*/
+    /***************** 跟 单 一 审 ********************/
     handleOneAudit() {
       if (this.newOpt[2].nClick) {
         return;
@@ -3332,20 +3353,8 @@ export default {
         );
       }
     },
-    /*货审*/
-    warehouseChg(val) {
-      let id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$fetch(this.urls.merchandiserdepts + "/" + id + "/stock", {
-        warehouses_id: val
-      }).then(
-        res => {
-          this.cargoAuditTableVal = res["order_items"];
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    },
+    /******************** 货 审 ***********************/
+    /**打开货审面板 */
     handleCargoAudit() {
       if (this.newOpt[3].nClick) {
         return;
@@ -3408,6 +3417,29 @@ export default {
       this.newOpt[11].nClick = false;
       this.newOpt[12].nClick = false;
     },
+    /**选择仓库 */
+    warehouseChg(val) {
+      let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$fetch(this.urls.merchandiserdepts + "/" + id + "/stock", {
+        warehouses_id: val
+      }).then(
+        res => {
+          this.cargoAuditTableVal = res["order_items"];
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    },
+    formChg() {
+      let formVal = this.cargoAuditFormVal;
+      formVal["total_distribution_fee"] =
+        formVal["deliver_goods_fee"] -
+        0 +
+        (formVal["move_upstairs_fee"] - 0) +
+        (formVal["installation_fee"] - 0);
+    },
+    /**确认货审 */
     cargoAuditConfirm() {
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
       let formData = this.cargoAuditFormVal;
@@ -3443,14 +3475,6 @@ export default {
         }
       );
     },
-    formChg() {
-      let formVal = this.cargoAuditFormVal;
-      formVal["total_distribution_fee"] =
-        formVal["deliver_goods_fee"] -
-        0 +
-        (formVal["move_upstairs_fee"] - 0) +
-        (formVal["installation_fee"] - 0);
-    },
     cargoAuditCancel() {
       this.cargoAuditMask = false;
       this.$message({
@@ -3458,7 +3482,9 @@ export default {
         type: "info"
       });
     },
-    /*退审*/
+    /** 
+     ******************** 退 审 **********************
+    */
     handleUnOneAudit() {
       if (this.newOpt[1].nClick) {
         return;
@@ -3491,6 +3517,8 @@ export default {
         );
       }
     },
+    /******************** 发 货 ***********************/
+    /**打开发货面板 */
     stockOut() {
       if (this.newOpt[5].nClick) {
         this.$message({
@@ -3569,6 +3597,7 @@ export default {
         }
       }
     },
+    /**确认发货 */
     stockOutConfirm() {
       let forData = this.updateCustomerFormVal;
       let submitData = {
@@ -3735,33 +3764,6 @@ export default {
           }
         }
       );
-    },
-    handleSelectionChange(val) {
-      console.log(val);
-      /*拿到id集合*/
-      let delArr = [];
-      val.forEach(selectedItem => {
-        delArr.push(selectedItem.id);
-      });
-      this.ids = delArr.join(",");
-      /*拿到当前id*/
-      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-      this.mergerIds = val;
-    },
-
-    /*页码*/
-    handlePagChg(page) {
-      this.$fetch(this.urls.merchandiserdepts + "?page=" + page, {
-        include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-      }).then(res => {
-        if (this.leftTopActiveName == "0") {
-          this.orderListData = res.data;
-        } else {
-          this.alreadyHandle = res.data;
-        }
-      });
     },
     /***************************** 拆 分 **********************************/
     handleSplitOrder() {
@@ -3966,10 +3968,10 @@ export default {
               updated_at: item["combination"].updated_at,
               productComponents: item["combination"].productComponents
             };
-            this.proSkuVal.push(proSkuData);
+            this.purchaseSkuVal.push(proSkuData);
           });
         }
-        //this.proCompVal = res["orderItems"]["data"];
+        //this.purchaseCompVal = res["orderItems"]["data"];
       });
     },
     orderPurchaseConfirm() {
@@ -4007,8 +4009,8 @@ export default {
       this.proRowIndex = "0";
       this.specDtlInfo = [];
       this.proDtlVal = [];
-      this.proSkuVal = [];
-      this.proCompVal = [];
+      this.purchaseSkuVal = [];
+      this.purchaseCompVal = [];
       this.addPurchaseSkuVal = [];
       this.proCompRowIndex = "";
       this.proMask = true;
@@ -4020,7 +4022,7 @@ export default {
     proCompRowClick(row) {
       this.proCompRowIndex = "index" + row.index;
       this.proCompIndex = row.index;
-      if (this.proCompValChg) {
+      if (this.purchaseCompValChg) {
         if (this.compStagData.length > 0) {
           if (this.compStagId.indexOf(row.id) == -1) {
             this.compStagData.push(row);
@@ -4037,18 +4039,17 @@ export default {
           this.compStagData.push(row);
           this.compStagId.push(row.id);
         }
-        this.proCompValChg = false;
+        this.purchaseCompValChg = false;
       }
       let newStagData = this.compStagData;
       this.proCurSkuData["compData"] = newStagData;
     },
     compValChg() {
-      this.proCompValChg = true;
+      this.purchaseCompValChg = true;
     },
-
     confirmAddPur() {
       this.addPurchaseForm.purchase_lists = [];
-      this.proSkuVal.map(item => {
+      this.purchaseSkuVal.map(item => {
         let sku = {
           combinations_id: item.id,
           purchase_details: []
@@ -4107,7 +4108,7 @@ export default {
       row.index = rowIndex;
     },
     proSkuRowClick(row) {
-      this.proCompValChg = false;
+      this.purchaseCompValChg = false;
       this.proCompIndex = "0";
       this.compStagData = [];
       this.compStagId = [];
@@ -4130,8 +4131,8 @@ export default {
           });
         });
       }
-      this.proCompVal = row["productComponents"]["data"];
-      // this.proCompVal = Object.assign({},row['productComponents']['data']);
+      this.purchaseCompVal = row["productComponents"]["data"];
+      // this.purchaseCompVal = Object.assign({},row['productComponents']['data']);
       this.proCurSkuData = row;
     },
     cancelAddProDtl() {
@@ -4142,7 +4143,7 @@ export default {
     },
     orderPurchaseConfirm() {
       this.addPurchaseForm.purchase_lists = [];
-      this.proSkuVal.map(item => {
+      this.purchaseSkuVal.map(item => {
         let sku = {
           combinations_id: item.id,
           purchase_details: []

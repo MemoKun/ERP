@@ -898,18 +898,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
 
     return _ref = {
+      /****************** 操 作 按 钮 ********************/
       newOpt: [{
         cnt: "修改",
         icon: "bf-change",
@@ -978,7 +973,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       waitingStockOut: [],
       alreadyStockOut: [],
-      /*获取数据*/
+      /****************** 获 取 数 据 *********************/
+
       filterBox: false,
       searchBox: {
         member_nick: "",
@@ -1759,7 +1755,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         holder: "请输入备注",
         type: "textarea"
       }],
-      proCompVal: [],
+      purchaseCompVal: [],
       payDtlData: [],
       /*货审*/
       moreForms: true,
@@ -2322,7 +2318,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       inProp: "remark",
       holder: "请输入备注",
       type: "textarea"
-    }]), _defineProperty(_ref, "addPurchaseCompIndex", ""), _defineProperty(_ref, "proSkuVal", []), _defineProperty(_ref, "proSkuHead", [{
+    }]), _defineProperty(_ref, "addPurchaseCompIndex", ""), _defineProperty(_ref, "purchaseSkuVal", []), _defineProperty(_ref, "proSkuHead", [{
       label: "sku名称",
       width: "120",
       prop: "name",
@@ -2492,7 +2488,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       inProp: "remark",
       holder: "请输入备注",
       type: "textarea"
-    }]), _defineProperty(_ref, "skuEditVal", {}), _defineProperty(_ref, "proCurSkuData", {}), _defineProperty(_ref, "proIndex", ""), _defineProperty(_ref, "proDtlVal", []), _defineProperty(_ref, "proCompValChg", false), _defineProperty(_ref, "proCompIndex", ""), _defineProperty(_ref, "skuRowIndex", ""), _defineProperty(_ref, "skuIndex", ""), _defineProperty(_ref, "combEditVal", {}), _defineProperty(_ref, "skuProEditHead", [{
+    }]), _defineProperty(_ref, "skuEditVal", {}), _defineProperty(_ref, "proCurSkuData", {}), _defineProperty(_ref, "proIndex", ""), _defineProperty(_ref, "proDtlVal", []), _defineProperty(_ref, "purchaseCompValChg", false), _defineProperty(_ref, "proCompIndex", ""), _defineProperty(_ref, "skuRowIndex", ""), _defineProperty(_ref, "skuIndex", ""), _defineProperty(_ref, "combEditVal", {}), _defineProperty(_ref, "skuProEditHead", [{
       label: "采购数",
       width: "120",
       prop: "combEditVal",
@@ -2554,10 +2550,67 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
 
-    /*获取数据*/
-    toggleShow: function toggleShow() {
-      this.filterBox = !this.filterBox;
+    /**
+     * 操作相关
+     * 这些函数通常包含Click与选择checkbox
+     */
+    /**点击与选择框 */
+    handleSelectionChange: function handleSelectionChange(val) {
+      console.log(val);
+      /*拿到id集合*/
+      var delArr = [];
+      val.forEach(function (selectedItem) {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
     },
+
+    /**单个删除数据 */
+    delBatch: function delBatch() {
+      var _this = this;
+
+      if (this.ids.length === 0) {
+        this.$message({
+          message: "没有选中数据",
+          type: "warning"
+        });
+      } else {
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          _this.$del(_this.urls.customerservicedepts, { ids: _this.ids }).then(function () {
+            _this.refresh();
+            _this.$message({
+              message: "删除成功",
+              type: "success"
+            });
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this.$message.error(str);
+            }
+          });
+        }).catch(function () {
+          _this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+      }
+    },
+
+    /****************** 获 取 数 据 ********************/
     outerHandleClick: function outerHandleClick() {
       var index = this.activeName - 0;
       switch (index) {
@@ -2612,7 +2665,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     fetchData: function fetchData() {
-      var _this = this;
+      var _this2 = this;
 
       var index = this.leftTopActiveName - 0;
       this.loading = true;
@@ -2633,16 +2686,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
-            _this.loading = false;
-            _this.orderListData = res.data;
+            _this2.loading = false;
+            _this2.orderListData = res.data;
             var pg = res.meta.pagination;
-            _this.$store.dispatch("suppliers", "/suppliers");
-            _this.$store.dispatch("shops", "/shops");
-            _this.$store.dispatch("currentPage", pg.current_page);
-            _this.$store.commit("PER_PAGE", pg.per_page);
-            _this.$store.commit("PAGE_TOTAL", pg.total);
-            _this.$fetch(_this.urls.customerservicedepts + "/create").then(function (res) {
-              _this.addSubData = res;
+            _this2.$store.dispatch("suppliers", "/suppliers");
+            _this2.$store.dispatch("shops", "/shops");
+            _this2.$store.dispatch("currentPage", pg.current_page);
+            _this2.$store.commit("PER_PAGE", pg.per_page);
+            _this2.$store.commit("PAGE_TOTAL", pg.total);
+            _this2.$fetch(_this2.urls.customerservicedepts + "/create").then(function (res) {
+              _this2.addSubData = res;
             }, function (err) {});
           }, function (err) {
             console.log(err);
@@ -2663,14 +2716,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
-            _this.loading = false;
-            _this.alreadyHandle = res.data;
+            _this2.loading = false;
+            _this2.alreadyHandle = res.data;
             var pg = res.meta.pagination;
-            _this.$store.dispatch("suppliers", "/suppliers");
-            _this.$store.dispatch("shops", "/shops");
-            _this.$store.dispatch("currentPage", pg.current_page);
-            _this.$store.commit("PER_PAGE", pg.per_page);
-            _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this2.$store.dispatch("suppliers", "/suppliers");
+            _this2.$store.dispatch("shops", "/shops");
+            _this2.$store.dispatch("currentPage", pg.current_page);
+            _this2.$store.commit("PER_PAGE", pg.per_page);
+            _this2.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             console.log(err);
           });
@@ -2690,14 +2743,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
-            _this.loading = false;
-            _this.waitingStockOut = res.data;
+            _this2.loading = false;
+            _this2.waitingStockOut = res.data;
             var pg = res.meta.pagination;
-            _this.$store.dispatch("suppliers", "/suppliers");
-            _this.$store.dispatch("shops", "/shops");
-            _this.$store.dispatch("currentPage", pg.current_page);
-            _this.$store.commit("PER_PAGE", pg.per_page);
-            _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this2.$store.dispatch("suppliers", "/suppliers");
+            _this2.$store.dispatch("shops", "/shops");
+            _this2.$store.dispatch("currentPage", pg.current_page);
+            _this2.$store.commit("PER_PAGE", pg.per_page);
+            _this2.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             console.log(err);
           });
@@ -2717,14 +2770,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             seller_flag: this.searchBox.seller_flag,
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(function (res) {
-            _this.loading = false;
-            _this.alreadyStockOut = res.data;
+            _this2.loading = false;
+            _this2.alreadyStockOut = res.data;
             var pg = res.meta.pagination;
-            _this.$store.dispatch("suppliers", "/suppliers");
-            _this.$store.dispatch("shops", "/shops");
-            _this.$store.dispatch("currentPage", pg.current_page);
-            _this.$store.commit("PER_PAGE", pg.per_page);
-            _this.$store.commit("PAGE_TOTAL", pg.total);
+            _this2.$store.dispatch("suppliers", "/suppliers");
+            _this2.$store.dispatch("shops", "/shops");
+            _this2.$store.dispatch("currentPage", pg.current_page);
+            _this2.$store.commit("PER_PAGE", pg.per_page);
+            _this2.$store.commit("PAGE_TOTAL", pg.total);
           }, function (err) {
             console.log(err);
           });
@@ -2876,62 +2929,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.payDtlData = row["paymentDetails"]["data"];
     },
     proDtlRClick: function proDtlRClick(row) {},
-    delBatch: function delBatch() {
-      var _this2 = this;
 
-      if (this.ids.length === 0) {
-        this.$message({
-          message: "没有选中数据",
-          type: "warning"
-        });
-      } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          _this2.$del(_this2.urls.customerservicedepts, { ids: _this2.ids }).then(function () {
-            _this2.refresh();
-            _this2.$message({
-              message: "删除成功",
-              type: "success"
-            });
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              var str = arr1.join(",");
-              _this2.$message.error(str);
-            }
-          });
-        }).catch(function () {
-          _this2.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-      }
-    },
 
+    /******************** 页 码 **********************/
     /*页码*/
     handlePagChg: function handlePagChg(page) {
       var _this3 = this;
 
-      this.$fetch(this.urls.logistics + "?page=" + page, {
-        include: "cityInfos.logistics,printReport,freightType"
+      this.$fetch(this.urls.merchandiserdepts + "?page=" + page, {
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(function (res) {
-        _this3.logisticsData = res.data;
+        if (_this3.leftTopActiveName == "0") {
+          _this3.orderListData = res.data;
+        } else {
+          _this3.alreadyHandle = res.data;
+        }
       });
     },
+
+    /******************** 刷 新 **********************/
     refresh: function refresh() {
       this.loading = true;
       this.fetchData();
     },
 
-    /*驳回*/
+    /******************** 驳 回 **********************/
     handleUnAudit: function handleUnAudit() {
       var _this4 = this;
 
@@ -2955,7 +2977,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
 
-    /*跟单一审*/
+    /***************** 跟 单 一 审 ********************/
     handleOneAudit: function handleOneAudit() {
       var _this5 = this;
 
@@ -2988,46 +3010,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
 
-    /*货审*/
-    warehouseChg: function warehouseChg(val) {
-      var _this6 = this;
-
-      var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$fetch(this.urls.merchandiserdepts + "/" + id + "/stock", {
-        warehouses_id: val
-      }).then(function (res) {
-        _this6.cargoAuditTableVal = res["order_items"];
-      }, function (err) {
-        console.log(err);
-      });
-    },
+    /******************** 货 审 ***********************/
+    /**打开货审面板 */
     handleCargoAudit: function handleCargoAudit() {
-      var _this7 = this;
+      var _this6 = this;
 
       if (this.newOpt[3].nClick) {
         return;
       } else {
         this.cargoAuditMask = true;
         this.$fetch(this.urls.customerservicedepts + "/create").then(function (res) {
-          _this7.apiData = res;
-          _this7.$store.dispatch("suppliers", "/suppliers");
-          var id = _this7.checkboxId ? _this7.checkboxId : _this7.curRowId;
-          _this7.$fetch(_this7.urls.merchandiserdepts + "/" + id).then(function (res) {
-            _this7.cargoAuditFormVal = res;
-            _this7.cargoAuditTableVal = res.order_items;
-            _this7.newOpt[0].nClick = true;
-            _this7.newOpt[1].nClick = true;
-            _this7.newOpt[2].nClick = true;
-            _this7.newOpt[3].nClick = true;
-            _this7.newOpt[4].nClick = false;
-            _this7.newOpt[5].nClick = true;
-            _this7.newOpt[6].nClick = true;
-            _this7.newOpt[7].nClick = false;
-            _this7.newOpt[8].nClick = true;
-            _this7.newOpt[9].nClick = true;
-            _this7.newOpt[10].nClick = true;
-            _this7.newOpt[11].nClick = false;
-            _this7.newOpt[12].nClick = false;
+          _this6.apiData = res;
+          _this6.$store.dispatch("suppliers", "/suppliers");
+          var id = _this6.checkboxId ? _this6.checkboxId : _this6.curRowId;
+          _this6.$fetch(_this6.urls.merchandiserdepts + "/" + id).then(function (res) {
+            _this6.cargoAuditFormVal = res;
+            _this6.cargoAuditTableVal = res.order_items;
+            _this6.newOpt[0].nClick = true;
+            _this6.newOpt[1].nClick = true;
+            _this6.newOpt[2].nClick = true;
+            _this6.newOpt[3].nClick = true;
+            _this6.newOpt[4].nClick = false;
+            _this6.newOpt[5].nClick = true;
+            _this6.newOpt[6].nClick = true;
+            _this6.newOpt[7].nClick = false;
+            _this6.newOpt[8].nClick = true;
+            _this6.newOpt[9].nClick = true;
+            _this6.newOpt[10].nClick = true;
+            _this6.newOpt[11].nClick = false;
+            _this6.newOpt[12].nClick = false;
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -3036,7 +3047,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 arr1.push(arr[i]);
               }
               var str = arr1.join(",");
-              _this7.$message.error(str);
+              _this6.$message.error(str);
             }
           });
         }, function (err) {
@@ -3059,6 +3070,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.newOpt[11].nClick = false;
       this.newOpt[12].nClick = false;
     },
+
+    /**选择仓库 */
+    warehouseChg: function warehouseChg(val) {
+      var _this7 = this;
+
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$fetch(this.urls.merchandiserdepts + "/" + id + "/stock", {
+        warehouses_id: val
+      }).then(function (res) {
+        _this7.cargoAuditTableVal = res["order_items"];
+      }, function (err) {
+        console.log(err);
+      });
+    },
+    formChg: function formChg() {
+      var formVal = this.cargoAuditFormVal;
+      formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
+    },
+
+    /**确认货审 */
     cargoAuditConfirm: function cargoAuditConfirm() {
       var _this8 = this;
 
@@ -3090,10 +3121,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this8.$message.error(err.response.data.message);
       });
     },
-    formChg: function formChg() {
-      var formVal = this.cargoAuditFormVal;
-      formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
-    },
     cargoAuditCancel: function cargoAuditCancel() {
       this.cargoAuditMask = false;
       this.$message({
@@ -3102,7 +3129,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
 
-    /*退审*/
+    /** 
+     ******************** 退 审 **********************
+    */
     handleUnOneAudit: function handleUnOneAudit() {
       var _this9 = this;
 
@@ -3134,6 +3163,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     },
+
+    /******************** 发 货 ***********************/
+    /**打开发货面板 */
     stockOut: function stockOut() {
       var _this10 = this;
 
@@ -3207,6 +3239,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
     },
+
+    /**确认发货 */
     stockOutConfirm: function stockOutConfirm() {
       var _this11 = this;
 
@@ -3373,381 +3407,389 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     },
-    handleSelectionChange: function handleSelectionChange(val) {
-      console.log(val);
-      /*拿到id集合*/
-      var delArr = [];
-      val.forEach(function (selectedItem) {
-        delArr.push(selectedItem.id);
-      });
-      this.ids = delArr.join(",");
-      /*拿到当前id*/
-      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-      this.mergerIds = val;
-    }
-  }, _defineProperty(_methods, "handlePagChg", function handlePagChg(page) {
-    var _this12 = this;
 
-    this.$fetch(this.urls.merchandiserdepts + "?page=" + page, {
-      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-    }).then(function (res) {
-      if (_this12.leftTopActiveName == "0") {
-        _this12.orderListData = res.data;
+    /***************************** 拆 分 **********************************/
+    handleSplitOrder: function handleSplitOrder() {
+      var _this12 = this;
+
+      if (this.newOpt[9].nClick) {
+        return;
       } else {
-        _this12.alreadyHandle = res.data;
-      }
-    });
-  }), _defineProperty(_methods, "handleSplitOrder", function handleSplitOrder() {
-    var _this13 = this;
-
-    if (this.newOpt[9].nClick) {
-      return;
-    } else {
-      this.splitMask = true;
-      this.splitRowIndex = "";
-      this.splitVal = [];
-      var orderData = this.curRowData["orderItems"]["data"];
-      if (orderData.length > 0) {
-        orderData.map(function (item) {
-          var list = {
-            id: item.id,
-            commodity_code: item.product["commodity_code"],
-            short_name: item.product["short_name"],
-            quantity: item["quantity"],
-            newData: {
-              quantity: ""
-            }
-          };
-          _this13.splitVal.push(list);
-        });
-      }
-    }
-  }), _defineProperty(_methods, "splitCName", function splitCName(_ref2) {
-    var row = _ref2.row,
-        rowIndex = _ref2.rowIndex;
-
-    row.index = rowIndex;
-  }), _defineProperty(_methods, "splitRowClick", function splitRowClick(row) {
-    this.splitRowIndex = "index" + row.index;
-    this.splitRow = row;
-  }), _defineProperty(_methods, "numChg", function numChg(value) {
-    if (value > this.splitRow["quantity"] - 0) {
-      this.splitRow["newData"]["quantity"] = this.splitRow["quantity"];
-    }
-  }), _defineProperty(_methods, "confirmSplit", function confirmSplit() {
-    var _this14 = this;
-
-    var id = this.checkboxId ? this.checkboxId : this.curRowId;
-    var confSplit = {
-      order_items: []
-    };
-    if (this.splitVal.length > 0) {
-      this.splitVal.map(function (item) {
-        if (item["newData"]["quantity"] > 0) {
-          var list = {
-            id: item.id,
-            quantity: item["newData"]["quantity"]
-          };
-          confSplit["order_items"].push(list);
-        }
-      });
-    }
-    this.$put(this.urls.customerservicedepts + "/" + id + "/splitorder", confSplit).then(function () {
-      _this14.splitMask = false;
-      _this14.refresh();
-      /*   this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = false;
-        this.newOpt[3].nClick = true;
-        this.newOpt[4].nClick = false;
-        this.newOpt[5].nClick = false;
-        this.newOpt[6].nClick = true;
-        this.newOpt[8].nClick = false;
-        this.newOpt[9].nClick = false;
-        this.newOpt[13].nClick = false;
-        this.newOpt[14].nClick = true;
-        this.newOpt[15].nClick = false;
-        this.newOpt[18].nClick = false;*/
-      _this14.$message({
-        message: "订单拆分成功",
-        type: "success"
-      });
-    }, function (err) {
-      if (err.response) {
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
-        }
-        var str = arr1.join(",");
-        _this14.$message.error(str);
-      }
-    });
-  }), _defineProperty(_methods, "addProRowClick", function addProRowClick(row) {
-    this.proRIndex = "index" + row.index;
-  }), _defineProperty(_methods, "stockOutCancel", function stockOutCancel() {
-    this.stockOutMask = false;
-  }), _defineProperty(_methods, "cancelSplit", function cancelSplit() {
-    this.splitMask = false;
-  }), _defineProperty(_methods, "handleMergerOrder", function handleMergerOrder() {
-    var _this15 = this;
-
-    if (this.newOpt[8].nClick) {
-      return;
-    } else {
-      if (this.mergerIds.length != 2) {
-        this.$message({
-          message: "请选择要合并的订单",
-          type: "info"
-        });
-      } else {
-        var ids = [];
-        this.mergerIds.map(function (item) {
-          ids.push(item.id);
-        });
-        this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-          _this15.refresh();
-          _this15.$message({
-            message: "订单合并成功",
-            type: "success"
+        this.splitMask = true;
+        this.splitRowIndex = "";
+        this.splitVal = [];
+        var orderData = this.curRowData["orderItems"]["data"];
+        if (orderData.length > 0) {
+          orderData.map(function (item) {
+            var list = {
+              id: item.id,
+              commodity_code: item.product["commodity_code"],
+              short_name: item.product["short_name"],
+              quantity: item["quantity"],
+              newData: {
+                quantity: ""
+              }
+            };
+            _this12.splitVal.push(list);
           });
-          _this15.mergerIds = [];
-        }, function (err) {
-          if (err.response) {
-            _this15.$message.error("合并订单出错");
+        }
+      }
+    },
+    splitCName: function splitCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
+
+      row.index = rowIndex;
+    },
+    splitRowClick: function splitRowClick(row) {
+      this.splitRowIndex = "index" + row.index;
+      this.splitRow = row;
+    },
+    numChg: function numChg(value) {
+      if (value > this.splitRow["quantity"] - 0) {
+        this.splitRow["newData"]["quantity"] = this.splitRow["quantity"];
+      }
+    },
+    confirmSplit: function confirmSplit() {
+      var _this13 = this;
+
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      var confSplit = {
+        order_items: []
+      };
+      if (this.splitVal.length > 0) {
+        this.splitVal.map(function (item) {
+          if (item["newData"]["quantity"] > 0) {
+            var list = {
+              id: item.id,
+              quantity: item["newData"]["quantity"]
+            };
+            confSplit["order_items"].push(list);
           }
         });
       }
-    }
-  }), _defineProperty(_methods, "searchData", function searchData() {
-    this.loading = true;
-    this.fetchData();
-  }), _defineProperty(_methods, "resets", function resets() {
-    this.searchBox = {
-      member_nick: "",
-      system_order_no: "",
-      receiver_name: "",
-      receiver_phone: "",
-      receiver_address: "",
-      shops_id: "",
-      business_personnel_id: "",
-      seller_remark: "",
-      logistics_id: "",
-      seller_flag: "",
-      promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-      created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-      audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
-      order_transMStart: "",
-      order_order_transMEndmark: ""
-    };
-  }), _defineProperty(_methods, "orderPurchase", function orderPurchase() {
-    var _this16 = this;
+      this.$put(this.urls.customerservicedepts + "/" + id + "/splitorder", confSplit).then(function () {
+        _this13.splitMask = false;
+        _this13.refresh();
+        /*   this.newOpt[1].nClick = false;
+          this.newOpt[2].nClick = false;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = false;
+          this.newOpt[5].nClick = false;
+          this.newOpt[6].nClick = true;
+          this.newOpt[8].nClick = false;
+          this.newOpt[9].nClick = false;
+          this.newOpt[13].nClick = false;
+          this.newOpt[14].nClick = true;
+          this.newOpt[15].nClick = false;
+          this.newOpt[18].nClick = false;*/
+        _this13.$message({
+          message: "订单拆分成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this13.$message.error(str);
+        }
+      });
+    },
+    addProRowClick: function addProRowClick(row) {
+      this.proRIndex = "index" + row.index;
+    },
+    stockOutCancel: function stockOutCancel() {
+      this.stockOutMask = false;
+    },
+    cancelSplit: function cancelSplit() {
+      this.splitMask = false;
+    },
 
-    this.orderPurchaseMask = true;
-    var id = this.checkboxId ? this.checkboxId : this.curRowId;
-    this.$fetch(this.urls.merchandiserdepts + "/searchorderpurchase" + "/" + id, {
-      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
-    }).then(function (res) {
-      _this16.orderPurchaseFormVal = res;
-      _this16.addPurchaseForm.receiver = res.receiver_name;
-      _this16.addPurchaseForm.receiver_address = res.receiver_address;
-      _this16.addPurchaseForm.remark = res.seller_remark;
-      if (res["orderItems"]["data"].length > 0) {
-        res["orderItems"]["data"].map(function (item) {
-          item["name"] = item["combination"]["name"];
-          item["id"] = item.id;
-          item["products_id"] = item.products_id;
-          item["combinations_id"] = item.combinations_id;
-          item["productComp"] = item["combination"]["productComponents"]["data"];
-          _this16.$set(item, "SkuData", {
-            created_at: item["combination"].created_at,
-            id: item["combination"].id,
-            name: item["combination"].name,
-            pid: item["combination"].pid,
-            updated_at: item["combination"].updated_at
+    /***************************** 合 并 **********************************/
+    handleMergerOrder: function handleMergerOrder() {
+      var _this14 = this;
+
+      if (this.newOpt[8].nClick) {
+        return;
+      } else {
+        if (this.mergerIds.length != 2) {
+          this.$message({
+            message: "请选择要合并的订单",
+            type: "info"
           });
-          var proSkuData = {
-            created_at: item["combination"].created_at,
-            id: item["combination"].id,
-            name: item["combination"].name,
-            pid: item["combination"].pid,
-            updated_at: item["combination"].updated_at,
-            productComponents: item["combination"].productComponents
-          };
-          _this16.proSkuVal.push(proSkuData);
-        });
-      }
-      //this.proCompVal = res["orderItems"]["data"];
-    });
-  }), _defineProperty(_methods, "orderPurchaseConfirm", function orderPurchaseConfirm() {
-    //this.orderPurchaseMask = false;
-  }), _defineProperty(_methods, "addPurSkuRowClick", function addPurSkuRowClick(row) {
-    this.addPurchaseCompVal = row.compData;
-  }), _defineProperty(_methods, "addCompCName", function addCompCName(_ref3) {
-    var row = _ref3.row,
-        rowIndex = _ref3.rowIndex;
-
-    row.index = rowIndex;
-  }), _defineProperty(_methods, "addCompRowClick", function addCompRowClick(row) {
-    this.addPurchaseCompIndex = "index" + row.index;
-  }), _defineProperty(_methods, "addPurCompDtl", function addPurCompDtl(index) {
-    /* this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.addPurchaseSkuVal.splice(index,1);
-        this.$message({
-          message: '删除成功',
-          type: 'success'
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });*/
-    this.addPurchaseCompVal.splice(index, 1);
-  }), _defineProperty(_methods, "addPurchaseDetail", function addPurchaseDetail() {
-    this.proRowIndex = "0";
-    this.specDtlInfo = [];
-    this.proDtlVal = [];
-    this.proSkuVal = [];
-    this.proCompVal = [];
-    this.addPurchaseSkuVal = [];
-    this.proCompRowIndex = "";
-    this.proMask = true;
-    Object.assign(this.proQuery, this.$options.data().proQuery);
-  }), _defineProperty(_methods, "proCompCName", function proCompCName(_ref4) {
-    var row = _ref4.row,
-        rowIndex = _ref4.rowIndex;
-
-    row.index = rowIndex;
-  }), _defineProperty(_methods, "proCompRowClick", function proCompRowClick(row) {
-    var _this17 = this;
-
-    this.proCompRowIndex = "index" + row.index;
-    this.proCompIndex = row.index;
-    if (this.proCompValChg) {
-      if (this.compStagData.length > 0) {
-        if (this.compStagId.indexOf(row.id) == -1) {
-          this.compStagData.push(row);
-          this.compStagId.push(row.id);
         } else {
-          this.compStagData.map(function (item, index) {
-            if (item.id == row.id) {
-              _this17.compStagData.splice(index, 1);
+          var ids = [];
+          this.mergerIds.map(function (item) {
+            ids.push(item.id);
+          });
+          this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
+            _this14.refresh();
+            _this14.$message({
+              message: "订单合并成功",
+              type: "success"
+            });
+            _this14.mergerIds = [];
+          }, function (err) {
+            if (err.response) {
+              _this14.$message.error("合并订单出错");
             }
           });
-          this.compStagData.push(row);
         }
-      } else {
-        this.compStagData.push(row);
-        this.compStagId.push(row.id);
       }
-      this.proCompValChg = false;
-    }
-    var newStagData = this.compStagData;
-    this.proCurSkuData["compData"] = newStagData;
-  }), _defineProperty(_methods, "compValChg", function compValChg() {
-    this.proCompValChg = true;
-  }), _defineProperty(_methods, "confirmAddPur", function confirmAddPur() {
-    var _this18 = this;
+    },
 
-    this.addPurchaseForm.purchase_lists = [];
-    this.proSkuVal.map(function (item) {
-      var sku = {
-        combinations_id: item.id,
-        purchase_details: []
+    //筛选
+    searchData: function searchData() {
+      this.loading = true;
+      this.fetchData();
+    },
+    resets: function resets() {
+      this.searchBox = {
+        member_nick: "",
+        system_order_no: "",
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_address: "",
+        shops_id: "",
+        business_personnel_id: "",
+        seller_remark: "",
+        logistics_id: "",
+        seller_flag: "",
+        promise_ship_time: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        created_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        audit_at: ["2018-12-31T16:00:00.000Z", "2099-12-31T16:00:00.000Z"],
+        order_transMStart: "",
+        order_order_transMEndmark: ""
       };
-      item.productComponents.map(function (list) {
-        var comp = {
-          product_components_id: list.id,
-          purchase_quantity: list["proPurchaseData"].purchase_quantity,
-          shops_id: list["proPurchaseData"].shops_id,
-          suppliers_id: list["proPurchaseData"].suppliers_id,
-          purchase_cost: list["proPurchaseData"].purchase_cost,
-          warehouse_cost: list["proPurchaseData"].warehouse_cost,
-          purchase_freight: list["proPurchaseData"].purchase_freight,
-          commission: list["proPurchaseData"].commission,
-          discount: list["proPurchaseData"].discount,
-          wooden_frame_costs: list["proPurchaseData"].wooden_frame_costs,
-          arrival_time: list["proPurchaseData"].arrival_time,
-          remark: list["proPurchaseData"].remark
-        };
-        sku.purchase_details.push(comp);
-      });
-      _this18.addPurchaseForm.purchase_lists.push(sku);
-    });
-    this.$post(this.urls.purchases, this.addPurchaseForm).then(function () {
-      _this18.$message({
-        message: "新建采购单成功",
-        type: "success"
-      });
-      _this18.addPurchaseMask = false;
-      _this18.refresh();
-    }, function (err) {
-      if (err.response) {
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
+    },
+    orderPurchase: function orderPurchase() {
+      var _this15 = this;
+
+      this.orderPurchaseMask = true;
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$fetch(this.urls.merchandiserdepts + "/searchorderpurchase" + "/" + id, {
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+      }).then(function (res) {
+        _this15.orderPurchaseFormVal = res;
+        _this15.addPurchaseForm.receiver = res.receiver_name;
+        _this15.addPurchaseForm.receiver_address = res.receiver_address;
+        _this15.addPurchaseForm.remark = res.seller_remark;
+        if (res["orderItems"]["data"].length > 0) {
+          res["orderItems"]["data"].map(function (item) {
+            item["name"] = item["combination"]["name"];
+            item["id"] = item.id;
+            item["products_id"] = item.products_id;
+            item["combinations_id"] = item.combinations_id;
+            item["productComp"] = item["combination"]["productComponents"]["data"];
+            _this15.$set(item, "SkuData", {
+              created_at: item["combination"].created_at,
+              id: item["combination"].id,
+              name: item["combination"].name,
+              pid: item["combination"].pid,
+              updated_at: item["combination"].updated_at
+            });
+            var proSkuData = {
+              created_at: item["combination"].created_at,
+              id: item["combination"].id,
+              name: item["combination"].name,
+              pid: item["combination"].pid,
+              updated_at: item["combination"].updated_at,
+              productComponents: item["combination"].productComponents
+            };
+            _this15.purchaseSkuVal.push(proSkuData);
+          });
         }
-        var str = arr1.join(",");
-        _this18.$message.error({
-          message: str
+        //this.purchaseCompVal = res["orderItems"]["data"];
+      });
+    },
+    orderPurchaseConfirm: function orderPurchaseConfirm() {
+      //this.orderPurchaseMask = false;
+    },
+    addPurSkuRowClick: function addPurSkuRowClick(row) {
+      this.addPurchaseCompVal = row.compData;
+    },
+    addCompCName: function addCompCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
+
+      row.index = rowIndex;
+    },
+    addCompRowClick: function addCompRowClick(row) {
+      this.addPurchaseCompIndex = "index" + row.index;
+    },
+    addPurCompDtl: function addPurCompDtl(index) {
+      /* this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.addPurchaseSkuVal.splice(index,1);
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });*/
+      this.addPurchaseCompVal.splice(index, 1);
+    },
+    addPurchaseDetail: function addPurchaseDetail() {
+      this.proRowIndex = "0";
+      this.specDtlInfo = [];
+      this.proDtlVal = [];
+      this.purchaseSkuVal = [];
+      this.purchaseCompVal = [];
+      this.addPurchaseSkuVal = [];
+      this.proCompRowIndex = "";
+      this.proMask = true;
+      Object.assign(this.proQuery, this.$options.data().proQuery);
+    },
+    proCompCName: function proCompCName(_ref4) {
+      var row = _ref4.row,
+          rowIndex = _ref4.rowIndex;
+
+      row.index = rowIndex;
+    },
+    proCompRowClick: function proCompRowClick(row) {
+      var _this16 = this;
+
+      this.proCompRowIndex = "index" + row.index;
+      this.proCompIndex = row.index;
+      if (this.purchaseCompValChg) {
+        if (this.compStagData.length > 0) {
+          if (this.compStagId.indexOf(row.id) == -1) {
+            this.compStagData.push(row);
+            this.compStagId.push(row.id);
+          } else {
+            this.compStagData.map(function (item, index) {
+              if (item.id == row.id) {
+                _this16.compStagData.splice(index, 1);
+              }
+            });
+            this.compStagData.push(row);
+          }
+        } else {
+          this.compStagData.push(row);
+          this.compStagId.push(row.id);
+        }
+        this.purchaseCompValChg = false;
+      }
+      var newStagData = this.compStagData;
+      this.proCurSkuData["compData"] = newStagData;
+    },
+    compValChg: function compValChg() {
+      this.purchaseCompValChg = true;
+    },
+    confirmAddPur: function confirmAddPur() {
+      var _this17 = this;
+
+      this.addPurchaseForm.purchase_lists = [];
+      this.purchaseSkuVal.map(function (item) {
+        var sku = {
+          combinations_id: item.id,
+          purchase_details: []
+        };
+        item.productComponents.map(function (list) {
+          var comp = {
+            product_components_id: list.id,
+            purchase_quantity: list["proPurchaseData"].purchase_quantity,
+            shops_id: list["proPurchaseData"].shops_id,
+            suppliers_id: list["proPurchaseData"].suppliers_id,
+            purchase_cost: list["proPurchaseData"].purchase_cost,
+            warehouse_cost: list["proPurchaseData"].warehouse_cost,
+            purchase_freight: list["proPurchaseData"].purchase_freight,
+            commission: list["proPurchaseData"].commission,
+            discount: list["proPurchaseData"].discount,
+            wooden_frame_costs: list["proPurchaseData"].wooden_frame_costs,
+            arrival_time: list["proPurchaseData"].arrival_time,
+            remark: list["proPurchaseData"].remark
+          };
+          sku.purchase_details.push(comp);
+        });
+        _this17.addPurchaseForm.purchase_lists.push(sku);
+      });
+      this.$post(this.urls.purchases, this.addPurchaseForm).then(function () {
+        _this17.$message({
+          message: "新建采购单成功",
+          type: "success"
+        });
+        _this17.addPurchaseMask = false;
+        _this17.refresh();
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this17.$message.error({
+            message: str
+          });
+        }
+      });
+    },
+    cancelAddPur: function cancelAddPur() {
+      this.addPurchaseMask = false;
+      this.$message({
+        message: "取消新建采购单",
+        type: "info"
+      });
+    },
+    proSkuCName: function proSkuCName(_ref5) {
+      var row = _ref5.row,
+          rowIndex = _ref5.rowIndex;
+
+      row.index = rowIndex;
+    },
+    proSkuRowClick: function proSkuRowClick(row) {
+      var _this18 = this;
+
+      this.purchaseCompValChg = false;
+      this.proCompIndex = "0";
+      this.compStagData = [];
+      this.compStagId = [];
+      this.skuRowIndex = "index" + row.index;
+      this.skuIndex = row.index;
+      if (row["productComponents"]["data"].length > 0) {
+        row["productComponents"]["data"].map(function (item) {
+          _this18.$set(item, "proPurchaseData", {
+            purchase_quantity: "",
+            shops_id: "",
+            suppliers_id: "",
+            arrival_time: "",
+            remark: "",
+            purchase_cost: item.purchase_cost,
+            purchase_freight: item.purchase_freight,
+            warehouse_cost: item.warehouse_cost,
+            commission: item.commission,
+            discount: item.discount,
+            wooden_frame_costs: item.wooden_frame_costs
+          });
         });
       }
-    });
-  }), _defineProperty(_methods, "cancelAddPur", function cancelAddPur() {
-    this.addPurchaseMask = false;
-    this.$message({
-      message: "取消新建采购单",
-      type: "info"
-    });
-  }), _defineProperty(_methods, "proSkuCName", function proSkuCName(_ref5) {
-    var row = _ref5.row,
-        rowIndex = _ref5.rowIndex;
-
-    row.index = rowIndex;
-  }), _defineProperty(_methods, "proSkuRowClick", function proSkuRowClick(row) {
+      this.purchaseCompVal = row["productComponents"]["data"];
+      // this.purchaseCompVal = Object.assign({},row['productComponents']['data']);
+      this.proCurSkuData = row;
+    },
+    cancelAddProDtl: function cancelAddProDtl() {
+      this.proMask = false;
+    },
+    dateChg: function dateChg(val) {
+      // this.specDtlInfo.arrival_time = val;
+    }
+  }, _defineProperty(_methods, "orderPurchaseConfirm", function orderPurchaseConfirm() {
     var _this19 = this;
 
-    this.proCompValChg = false;
-    this.proCompIndex = "0";
-    this.compStagData = [];
-    this.compStagId = [];
-    this.skuRowIndex = "index" + row.index;
-    this.skuIndex = row.index;
-    if (row["productComponents"]["data"].length > 0) {
-      row["productComponents"]["data"].map(function (item) {
-        _this19.$set(item, "proPurchaseData", {
-          purchase_quantity: "",
-          shops_id: "",
-          suppliers_id: "",
-          arrival_time: "",
-          remark: "",
-          purchase_cost: item.purchase_cost,
-          purchase_freight: item.purchase_freight,
-          warehouse_cost: item.warehouse_cost,
-          commission: item.commission,
-          discount: item.discount,
-          wooden_frame_costs: item.wooden_frame_costs
-        });
-      });
-    }
-    this.proCompVal = row["productComponents"]["data"];
-    // this.proCompVal = Object.assign({},row['productComponents']['data']);
-    this.proCurSkuData = row;
-  }), _defineProperty(_methods, "cancelAddProDtl", function cancelAddProDtl() {
-    this.proMask = false;
-  }), _defineProperty(_methods, "dateChg", function dateChg(val) {
-    // this.specDtlInfo.arrival_time = val;
-  }), _defineProperty(_methods, "orderPurchaseConfirm", function orderPurchaseConfirm() {
-    var _this20 = this;
-
     this.addPurchaseForm.purchase_lists = [];
-    this.proSkuVal.map(function (item) {
+    this.purchaseSkuVal.map(function (item) {
       var sku = {
         combinations_id: item.id,
         purchase_details: []
@@ -3769,19 +3811,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
         sku.purchase_details.push(comp);
       });
-      _this20.addPurchaseForm.purchase_lists.push(sku);
+      _this19.addPurchaseForm.purchase_lists.push(sku);
     });
     this.$message({
       message: "测试2",
       type: "success"
     });
     this.$post(this.urls.purchases, this.addPurchaseForm).then(function () {
-      _this20.$message({
+      _this19.$message({
         message: "新建采购单成功",
         type: "success"
       });
-      _this20.orderPurchaseMask = false;
-      _this20.refresh();
+      _this19.orderPurchaseMask = false;
+      _this19.refresh();
     }, function (err) {
       if (err.response) {
         var arr = err.response.data.errors;
@@ -3790,7 +3832,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           arr1.push(arr[i]);
         }
         var str = arr1.join(",");
-        _this20.$message.error({
+        _this19.$message.error({
           message: str
         });
       }
@@ -7463,18 +7505,6 @@ var render = function() {
           }
         },
         [
-          _c("label", [_vm._v(_vm._s(this.addPurchaseForm))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v(_vm._s(this.proSkuVal))]),
-          _vm._v(" "),
           _c("el-button", { attrs: { type: "text" } }, [_vm._v("订单信息")]),
           _vm._v(" "),
           _c(
@@ -7793,7 +7823,7 @@ var render = function() {
                     "el-table",
                     {
                       attrs: {
-                        data: _vm.proSkuVal,
+                        data: _vm.purchaseSkuVal,
                         fit: "",
                         height: "160",
                         "row-class-name": _vm.proSkuCName
@@ -8153,7 +8183,7 @@ var render = function() {
                     "el-table",
                     {
                       attrs: {
-                        data: _vm.proCompVal,
+                        data: _vm.purchaseCompVal,
                         fit: "",
                         height: "230",
                         "row-class-name": _vm.proCompCName
