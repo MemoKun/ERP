@@ -738,6 +738,11 @@
 
     <!--订单采购-->
     <el-dialog title="根据订单生成采购单" :visible.sync="orderPurchaseMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
+      <label>{{this.addPurchaseForm}}</label>
+      <br>
+      <br>
+      <br>
+      <br>
       <label>{{this.proSkuVal}}</label>
       <el-button type="text">订单信息</el-button>
       <el-form :model="orderPurchaseFormVal" class="orderPurchaseForm" id="form">
@@ -786,41 +791,40 @@
           <el-table :data="proSkuVal" fit height="160" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
             <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
               <template slot-scope="scope">
-                <span v-if="item.prop">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column v-for="each in skuProEditHead" :label="each.label" align="center" :width="each.width" :key="each.label">
-              <template slot-scope="scope">
-                <span v-if="skuRowIndex =='index'+scope.$index">
-                  <span v-if="each.type=='number'">
-                    <el-input size="small" type="number" v-model.trim="specDtlInfo[each.inProp]" :placeholder="each.holder"></el-input>
-                  </span>
-                  <span v-else-if="each.type == 'textarea'">
-                    <el-input type="textarea" size="small" v-model.trim="specDtlInfo[each.inProp]" :placeholder="each.holder"></el-input>
-                  </span>
-                  <span v-else-if="each.type == 'select'">
-                    <el-select v-model="specDtlInfo[each.inProp]" :placeholder="each.holder">
-                      <span v-for="list in resData[each.stateVal]" :key="list.id">
-                        <el-option :label="list.name" :value="list.id"></el-option>
-                      </span>
-                    </el-select>
-                  </span>
-                  <span v-else-if="each.type == 'datepicker'">
-                    <el-date-picker v-model="specDtlInfo[each.inProp]" type="date" placeholder="选择日期" @change="dateChg" format="yyyy/MM/dd" value-format="yyyy/MM/dd"></el-date-picker>
-                  </span>
-                  <span v-else>
-                    <el-input size="small" v-model.trim="specDtlInfo[each.inProp]" :placeholder="each.holder"></el-input>
-                  </span>
-                </span>
-                <span v-else>
-                  <span v-if="each.type=='select'">
-                    <span v-for="list in resData[each.stateVal]" :key="list.id">
-                      <span v-if="each.inProp">
-                        <span v-if="list.id==specDtlInfo[each.inProp]">{{list.name}}</span>
-                      </span>
+                <span v-if="item.prop=='skuEditVal'">
+                  <span v-if="skuRowIndex =='index'+scope.$index">
+                    <span v-if="item.type=='number'">
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @change="compValChg"></el-input>
+                    </span>
+                    <span v-else-if="item.type == 'textarea'">
+                      <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @change="compValChg"></el-input>
+                    </span>
+                    <span v-else-if="item.type == 'select'">
+                      <el-select v-model="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @change="compValChg">
+                        <span v-for="list in resData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else-if="item.type == 'datepicker'">
+                      <el-date-picker v-model="scope.row[item.prop][item.inProp]" type="date" placeholder="选择日期" @change="dateChg" format="yyyy/MM/dd" value-format="yyyy/MM/dd"></el-date-picker>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
                     </span>
                   </span>
-                  <span v-else>{{combEditVal[each.inProp]}}</span>
+                </span>
+                <span v-else-if="item.prop">
+                  <span v-if="item.type=='checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                  <span v-else-if="item.type=='img'">
+                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                      <img :src="scope.row[item.prop]">
+                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                    </el-popover>
+                  </span>
+                  <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
                 </span>
               </template>
             </el-table-column>
@@ -877,7 +881,14 @@
           </el-table>
         </el-tab-pane>
       </el-tabs>
+      <div slot="footer" class="dialog-footer clearfix">
+        <div style="float: right">
+          <el-button type="primary" @click="orderPurchaseConfirm">确定</el-button>
+          <el-button @click="orderPurchaseCancel">取消</el-button>
+        </div>
+      </div>
     </el-dialog>
+
     <!--页码-->
     <Pagination :page-url="this.urls.merchandiserdepts" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
   </div>
@@ -1817,13 +1828,13 @@ export default {
           inProp: "",
           type: "number"
         },*/
-        {
+        /*{
           label: "可用数",
           width: "120",
           prop: "",
           inProp: "",
           type: "number"
-        },
+        },*/
         {
           label: "采购数",
           width: "120",
@@ -2701,6 +2712,48 @@ export default {
             inProp: "wooden_frame_costs",
             type: 'number'
           }*/
+        /*{
+          label: "采购数",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "purchase_quantity",
+          holder: "请输入采购数",
+          type: "number"
+        },
+        {
+          label: "采购店铺",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "shops_id",
+          holder: "请输入采购店铺",
+          type: "select",
+          stateVal: "shops"
+        },
+        {
+          label: "供应商",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "suppliers_id",
+          holder: "请选择供应商",
+          type: "select",
+          stateVal: "suppliers"
+        },
+        {
+          label: "到货时间",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "arrival_time",
+          holder: "请输入到货时间",
+          type: "datepicker"
+        },
+        {
+          label: "备注",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "remark",
+          holder: "请输入备注",
+          type: "textarea"
+        }*/
       ],
       skuEditHead: [
         {
@@ -2746,14 +2799,14 @@ export default {
           type: "textarea"
         }
       ],
-      skuEditVal:{},
+      skuEditVal: {},
       proCurSkuData: {},
       proIndex: "",
       proDtlVal: [],
       proCompValChg: false,
       proCompIndex: "",
       skuRowIndex: "",
-      skuIndex:"",
+      skuIndex: "",
       combEditVal: {},
       skuProEditHead: [
         {
@@ -2908,6 +2961,8 @@ export default {
               this.loading = false;
               this.orderListData = res.data;
               let pg = res.meta.pagination;
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
@@ -2943,6 +2998,8 @@ export default {
               this.loading = false;
               this.alreadyHandle = res.data;
               let pg = res.meta.pagination;
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
@@ -2972,6 +3029,8 @@ export default {
               this.loading = false;
               this.waitingStockOut = res.data;
               let pg = res.meta.pagination;
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
@@ -3001,6 +3060,8 @@ export default {
               this.loading = false;
               this.alreadyStockOut = res.data;
               let pg = res.meta.pagination;
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
@@ -3868,7 +3929,6 @@ export default {
         order_order_transMEndmark: ""
       };
     },
-
     orderPurchase() {
       this.orderPurchaseMask = true;
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -3880,6 +3940,9 @@ export default {
         }
       ).then(res => {
         this.orderPurchaseFormVal = res;
+        this.addPurchaseForm.receiver = res.receiver_name;
+        this.addPurchaseForm.receiver_address = res.receiver_address;
+        this.addPurchaseForm.remark = res.seller_remark;
         if (res["orderItems"]["data"].length > 0) {
           res["orderItems"]["data"].map(item => {
             item["name"] = item["combination"]["name"];
@@ -3889,19 +3952,19 @@ export default {
             item["productComp"] =
               item["combination"]["productComponents"]["data"];
             this.$set(item, "SkuData", {
-              created_at: "00000000000000000000000",
+              created_at: item["combination"].created_at,
               id: item["combination"].id,
               name: item["combination"].name,
               pid: item["combination"].pid,
               updated_at: item["combination"].updated_at
             });
             let proSkuData = {
-              created_at: "00000000000000000000000",
+              created_at: item["combination"].created_at,
               id: item["combination"].id,
               name: item["combination"].name,
               pid: item["combination"].pid,
               updated_at: item["combination"].updated_at,
-              productComponents:item["combination"].productComponents
+              productComponents: item["combination"].productComponents
             };
             this.proSkuVal.push(proSkuData);
           });
@@ -3985,12 +4048,12 @@ export default {
 
     confirmAddPur() {
       this.addPurchaseForm.purchase_lists = [];
-      this.addPurchaseSkuVal.map(item => {
+      this.proSkuVal.map(item => {
         let sku = {
           combinations_id: item.id,
           purchase_details: []
         };
-        item.compData.map(list => {
+        item.productComponents.map(list => {
           let comp = {
             product_components_id: list.id,
             purchase_quantity: list["proPurchaseData"].purchase_quantity,
@@ -4076,6 +4139,63 @@ export default {
     },
     dateChg(val) {
       // this.specDtlInfo.arrival_time = val;
+    },
+    orderPurchaseConfirm() {
+      this.addPurchaseForm.purchase_lists = [];
+      this.proSkuVal.map(item => {
+        let sku = {
+          combinations_id: item.id,
+          purchase_details: []
+        };
+        item.productComponents.data.map(list => {
+          let comp = {
+            product_components_id: list.id,
+            purchase_quantity: list["proPurchaseData"].purchase_quantity,
+            shops_id: list["proPurchaseData"].shops_id,
+            suppliers_id: list["proPurchaseData"].suppliers_id,
+            purchase_cost: list["proPurchaseData"].purchase_cost,
+            warehouse_cost: list["proPurchaseData"].warehouse_cost,
+            purchase_freight: list["proPurchaseData"].purchase_freight,
+            commission: list["proPurchaseData"].commission,
+            discount: list["proPurchaseData"].discount,
+            wooden_frame_costs: list["proPurchaseData"].wooden_frame_costs,
+            arrival_time: list["proPurchaseData"].arrival_time,
+            remark: list["proPurchaseData"].remark
+          };
+            sku.purchase_details.push(comp);
+        });
+        this.addPurchaseForm.purchase_lists.push(sku);
+      });
+      this.$message({
+        message: "测试2",
+        type: "success"
+      });
+      this.$post(this.urls.purchases, this.addPurchaseForm).then(
+        () => {
+          this.$message({
+            message: "新建采购单成功",
+            type: "success"
+          });
+          this.orderPurchaseMask = false;
+          this.refresh();
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error({
+              message: str
+            });
+          }
+        }
+      );
+    },
+    orderPurchaseCancel() {
+      this.orderPurchaseMask = false;
     }
   },
   mounted() {

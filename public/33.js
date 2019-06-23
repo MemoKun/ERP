@@ -3306,7 +3306,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             item["combinations_id"] = item.combinations_id;
             item["productComp"] = item["combination"]["productComponents"]["data"];
             _this10.$set(item, "newData", {
-              name: item["combination"].name,
+              quantity: item.quantity,
               paint: item.paint,
               is_printing: item.is_printing,
               printing_fee: item.printing_fee,

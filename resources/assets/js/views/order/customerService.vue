@@ -3588,7 +3588,7 @@ export default {
               item["productComp"] =
                 item["combination"]["productComponents"]["data"];
               this.$set(item, "newData", {
-                name: item["combination"].name,
+                quantity: item.quantity,
                 paint: item.paint,
                 is_printing: item.is_printing,
                 printing_fee: item.printing_fee,
