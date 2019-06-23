@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Order;
 use Illuminate\Support\Facades\DB;
+
+use App\Models\Order;
 
 use App\Http\Requests\Api\MerchandiserDepartmentRequest;
 use App\Http\Requests\Api\CustomerServiceDepartmentRequest;
@@ -36,6 +37,11 @@ class MerchandiserDepartmentsController extends Controller
     const MODEL = Order::class;
     const TRANSFORMER = OrderTransformer::class;
     const PerPage = 8;
+
+    public function searchOrderPurchase(Order $order)
+    {
+        return $this->traitShow($order, self::TRANSFORMER);
+    }
 
     /**
      * 获取所有跟单部订单
@@ -141,7 +147,6 @@ class MerchandiserDepartmentsController extends Controller
      *       }
      * })
      */
-
     
     public function index(MerchandiserDepartmentRequest $request)
     {
@@ -166,7 +171,7 @@ class MerchandiserDepartmentsController extends Controller
                 return $query->where('warehouses_id', $warehouses_id);
 
             })
-            ->where('order_status', 'like', '%'.$order_status.'%')
+            ->whereIn('order_status',$order_status)
             ->where('member_nick', 'like', '%'.$member_nick.'%')
             ->where('system_order_no', 'like', '%'.$system_order_no.'%')
             ->where('receiver_name', 'like', '%'.$receiver_name.'%')

@@ -1627,7 +1627,7 @@ export default {
           type: "text"
         },
         {
-          label: "承诺时间",
+          label: "承诺发货时间",
           prop: "promise_ship_time",
           type: "text"
         },
@@ -3588,7 +3588,7 @@ export default {
               item["productComp"] =
                 item["combination"]["productComponents"]["data"];
               this.$set(item, "newData", {
-                quantity: item.quantity,
+                name: item["combination"].name,
                 paint: item.paint,
                 is_printing: item.is_printing,
                 printing_fee: item.printing_fee,

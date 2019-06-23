@@ -521,7 +521,7 @@
       </el-tab-pane>
     </el-tabs>
 
-    <!--修改-->
+    <!--货审-->
     <el-dialog title="仓库/供应商选项" :visible.sync="cargoAuditMask" :class="{'more-forms':moreForms}">
       <el-form :model="cargoAuditFormVal">
         <el-form-item v-for="item in cargoAuditFormHead" :key="item.label" :label="item.label" :prop="item.prop">
@@ -735,6 +735,149 @@
         <el-button @click="cancelSplit">关闭</el-button>
       </div>
     </el-dialog>
+
+    <!--订单采购-->
+    <el-dialog title="根据订单生成采购单" :visible.sync="orderPurchaseMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
+      <label>{{this.proSkuVal}}</label>
+      <el-button type="text">订单信息</el-button>
+      <el-form :model="orderPurchaseFormVal" class="orderPurchaseForm" id="form">
+        <el-form-item v-for="(item,index) in orderPurchaseFormHead" :key="index" :label="item.label" :prop="item.prop">
+          <span v-if="item.type=='text'">
+            <span v-if="item.inProp">
+              <el-input v-model.trim="orderPurchaseFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+            </span>
+            <span v-else>
+              <el-input v-model.trim="orderPurchaseFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+            </span>
+          </span>
+          <span v-else-if="item.type=='number'">
+            <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+              <el-input type="number" v-model.trim="orderPurchaseFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+            </span>
+            <span v-else>
+              <el-input type="number" v-model.trim="orderPurchaseFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+            </span>
+          </span>
+          <span v-else-if="item.type=='select'">
+            <el-select v-model="orderPurchaseFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+              <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+              </span>
+            </el-select>
+          </span>
+          <span v-else-if="item.type=='textarea'">
+            <el-input type="textarea" v-model.trim="orderPurchaseFormVal[item.prop]" :placehode="item.holder"></el-input>
+          </span>
+          <span v-else-if="item.type=='checkbox'">
+            <el-checkbox v-model="orderPurchaseFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
+          </span>
+          <span v-else-if="item.type=='radio'">
+            <el-radio v-model="orderPurchaseFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+            <el-radio v-model="orderPurchaseFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+          </span>
+          <span v-else-if="item.type=='DatePicker'">
+            <el-date-picker v-model="orderPurchaseFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
+            </el-date-picker>
+          </span>
+        </el-form-item>
+      </el-form>
+      <el-tabs v-model="orderPurchaseActiveName" id="orderPurchaseSkuId">
+        <el-tab-pane label="订单SKU信息">
+          <el-table :data="proSkuVal" fit height="160" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
+            <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.prop">{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column v-for="each in skuProEditHead" :label="each.label" align="center" :width="each.width" :key="each.label">
+              <template slot-scope="scope">
+                <span v-if="skuRowIndex =='index'+scope.$index">
+                  <span v-if="each.type=='number'">
+                    <el-input size="small" type="number" v-model.trim="specDtlInfo[each.inProp]" :placeholder="each.holder"></el-input>
+                  </span>
+                  <span v-else-if="each.type == 'textarea'">
+                    <el-input type="textarea" size="small" v-model.trim="specDtlInfo[each.inProp]" :placeholder="each.holder"></el-input>
+                  </span>
+                  <span v-else-if="each.type == 'select'">
+                    <el-select v-model="specDtlInfo[each.inProp]" :placeholder="each.holder">
+                      <span v-for="list in resData[each.stateVal]" :key="list.id">
+                        <el-option :label="list.name" :value="list.id"></el-option>
+                      </span>
+                    </el-select>
+                  </span>
+                  <span v-else-if="each.type == 'datepicker'">
+                    <el-date-picker v-model="specDtlInfo[each.inProp]" type="date" placeholder="选择日期" @change="dateChg" format="yyyy/MM/dd" value-format="yyyy/MM/dd"></el-date-picker>
+                  </span>
+                  <span v-else>
+                    <el-input size="small" v-model.trim="specDtlInfo[each.inProp]" :placeholder="each.holder"></el-input>
+                  </span>
+                </span>
+                <span v-else>
+                  <span v-if="each.type=='select'">
+                    <span v-for="list in resData[each.stateVal]" :key="list.id">
+                      <span v-if="each.inProp">
+                        <span v-if="list.id==specDtlInfo[each.inProp]">{{list.name}}</span>
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>{{combEditVal[each.inProp]}}</span>
+                </span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
+      <el-tabs v-model="orderPurchaseActiveName" id="orderPurchaseCompId">
+        <el-tab-pane label="产品包件明细" name="0">
+          <el-table :data="proCompVal" fit height="230" :row-class-name="proCompCName" @row-click="proCompRowClick">
+            <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.prop=='proPurchaseData'">
+                  <span v-if="proCompRowIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='number'">
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @change="compValChg"></el-input>
+                    </span>
+                    <span v-else-if="item.type == 'textarea'">
+                      <el-input type="textarea" size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @change="compValChg"></el-input>
+                    </span>
+                    <span v-else-if="item.type == 'select'">
+                      <el-select v-model="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @change="compValChg">
+                        <span v-for="list in resData[item.stateVal]" :key="list.id">
+                          <el-option :label="list.name?list.name:list.title" :value="list.id"></el-option>
+                        </span>
+                      </el-select>
+                    </span>
+                    <span v-else-if="item.type == 'datepicker'" @change="compValChg">
+                      <el-date-picker v-model="scope.row[item.prop][item.inProp]" type="date" placeholder="选择日期" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='select'">
+                      <span v-for="list in resData[item.stateVal]" :key="list.id">
+                        <span v-if="list.id==scope.row[item.prop][item.inProp]">{{list.name?list.name:list.title}}</span>
+                      </span>
+                    </span>
+                    <span v-else>{{scope.row[item.prop][item.inProp]}}</span>
+                  </span>
+                </span>
+                <span v-else-if="item.prop">
+                  <span v-if="item.type=='checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                  <span v-else-if="item.type=='img'">
+                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                      <img :src="scope.row[item.prop]">
+                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                    </el-popover>
+                  </span>
+                  <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
+                </span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
     <!--页码-->
     <Pagination :page-url="this.urls.merchandiserdepts" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
   </div>
@@ -807,7 +950,7 @@ export default {
         {
           cnt: "订单采购",
           icon: "bf-purchase",
-          ent: this.test,
+          ent: this.orderPurchase,
           nClick: true
         },
         {
@@ -851,6 +994,7 @@ export default {
       activeName: "0",
       leftTopActiveName: "0",
       rightActiveName: "0",
+      orderPurchaseActiveName: "0",
       orderListData: [],
       orderListHead: [
         {
@@ -1615,7 +1759,7 @@ export default {
       ],
       proCompHead: [
         {
-          label: "组合",
+          label: "通用子件",
           width: "90",
           prop: "is_common",
           type: "checkbox"
@@ -1628,7 +1772,7 @@ export default {
         },
         {
           label: "子件编码",
-          width: "140",
+          width: "120",
           prop: "component_code",
           type: "text"
         },
@@ -1638,79 +1782,134 @@ export default {
           prop: "spec",
           type: "text"
         },
-        {
-          label: "颜色",
+        /*{
+          label: "库存数",
           width: "120",
-          prop: "color",
-          type: "text"
-        },
-        {
-          label: "材质",
-          width: "120",
-          prop: "materials",
-          type: "text"
-        },
-        {
-          label: "功能",
-          width: "120",
-          prop: "function",
-          type: "text"
-        },
-        {
-          label: "特殊",
-          width: "120",
-          prop: "special",
-          type: "text"
-        },
-        {
-          label: "其他",
-          width: "120",
-          prop: "other",
-          type: "text"
-        },
-        {
-          label: "淘宝售价",
-          width: "130",
-          prop: "tb_price",
+          prop: "",
+          inProp: "",
           type: "number"
         },
         {
-          label: "标准售价",
-          width: "130",
-          prop: "price",
-          type: "number"
-        },
-        {
-          label: "最低销售价格",
-          width: "140",
-          prop: "lowest_price",
-          type: "number"
-        },
-        {
-          label: "最高销售价格",
-          width: "140",
-          prop: "highest_price",
-          type: "number"
-        },
-        {
-          label: "体积",
+          label: "库存预警数",
           width: "120",
-          prop: "volume",
+          prop: "inventory_warning",
           type: "number"
         },
         {
-          label: "包件数",
-          width: "130",
-          prop: "package_quantity",
+          label: "订单数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },*/
+        /*
+        {
+          label: "在途数",
+          width: "120",
+          prop: "",
+          inProp: "",
           type: "number"
         },
         {
-          label: "停产",
-          width: "90",
-          prop: "is_stop_pro",
-          type: "checkbox"
+          label: "在途数(提交)",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },*/
+        {
+          label: "可用数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },
+        {
+          label: "采购数",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "purchase_quantity",
+          holder: "请输入采购数",
+          type: "number"
+        },
+        {
+          label: "采购店铺",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "shops_id",
+          holder: "请选择采购店铺",
+          stateVal: "shops",
+          type: "select"
+        },
+        {
+          label: "供应商",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "suppliers_id",
+          holder: "请选择供应商",
+          stateVal: "suppliers",
+          type: "select"
+        },
+        {
+          label: "采购成本",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "purchase_cost",
+          type: "number"
+        },
+        {
+          label: "采购运费",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "purchase_freight",
+          type: "number"
+        },
+        {
+          label: "仓库成本",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "warehouse_cost",
+          type: "number"
+        },
+        {
+          label: "佣金点",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "commission",
+          type: "number"
+        },
+        {
+          label: "折扣",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "discount",
+          type: "number"
+        },
+        {
+          label: "木架费",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "wooden_frame_costs",
+          type: "number"
+        },
+        {
+          label: "到货时间",
+          width: "155",
+          prop: "proPurchaseData",
+          inProp: "arrival_time",
+          holder: "请输入到货时间",
+          type: "datepicker"
+        },
+        {
+          label: "备注",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "remark",
+          holder: "请输入备注",
+          type: "textarea"
         }
       ],
+      proCompVal: [],
       payDtlData: [],
       /*货审*/
       moreForms: true,
@@ -2143,7 +2342,464 @@ export default {
       rejectReasonData: [], //驳回原因
       offListData: [], //优惠列表
       imageData: [], //订单图片
-      innerNote:[],//内部便签
+      innerNote: [], //内部便签
+      orderPurchaseMask: false,
+
+      orderPurchaseFormVal: {},
+      orderPurchaseFormHead: [
+        {
+          label: "系统单号",
+          prop: "system_order_no",
+          width: "200",
+          type: "text",
+          editChgAble: true
+        },
+        {
+          label: "承诺发货时间",
+          prop: "promise_ship_time",
+          width: "200",
+          type: "text",
+          editChgAble: true
+        },
+        {
+          label: "买家昵称",
+          prop: "member_nick",
+          width: "200",
+          type: "text",
+          editChgAble: true
+        },
+        {
+          label: "收货人",
+          prop: "receiver_name",
+          width: "200",
+          type: "text",
+          editChgAble: true
+        },
+        {
+          label: "卖家备注",
+          prop: "seller_remark",
+          width: "200",
+          type: "text",
+          editChgAble: true
+        },
+        {
+          label: "客服备注",
+          prop: "customer_service_remark",
+          width: "200",
+          type: "text",
+          editChgAble: true
+        }
+      ],
+      addPurchaseForm: {
+        receiver: "",
+        receiver_address: "",
+        remark: "",
+        purchase_lists: []
+      },
+      addPurchaseRules: {
+        receiver: [{ required: true, message: "收货人必填", trigger: "blur" }],
+        receiver_address: [
+          { required: true, message: "收货地址必填", trigger: "blur" }
+        ]
+      },
+      addPurchaseCompVal: [],
+      addPurchaseHead: [
+        {
+          label: "采购单号",
+          prop: "purchase_order_no",
+          holder: "系统自动生成",
+          type: "text",
+          addChgAble: true
+        },
+        {
+          label: "采购状态",
+          prop: "purchase_status",
+          holder: "新建",
+          type: "select",
+          addChgAble: true
+        },
+        {
+          label: "收货人",
+          prop: "receiver",
+          holder: "请输入收货人",
+          type: "text"
+        },
+        {
+          label: "收货地址",
+          prop: "receiver_address",
+          holder: "请输入收货地址",
+          type: "text"
+        },
+        {
+          label: "采购备注",
+          prop: "remark",
+          holder: "请输入采购备注",
+          type: "textarea"
+        }
+      ],
+      addPurchaseSkuVal: [],
+      addPurSkuStagId: [],
+      addPurchaseSkuHead: [
+        {
+          label: "sku名称",
+          prop: "name",
+          type: "text"
+        }
+      ],
+      addPurCurSkuData: [],
+      addPurchaseCompHead: [
+        {
+          label: "子件图片",
+          width: "120",
+          prop: "img_url",
+          type: "img"
+        },
+        {
+          label: "子件编码",
+          width: "120",
+          prop: "component_code",
+          type: "text"
+        },
+        {
+          label: "子件名称",
+          width: "120",
+          prop: "spec",
+          type: "text"
+        },
+        /*{
+          label: "库存数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },
+        {
+          label: "订单数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },*/
+        /*
+        {
+          label: "在途数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },
+        {
+          label: "在途数(提交)",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },
+        {
+          label: "可用数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },
+        {
+          label: "已入库数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },
+        {
+          label: "需采购数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },*/
+        {
+          label: "采购数",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "purchase_quantity",
+          type: "number"
+        },
+        {
+          label: "采购店铺",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "shops_id",
+          stateVal: "shops",
+          type: "select"
+        },
+        {
+          label: "供应商",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "suppliers_id",
+          stateVal: "suppliers",
+          holder: "请选择供应商",
+          type: "select"
+        },
+        {
+          label: "采购成本",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "purchase_cost",
+          holder: "请输入采购成本",
+          type: "number"
+        },
+        {
+          label: "仓库成本",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "warehouse_cost",
+          holder: "请输入仓库成本",
+          type: "number"
+        },
+        {
+          label: "佣金点",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "commission",
+          holder: "请输入佣金点",
+          type: "number"
+        },
+        {
+          label: "采购运费",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "purchase_freight",
+          holder: "请输入采购运费",
+          type: "number"
+        },
+        {
+          label: "折扣",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "discount",
+          holder: "请输入折扣",
+          type: "number"
+        },
+        {
+          label: "木架费",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "wooden_frame_costs",
+          holder: "请输入木架费",
+          type: "number"
+        },
+        {
+          label: "到货时间",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "arrival_time",
+          holder: "请输入到货时间",
+          type: "datepicker"
+        },
+        {
+          label: "备注",
+          width: "120",
+          prop: "proPurchaseData",
+          inProp: "remark",
+          holder: "请输入备注",
+          type: "textarea"
+        }
+      ],
+      addPurchaseCompIndex: "",
+
+      proSkuVal: [],
+      proSkuHead: [
+        {
+          label: "sku名称",
+          width: "120",
+          prop: "name",
+          type: "text"
+        }
+        /*
+        {
+          label: "组合件数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },
+        {
+          label: "库存数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },
+        {
+          label: "订单数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },*/
+        /*
+        {
+          label: "在途数(提交)",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        },*/
+        /*{
+          label: "可用数",
+          width: "120",
+          prop: "",
+          inProp: "",
+          type: "number"
+        }
+        {
+            label: 'sku图片',
+            width: '160',
+            prop: 'com_pro_spec',
+            inProp: "img_url",
+            type: 'text'
+          },
+          {
+             label: '规格编码',
+             width: '160',
+             prop: 'com_pro_spec',
+             inProp: "spec_code",
+             type: 'text'
+           },
+          {
+            label: '采购成本',
+            width: '120',
+            prop: '',
+            inProp: "",
+            type: 'number'
+          },
+          {
+            label: '仓库成本',
+            width: '120',
+            prop: '',
+            inProp: "",
+            type: 'number'
+          },
+          {
+            label: '佣金点',
+            width: '120',
+            prop: 'com_pro_spec',
+            inProp: "commission",
+            type: 'number'
+          },
+          {
+            label: '折扣',
+            width: '120',
+            prop: 'com_pro_spec',
+            inProp: "discount",
+            type: 'number'
+          },
+          {
+            label: '木架费',
+            width: '120',
+            prop: 'com_pro_spec',
+            inProp: "wooden_frame_costs",
+            type: 'number'
+          }*/
+      ],
+      skuEditHead: [
+        {
+          label: "采购数",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "purchase_quantity",
+          holder: "请输入采购数",
+          type: "number"
+        },
+        {
+          label: "采购店铺",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "shops_id",
+          holder: "请输入采购店铺",
+          type: "select",
+          stateVal: "shops"
+        },
+        {
+          label: "供应商",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "suppliers_id",
+          holder: "请选择供应商",
+          type: "select",
+          stateVal: "suppliers"
+        },
+        {
+          label: "到货时间",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "arrival_time",
+          holder: "请输入到货时间",
+          type: "datepicker"
+        },
+        {
+          label: "备注",
+          width: "120",
+          prop: "skuEditVal",
+          inProp: "remark",
+          holder: "请输入备注",
+          type: "textarea"
+        }
+      ],
+      skuEditVal:{},
+      proCurSkuData: {},
+      proIndex: "",
+      proDtlVal: [],
+      proCompValChg: false,
+      proCompIndex: "",
+      skuRowIndex: "",
+      skuIndex:"",
+      combEditVal: {},
+      skuProEditHead: [
+        {
+          label: "采购数",
+          width: "120",
+          prop: "combEditVal",
+          inProp: "purchase_quantity",
+          holder: "请输入采购数",
+          type: "number"
+        },
+        {
+          label: "采购店铺",
+          width: "120",
+          prop: "combEditVal",
+          inProp: "shops_id",
+          holder: "请输入采购店铺",
+          type: "select",
+          stateVal: "shops"
+        },
+        {
+          label: "供应商",
+          width: "120",
+          prop: "combEditVal",
+          inProp: "suppliers_id",
+          holder: "请选择供应商",
+          type: "select",
+          stateVal: "suppliers"
+        },
+        {
+          label: "到货时间",
+          width: "120",
+          prop: "combEditVal",
+          inProp: "arrival_time",
+          holder: "请输入到货时间",
+          type: "datepicker"
+        },
+        {
+          label: "备注",
+          width: "120",
+          prop: "combEditVal",
+          inProp: "remark",
+          holder: "请输入备注",
+          type: "textarea"
+        }
+      ],
+      specDtlInfo: []
     };
   },
   computed: {
@@ -2163,9 +2819,9 @@ export default {
   methods: {
     test() {
       this.$message({
-        message:"此功能处于开发调试中",
-        type:"success"
-      })
+        message: "此功能处于开发调试中",
+        type: "success"
+      });
     },
     /*获取数据*/
     toggleShow() {
@@ -2234,7 +2890,7 @@ export default {
         /*已客审*/
         case 0:
           this.$fetch(this.urls.merchandiserdepts, {
-            order_status: 30,
+            order_status: [30, 50],
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
@@ -3211,6 +3867,215 @@ export default {
         order_transMStart: "",
         order_order_transMEndmark: ""
       };
+    },
+
+    orderPurchase() {
+      this.orderPurchaseMask = true;
+      let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$fetch(
+        this.urls.merchandiserdepts + "/searchorderpurchase" + "/" + id,
+        {
+          include:
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+        }
+      ).then(res => {
+        this.orderPurchaseFormVal = res;
+        if (res["orderItems"]["data"].length > 0) {
+          res["orderItems"]["data"].map(item => {
+            item["name"] = item["combination"]["name"];
+            item["id"] = item.id;
+            item["products_id"] = item.products_id;
+            item["combinations_id"] = item.combinations_id;
+            item["productComp"] =
+              item["combination"]["productComponents"]["data"];
+            this.$set(item, "SkuData", {
+              created_at: "00000000000000000000000",
+              id: item["combination"].id,
+              name: item["combination"].name,
+              pid: item["combination"].pid,
+              updated_at: item["combination"].updated_at
+            });
+            let proSkuData = {
+              created_at: "00000000000000000000000",
+              id: item["combination"].id,
+              name: item["combination"].name,
+              pid: item["combination"].pid,
+              updated_at: item["combination"].updated_at,
+              productComponents:item["combination"].productComponents
+            };
+            this.proSkuVal.push(proSkuData);
+          });
+        }
+        //this.proCompVal = res["orderItems"]["data"];
+      });
+    },
+    orderPurchaseConfirm() {
+      //this.orderPurchaseMask = false;
+    },
+    addPurSkuRowClick(row) {
+      this.addPurchaseCompVal = row.compData;
+    },
+    addCompCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    addCompRowClick(row) {
+      this.addPurchaseCompIndex = "index" + row.index;
+    },
+    addPurCompDtl(index) {
+      /* this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.addPurchaseSkuVal.splice(index,1);
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });*/
+      this.addPurchaseCompVal.splice(index, 1);
+    },
+    addPurchaseDetail() {
+      this.proRowIndex = "0";
+      this.specDtlInfo = [];
+      this.proDtlVal = [];
+      this.proSkuVal = [];
+      this.proCompVal = [];
+      this.addPurchaseSkuVal = [];
+      this.proCompRowIndex = "";
+      this.proMask = true;
+      Object.assign(this.proQuery, this.$options.data().proQuery);
+    },
+    proCompCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    proCompRowClick(row) {
+      this.proCompRowIndex = "index" + row.index;
+      this.proCompIndex = row.index;
+      if (this.proCompValChg) {
+        if (this.compStagData.length > 0) {
+          if (this.compStagId.indexOf(row.id) == -1) {
+            this.compStagData.push(row);
+            this.compStagId.push(row.id);
+          } else {
+            this.compStagData.map((item, index) => {
+              if (item.id == row.id) {
+                this.compStagData.splice(index, 1);
+              }
+            });
+            this.compStagData.push(row);
+          }
+        } else {
+          this.compStagData.push(row);
+          this.compStagId.push(row.id);
+        }
+        this.proCompValChg = false;
+      }
+      let newStagData = this.compStagData;
+      this.proCurSkuData["compData"] = newStagData;
+    },
+    compValChg() {
+      this.proCompValChg = true;
+    },
+
+    confirmAddPur() {
+      this.addPurchaseForm.purchase_lists = [];
+      this.addPurchaseSkuVal.map(item => {
+        let sku = {
+          combinations_id: item.id,
+          purchase_details: []
+        };
+        item.compData.map(list => {
+          let comp = {
+            product_components_id: list.id,
+            purchase_quantity: list["proPurchaseData"].purchase_quantity,
+            shops_id: list["proPurchaseData"].shops_id,
+            suppliers_id: list["proPurchaseData"].suppliers_id,
+            purchase_cost: list["proPurchaseData"].purchase_cost,
+            warehouse_cost: list["proPurchaseData"].warehouse_cost,
+            purchase_freight: list["proPurchaseData"].purchase_freight,
+            commission: list["proPurchaseData"].commission,
+            discount: list["proPurchaseData"].discount,
+            wooden_frame_costs: list["proPurchaseData"].wooden_frame_costs,
+            arrival_time: list["proPurchaseData"].arrival_time,
+            remark: list["proPurchaseData"].remark
+          };
+          sku.purchase_details.push(comp);
+        });
+        this.addPurchaseForm.purchase_lists.push(sku);
+      });
+      this.$post(this.urls.purchases, this.addPurchaseForm).then(
+        () => {
+          this.$message({
+            message: "新建采购单成功",
+            type: "success"
+          });
+          this.addPurchaseMask = false;
+          this.refresh();
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error({
+              message: str
+            });
+          }
+        }
+      );
+    },
+    cancelAddPur() {
+      this.addPurchaseMask = false;
+      this.$message({
+        message: "取消新建采购单",
+        type: "info"
+      });
+    },
+    proSkuCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    proSkuRowClick(row) {
+      this.proCompValChg = false;
+      this.proCompIndex = "0";
+      this.compStagData = [];
+      this.compStagId = [];
+      this.skuRowIndex = "index" + row.index;
+      this.skuIndex = row.index;
+      if (row["productComponents"]["data"].length > 0) {
+        row["productComponents"]["data"].map(item => {
+          this.$set(item, "proPurchaseData", {
+            purchase_quantity: "",
+            shops_id: "",
+            suppliers_id: "",
+            arrival_time: "",
+            remark: "",
+            purchase_cost: item.purchase_cost,
+            purchase_freight: item.purchase_freight,
+            warehouse_cost: item.warehouse_cost,
+            commission: item.commission,
+            discount: item.discount,
+            wooden_frame_costs: item.wooden_frame_costs
+          });
+        });
+      }
+      this.proCompVal = row["productComponents"]["data"];
+      // this.proCompVal = Object.assign({},row['productComponents']['data']);
+      this.proCurSkuData = row;
+    },
+    cancelAddProDtl() {
+      this.proMask = false;
+    },
+    dateChg(val) {
+      // this.specDtlInfo.arrival_time = val;
     }
   },
   mounted() {

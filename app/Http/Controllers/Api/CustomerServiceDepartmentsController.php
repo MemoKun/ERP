@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\DB;
+
 use App\Models\Order;
+
 use App\Http\Requests\Api\CustomerServiceDepartmentRequest;
 use App\Http\Requests\Api\PaymentDetailRequest;
 use App\Http\Requests\Api\SplitOrderRequest;
@@ -11,9 +13,12 @@ use App\Http\Requests\Api\MergerOrderRequest;
 use App\Http\Requests\Api\TurnToAdditionOrderRequest;
 use App\Http\Requests\Api\EditStatuRequest;
 use App\Http\Requests\Api\DestroyRequest;
+
 use App\Transformers\OrderTransformer;
+
 use App\Http\Controllers\Traits\CURDTrait;
 use App\Http\Controllers\Traits\ProcedureTrait;
+
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 

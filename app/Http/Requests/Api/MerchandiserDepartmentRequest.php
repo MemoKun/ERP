@@ -24,9 +24,6 @@ class MerchandiserDepartmentRequest extends FormRequest
                                 $query->where('status', 1);
                             }),
                         ],
-                        'order_status' => [
-                            'nullable', 'in:'.Order::ORDER_STATUS_CS_AUDIT.','.Order::ORDER_STATUS_CARGO_AUDIT.','.Order::ORDER_STATUS_READY_STOCK_OUT.','.Order::ORDER_STATUS_STOCK_OUT
-                        ],
                         'status' => [
                             'nullable', 'boolean'
                         ]

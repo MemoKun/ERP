@@ -1541,7 +1541,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
         prop: "payment_date",
         type: "text"
       }, {
-        label: "承诺时间",
+        label: "承诺发货时间",
         prop: "promise_ship_time",
         type: "text"
       }, {
@@ -3306,7 +3306,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
             item["combinations_id"] = item.combinations_id;
             item["productComp"] = item["combination"]["productComponents"]["data"];
             _this10.$set(item, "newData", {
-              quantity: item.quantity,
+              name: item["combination"].name,
               paint: item.paint,
               is_printing: item.is_printing,
               printing_fee: item.printing_fee,

@@ -810,6 +810,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //跟单部
         $api->get('merchandiserdepts', 'MerchandiserDepartmentsController@index')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.index');
+        $api->get('merchandiserdepts/searchorderpurchase/{order}', 'MerchandiserDepartmentsController@searchOrderPurchase')->middleware('permission:跟单部')
+            ->name('api.merchandiserdepts.searchorderpurchase');
         $api->get('merchandiserdepts/searchstockout', 'MerchandiserDepartmentsController@searchStockOut')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.searchstockout');
         $api->get('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@show')->middleware('permission:跟单部')
