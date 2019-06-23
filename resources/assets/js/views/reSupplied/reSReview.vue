@@ -877,6 +877,7 @@ export default {
             res => {
               this.orderLoading = false;
               this.reviewData = res.data;
+              this.currentId=this.reviewData[0].id;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -930,6 +931,7 @@ export default {
             res => {
               this.orderLoading = false;
               this.reviewData = res.data;
+              this.currentId=this.reviewData[0].id;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);

@@ -1,14 +1,14 @@
 webpackJsonp([20],{
 
-/***/ 1005:
+/***/ 1008:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1192)
+var __vue_script__ = __webpack_require__(1195)
 /* template */
-var __vue_template__ = __webpack_require__(1193)
+var __vue_template__ = __webpack_require__(1196)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,12 +48,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 1192:
+/***/ 1195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
 //
 //
@@ -865,6 +865,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }).then(function (res) {
             _this.orderLoading = false;
             _this.reviewData = res.data;
+            _this.currentId = _this.reviewData[0].id;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -902,6 +903,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }).then(function (res) {
             _this.orderLoading = false;
             _this.reviewData = res.data;
+            _this.currentId = _this.reviewData[0].id;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -1375,7 +1377,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1193:
+/***/ 1196:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

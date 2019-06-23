@@ -1,14 +1,14 @@
 webpackJsonp([21],{
 
-/***/ 1007:
+/***/ 1010:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1196)
+var __vue_script__ = __webpack_require__(1199)
 /* template */
-var __vue_template__ = __webpack_require__(1197)
+var __vue_template__ = __webpack_require__(1200)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,12 +48,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 1196:
+/***/ 1199:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -1025,6 +1025,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, _defineProperty(_$fetch, "resupply_order_no", this.searchBox.resupply_order_no), _defineProperty(_$fetch, "receiver_state", this.searchBox.receiver_state), _defineProperty(_$fetch, "receiver_city", this.searchBox.receiver_city), _defineProperty(_$fetch, "receiver_district", this.searchBox.receiver_district), _defineProperty(_$fetch, "mark_name", this.searchBox.mark_name), _defineProperty(_$fetch, "suppliers_id", this.searchBox.suppliers_id), _defineProperty(_$fetch, "is_invalid", this.searchBox.is_invalid), _defineProperty(_$fetch, "include", "packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote"), _$fetch)).then(function (res) {
         _this.orderLoading = false;
         _this.orderData = res.data;
+        _this.currentId = _this.orderData[0].id;
         var pg = res.meta.pagination;
         _this.$store.dispatch("currentPage", pg.current_page);
         _this.$store.commit("PER_PAGE", pg.per_page);
@@ -1293,7 +1294,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ 1197:
+/***/ 1200:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
