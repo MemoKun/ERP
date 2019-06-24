@@ -17,6 +17,9 @@
       </div>
       <div class="searchBox">
         <div id="cmptnOrder" :style="{width: '400px', height: '350px'}"></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
       <div id="monthlySalesPrediction" :style="{width: '1000px', height: '500px'}"></div>
       <div id="salesPrediction" :style="{width: '1000px', height: '500px'}"></div>

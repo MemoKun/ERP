@@ -83,6 +83,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -897,7 +900,13 @@ var render = function() {
           _c("div", {
             style: { width: "400px", height: "350px" },
             attrs: { id: "cmptnOrder" }
-          })
+          }),
+          _vm._v(" "),
+          _c("div"),
+          _vm._v(" "),
+          _c("div"),
+          _vm._v(" "),
+          _c("div")
         ]),
         _vm._v(" "),
         _c("div", {
