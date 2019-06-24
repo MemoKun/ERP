@@ -48,6 +48,7 @@ const urls = {
     financialdepts: '/financialdepts',
     paymentdetails: '/paymentdetails',
     warehousingdepts: '/warehousingdepts',
+    resupplieorderaudit:'/resupplieorderaudit',
     returnreasons: '/returnreasons',
     changeorders: '/changeorders',
     shopgatheringmag: '/shopgatheringmag',

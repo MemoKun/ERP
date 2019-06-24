@@ -19,7 +19,12 @@ class Order extends Model
     const ORDER_STATUS_CARGO_AUDIT = 60;
     const ORDER_STATUS_READY_STOCK_OUT = 70;
     const ORDER_STATUS_STOCK_OUT = 80; //已发货
-    const ORDER_STATUS_BRUSH_ORDER = 110;
+
+    const ORDER_STATUS_RESUPPLIE_ORDER_UNSUBMIT = 110;//补单未提交
+    const ORDER_STATUS_RESUPPLIE_ORDER_SUBMIT = 120;//补单已提交
+    const ORDER_STATUS_RESUPPLIE_ORDER_AUDIT = 130;//补单已审核
+
+
 
     //退回
     const ORDER_RETURN_LOCK = 21;
@@ -50,6 +55,10 @@ class Order extends Model
         self::ORDER_STATUS_CARGO_AUDIT => '已货审',
         self::ORDER_STATUS_READY_STOCK_OUT => '准备出库',
         self::ORDER_STATUS_STOCK_OUT => '已出库',
+
+        self::ORDER_STATUS_RESUPPLIE_ORDER_UNSUBMIT  => '未提交',
+        self::ORDER_STATUS_RESUPPLIE_ORDER_SUBMIT  => '未审核',
+        self::ORDER_STATUS_RESUPPLIE_ORDER_AUDIT => '未审核',
     ];
 
     //订单操作

@@ -17,9 +17,6 @@ class WarehousingDepartmentRequest extends FormRequest
         switch ($this->method()) {
             case 'GET':
                 return [
-                    'order_status' => [
-                        'nullable', 'in:'.Order::ORDER_STATUS_CARGO_AUDIT.','.Order::ORDER_STATUS_READY_STOCK_OUT
-                    ],
                     'status' => [
                         'nullable', 'boolean'
                     ]

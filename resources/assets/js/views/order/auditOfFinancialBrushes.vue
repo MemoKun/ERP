@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="outerHandleClick">
-      <el-tab-pane label="订单列表" name="0">
+      <el-tab-pane label="订单" name="0">
         <div>
           <div class="searchBox">
             <span>
@@ -110,109 +110,210 @@
             <el-button @click="resets">重置</el-button>
           </div>
         </div>
-        <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
-          <el-tab-pane label="未处理" name="0">
-            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-              </el-table-column>
-              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                <template slot-scope="scope">
-                  <span v-if="item.type=='checkbox'">
-                    <span v-if="item.inProp">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                    </span>
-                    <span v-else>
-                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                    </span>
-                  </span>
-                  <span v-else-if="item.type=='flag'">
-                    <span v-if="scope.row[item.prop]==0">
-                      <i class="iconfont bf-flag"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==1">
-                      <i class="iconfont bf-flag" style="color:red"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==2">
-                      <i class="iconfont bf-flag" style="color:yellow"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==3">
-                      <i class="iconfont bf-flag" style="color:green"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==4">
-                      <i class="iconfont bf-flag" style="color:blue"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==5">
-                      <i class="iconfont bf-flag" style="color:purple"></i>
-                    </span>
-                  </span>
-                  <span v-else>
-                    <span v-if="scope.row[item.prop]">
-                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                    </span>
-                  </span>
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" width="90" align="center" fixed="right">
-                <template slot-scope="scope">
-                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-tab-pane>
-          <el-tab-pane label="已处理" name="1">
-            <el-table :data="alreadyHandle" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRClick" @row-dblclick="orderDbClick">
-              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-              </el-table-column>
-              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                <template slot-scope="scope">
-                  <span v-if="item.type=='checkbox'">
-                    <span v-if="item.inProp">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                    </span>
-                    <span v-else>
-                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                    </span>
-                  </span>
-                  <span v-else-if="item.type=='flag'">
-                    <span v-if="scope.row[item.prop]==0">
-                      <i class="iconfont bf-flag"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==1">
-                      <i class="iconfont bf-flag" style="color:red"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==2">
-                      <i class="iconfont bf-flag" style="color:yellow"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==3">
-                      <i class="iconfont bf-flag" style="color:green"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==4">
-                      <i class="iconfont bf-flag" style="color:blue"></i>
-                    </span>
-                    <span v-else-if="scope.row[item.prop]==5">
-                      <i class="iconfont bf-flag" style="color:purple"></i>
-                    </span>
-                  </span>
-                  <span v-else>
-                    <span v-if="scope.row[item.prop]">
-                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                    </span>
-                  </span>
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" width="90" align="center" fixed="right">
-                <template slot-scope="scope">
-                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-tab-pane>
-          <!--<el-tab-pane label="等通知发货" name="2">
 
-                    </el-tab-pane>-->
+        <!--显示列表-未处理-->
+        <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
+          <el-tab-pane label="未提交" name="0">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="未审核" name="1">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="已审核" name="2">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="所有数据" name="3">
+            <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
+              <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
+              </el-table-column>
+              <el-table-column v-for="item in orderListHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='checkbox'">
+                    <span v-if="item.inProp">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                    </span>
+                  </span>
+                  <span v-else-if="item.type=='flag'">
+                    <span v-if="scope.row[item.prop]==0">
+                      <i class="iconfont bf-flag"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==1">
+                      <i class="iconfont bf-flag" style="color:red"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==2">
+                      <i class="iconfont bf-flag" style="color:yellow"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==3">
+                      <i class="iconfont bf-flag" style="color:green"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==4">
+                      <i class="iconfont bf-flag" style="color:blue"></i>
+                    </span>
+                    <span v-else-if="scope.row[item.prop]==5">
+                      <i class="iconfont bf-flag" style="color:purple"></i>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="scope.row[item.prop]">
+                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                    </span>
+                  </span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="90" align="center" fixed="right">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
+
       <el-tab-pane label="订单明细" name="1">
+        <!-- 上方信息 -->
         <el-form :model="orderDtlFormVal" class="quarter_turn">
           <el-form-item v-for="item in orderDtlFormHead" :key="item.label" :label="item.label" :prop="item.prop">
             <span v-if="item.type=='text'">
@@ -231,6 +332,7 @@
             </span>
           </el-form-item>
         </el-form>
+        <!-- 下方信息 -->
         <el-tabs v-model="rightActiveName" @tab-click="rightHandleClick">
           <el-tab-pane label="商品明细" name="0">
             <el-table :data="proDtlData" fit>
@@ -299,213 +401,134 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="内部便签" name="2">
-
-          </el-tab-pane>
-          <el-tab-pane label="操作记录" name="3">
-
-          </el-tab-pane>
-          <el-tab-pane label="关联信息" name="4">
-
-          </el-tab-pane>
-          <el-tab-pane label="其他费用" name="5">
-
-          </el-tab-pane>
-          <el-tab-pane label="驳回原因" name="6">
-
-          </el-tab-pane>
-          <el-tab-pane label="优惠列表" name="7">
-
-          </el-tab-pane>
-        </el-tabs>
-      </el-tab-pane>
-    </el-tabs>
-
-    <!--新增-->
-    <el-dialog title="订单明细" :visible.sync="addCustomerMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
-      <div class="clearfix">
-        <el-button type="text" style="float: left">基础信息</el-button>
-        <!--<el-button type="primary" style="float: right;padding: 6px 10px;
-    font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>-->
-      </div>
-      <el-form :model="addCustomerFormVal" :rules="addCustomerFormRules" class="customerAddForm" id="form">
-        <el-form-item v-for="(item,index) in addCustomerFormHead" :key="index" :label="item.label" :prop="item.prop">
-          <span v-if="item.type=='text'">
-            <span v-if="item.inProp">
-              <el-input v-model.trim="addCustomerFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-            </span>
-            <span v-else>
-              <el-input v-model.trim="addCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-            </span>
-          </span>
-          <span v-else-if="item.type=='number'">
-            <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-              <el-input type="number" v-model.trim="addCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
-            </span>
-            <span v-else>
-              <el-input type="number" v-model.trim="addCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
-            </span>
-          </span>
-          <span v-else-if="item.type=='select'">
-            <el-select v-model="addCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
-              <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
-              </span>
-            </el-select>
-          </span>
-          <span v-else-if="item.type=='textarea'">
-            <el-input type="textarea" v-model.trim="addCustomerFormVal[item.prop]" :placehode="item.holder"></el-input>
-          </span>
-          <span v-else-if="item.type=='checkbox'">
-            <el-checkbox v-model="addCustomerFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
-          </span>
-          <span v-else-if="item.type=='radio'">
-            <el-radio v-model="addCustomerFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-            <el-radio v-model="addCustomerFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
-          </span>
-          <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker v-model="addCustomerFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
-            </el-date-picker>
-          </span>
-        </el-form-item>
-      </el-form>
-      <el-tabs v-model="addActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
-        <el-tab-pane label="商品信息" name="0">
-          <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-            <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-              <template slot-scope="scope">
-                <span v-if="item.prop=='newData'">
-                  <span v-if="proRIndex == 'index'+scope.$index">
-                    <span v-if="item.type=='number'">
-                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+            <el-table :data="innerNote" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
                     </span>
-                    <span v-else-if="item.type == 'checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
-                    </span>
-                    <span v-else>
-                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                    </span>
-                  </span>
-                  <span v-else>
-                    <span v-if="item.type=='checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                    </span>
-                    <span v-else>
-                      {{scope.row[item.prop][item.inProp]}}
-                    </span>
-                  </span>
-                </span>
-                <span v-else-if="item.prop">
-                  <span v-if="item.type=='checkbox'">
-                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                  </span>
-                  <span v-else-if="item.type=='img'">
-                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                      <img :src="scope.row[item.prop]">
-                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                    </el-popover>
                   </span>
                   <span v-else>
                     {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
                   </span>
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column type="expand" fixed="left">
-              <template slot-scope="scope">
-                <el-table :data="scope.row['productComp']" fit>
-                  <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                    <template slot-scope="scope">
-                      <span v-if="item.prop">
-                        <span v-if="item.type=='checkbox'">
-                          <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                        </span>
-                        <span v-else-if="item.type=='img'">
-                          <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                            <img :src="scope.row[item.prop]">
-                            <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                          </el-popover>
-                        </span>
-                        <span v-else>
-                          {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                      </span>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" width="90" align="center" fixed="right">
-              <template slot-scope="scope">
-                <el-button size="mini" type="danger" @click="addDelPro(scope.$index)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="收货信息" name="1">
-          <el-form :model="receiveInfo" class="half">
-            <el-form-item v-for="(item,index) in addHead[addActiveName]" :key="index" :label="item.label" :prop="item.label">
-              <span v-if="item.type=='number'">
-                <el-input type="number" v-model.trim="receiveInfo[item.prop]" :placeholder="item.holder"></el-input>
-              </span>
-              <span v-else-if="item.type=='cascader'">
-                <el-cascader size="large" :options="options" v-model="receiveInfo[item.prop]">
-                </el-cascader>
-              </span>
-              <span v-else>
-                <el-input v-model.trim="receiveInfo[item.prop]" :placeholder="item.holder"></el-input>
-              </span>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane>
-        <el-tab-pane label="费用类型" name="2">
-          <el-table :data="expenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
-            <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-              <template slot-scope="scope">
-                <span v-if="expenseRIndex == 'index'+scope.$index">
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="操作记录" name="3">
+            <el-table :data="operationData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
                   <span v-if="item.type=='select'">
-                    <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
-                      <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                        <el-option :label="list.name" :value="list.id"></el-option>
-                      </span>
-                    </el-select>
-                  </span>
-                  <span v-else>
-                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                  </span>
-                </span>
-                <span v-else>
-                  <span v-if="item.type=='select'">
-                    <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
                       <span v-if="list.id==scope.row[item.prop]">
-                        {{list.name}}
+                        {{list.name?list.name:''}}
                       </span>
                     </span>
                   </span>
                   <span v-else>
-                    {{scope.row[item.prop]}}
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
                   </span>
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" width="90" align="center" fixed="right">
-              <template slot-scope="scope">
-                <el-button size="mini" type="danger" @click="addDelExpense(scope.$index)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
-      <div slot="footer" class="dialog-footer clearfix">
-        <div style="float: left">
-          <el-button type="primary" @click="addProDtl" v-if="addActiveName=='0'">添加商品</el-button>
-          <el-button type="primary" @click="addExpenseLine" v-if="addActiveName=='2'">新增行</el-button>
-        </div>
-        <div style="float: right">
-          <el-button type="primary" @click="addCustomerConfirm">确定</el-button>
-          <el-button @click="addCustomerCancel">取消</el-button>
-        </div>
-      </div>
-    </el-dialog>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="关联信息" name="4">
+            <el-table :data="relatedInfoData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="其他费用" name="5">
+            <el-table :data="otherFeeData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="驳回原因" name="6">
+            <el-table :data="rejectReasonData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="优惠列表" name="7">
+            <el-table :data="offListData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="订单图片" name="8">
+            <el-table :data="imageData" fit>
+              <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
+                <template slot-scope="scope">
+                  <span v-if="item.type=='select'">
+                    <span v-for="(list,index) in resData[item.stateVal]" :key="index">
+                      <span v-if="list.id==scope.row[item.prop]">
+                        {{list.name?list.name:''}}
+                      </span>
+                    </span>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+    </el-tabs>
 
     <!--商品明细-->
     <el-dialog title="商品明细" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
@@ -633,189 +656,206 @@
       </div>
     </el-dialog>
 
-    <!--修改-->
-    <el-dialog title="修改明细" :visible.sync="updateCustomerMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
+    <!--修改  样式不再未bigDialog-->
+    <el-dialog title="修改明细" :visible.sync="updateStorageMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <div class="clearfix">
-        <el-button type="text" style="float: left">基础信息</el-button>
-        <!--<el-button type="primary" style="float: right;padding: 6px 10px;
-    font-size: 12px;margin-bottom: 5px;" @click="toggleForm">{{toggleText?"折叠":"展开"}}</el-button>-->
+        <span style="float: left">物流信息</span>
       </div>
-      <el-form :model="updateCustomerFormVal" :rules="addCustomerFormRules" class="customerAddForm" id="form">
-        <el-form-item v-for="(item,index) in addCustomerFormHead" :key="index" :label="item.label" :prop="item.prop">
+      <!--取消hidepart-->
+      <el-form :model="updateStorageFormVal" :rules="addStorageFormRules" class="storageUpdateForm" id="form">
+        <el-form-item v-for="(item,index) in addStorageFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">
-              <el-input v-model.trim="updateCustomerFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+              <el-input v-model.trim="updateStorageFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
             <span v-else>
-              <el-input v-model.trim="updateCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+              <el-input v-model.trim="updateStorageFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='number'">
             <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-              <el-input type="number" v-model.trim="updateCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+              <el-input type="number" v-model.trim="updateStorageFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
             </span>
             <span v-else>
-              <el-input type="number" v-model.trim="updateCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+              <el-input type="number" v-model.trim="updateStorageFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='select'">
-            <el-select v-model="updateCustomerFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+            <el-select v-model="updateStorageFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
               <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
           </span>
           <span v-else-if="item.type=='textarea'">
-            <el-input type="textarea" v-model.trim="updateCustomerFormVal[item.prop]" :placehode="item.holder"></el-input>
+            <el-input type="textarea" v-model.trim="updateStorageFormVal[item.prop]" :placehode="item.holder"></el-input>
           </span>
           <span v-else-if="item.type=='checkbox'">
-            <el-checkbox v-model="updateCustomerFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
+            <el-checkbox v-model="updateStorageFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
           </span>
           <span v-else-if="item.type=='radio'">
-            <el-radio v-model="updateCustomerFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-            <el-radio v-model="updateCustomerFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+            <el-radio v-model="updateStorageFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+            <el-radio v-model="updateStorageFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker v-model="updateCustomerFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
+            <el-date-picker v-model="updateStorageFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
             </el-date-picker>
           </span>
         </el-form-item>
       </el-form>
-      <el-tabs v-model="updateActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">
-        <el-tab-pane label="商品信息" name="0">
-          <el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
-            <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-              <template slot-scope="scope">
-                <span v-if="item.prop=='newData'">
-                  <span v-if="proRIndex == 'index'+scope.$index">
-                    <span v-if="item.type=='number'">
-                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                    </span>
-                    <span v-else-if="item.type == 'checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
-                    </span>
-                    <span v-else>
-                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                    </span>
-                  </span>
-                  <span v-else>
-                    <span v-if="item.type=='checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                    </span>
-                    <span v-else>
-                      {{scope.row[item.prop][item.inProp]}}
-                    </span>
-                  </span>
-                </span>
-                <span v-else-if="item.prop">
-                  <span v-if="item.type=='checkbox'">
-                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                  </span>
-                  <span v-else-if="item.type=='img'">
-                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                      <img :src="scope.row[item.prop]">
-                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                    </el-popover>
-                  </span>
-                  <span v-else>
-                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                  </span>
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column type="expand" fixed="left">
-              <template slot-scope="scope">
-                <el-table :data="scope.row['productComp']" fit>
-                  <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                    <template slot-scope="scope">
-                      <span v-if="item.prop">
-                        <span v-if="item.type=='checkbox'">
-                          <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                        </span>
-                        <span v-else-if="item.type=='img'">
-                          <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                            <img :src="scope.row[item.prop]">
-                            <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                          </el-popover>
-                        </span>
-                        <span v-else>
-                          {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                        </span>
-                      </span>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" width="90" align="center" fixed="right">
-              <template slot-scope="scope">
-                <el-button size="mini" type="danger" @click="updateDelPro(scope.row,scope.$index)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="收货信息" name="1">
-          <el-form :model="updateReceiveInfo" class="half">
-            <el-form-item v-for="(item,index) in addHead[updateActiveName]" :key="index" :label="item.label" :prop="item.label">
-              <span v-if="item.type=='number'">
-                <el-input type="number" v-model.trim="updateReceiveInfo[item.prop]" :placeholder="item.holder"></el-input>
-              </span>
-              <span v-else-if="item.type=='cascader'">
-                <el-cascader size="large" :options="options" v-model="updateReceiveInfo[item.prop]">
-                </el-cascader>
-              </span>
-              <span v-else>
-                <el-input v-model.trim="updateReceiveInfo[item.prop]" :placeholder="item.holder"></el-input>
-              </span>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane>
-        <el-tab-pane label="费用类型" name="2">
-          <el-table :data="updateExpenseData" fit @row-click="addExpenseRClick" :row-class-name="addExpenseRCName">
-            <el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
-              <template slot-scope="scope">
-                <span v-if="expenseRIndex == 'index'+scope.$index">
-                  <span v-if="item.type=='select'">
-                    <el-select v-model="scope.row[item.prop]" :placeholder="item.holder">
-                      <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                        <el-option :label="list.name" :value="list.id"></el-option>
-                      </span>
-                    </el-select>
-                  </span>
-                  <span v-else>
-                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>
-                  </span>
-                </span>
-                <span v-else>
-                  <span v-if="item.type=='select'">
-                    <span v-for="(list,index) in addSubData[item.stateVal]" :key="index">
-                      <span v-if="list.id==scope.row[item.prop]">
-                        {{list.name}}
-                      </span>
-                    </span>
-                  </span>
-                  <span v-else>
-                    {{scope.row[item.prop]}}
-                  </span>
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" width="90" align="center" fixed="right">
-              <template slot-scope="scope">
-                <el-button size="mini" type="danger" @click="updateDelExpense(scope.row,scope.$index)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
+      <!--<el-tabs v-model="updateActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">-->
+      <!--<el-tab-pane label="商品信息" name="0">-->
+      <!--<el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">-->
+      <!--<el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center"-->
+      <!--:width="item.width" :key="item.label">-->
+      <!--<template slot-scope="scope">-->
+      <!--<span v-if="item.prop=='newData'">-->
+      <!--<span v-if="proRIndex == 'index'+scope.$index">-->
+      <!--<span v-if="item.type=='number'">-->
+      <!--<el-input size="small" type="number"-->
+      <!--v-model.trim="scope.row[item.prop][item.inProp]"-->
+      <!--:placeholder="item.holder"></el-input>-->
+      <!--</span>-->
+      <!--<span v-else-if="item.type == 'checkbox'">-->
+      <!--<el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--<el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]"-->
+      <!--:placeholder="item.holder"></el-input>-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--<span v-if="item.type=='checkbox'">-->
+      <!--<el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--{{scope.row[item.prop][item.inProp]}}-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--<span v-else-if="item.prop">-->
+      <!--<span v-if="item.type=='checkbox'">-->
+      <!--<el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>-->
+      <!--</span>-->
+      <!--<span v-else-if="item.type=='img'">-->
+      <!--<el-popover-->
+      <!--placement="right"-->
+      <!--trigger="hover"-->
+      <!--popper-class="picture_detail">-->
+      <!--<img :src="scope.row[item.prop]">-->
+      <!--<img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">-->
+      <!--</el-popover>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column type="expand" fixed="left">-->
+      <!--<template slot-scope="scope">-->
+      <!--<el-table :data="scope.row['productComp']" fit>-->
+      <!--<el-table-column v-for="item in proCompHead" :label="item.label" align="center"-->
+      <!--:width="item.width" :key="item.label">-->
+      <!--<template slot-scope="scope">-->
+      <!--<span v-if="item.prop">-->
+      <!--<span v-if="item.type=='checkbox'">-->
+      <!--<el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>-->
+      <!--</span>-->
+      <!--<span v-else-if="item.type=='img'">-->
+      <!--<el-popover-->
+      <!--placement="right"-->
+      <!--trigger="hover"-->
+      <!--popper-class="picture_detail">-->
+      <!--<img :src="scope.row[item.prop]">-->
+      <!--<img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">-->
+      <!--</el-popover>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--</template>-->
+      <!--</el-table-column>-->
+      <!--</el-table>-->
+      <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column label="操作" width="90" align="center" fixed="right">-->
+      <!--<template slot-scope="scope">-->
+      <!--<el-button size="mini" type="danger" @click="updateDelPro(scope.row,scope.$index)">删除-->
+      <!--</el-button>-->
+      <!--</template>-->
+      <!--</el-table-column>-->
+      <!--</el-table>-->
+      <!--</el-tab-pane>-->
+      <!--<el-tab-pane label="收货信息" name="1">-->
+      <!--<el-form :model="updateReceiveInfo" class="half">-->
+      <!--<el-form-item v-for="(item,index) in addHead[updateActiveName]" :key="index" :label="item.label"-->
+      <!--:prop="item.label">-->
+      <!--<span v-if="item.type=='number'">-->
+      <!--<el-input type="number" v-model.trim="updateReceiveInfo[item.prop]"-->
+      <!--:placeholder="item.holder"></el-input>-->
+      <!--</span>-->
+      <!--<span v-else-if="item.type=='cascader'">-->
+      <!--<el-cascader-->
+      <!--size="large"-->
+      <!--:options="options"-->
+      <!--v-model="updateReceiveInfo[item.prop]">-->
+      <!--</el-cascader>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--<el-input v-model.trim="updateReceiveInfo[item.prop]"-->
+      <!--:placeholder="item.holder"></el-input>-->
+      <!--</span>-->
+      <!--</el-form-item>-->
+      <!--</el-form>-->
+      <!--</el-tab-pane>-->
+      <!--<el-tab-pane label="费用类型" name="2">-->
+      <!--<el-table :data="updateExpenseData" fit @row-click="addExpenseRClick"-->
+      <!--:row-class-name="addExpenseRCName">-->
+      <!--<el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center"-->
+      <!--:width="item.width" :key="item.label">-->
+      <!--&lt;!&ndash;<template slot-scope="scope">-->
+      <!--<span v-if="expenseRIndex == 'index'+scope.$index">-->
+      <!--<span v-if="item.type=='select'">-->
+      <!--<el-select v-model="scope.row[item.prop]" :placeholder="item.holder">-->
+      <!--<span v-for="list in addSubData[item.stateVal]" :key="list.id">-->
+      <!--<el-option :label="list.name" :value="list.id"></el-option>-->
+      <!--</span>-->
+      <!--</el-select>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--<el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--<span v-if="item.type=='select'">-->
+      <!--<span v-for="(list,index) in addSubData[item.stateVal]" :key="index">-->
+      <!--<span v-if="list.id==scope.row[item.prop]">-->
+      <!--{{list.name}}-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--<span v-else>-->
+      <!--{{scope.row[item.prop]}}-->
+      <!--</span>-->
+      <!--</span>-->
+      <!--</template>&ndash;&gt;-->
+      <!--</el-table-column>-->
+      <!--<el-table-column label="操作" width="90" align="center" fixed="right">-->
+      <!--<template slot-scope="scope">-->
+      <!--<el-button size="mini" type="danger" @click="updateDelExpense(scope.row,scope.$index)">-->
+      <!--删除-->
+      <!--</el-button>-->
+      <!--</template>-->
+      <!--</el-table-column>-->
+      <!--</el-table>-->
+      <!--</el-tab-pane>-->
+      <!--</el-tabs>-->
       <div slot="footer" class="dialog-footer clearfix">
-        <div style="float: left">
-          <el-button type="primary" @click="addProDtl" v-if="updateActiveName=='0'">添加商品</el-button>
-          <el-button type="primary" @click="addExpenseLine" v-if="updateActiveName=='2'">新增行</el-button>
-        </div>
         <div style="float: right">
-          <el-button type="primary" @click="updateCustomerConfirm">确定</el-button>
-          <el-button @click="updateCustomerCancel">取消</el-button>
+          <el-button type="primary" @click="updateStorageConfirm">确定</el-button>
+          <el-button @click="updateStorageCancel">取消</el-button>
         </div>
       </div>
     </el-dialog>
@@ -870,6 +910,7 @@ import {
   CodeToText,
   TextToCode
 } from "element-china-area-data";
+
 export default {
   data() {
     return {
@@ -881,45 +922,33 @@ export default {
           nClick: true
         },
         {
-          cnt: "删除",
-          icon: "bf-del",
-          ent: this.delBatch,
+          cnt: "退审",
+          icon: "bf-auditfaild",
+          ent: this.handleunStockOut,
           nClick: true
         },
         {
-          cnt: "锁定",
-          icon: "bf-lock",
-          ent: this.lockOrder,
-          nClick: false
-        },
-        {
-          cnt: "解锁",
-          icon: "bf-delock",
-          ent: this.debLock,
-          nClick: false
-        },
-        {
-          cnt: "审核",
-          icon: "bf-audit",
-          ent: this.handleAudit,
-          nClick: false
-        },
-        {
-          cnt: "退审",
-          icon: "bf-auditfaild",
-          ent: this.handleUnAudit,
-          nClick: false
+          cnt: "返回客审",
+          icon: "bf-examination",
+          ent: this.handleStockOutToCS,
+          nClick: true
         },
         {
           cnt: "导出",
           icon: "bf-out",
           ent: this.test,
-          nClick: false
+          nClick: true
         },
         {
-          cnt: "合并",
-          icon: "bf-merge",
-          ent: this.handleMergerOrder,
+          cnt: "物流单",
+          icon: "bf-logCode",
+          ent: this.logisticsBill,
+          nClick: true
+        },
+        {
+          cnt: "发货单",
+          icon: "bf-bill",
+          ent: this.dispatchBill,
           nClick: true
         },
         {
@@ -929,48 +958,28 @@ export default {
           nClick: true
         },
         {
-          cnt: "转刷单",
-          icon: "bf-transa",
-          ent: this.test,
-          nClick: false
-        },
-        {
-          cnt: "转补款",
-          icon: "bf-transferAcc",
-          ent: this.test
-        },
-        {
-          cnt: "订单关联",
-          icon: "bf-asso",
-          ent: this.test,
+          cnt: "捡货单",
+          icon: "bf-secSort",
+          ent: this.pickGoodsBill,
           nClick: true
-        },
-        {
-          cnt: "取消关联",
-          icon: "bf-cancelAsso",
-          ent: this.test
-        },
-        {
-          cnt: "通知发货",
-          icon: "bf-deliNotice",
-          ent: this.test,
-          nClick: false
         },
         {
           cnt: "打印",
           icon: "bf-printer",
-          ent: this.test
+          ent: this.print,
+          nClick: true
         },
         {
-          cnt: "转送款",
-          icon: "bf-giveMoney",
-          ent: this.test,
-          nClick: false
+          cnt: "电子面单",
+          icon: "bf-salesinvoice",
+          ent: this.elecBill,
+          nClick: true
         },
         {
           cnt: "刷新",
           icon: "bf-refresh",
-          ent: this.refresh
+          ent: this.refresh,
+          nClick: true
         }
       ],
       filterBox: false,
@@ -1001,6 +1010,12 @@ export default {
       orderListData: [],
       orderListHead: [
         {
+          label: "订单状态",
+          width: "140",
+          prop: "order_status",
+          type: "text"
+        },
+        {
           label: "系统订单",
           width: "220",
           prop: "system_order_no",
@@ -1019,31 +1034,16 @@ export default {
           type: "text"
         },
         {
+          label: "订单来源",
+          width: "130",
+          prop: "order_source",
+          type: "text"
+        },
+        {
           label: "店铺昵称",
           width: "150",
           prop: "shop",
           inProp: "title",
-          type: "text"
-        },
-        {
-          label: "业务员账号",
-          width: "140",
-          prop: "user",
-          inProp: "username",
-          type: "text"
-        },
-        {
-          label: "业务员姓名",
-          width: "140",
-          prop: "user",
-          inProp: "username",
-          type: "text"
-        },
-        {
-          label: "锁定人姓名",
-          width: "130",
-          prop: "user",
-          inProp: "username",
           type: "text"
         },
         {
@@ -1078,12 +1078,13 @@ export default {
           prop: "express_fee",
           type: "number"
         },
-        /* {
-            label: '其他费用',
-            width: '120',
-            prop: 'is_print',
-            type: 'number',
-          },*/
+        {
+          label: "发货仓库",
+          width: "130",
+          prop: "warehouses",
+          inProp: "name",
+          type: "text"
+        },
         {
           label: "收货人",
           width: "130",
@@ -1118,13 +1119,6 @@ export default {
           label: "配送商",
           width: "130",
           prop: "distribution",
-          inProp: "name",
-          type: "text"
-        },
-        {
-          label: "发货仓库",
-          width: "130",
-          prop: "warehouses",
           inProp: "name",
           type: "text"
         },
@@ -1180,13 +1174,6 @@ export default {
           type: "text"
         },
         {
-          label: "客审时间",
-          width: "180",
-          prop: "audit_at",
-          inProp: "date",
-          type: "text"
-        },
-        {
           label: "拍单时间",
           width: "180",
           prop: "created",
@@ -1204,42 +1191,6 @@ export default {
           prop: "promise_ship_time",
           type: "text"
         },
-        /* {
-            label: '商品数量',
-            width: '120',
-            prop: 'is_print',
-            type: 'number',
-          },*/
-        /* {
-            label: '(实际售价+其他费用)',
-            width: '150',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '商家优惠金额',
-            width: '130',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '标记总金额',
-            width: '130',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '支付总金额',
-            width: '130',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '实际总售价',
-            width: '130',
-            prop: '',
-            type: 'number',
-          },*/
         {
           label: "木架费",
           width: "120",
@@ -1258,48 +1209,6 @@ export default {
           prop: "favorable_cashback",
           type: "number"
         },
-        /* {
-            label: '拆分主订单',
-            width: '130',
-            prop: 'is_split',
-            type: 'checkbox'
-          },*/
-        /* {
-            label: '标记人',
-            width: '130',
-            prop: '',
-            type: 'text',
-          },
-          {
-            label: '标记名称',
-            width: '130',
-            prop: '',
-            type: 'text'
-          },
-          {
-            label: '标记时间',
-            width: '160',
-            prop: '',
-            type: 'text',
-          },*/
-        {
-          label: "订单来源",
-          width: "130",
-          prop: "order_source",
-          type: "text"
-        },
-        /* {
-            label: '分阶段金额',
-            width: '130',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '分阶段状态',
-            width: '130',
-            prop: '',
-            type: 'text'
-          },*/
         {
           label: "服务车金额",
           width: "130",
@@ -1325,71 +1234,17 @@ export default {
           prop: "deposit",
           type: "number"
         },
-        /* {
-            label: '门店欠款金额',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '线下单价汇总',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '线下金额汇总',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },*/
         {
           label: "发票快递费",
           width: "130",
           prop: "invoice_express_fee",
           type: "number"
         },
-        /* {
-            label: '线下优惠汇总',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },*/
-        /* {
-            label: '送货类型-京东',
-            width: '140',
-            prop: '',
-            type: 'text',
-          },
-          {
-            label: '线下实际金额汇总',
-            width: '140',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '支付方式-京东',
-            width: '140',
-            prop: '',
-            type: 'text',
-          },*/
         {
           label: "需要发票",
           width: "90",
           prop: "is_invoice",
           type: "checkbox"
-        },
-        /*  {
-            label: '余额支付金额-京东',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },*/
-        {
-          label: "订单状态",
-          width: "140",
-          prop: "order_status",
-          type: "text"
         },
         {
           label: "发票信息",
@@ -1403,121 +1258,6 @@ export default {
           prop: "tax_number",
           type: "text"
         },
-        /* {
-            label: '纳税注册地址',
-            width: '180',
-            prop: '',
-            type: 'text'
-          },
-          {
-            label: '纳税注册电话',
-            width: '140',
-            prop: '',
-            type: 'number'
-          },
-          {
-            label: '纳税开户银行',
-            width: '130',
-            prop: '',
-            type: 'text'
-          },
-          {
-            label: '纳税银行账号',
-            width: '180',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '发票信息-唯品会',
-            width: '180',
-            prop: '',
-            type: 'text'
-          },*/
-        /* {
-            label: 'PO单号-唯品会',
-            width: '180',
-            prop: '',
-            type: 'text',
-          },
-          {
-            label: '促销优惠金额-唯品会',
-            width: '150',
-            prop: '',
-            type: 'number',
-          },
-          {
-            label: '期望收货时间-唯品会',
-            width: '160',
-            prop: '',
-            type: 'text',
-          },*/
-        {
-          label: "买家留言",
-          width: "150",
-          prop: "buyer_message",
-          type: "text"
-        },
-        {
-          label: "客服备注",
-          width: "150",
-          prop: "customer_service_remark",
-          type: "text"
-        },
-        {
-          label: "卖家备注",
-          width: "150",
-          prop: "customer_service_remark",
-          type: "text"
-        },
-        /* {
-            label: '补件原因',
-            width: '150',
-            prop: '',
-            type: 'text',
-          },*/
-        /* {
-            label: '已驳回',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },
-
-          {
-            label: '分阶段',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },*/
-        /*{
-            label: '服务车',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },*/
-        /* {
-            label: '赠品',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },
-          {
-            label: '红包',
-            width: '90',
-            prop: '',
-            type: 'checkbox',
-          },
-          {
-            label: '已打印',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },*/
-        /* {
-            label: '锁定',
-            width: '90',
-            prop: '',
-            type: 'checkbox',
-          },*/
         {
           label: "合并订单",
           width: "90",
@@ -1537,6 +1277,12 @@ export default {
           type: "checkbox"
         },
         {
+          label: "关联单号",
+          width: "220",
+          prop: "association_taobao_oid",
+          type: "text"
+        },
+        {
           label: "接单人",
           width: "120",
           prop: "accept_order_user",
@@ -1548,49 +1294,12 @@ export default {
           prop: "receipt",
           type: "text"
         },
-        /* {
-            label: '(订单总额+服务车金额)',
-            width: '150',
-            prop: '',
-            type: 'number'
-          },*/
-        /* {
-            label: '店铺分组',
-            width: '120',
-            prop: '',
-            type: 'text'
-          },*/
-        {
-          label: "关联单号",
-          width: "220",
-          prop: "association_taobao_oid",
-          type: "text"
-        },
         {
           label: "退款信息",
           width: "130",
           prop: "refund_info",
           type: "text"
         },
-        {
-          label: "锁定人账号",
-          width: "140",
-          prop: "locker",
-          inProp: "username",
-          type: "text"
-        },
-        /* {
-            label: '退审',
-            width: '90',
-            prop: '',
-            type: 'checkbox'
-          },
-          {
-            label: '库存占用',
-            width: '90',
-            prop: '',
-            type: 'checkbox',
-          },*/
         {
           label: "需要核销",
           width: "90",
@@ -1602,13 +1311,64 @@ export default {
           width: "90",
           prop: "is_notice",
           type: "checkbox"
+        },
+        {
+          label: "业务员账号",
+          width: "140",
+          prop: "businessPersonnel",
+          inProp: "username",
+          type: "text"
+        },
+        {
+          label: "锁定人账号",
+          width: "130",
+          prop: "locker",
+          inProp: "username",
+          type: "text"
+        },
+        {
+          label: "锁定时间",
+          width: "180",
+          prop: "locked_at",
+          type: "text"
+        },
+        {
+          label: "客审人账号",
+          width: "130",
+          prop: "csAudit",
+          inProp: "username",
+          type: "text"
+        },
+        {
+          label: "客审时间",
+          width: "180",
+          prop: "cs_audited_at",
+          type: "text"
+        },
+        {
+          label: "买家留言",
+          width: "150",
+          prop: "buyer_message",
+          type: "text"
+        },
+        {
+          label: "客服备注",
+          width: "150",
+          prop: "customer_service_remark",
+          type: "text"
+        },
+        {
+          label: "卖家备注",
+          width: "150",
+          prop: "customer_service_remark",
+          type: "text"
         }
       ],
-      loading: true,
-      checkboxInit: false,
-      orderListIndex: "",
-      alreadyHandle: [],
-      orderDtlFormVal: [],
+      loading: true, //作用未知
+      checkboxInit: false, //作用未知
+      orderListIndex: "", //作用未知
+      orderListData: [],
+      orderDtlFormVal: {},
       orderDtlFormHead: [
         {
           label: "系统单号",
@@ -1671,10 +1431,10 @@ export default {
           type: "number"
         },
         /*{
-            label: '标准总金额',
-            prop: 'move_upstairs_fee',
-            type: 'number'
-          },*/
+                label: '标准总金额',
+                prop: 'move_upstairs_fee',
+                type: 'number'
+              },*/
         {
           label: "运费类型",
           prop: "freight_types_name",
@@ -1686,35 +1446,35 @@ export default {
           type: "number"
         },
         /*{
-            label: '支付总金额',
-            prop: 'distribution_phone',
-            type: 'number'
-          },
-          {
-            label: '三包类型',
-            prop: 'distribution_no',
-            type: 'text'
-          },
-          {
-            label: '三包费用',
-            prop: '',
-            type: 'number'
-          },*/
+                label: '支付总金额',
+                prop: 'distribution_phone',
+                type: 'number'
+              },
+              {
+                label: '三包类型',
+                prop: 'distribution_no',
+                type: 'text'
+              },
+              {
+                label: '三包费用',
+                prop: '',
+                type: 'number'
+              },*/
         {
           label: "物流成本",
           prop: "deliver_goods_fee",
           type: "number"
         },
         /*   {
-            label: '订单总额',
-            prop: '',
-            type: 'number'
-          },*/
+                   label: '订单总额',
+                   prop: '',
+                   type: 'number'
+                 },*/
         /*  {
-            label: '订单时间',
-            prop: '',
-            type: 'text'
-          },*/
+                  label: '订单时间',
+                  prop: '',
+                  type: 'text'
+                },*/
         {
           label: "付款时间",
           prop: "payment_date",
@@ -1783,7 +1543,7 @@ export default {
       ],
       proDtlData: [],
       curRowId: "",
-      curRowData: [],
+      curRowData: {},
       orderDtlHead: [
         [
           {
@@ -1854,6 +1614,11 @@ export default {
             stateVal: "paymentmethods"
           },
           {
+            label: "到账金额",
+            prop: "arrival_amount",
+            type: "text"
+          },
+          {
             label: "交易号",
             prop: "taobao_tid",
             type: "text"
@@ -1862,17 +1627,156 @@ export default {
             label: "来源单号",
             prop: "taobao_oid",
             type: "text"
+          },
+          {
+            label: "系统单号",
+            prop: "system_order_no",
+            type: "text"
           }
         ],
-        [],
-        []
+        [
+          {
+            label: "内部便签",
+            prop: "inner_note",
+            type: "text"
+          },
+          {
+            label: "用户",
+            prop: "user",
+            type: "text"
+          },
+          {
+            label: "内容",
+            prop: "content",
+            type: "text"
+          },
+          {
+            label: "提出时间",
+            prop: "noted_at",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "用户",
+            prop: "user_name",
+            type: "text"
+          },
+          {
+            label: "操作",
+            prop: "operation",
+            type: "text"
+          },
+          {
+            label: "操作描述",
+            prop: "description",
+            type: "text"
+          },
+          {
+            label: "操作时间",
+            prop: "created_at",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "关联单号",
+            prop: "association_taobao_oid",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "系统单号",
+            prop: "system_order_no",
+            type: "text"
+          },
+          {
+            label: "类型名称",
+            prop: "payment_methods_id",
+            type: "select",
+            stateVal: "fee_type"
+          },
+          {
+            label: "金额",
+            prop: "payment",
+            type: "number"
+          },
+          {
+            label: "创建人",
+            prop: "creator",
+            type: "text"
+          },
+          {
+            label: "创建时间",
+            prop: "created_at",
+            type: "text"
+          },
+          {
+            label: "修改人",
+            prop: "editor",
+            type: "text"
+          },
+          {
+            label: "修改时间",
+            prop: "edited_at",
+            type: "text"
+          },
+          {
+            label: "备注",
+            prop: "remark",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "驳回人",
+            prop: "rejecter",
+            type: "text"
+          },
+          {
+            label: "驳回时间",
+            prop: "rejected_at",
+            type: "text"
+          },
+          {
+            label: "驳回原因",
+            prop: "reason",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "单号",
+            prop: "system_order_no",
+            type: "text"
+          },
+          {
+            label: "优惠标题",
+            prop: "preferential_title",
+            type: "text"
+          },
+          {
+            label: "优惠金额",
+            prop: "preferential_cashback",
+            type: "text"
+          }
+        ],
+        [
+          {
+            label: "订单图片",
+            prop: "img",
+            type: "img"
+          }
+        ]
       ],
       payDtlData: [],
       /*新增*/
-      addCustomerMask: false,
+      addStorageMask: false,
       moreForms: true,
       threeParts: true,
-      addCustomerFormVal: {
+      addStorageFormVal: {
+        //作用未知
         shops_id: "",
         member_nick: "",
         logistics_id: "",
@@ -1885,7 +1789,7 @@ export default {
         deliver_goods_fee: "",
         move_upstairs_fee: "",
         installation_fee: "",
-        total_distribution_fee: 20,
+        total_distribution_fee: 0,
         distribution_phone: "",
         distribution_no: "",
         distribution_types_id: "",
@@ -1920,7 +1824,8 @@ export default {
         buyer_message: "",
         status: true
       },
-      addCustomerFormRules: {
+      addStorageFormRules: {
+        //新建订单的要求格式
         shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
         logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
         billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
@@ -1941,67 +1846,29 @@ export default {
         ],
         warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
       },
-      addCustomerFormHead: [
-        {
-          label: "单据来源",
-          prop: "order_source",
-          holder: "系统自动生成",
-          width: "200",
-          type: "text",
-          editChgAble: true,
-          addChgAble: true
-        },
-        {
-          label: "单据编号",
-          prop: "taobao_oid",
-          holder: "系统自动生成",
-          type: "text",
-          editChgAble: true,
-          addChgAble: true
-        },
-        {
-          label: "店铺名称",
-          prop: "shops_id",
-          holder: "请选择店铺",
-          type: "select",
-          stateVal: "shop",
-          editChgAble: true
-        },
-        {
-          label: "会员昵称",
-          prop: "member_nick",
-          holder: "请输入会员昵称",
-          type: "text"
-        },
+      addStorageFormHead: [
+        //新建或者修改仓储头
         {
           label: "物流公司",
           prop: "logistics_id",
           holder: "请选择物流公司",
+          // width: '200',
           type: "select",
-          stateVal: "logistics"
+          stateVal: "logistics",
+          editChgAble: true
         },
         {
-          label: "计费方式",
-          choiceName: ["按体积", "按重量"],
-          prop: "billing_way",
-          type: "radio"
+          label: "物流单号",
+          prop: "logistic_oid",
+          holder: "系统自动生成",
+          type: "text",
+          editChgAble: true
+          // addChgAble: true
         },
         {
-          label: "承诺日期",
-          prop: "promise_ship_time",
-          type: "DatePicker"
-        },
-        {
-          label: "运费类型",
-          prop: "freight_types_id",
-          holder: "请选择运费类型",
-          type: "select",
-          stateVal: "freight_type"
-        },
-        {
-          label: "预计运费",
-          prop: "expected_freight",
-          holder: "请输入预计运费",
+          label: "实际运费",
+          prop: "actual_freight",
+          holder: "请输入实际运费",
           type: "number"
         },
         {
@@ -2012,11 +1879,10 @@ export default {
           stateVal: "distribution"
         },
         {
-          label: "配送方式",
-          prop: "distribution_methods_id",
-          holder: "请选择配送方式",
-          type: "select",
-          stateVal: "distribution_method"
+          label: "配送电话",
+          prop: "distribution_phone",
+          holder: "请输入配送电话",
+          type: "text"
         },
         {
           label: "送货费用",
@@ -2043,203 +1909,49 @@ export default {
           type: "number",
           addChgAble: true
         },
+        //这里的星号值
         {
-          label: "配送电话",
-          prop: "distribution_phone",
-          holder: "请输入配送电话",
+          label: "收货人",
+          prop: "receive_num",
+          holder: "请填写收货人",
+          type: "text",
+          stateVal: "receive"
+        },
+        {
+          label: "手机",
+          prop: "receive_phone",
+          holder: "请填写手机号",
+          type: "text",
+          stateVal: "receive"
+        },
+        {
+          label: "手动修改体积",
+          prop: "mod_total_volume",
           type: "number"
         },
         {
-          label: "配送单号",
-          prop: "distribution_no",
-          holder: "请输入配送单号",
-          type: "text"
-        },
-        {
-          label: "配送类型",
-          prop: "distribution_types_id",
-          holder: "请选择配送类型",
-          type: "select",
-          stateVal: "distribution_type"
-        },
-        {
-          label: "配送信息",
-          prop: "service_car_info",
-          holder: "请输入配送信息",
-          type: "text"
-        },
-        {
-          label: "提货费用",
-          prop: "take_delivery_goods_fee",
-          holder: "请输入提货费用",
+          label: "手动修改包件数",
+          prop: "mod_total_number",
           type: "number"
         },
         {
-          label: "提货方式",
-          prop: "take_delivery_goods_ways_id",
-          holder: "请选择提货方式",
-          type: "select",
-          stateVal: "take_delivery_goodsWay"
-        },
-        {
-          label: "快递费用",
-          prop: "express_fee",
-          holder: "请输入快递费用",
+          label: "手动修改重量",
+          prop: "mod_total_weight",
           type: "number"
         },
         {
-          label: "家装服务",
-          prop: "service_car_fee",
-          holder: "请输入家装服务",
+          label: "物流保价",
+          prop: "distribution_save_price",
+          type: "number",
+          editChgAble: true,
+          addChgAble: true
+        },
+        {
+          label: "保价",
+          prop: "save_price",
           type: "number"
-        },
-        {
-          label: "核销码",
-          prop: "cancel_after_verification_code",
-          holder: "请输入核销码",
-          type: "text"
-        },
-        {
-          label: "木架费",
-          prop: "wooden_frame_costs",
-          holder: "请输入木架费",
-          type: "number"
-        },
-        {
-          label: "优惠返现",
-          prop: "preferential_cashback",
-          holder: "请输入优惠返现",
-          type: "number"
-        },
-        {
-          label: "好评返现",
-          prop: "favorable_cashback",
-          holder: "请输入好评返现",
-          type: "number"
-        },
-        {
-          label: "客户类型",
-          prop: "customer_types_id",
-          holder: "请输入客户类型",
-          type: "select",
-          stateVal: "customer_type"
-        },
-        {
-          label: "发票",
-          prop: "is_invoice",
-          type: "checkbox"
-        },
-        {
-          label: "抬头",
-          prop: "express_invoice_title",
-          holder: "请输入发票抬头",
-          type: "text"
-        },
-        {
-          label: "发票快递费",
-          prop: "invoice_express_fee",
-          holder: "请输入发票快递费",
-          type: "number"
-        },
-        {
-          label: "合同单号",
-          prop: "contract_no",
-          holder: "请输入合同单号",
-          type: "text"
-        },
-        {
-          label: "付款方式",
-          prop: "payment_methods_id",
-          holder: "请选择付款方式",
-          type: "select",
-          stateVal: "payment_method"
-        },
-        {
-          label: "门店定金",
-          prop: "deposit",
-          holder: "请输入门店定金",
-          type: "number"
-        },
-        {
-          label: "单据头",
-          prop: "document_title",
-          holder: "请输入单据头",
-          type: "text"
-        },
-        {
-          label: "发货仓库",
-          holder: "请选择发货仓库",
-          prop: "warehouses_id",
-          type: "select",
-          stateVal: "warehouse"
-        },
-        {
-          label: "收款日期",
-          prop: "payment_date",
-          type: "DatePicker"
-        },
-        {
-          label: "让利金额",
-          prop: "interest_concessions",
-          holder: "请输入让利金额",
-          type: "number"
-        },
-        {
-          label: "等通知发货",
-          prop: "is_notice",
-          type: "checkbox"
-        },
-        {
-          label: "是否核销",
-          prop: "is_cancel_after_verification",
-          type: "checkbox"
-        },
-        {
-          label: "接单用户",
-          prop: "accept_order_user",
-          holder: "请输入接单用户",
-          type: "text"
-        },
-        {
-          label: "税号",
-          prop: "tax_number",
-          holder: "请输入税号",
-          type: "text"
-        },
-        {
-          label: "收据",
-          prop: "receipt",
-          holder: "请输入收据",
-          type: "text"
-        },
-        {
-          label: "物流备注",
-          prop: "logistics_remark",
-          holder: "请输入物流备注",
-          type: "textarea"
-        },
-        {
-          label: "卖家备注",
-          holder: "请输入卖家备注",
-          prop: "seller_remark",
-          type: "textarea"
-        },
-        {
-          label: "客服备注",
-          holder: "请输入客服备注",
-          prop: "customer_service_remark",
-          type: "textarea"
-        },
-        {
-          label: "买家留言",
-          holder: "请输入买家留言",
-          prop: "buyer_message",
-          type: "textarea"
-        },
-        {
-          label: "开启订单",
-          prop: "status",
-          type: "checkbox"
+          // editChgAble: true,
+          // addChgAble: true,
         }
       ],
       addActiveName: "0",
@@ -2407,10 +2119,10 @@ export default {
         }
       ],
       proVal: [],
-      toggleText: true,
+      toggleText: false,
       toggleHeight: true,
       clickFlag: false,
-      proCurSkuData: [],
+      proCurSkuData: {},
       proSkuVal: [],
       proSkuHead: [
         {
@@ -2579,7 +2291,7 @@ export default {
       proSubmitData: [],
       proIds: [],
       addIds: [],
-      proCompRow: [],
+      proCompRow: {},
       proRIndex: "",
       receiveInfo: {
         receiver_name: "",
@@ -2597,11 +2309,11 @@ export default {
       expenseRIndex: "",
       addSubData: [],
       /*修改*/
-      updateCustomerMask: false,
-      updateCustomerFormVal: [],
+      updateStorageMask: false,
+      updateStorageFormVal: {},
       updateActiveName: "0",
       updateProData: [],
-      updateReceiveInfo: [],
+      updateReceiveInfo: {},
       updateExpenseData: [],
       updateProIds: [],
       /*删除单条*/
@@ -2636,10 +2348,18 @@ export default {
         }
       ],
       splitRowIndex: "",
-      splitRow: [],
-      mergerIds: []
+      splitRow: {},
+      mergerIds: [],
+      operationData: [], //操作记录
+      relatedInfoData: [], //关联信息
+      otherFeeData: [], //其他费用
+      rejectReasonData: [], //驳回原因
+      offListData: [], //优惠列表
+      imageData: [], //订单图片
+      innerNote: [] //内部便签
     };
   },
+  /*搬运自客服部*/
   computed: {
     resData: {
       get: function() {
@@ -2654,28 +2374,31 @@ export default {
       set: function() {}
     }
   },
+  /*搬运自客服部*/
   filters: {
     /*conditions: function(items){
-        let searchRegex = new RegExp(this.searchBox.vip_name, 'i');
-        let arr=[];
-        for(let i= 0, j = items.length; i < j; i++){
-          arr[i] = {};
-          arr[i].contacters = [];
-          for(let item = 0, len = items[i].contacters.length; item < len; item++){
-            if(searchRegex.test(items[i].contacters[item].name) || searchRegex.test(items[i].contacters[item].enterpriseName) || searchRegex.test(items[i].contacters[item].phoneNumber) || searchRegex.test(items[i].contacters[item].uniqueID)){
-              arr[i].firstLetter = items[i].firstLetter;
-              arr[i].contacters.push(items[i].contacters[item]);
+            let searchRegex = new RegExp(this.searchBox.vip_name, 'i');
+            let arr=[];
+            for(let i= 0, j = items.length; i < j; i++){
+              arr[i] = {};
+              arr[i].contacters = [];
+              for(let item = 0, len = items[i].contacters.length; item < len; item++){
+                if(searchRegex.test(items[i].contacters[item].name) || searchRegex.test(items[i].contacters[item].enterpriseName) || searchRegex.test(items[i].contacters[item].phoneNumber) || searchRegex.test(items[i].contacters[item].uniqueID)){
+                  arr[i].firstLetter = items[i].firstLetter;
+                  arr[i].contacters.push(items[i].contacters[item]);
+                }
+              }
             }
+            return arr;
           }
-        }
-        return arr;
-      }
-*/
+    */
   },
   methods: {
+    /*搬运自客服部*/
     toggleShow() {
       this.filterBox = !this.filterBox;
     },
+
     test() {
       console.log(1);
     },
@@ -2697,8 +2420,8 @@ export default {
               taobao_tid: data.taobao_tid,
               association_taobao_oid: data.association_taobao_oid,
               shop_name: data["shop"]["title"],
-              business_personnel_name: data["user"]
-                ? data["user"]["username"]
+              business_personnel_name: data["businessPersonnel"]
+                ? data["businessPersonnel"]["username"]
                 : "",
               member_nick: data.member_nick,
               receiver_name: data.receiver_name,
@@ -2740,7 +2463,8 @@ export default {
       let index = this.leftTopActiveName - 0;
       switch (index) {
         case 0:
-          this.$fetch(this.urls.customerservicedepts + "/searchuntreated", {
+          this.$fetch(this.urls.resupplieorderaudit, {
+            order_status: [110],
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
@@ -2752,7 +2476,7 @@ export default {
             logistics_id: this.searchBox.logistics_id,
             seller_flag: this.searchBox.seller_flag,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2782,7 +2506,8 @@ export default {
           );
           break;
         case 1:
-          this.$fetch(this.urls.customerservicedepts, {
+          this.$fetch(this.urls.resupplieorderaudit, {
+            order_status: [120],
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
@@ -2793,13 +2518,12 @@ export default {
             seller_remark: this.searchBox.seller_remark,
             logistics_id: this.searchBox.logistics_id,
             seller_flag: this.searchBox.seller_flag,
-            order_status: 30,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
-              this.alreadyHandle = res.data;
+              this.orderListData = res.data;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2817,11 +2541,57 @@ export default {
             }
           );
           break;
-        case 2:
-          this.$fetch(this.urls.customerservicedepts, {
-            order_status: "等通知发货",
+          case 2:
+          this.$fetch(this.urls.resupplieorderaudit, {
+            order_status: [130],
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems,businessPersonnel,locker,paymentDetails"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
+          }).then(
+            res => {
+              this.loading = false;
+              this.orderListData = res.data;
+              let pg = res.meta.pagination;
+              this.$store.dispatch("currentPage", pg.current_page);
+              this.$store.commit("PER_PAGE", pg.per_page);
+              this.$store.commit("PAGE_TOTAL", pg.total);
+            },
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                this.$message.error(arr1.join(","));
+              }
+            }
+          );
+          break;
+          case 3:
+          this.$fetch(this.urls.resupplieorderaudit, {
+            order_status: [110,120,130],
+            member_nick: this.searchBox.member_nick,
+            system_order_no: this.searchBox.system_order_no,
+            receiver_name: this.searchBox.receiver_name,
+            receiver_phone: this.searchBox.receiver_phone,
+            receiver_address: this.searchBox.receiver_address,
+            shops_id: this.searchBox.shops_id,
+            business_personnel_id: this.searchBox.business_personnel_id,
+            seller_remark: this.searchBox.seller_remark,
+            logistics_id: this.searchBox.logistics_id,
+            seller_flag: this.searchBox.seller_flag,
+            include:
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
           }).then(
             res => {
               this.loading = false;
@@ -2850,35 +2620,40 @@ export default {
       this.fetchData();
     },
     rightHandleClick() {},
-    orderListRClick(row) {
-      if (row["locker_id"] == 0) {
-        this.newOpt[1].nClick = true;
-        this.newOpt[2].nClick = true;
-        this.newOpt[3].nClick = false;
-        this.newOpt[4].nClick = true;
-        this.newOpt[8].nClick = true;
-        this.newOpt[9].nClick = true;
-        this.newOpt[14].nClick = true;
-        if (row["order_status"] == "已客审") {
-          this.newOpt[5].nClick = true;
-          this.newOpt[6].nClick = false;
-        } else {
-          this.newOpt[5].nClick = false;
-          this.newOpt[6].nClick = true;
-        }
-      } else {
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = false;
-        this.newOpt[3].nClick = true;
-        this.newOpt[4].nClick = false;
-        this.newOpt[5].nClick = false;
-        this.newOpt[6].nClick = true;
-        this.newOpt[8].nClick = false;
-        this.newOpt[9].nClick = false;
-        this.newOpt[14].nClick = false;
-      }
+    orderListRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
+      this.operationData = row["orderOperationRecord"].data;
+      if (row["order_status"] == "已货审") {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = false;
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "准备出库") {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = false;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
+        this.newOpt[12].nClick = false;
+      }
     },
     orderDbClick(row) {
       this.activeName = "1";
@@ -2929,8 +2704,8 @@ export default {
     },
     proDtlRClick(row) {},
     /*新增*/
-    addCustomer() {
-      this.addCustomerMask = true;
+    addStorage() {
+      this.addStorageMask = true;
       this.addIds = [];
       this.proData = [];
       this.proRIndex = "";
@@ -2989,8 +2764,8 @@ export default {
     addDelPro(index) {
       this.proData.splice(index, 1);
     },
-    addCustomerConfirm() {
-      let forData = this.addCustomerFormVal;
+    addStorageConfirm() {
+      let forData = this.addStorageFormVal;
       let submitData = {
         shops_id: forData.shops_id,
         member_nick: forData.member_nick,
@@ -3073,7 +2848,7 @@ export default {
       });
       this.$post(this.urls.customerservicedepts, submitData).then(
         () => {
-          this.addCustomerMask = false;
+          this.addStorageMask = false;
           this.refresh();
           this.$message({
             message: "添加成功",
@@ -3094,8 +2869,8 @@ export default {
         }
       );
     },
-    addCustomerCancel() {
-      this.addCustomerMask = false;
+    addStorageCancel() {
+      this.addStorageMask = false;
       this.$message({
         message: "取消新增订单明细",
         type: "success"
@@ -3111,7 +2886,7 @@ export default {
     },
     toggleForm() {
       /*展开  partHide
-        * 折叠  没有partHide*/
+            * 折叠  没有partHide*/
       this.clickFlag = !this.clickFlag;
       this.toggleText = !this.toggleText;
       if (this.clickFlag) {
@@ -3179,26 +2954,19 @@ export default {
     },
     formChg() {
       let formVal;
-      if (this.addCustomerMask) {
-        formVal = this.addCustomerFormVal;
+      if (this.addStorageMask) {
+        formVal = this.updateStorageFormVal;
       } else {
-        formVal = this.updateCustomerFormVal;
+        formVal = this.updateStorageFormVal;
       }
       formVal["total_distribution_fee"] =
         formVal["deliver_goods_fee"] -
         0 +
         (formVal["move_upstairs_fee"] - 0) +
         (formVal["installation_fee"] - 0);
-      if (this.addCustomerMask) {
-        this.addCustomerFormVal.total_distribution_fee =
-          formVal["total_distribution_fee"];
-      } else {
-        this.updateCustomerFormVal.total_distribution_fee =
-          formVal["total_distribution_fee"];
-      }
     },
     confirmAddProDtl() {
-      if (this.addCustomerMask) {
+      if (this.addStorageMask) {
         this.proSubmitData.map(item => {
           if (this.addIds.indexOf(item.id) == -1) {
             this.proData.push(item);
@@ -3263,7 +3031,7 @@ export default {
     },
     /*新增行*/
     addExpenseLine() {
-      if (this.addCustomerMask) {
+      if (this.addStorageMask) {
         this.expenseData.push({
           payment_methods_id: "",
           payment: ""
@@ -3380,7 +3148,7 @@ export default {
         if (this.leftTopActiveName == "0") {
           this.orderListData = res.data;
         } else {
-          this.alreadyHandle = res.data;
+          this.orderListData = res.data;
         }
       });
     },
@@ -3471,69 +3239,69 @@ export default {
       this.proIds = [];
       this.updateProIds = [];
       this.expenseRIndex = "";
-      this.updateCustomerFormVal = {};
+      this.updateStorageFormVal = {};
       this.updateProData = [];
       this.updateReceiveInfo = {};
       this.updateExpenseData = [];
-      this.updateCustomerMask = true;
+      this.updateStorageMask = true;
       this.proRIndex = "";
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$fetch(this.urls.customerservicedepts + "/" + id, {
-        include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
-      }).then(
-        res => {
-          this.updateCustomerFormVal = res;
-          if (res["orderItems"]["data"].length > 0) {
-            res["orderItems"]["data"].map(item => {
-              this.updateProIds.push(item["combination"].id);
-              item["name"] = item["combination"]["name"];
-              item["id"] = item.id;
-              item["products_id"] = item.products_id;
-              item["combinations_id"] = item.combinations_id;
-              item["productComp"] =
-                item["combination"]["productComponents"]["data"];
-              this.$set(item, "newData", {
-                quantity: item.quantity,
-                paint: item.paint,
-                is_printing: item.is_printing,
-                printing_fee: item.printing_fee,
-                is_spot_goods: item.is_spot_goods,
-                under_line_univalent: item.under_line_univalent,
-                under_line_preferential: item.under_line_preferential,
-                total_volume: item.total_volume
-              });
-            });
-          }
-          this.updateProData = res["orderItems"]["data"];
-          this.updateReceiveInfo = {
-            receiver_name: res.receiver_name,
-            receiver_phone: res.receiver_phone,
-            receiver_mobile: res.receiver_mobile,
-            provinces: [
-              TextToCode[res.receiver_state].code,
-              TextToCode[res.receiver_state][res.receiver_city].code,
-              TextToCode[res.receiver_state][res.receiver_city][
-                res.receiver_district
-              ].code
-            ],
-            receiver_address: res.receiver_address,
-            receiver_zip: res.receiver_zip
-          };
-          this.updateExpenseData = res["paymentDetails"]["data"];
-        },
-        err => {
-          if (err.response) {
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error(str);
-          }
-        }
-      );
+      // this.proIds = [];
+      // this.updateProIds = [];
+      // this.expenseRIndex = '';
+      // this.updateStorageFormVal = {};
+      // this.updateProData = [];
+      // this.updateReceiveInfo = {};
+      // this.updateExpenseData = [];
+      // this.updateStorageMask = true;
+      // this.proRIndex = '';
+      // let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      // //这里是从数据库里捞数据
+      // this.$fetch(this.urls.customerservicedepts + '/' + id, {'include': 'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails'})
+      //     .then(res => {
+      //         this.updateStorageFormVal = res;
+      //         if (res['orderItems']['data'].length > 0) {
+      //             res['orderItems']['data'].map(item => {
+      //                 this.updateProIds.push(item['combination'].id);
+      //                 item['name'] = item['combination']['name'];
+      //                 item['id'] = item.id;
+      //                 item['products_id'] = item.products_id;
+      //                 item['combinations_id'] = item.combinations_id;
+      //                 item['productComp'] = item['combination']['productComponents']['data'];
+      //                 this.$set(item, 'newData', {
+      //                     quantity: item.quantity,
+      //                     paint: item.paint,
+      //                     is_printing: item.is_printing,
+      //                     printing_fee: item.printing_fee,
+      //                     is_spot_goods: item.is_spot_goods,
+      //                     under_line_univalent: item.under_line_univalent,
+      //                     under_line_preferential: item.under_line_preferential,
+      //                     total_volume: item.total_volume
+      //                 });
+      //             })
+      //         }
+      //         this.updateProData = res['orderItems']['data'];
+      //         this.updateReceiveInfo = {
+      //             receiver_name: res.receiver_name,
+      //             receiver_phone: res.receiver_phone,
+      //             receiver_mobile: res.receiver_mobile,
+      //             provinces: [TextToCode[res.receiver_state].code, TextToCode[res.receiver_state][res.receiver_city].code, TextToCode[res.receiver_state][res.receiver_city][res.receiver_district].code],
+      //             receiver_address: res.receiver_address,
+      //             receiver_zip: res.receiver_zip
+      //         };
+      //         this.updateExpenseData = res['paymentDetails']['data'];
+      //     }, err => {
+      //         if (err.response) {
+      //             let arr = err.response.data.errors;
+      //             let arr1 = [];
+      //             for (let i in arr) {
+      //                 arr1.push(arr[i]);
+      //             }
+      //             let str = arr1.join(',');
+      //             this.$message.error(str);
+      //         }
+      //     })
+      return 1;
     },
     updateDelPro(row, index) {
       if (row["originalId"]) {
@@ -3616,8 +3384,8 @@ export default {
         });
       }
     },
-    updateCustomerConfirm() {
-      let forData = this.updateCustomerFormVal;
+    updateStorageConfirm() {
+      let forData = this.updateStorageFormVal;
       let submitData = {
         shops_id: forData.shops_id,
         member_nick: forData.member_nick,
@@ -3743,13 +3511,9 @@ export default {
         }
       });
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$message({
-        message: "加载成功",
-        type: "success"
-      });
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(
         () => {
-          this.updateCustomerMask = false;
+          this.updateStorageMask = false;
           this.refresh();
           this.$message({
             message: "修改成功",
@@ -3770,8 +3534,8 @@ export default {
         }
       );
     },
-    updateCustomerCancel() {
-      this.updateCustomerMask = false;
+    updateStorageCancel() {
+      this.updateStorageMask = false;
       this.$message({
         message: "取消修改订单明细",
         type: "success"
@@ -3817,25 +3581,26 @@ export default {
         );
       }
     },
-    handleUnAudit() {
-      if (this.newOpt[6].nClick) {
+    handleunStockOut() {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(
           () => {
+            this.newOpt[0].nClick = false;
             this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = true;
+            this.newOpt[2].nClick = false;
             this.newOpt[3].nClick = false;
-            this.newOpt[4].nClick = true;
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = true;
-            this.newOpt[9].nClick = true;
-            this.newOpt[13].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = true;
-            this.newOpt[18].nClick = false;
+            this.newOpt[4].nClick = false;
+            this.newOpt[5].nClick = false;
+            this.newOpt[6].nClick = false;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = false;
             this.refresh();
             this.$message({
               message: "退审成功",
@@ -3856,8 +3621,48 @@ export default {
         );
       }
     },
+    handleStockOutToCS() {
+      if (this.newOpt[3].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.warehousingdepts + "/" + id + "/stockouttocs").then(
+          () => {
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.newOpt[10].nClick = true;
+            this.newOpt[11].nClick = true;
+            this.newOpt[12].nClick = true;
+            this.refresh();
+            this.$message({
+              message: "退回客审成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
     handleSplitOrder() {
-      if (this.newOpt[9].nClick) {
+      if (this.newOpt[6].nClick) {
         return;
       } else {
         this.splitMask = true;
@@ -3909,24 +3714,24 @@ export default {
         });
       }
       this.$put(
-        this.urls.customerservicedepts + "/" + id + "/splitorder",
+        this.urls.warehousingdepts + "/" + id + "/cargosplitorder",
         confSplit
       ).then(
         () => {
           this.splitMask = false;
           this.refresh();
           /*   this.newOpt[1].nClick = false;
-            this.newOpt[2].nClick = false;
-            this.newOpt[3].nClick = true;
-            this.newOpt[4].nClick = false;
-            this.newOpt[5].nClick = false;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = false;
-            this.newOpt[9].nClick = false;
-            this.newOpt[13].nClick = false;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = false;
-            this.newOpt[18].nClick = false;*/
+                       this.newOpt[2].nClick = false;
+                       this.newOpt[3].nClick = true;
+                       this.newOpt[4].nClick = false;
+                       this.newOpt[5].nClick = false;
+                       this.newOpt[6].nClick = true;
+                       this.newOpt[8].nClick = false;
+                       this.newOpt[9].nClick = false;
+                       this.newOpt[13].nClick = false;
+                       this.newOpt[14].nClick = true;
+                       this.newOpt[15].nClick = false;
+                       this.newOpt[18].nClick = false;*/
           this.$message({
             message: "订单拆分成功",
             type: "success"
@@ -3986,6 +3791,74 @@ export default {
         }
       }
     },
+    logisticsBill() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    dispatchBill() {
+      if (this.newOpt[5].nClick) {
+        return;
+      } else {
+        this.$message({
+          message: "请先配置打印机",
+          type: "success"
+        });
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(
+          this.urls.warehousingdepts + "/" + id + "/isprintdispatchbill"
+        ).then(
+          () => {
+            this.newOpt[0].nClick = false;
+            this.newOpt[1].nClick = false;
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = false;
+            this.newOpt[4].nClick = false;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.refresh();
+            this.$message({
+              message: "打印发货单成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    pickGoodsBill() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    print() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
+    elecBill() {
+      this.$message({
+        message: "请先配置打印机",
+        type: "success"
+      });
+    },
     //筛选
     searchData() {
       this.loading = true;
@@ -4016,10 +3889,14 @@ export default {
   },
   mounted() {
     this.fetchData();
-    this.$store.dispatch("setOpt", this.newOpt);
-    let that = this;
+    this.$store.state.opt.opts = this.newOpt;
+    this.$store.commit("change", this.newOpt);
+    const that = this;
     $(window).resize(() => {
-      that.$store.dispatch("setOpt", that.newOpt);
+      return (() => {
+        that.$store.state.opt.opts = that.newOpt;
+        that.$store.commit("change", that.newOpt);
+      })();
     });
   }
 };

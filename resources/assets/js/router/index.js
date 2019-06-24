@@ -127,7 +127,7 @@ const constantRouterMap = [{
         name: 'AuditOfFinancialBrushes',
         component: resolve => void(require(['../views/order/auditOfFinancialBrushes.vue'], resolve)),
         meta: {
-          title: '财务刷单审核',
+          title: '补单审核',
           icon: 'fiRea',
           requireAuth: true
         }
