@@ -1080,6 +1080,7 @@ export default {
         res => {
           this.orderLoading = false;
           this.orderData = res.data;
+          this.currentId=this.orderData[0].id;
           let pg = res.meta.pagination;
           this.$store.dispatch("currentPage", pg.current_page);
           this.$store.commit("PER_PAGE", pg.per_page);

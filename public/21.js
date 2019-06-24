@@ -1025,6 +1025,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, _defineProperty(_$fetch, "resupply_order_no", this.searchBox.resupply_order_no), _defineProperty(_$fetch, "receiver_state", this.searchBox.receiver_state), _defineProperty(_$fetch, "receiver_city", this.searchBox.receiver_city), _defineProperty(_$fetch, "receiver_district", this.searchBox.receiver_district), _defineProperty(_$fetch, "mark_name", this.searchBox.mark_name), _defineProperty(_$fetch, "suppliers_id", this.searchBox.suppliers_id), _defineProperty(_$fetch, "is_invalid", this.searchBox.is_invalid), _defineProperty(_$fetch, "include", "packageType,resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resuppliePurchase,resuppliePurchase.product,resuppliePurchase.productComponent,resupplieOperationRecord,resupplieProgress,resupplieEsheet,resupplieInnerNote"), _$fetch)).then(function (res) {
         _this.orderLoading = false;
         _this.orderData = res.data;
+        _this.currentId = _this.orderData[0].id;
         var pg = res.meta.pagination;
         _this.$store.dispatch("currentPage", pg.current_page);
         _this.$store.commit("PER_PAGE", pg.per_page);

@@ -311,7 +311,7 @@
       <!--查找并添加问题产品-->
       <el-dialog title="查找订单" :visible.sync="addProblemProMask" :class="{'more-forms':moreForms}">
         <el-button type="text">订单</el-button>
-        <el-table :data="problemOrderVal" height="180" @row-click="orderRClick">
+        <el-table :data="problemOrderVal" height="180" @row-click="problemOrderRClick">
           <el-table-column v-for="item in problemOrderHead" :label="item.label" align="center" :width="item.width" :key="item.label">
             <template slot-scope="scope">
               <span>
@@ -1564,6 +1564,8 @@ export default {
             res => {
               this.orderLoading = false;
               this.submitData = res.data;
+              this.currentId=this.submitData[0].id;
+              console.log(this.currentId);
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -1612,6 +1614,7 @@ export default {
             res => {
               this.orderLoading = false;
               this.submitData = res.data;
+              this.currentId=this.submitData[0].id;
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -1821,6 +1824,9 @@ export default {
         freight_types_id: this.addOrderForm.freight_types_id,
         //promise_time: new Date(this.createdTimeFormat(this.addOrderForm.promise_time)),
         remark: this.addOrderForm.remark,
+        receiver_state:this.addOrderForm.receiver_state,
+        receiver_city:this.addOrderForm.receiver_city,
+        receiver_district:this.addOrderForm.receiver_district,
         address: this.addOrderForm.address,
         re_supplie_responsibles_id: this.addOrderForm
           .re_supplie_responsibles_id,
@@ -1956,7 +1962,7 @@ export default {
           this.updateProblemProVal.push(item);
         });
       }
-
+      console.log(this.addOrderForm);
       this.addProblemProArr = [];
       this.problemProductVal = [];
       this.problemOrderVal = [];
@@ -2030,7 +2036,7 @@ export default {
         this.addResupplyInfoArr.push(item);
       });
     },
-    orderRClick(row) {
+    problemOrderRClick(row) {
       this.problemOrderRow = row;
       //this.problemProductVal = row['problemProduct'].data;
       console.log(this.problemOrderRow);
@@ -2284,6 +2290,7 @@ export default {
         description: this.addProgressForm.description,
         creator: this.addProgressForm.creator
       };
+      console.log(addProgressData);
       this.$post(this.urls.resupplieProgress, addProgressData).then(
         () => {
           this.addProgressMask = false;

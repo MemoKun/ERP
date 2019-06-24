@@ -57,10 +57,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_element_china_area_data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_element_china_area_data__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-var _methods;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -1450,7 +1446,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       set: function set() {}
     }
   },
-  methods: (_methods = {
+  methods: {
     test: function test() {
       console.log(1);
     },
@@ -1477,6 +1473,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }).then(function (res) {
             _this.orderLoading = false;
             _this.submitData = res.data;
+            _this.currentId = _this.submitData[0].id;
+            console.log(_this.currentId);
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -1509,6 +1507,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }).then(function (res) {
             _this.orderLoading = false;
             _this.submitData = res.data;
+            _this.currentId = _this.submitData[0].id;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -1674,6 +1673,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         freight_types_id: this.addOrderForm.freight_types_id,
         //promise_time: new Date(this.createdTimeFormat(this.addOrderForm.promise_time)),
         remark: this.addOrderForm.remark,
+        receiver_state: this.addOrderForm.receiver_state,
+        receiver_city: this.addOrderForm.receiver_city,
+        receiver_district: this.addOrderForm.receiver_district,
         address: this.addOrderForm.address,
         re_supplie_responsibles_id: this.addOrderForm.re_supplie_responsibles_id,
         package_types_id: this.addOrderForm.package_types_id,
@@ -1809,7 +1811,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this5.updateProblemProVal.push(item);
         });
       }
-
+      console.log(this.addOrderForm);
       this.addProblemProArr = [];
       this.problemProductVal = [];
       this.problemOrderVal = [];
@@ -1885,52 +1887,107 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
         _this8.addResupplyInfoArr.push(item);
       });
-    }
-  }, _defineProperty(_methods, "orderRClick", function orderRClick(row) {
-    this.problemOrderRow = row;
-    //this.problemProductVal = row['problemProduct'].data;
-    console.log(this.problemOrderRow);
-  }), _defineProperty(_methods, "problemProSelectionChange", function problemProSelectionChange(val) {
-    var _this9 = this;
+    },
+    problemOrderRClick: function problemOrderRClick(row) {
+      this.problemOrderRow = row;
+      //this.problemProductVal = row['problemProduct'].data;
+      console.log(this.problemOrderRow);
+    },
+    problemProSelectionChange: function problemProSelectionChange(val) {
+      var _this9 = this;
 
-    this.addProblemProArr = [];
-    val.forEach(function (selectedItem) {
-      var item = {
-        commodity_code: selectedItem.commodity_code,
-        spec_code: selectedItem.spec_code,
-        short_name: selectedItem.short_name,
-        spec: selectedItem.spec,
-        suppliers_id: selectedItem.supplier_id,
-        problem_description: ""
-      };
-      _this9.addProblemProArr.push(item);
-    });
-  }), _defineProperty(_methods, "updateOrder", function updateOrder() {
-    var _this10 = this;
-
-    if (this.delArr.length === 0) {
-      this.$message({
-        message: "没有选中数据",
-        type: "warning"
+      this.addProblemProArr = [];
+      val.forEach(function (selectedItem) {
+        var item = {
+          commodity_code: selectedItem.commodity_code,
+          spec_code: selectedItem.spec_code,
+          short_name: selectedItem.short_name,
+          spec: selectedItem.spec,
+          suppliers_id: selectedItem.supplier_id,
+          problem_description: ""
+        };
+        _this9.addProblemProArr.push(item);
       });
-    } else {
-      this.updateResupplyInfoIndex = "";
-      this.updateproblemProIndex = "";
-      this.updateOrderForm = {};
-      this.updateProblemProVal = [];
-      this.updateResupplyInfoVal = [];
-      this.updateMask = true;
+    },
+
+    //修改
+    updateOrder: function updateOrder() {
+      var _this10 = this;
+
+      if (this.delArr.length === 0) {
+        this.$message({
+          message: "没有选中数据",
+          type: "warning"
+        });
+      } else {
+        this.updateResupplyInfoIndex = "";
+        this.updateproblemProIndex = "";
+        this.updateOrderForm = {};
+        this.updateProblemProVal = [];
+        this.updateResupplyInfoVal = [];
+        this.updateMask = true;
+        var id = this.currentId ? this.currentId : this.orderRow.id;
+        this.$fetch(this.urls.resupplieApplication + "/" + id, {
+          include: "resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
+        }).then(function (res) {
+          _this10.updateOrderForm = res;
+          _this10.updateProblemProVal = res["resupplieProblemProduct"]["data"];
+          _this10.updateResupplyInfoVal = res["resupplieOrderItem"]["data"];
+          _this10.$store.dispatch("logistics", "/logistics");
+          _this10.$store.dispatch("freighttypes", "/freighttypes");
+          _this10.$store.dispatch("resupplieResponsible", "/resupplieResponsible");
+          _this10.$store.dispatch("refundMethod", "/refundMethod");
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this10.$message.error(str);
+          }
+        });
+      }
+    },
+    updateConfirm: function updateConfirm() {
+      var _this11 = this;
+
       var id = this.currentId ? this.currentId : this.orderRow.id;
-      this.$fetch(this.urls.resupplieApplication + "/" + id, {
-        include: "resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
-      }).then(function (res) {
-        _this10.updateOrderForm = res;
-        _this10.updateProblemProVal = res["resupplieProblemProduct"]["data"];
-        _this10.updateResupplyInfoVal = res["resupplieOrderItem"]["data"];
-        _this10.$store.dispatch("logistics", "/logistics");
-        _this10.$store.dispatch("freighttypes", "/freighttypes");
-        _this10.$store.dispatch("resupplieResponsible", "/resupplieResponsible");
-        _this10.$store.dispatch("refundMethod", "/refundMethod");
+      var updateData = {
+        system_order_no: this.updateOrderForm.system_order_no,
+        member_name: this.updateOrderForm.member_name,
+        member_phone: this.updateOrderForm.member_phone,
+        re_supplie_categories_id: this.updateOrderForm.re_supplie_categories_id,
+        resupply_money: this.updateOrderForm.resupply_money,
+        refund_methods_id: this.updateOrderForm.refund_methods_id,
+        refund_account: this.updateOrderForm.refund_account,
+        bank: this.updateOrderForm.bank,
+        logistics_id: this.updateOrderForm.logistics_id,
+        estimated_fee: this.updateOrderForm.estimated_fee,
+        compensate_fee: this.updateOrderForm.compensate_fee,
+        load_fee: this.updateOrderForm.load_fee,
+        suppliers_id: this.updateOrderForm.suppliers_id,
+        resupply_reason: this.updateOrderForm.resupply_reason,
+        distribution_methods_id: this.updateOrderForm.distribution_methods_id,
+        freight_types_id: this.updateOrderForm.freight_types_id,
+        //promise_time: new Date(this.createdTimeFormat(this.updateOrderForm.promise_time)),
+        remark: this.updateOrderForm.remark,
+        address: this.updateOrderForm.address,
+        re_supplie_responsibles_id: this.updateOrderForm.re_supplie_responsibles_id,
+        package_types_id: this.updateOrderForm.package_types_id,
+        re_supplie_order_items: this.updateResupplyInfoVal,
+        re_supplie_problem_products: this.updateProblemProVal
+      };
+      console.log(this.updateOrderForm.promise_time);
+      console.log(updateData.promise_time);
+      this.$patch(this.urls.resupplieApplication + "/" + id, updateData).then(function () {
+        _this11.updateMask = false;
+        _this11.refresh();
+        _this11.$message({
+          message: "修改成功",
+          type: "success"
+        });
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -1939,144 +1996,118 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this10.$message.error(str);
+          _this11.$message.error(str);
         }
       });
-    }
-  }), _defineProperty(_methods, "updateConfirm", function updateConfirm() {
-    var _this11 = this;
+    },
+    updateCancel: function updateCancel() {
+      this.updateMask = false;
+    },
+    updateProDel: function updateProDel(index) {
+      var _this12 = this;
 
-    var id = this.currentId ? this.currentId : this.orderRow.id;
-    var updateData = {
-      system_order_no: this.updateOrderForm.system_order_no,
-      member_name: this.updateOrderForm.member_name,
-      member_phone: this.updateOrderForm.member_phone,
-      re_supplie_categories_id: this.updateOrderForm.re_supplie_categories_id,
-      resupply_money: this.updateOrderForm.resupply_money,
-      refund_methods_id: this.updateOrderForm.refund_methods_id,
-      refund_account: this.updateOrderForm.refund_account,
-      bank: this.updateOrderForm.bank,
-      logistics_id: this.updateOrderForm.logistics_id,
-      estimated_fee: this.updateOrderForm.estimated_fee,
-      compensate_fee: this.updateOrderForm.compensate_fee,
-      load_fee: this.updateOrderForm.load_fee,
-      suppliers_id: this.updateOrderForm.suppliers_id,
-      resupply_reason: this.updateOrderForm.resupply_reason,
-      distribution_methods_id: this.updateOrderForm.distribution_methods_id,
-      freight_types_id: this.updateOrderForm.freight_types_id,
-      //promise_time: new Date(this.createdTimeFormat(this.updateOrderForm.promise_time)),
-      remark: this.updateOrderForm.remark,
-      address: this.updateOrderForm.address,
-      re_supplie_responsibles_id: this.updateOrderForm.re_supplie_responsibles_id,
-      package_types_id: this.updateOrderForm.package_types_id,
-      re_supplie_order_items: this.updateResupplyInfoVal,
-      re_supplie_problem_products: this.updateProblemProVal
-    };
-    console.log(this.updateOrderForm.promise_time);
-    console.log(updateData.promise_time);
-    this.$patch(this.urls.resupplieApplication + "/" + id, updateData).then(function () {
-      _this11.updateMask = false;
-      _this11.refresh();
-      _this11.$message({
-        message: "修改成功",
-        type: "success"
-      });
-    }, function (err) {
-      if (err.response) {
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
-        }
-        var str = arr1.join(",");
-        _this11.$message.error(str);
-      }
-    });
-  }), _defineProperty(_methods, "updateCancel", function updateCancel() {
-    this.updateMask = false;
-  }), _defineProperty(_methods, "updateProDel", function updateProDel(index) {
-    var _this12 = this;
-
-    if (row.id) {
-      this.$del(this.urls.resupplieProblemProduct + "/" + row.id).then(function () {
-        _this12.updateProblemProVal.splice(index, 1);
-        _this12.$message({
+      if (row.id) {
+        this.$del(this.urls.resupplieProblemProduct + "/" + row.id).then(function () {
+          _this12.updateProblemProVal.splice(index, 1);
+          _this12.$message({
+            message: "删除问题产品成功",
+            type: "success"
+          });
+        });
+      } else {
+        this.updateProblemProVal.splice(index, 1);
+        this.$message({
           message: "删除问题产品成功",
           type: "success"
         });
-      });
-    } else {
-      this.updateProblemProVal.splice(index, 1);
-      this.$message({
-        message: "删除问题产品成功",
-        type: "success"
-      });
-    }
-  }), _defineProperty(_methods, "updateResupplyInfoDel", function updateResupplyInfoDel(index) {
-    var _this13 = this;
+      }
+    },
+    updateResupplyInfoDel: function updateResupplyInfoDel(index) {
+      var _this13 = this;
 
-    if (row.id) {
-      this.$del(this.urls.resupplieOrderItem + "/" + row.id).then(function () {
-        _this13.updateResupplyInfoVal.splice(index, 1);
-        _this13.$message({
+      if (row.id) {
+        this.$del(this.urls.resupplieOrderItem + "/" + row.id).then(function () {
+          _this13.updateResupplyInfoVal.splice(index, 1);
+          _this13.$message({
+            message: "删除补件产品成功",
+            type: "success"
+          });
+        });
+      } else {
+        this.updateResupplyInfoVal.splice(index, 1);
+        this.$message({
           message: "删除补件产品成功",
           type: "success"
         });
-      });
-    } else {
-      this.updateResupplyInfoVal.splice(index, 1);
-      this.$message({
-        message: "删除补件产品成功",
-        type: "success"
-      });
-    }
-  }), _defineProperty(_methods, "handleSelectionChange", function handleSelectionChange(val) {
-    var arr = [];
-    val.forEach(function (selectedItem) {
-      arr.push(selectedItem.id);
-    });
-    this.delArr = arr.join(",");
-    this.currentId = val.length > 0 ? val[val.length - 1].id : "";
-  }), _defineProperty(_methods, "submit", function submit() {
-    var _this14 = this;
-
-    var id = this.currentId ? this.currentId : this.orderRow.id;
-    this.$put(this.urls.resupplieApplication + "/" + id + "/submit").then(function () {
-      _this14.refresh();
-      _this14.$message({
-        message: "提交成功",
-        type: "success"
-      });
-    }, function (err) {
-      if (err.response) {
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
-        }
-        var str = arr1.join(",");
-        _this14.$message.error(str);
       }
-    });
-  }), _defineProperty(_methods, "reject", function reject() {
-    this.rejectMask = true;
-    Object.assign(this.rejectForm, this.$options.data().rejectForm);
-  }), _defineProperty(_methods, "rejectConfirm", function rejectConfirm() {
-    var _this15 = this;
+    },
 
-    var id = this.currentId ? this.currentId : this.orderRow.id;
-    var rejectData = {
-      re_supplie_orders_id: this.currentId ? this.currentId : this.orderRow.id,
-      rejecter: this.rejectForm.rejecter,
-      reason: this.rejectForm.reason
-    };
-    this.$post(this.urls.resupplieRejectReason, rejectData).then(function () {
-      _this15.$put(_this15.urls.resupplieApplication + "/" + id + "/reject").then(function () {
-        _this15.rejectMask = false;
-        _this15.refresh();
-        _this15.$message({
-          message: "驳回成功",
+    //批量选择
+    handleSelectionChange: function handleSelectionChange(val) {
+      var arr = [];
+      val.forEach(function (selectedItem) {
+        arr.push(selectedItem.id);
+      });
+      this.delArr = arr.join(",");
+      this.currentId = val.length > 0 ? val[val.length - 1].id : "";
+    },
+
+    //提交
+    submit: function submit() {
+      var _this14 = this;
+
+      var id = this.currentId ? this.currentId : this.orderRow.id;
+      this.$put(this.urls.resupplieApplication + "/" + id + "/submit").then(function () {
+        _this14.refresh();
+        _this14.$message({
+          message: "提交成功",
           type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this14.$message.error(str);
+        }
+      });
+    },
+
+    //驳回
+    reject: function reject() {
+      this.rejectMask = true;
+      Object.assign(this.rejectForm, this.$options.data().rejectForm);
+    },
+    rejectConfirm: function rejectConfirm() {
+      var _this15 = this;
+
+      var id = this.currentId ? this.currentId : this.orderRow.id;
+      var rejectData = {
+        re_supplie_orders_id: this.currentId ? this.currentId : this.orderRow.id,
+        rejecter: this.rejectForm.rejecter,
+        reason: this.rejectForm.reason
+      };
+      this.$post(this.urls.resupplieRejectReason, rejectData).then(function () {
+        _this15.$put(_this15.urls.resupplieApplication + "/" + id + "/reject").then(function () {
+          _this15.rejectMask = false;
+          _this15.refresh();
+          _this15.$message({
+            message: "驳回成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this15.$message.error(str);
+          }
         });
       }, function (err) {
         if (err.response) {
@@ -2089,202 +2120,219 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this15.$message.error(str);
         }
       });
-    }, function (err) {
-      if (err.response) {
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
-        }
-        var str = arr1.join(",");
-        _this15.$message.error(str);
-      }
-    });
-  }), _defineProperty(_methods, "rejectCancel", function rejectCancel() {
-    this.rejectMask = false;
-  }), _defineProperty(_methods, "addProgress", function addProgress() {
-    this.addProgressMask = true;
-    Object.assign(this.addProgressForm, this.$options.data().addProgressForm);
-  }), _defineProperty(_methods, "addProgressConfirm", function addProgressConfirm() {
-    var _this16 = this;
+    },
+    rejectCancel: function rejectCancel() {
+      this.rejectMask = false;
+    },
 
-    var id = this.currentId ? this.currentId : this.orderRow.id;
-    var addProgressData = {
-      re_supplie_orders_id: this.currentId ? this.currentId : this.orderRow.id,
-      description: this.addProgressForm.description,
-      creator: this.addProgressForm.creator
-    };
-    this.$post(this.urls.resupplieProgress, addProgressData).then(function () {
-      _this16.addProgressMask = false;
-      _this16.refresh();
-      _this16.$message({
-        message: "添加进度成功",
-        type: "success"
-      });
-    }, function (err) {
-      if (err.response) {
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
-        }
-        var str = arr1.join(",");
-        _this16.$message.error(str);
-      }
-    });
-  }), _defineProperty(_methods, "addProgressCancel", function addProgressCancel() {
-    this.addProgressMask = false;
-    this.$message({
-      message: "取消添加",
-      type: "info"
-    });
-  }), _defineProperty(_methods, "updateProgress", function updateProgress() {
-    var _this17 = this;
+    //补件进度
+    addProgress: function addProgress() {
+      this.addProgressMask = true;
+      Object.assign(this.addProgressForm, this.$options.data().addProgressForm);
+    },
+    addProgressConfirm: function addProgressConfirm() {
+      var _this16 = this;
 
-    this.updateProgressMask = true;
-    var id = this.currentId;
-    this.$fetch(this.urls.resupplieProgress + "/" + id).then(function (res) {
-      _this17.updateProgressFrom = {
-        description: res.description,
-        creator: res.creator
+      var id = this.currentId ? this.currentId : this.orderRow.id;
+      var addProgressData = {
+        re_supplie_orders_id: this.currentId ? this.currentId : this.orderRow.id,
+        description: this.addProgressForm.description,
+        creator: this.addProgressForm.creator
       };
-    }, function (err) {});
-  }), _defineProperty(_methods, "updateProgressConfirm", function updateProgressConfirm() {
-    var _this18 = this;
-
-    var id = this.currentId;
-    var data = {
-      description: this.updateProgressFrom.description,
-      creator: this.updateProgressFrom.creator
-    };
-    this.$patch(this.urls.resupplieProgress + "/" + id, data).then(function () {
-      _this18.updateProgressMask = false;
-      _this18.refresh();
-      _this18.$message({
-        message: "修改成功",
-        type: "success"
-      });
-    }, function (err) {
-      if (err.response) {
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
-        }
-        var str = arr1.join(",");
-        _this18.$message.error(str);
-      }
-    });
-  }), _defineProperty(_methods, "updateProgressCancel", function updateProgressCancel() {
-    this.updateMask = false;
-    this.$message({
-      message: "取消修改",
-      type: "info"
-    });
-  }), _defineProperty(_methods, "delProgress", function delProgress() {
-    var _this19 = this;
-
-    if (this.delArr.length === 0) {
-      this.$message({
-        message: "没有选中数据",
-        type: "warning"
-      });
-    } else {
-      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function () {
-        _this19.$del(_this19.urls.resupplieProgress, { ids: _this19.delArr }).then(function () {
-          _this19.$message({
-            message: "删除成功",
-            type: "success"
-          });
-          _this19.refresh();
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this19.$message.error(str);
+      console.log(addProgressData);
+      this.$post(this.urls.resupplieProgress, addProgressData).then(function () {
+        _this16.addProgressMask = false;
+        _this16.refresh();
+        _this16.$message({
+          message: "添加进度成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
           }
-        });
-      }).catch(function () {
-        _this19.$message({
-          type: "info",
-          message: "已取消删除"
-        });
-      });
-    }
-  }), _defineProperty(_methods, "void", function _void() {
-    var _this20 = this;
-
-    var id = this.currentId ? this.currentId : this.orderRow.id;
-    this.$put(this.urls.resupplieCenter + "/" + id + "/invalid").then(function () {
-      _this20.refresh();
-      _this20.$message({
-        message: "作废成功",
-        type: "success"
-      });
-    }, function (err) {
-      if (err.response) {
-        var arr = err.response.data.errors;
-        var arr1 = [];
-        for (var i in arr) {
-          arr1.push(arr[i]);
+          var str = arr1.join(",");
+          _this16.$message.error(str);
         }
-        var str = arr1.join(",");
-        _this20.$message.error(str);
-      }
-    });
-  }), _defineProperty(_methods, "refresh", function refresh() {
-    this.orderLoading = true;
-    this.resets();
-    this.fetchData();
-  }), _defineProperty(_methods, "judgeFm", function judgeFm(file) {
-    var isJPG = file.type === "image/jpeg";
-    var isGIF = file.type === "image/gif";
-    var isPNG = file.type === "image/png";
+      });
+    },
+    addProgressCancel: function addProgressCancel() {
+      this.addProgressMask = false;
+      this.$message({
+        message: "取消添加",
+        type: "info"
+      });
+    },
+    updateProgress: function updateProgress() {
+      var _this17 = this;
 
-    if (!isJPG && !isGIF && !isPNG) {
-      this.$message.error("上传图片必须是JPG/GIF/PNG 格式!");
+      this.updateProgressMask = true;
+      var id = this.currentId;
+      this.$fetch(this.urls.resupplieProgress + "/" + id).then(function (res) {
+        _this17.updateProgressFrom = {
+          description: res.description,
+          creator: res.creator
+        };
+      }, function (err) {});
+    },
+    updateProgressConfirm: function updateProgressConfirm() {
+      var _this18 = this;
+
+      var id = this.currentId;
+      var data = {
+        description: this.updateProgressFrom.description,
+        creator: this.updateProgressFrom.creator
+      };
+      this.$patch(this.urls.resupplieProgress + "/" + id, data).then(function () {
+        _this18.updateProgressMask = false;
+        _this18.refresh();
+        _this18.$message({
+          message: "修改成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this18.$message.error(str);
+        }
+      });
+    },
+    updateProgressCancel: function updateProgressCancel() {
+      this.updateMask = false;
+      this.$message({
+        message: "取消修改",
+        type: "info"
+      });
+    },
+    delProgress: function delProgress() {
+      var _this19 = this;
+
+      if (this.delArr.length === 0) {
+        this.$message({
+          message: "没有选中数据",
+          type: "warning"
+        });
+      } else {
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          _this19.$del(_this19.urls.resupplieProgress, { ids: _this19.delArr }).then(function () {
+            _this19.$message({
+              message: "删除成功",
+              type: "success"
+            });
+            _this19.refresh();
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this19.$message.error(str);
+            }
+          });
+        }).catch(function () {
+          _this19.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+      }
+    },
+
+    //作废
+    void: function _void() {
+      var _this20 = this;
+
+      var id = this.currentId ? this.currentId : this.orderRow.id;
+      this.$put(this.urls.resupplieCenter + "/" + id + "/invalid").then(function () {
+        _this20.refresh();
+        _this20.$message({
+          message: "作废成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this20.$message.error(str);
+        }
+      });
+    },
+
+    //刷新
+    refresh: function refresh() {
+      this.orderLoading = true;
+      this.resets();
+      this.fetchData();
+    },
+
+    //上传图片
+    judgeFm: function judgeFm(file) {
+      var isJPG = file.type === "image/jpeg";
+      var isGIF = file.type === "image/gif";
+      var isPNG = file.type === "image/png";
+
+      if (!isJPG && !isGIF && !isPNG) {
+        this.$message.error("上传图片必须是JPG/GIF/PNG 格式!");
+      }
+    },
+    beforeUpload: function beforeUpload(file) {
+      var _this21 = this;
+
+      this.showChgBtn = false;
+      this.judgeFm(file);
+      var formData = new FormData();
+      formData.append("image", file);
+      this.$post(this.urls.resupplieImage, formData).then(function (res) {
+        var imageInfo = res.data.meta;
+        if (imageInfo.status_code == 201) {
+          _this21.showChgBtn = true;
+          _this21.imageData = res.data;
+        }
+      }).catch(function (err) {});
+    },
+
+    /*分页*/
+    handlePagChg: function handlePagChg(page) {
+      var _this22 = this;
+
+      this.$fetch(this.urls.resupplieApplication + "?page=" + page, {
+        include: "resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
+      }).then(function (res) {
+        _this22.orderData = res.data;
+      });
+    },
+
+    //转换时间格式
+    createdTimeFormat: function createdTimeFormat(timestamp) {
+      var date = new Date(timestamp * 1000);
+      var Y = date.getFullYear();
+      var M = date.getMonth() + 1;
+      M = m < 10 ? "0" + M : M;
+      var D = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+      var h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+      var m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      var s = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+      return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
     }
-  }), _defineProperty(_methods, "beforeUpload", function beforeUpload(file) {
-    var _this21 = this;
-
-    this.showChgBtn = false;
-    this.judgeFm(file);
-    var formData = new FormData();
-    formData.append("image", file);
-    this.$post(this.urls.resupplieImage, formData).then(function (res) {
-      var imageInfo = res.data.meta;
-      if (imageInfo.status_code == 201) {
-        _this21.showChgBtn = true;
-        _this21.imageData = res.data;
-      }
-    }).catch(function (err) {});
-  }), _defineProperty(_methods, "handlePagChg", function handlePagChg(page) {
-    var _this22 = this;
-
-    this.$fetch(this.urls.resupplieApplication + "?page=" + page, {
-      include: "resupplieCategory,resupplieResponsible,logistic,freightType,supplier,distributionMethod,refundMethod,resupplieOrderItem.resupplieOrder,resupplieOrderItem.productComponent,resupplieOrderItem.product,resupplieProblemProduct.resupplieOrder,resupplieProblemProduct.supplier,resupplieImage,resupplieRejectReason,resupplieOperationRecord,resupplieProgress"
-    }).then(function (res) {
-      _this22.orderData = res.data;
-    });
-  }), _defineProperty(_methods, "createdTimeFormat", function createdTimeFormat(timestamp) {
-    var date = new Date(timestamp * 1000);
-    var Y = date.getFullYear();
-    var M = date.getMonth() + 1;
-    M = m < 10 ? "0" + M : M;
-    var D = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    var h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-    var m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    var s = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
-  }), _methods),
+  },
   mounted: function mounted() {
     this.fetchData();
     this.$store.state.opt.opts = this.newOpt;
@@ -4003,7 +4051,7 @@ var render = function() {
                 "el-table",
                 {
                   attrs: { data: _vm.problemOrderVal, height: "180" },
-                  on: { "row-click": _vm.orderRClick }
+                  on: { "row-click": _vm.problemOrderRClick }
                 },
                 _vm._l(_vm.problemOrderHead, function(item) {
                   return _c("el-table-column", {

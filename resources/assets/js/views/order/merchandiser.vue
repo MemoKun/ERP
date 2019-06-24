@@ -152,11 +152,6 @@
                   </span>
                 </template>
               </el-table-column>
-              <!-- <el-table-column label="操作" width="90" align="center" fixed="right">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="delSingle(scope.row,$event)">删除</el-button>
-                                </template>
-                            </el-table-column>-->
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="已货审" name="1">

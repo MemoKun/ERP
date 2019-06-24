@@ -1003,6 +1003,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }).then(function (res) {
             _this.orderLoading = false;
             _this.orderData = res.data;
+            _this.currentId = _this.orderData[0].id;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -1043,6 +1044,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }).then(function (res) {
             _this.orderLoading = false;
             _this.orderData = res.data;
+            _this.currentId = _this.orderData[0].id;
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
