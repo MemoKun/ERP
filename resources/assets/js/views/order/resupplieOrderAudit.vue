@@ -106,13 +106,12 @@
             <span></span>
           </div>
           <div style="text-align: right">
-            <el-button type="primary" @click="searchData">筛选</el-button>
+            <el-button type="primary" @click="fetchData">筛选</el-button>
             <el-button @click="resets">重置</el-button>
           </div>
         </div>
-
         <!--显示列表-未处理-->
-        <el-tabs v-model="leftTopActiveName" @tab-click="leftHandleClick" style="height: 400px;">
+        <el-tabs v-model="leftTopActiveName" @tab-click="fetchData" style="height: 400px;">
           <el-tab-pane label="未提交" name="0">
             <el-table :data="orderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="350" @row-click="orderListRowClick" @row-dblclick="orderDbClick">
               <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
@@ -311,7 +310,6 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-
       <el-tab-pane label="订单明细" name="1">
         <!-- 上方信息 -->
         <el-form :model="orderDtlFormVal" class="quarter_turn">
@@ -333,7 +331,7 @@
           </el-form-item>
         </el-form>
         <!-- 下方信息 -->
-        <el-tabs v-model="rightActiveName" @tab-click="rightHandleClick">
+        <el-tabs v-model="rightActiveName" @tab-click="fetchData">
           <el-tab-pane label="商品明细" name="0">
             <el-table :data="proDtlData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -349,7 +347,7 @@
               <el-table-column type="expand" fixed="left">
                 <template slot-scope="scope">
                   <el-table :data="scope.row['productComp']" fit>
-                    <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+                    <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
                       <template slot-scope="scope">
                         <span v-if="item.prop">
                           <span v-if="item.type=='checkbox'">
@@ -530,333 +528,160 @@
       </el-tab-pane>
     </el-tabs>
 
-    <!--商品明细-->
-    <el-dialog title="商品明细" :visible.sync="proMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
-      <el-button type="text">选择商品</el-button>
-      <div class="searchBox">
-        <span>
-          <label>商品编码</label>
-          <el-input v-model.trim="proQuery.commodity_code" clearable placeholder="请输入商品编码" @keyup.enter.native="proQueryClick"></el-input>
-        </span>
-        <span>
-          <label>子件编码</label>
-          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
-        </span>
-        <span>
-          <label>商品类别</label>
-          <el-select v-model="proQuery.shops_id" clearable placeholder="请选择商品类别" @keyup.enter.native="proQueryClick">
-            <el-option v-for="item in resData.shops" :key="item.value" :label="item.nick" :value="item.id"></el-option>
-          </el-select>
-        </span>
-        <span>
-          <label>商品简称</label>
-          <el-input v-model.trim="proQuery.short_name" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
-        </span>
-        <span>
-          <label>组合筛选</label>
-          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
-        </span>
-        <span>
-          <label>成品筛选</label>
-          <el-input v-model.trim="proQuery.component_code" clearable placeholder="请输入子件编码" @keyup.enter.native="proQueryClick"></el-input>
-        </span>
-        <el-button type="primary" @click="proQueryClick">查询</el-button>
-      </div>
-      <el-table :data="proVal" fit height="250" :row-class-name="proCName" @row-click="proRowClick">
-        <el-table-column v-for="item in proHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-          <template slot-scope="scope">
-            <span v-if="item.prop">
-              <span v-if="item.type=='img'">
-                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                  <img :src="scope.row[item.prop]">
-                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                </el-popover>
-              </span>
-              <span v-else>
-                {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-              </span>
-            </span>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button type="text">sku信息</el-button>
-      <el-table :data="proSkuVal" fit height="230" :row-class-name="proSkuCName" @row-click="proSkuRowClick">
-        <el-table-column v-for="item in proSkuHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-          <template slot-scope="scope">
-            <span v-if="item.prop=='newData'">
-              <span v-if="proCompRowIndex == 'index'+scope.$index">
-                <span v-if="item.type=='number'">
-                  <span v-if="item.inProp=='quantity'">
-                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder" @input="quantityChg"></el-input>
-                  </span>
-                  <span v-else>
-                    <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                  </span>
-                </span>
-                <span v-else-if="item.type=='checkbox'">
-                  <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
-                </span>
-                <span v-else>
-                  <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
-                </span>
-              </span>
-              <span v-else>
-                <span v-if="item.type=='checkbox'">
-                  <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
-                </span>
-                <span v-else>
-                  {{scope.row[item.prop][item.inProp]}}
-                </span>
-              </span>
-            </span>
-            <span v-else-if="item.prop">
-              <span v-if="item.type=='checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else-if="item.type=='img'">
-                <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                  <img :src="scope.row[item.prop]">
-                  <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                </el-popover>
-              </span>
-              <span v-else>
-                {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-              </span>
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column type="expand" fixed="left">
-          <template slot-scope="scope">
-            <el-table :data="scope.row['productComp']" fit>
-              <el-table-column v-for="item in proCompHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-                <template slot-scope="scope">
-                  <span v-if="item.prop">
-                    <span v-if="item.type=='checkbox'">
-                      <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-                    </span>
-                    <span v-else-if="item.type=='img'">
-                      <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-                        <img :src="scope.row[item.prop]">
-                        <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
-                      </el-popover>
-                    </span>
-                    <span v-else>
-                      {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-                    </span>
-                  </span>
-                </template>
-              </el-table-column>
-            </el-table>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="confirmAddProDtl">确定</el-button>
-        <el-button @click="cancelAddProDtl">关闭</el-button>
-      </div>
-    </el-dialog>
-
-    <!--修改  样式不再未bigDialog-->
-    <el-dialog title="修改明细" :visible.sync="updateStorageMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
+    <!--修改-->
+    <el-dialog title="修改明细" :visible.sync="updateResupplieOrderMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
       <div class="clearfix">
-        <span style="float: left">物流信息</span>
+        <span style="float: left">修改信息</span>
       </div>
-      <!--取消hidepart-->
-      <el-form :model="updateStorageFormVal" :rules="addStorageFormRules" class="storageUpdateForm" id="form">
-        <el-form-item v-for="(item,index) in addStorageFormHead" :key="index" :label="item.label" :prop="item.prop">
+      <el-form :model="updateResupplieOrderFormVal" :rules="updateResupplieOrderFormRules" class="resupplieOrderUpdateForm" id="form">
+        <el-form-item v-for="(item,index) in updateResupplieOrderFormHead" :key="index" :label="item.label" :prop="item.prop">
           <span v-if="item.type=='text'">
             <span v-if="item.inProp">
-              <el-input v-model.trim="updateStorageFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+              <el-input v-model.trim="updateResupplieOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
             <span v-else>
-              <el-input v-model.trim="updateStorageFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+              <el-input v-model.trim="updateResupplieOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='number'">
             <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
-              <el-input type="number" v-model.trim="updateStorageFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+              <el-input type="number" v-model.trim="updateResupplieOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
             </span>
             <span v-else>
-              <el-input type="number" v-model.trim="updateStorageFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+              <el-input type="number" v-model.trim="updateResupplieOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
             </span>
           </span>
           <span v-else-if="item.type=='select'">
-            <el-select v-model="updateStorageFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+            <el-select v-model="updateResupplieOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
               <span v-for="list in addSubData[item.stateVal]" :key="list.id">
                 <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
               </span>
             </el-select>
           </span>
           <span v-else-if="item.type=='textarea'">
-            <el-input type="textarea" v-model.trim="updateStorageFormVal[item.prop]" :placehode="item.holder"></el-input>
+            <el-input type="textarea" v-model.trim="updateResupplieOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
           </span>
           <span v-else-if="item.type=='checkbox'">
-            <el-checkbox v-model="updateStorageFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
+            <el-checkbox v-model="updateResupplieOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
           </span>
           <span v-else-if="item.type=='radio'">
-            <el-radio v-model="updateStorageFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
-            <el-radio v-model="updateStorageFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+            <el-radio v-model="updateResupplieOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+            <el-radio v-model="updateResupplieOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
           </span>
           <span v-else-if="item.type=='DatePicker'">
-            <el-date-picker v-model="updateStorageFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
+            <el-date-picker v-model="updateResupplieOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
             </el-date-picker>
           </span>
         </el-form-item>
       </el-form>
-      <!--<el-tabs v-model="updateActiveName" @tab-click="addHandleClick" id="elTabs" class="hidePart">-->
-      <!--<el-tab-pane label="商品信息" name="0">-->
-      <!--<el-table :data="updateProData" fit @row-click="addProRowClick" :row-class-name="addProRCName">-->
-      <!--<el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center"-->
-      <!--:width="item.width" :key="item.label">-->
-      <!--<template slot-scope="scope">-->
-      <!--<span v-if="item.prop=='newData'">-->
-      <!--<span v-if="proRIndex == 'index'+scope.$index">-->
-      <!--<span v-if="item.type=='number'">-->
-      <!--<el-input size="small" type="number"-->
-      <!--v-model.trim="scope.row[item.prop][item.inProp]"-->
-      <!--:placeholder="item.holder"></el-input>-->
-      <!--</span>-->
-      <!--<span v-else-if="item.type == 'checkbox'">-->
-      <!--<el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--<el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]"-->
-      <!--:placeholder="item.holder"></el-input>-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--<span v-if="item.type=='checkbox'">-->
-      <!--<el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--{{scope.row[item.prop][item.inProp]}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--<span v-else-if="item.prop">-->
-      <!--<span v-if="item.type=='checkbox'">-->
-      <!--<el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>-->
-      <!--</span>-->
-      <!--<span v-else-if="item.type=='img'">-->
-      <!--<el-popover-->
-      <!--placement="right"-->
-      <!--trigger="hover"-->
-      <!--popper-class="picture_detail">-->
-      <!--<img :src="scope.row[item.prop]">-->
-      <!--<img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">-->
-      <!--</el-popover>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column type="expand" fixed="left">-->
-      <!--<template slot-scope="scope">-->
-      <!--<el-table :data="scope.row['productComp']" fit>-->
-      <!--<el-table-column v-for="item in proCompHead" :label="item.label" align="center"-->
-      <!--:width="item.width" :key="item.label">-->
-      <!--<template slot-scope="scope">-->
-      <!--<span v-if="item.prop">-->
-      <!--<span v-if="item.type=='checkbox'">-->
-      <!--<el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>-->
-      <!--</span>-->
-      <!--<span v-else-if="item.type=='img'">-->
-      <!--<el-popover-->
-      <!--placement="right"-->
-      <!--trigger="hover"-->
-      <!--popper-class="picture_detail">-->
-      <!--<img :src="scope.row[item.prop]">-->
-      <!--<img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">-->
-      <!--</el-popover>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-      <!--</el-table>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column label="操作" width="90" align="center" fixed="right">-->
-      <!--<template slot-scope="scope">-->
-      <!--<el-button size="mini" type="danger" @click="updateDelPro(scope.row,scope.$index)">删除-->
-      <!--</el-button>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-      <!--</el-table>-->
-      <!--</el-tab-pane>-->
-      <!--<el-tab-pane label="收货信息" name="1">-->
-      <!--<el-form :model="updateReceiveInfo" class="half">-->
-      <!--<el-form-item v-for="(item,index) in addHead[updateActiveName]" :key="index" :label="item.label"-->
-      <!--:prop="item.label">-->
-      <!--<span v-if="item.type=='number'">-->
-      <!--<el-input type="number" v-model.trim="updateReceiveInfo[item.prop]"-->
-      <!--:placeholder="item.holder"></el-input>-->
-      <!--</span>-->
-      <!--<span v-else-if="item.type=='cascader'">-->
-      <!--<el-cascader-->
-      <!--size="large"-->
-      <!--:options="options"-->
-      <!--v-model="updateReceiveInfo[item.prop]">-->
-      <!--</el-cascader>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--<el-input v-model.trim="updateReceiveInfo[item.prop]"-->
-      <!--:placeholder="item.holder"></el-input>-->
-      <!--</span>-->
-      <!--</el-form-item>-->
-      <!--</el-form>-->
-      <!--</el-tab-pane>-->
-      <!--<el-tab-pane label="费用类型" name="2">-->
-      <!--<el-table :data="updateExpenseData" fit @row-click="addExpenseRClick"-->
-      <!--:row-class-name="addExpenseRCName">-->
-      <!--<el-table-column v-for="item in addHead[updateActiveName]" :label="item.label" align="center"-->
-      <!--:width="item.width" :key="item.label">-->
-      <!--&lt;!&ndash;<template slot-scope="scope">-->
-      <!--<span v-if="expenseRIndex == 'index'+scope.$index">-->
-      <!--<span v-if="item.type=='select'">-->
-      <!--<el-select v-model="scope.row[item.prop]" :placeholder="item.holder">-->
-      <!--<span v-for="list in addSubData[item.stateVal]" :key="list.id">-->
-      <!--<el-option :label="list.name" :value="list.id"></el-option>-->
-      <!--</span>-->
-      <!--</el-select>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--<el-input size="small" type="number" v-model.trim="scope.row[item.prop]" :placeholder="item.holder"></el-input>-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--<span v-if="item.type=='select'">-->
-      <!--<span v-for="(list,index) in addSubData[item.stateVal]" :key="index">-->
-      <!--<span v-if="list.id==scope.row[item.prop]">-->
-      <!--{{list.name}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--<span v-else>-->
-      <!--{{scope.row[item.prop]}}-->
-      <!--</span>-->
-      <!--</span>-->
-      <!--</template>&ndash;&gt;-->
-      <!--</el-table-column>-->
-      <!--<el-table-column label="操作" width="90" align="center" fixed="right">-->
-      <!--<template slot-scope="scope">-->
-      <!--<el-button size="mini" type="danger" @click="updateDelExpense(scope.row,scope.$index)">-->
-      <!--删除-->
-      <!--</el-button>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-      <!--</el-table>-->
-      <!--</el-tab-pane>-->
-      <!--</el-tabs>-->
       <div slot="footer" class="dialog-footer clearfix">
         <div style="float: right">
-          <el-button type="primary" @click="updateStorageConfirm">确定</el-button>
-          <el-button @click="updateStorageCancel">取消</el-button>
+          <el-button type="primary" @click="updateResupplieOrderConfirm">确定</el-button>
+          <el-button @click="updateResupplieOrderCancel">取消</el-button>
         </div>
+      </div>
+    </el-dialog>
+
+    <!--发货-->
+    <el-dialog title="订单发货" :visible.sync="stockOutMask" :class="{'more-forms':moreForms}">
+      <el-tabs>
+        <el-tab-pane label="发货明细" name="0">
+          <el-form :model="updateResupplieOrderFormVal" :rules="addStockOutDtlRules" class="storageUpdateForm" id="form">
+            <el-form-item v-for="(item,index) in stockOutDtlHead" :key="index" :label="item.label" :prop="item.prop">
+              <span v-if="item.type=='text'">
+                <span v-if="item.inProp">
+                  <el-input v-model.trim="updateResupplieOrderFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+                <span v-else>
+                  <el-input v-model.trim="updateResupplieOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+              </span>
+              <span v-else-if="item.type=='number'">
+                <span v-if="item.prop=='deliver_goods_fee' || item.prop=='move_upstairs_fee' || item.prop=='installation_fee'">
+                  <el-input type="number" v-model.trim="updateResupplieOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble" @input="formChg"></el-input>
+                </span>
+                <span v-else>
+                  <el-input type="number" v-model.trim="updateResupplieOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                </span>
+              </span>
+              <span v-else-if="item.type=='select'">
+                <el-select v-model="updateResupplieOrderFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble">
+                  <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                    <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                  </span>
+                </el-select>
+              </span>
+              <span v-else-if="item.type=='textarea'">
+                <el-input type="textarea" v-model.trim="updateResupplieOrderFormVal[item.prop]" :placehode="item.holder"></el-input>
+              </span>
+              <span v-else-if="item.type=='checkbox'">
+                <el-checkbox v-model="updateResupplieOrderFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
+              </span>
+              <span v-else-if="item.type=='radio'">
+                <el-radio v-model="updateResupplieOrderFormVal[item.prop]" label="volume">{{item.choiceName[0]}}</el-radio>
+                <el-radio v-model="updateResupplieOrderFormVal[item.prop]" label="weight">{{item.choiceName[1]}}</el-radio>
+              </span>
+              <span v-else-if="item.type=='DatePicker'">
+                <el-date-picker v-model="updateResupplieOrderFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期">
+                </el-date-picker>
+              </span>
+            </el-form-item>
+          </el-form>
+          <el-table :data="updateResupplieOrderFormVal" fit @row-click="updateProRowClick">
+            <el-table-column v-for="item in stockOutDtlBottomHead" :label="item.label" align="center" :width="item.width" :key="item.label">
+              <template slot-scope="scope">
+                <span v-if="item.prop=='newData'">
+                  <span v-if="proRIndex == 'index'+scope.$index">
+                    <span v-if="item.type=='number'">
+                      <el-input size="small" type="number" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                    </span>
+                    <span v-else-if="item.type == 'checkbox'">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]"></el-checkbox>
+                    </span>
+                    <span v-else>
+                      <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" :placeholder="item.holder"></el-input>
+                    </span>
+                  </span>
+                  <span v-else>
+                    <span v-if="item.type=='checkbox'">
+                      <el-checkbox v-model="scope.row[item.prop][item.inProp]" disabled></el-checkbox>
+                    </span>
+                    <span v-else>
+                      {{scope.row[item.prop][item.inProp]}}
+                    </span>
+                  </span>
+                </span>
+                <span v-else-if="item.prop">
+                  <span v-if="item.type=='checkbox'">
+                    <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
+                  </span>
+                  <span v-else-if="item.type=='img'">
+                    <el-popover placement="right" trigger="hover" popper-class="picture_detail">
+                      <img :src="scope.row[item.prop]">
+                      <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+                    </el-popover>
+                  </span>
+                  <span v-else>
+                    {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
+                  </span>
+                </span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="分拣明细" name="1">
+
+        </el-tab-pane>
+        <el-tab-pane label="高拍仪" name="2">
+
+        </el-tab-pane>
+        <el-tab-pane label="订单图片" name="3">
+
+        </el-tab-pane>
+      </el-tabs>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="stockOutConfirm">确定</el-button>
+        <el-button @click="stockOutCancel">取消</el-button>
       </div>
     </el-dialog>
 
@@ -871,37 +696,6 @@
 
     <!--页码-->
     <Pagination :page-url="this.urls.customerservicedepts" @handlePagChg="handlePagChg" v-if="activeName=='0'"></Pagination>
-
-    <!--拆分-->
-    <el-dialog title="拆分订单" :visible.sync="splitMask" :class="{'more-forms':moreForms,'threeParts':threeParts}">
-      <el-button type="text">请选择拆出商品</el-button>
-      <el-table :data="splitVal" fit height="300" @row-click="splitRowClick" :row-class-name="splitCName">
-        <el-table-column v-for="item in splitHead" :label="item.label" align="center" :width="item.width" :key="item.label">
-          <template slot-scope="scope">
-            <span v-if="item.prop=='newData'">
-              <span v-if="splitRowIndex == 'index'+scope.$index">
-                <el-input size="small" v-model.trim="scope.row[item.prop][item.inProp]" @input="numChg"></el-input>
-              </span>
-              <span v-else>
-                {{scope.row[item.prop][item.inProp]}}
-              </span>
-            </span>
-            <span v-else-if="item.prop">
-              <span v-if="item.type=='checkbox'">
-                <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
-              </span>
-              <span v-else>
-                {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-              </span>
-            </span>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="confirmSplit">确定</el-button>
-        <el-button @click="cancelSplit">关闭</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -910,15 +704,39 @@ import {
   CodeToText,
   TextToCode
 } from "element-china-area-data";
-
 export default {
   data() {
     return {
+      //按钮
       newOpt: [
         {
           cnt: "修改",
           icon: "bf-change",
           ent: this.updateData,
+          nClick: true
+        },
+        {
+          cnt: "删除",
+          icon: "bf-del",
+          ent: this.delBatch,
+          nClick: true
+        },
+        {
+          cnt: "提交",
+          icon: "bf-submit",
+          ent: this.test,
+          nClick: true
+        },
+        {
+          cnt: "驳回",
+          icon: "bf-examination",
+          ent: this.handleStockOutToCS,
+          nClick: true
+        },
+        {
+          cnt: "审核",
+          icon: "bf-audit",
+          ent: this.handleAudit,
           nClick: true
         },
         {
@@ -928,9 +746,9 @@ export default {
           nClick: true
         },
         {
-          cnt: "返回客审",
-          icon: "bf-examination",
-          ent: this.handleStockOutToCS,
+          cnt: "发货",
+          icon: "bf-deliver",
+          ent: this.stockOut,
           nClick: true
         },
         {
@@ -952,24 +770,6 @@ export default {
           nClick: true
         },
         {
-          cnt: "拆分",
-          icon: "bf-node",
-          ent: this.handleSplitOrder,
-          nClick: true
-        },
-        {
-          cnt: "捡货单",
-          icon: "bf-secSort",
-          ent: this.pickGoodsBill,
-          nClick: true
-        },
-        {
-          cnt: "打印",
-          icon: "bf-printer",
-          ent: this.print,
-          nClick: true
-        },
-        {
           cnt: "电子面单",
           icon: "bf-salesinvoice",
           ent: this.elecBill,
@@ -982,7 +782,15 @@ export default {
           nClick: true
         }
       ],
-      filterBox: false,
+      //临时存储工具类
+      curRowId: "",
+      curRowData: {},
+      addSubData: [],
+      //数据加载有关
+      activeName: "0",
+      leftTopActiveName: "0",
+      rightActiveName: "0",
+
       searchBox: {
         member_nick: "",
         system_order_no: "",
@@ -1003,11 +811,8 @@ export default {
         order_transMStart: "",
         order_order_transMEndmark: ""
       },
-      /*获取数据*/
-      activeName: "0",
-      leftTopActiveName: "0",
-      rightActiveName: "0",
-      orderListData: [],
+
+      orderListData: [], //表格订单信息
       orderListHead: [
         {
           label: "订单状态",
@@ -1364,10 +1169,7 @@ export default {
           type: "text"
         }
       ],
-      loading: true, //作用未知
-      checkboxInit: false, //作用未知
-      orderListIndex: "", //作用未知
-      orderListData: [],
+
       orderDtlFormVal: {},
       orderDtlFormHead: [
         {
@@ -1541,9 +1343,7 @@ export default {
           type: "textarea"
         }
       ],
-      proDtlData: [],
-      curRowId: "",
-      curRowData: {},
+
       orderDtlHead: [
         [
           {
@@ -1770,89 +1570,52 @@ export default {
           }
         ]
       ],
-      payDtlData: [],
-      /*新增*/
-      addStorageMask: false,
+      proDtlData: [], //订单包含的产品信息
+      payDtlData: [], //费用信息
+      operationData: [], //操作记录
+      relatedInfoData: [], //关联信息
+      otherFeeData: [], //其他费用
+      rejectReasonData: [], //驳回原因
+      offListData: [], //优惠列表
+      imageData: [], //订单图片
+      innerNote: [], //内部便签
+      //标记有关
+      filterBox: false,
+      loading: true,
+      checkboxInit: false, //初始化checkbox为false
       moreForms: true,
       threeParts: true,
-      addStorageFormVal: {
-        //作用未知
-        shops_id: "",
-        member_nick: "",
-        logistics_id: "",
-        billing_way: "",
-        promise_ship_time: "",
-        freight_types_id: "",
-        expected_freight: "",
-        distributions_id: "",
-        distribution_methods_id: "",
-        deliver_goods_fee: "",
-        move_upstairs_fee: "",
-        installation_fee: "",
-        total_distribution_fee: 0,
-        distribution_phone: "",
-        distribution_no: "",
-        distribution_types_id: "",
-        service_car_info: "",
-        take_delivery_goods_fee: "",
-        take_delivery_goods_ways_id: "",
-        express_fee: "",
-        service_car_fee: "",
-        cancel_after_verification_code: "",
-        wooden_frame_costs: "",
-        preferential_cashback: "",
-        favorable_cashback: "",
-        customer_types_id: "",
-        is_invoice: false,
-        invoice_express_fee: "",
-        express_invoice_title: "",
-        contract_no: "",
-        payment_methods_id: "",
-        deposit: "",
-        document_title: "",
-        warehouses_id: "",
-        payment_date: "",
-        interest_concessions: "",
-        is_notice: false,
-        is_cancel_after_verification: false,
-        accept_order_user: "",
-        tax_number: "",
-        receipt: "",
-        logistics_remark: "",
-        seller_remark: "",
-        customer_service_remark: "",
-        buyer_message: "",
-        status: true
-      },
-      addStorageFormRules: {
-        //新建订单的要求格式
-        shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
-        logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
-        billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
-        freight_types_id: [
-          { required: true, message: "运费类型必选", trigger: "blur" }
-        ],
-        distributions_id: [
-          { required: true, message: "配送方式必选", trigger: "blur" }
-        ],
-        take_delivery_goods_fee: [
-          { required: true, message: "提货费用必填", trigger: "blur" }
-        ],
-        customer_types_id: [
-          { required: true, message: "客户类型必选", trigger: "blur" }
-        ],
-        payment_methods_id: [
-          { required: true, message: "付款方式必选", trigger: "blur" }
-        ],
-        warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
-      },
-      addStorageFormHead: [
-        //新建或者修改仓储头
+      halfForm: true,
+
+      addResupplieOrderMask: false,
+      //修改
+      updateResupplieOrderMask: false,
+      updateResupplieOrderFormVal: {},
+      updateResupplieOrderFormHead: [
+        {
+          label: "所属店铺",
+          prop: "shops_id",
+          holder: "所属店铺",
+          // width: '200',
+          type: "select",
+          stateVal: "shop",
+          editChgAble: true
+        },
+        {
+          label: "系统单号",
+          prop: "system_order_no",
+          type: "text",
+          editChgAble: false
+        },
+        {
+          label: "买家昵称",
+          prop: "member_nick",
+          type: "text"
+        },
         {
           label: "物流公司",
           prop: "logistics_id",
           holder: "请选择物流公司",
-          // width: '200',
           type: "select",
           stateVal: "logistics",
           editChgAble: true
@@ -1860,10 +1623,9 @@ export default {
         {
           label: "物流单号",
           prop: "logistic_oid",
-          holder: "系统自动生成",
+          holder: "请填写物流单号",
           type: "text",
           editChgAble: true
-          // addChgAble: true
         },
         {
           label: "实际运费",
@@ -1909,7 +1671,6 @@ export default {
           type: "number",
           addChgAble: true
         },
-        //这里的星号值
         {
           label: "收货人",
           prop: "receive_num",
@@ -1950,416 +1711,259 @@ export default {
           label: "保价",
           prop: "save_price",
           type: "number"
-          // editChgAble: true,
-          // addChgAble: true,
         }
       ],
-      addActiveName: "0",
-      proData: [],
-      options: regionDataPlus,
-      addHead: [
-        [
-          {
-            label: "sku名称",
-            width: "160",
-            prop: "name",
-            type: "text"
-          },
-          {
-            label: "数量",
-            width: "130",
-            prop: "newData",
-            inProp: "quantity",
-            type: "number"
-          },
-          {
-            label: "油漆",
-            width: "120",
-            prop: "newData",
-            inProp: "paint",
-            type: "text"
-          },
-          {
-            label: "需要印刷",
-            width: "120",
-            prop: "newData",
-            inProp: "is_printing",
-            type: "checkbox"
-          },
-          {
-            label: "总体积",
-            width: "120",
-            prop: "newData",
-            inProp: "total_volume",
-            type: "number"
-          },
-          {
-            label: "印刷费用",
-            width: "140",
-            prop: "newData",
-            inProp: "printing_fee",
-            type: "number"
-          },
-          {
-            label: "现货",
-            width: "120",
-            prop: "newData",
-            inProp: "is_spot_goods",
-            type: "checkbox"
-          },
-          {
-            label: "单价(线下)",
-            width: "150",
-            prop: "newData",
-            inProp: "under_line_univalent",
-            type: "number"
-          },
-          {
-            label: "优惠(线下)",
-            width: "150",
-            prop: "newData",
-            inProp: "under_line_preferential",
-            type: "number"
-          }
+      updateResupplieOrderFormRules: {
+        //新建订单的要求格式
+        shops_id: [{ required: true, message: "店铺必选", trigger: "blur" }],
+        logistics_id: [{ required: true, message: " 物流必选", trigger: "blur" }],
+        billing_way: [{ required: true, message: "计费方式必选", trigger: "blur" }],
+        freight_types_id: [
+          { required: true, message: "运费类型必选", trigger: "blur" }
         ],
-        [
-          {
-            label: "姓名",
-            prop: "receiver_name",
-            holder: "请输入姓名",
-            type: "text"
-          },
-          {
-            label: "固定电话",
-            prop: "receiver_phone",
-            holder: "请输入固定电话",
-            type: "number"
-          },
-          {
-            label: "手机",
-            prop: "receiver_mobile",
-            holder: "请输入手机号码",
-            type: "number"
-          },
-          {
-            label: "省市区",
-            prop: "provinces",
-            type: "cascader"
-          },
-          {
-            label: "地址",
-            prop: "receiver_address",
-            type: "text"
-          },
-          {
-            label: "邮编",
-            prop: "receiver_zip",
-            holder: "请输入邮编",
-            type: "text"
-          }
+        distributions_id: [
+          { required: true, message: "配送方式必选", trigger: "blur" }
         ],
-        [
-          {
-            label: "类型名称",
-            prop: "payment_methods_id",
-            type: "select",
-            stateVal: "fee_type"
-          },
-          {
-            label: "金额",
-            prop: "payment",
-            type: "number"
-          }
-        ]
-      ],
-      proMask: false,
-      proQuery: {
-        commodity_code: "",
-        component_code: "",
-        shops_id: "",
-        short_name: ""
+        take_delivery_goods_fee: [
+          { required: true, message: "提货费用必填", trigger: "blur" }
+        ],
+        customer_types_id: [
+          { required: true, message: "客户类型必选", trigger: "blur" }
+        ],
+        payment_methods_id: [
+          { required: true, message: "付款方式必选", trigger: "blur" }
+        ],
+        warehouses_id: [{ required: true, message: "发货仓库必选", trigger: "blur" }]
       },
-      proHead: [
-        {
-          label: "产品图片",
-          width: "120",
-          prop: "img",
-          type: "img"
-        },
-        {
-          label: "商品编码",
-          width: "120",
-          prop: "commodity_code",
-          type: "text"
-        },
-        {
-          label: "工厂型号",
-          width: "120",
-          prop: "factory_model",
-          type: "text"
-        },
-        {
-          label: "商品简称",
-          width: "120",
-          prop: "short_name",
-          type: "text"
-        },
-        {
-          label: "类别名称",
-          width: "120",
-          prop: "goodsCategory",
-          inProp: "name",
-          type: "text"
-        },
-        {
-          label: "商品备注",
-          width: "120",
-          prop: "remark",
-          type: "text"
-        }
-      ],
-      proVal: [],
-      toggleText: false,
-      toggleHeight: true,
-      clickFlag: false,
-      proCurSkuData: {},
-      proSkuVal: [],
-      proSkuHead: [
-        {
-          label: "sku名称",
-          width: "120",
-          prop: "name",
-          type: "text"
-        },
-        {
-          label: "数量",
-          width: "120",
-          prop: "newData",
-          inProp: "quantity",
-          type: "number"
-        },
-        {
-          label: "油漆",
-          width: "120",
-          prop: "newData",
-          inProp: "paint",
-          type: "text"
-        },
-        {
-          label: "总体积",
-          width: "120",
-          prop: "newData",
-          inProp: "total_volume",
-          type: "number"
-        },
-        {
-          label: "需要印刷",
-          width: "90",
-          prop: "newData",
-          inProp: "is_printing",
-          type: "checkbox"
-        },
-        {
-          label: "印刷费用",
-          width: "120",
-          prop: "newData",
-          inProp: "printing_fee",
-          type: "number"
-        },
-        {
-          label: "现货",
-          width: "90",
-          prop: "newData",
-          inProp: "is_spot_goods",
-          type: "checkbox"
-        },
-        {
-          label: "单价(线下)",
-          width: "130",
-          prop: "newData",
-          inProp: "under_line_univalent",
-          type: "number"
-        },
-        {
-          label: "优惠(线下)",
-          width: "130",
-          prop: "newData",
-          inProp: "under_line_preferential",
-          type: "number"
-        }
-      ],
-      proCompVal: [],
-      proCompHead: [
-        {
-          label: "组合",
-          width: "90",
-          prop: "is_common",
-          type: "checkbox"
-        },
-        {
-          label: "子件图片",
-          width: "120",
-          prop: "img_url",
-          type: "img"
-        },
-        {
-          label: "子件编码",
-          width: "140",
-          prop: "component_code",
-          type: "text"
-        },
-        {
-          label: "子件名称",
-          width: "120",
-          prop: "spec",
-          type: "text"
-        },
-        {
-          label: "颜色",
-          width: "120",
-          prop: "color",
-          type: "text"
-        },
-        {
-          label: "材质",
-          width: "120",
-          prop: "materials",
-          type: "text"
-        },
-        {
-          label: "功能",
-          width: "120",
-          prop: "function",
-          type: "text"
-        },
-        {
-          label: "特殊",
-          width: "120",
-          prop: "special",
-          type: "text"
-        },
-        {
-          label: "其他",
-          width: "120",
-          prop: "other",
-          type: "text"
-        },
-        {
-          label: "淘宝售价",
-          width: "130",
-          prop: "tb_price",
-          type: "number"
-        },
-        {
-          label: "标准售价",
-          width: "130",
-          prop: "price",
-          type: "number"
-        },
-        {
-          label: "最低销售价格",
-          width: "140",
-          prop: "lowest_price",
-          type: "number"
-        },
-        {
-          label: "最高销售价格",
-          width: "140",
-          prop: "highest_price",
-          type: "number"
-        },
-        {
-          label: "体积",
-          width: "120",
-          prop: "volume",
-          type: "number"
-        },
-        {
-          label: "包件数",
-          width: "130",
-          prop: "package_quantity",
-          type: "number"
-        },
-        {
-          label: "停产",
-          width: "90",
-          prop: "is_stop_pro",
-          type: "checkbox"
-        }
-      ],
-      proCompRowIndex: "",
-      proSubmitData: [],
-      proIds: [],
-      addIds: [],
-      proCompRow: {},
-      proRIndex: "",
-      receiveInfo: {
-        receiver_name: "",
-        receiver_phone: "",
-        receiver_mobile: "",
-        provinces: [],
-        receiver_state: "",
-        receiver_city: "",
-        receiver_district: "",
-        receiver_address: "",
-        receiver_zip: ""
-      },
-      halfForm: true,
-      expenseData: [],
-      expenseRIndex: "",
-      addSubData: [],
-      /*修改*/
-      updateStorageMask: false,
-      updateStorageFormVal: {},
       updateActiveName: "0",
       updateProData: [],
       updateReceiveInfo: {},
       updateExpenseData: [],
       updateProIds: [],
-      /*删除单条*/
+      //删除
       showDel: false,
+      ids: [],
       delUrl: "",
       delId: "",
-      /*删除批量*/
-      ids: [],
-      splitMask: false,
-      splitVal: [],
-      splitHead: [
+      //提交
+      //驳回
+      //审核
+      //退审
+      //发货
+      proIds: [], //产品Ids（暂时没用）
+      proRIndex: "", //用于切换产品所在行
+      expenseRIndex: "", //用于切换费用类型行（暂时没用）
+      stockOutMask: false,
+      stockOutDtlHead: [
         {
-          label: "商品编码",
-          prop: "commodity_code",
+          label: "订单编号",
+          prop: "system_order_no",
           type: "text"
         },
         {
-          label: "商品简称",
-          prop: "short_name",
+          label: "收货人",
+          prop: "receiver_name",
           type: "text"
         },
         {
-          label: "数量",
-          prop: "quantity",
+          label: "收货手机",
+          prop: "receiver_mobile",
+          type: "text"
+        },
+        {
+          label: "收货地址",
+          prop: "receiver_address",
+          type: "text"
+        },
+        {
+          label: "物流公司",
+          prop: "logistics_id",
+          holder: "请选择物流公司",
+          type: "select",
+          stateVal: "logistics"
+        },
+        {
+          label: "物流单号",
+          prop: "logistics_sn",
+          type: "text"
+        },
+        {
+          label: "物流运费",
+          prop: "actual_freight",
+          type: "text"
+        },
+        {
+          label: "运费类型",
+          prop: "freight_types_id",
+          holder: "请选择运费类型",
+          type: "select",
+          stateVal: "freight_type"
+        },
+        {
+          label: "预计运费",
+          prop: "expected_freight",
+          holder: "请输入预计运费",
           type: "number"
         },
         {
-          label: "实际拆分数量",
-          prop: "newData",
-          inProp: "quantity",
+          label: "总体积",
+          width: "120",
+          prop: "total_volume",
           type: "number"
+        },
+        {
+          label: "配送电话",
+          prop: "distribution_phone",
+          holder: "请输入配送电话",
+          type: "text"
+        },
+        {
+          label: "配送公司",
+          prop: "distributions_id",
+          holder: "请选择配送公司",
+          type: "select",
+          stateVal: "distribution"
+        },
+        {
+          label: "配送单号",
+          prop: "distribution_no",
+          holder: "请输入配送单号",
+          type: "text"
+        },
+        {
+          label: "配送类型",
+          prop: "distribution_types_id",
+          holder: "请选择配送类型",
+          type: "select",
+          stateVal: "distribution_type"
+        },
+        {
+          label: "搬楼费用",
+          prop: "move_upstairs_fee",
+          holder: "请输入搬楼费用",
+          type: "number"
+        },
+        {
+          label: "送货费用",
+          prop: "deliver_goods_fee",
+          holder: "请输入送货费用",
+          type: "number"
+        },
+        {
+          label: "配送总计",
+          prop: "total_distribution_fee",
+          holder: "请输入配送总计",
+          type: "number"
+        },
+        {
+          label: "安装费用",
+          prop: "installation_fee",
+          holder: "请输入安装费用",
+          type: "number"
+        },
+        {
+          label: "包件总数",
+          width: "130",
+          prop: "package_quantity",
+          type: "number"
+        },
+        {
+          label: "木架费",
+          width: "120",
+          prop: "wooden_frame_costs",
+          type: "number"
+        },
+        {
+          label: "供应商",
+          width: "120",
+          prop: "supplier_id",
+          type: "text"
+        },
+        {
+          label: "好评返现",
+          prop: "favorable_cashback",
+          holder: "请输入好评返现",
+          type: "number"
+        },
+        {
+          label: "发货时间",
+          prop: "stockout_at",
+          holder: "请输入发货时间",
+          type: "DatePicker"
+        },
+        {
+          label: "优惠返现",
+          width: "120",
+          prop: "preferential_cashback",
+          type: "number"
+        },
+        {
+          label: "发货备注",
+          width: "120",
+          prop: "stockout_remark",
+          type: "textarea"
+        },
+        {
+          label: "发货仓库",
+          holder: "请选择发货仓库",
+          prop: "warehouses_id",
+          type: "select",
+          stateVal: "warehouse"
         }
       ],
-      splitRowIndex: "",
-      splitRow: {},
-      mergerIds: [],
-      operationData: [], //操作记录
-      relatedInfoData: [], //关联信息
-      otherFeeData: [], //其他费用
-      rejectReasonData: [], //驳回原因
-      offListData: [], //优惠列表
-      imageData: [], //订单图片
-      innerNote: [] //内部便签
+      stockOutDtlBottomHead: [
+        {
+          label: "淘宝单号",
+          width: "220",
+          prop: "taobao_oid",
+          type: "text"
+        },
+        {
+          label: "淘宝状态",
+          width: "220",
+          prop: "taobao_status",
+          type: "text"
+        },
+        {
+          label: "服务车",
+          width: "90",
+          prop: "service_car",
+          type: "checkbox"
+        },
+        {
+          label: "验证通过",
+          width: "90",
+          prop: "is_validated",
+          type: "checkbox"
+        }
+      ],
+      addStockOutDtlRules: {
+        system_order_no: [
+          { required: true, message: "系统单号必选", trigger: "blur" }
+        ],
+        logistics_id: [{ required: true, message: "物流公司必选", trigger: "blur" }],
+        actual_freight: [
+          { required: true, message: "物流运费必选", trigger: "blur" }
+        ],
+        distributions_id: [
+          { required: true, message: "配送方式必选", trigger: "blur" }
+        ],
+        freight_types_id: [
+          { required: true, message: "运费类型必选", trigger: "blur" }
+        ],
+        total_volume: [{ required: true, message: "总体积必选", trigger: "blur" }],
+        package_quantity: [
+          { required: true, message: "包件总数必选", trigger: "blur" }
+        ],
+        stockout_at: [{ required: true, message: "发货时间", trigger: "blur" }]
+      }
+      //导出
+      //物流单
+      //发货单
+      //电子面单
+      //刷新
     };
   },
-  /*搬运自客服部*/
   computed: {
     resData: {
       get: function() {
@@ -2374,7 +1978,6 @@ export default {
       set: function() {}
     }
   },
-  /*搬运自客服部*/
   filters: {
     /*conditions: function(items){
             let searchRegex = new RegExp(this.searchBox.vip_name, 'i');
@@ -2394,20 +1997,14 @@ export default {
     */
   },
   methods: {
-    /*搬运自客服部*/
-    toggleShow() {
-      this.filterBox = !this.filterBox;
-    },
-
     test() {
       console.log(1);
     },
-    /*获取数据*/
+    //获取数据
     outerHandleClick() {
       let index = this.activeName - 0;
       switch (index) {
         case 0:
-          this.loading = true;
           this.fetchData();
           break;
         case 1:
@@ -2461,6 +2058,8 @@ export default {
     },
     fetchData() {
       let index = this.leftTopActiveName - 0;
+      this.orderListData = [];
+      this.loading = true;
       switch (index) {
         case 0:
           this.$fetch(this.urls.resupplieorderaudit, {
@@ -2482,6 +2081,8 @@ export default {
               this.loading = false;
               this.orderListData = res.data;
               let pg = res.meta.pagination;
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
@@ -2525,6 +2126,8 @@ export default {
               this.loading = false;
               this.orderListData = res.data;
               let pg = res.meta.pagination;
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
@@ -2541,7 +2144,7 @@ export default {
             }
           );
           break;
-          case 2:
+        case 2:
           this.$fetch(this.urls.resupplieorderaudit, {
             order_status: [130],
             member_nick: this.searchBox.member_nick,
@@ -2561,6 +2164,8 @@ export default {
               this.loading = false;
               this.orderListData = res.data;
               let pg = res.meta.pagination;
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
@@ -2577,9 +2182,9 @@ export default {
             }
           );
           break;
-          case 3:
+        case 3:
           this.$fetch(this.urls.resupplieorderaudit, {
-            order_status: [110,120,130],
+            order_status: [110, 120, 130],
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
@@ -2597,6 +2202,8 @@ export default {
               this.loading = false;
               this.orderListData = res.data;
               let pg = res.meta.pagination;
+              this.$store.dispatch("suppliers", "/suppliers");
+              this.$store.dispatch("shops", "/shops");
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
               this.$store.commit("PAGE_TOTAL", pg.total);
@@ -2615,34 +2222,54 @@ export default {
           break;
       }
     },
-    leftHandleClick() {
-      this.loading = true;
-      this.fetchData();
+    handlePagChg(page) {
+      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
+        include:
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
+      }).then(res => {
+        if (this.leftTopActiveName == "0") {
+          this.orderListData = res.data;
+        } else {
+          this.orderListData = res.data;
+        }
+      });
     },
-    rightHandleClick() {},
+    //点击与改变checkbox状态
+    handleSelectionChange(val) {
+      console.log(val);
+      /*拿到id集合*/
+      let delArr = [];
+      val.forEach(selectedItem => {
+        delArr.push(selectedItem.id);
+      });
+      this.ids = delArr.join(",");
+      /*拿到当前id*/
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
+    },
     orderListRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
       this.operationData = row["orderOperationRecord"].data;
-      if (row["order_status"] == "已货审") {
+      if (row["order_status"] == "未提交") {
         this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = true;
+        this.newOpt[1].nClick = false;
         this.newOpt[2].nClick = false;
-        this.newOpt[3].nClick = false;
-        this.newOpt[4].nClick = false;
-        this.newOpt[5].nClick = false;
-        this.newOpt[6].nClick = false;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
         this.newOpt[7].nClick = false;
         this.newOpt[8].nClick = false;
         this.newOpt[9].nClick = false;
         this.newOpt[10].nClick = false;
         this.newOpt[11].nClick = false;
-        this.newOpt[12].nClick = false;
       }
-      if (row["order_status"] == "准备出库") {
+      if (row["order_status"] == "未审核") {
         this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
         this.newOpt[3].nClick = false;
         this.newOpt[4].nClick = false;
         this.newOpt[5].nClick = true;
@@ -2652,7 +2279,20 @@ export default {
         this.newOpt[9].nClick = false;
         this.newOpt[10].nClick = false;
         this.newOpt[11].nClick = false;
-        this.newOpt[12].nClick = false;
+      }
+      if (row["order_status"] == "已审核") {
+        this.newOpt[0].nClick = true;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+        this.newOpt[8].nClick = false;
+        this.newOpt[9].nClick = false;
+        this.newOpt[10].nClick = false;
+        this.newOpt[11].nClick = false;
       }
     },
     orderDbClick(row) {
@@ -2702,690 +2342,76 @@ export default {
       /*支付明细*/
       this.payDtlData = row["paymentDetails"]["data"];
     },
-    proDtlRClick(row) {},
-    /*新增*/
-    addStorage() {
-      this.addStorageMask = true;
-      this.addIds = [];
-      this.proData = [];
-      this.proRIndex = "";
-    },
-    proQueryClick() {
-      this.proSkuVal = [];
-      this.$fetch(this.urls.products, {
-        status: true,
-        commodity_code: this.proQuery.commodity_code,
-        component_code: this.proQuery.component_code,
-        shops_id: this.proQuery.shops_id,
-        short_name: this.proQuery.short_name,
-        include:
-          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
-      }).then(
-        res => {
-          this.proVal = res.data;
-          let comb = res.data[0]["combinations"]["data"];
-          if (comb.length > 0) {
-            let total_volume = 0;
-            comb.map(item => {
-              item["productComp"] = item["productComponents"]["data"];
-              if (item["productComponents"]["data"].length > 0) {
-                item["productComponents"]["data"].map(list => {
-                  total_volume += list.volume;
-                });
-              } else {
-                total_volume = 0;
-              }
-              this.$set(item, "newData", {
-                quantity: "",
-                paint: "",
-                is_printing: false,
-                printing_fee: "",
-                is_spot_goods: true,
-                under_line_univalent: "",
-                under_line_preferential: "",
-                total_volume: total_volume
-              });
-            });
-          } else {
-            comb["productComp"] = [];
-          }
-          this.proSkuVal = comb;
-        },
-        err => {}
-      );
-    },
-    addHandleClick() {},
-    addProRCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    addProRowClick(row) {
-      this.proRIndex = `index${row.index}`;
-    },
-    addDelPro(index) {
-      this.proData.splice(index, 1);
-    },
-    addStorageConfirm() {
-      let forData = this.addStorageFormVal;
-      let submitData = {
-        shops_id: forData.shops_id,
-        member_nick: forData.member_nick,
-        logistics_id: forData.logistics_id,
-        billing_way: forData.billing_way,
-        promise_ship_time: forData.promise_ship_time,
-        freight_types_id: forData.freight_types_id,
-        expected_freight: forData.expected_freight,
-        distributions_id: forData.distributions_id,
-        distribution_methods_id: forData.distribution_methods_id,
-        deliver_goods_fee: forData.deliver_goods_fee,
-        move_upstairs_fee: forData.move_upstairs_fee,
-        installation_fee: forData.installation_fee,
-        total_distribution_fee: forData.total_distribution_fee,
-        distribution_phone: forData.distribution_phone,
-        distribution_no: forData.distribution_no,
-        distribution_types_id: forData.distribution_types_id,
-        service_car_info: forData.service_car_info,
-        take_delivery_goods_fee: forData.take_delivery_goods_fee,
-        take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
-        express_fee: forData.express_fee,
-        service_car_fee: forData.service_car_fee,
-        cancel_after_verification_code: forData.cancel_after_verification_code,
-        wooden_frame_costs: forData.wooden_frame_costs,
-        preferential_cashback: forData.preferential_cashback,
-        favorable_cashback: forData.favorable_cashback,
-        customer_types_id: forData.customer_types_id,
-        is_invoice: forData.is_invoice,
-        invoice_express_fee: forData.invoice_express_fee,
-        express_invoice_title: forData.express_invoice_title,
-        contract_no: forData.contract_no,
-        payment_methods_id: forData.payment_methods_id,
-        deposit: forData.deposit,
-        document_title: forData.document_title,
-        warehouses_id: forData.warehouses_id,
-        payment_date: forData.payment_date,
-        interest_concessions: forData.interest_concessions,
-        is_notice: forData.is_notice,
-        is_cancel_after_verification: forData.is_cancel_after_verification,
-        accept_order_user: forData.accept_order_user,
-        tax_number: forData.tax_number,
-        receipt: forData.receipt,
-        logistics_remark: forData.logistics_remark,
-        seller_remark: forData.seller_remark,
-        customer_service_remark: forData.customer_service_remark,
-        buyer_message: forData.buyer_message,
-        status: forData.status,
-        receiver_name: this.receiveInfo.receiver_name,
-        receiver_phone: this.receiveInfo.receiver_phone,
-        receiver_mobile: this.receiveInfo.receiver_mobile,
-        receiver_state: CodeToText[this.receiveInfo.provinces[0]],
-        receiver_city: CodeToText[this.receiveInfo.provinces[1]],
-        receiver_district: CodeToText[this.receiveInfo.provinces[2]],
-        receiver_address: this.receiveInfo.receiver_address,
-        receiver_zip: this.receiveInfo.receiver_zip,
-        order_items: [],
-        payment_details: []
-      };
-      this.proData.map(item => {
-        let proD = {
-          products_id: item.pid,
-          combinations_id: item.id,
-          total_volume: item["newData"].total_volume,
-          paint: item["newData"].paint,
-          is_printing: item["newData"].is_printing,
-          printing_fee: item["newData"].printing_fee,
-          is_spot_goods: item["newData"].is_spot_goods,
-          under_line_univalent: item["newData"].under_line_univalent,
-          under_line_total_amount: item["newData"].under_line_total_amount,
-          under_line_preferential: item["newData"].under_line_preferential
-        };
-        submitData.order_items.push(proD);
-      });
-      this.expenseData.map(list => {
-        let expenseD = {
-          payment: list.payment,
-          payment_methods_id: list.payment_methods_id
-        };
-        submitData.payment_details.push(expenseD);
-      });
-      this.$post(this.urls.customerservicedepts, submitData).then(
-        () => {
-          this.addStorageMask = false;
-          this.refresh();
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          });
-        },
-        err => {
-          if (err.response) {
-            this.showDel = false;
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error(str);
-          }
-        }
-      );
-    },
-    addStorageCancel() {
-      this.addStorageMask = false;
-      this.$message({
-        message: "取消新增订单明细",
-        type: "success"
-      });
-    },
-    /*商品明细*/
-    addProDtl() {
-      this.proMask = true;
-      Object.assign(this.proQuery, this.$options.data().proQuery);
-      this.proVal = [];
-      this.proSkuVal = [];
-      this.proIds = [];
-    },
-    toggleForm() {
-      /*展开  partHide
-            * 折叠  没有partHide*/
-      this.clickFlag = !this.clickFlag;
-      this.toggleText = !this.toggleText;
-      if (this.clickFlag) {
-        $("#form").removeClass("hidePart");
-        $("#elTabs").removeClass("hidePart");
-      } else {
-        $("#form").addClass("hidePart");
-        $("#elTabs").addClass("hidePart");
-      }
-    },
-    proRowClick(row) {
-      this.proSkuVal = [];
-      this.proCompRowIndex = "";
-      let comb = row["combinations"]["data"];
-      if (comb.length > 0) {
-        let total_volume = 0;
-        comb.map(item => {
-          item["productComp"] = item["productComponents"]["data"];
-          if (item["productComponents"]["data"].length > 0) {
-            item["productComponents"]["data"].map(list => {
-              total_volume += list.volume;
-            });
-          } else {
-            total_volume = 0;
-          }
-          this.$set(item, "newData", {
-            quantity: "",
-            paint: "",
-            is_printing: false,
-            printing_fee: "0.0",
-            is_spot_goods: false,
-            under_line_univalent: "0.0",
-            under_line_preferential: "0.0",
-            total_volume: total_volume
-          });
-        });
-      } else {
-        comb["productComp"] = [];
-      }
-      this.proSkuVal = comb;
-    },
-    proCName() {},
-    proSkuCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    proSkuRowClick(row) {
-      this.proCompRowIndex = `index${row.index}`;
-      this.proCompRow = row;
-    },
-    quantityChg(value) {
-      if (value > 0) {
-        let proCRow = this.proCompRow;
-        if (this.proIds.indexOf(proCRow.id) == -1) {
-          this.proIds.push(proCRow.id);
-          this.proSubmitData.push(proCRow);
-        } else {
-          this.proSubmitData.map((list, index) => {
-            if (list.id == proCRow.id) {
-              this.proSubmitData.splice(index, 1);
-              this.proSubmitData.push(proCRow);
-            }
-          });
-        }
-      }
-    },
-    formChg() {
-      let formVal;
-      if (this.addStorageMask) {
-        formVal = this.updateStorageFormVal;
-      } else {
-        formVal = this.updateStorageFormVal;
-      }
-      formVal["total_distribution_fee"] =
-        formVal["deliver_goods_fee"] -
-        0 +
-        (formVal["move_upstairs_fee"] - 0) +
-        (formVal["installation_fee"] - 0);
-    },
-    confirmAddProDtl() {
-      if (this.addStorageMask) {
-        this.proSubmitData.map(item => {
-          if (this.addIds.indexOf(item.id) == -1) {
-            this.proData.push(item);
-            this.addIds.push(item.id);
-            this.$message({
-              message: "添加商品信息成功",
-              type: "success"
-            });
-          } else {
-            this.proData.map((list, index) => {
-              if (list.id == item.id) {
-                this.proData.splice(index, 1);
-                this.proData.push(item);
-                this.$message({
-                  message: "添加商品信息成功",
-                  type: "success"
-                });
-              }
-            });
-          }
-        });
-      } else {
-        this.proSubmitData.map(item => {
-          if (this.updateProIds.indexOf(item.id) == -1) {
-            this.updateProData.push(item);
-            this.updateProIds.push(item.id);
-            this.$message({
-              message: "添加商品信息成功",
-              type: "success"
-            });
-          } else {
-            this.updateProData.map((list, index) => {
-              if (list.combinations_id == item.id) {
-                this.$set(item, "originalId", list.id);
-                this.updateProData.splice(index, 1);
-                this.updateProData.push(item);
-                this.$message({
-                  message: "添加商品信息成功",
-                  type: "success"
-                });
-              }
-            });
-          }
-        });
-      }
-    },
-    cancelAddProDtl() {
-      this.proMask = false;
-    },
-    addDelExpense(index) {
-      this.expenseData.splice(index, 1);
-      this.$message({
-        message: "删除成功",
-        type: "success"
-      });
-    },
-    addExpenseRCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    addExpenseRClick(row) {
-      this.expenseRIndex = `index${row.index}`;
-    },
-    /*新增行*/
-    addExpenseLine() {
-      if (this.addStorageMask) {
-        this.expenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      } else {
-        this.updateExpenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      }
-    },
-    /*删除单条*/
-    delSingle(row, e) {
-      this.showDel = true;
-      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
-      this.delId = row.id;
-      this.delUrl = row["orderItems"]
-        ? this.urls.customerservicedepts
-        : row["payment"] ? this.urls["paymentdetails"] : this.urls.orderitems;
-    },
-    cancelD() {
-      this.showDel = false;
-      this.$message({
-        message: "取消删除",
-        type: "info"
-      });
-    },
-    confirmD(url, id) {
-      this.$del(url + "/" + id).then(
-        () => {
-          this.showDel = false;
-          this.refresh();
-          this.$message({
-            message: "删除成功",
-            type: "success"
-          });
-        },
-        err => {
-          if (err.response) {
-            this.showDel = false;
-            let arr = err.response.data.errors;
-            let arr1 = [];
-            for (let i in arr) {
-              arr1.push(arr[i]);
-            }
-            let str = arr1.join(",");
-            this.$message.error(str);
-          }
-        }
-      );
-    },
-    /*批量删除*/
-    handleSelectionChange(val) {
-      console.log(val);
-      /*拿到id集合*/
-      let delArr = [];
-      val.forEach(selectedItem => {
-        delArr.push(selectedItem.id);
-      });
-      this.ids = delArr.join(",");
-      /*拿到当前id*/
-      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-      this.mergerIds = val;
-    },
-    delBatch() {
-      if (this.ids.length === 0) {
-        this.$message({
-          message: "没有选中数据",
-          type: "warning"
-        });
-      } else {
-        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
-            this.$del(this.urls.customerservicedepts, { ids: this.ids }).then(
-              () => {
-                this.refresh();
-                this.$message({
-                  message: "删除成功",
-                  type: "success"
-                });
-              },
-              err => {
-                if (err.response) {
-                  let arr = err.response.data.errors;
-                  let arr1 = [];
-                  for (let i in arr) {
-                    arr1.push(arr[i]);
-                  }
-                  let str = arr1.join(",");
-                  this.$message.error(str);
-                }
-              }
-            );
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消删除"
-            });
-          });
-      }
-    },
-    /*页码*/
-    handlePagChg(page) {
-      this.$fetch(this.urls.customerservicedepts + "?page=" + page, {
-        include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
-      }).then(res => {
-        if (this.leftTopActiveName == "0") {
-          this.orderListData = res.data;
-        } else {
-          this.orderListData = res.data;
-        }
-      });
-    },
-    refresh() {
-      this.loading = true;
-      this.fetchData();
-    },
-    /*锁定*/
-    lockOrder() {
-      if (this.newOpt[3].nClick) {
-        return;
-      } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(
-          this.urls.customerservicedepts + "/" + id + "/lockorunlock"
-        ).then(
-          () => {
-            this.newOpt[1].nClick = false;
-            this.newOpt[2].nClick = false;
-            this.newOpt[3].nClick = true;
-            this.newOpt[4].nClick = false;
-            this.newOpt[5].nClick = false;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = false;
-            this.newOpt[9].nClick = false;
-            this.newOpt[14].nClick = false;
-            this.refresh();
-            this.$message({
-              message: "锁定成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
-      }
-    },
-    /*解锁*/
-    debLock() {
-      if (this.newOpt[4].nClick) {
-        return;
-      } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(
-          this.urls.customerservicedepts + "/" + id + "/lockorunlock"
-        ).then(
-          () => {
-            this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = true;
-            this.newOpt[3].nClick = false;
-            this.newOpt[4].nClick = true;
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = true;
-            this.newOpt[9].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.refresh();
-            this.$message({
-              message: "解锁成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
-      }
-    },
-    /*修改*/
+    //修改
     updateData() {
       this.proIds = [];
       this.updateProIds = [];
-      this.expenseRIndex = "";
-      this.updateStorageFormVal = {};
+      this.updateResupplieOrderFormVal = {};
       this.updateProData = [];
       this.updateReceiveInfo = {};
       this.updateExpenseData = [];
-      this.updateStorageMask = true;
+      this.updateResupplieOrderMask = true;
       this.proRIndex = "";
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
-      // this.proIds = [];
-      // this.updateProIds = [];
-      // this.expenseRIndex = '';
-      // this.updateStorageFormVal = {};
-      // this.updateProData = [];
-      // this.updateReceiveInfo = {};
-      // this.updateExpenseData = [];
-      // this.updateStorageMask = true;
-      // this.proRIndex = '';
-      // let id = this.checkboxId ? this.checkboxId : this.curRowId;
-      // //这里是从数据库里捞数据
-      // this.$fetch(this.urls.customerservicedepts + '/' + id, {'include': 'shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails'})
-      //     .then(res => {
-      //         this.updateStorageFormVal = res;
-      //         if (res['orderItems']['data'].length > 0) {
-      //             res['orderItems']['data'].map(item => {
-      //                 this.updateProIds.push(item['combination'].id);
-      //                 item['name'] = item['combination']['name'];
-      //                 item['id'] = item.id;
-      //                 item['products_id'] = item.products_id;
-      //                 item['combinations_id'] = item.combinations_id;
-      //                 item['productComp'] = item['combination']['productComponents']['data'];
-      //                 this.$set(item, 'newData', {
-      //                     quantity: item.quantity,
-      //                     paint: item.paint,
-      //                     is_printing: item.is_printing,
-      //                     printing_fee: item.printing_fee,
-      //                     is_spot_goods: item.is_spot_goods,
-      //                     under_line_univalent: item.under_line_univalent,
-      //                     under_line_preferential: item.under_line_preferential,
-      //                     total_volume: item.total_volume
-      //                 });
-      //             })
-      //         }
-      //         this.updateProData = res['orderItems']['data'];
-      //         this.updateReceiveInfo = {
-      //             receiver_name: res.receiver_name,
-      //             receiver_phone: res.receiver_phone,
-      //             receiver_mobile: res.receiver_mobile,
-      //             provinces: [TextToCode[res.receiver_state].code, TextToCode[res.receiver_state][res.receiver_city].code, TextToCode[res.receiver_state][res.receiver_city][res.receiver_district].code],
-      //             receiver_address: res.receiver_address,
-      //             receiver_zip: res.receiver_zip
-      //         };
-      //         this.updateExpenseData = res['paymentDetails']['data'];
-      //     }, err => {
-      //         if (err.response) {
-      //             let arr = err.response.data.errors;
-      //             let arr1 = [];
-      //             for (let i in arr) {
-      //                 arr1.push(arr[i]);
-      //             }
-      //             let str = arr1.join(',');
-      //             this.$message.error(str);
-      //         }
-      //     })
-      return 1;
-    },
-    updateDelPro(row, index) {
-      if (row["originalId"]) {
-        this.$del(this.urls.orderitems + "/" + row["originalId"]).then(
-          () => {
-            this.updateProData.splice(index, 1);
-            this.$message({
-              message: "删除成功",
-              type: "success"
+      this.$fetch(this.urls.customerservicedepts + "/" + id, {
+        include:
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
+      }).then(
+        res => {
+          this.updateResupplieOrderFormVal = res;
+          if (res["orderItems"]["data"].length > 0) {
+            res["orderItems"]["data"].map(item => {
+              this.updateProIds.push(item["combination"].id);
+              item["name"] = item["combination"]["name"];
+              item["id"] = item.id;
+              item["products_id"] = item.products_id;
+              item["combinations_id"] = item.combinations_id;
+              item["productComp"] =
+                item["combination"]["productComponents"]["data"];
+              this.$set(item, "newData", {
+                quantity: item.quantity,
+                paint: item.paint,
+                is_printing: item.is_printing,
+                printing_fee: item.printing_fee,
+                is_spot_goods: item.is_spot_goods,
+                under_line_univalent: item.under_line_univalent,
+                under_line_preferential: item.under_line_preferential,
+                total_volume: item.total_volume
+              });
             });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
           }
-        );
-      } else if (row.id) {
-        this.$del(this.urls.orderitems + "/" + row.id).then(
-          () => {
-            this.updateProData.splice(index, 1);
-            this.$message({
-              message: "删除成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
+          this.updateProData = res["orderItems"]["data"];
+          this.updateReceiveInfo = {
+            receiver_name: res.receiver_name,
+            receiver_phone: res.receiver_phone,
+            receiver_mobile: res.receiver_mobile,
+            provinces: [
+              TextToCode[res.receiver_state].code,
+              TextToCode[res.receiver_state][res.receiver_city].code,
+              TextToCode[res.receiver_state][res.receiver_city][
+                res.receiver_district
+              ].code
+            ],
+            receiver_address: res.receiver_address,
+            receiver_zip: res.receiver_zip
+          };
+          this.updateExpenseData = res["paymentDetails"]["data"];
+        },
+        err => {
+          if (err.response) {
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
             }
+            let str = arr1.join(",");
+            this.$message.error(str);
           }
-        );
-      } else {
-        this.updateProData.splice(index, 1);
-        this.$message({
-          message: "删除商品信息成功",
-          type: "success"
-        });
-      }
+        }
+      );
     },
-    updateDelExpense(row, index) {
-      if (row.id) {
-        this.$del(this.urls.paymentdetails + "/" + row.id).then(
-          () => {
-            this.updateExpenseData.splice(index, 1);
-            this.$message({
-              message: "删除成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
-      } else {
-        this.updateExpenseData.splice(index, 1);
-        this.$message({
-          message: "删除商品信息成功",
-          type: "success"
-        });
-      }
-    },
-    updateStorageConfirm() {
-      let forData = this.updateStorageFormVal;
+    updateResupplieOrderConfirm() {
+      let forData = this.updateResupplieOrderFormVal;
       let submitData = {
         shops_id: forData.shops_id,
         member_nick: forData.member_nick,
@@ -3513,7 +2539,7 @@ export default {
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$patch(this.urls.customerservicedepts + "/" + id, submitData).then(
         () => {
-          this.updateStorageMask = false;
+          this.updateResupplieOrderMask = false;
           this.refresh();
           this.$message({
             message: "修改成功",
@@ -3534,93 +2560,100 @@ export default {
         }
       );
     },
-    updateStorageCancel() {
-      this.updateStorageMask = false;
+    updateResupplieOrderCancel() {
+      this.updateResupplieOrderMask = false;
       this.$message({
         message: "取消修改订单明细",
         type: "success"
       });
     },
-    /*审核*/
-    handleAudit() {
-      if (this.newOpt[5].nClick) {
-        return;
+    updateProRowClick(row) {
+      this.proRIndex = `index${row.index}`;
+    },
+    //删除
+    delBatch() {
+      if (this.ids.length === 0) {
+        this.$message({
+          message: "没有选中数据",
+          type: "warning"
+        });
       } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(
-          () => {
-            this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = true;
-            this.newOpt[3].nClick = true;
-            this.newOpt[4].nClick = true;
-            this.newOpt[5].nClick = true;
-            this.newOpt[6].nClick = true;
-            this.newOpt[8].nClick = true;
-            this.newOpt[9].nClick = true;
-            this.newOpt[13].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = true;
-            this.newOpt[18].nClick = true;
-            this.refresh();
-            this.$message({
-              message: "审核成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
+        this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$del(this.urls.customerservicedepts, { ids: this.ids }).then(
+              () => {
+                this.refresh();
+                this.$message({
+                  message: "删除成功",
+                  type: "success"
+                });
+              },
+              err => {
+                if (err.response) {
+                  let arr = err.response.data.errors;
+                  let arr1 = [];
+                  for (let i in arr) {
+                    arr1.push(arr[i]);
+                  }
+                  let str = arr1.join(",");
+                  this.$message.error(str);
+                }
               }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
+            );
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
+          });
       }
     },
-    handleunStockOut() {
-      if (this.newOpt[2].nClick) {
-        return;
-      } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(
-          () => {
-            this.newOpt[0].nClick = false;
-            this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = false;
-            this.newOpt[3].nClick = false;
-            this.newOpt[4].nClick = false;
-            this.newOpt[5].nClick = false;
-            this.newOpt[6].nClick = false;
-            this.newOpt[7].nClick = false;
-            this.newOpt[8].nClick = false;
-            this.newOpt[9].nClick = false;
-            this.newOpt[10].nClick = false;
-            this.newOpt[11].nClick = false;
-            this.newOpt[12].nClick = false;
-            this.refresh();
-            this.$message({
-              message: "退审成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
-      }
+    delSingle(row, e) {
+      this.showDel = true;
+      $(".el-popper").css({ left: e.x - 100 + "px", top: e.y - 125 + "px" });
+      this.delId = row.id;
+      this.delUrl = row["orderItems"]
+        ? this.urls.customerservicedepts
+        : row["payment"] ? this.urls["paymentdetails"] : this.urls.orderitems;
     },
+    cancelD() {
+      this.showDel = false;
+      this.$message({
+        message: "取消删除",
+        type: "info"
+      });
+    },
+    confirmD(url, id) {
+      this.$del(url + "/" + id).then(
+        () => {
+          this.showDel = false;
+          this.refresh();
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
+        },
+        err => {
+          if (err.response) {
+            this.showDel = false;
+            let arr = err.response.data.errors;
+            let arr1 = [];
+            for (let i in arr) {
+              arr1.push(arr[i]);
+            }
+            let str = arr1.join(",");
+            this.$message.error(str);
+          }
+        }
+      );
+    },
+    //提交
+    //驳回
     handleStockOutToCS() {
       if (this.newOpt[3].nClick) {
         return;
@@ -3661,81 +2694,318 @@ export default {
         );
       }
     },
-    handleSplitOrder() {
-      if (this.newOpt[6].nClick) {
+    //审核
+    handleAudit() {
+      if (this.newOpt[5].nClick) {
         return;
       } else {
-        this.splitMask = true;
-        this.splitRowIndex = "";
-        this.splitVal = [];
-        let orderData = this.curRowData["orderItems"]["data"];
-        if (orderData.length > 0) {
-          orderData.map(item => {
-            let list = {
-              id: item.id,
-              commodity_code: item.product["commodity_code"],
-              short_name: item.product["short_name"],
-              quantity: item["quantity"],
-              newData: {
-                quantity: ""
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(
+          () => {
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.newOpt[13].nClick = true;
+            this.newOpt[14].nClick = true;
+            this.newOpt[15].nClick = true;
+            this.newOpt[18].nClick = true;
+            this.refresh();
+            this.$message({
+              message: "审核成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
               }
-            };
-            this.splitVal.push(list);
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    //退审
+    handleunStockOut() {
+      if (this.newOpt[2].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(
+          () => {
+            this.newOpt[0].nClick = false;
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = false;
+            this.newOpt[3].nClick = false;
+            this.newOpt[4].nClick = false;
+            this.newOpt[5].nClick = false;
+            this.newOpt[6].nClick = false;
+            this.newOpt[7].nClick = false;
+            this.newOpt[8].nClick = false;
+            this.newOpt[9].nClick = false;
+            this.newOpt[10].nClick = false;
+            this.newOpt[11].nClick = false;
+            this.newOpt[12].nClick = false;
+            this.refresh();
+            this.$message({
+              message: "退审成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
+    //发货
+    stockOut() {
+      if (this.newOpt[5].nClick) {
+        this.$message({
+          message: "请点击要选择的订单并重试",
+          type: "info"
+        });
+      } else {
+        this.stockOutMask = true;
+        if (this.checkboxId == "") {
+          this.$message({
+            type: "info",
+            message: "请先选择订单"
           });
+        } else {
+          this.proIds = [];
+          this.updateProIds = [];
+          this.updateResupplieOrderFormVal = {};
+          this.updateProData = [];
+          this.updateReceiveInfo = {};
+          this.updateExpenseData = [];
+          this.proRIndex = "";
+          let id = this.checkboxId ? this.checkboxId : this.curRowId;
+          this.$fetch(this.urls.customerservicedepts + "/" + id, {
+            include:
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails,orderOperationRecord"
+          }).then(
+            res => {
+              this.updateResupplieOrderFormVal = res;
+              if (res["orderItems"]["data"].length > 0) {
+                res["orderItems"]["data"].map(item => {
+                  this.updateProIds.push(item["combination"].id);
+                  item["name"] = item["combination"]["name"];
+                  item["id"] = item.id;
+                  item["products_id"] = item.products_id;
+                  item["combinations_id"] = item.combinations_id;
+                  item["productComp"] =
+                    item["combination"]["productComponents"]["data"];
+                  this.$set(item, "newData", {
+                    quantity: item.quantity,
+                    paint: item.paint,
+                    is_printing: item.is_printing,
+                    printing_fee: item.printing_fee,
+                    is_spot_goods: item.is_spot_goods,
+                    under_line_univalent: item.under_line_univalent,
+                    under_line_preferential: item.under_line_preferential,
+                    total_volume: item.total_volume
+                  });
+                });
+              }
+              this.updateProData = res["orderItems"]["data"];
+              this.updateReceiveInfo = {
+                receiver_name: res.receiver_name,
+                receiver_phone: res.receiver_phone,
+                receiver_mobile: res.receiver_mobile,
+                receiver_state: res.receiver_state,
+                receiver_state: res.receiver_city,
+                receiver_district: res.receiver_district,
+                receiver_address: res.receiver_address,
+                receiver_zip: res.receiver_zip
+              };
+              this.updateExpenseData = res["paymentDetails"]["data"];
+            },
+            err => {
+              if (err.response) {
+                let arr = err.response.data.errors;
+                let arr1 = [];
+                for (let i in arr) {
+                  arr1.push(arr[i]);
+                }
+                let str = arr1.join(",");
+                this.$message.error(str);
+              }
+            }
+          );
         }
       }
     },
-    splitCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    splitRowClick(row) {
-      this.splitRowIndex = `index${row.index}`;
-      this.splitRow = row;
-    },
-    numChg(value) {
-      if (value > this.splitRow["quantity"] - 0) {
-        this.splitRow["newData"]["quantity"] = this.splitRow["quantity"];
-      }
-    },
-    confirmSplit() {
-      let id = this.checkboxId ? this.checkboxId : this.curRowId;
-      let confSplit = {
-        order_items: []
+    stockOutConfirm() {
+      let forData = this.updateResupplieOrderFormVal;
+      let submitData = {
+        shops_id: forData.shops_id,
+        member_nick: forData.member_nick,
+        logistics_id: forData.logistics_id,
+        logistics_sn: forData.logistics_sn,
+        billing_way: forData.billing_way,
+        promise_ship_time: forData.promise_ship_time,
+        freight_types_id: forData.freight_types_id,
+        expected_freight: forData.expected_freight,
+        distributions_id: forData.distributions_id,
+        distribution_methods_id: forData.distribution_methods_id,
+        deliver_goods_fee: forData.deliver_goods_fee,
+        move_upstairs_fee: forData.move_upstairs_fee,
+        installation_fee: forData.installation_fee,
+        total_distribution_fee: forData.total_distribution_fee,
+        distribution_phone: forData.distribution_phone,
+        distribution_no: forData.distribution_no,
+        distribution_types_id: forData.distribution_types_id,
+        service_car_info: forData.service_car_info,
+        take_delivery_goods_fee: forData.take_delivery_goods_fee,
+        take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
+        express_fee: forData.express_fee,
+        service_car_fee: forData.service_car_fee,
+        cancel_after_verification_code: forData.cancel_after_verification_code,
+        wooden_frame_costs: forData.wooden_frame_costs,
+        preferential_cashback: forData.preferential_cashback,
+        favorable_cashback: forData.favorable_cashback,
+        customer_types_id: forData.customer_types_id,
+        is_invoice: forData.is_invoice,
+        invoice_express_fee: forData.invoice_express_fee,
+        express_invoice_title: forData.express_invoice_title,
+        contract_no: forData.contract_no,
+        payment_methods_id: forData.payment_methods_id,
+        deposit: forData.deposit,
+        document_title: forData.document_title,
+        warehouses_id: forData.warehouses_id,
+        payment_date: forData.payment_date,
+        interest_concessions: forData.interest_concessions,
+        is_notice: forData.is_notice,
+        is_cancel_after_verification: forData.is_cancel_after_verification,
+        accept_order_user: forData.accept_order_user,
+        tax_number: forData.tax_number,
+        receipt: forData.receipt,
+        logistics_remark: forData.logistics_remark,
+        seller_remark: forData.seller_remark,
+        customer_service_remark: forData.customer_service_remark,
+        buyer_message: forData.buyer_message,
+        status: forData.status,
+        receiver_name: this.updateReceiveInfo.receiver_name,
+        receiver_phone: this.updateReceiveInfo.receiver_phone,
+        receiver_mobile: this.updateReceiveInfo.receiver_mobile,
+        receiver_state: this.updateReceiveInfo.receiver_state,
+        receiver_city: this.updateReceiveInfo.receiver_city,
+        receiver_district: this.updateReceiveInfo.receiver_district,
+        receiver_address: this.updateReceiveInfo.receiver_address,
+        receiver_zip: this.updateReceiveInfo.receiver_zip,
+        order_items: [],
+        payment_details: []
       };
-      if (this.splitVal.length > 0) {
-        this.splitVal.map(item => {
-          if (item["newData"]["quantity"] > 0) {
-            let list = {
-              id: item.id,
-              quantity: item["newData"]["quantity"]
-            };
-            confSplit["order_items"].push(list);
-          }
-        });
-      }
-      this.$put(
-        this.urls.warehousingdepts + "/" + id + "/cargosplitorder",
-        confSplit
-      ).then(
+      this.updateProData.map(item => {
+        if (item.combinations_id) {
+          let proD = {
+            id: item.id,
+            products_id: item.products_id,
+            combinations_id: item.combinations_id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(proD);
+        } else if (item["originalId"]) {
+          let proD = {
+            id: item["originalId"],
+            products_id: item.pid,
+            combinations_id: item.id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(proD);
+        } else {
+          let proD = {
+            products_id: item.pid,
+            combinations_id: item.id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          submitData.order_items.push(proD);
+        }
+      });
+      this.updateExpenseData.map(list => {
+        if (list.id) {
+          let expenseD = {
+            id: list.id,
+            payment: list.payment,
+            payment_methods_id: list.payment_methods_id
+          };
+          submitData.payment_details.push(expenseD);
+        } else {
+          let expenseD = {
+            payment: list.payment,
+            payment_methods_id: list.payment_methods_id
+          };
+          submitData.payment_details.push(expenseD);
+        }
+      });
+      let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$message({
+        message: "加载成功",
+        type: "success"
+      });
+      this.$patch(this.urls.merchandiserdepts + "/" + id, submitData).then(
         () => {
-          this.splitMask = false;
+          this.stockOutMask = false;
           this.refresh();
-          /*   this.newOpt[1].nClick = false;
-                       this.newOpt[2].nClick = false;
-                       this.newOpt[3].nClick = true;
-                       this.newOpt[4].nClick = false;
-                       this.newOpt[5].nClick = false;
-                       this.newOpt[6].nClick = true;
-                       this.newOpt[8].nClick = false;
-                       this.newOpt[9].nClick = false;
-                       this.newOpt[13].nClick = false;
-                       this.newOpt[14].nClick = true;
-                       this.newOpt[15].nClick = false;
-                       this.newOpt[18].nClick = false;*/
           this.$message({
-            message: "订单拆分成功",
+            message: "发货成功",
             type: "success"
           });
+          this.newOpt[0].nClick = false;
+          this.newOpt[1].nClick = true;
+          this.newOpt[2].nClick = true;
+          this.newOpt[3].nClick = true;
+          this.newOpt[4].nClick = true;
+          this.newOpt[5].nClick = true;
+          this.newOpt[6].nClick = false;
+          this.newOpt[7].nClick = false;
+          this.newOpt[8].nClick = true;
+          this.newOpt[9].nClick = true;
+          this.newOpt[10].nClick = true;
+          this.newOpt[11].nClick = false;
+          this.newOpt[12].nClick = false;
         },
         err => {
           if (err.response) {
@@ -3750,53 +3020,31 @@ export default {
         }
       );
     },
-    cancelSplit() {
-      this.splitMask = false;
+    stockOutCancel() {
+      this.stockOutMask = false;
     },
-    handleMergerOrder() {
-      if (this.newOpt[8].nClick) {
-        return;
+    formChg() {
+      let formVal;
+      if (this.addResupplieOrderMask) {
+        formVal = this.updateResupplieOrderFormVal;
       } else {
-        if (this.mergerIds.length != 2) {
-          this.$message({
-            message: "请选择要合并的订单",
-            type: "info"
-          });
-        } else {
-          let ids = [];
-          this.mergerIds.map(item => {
-            ids.push(item.id);
-          });
-          this.$put(
-            this.urls.customerservicedepts +
-              "/mergerorder" +
-              "?order_id_one=" +
-              ids[0] +
-              "&order_id_two=" +
-              ids[1]
-          ).then(
-            () => {
-              this.refresh();
-              this.$message({
-                message: "订单合并成功",
-                type: "success"
-              });
-            },
-            err => {
-              if (err.response) {
-                this.$message.error("合并订单出错");
-              }
-            }
-          );
-        }
+        formVal = this.updateResupplieOrderFormVal;
       }
+      formVal["total_distribution_fee"] =
+        formVal["deliver_goods_fee"] -
+        0 +
+        (formVal["move_upstairs_fee"] - 0) +
+        (formVal["installation_fee"] - 0);
     },
+    //导出
+    //物流单
     logisticsBill() {
       this.$message({
         message: "请先配置打印机",
         type: "success"
       });
     },
+    //发货单
     dispatchBill() {
       if (this.newOpt[5].nClick) {
         return;
@@ -3841,26 +3089,15 @@ export default {
         );
       }
     },
-    pickGoodsBill() {
-      this.$message({
-        message: "请先配置打印机",
-        type: "success"
-      });
-    },
-    print() {
-      this.$message({
-        message: "请先配置打印机",
-        type: "success"
-      });
-    },
+    //电子面单
     elecBill() {
       this.$message({
         message: "请先配置打印机",
         type: "success"
       });
     },
-    //筛选
-    searchData() {
+    //刷新
+    refresh() {
       this.loading = true;
       this.fetchData();
     },

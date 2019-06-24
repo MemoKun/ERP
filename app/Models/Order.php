@@ -58,7 +58,7 @@ class Order extends Model
 
         self::ORDER_STATUS_RESUPPLIE_ORDER_UNSUBMIT  => '未提交',
         self::ORDER_STATUS_RESUPPLIE_ORDER_SUBMIT  => '未审核',
-        self::ORDER_STATUS_RESUPPLIE_ORDER_AUDIT => '未审核',
+        self::ORDER_STATUS_RESUPPLIE_ORDER_AUDIT => '已审核',
     ];
 
     //订单操作
