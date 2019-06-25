@@ -332,7 +332,7 @@ class Order extends Model
 
     public function unReadyStockOut()
     {
-        return $this->getOriginal('order_status') != self::ORDER_STATUS_READY_STOCK_OUT;
+        return !(($this->getOriginal('order_status') == self::ORDER_STATUS_READY_STOCK_OUT)||($this->getOriginal('order_status') == self::ORDER_STATUS_RESUPPLIE_ORDER_AUDIT));
     }
 
     /**

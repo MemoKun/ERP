@@ -500,7 +500,6 @@ class MerchandiserDepartmentsController extends Controller
         return $this->response->item($order, CargoAuditTransformer::class);
     }
 
-
     /**
      * 根据仓库获取sku库存
      *

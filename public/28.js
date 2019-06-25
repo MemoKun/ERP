@@ -2558,7 +2558,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     stockOut: function stockOut() {
       var _this11 = this;
 
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[6].nClick) {
         this.$message({
           message: "请点击要选择的订单并重试",
           type: "info"
@@ -2758,9 +2758,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$message({
-        message: "加载成功",
+        message: "发货成功",
         type: "success"
       });
+      this.stockOutMask = false;
       this.$patch(this.urls.merchandiserdepts + "/" + id, submitData).then(function () {
         _this12.stockOutMask = false;
         _this12.refresh();

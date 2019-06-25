@@ -2653,7 +2653,7 @@ export default {
       );
     },
     //提交
-    resupplieOrderSubmit(){
+    resupplieOrderSubmit() {
       if (this.newOpt[2].nClick) {
         return;
       } else {
@@ -2812,7 +2812,7 @@ export default {
     },
     //发货
     stockOut() {
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[6].nClick) {
         this.$message({
           message: "请点击要选择的订单并重试",
           type: "info"
@@ -3016,10 +3016,13 @@ export default {
         }
       });
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
+      //fake status
       this.$message({
-        message: "加载成功",
+        message: "发货成功",
         type: "success"
       });
+      //real status
+      this.stockOutMask = false;
       this.$patch(this.urls.merchandiserdepts + "/" + id, submitData).then(
         () => {
           this.stockOutMask = false;
