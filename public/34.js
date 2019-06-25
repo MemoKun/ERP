@@ -3761,28 +3761,18 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       if (this.newOpt[10].nClick) {
         return;
       } else {
-        if (this.additionOrderIds.length != 2) {
-          this.$message({
-            message: "请选择要转补单的订单",
-            type: "info"
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/additionorder").then(function () {
+          _this18.refresh();
+          _this18.$message({
+            message: "转补单成功",
+            type: "success"
           });
-        } else {
-          var ids = [];
-          this.additionOrderIds.map(function (item) {
-            ids.push(item.id);
-          });
-          this.$put(this.urls.customerservicedepts + "/additionorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-            _this18.refresh();
-            _this18.$message({
-              message: "转补单成功",
-              type: "success"
-            });
-          }, function (err) {
-            if (err.response) {
-              _this18.$message.error("转补单出错");
-            }
-          });
-        }
+        }, function (err) {
+          if (err.response) {
+            _this18.$message.error("转补单出错");
+          }
+        });
       }
     },
 
@@ -3793,29 +3783,18 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
       if (this.newOpt[11].nclick) {
         return;
       } else {
-        if (this.additionOrderIds.length != 2) {
-          this.$message({
-            message: "请选择要转补款的订单",
-            type: "info"
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/additionmoney").then(function () {
+          _this19.refresh();
+          _this19.$message({
+            message: "转补款成功",
+            type: "success"
           });
-        } else {
-          var ids = [];
-          this.additionOrderIds.map(function (item) {
-            ids.push(item.id);
-          });
-          this.$put(this.urls.customerservicedepts + "/additionmoney" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-            _this19.refresh();
-            _this19.$message({
-              message: "转补款成功",
-              type: "success"
-            });
-            _this19.additionOrderIds = [];
-          }, function (err) {
-            if (err.response) {
-              _this19.$message.error("转补款出错");
-            }
-          });
-        }
+        }, function (err) {
+          if (err.response) {
+            _this19.$message.error("转补款出错");
+          }
+        });
       }
     },
 

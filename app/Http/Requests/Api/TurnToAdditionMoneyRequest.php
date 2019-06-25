@@ -16,25 +16,7 @@ class TurnToAdditionMoneyRequest extends FormRequest
         switch ($this->method()) {
             case 'PUT':
                 return [
-                    'order_id_one' => [
-                        'required', 'integer',
-                        Rule::exists('orders', 'id')->where(function ($query) {
-                            $query->where('status', 1)->where('order_status', '<=', \App\Models\Order::ORDER_STATUS_FD_AUDIT);
-                        }),
-                        function($attribute, $value, $fail) {
-                            //判断id是否重复
-                            if ($this->order_id_one == $this->order_id_two){
-                                return $fail('id不能重复');
-                            }
-                            return true;
-                        }
-                    ],
-                    'order_id_two' => [
-                        'required', 'integer',
-                        Rule::exists('orders', 'id')->where(function ($query) {
-                            $query->where('status', 1)->where('order_status', '<=', \App\Models\Order::ORDER_STATUS_FD_AUDIT);
-                        }),
-                    ]
+                    
                 ];
                 break;
         }

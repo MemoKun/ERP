@@ -4059,38 +4059,23 @@ export default {
       if (this.newOpt[10].nClick) {
         return;
       } else {
-        if (this.additionOrderIds.length != 2) {
-          this.$message({
-            message: "请选择要转补单的订单",
-            type: "info"
-          });
-        } else {
-          let ids = [];
-          this.additionOrderIds.map(item => {
-            ids.push(item.id);
-          });
-          this.$put(
-            this.urls.customerservicedepts +
-              "/additionorder" +
-              "?order_id_one=" +
-              ids[0] +
-              "&order_id_two=" +
-              ids[1]
-          ).then(
-            () => {
-              this.refresh();
-              this.$message({
-                message: "转补单成功",
-                type: "success"
-              });
-            },
-            err => {
-              if (err.response) {
-                this.$message.error("转补单出错");
-              }
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(
+          this.urls.customerservicedepts + "/" + id + "/additionorder"
+        ).then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "转补单成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              this.$message.error("转补单出错");
             }
-          );
-        }
+          }
+        );
       }
     },
     /***************************** 转 补 款 *******************************/
@@ -4098,39 +4083,23 @@ export default {
       if (this.newOpt[11].nclick) {
         return;
       } else {
-        if (this.additionOrderIds.length != 2) {
-          this.$message({
-            message: "请选择要转补款的订单",
-            type: "info"
-          });
-        } else {
-          let ids = [];
-          this.additionOrderIds.map(item => {
-            ids.push(item.id);
-          });
-          this.$put(
-            this.urls.customerservicedepts +
-              "/additionmoney" +
-              "?order_id_one=" +
-              ids[0] +
-              "&order_id_two=" +
-              ids[1]
-          ).then(
-            () => {
-              this.refresh();
-              this.$message({
-                message: "转补款成功",
-                type: "success"
-              });
-              this.additionOrderIds = [];
-            },
-            err => {
-              if (err.response) {
-                this.$message.error("转补款出错");
-              }
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(
+          this.urls.customerservicedepts + "/" + id + "/additionmoney"
+        ).then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "转补款成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              this.$message.error("转补款出错");
             }
-          );
-        }
+          }
+        );
       }
     },
     /***************************** 拆 分 **********************************/

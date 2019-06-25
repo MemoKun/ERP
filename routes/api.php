@@ -700,9 +700,9 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.customerservicedepts.ismergerorder');
         $api->put('customerservicedepts/{order}/notice', 'CustomerServiceDepartmentsController@isNotice')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.isnotice');
-        $api->put('customerservicedepts/additionorder', 'CustomerServiceDepartmentsController@isAdditionOrder')->middleware('permission:客服部|跟单部')
+        $api->put('customerservicedepts/{order}/additionorder', 'CustomerServiceDepartmentsController@isAdditionOrder')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.isadditionorder');
-        $api->put('customerservicedepts/additionmoney', 'CustomerServiceDepartmentsController@isAdditionMoney')->middleware('permission:客服部|跟单部')
+        $api->put('customerservicedepts/{order}/additionmoney', 'CustomerServiceDepartmentsController@isAdditionMoney')->middleware('permission:客服部|跟单部')
             ->name('api.customerservicedepts.isadditionmoney');
 
         //订单结算

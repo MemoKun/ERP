@@ -24,6 +24,8 @@ class Order extends Model
     const ORDER_STATUS_RESUPPLIE_ORDER_SUBMIT = 120;//补单已提交
     const ORDER_STATUS_RESUPPLIE_ORDER_AUDIT = 130;//补单已审核
 
+    const ORDER_STATUS_RESUPPLIE_MONEY_UNSUBMIT = 210;//补款未提交
+
 
 
     //退回
@@ -1045,31 +1047,8 @@ class Order extends Model
     //转补单
     public function additionOrder($data)
     {
-        $orderOneId = $data['order_id_one'];
-        $orderTwoId = $data['order_id_two'];
-
-        $orderOne = $this->newQuery()->findOrFail($orderOneId);
-        $orderTwo = $this->newQuery()->findOrFail($orderTwoId);
-
-        //提取数据
-        $order = $orderOne->toArray();
-        $order['order_status'] = intval($order['order_status']);
-        $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
-
-        DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
-            //新建订单
-            $newOrder = $this->newQuery()->create($order);
-
-            //新增子单
-            collect($orderItem)->map(function ($item) use ($newOrder) {
-                $newOrder->orderItems()->create($item);
-            });
-
-            //删除旧单
-            PaymentDetail::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
-            OrderItem::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
-            Order::destroy($orderOneId, $orderTwoId);
-        });
+        $this->order_status = 110; //将订单状态修改为补单未处理
+        $this->save();
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
@@ -1084,31 +1063,8 @@ class Order extends Model
 
     public function additionMoney($data)
     {
-        $orderOneId = $data['order_id_one'];
-        $orderTwoId = $data['order_id_two'];
-
-        $orderOne = $this->newQuery()->findOrFail($orderOneId);
-        $orderTwo = $this->newQuery()->findOrFail($orderTwoId);
-
-        //提取数据
-        $order = $orderOne->toArray();
-        $order['order_status'] = intval($order['order_status']);
-        $orderItem = $orderOne->orderItems->merge($orderTwo->orderItems)->toArray();
-
-        DB::transaction(function () use ($order, $orderItem, $orderOneId, $orderTwoId) {
-            //新建订单
-            $newOrder = $this->newQuery()->create($order);
-
-            //新增子单
-            collect($orderItem)->map(function ($item) use ($newOrder) {
-                $newOrder->orderItems()->create($item);
-            });
-
-            //删除旧单
-            PaymentDetail::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
-            OrderItem::query()->whereIn('orders_id', [$orderOneId, $orderTwoId])->delete();
-            Order::destroy($orderOneId, $orderTwoId);
-        });
+        $this->order_status = 210; //将订单状态修改为补单未处理
+        $this->save();
 
         $userId = Auth::guard('api')->id();
         $userName = User::find($userId)->real_name;
