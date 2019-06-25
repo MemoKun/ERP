@@ -79,6 +79,16 @@ class CustomerServiceResupplieOrderAuditController extends Controller
         );
     }
 
+    public function isAudit(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '审核出错',
+            'resupplieOrderAudit'
+        );
+    }
+
     public function destroy(Order $order)
     {
         DB::transaction(function () use ($order) {

@@ -2480,23 +2480,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleAudit: function handleAudit() {
       var _this9 = this;
 
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[4].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(function () {
+        this.$put(this.urls.resupplieorderaudit + "/" + id + "/audit").then(function () {
+          _this9.newOpt[0].nClick = true;
           _this9.newOpt[1].nClick = true;
           _this9.newOpt[2].nClick = true;
           _this9.newOpt[3].nClick = true;
           _this9.newOpt[4].nClick = true;
           _this9.newOpt[5].nClick = true;
           _this9.newOpt[6].nClick = true;
+          _this9.newOpt[7].nClick = true;
           _this9.newOpt[8].nClick = true;
           _this9.newOpt[9].nClick = true;
-          _this9.newOpt[13].nClick = true;
-          _this9.newOpt[14].nClick = true;
-          _this9.newOpt[15].nClick = true;
-          _this9.newOpt[18].nClick = true;
+          _this9.newOpt[10].nClick = true;
           _this9.refresh();
           _this9.$message({
             message: "审核成功",

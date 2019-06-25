@@ -2734,24 +2734,23 @@ export default {
     },
     //审核
     handleAudit() {
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[4].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(
+        this.$put(this.urls.resupplieorderaudit + "/" + id + "/audit").then(
           () => {
+            this.newOpt[0].nClick = true;
             this.newOpt[1].nClick = true;
             this.newOpt[2].nClick = true;
             this.newOpt[3].nClick = true;
             this.newOpt[4].nClick = true;
             this.newOpt[5].nClick = true;
             this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = true;
             this.newOpt[8].nClick = true;
             this.newOpt[9].nClick = true;
-            this.newOpt[13].nClick = true;
-            this.newOpt[14].nClick = true;
-            this.newOpt[15].nClick = true;
-            this.newOpt[18].nClick = true;
+            this.newOpt[10].nClick = true;
             this.refresh();
             this.$message({
               message: "审核成功",
