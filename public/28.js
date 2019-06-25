@@ -2519,24 +2519,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleunStockOut: function handleunStockOut() {
       var _this10 = this;
 
-      if (this.newOpt[2].nClick) {
+      if (this.newOpt[5].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(function () {
-          _this10.newOpt[0].nClick = false;
+        this.$put(this.urls.resupplieorderaudit + "/" + id + "/unaudit").then(function () {
+          _this10.newOpt[0].nClick = true;
           _this10.newOpt[1].nClick = true;
-          _this10.newOpt[2].nClick = false;
-          _this10.newOpt[3].nClick = false;
-          _this10.newOpt[4].nClick = false;
-          _this10.newOpt[5].nClick = false;
-          _this10.newOpt[6].nClick = false;
-          _this10.newOpt[7].nClick = false;
-          _this10.newOpt[8].nClick = false;
-          _this10.newOpt[9].nClick = false;
-          _this10.newOpt[10].nClick = false;
-          _this10.newOpt[11].nClick = false;
-          _this10.newOpt[12].nClick = false;
+          _this10.newOpt[2].nClick = true;
+          _this10.newOpt[3].nClick = true;
+          _this10.newOpt[4].nClick = true;
+          _this10.newOpt[5].nClick = true;
+          _this10.newOpt[6].nClick = true;
+          _this10.newOpt[7].nClick = true;
+          _this10.newOpt[8].nClick = true;
+          _this10.newOpt[9].nClick = true;
+          _this10.newOpt[10].nClick = true;
           _this10.refresh();
           _this10.$message({
             message: "退审成功",

@@ -89,6 +89,16 @@ class CustomerServiceResupplieOrderAuditController extends Controller
         );
     }
 
+    public function isUnAudit(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '退审出错',
+            'resupplieOrderUnAudit'
+        );
+    }
+
     public function destroy(Order $order)
     {
         DB::transaction(function () use ($order) {

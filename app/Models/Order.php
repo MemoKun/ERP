@@ -1108,6 +1108,21 @@ class Order extends Model
         $operationData->description = '补单审核-审核';
         $operationData->save();
     }
+    public function resupplieOrderUnAudit($data)
+    {
+        $this->order_status = 120; //将订单状态修改为补单未处理
+        $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new OrderOperationRecord();
+        $operationData->orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = '补单审核-退审';
+        $operationData->description = '补单审核-退审';
+        $operationData->save();
+    }
 
     public function shop()
     {

@@ -2773,25 +2773,23 @@ export default {
     },
     //退审
     handleunStockOut() {
-      if (this.newOpt[2].nClick) {
+      if (this.newOpt[5].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(
+        this.$put(this.urls.resupplieorderaudit + "/" + id + "/unaudit").then(
           () => {
-            this.newOpt[0].nClick = false;
+            this.newOpt[0].nClick = true;
             this.newOpt[1].nClick = true;
-            this.newOpt[2].nClick = false;
-            this.newOpt[3].nClick = false;
-            this.newOpt[4].nClick = false;
-            this.newOpt[5].nClick = false;
-            this.newOpt[6].nClick = false;
-            this.newOpt[7].nClick = false;
-            this.newOpt[8].nClick = false;
-            this.newOpt[9].nClick = false;
-            this.newOpt[10].nClick = false;
-            this.newOpt[11].nClick = false;
-            this.newOpt[12].nClick = false;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.newOpt[10].nClick = true;
             this.refresh();
             this.$message({
               message: "退审成功",

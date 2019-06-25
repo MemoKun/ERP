@@ -880,10 +880,12 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.resupplieorderaudit.show');
         $api->patch('resupplieorderaudit/{order}', 'CustomerServiceResupplieOrderAuditController@update')->middleware('permission:仓储部')
             ->name('api.resupplieorderaudit.update');
-        $api->put('resupplieorderaudit/{order}/audit', 'CustomerServiceResupplieOrderAuditController@isAudit')->middleware('permission:仓储部')
-            ->name('api.resupplieorderaudit.isaudit');
         $api->put('resupplieorderaudit/{order}/submit', 'CustomerServiceResupplieOrderAuditController@isSubmit')->middleware('permission:仓储部')
             ->name('api.resupplieorderaudit.issubmit');
+        $api->put('resupplieorderaudit/{order}/audit', 'CustomerServiceResupplieOrderAuditController@isAudit')->middleware('permission:仓储部')
+            ->name('api.resupplieorderaudit.isaudit');
+        $api->put('resupplieorderaudit/{order}/unaudit', 'CustomerServiceResupplieOrderAuditController@isUnAudit')->middleware('permission:仓储部')
+            ->name('api.resupplieorderaudit.isunaudit');
         $api->put('resupplieorderaudit/{order}/stockouttocs', 'CustomerServiceResupplieOrderAuditController@isStockOutToCS')->middleware('permission:仓储部')
             ->name('api.resupplieorderaudit.isstockouttocs');
         $api->put('resupplieorderaudit/{order}/isprintdispatchbill', 'CustomerServiceResupplieOrderAuditController@isPrintDispatchBill')->middleware('permission:仓储部')
