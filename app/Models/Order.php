@@ -1077,6 +1077,22 @@ class Order extends Model
         $operationData->save();
     }
 
+    public function resupplieOrderSubmit($data)
+    {
+        $this->order_status = 120; //将订单状态修改为补单未处理
+        $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new OrderOperationRecord();
+        $operationData->orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = '补单审核-提交';
+        $operationData->description = '补单审核-提交';
+        $operationData->save();
+    }
+
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shops_id');

@@ -724,7 +724,7 @@ export default {
         {
           cnt: "提交",
           icon: "bf-submit",
-          ent: this.test,
+          ent: this.resupplieOrderSubmit,
           nClick: true
         },
         {
@@ -2653,6 +2653,44 @@ export default {
       );
     },
     //提交
+    resupplieOrderSubmit(){
+      if (this.newOpt[2].nClick) {
+        return;
+      } else {
+        let id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.resupplieorderaudit + "/" + id + "/submit").then(
+          () => {
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.newOpt[10].nClick = true;
+            this.refresh();
+            this.$message({
+              message: "提交成功",
+              type: "success"
+            });
+          },
+          err => {
+            if (err.response) {
+              let arr = err.response.data.errors;
+              let arr1 = [];
+              for (let i in arr) {
+                arr1.push(arr[i]);
+              }
+              let str = arr1.join(",");
+              this.$message.error(str);
+            }
+          }
+        );
+      }
+    },
     //驳回
     handleStockOutToCS() {
       if (this.newOpt[3].nClick) {

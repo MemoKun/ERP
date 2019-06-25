@@ -871,7 +871,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         $api->put('warehousingdepts/{order}/cargosplitorder', 'WarehousingDepartmentsController@isCargoSplitOrder')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.iscargosplitorder');
         
-        //仓储部
+        //补单管理
         $api->get('resupplieorderaudit', 'CustomerServiceResupplieOrderAuditController@index')->middleware('permission:仓储部')
             ->name('api.warehousingdepts.index');
         $api->get('resupplieorderaudit/searchuntreated', 'CustomerServiceResupplieOrderAuditController@searchUntreated')->middleware('permission:仓储部')
@@ -882,14 +882,15 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.resupplieorderaudit.update');
         $api->put('resupplieorderaudit/{order}/stockout', 'CustomerServiceResupplieOrderAuditController@isStockOut')->middleware('permission:仓储部')
             ->name('api.resupplieorderaudit.isstockout');
-        $api->put('resupplieorderaudit/{order}/stockoutunaudit', 'CustomerServiceResupplieOrderAuditController@isStockOutUnAudit')->middleware('permission:仓储部')
-            ->name('api.resupplieorderaudit.isstockoutunaudit');
+        $api->put('resupplieorderaudit/{order}/submit', 'CustomerServiceResupplieOrderAuditController@isSubmit')->middleware('permission:仓储部')
+            ->name('api.resupplieorderaudit.issubmit');
         $api->put('resupplieorderaudit/{order}/stockouttocs', 'CustomerServiceResupplieOrderAuditController@isStockOutToCS')->middleware('permission:仓储部')
             ->name('api.resupplieorderaudit.isstockouttocs');
         $api->put('resupplieorderaudit/{order}/isprintdispatchbill', 'CustomerServiceResupplieOrderAuditController@isPrintDispatchBill')->middleware('permission:仓储部')
             ->name('api.resupplieorderaudit.isprintdispatchbill');
         $api->put('resupplieorderaudit/{order}/cargosplitorder', 'CustomerServiceResupplieOrderAuditController@isCargoSplitOrder')->middleware('permission:仓储部')
             ->name('api.resupplieorderaudit.iscargosplitorder');
+        
 
         //客服退款申请
         $api->get('customerservicerefunds', 'CustomerServiceRefundsController@index')->middleware('permission:客服退款申请')

@@ -68,4 +68,29 @@ class CustomerServiceResupplieOrderAuditController extends Controller
 
         return $this->response->paginator($order->paginate(self::PerPage), new OrderTransformer());
     }
+
+    public function isSubmit(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status,
+            '提交出错',
+            'resupplieOrderSubmit'
+        );
+    }
+
+    public function destroy(Order $order)
+    {
+        DB::transaction(function () use ($order) {
+            $orderItems = $order->orderItems()->delete();
+            $paymentDetails = $order->paymentDetails()->delete();
+            $order = $order->delete();
+
+            if ($orderItems === false || $paymentDetails === false || $order === false) {
+                throw new DeleteResourceFailedException('The given data was invalid.');
+            }
+        });
+
+        return $this->noContent();
+    }
 }

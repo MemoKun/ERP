@@ -728,7 +728,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: "提交",
         icon: "bf-submit",
-        ent: this.test,
+        ent: this.resupplieOrderSubmit,
         nClick: true
       }, {
         cnt: "驳回",
@@ -2397,15 +2397,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     //提交
-    //驳回
-    handleStockOutToCS: function handleStockOutToCS() {
+    resupplieOrderSubmit: function resupplieOrderSubmit() {
       var _this7 = this;
 
-      if (this.newOpt[3].nClick) {
+      if (this.newOpt[2].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.warehousingdepts + "/" + id + "/stockouttocs").then(function () {
+        this.$put(this.urls.resupplieorderaudit + "/" + id + "/submit").then(function () {
           _this7.newOpt[0].nClick = true;
           _this7.newOpt[1].nClick = true;
           _this7.newOpt[2].nClick = true;
@@ -2417,11 +2416,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this7.newOpt[8].nClick = true;
           _this7.newOpt[9].nClick = true;
           _this7.newOpt[10].nClick = true;
-          _this7.newOpt[11].nClick = true;
-          _this7.newOpt[12].nClick = true;
           _this7.refresh();
           _this7.$message({
-            message: "退回客审成功",
+            message: "提交成功",
             type: "success"
           });
         }, function (err) {
@@ -2438,30 +2435,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
 
-    //审核
-    handleAudit: function handleAudit() {
+    //驳回
+    handleStockOutToCS: function handleStockOutToCS() {
       var _this8 = this;
 
-      if (this.newOpt[5].nClick) {
+      if (this.newOpt[3].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(function () {
+        this.$put(this.urls.warehousingdepts + "/" + id + "/stockouttocs").then(function () {
+          _this8.newOpt[0].nClick = true;
           _this8.newOpt[1].nClick = true;
           _this8.newOpt[2].nClick = true;
           _this8.newOpt[3].nClick = true;
           _this8.newOpt[4].nClick = true;
           _this8.newOpt[5].nClick = true;
           _this8.newOpt[6].nClick = true;
+          _this8.newOpt[7].nClick = true;
           _this8.newOpt[8].nClick = true;
           _this8.newOpt[9].nClick = true;
-          _this8.newOpt[13].nClick = true;
-          _this8.newOpt[14].nClick = true;
-          _this8.newOpt[15].nClick = true;
-          _this8.newOpt[18].nClick = true;
+          _this8.newOpt[10].nClick = true;
+          _this8.newOpt[11].nClick = true;
+          _this8.newOpt[12].nClick = true;
           _this8.refresh();
           _this8.$message({
-            message: "审核成功",
+            message: "退回客审成功",
             type: "success"
           });
         }, function (err) {
@@ -2478,31 +2476,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
 
-    //退审
-    handleunStockOut: function handleunStockOut() {
+    //审核
+    handleAudit: function handleAudit() {
       var _this9 = this;
 
-      if (this.newOpt[2].nClick) {
+      if (this.newOpt[5].nClick) {
         return;
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(function () {
-          _this9.newOpt[0].nClick = false;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/audit").then(function () {
           _this9.newOpt[1].nClick = true;
-          _this9.newOpt[2].nClick = false;
-          _this9.newOpt[3].nClick = false;
-          _this9.newOpt[4].nClick = false;
-          _this9.newOpt[5].nClick = false;
-          _this9.newOpt[6].nClick = false;
-          _this9.newOpt[7].nClick = false;
-          _this9.newOpt[8].nClick = false;
-          _this9.newOpt[9].nClick = false;
-          _this9.newOpt[10].nClick = false;
-          _this9.newOpt[11].nClick = false;
-          _this9.newOpt[12].nClick = false;
+          _this9.newOpt[2].nClick = true;
+          _this9.newOpt[3].nClick = true;
+          _this9.newOpt[4].nClick = true;
+          _this9.newOpt[5].nClick = true;
+          _this9.newOpt[6].nClick = true;
+          _this9.newOpt[8].nClick = true;
+          _this9.newOpt[9].nClick = true;
+          _this9.newOpt[13].nClick = true;
+          _this9.newOpt[14].nClick = true;
+          _this9.newOpt[15].nClick = true;
+          _this9.newOpt[18].nClick = true;
           _this9.refresh();
           _this9.$message({
-            message: "退审成功",
+            message: "审核成功",
             type: "success"
           });
         }, function (err) {
@@ -2519,9 +2516,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
 
+    //退审
+    handleunStockOut: function handleunStockOut() {
+      var _this10 = this;
+
+      if (this.newOpt[2].nClick) {
+        return;
+      } else {
+        var id = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.customerservicedepts + "/" + id + "/unaudit").then(function () {
+          _this10.newOpt[0].nClick = false;
+          _this10.newOpt[1].nClick = true;
+          _this10.newOpt[2].nClick = false;
+          _this10.newOpt[3].nClick = false;
+          _this10.newOpt[4].nClick = false;
+          _this10.newOpt[5].nClick = false;
+          _this10.newOpt[6].nClick = false;
+          _this10.newOpt[7].nClick = false;
+          _this10.newOpt[8].nClick = false;
+          _this10.newOpt[9].nClick = false;
+          _this10.newOpt[10].nClick = false;
+          _this10.newOpt[11].nClick = false;
+          _this10.newOpt[12].nClick = false;
+          _this10.refresh();
+          _this10.$message({
+            message: "退审成功",
+            type: "success"
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this10.$message.error(str);
+          }
+        });
+      }
+    },
+
     //发货
     stockOut: function stockOut() {
-      var _this10 = this;
+      var _this11 = this;
 
       if (this.newOpt[5].nClick) {
         this.$message({
@@ -2547,18 +2585,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.$fetch(this.urls.customerservicedepts + "/" + id, {
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails,orderOperationRecord"
           }).then(function (res) {
-            var _this10$updateReceive;
+            var _this11$updateReceive;
 
-            _this10.updateResupplieOrderFormVal = res;
+            _this11.updateResupplieOrderFormVal = res;
             if (res["orderItems"]["data"].length > 0) {
               res["orderItems"]["data"].map(function (item) {
-                _this10.updateProIds.push(item["combination"].id);
+                _this11.updateProIds.push(item["combination"].id);
                 item["name"] = item["combination"]["name"];
                 item["id"] = item.id;
                 item["products_id"] = item.products_id;
                 item["combinations_id"] = item.combinations_id;
                 item["productComp"] = item["combination"]["productComponents"]["data"];
-                _this10.$set(item, "newData", {
+                _this11.$set(item, "newData", {
                   quantity: item.quantity,
                   paint: item.paint,
                   is_printing: item.is_printing,
@@ -2570,14 +2608,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
               });
             }
-            _this10.updateProData = res["orderItems"]["data"];
-            _this10.updateReceiveInfo = (_this10$updateReceive = {
+            _this11.updateProData = res["orderItems"]["data"];
+            _this11.updateReceiveInfo = (_this11$updateReceive = {
               receiver_name: res.receiver_name,
               receiver_phone: res.receiver_phone,
               receiver_mobile: res.receiver_mobile,
               receiver_state: res.receiver_state
-            }, _defineProperty(_this10$updateReceive, "receiver_state", res.receiver_city), _defineProperty(_this10$updateReceive, "receiver_district", res.receiver_district), _defineProperty(_this10$updateReceive, "receiver_address", res.receiver_address), _defineProperty(_this10$updateReceive, "receiver_zip", res.receiver_zip), _this10$updateReceive);
-            _this10.updateExpenseData = res["paymentDetails"]["data"];
+            }, _defineProperty(_this11$updateReceive, "receiver_state", res.receiver_city), _defineProperty(_this11$updateReceive, "receiver_district", res.receiver_district), _defineProperty(_this11$updateReceive, "receiver_address", res.receiver_address), _defineProperty(_this11$updateReceive, "receiver_zip", res.receiver_zip), _this11$updateReceive);
+            _this11.updateExpenseData = res["paymentDetails"]["data"];
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -2586,14 +2624,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 arr1.push(arr[i]);
               }
               var str = arr1.join(",");
-              _this10.$message.error(str);
+              _this11.$message.error(str);
             }
           });
         }
       }
     },
     stockOutConfirm: function stockOutConfirm() {
-      var _this11 = this;
+      var _this12 = this;
 
       var forData = this.updateResupplieOrderFormVal;
       var submitData = {
@@ -2727,25 +2765,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "success"
       });
       this.$patch(this.urls.merchandiserdepts + "/" + id, submitData).then(function () {
-        _this11.stockOutMask = false;
-        _this11.refresh();
-        _this11.$message({
+        _this12.stockOutMask = false;
+        _this12.refresh();
+        _this12.$message({
           message: "发货成功",
           type: "success"
         });
-        _this11.newOpt[0].nClick = false;
-        _this11.newOpt[1].nClick = true;
-        _this11.newOpt[2].nClick = true;
-        _this11.newOpt[3].nClick = true;
-        _this11.newOpt[4].nClick = true;
-        _this11.newOpt[5].nClick = true;
-        _this11.newOpt[6].nClick = false;
-        _this11.newOpt[7].nClick = false;
-        _this11.newOpt[8].nClick = true;
-        _this11.newOpt[9].nClick = true;
-        _this11.newOpt[10].nClick = true;
-        _this11.newOpt[11].nClick = false;
-        _this11.newOpt[12].nClick = false;
+        _this12.newOpt[0].nClick = false;
+        _this12.newOpt[1].nClick = true;
+        _this12.newOpt[2].nClick = true;
+        _this12.newOpt[3].nClick = true;
+        _this12.newOpt[4].nClick = true;
+        _this12.newOpt[5].nClick = true;
+        _this12.newOpt[6].nClick = false;
+        _this12.newOpt[7].nClick = false;
+        _this12.newOpt[8].nClick = true;
+        _this12.newOpt[9].nClick = true;
+        _this12.newOpt[10].nClick = true;
+        _this12.newOpt[11].nClick = false;
+        _this12.newOpt[12].nClick = false;
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -2754,7 +2792,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this11.$message.error(str);
+          _this12.$message.error(str);
         }
       });
     },
@@ -2782,7 +2820,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     //发货单
     dispatchBill: function dispatchBill() {
-      var _this12 = this;
+      var _this13 = this;
 
       if (this.newOpt[5].nClick) {
         return;
@@ -2793,19 +2831,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$put(this.urls.warehousingdepts + "/" + id + "/isprintdispatchbill").then(function () {
-          _this12.newOpt[0].nClick = false;
-          _this12.newOpt[1].nClick = false;
-          _this12.newOpt[2].nClick = false;
-          _this12.newOpt[3].nClick = false;
-          _this12.newOpt[4].nClick = false;
-          _this12.newOpt[5].nClick = true;
-          _this12.newOpt[6].nClick = true;
-          _this12.newOpt[7].nClick = false;
-          _this12.newOpt[8].nClick = false;
-          _this12.newOpt[9].nClick = false;
-          _this12.newOpt[10].nClick = false;
-          _this12.refresh();
-          _this12.$message({
+          _this13.newOpt[0].nClick = false;
+          _this13.newOpt[1].nClick = false;
+          _this13.newOpt[2].nClick = false;
+          _this13.newOpt[3].nClick = false;
+          _this13.newOpt[4].nClick = false;
+          _this13.newOpt[5].nClick = true;
+          _this13.newOpt[6].nClick = true;
+          _this13.newOpt[7].nClick = false;
+          _this13.newOpt[8].nClick = false;
+          _this13.newOpt[9].nClick = false;
+          _this13.newOpt[10].nClick = false;
+          _this13.refresh();
+          _this13.$message({
             message: "打印发货单成功",
             type: "success"
           });
@@ -2817,7 +2855,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               arr1.push(arr[i]);
             }
             var str = arr1.join(",");
-            _this12.$message.error(str);
+            _this13.$message.error(str);
           }
         });
       }

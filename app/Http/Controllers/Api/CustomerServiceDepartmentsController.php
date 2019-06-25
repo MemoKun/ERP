@@ -36,6 +36,23 @@ class CustomerServiceDepartmentsController extends Controller
     const MODEL = Order::class;
     const PerPage = 8;
 
+    
+
+
+    
+
+    public function index(CustomerServiceDepartmentRequest $request)
+    {
+        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, self::PerPage);
+    }
+
+    public function searchAll(CustomerServiceDepartmentRequest $request)
+    {
+        $order = Order::query()->orderBy('created_at', 'desc');
+
+        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
+    }
+    
     /**
      * 获取所有未处理的订单.
      *
@@ -57,8 +74,8 @@ class CustomerServiceDepartmentsController extends Controller
         $seller_remark = $request->input('seller_remark');
         $seller_flag = $request->input('seller_flag');
         $business_personnel_id = $request->input('business_personnel_id');
-        
-
+         
+ 
         $order = Order::query()->whereIn('order_status', [ORDER::ORDER_STATUS_NEW, ORDER::ORDER_STATUS_LOCK])
         ->where('member_nick', 'like', '%'.$member_nick.'%')
         ->where('system_order_no', 'like', '%'.$system_order_no.'%')
@@ -74,30 +91,17 @@ class CustomerServiceDepartmentsController extends Controller
         ->whereBetween('created_at', [$created_at[0], $created_at[1]])
         //->whereBetween('audit_at', [$audit_at[0], $audit_at[1]])
         ->orderBy('updated_at', 'desc');
-
+ 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
     }
-
+ 
     public function searchIsNotice(CustomerServiceDepartmentRequest $request)
     {
         $order = Order::query()->whereIn('order_status', [ORDER::ORDER_STATUS_NEW, ORDER::ORDER_STATUS_LOCK, ORDER::ORDER_STATUS_CS_AUDIT, ORDER::ORDER_STATUS_ONE_AUDIT, ORDER::ORDER_STATUS_FD_AUDIT,ORDER::ORDER_STATUS_CARGO_AUDIT,ORDER::ORDER_STATUS_READY_STOCK_OUT,])
         ->where('is_notice', '=', 1)
         ->orderBy('updated_at', 'desc');
-
+ 
         return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
-    }
-
-
-    public function searchAll(CustomerServiceDepartmentRequest $request)
-    {
-        $order = Order::query()->orderBy('created_at', 'desc');
-
-        return $this->response->paginator($order->paginate(self::PerPage), self::TRANSFORMER);
-    }
-
-    public function index(CustomerServiceDepartmentRequest $request)
-    {
-        return $this->allOrPage($request, self::MODEL, self::TRANSFORMER, self::PerPage);
     }
 
     //物流跟单查询
