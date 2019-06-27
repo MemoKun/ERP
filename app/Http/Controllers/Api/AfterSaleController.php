@@ -200,7 +200,7 @@ class AfterSaleController extends Controller
         return $this->traitAction(
             $aftersale,
             !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_NEW,
-            '提交出错',
+            '审核出错',
             'audit'
         );
     }
@@ -220,7 +220,7 @@ class AfterSaleController extends Controller
         return $this->traitAction(
             $aftersale,
             !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_SUBMIT,
-            '提交出错',
+            '一审出错',
             'oneAudit'
         );
     }
@@ -240,7 +240,7 @@ class AfterSaleController extends Controller
         return $this->traitAction(
             $aftersale,
             !$aftersale->status || $aftersale->getOriginal('order_status') != $aftersale::AFTERSALE_STATUS_ONE_AUDIT,
-            '提交出错',
+            '二审出错',
             'twoAudit'
         );
     }

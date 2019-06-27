@@ -889,6 +889,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1905,95 +1912,134 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       label: "店铺名称",
       prop: "shops_id",
       holder: "请选择店铺",
-      type: "text",
-      editChgAble: true
+      type: "select",
+      addChgAble: true,
+      editChgAble: true,
+      stateVal: "shop"
     }, {
       label: "会员昵称",
       prop: "member_nick",
       holder: "请输入会员昵称",
+      addChgAble: true,
       type: "text"
-    }, {
+    },
+    /*{
       label: "业务员",
       prop: "business_personnel_id",
       //inProp: "name",
-      type: "text"
-    }, {
+      type: "select",
+      stateVal: "user"
+    },*/
+    {
       label: "物流公司",
       prop: "logistics_id",
       holder: "请选择物流公司",
-      type: "text"
+      type: "select",
+      stateVal: "logistics",
+      addChgAble: true
     }, {
       label: "承诺日期",
       prop: "promise_ship_time",
-      type: "text"
+      type: "text",
+      addChgAble: true
     }, {
       label: "预计运费",
       prop: "expected_freight",
       holder: "请输入预计运费",
-      type: "number"
+      type: "number",
+      addChgAble: true
     }, {
       label: "运费类型",
       prop: "freight_types_id",
       holder: "请选择运费类型",
-      type: "text"
-    }, {
+      type: "select",
+      stateVal: "freight_type",
+      addChgAble: true
+    },
+    /*{
       label: "三包服务",
       prop: "sanbao_service",
       holder: "请选择运费类型",
-      type: "text"
-    }, {
+      type: "text",
+      addChgAble: true,
+    },
+    {
       label: "三包类型",
       prop: "sanbao_type",
       holder: "请选择运费类型",
-      type: "text"
-    }, {
+      type: "text",
+      addChgAble: true,
+    },*/
+    {
       label: "姓名",
       prop: "receiver_name",
       holder: "请输入姓名",
-      type: "text"
+      type: "text",
+      addChgAble: true
     }, {
       label: "固定电话",
       prop: "receiver_phone",
       holder: "请输入固定电话",
-      type: "number"
+      type: "number",
+      addChgAble: true
     }, {
       label: "手机",
       prop: "receiver_mobile",
       holder: "请输入手机号码",
-      type: "number"
+      type: "number",
+      addChgAble: true
     }, {
-      label: "省市区",
-      prop: "provinces",
-      type: "text"
+      label: "省",
+      width: "120",
+      prop: "receiver_state",
+      type: "text",
+      addChgAble: true
+    }, {
+      label: "市",
+      width: "120",
+      prop: "receiver_city",
+      type: "text",
+      addChgAble: true
+    }, {
+      label: "区",
+      width: "120",
+      prop: "receiver_district",
+      type: "text",
+      addChgAble: true
     }, {
       label: "邮编",
       prop: "receiver_zip",
       holder: "请输入邮编",
-      type: "text"
+      type: "text",
+      addChgAble: true
     }, {
       label: "地址",
       prop: "receiver_address",
-      type: "text"
+      type: "text",
+      addChgAble: true
     }, {
       label: "配送方式",
       prop: "distribution_methods_id",
-      type: "text"
+      type: "select",
+      stateVal: "distribution_method",
+      addChgAble: true
     }, {
       label: "配送信息",
       prop: "service_car_info",
-      type: "text"
+      type: "text",
+      addChgAble: true
     }, {
       label: "买家留言",
       prop: "buyer_message",
       type: "textarea",
-      editChgAble: false,
-      addChgAble: false
+      editChgAble: true,
+      addChgAble: true
     }, {
       label: "卖家备注",
       prop: "seller_remark",
       type: "textarea",
-      editChgAble: false,
-      addChgAble: false
+      editChgAble: true,
+      addChgAble: true
     }]), _defineProperty(_ref, "operationHead", [{
       label: "用户",
       prop: "user_name",
@@ -2093,12 +2139,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       switch (index) {
         case 0:
           this.$fetch(this.urls.changeorders + "/searchnew", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,orderOperationRecord"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,changeOrderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.newOrderListData = [];
             _this.newOrderListData = res.data;
-            //this.addChangeOrderFormVal = res.data[0];
+            _this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -2120,11 +2166,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 1:
           this.$fetch(this.urls.changeorders + "/searchuntreated", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,orderOperationRecord"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,changeOrderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.untreatedOrderListData = [];
             _this.untreatedOrderListData = res.data;
+            _this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
+            _this.operationData = res.data[0]['changeOrderOperationRecord'].data ? res.data[0]['changeOrderOperationRecord'].data : [];
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -2146,11 +2194,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 2:
           this.$fetch(this.urls.changeorders + "/searchtreated", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.treatedOrderListData = [];
             _this.treatedOrderListData = res.data;
+            _this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
+            _this.operationData = res.data[0]['changeOrderOperationRecord'].data ? res.data[0]['changeOrderOperationRecord'].data : [];
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -2172,11 +2222,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
         case 3:
           this.$fetch(this.urls.changeorders + "/searchcanceled", {
-            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
+            include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
           }).then(function (res) {
             _this.loading = false;
             _this.canceledOrderListData = [];
             _this.canceledOrderListData = res.data;
+            _this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
+            _this.operationData = res.data[0]['changeOrderOperationRecord'].data ? res.data[0]['changeOrderOperationRecord'].data : [];
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -2550,7 +2602,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.updateOrderChangesMask = true;
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$fetch(this.urls.changeorders + "/" + id, {
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,changeOrderOperationRecord"
         }).then(function (res) {
           _this5.updateChangeOrderFormVal = res;
           if (res["orderItems"]["data"].length > 0) {
@@ -2841,7 +2893,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         var id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$fetch(this.urls.changeorders + "/" + id, {
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
         }).then(function (res) {
           /*请求选中的数据并拼接用于patch Order的submit*/
           //this.submitData = res;
@@ -3199,7 +3251,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       component_code: this.proQuery.component_code,
       shops_id: this.proQuery.shops_id,
       short_name: this.proQuery.short_name,
-      include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents,orderOperationRecord"
+      include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
     }).then(function (res) {
       _this12.proVal = res.data;
       var comb = res.data[0]["combinations"]["data"];
@@ -3234,7 +3286,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this13 = this;
 
     this.$fetch(this.urls.changeorders + "?page=" + page, {
-      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
+      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
     }).then(function (res) {
       var index = _this13.middleActiveName - 0;
       switch (index) {
@@ -3275,7 +3327,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), _defineProperty(_methods, "orderListRowClick", function orderListRowClick(row) {
     this.curRowId = row.id;
     this.curRowData = row;
-    this.operationData = row["orderOperationRecord"].data;
+    this.operationData = row["changeOrderOperationRecord"] ? row["changeOrderOperationRecord"].data : [];
     this.changeOrdersMainInfo = this.curRowData;
     if (row["change_status"] == 10) {
       this.newOpt[0].nClick = false;
@@ -4082,7 +4134,6 @@ var render = function() {
       _c(
         "el-tabs",
         {
-          on: { "tab-click": _vm.secondHandleClick },
           model: {
             value: _vm.bottomActiveName,
             callback: function($$v) {
@@ -4288,6 +4339,56 @@ var render = function() {
                                   1
                                 )
                           ])
+                        : item.type == "select"
+                        ? _c(
+                            "span",
+                            [
+                              _c(
+                                "el-select",
+                                {
+                                  attrs: {
+                                    placeholder: item.holder,
+                                    disabled: ""
+                                  },
+                                  model: {
+                                    value: _vm.changeOrdersMainInfo[item.prop],
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.changeOrdersMainInfo,
+                                        item.prop,
+                                        typeof $$v === "string"
+                                          ? $$v.trim()
+                                          : $$v
+                                      )
+                                    },
+                                    expression:
+                                      "changeOrdersMainInfo[item.prop]"
+                                  }
+                                },
+                                _vm._l(_vm.addSubData[item.stateVal], function(
+                                  list
+                                ) {
+                                  return _c(
+                                    "span",
+                                    { key: list.id },
+                                    [
+                                      _c("el-option", {
+                                        attrs: {
+                                          label: list.name
+                                            ? list.name
+                                            : list.nick,
+                                          value: list.id
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                }),
+                                0
+                              )
+                            ],
+                            1
+                          )
                         : item.type == "number"
                         ? _c(
                             "span",
@@ -4320,7 +4421,8 @@ var render = function() {
                               _c("el-input", {
                                 attrs: {
                                   type: "textarea",
-                                  placehode: item.holder
+                                  placehode: item.holder,
+                                  disabled: ""
                                 },
                                 model: {
                                   value: _vm.changeOrdersMainInfo[item.prop],

@@ -97,7 +97,6 @@ class CustomerServiceChangeOrdersController extends Controller
          return $this->traitShow($order, self::TRANSFORMER);
     }
     
-
     /**
     * 提交·将新建订单提交至待处理
     */
@@ -105,7 +104,7 @@ class CustomerServiceChangeOrdersController extends Controller
     {
         return $this->traitAction(
             $order,
-            !$order->status || $order->getOriginal('change_status') != $order::CHANGE_STATUS_NEW,
+            !$order->status,
             '提交出错',
             'submit'
         );

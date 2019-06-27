@@ -2757,10 +2757,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      //fake status
       this.$message({
         message: "发货成功",
         type: "success"
       });
+      //real status
       this.stockOutMask = false;
       this.$patch(this.urls.merchandiserdepts + "/" + id, submitData).then(function () {
         _this12.stockOutMask = false;

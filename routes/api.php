@@ -1786,6 +1786,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.users.setroles');
         $api->get('users/{users}/getrolesassociateusers', 'UsersController@getRolesAssociateUsers')->middleware('permission:用户管理')
             ->name('api.users.getrolesassociateusers');
+        $api->post('users/import', 'UsersController@import')->middleware('permission:用户管理')
+            ->name('api.users.import');
     });
     $api->group([
         'middleware' => 'api.throttle',

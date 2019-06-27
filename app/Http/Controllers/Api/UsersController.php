@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\User;
+use App\Imports\UsersImport;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
 use App\Http\Controllers\Traits\CURDTrait;
@@ -98,5 +100,12 @@ class UsersController extends Controller
         return $this->response->item($user, new UserTransformer())
             ->setStatusCode(201);
         return $this->response->created();
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new UsersImport, $request->file('form'));
+        
+        return redirect('/')->with('success', 'All good!');
     }
 }

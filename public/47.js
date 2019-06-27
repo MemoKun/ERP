@@ -7,6 +7,23 @@ webpackJsonp([47],{
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -467,7 +484,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, {
         cnt: "导入",
         icon: "bf-in",
-        ent: this.test
+        ent: this.importProducts
       }, {
         cnt: "导出",
         icon: "bf-out",
@@ -1104,7 +1121,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       alreadyCompId: [],
       updateCompList: [],
       updateList: [],
-      updateCompId: []
+      updateCompId: [],
+
+      //导入
+      importProductsMask: false
+
     };
   },
 
@@ -1122,7 +1143,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       set: function set() {}
     }
   },
-  methods: {
+  methods: (_methods = {
     handleQuery: function handleQuery() {},
 
     /*获取商品数据*/
@@ -1815,6 +1836,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this16.logisticsData = res.data;
       });
     },
+
+    /**导出 */
     excelExport: function excelExport() {
       var _this17 = this;
 
@@ -1827,8 +1850,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     /*其他*/
-    test: function test() {}
-  },
+    test: function test() {},
+
+    /**审核 */
+    importProducts: function importProducts() {
+      this.importProductsMask = true;
+    },
+    importProductsConfirm: function importProductsConfirm() {
+      this.$post(this.urls.users + "/import", this.xlsxFile);
+    }
+  }, _defineProperty(_methods, "beforeUpload", function beforeUpload(file) {
+    console.log("beforeUpload");
+    console.log(file.type);
+    this.xlsxFile = file;
+    var isText = file.type === "application/vnd.ms-excel";
+    var isTextComputer = file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    return isText | isTextComputer;
+  }), _defineProperty(_methods, "handleExceed", function handleExceed(files, fileList) {
+    this.$message.warning("\u5F53\u524D\u9650\u5236\u9009\u62E9 1 \u4E2A\u6587\u4EF6\uFF0C\u8BF7\u5220\u9664\u540E\u7EE7\u7EED\u4E0A\u4F20");
+  }), _defineProperty(_methods, "uploadFile", function uploadFile(item) {
+    var _this18 = this;
+
+    console.log(item);
+    var fileObj = item.file;
+    // FormData 对象
+    var form = new FormData();
+    // 文件对象
+    form.append("file", fileObj);
+    form.append("comId", this.comId);
+    console.log(JSON.stringify(form));
+    // let formTwo = JSON.stringify(form)
+    this.$post(this.urls.users + "/import", form).then(function (res) {
+      console.log("MediaAPI.upload");
+      console.log(res);
+      _this18.$message.info("文件：" + fileObj.name + "上传成功");
+    });
+  }), _methods),
   mounted: function mounted() {
     this.getProducts();
     this.$store.dispatch("setOpt", this.newOpt);
@@ -4111,6 +4168,70 @@ var render = function() {
               ])
             ],
             1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "批量导入用户", visible: _vm.importProductsMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.importProductsMask = $event
+            }
+          }
+        },
+        [
+          _c("el-button", { attrs: { type: "text" } }, [
+            _vm._v("导入产品Excel")
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-upload",
+            {
+              staticClass: "image-uploader",
+              attrs: {
+                multiple: false,
+                "auto-upload": true,
+                "list-type": "text",
+                "show-file-list": true,
+                "before-upload": _vm.beforeUpload,
+                drag: true,
+                action: "",
+                limit: 1,
+                "on-exceed": _vm.handleExceed,
+                "http-request": _vm.uploadFile
+              }
+            },
+            [
+              _c("i", { staticClass: "el-icon-upload" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "el-upload__text" }, [
+                _vm._v("将文件拖到此处，或\n        "),
+                _c("em", [_vm._v("点击上传")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "el-upload__tip",
+                  attrs: { slot: "tip" },
+                  slot: "tip"
+                },
+                [_vm._v("一次只能上传一个文件，仅限text格式，单文件不超过1MB")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { type: "primary" },
+              on: { click: _vm.importProductsConfirm }
+            },
+            [_vm._v("确定")]
           )
         ],
         1

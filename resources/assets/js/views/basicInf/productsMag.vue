@@ -431,6 +431,19 @@
         <el-button @click="cancelUpdateSku">取消</el-button>
       </div>
     </el-dialog>
+
+    <!--导入Excel-->
+    <el-dialog title="批量导入用户" :visible.sync="importProductsMask">
+      <el-button type="text">导入产品Excel</el-button>
+      <el-upload class='image-uploader' :multiple='false' :auto-upload='true' list-type='text' :show-file-list='true' :before-upload="beforeUpload" :drag='true' action='' :limit="1" :on-exceed="handleExceed" :http-request="uploadFile">
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或
+          <em>点击上传</em>
+        </div>
+        <div class="el-upload__tip" slot="tip">一次只能上传一个文件，仅限text格式，单文件不超过1MB</div>
+      </el-upload>
+      <el-button type="primary" @click="importProductsConfirm">确定</el-button>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -463,7 +476,7 @@ export default {
         {
           cnt: "导入",
           icon: "bf-in",
-          ent: this.test
+          ent: this.importProducts
         },
         {
           cnt: "导出",
@@ -1214,7 +1227,11 @@ export default {
       alreadyCompId: [],
       updateCompList: [],
       updateList: [],
-      updateCompId: []
+      updateCompId: [],
+
+      //导入
+      importProductsMask:false,
+
     };
   },
   computed: {
@@ -1945,6 +1962,7 @@ export default {
         this.logisticsData = res.data;
       });
     },
+    /**导出 */
     excelExport(){
       this.$fetch(this.urls.excel).then(res => {
         this.$message({
@@ -1954,7 +1972,45 @@ export default {
       });
     },
     /*其他*/
-    test() {}
+    test() {},
+    /**审核 */
+    importProducts(){
+      this.importProductsMask = true;
+    },
+    importProductsConfirm() {
+      this.$post(this.urls.users + "/import", this.xlsxFile);
+    },
+    beforeUpload(file) {
+      console.log("beforeUpload");
+      console.log(file.type);
+      this.xlsxFile = file;
+      const isText = file.type === "application/vnd.ms-excel";
+      const isTextComputer =
+        file.type ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+      return isText | isTextComputer;
+    },
+    // 上传文件个数超过定义的数量
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，请删除后继续上传`);
+    },
+    // 上传文件
+    uploadFile(item) {
+      console.log(item);
+      const fileObj = item.file;
+      // FormData 对象
+      const form = new FormData();
+      // 文件对象
+      form.append("file", fileObj);
+      form.append("comId", this.comId);
+      console.log(JSON.stringify(form));
+      // let formTwo = JSON.stringify(form)
+      this.$post(this.urls.users+"/import",form).then(res => {
+        console.log("MediaAPI.upload");
+        console.log(res);
+        this.$message.info("文件：" + fileObj.name + "上传成功");
+      });
+    }
   },
   mounted() {
     this.getProducts();

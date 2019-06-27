@@ -248,6 +248,16 @@ class ChangeOrder extends Model
         $this->ch_submitted_at = date("Y-m-d h:i:s");
         $this->change_status = self::CHANGE_STATUS_SUBMIT;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ChangeOrderOperationRecord();
+        $operationData->change_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = '订单变更-提交';
+        $operationData->description = '订单变更-提交';
+        $operationData->save();
     }
 
     /**
@@ -261,6 +271,16 @@ class ChangeOrder extends Model
          $this->ch_auditor_id = Auth::guard('api')->id();
          $this->ch_audited_at = date("Y-m-d h:i:s");
          $this->save();
+
+         $userId = Auth::guard('api')->id();
+         $userName = User::find($userId)->real_name;
+         $operationData = new ChangeOrderOperationRecord();
+         $operationData->change_orders_id = $this->id;
+         $operationData->user_id = Auth::guard('api')->id();
+         $operationData->user_name = $userName;
+         $operationData->operation = '订单变更-审核变更';
+         $operationData->description = '订单变更-审核变更';
+         $operationData->save();
      }
 
     /**
@@ -273,6 +293,16 @@ class ChangeOrder extends Model
         $this->change_status = self::CHANGE_STATUS_SUBMIT;
         $this->submitted_at = date("Y-m-d h:i:s");
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ChangeOrderOperationRecord();
+        $operationData->change_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = '订单变更-审核';
+        $operationData->description = '订单变更-审核';
+        $operationData->save();
     }
 
     /**
@@ -286,6 +316,16 @@ class ChangeOrder extends Model
         $this->change_status = self::CHANGE_STATUS_NEW;
         $this->submitted_at = null;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new ChangeOrderOperationRecord();
+        $operationData->change_orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = '订单变更-退审';
+        $operationData->description = '订单变更-退审';
+        $operationData->save();
     }
 
     /**
@@ -298,8 +338,17 @@ class ChangeOrder extends Model
          $this->locker_id = 0;
          $this->change_status = self::CHANGE_STATUS_CANCEL;
          $this->save();
-     }
 
+         $userId = Auth::guard('api')->id();
+         $userName = User::find($userId)->real_name;
+         $operationData = new ChangeOrderOperationRecord();
+         $operationData->change_orders_id = $this->id;
+         $operationData->user_id = Auth::guard('api')->id();
+         $operationData->user_name = $userName;
+         $operationData->operation = '订单变更-取消';
+         $operationData->description = '订单变更-取消';
+         $operationData->save();
+     }
 
     public function shop()
     {
@@ -376,8 +425,8 @@ class ChangeOrder extends Model
         return $this->hasMany(PaymentDetail::class, 'change_orders_id');
     }
 
-    public function orderOperationRecord()
+    public function changeOrderOperationRecord()
     {
-        return $this->hasMany(OrderOperationRecord::class, 'orders_id');
+        return $this->hasMany(ChangeOrderOperationRecord::class, 'change_orders_id');
     }
 }

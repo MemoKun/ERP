@@ -11,7 +11,7 @@ class ChangeOrderTransformer extends TransformerAbstract
         'shop', 'logistic', 'freightType', 'distribution',
         'distributionMethod', 'distributionType', 'takeDeliveryGoodsWay',
         'customerType', 'paymentMethod', 'warehouses', 'orderItems', 'businessPersonnel',
-        'locker', 'paymentDetails'
+        'locker', 'paymentDetails', 'changeOrderOperationRecord',
     ];
 
     public function transform(ChangeOrder $order)
@@ -214,5 +214,10 @@ class ChangeOrderTransformer extends TransformerAbstract
     public function includeUser(ChangeOrder $order)
     {
         return $this->item($order->user, new UserTransformer());
+    }
+
+    public function includeChangeOrderOperationRecord(ChangeOrder $order)
+    {
+        return $this->collection($order->changeOrderOperationRecord, new ChangeOrderOperationRecordTransformer());
     }
 }

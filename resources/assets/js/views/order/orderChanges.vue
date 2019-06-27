@@ -109,7 +109,7 @@
     <Pagination :page-url="this.urls.changeorders" @handlePagChg="handlePagChg" v-if="middleActiveName=='0'"></Pagination>
 
     <!--底部tab-->
-    <el-tabs v-model="bottomActiveName" @tab-click="secondHandleClick">
+    <el-tabs v-model="bottomActiveName">
       <el-tab-pane label="变更明细" name="0">
         <el-table :data="changeDetails" fit @selection-change="handleSelectionChange" v-loading="loading" height="200">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
@@ -141,11 +141,18 @@
                 <el-input v-model.trim="changeOrdersMainInfo[item.prop]" :placeholder="item.holder" disabled></el-input>
               </span>
             </span>
+            <span v-else-if="item.type=='select'">
+            <el-select v-model.trim="changeOrdersMainInfo[item.prop]" :placeholder="item.holder" disabled>
+              <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+              </span>
+            </el-select>
+          </span>
             <span v-else-if="item.type=='number'">
               <el-input type="number" v-model.trim="changeOrdersMainInfo[item.prop]" :placeholder="item.holder" disabled></el-input>
             </span>
             <span v-else-if="item.type=='textarea'">
-              <el-input type="textarea" v-model.trim="changeOrdersMainInfo[item.prop]" :placehode="item.holder"></el-input>
+              <el-input type="textarea" v-model.trim="changeOrdersMainInfo[item.prop]" :placehode="item.holder" disabled></el-input>
             </span>
           </el-form-item>
         </el-form>
@@ -2105,113 +2112,149 @@ export default {
           label: "店铺名称",
           prop: "shops_id",
           holder: "请选择店铺",
-          type: "text",
-          editChgAble: true
+          type: "select",
+          addChgAble: true,
+          editChgAble: true,
+          stateVal: "shop"
         },
         {
           label: "会员昵称",
           prop: "member_nick",
           holder: "请输入会员昵称",
+          addChgAble: true,
           type: "text"
         },
-        {
+        /*{
           label: "业务员",
           prop: "business_personnel_id",
           //inProp: "name",
-          type: "text"
-        },
+          type: "select",
+          stateVal: "user"
+        },*/
         {
           label: "物流公司",
           prop: "logistics_id",
           holder: "请选择物流公司",
-          type: "text"
+          type: "select",
+          stateVal: "logistics",
+          addChgAble: true,
         },
         {
           label: "承诺日期",
           prop: "promise_ship_time",
-          type: "text"
+          type: "text",
+          addChgAble: true,
         },
         {
           label: "预计运费",
           prop: "expected_freight",
           holder: "请输入预计运费",
-          type: "number"
+          type: "number",
+          addChgAble: true,
         },
         {
           label: "运费类型",
           prop: "freight_types_id",
           holder: "请选择运费类型",
-          type: "text"
+          type: "select",
+          stateVal: "freight_type",
+          addChgAble: true,
         },
-        {
+        /*{
           label: "三包服务",
           prop: "sanbao_service",
           holder: "请选择运费类型",
-          type: "text"
+          type: "text",
+          addChgAble: true,
         },
         {
           label: "三包类型",
           prop: "sanbao_type",
           holder: "请选择运费类型",
-          type: "text"
-        },
+          type: "text",
+          addChgAble: true,
+        },*/
         {
           label: "姓名",
           prop: "receiver_name",
           holder: "请输入姓名",
-          type: "text"
+          type: "text",
+          addChgAble: true,
         },
         {
           label: "固定电话",
           prop: "receiver_phone",
           holder: "请输入固定电话",
-          type: "number"
+          type: "number",
+          addChgAble: true,
         },
         {
           label: "手机",
           prop: "receiver_mobile",
           holder: "请输入手机号码",
-          type: "number"
+          type: "number",
+          addChgAble: true,
         },
         {
-          label: "省市区",
-          prop: "provinces",
-          type: "text"
+          label: "省",
+          width: "120",
+          prop: "receiver_state",
+          type: "text",
+          addChgAble: true,
+        },
+        {
+          label: "市",
+          width: "120",
+          prop: "receiver_city",
+          type: "text",
+          addChgAble: true,
+        },
+        {
+          label: "区",
+          width: "120",
+          prop: "receiver_district",
+          type: "text",
+          addChgAble: true,
         },
         {
           label: "邮编",
           prop: "receiver_zip",
           holder: "请输入邮编",
-          type: "text"
+          type: "text",
+          addChgAble: true,
         },
         {
           label: "地址",
           prop: "receiver_address",
-          type: "text"
+          type: "text",
+          addChgAble: true,
         },
         {
           label: "配送方式",
           prop: "distribution_methods_id",
-          type: "text"
+          type: "select",
+          stateVal:"distribution_method",
+          addChgAble: true,
         },
         {
           label: "配送信息",
           prop: "service_car_info",
-          type: "text"
+          type: "text",
+          addChgAble: true,
         },
         {
           label: "买家留言",
           prop: "buyer_message",
           type: "textarea",
-          editChgAble: false,
-          addChgAble: false
+          editChgAble: true,
+          addChgAble: true
         },
         {
           label: "卖家备注",
           prop: "seller_remark",
           type: "textarea",
-          editChgAble: false,
-          addChgAble: false
+          editChgAble: true,
+          addChgAble: true
         }
       ],
       operationHead: [
@@ -2346,13 +2389,13 @@ export default {
         case 0:
           this.$fetch(this.urls.changeorders + "/searchnew", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,orderOperationRecord"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,changeOrderOperationRecord"
           }).then(
             res => {
               this.loading = false;
               this.newOrderListData = [];
               this.newOrderListData = res.data;
-              //this.addChangeOrderFormVal = res.data[0];
+              this.changeOrdersMainInfo = res.data[0]?res.data[0]:{};
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2380,12 +2423,14 @@ export default {
         case 1:
           this.$fetch(this.urls.changeorders + "/searchuntreated", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,orderOperationRecord"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,applier,changeOrderOperationRecord"
           }).then(
             res => {
               this.loading = false;
               this.untreatedOrderListData = [];
               this.untreatedOrderListData = res.data;
+              this.changeOrdersMainInfo = res.data[0]?res.data[0]:{};
+              this.operationData = res.data[0]['changeOrderOperationRecord'].data?res.data[0]['changeOrderOperationRecord'].data:[];
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2413,12 +2458,14 @@ export default {
         case 2:
           this.$fetch(this.urls.changeorders + "/searchtreated", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
           }).then(
             res => {
               this.loading = false;
               this.treatedOrderListData = [];
               this.treatedOrderListData = res.data;
+              this.changeOrdersMainInfo = res.data[0]?res.data[0]:{};
+              this.operationData = res.data[0]['changeOrderOperationRecord'].data?res.data[0]['changeOrderOperationRecord'].data:[];
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2446,12 +2493,14 @@ export default {
         case 3:
           this.$fetch(this.urls.changeorders + "/searchcanceled", {
             include:
-              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
+              "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
           }).then(
             res => {
               this.loading = false;
               this.canceledOrderListData = [];
               this.canceledOrderListData = res.data;
+              this.changeOrdersMainInfo = res.data[0]?res.data[0]:{};
+              this.operationData = res.data[0]['changeOrderOperationRecord'].data?res.data[0]['changeOrderOperationRecord'].data:[];
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2866,7 +2915,7 @@ export default {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$fetch(this.urls.changeorders + "/" + id, {
           include:
-            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,orderOperationRecord"
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,changeOrderOperationRecord"
         }).then(
           res => {
             this.updateChangeOrderFormVal = res;
@@ -3160,7 +3209,7 @@ export default {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
         this.$fetch(this.urls.changeorders + "/" + id, {
           include:
-            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
+            "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
         }).then(
           res => {
             /*请求选中的数据并拼接用于patch Order的submit*/
@@ -3517,7 +3566,7 @@ export default {
         shops_id: this.proQuery.shops_id,
         short_name: this.proQuery.short_name,
         include:
-          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents,orderOperationRecord"
+          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
       }).then(
         res => {
           this.proVal = res.data;
@@ -3556,7 +3605,7 @@ export default {
     handlePagChg(page) {
       this.$fetch(this.urls.changeorders + "?page=" + page, {
         include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,orderOperationRecord"
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
       }).then(res => {
         let index = this.middleActiveName - 0;
         switch (index) {
@@ -3600,7 +3649,7 @@ export default {
     orderListRowClick(row) {
       this.curRowId = row.id;
       this.curRowData = row;
-      this.operationData = row["orderOperationRecord"].data;
+      this.operationData = row["changeOrderOperationRecord"]?row["changeOrderOperationRecord"].data:[];
       this.changeOrdersMainInfo = this.curRowData;
       if (row["change_status"] == 10) {
         this.newOpt[0].nClick = false;

@@ -113,6 +113,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -126,6 +139,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         icon: "bf-change",
         ent: this.test
       }, {
+        cnt: "导入",
+        icon: "bf-in",
+        ent: this.importUsers
+      }, {
         cnt: "删除",
         icon: "bf-del",
         ent: this.test
@@ -136,7 +153,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }],
       loading: false,
       checkboxInit: false,
-      userListData: {},
+      userListData: [],
 
       tableHead: [[
       /*{
@@ -226,7 +243,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }]],
       /**新增 */
       addUserMask: false,
-      addUserFormVal: {}
+      addUserFormVal: {},
+      importUsersMask: false,
+      xlsxFile: ""
     };
   },
 
@@ -283,6 +302,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     refresh: function refresh() {
       this.loading = true;
       this.fetchData();
+    },
+    importUsers: function importUsers() {
+      this.importUsersMask = true;
+    },
+    importUsersConfirm: function importUsersConfirm() {
+      this.$post(this.urls.users + "/import", this.xlsxFile);
+    },
+    beforeUpload: function beforeUpload(file) {
+      console.log("beforeUpload");
+      console.log(file.type);
+      this.xlsxFile = file;
+      var isText = file.type === "application/vnd.ms-excel";
+      var isTextComputer = file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+      return isText | isTextComputer;
+    },
+
+    // 上传文件个数超过定义的数量
+    handleExceed: function handleExceed(files, fileList) {
+      this.$message.warning("\u5F53\u524D\u9650\u5236\u9009\u62E9 1 \u4E2A\u6587\u4EF6\uFF0C\u8BF7\u5220\u9664\u540E\u7EE7\u7EED\u4E0A\u4F20");
+    },
+
+    // 上传文件
+    uploadFile: function uploadFile(item) {
+      var _this3 = this;
+
+      console.log(item);
+      var fileObj = item.file;
+      // FormData 对象
+      var form = new FormData();
+      // 文件对象
+      form.append("file", fileObj);
+      form.append("comId", this.comId);
+      console.log(JSON.stringify(form));
+      // let formTwo = JSON.stringify(form)
+      this.$post(this.urls.users + "/import", form).then(function (res) {
+        console.log("MediaAPI.upload");
+        console.log(res);
+        _this3.$message.info("文件：" + fileObj.name + "上传成功");
+      });
     }
   },
   mounted: function mounted() {
@@ -610,6 +668,70 @@ var render = function() {
             ]
           )
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "批量导入用户", visible: _vm.importUsersMask },
+          on: {
+            "update:visible": function($event) {
+              _vm.importUsersMask = $event
+            }
+          }
+        },
+        [
+          _c("el-button", { attrs: { type: "text" } }, [
+            _vm._v("导入用户Excel")
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-upload",
+            {
+              staticClass: "image-uploader",
+              attrs: {
+                multiple: false,
+                "auto-upload": true,
+                "list-type": "text",
+                "show-file-list": true,
+                "before-upload": _vm.beforeUpload,
+                drag: true,
+                action: "",
+                limit: 1,
+                "on-exceed": _vm.handleExceed,
+                "http-request": _vm.uploadFile
+              }
+            },
+            [
+              _c("i", { staticClass: "el-icon-upload" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "el-upload__text" }, [
+                _vm._v("将文件拖到此处，或\n        "),
+                _c("em", [_vm._v("点击上传")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "el-upload__tip",
+                  attrs: { slot: "tip" },
+                  slot: "tip"
+                },
+                [_vm._v("一次只能上传一个文件，仅限text格式，单文件不超过1MB")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { type: "primary" },
+              on: { click: _vm.importUsersConfirm }
+            },
+            [_vm._v("确定")]
+          )
+        ],
+        1
       )
     ],
     1

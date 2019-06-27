@@ -54,8 +54,21 @@
       </div>
     </el-dialog>
 
+    <el-dialog title="批量导入用户" :visible.sync="importUsersMask">
+      <el-button type="text">导入用户Excel</el-button>
+      <el-upload class='image-uploader' :multiple='false' :auto-upload='true' list-type='text' :show-file-list='true' :before-upload="beforeUpload" :drag='true' action='' :limit="1" :on-exceed="handleExceed" :http-request="uploadFile">
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或
+          <em>点击上传</em>
+        </div>
+        <div class="el-upload__tip" slot="tip">一次只能上传一个文件，仅限text格式，单文件不超过1MB</div>
+      </el-upload>
+      <el-button type="primary" @click="importUsersConfirm">确定</el-button>
+    </el-dialog>
+
     <!--页码-->
     <!--<Pagination :page-url="delBatchUrl" @handlePagChg="handlePagChg"></Pagination>-->
+
   </div>
 </template>
 <script>
@@ -74,6 +87,11 @@ export default {
           ent: this.test
         },
         {
+          cnt: "导入",
+          icon: "bf-in",
+          ent: this.importUsers
+        },
+        {
           cnt: "删除",
           icon: "bf-del",
           ent: this.test
@@ -86,7 +104,7 @@ export default {
       ],
       loading: false,
       checkboxInit: false,
-      userListData: {},
+      userListData:[],
 
       tableHead: [
         [
@@ -196,7 +214,9 @@ export default {
       ],
       /**新增 */
       addUserMask: false,
-      addUserFormVal: {}
+      addUserFormVal: {},
+      importUsersMask:false,
+      xlsxFile:""
     };
   },
   computed: {
@@ -243,10 +263,47 @@ export default {
       this.addUserFormVal = {};
     },
     /**修改 */
-    refresh(){
+    refresh() {
       this.loading = true;
       this.fetchData();
     },
+    importUsers(){
+      this.importUsersMask = true;
+    },
+    importUsersConfirm() {
+      this.$post(this.urls.users + "/import", this.xlsxFile);
+    },
+    beforeUpload(file) {
+      console.log("beforeUpload");
+      console.log(file.type);
+      this.xlsxFile = file;
+      const isText = file.type === "application/vnd.ms-excel";
+      const isTextComputer =
+        file.type ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+      return isText | isTextComputer;
+    },
+    // 上传文件个数超过定义的数量
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，请删除后继续上传`);
+    },
+    // 上传文件
+    uploadFile(item) {
+      console.log(item);
+      const fileObj = item.file;
+      // FormData 对象
+      const form = new FormData();
+      // 文件对象
+      form.append("file", fileObj);
+      form.append("comId", this.comId);
+      console.log(JSON.stringify(form));
+      // let formTwo = JSON.stringify(form)
+      this.$post(this.urls.users+"/import",form).then(res => {
+        console.log("MediaAPI.upload");
+        console.log(res);
+        this.$message.info("文件：" + fileObj.name + "上传成功");
+      });
+    }
   },
   mounted() {
     this.fetchData();
