@@ -504,7 +504,7 @@
           </span>
         </el-form-item>
       </el-form>
-      <el-tabs v-model="addActiveName" id="elTabs" class="hidePart">
+      <el-tabs v-model="addActiveName" id="elTabs">
         <el-tab-pane label="商品信息" name="0">
           <el-table :data="proData" fit @row-click="addProRowClick" :row-class-name="addProRCName">
             <el-table-column v-for="item in addHead[addActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -3319,6 +3319,7 @@ export default {
           products_id: item.pid,
           combinations_id: item.id,
           total_volume: item["newData"].total_volume,
+          quantity: item["newData"].quantity,
           paint: item["newData"].paint,
           is_printing: item["newData"].is_printing,
           printing_fee: item["newData"].printing_fee,

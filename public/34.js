@@ -3022,6 +3022,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
           products_id: item.pid,
           combinations_id: item.id,
           total_volume: item["newData"].total_volume,
+          quantity: item["newData"].quantity,
           paint: item["newData"].paint,
           is_printing: item["newData"].is_printing,
           printing_fee: item["newData"].printing_fee,
@@ -6631,7 +6632,6 @@ var render = function() {
           _c(
             "el-tabs",
             {
-              staticClass: "hidePart",
               attrs: { id: "elTabs" },
               model: {
                 value: _vm.addActiveName,
