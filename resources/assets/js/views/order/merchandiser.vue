@@ -897,7 +897,7 @@ export default {
         {
           cnt: "驳回",
           icon: "bf-reject",
-          ent: this.handleUnOneAudit,
+          ent: this.handleUnAudit,
           nClick: true
         },
         {
@@ -2922,25 +2922,92 @@ export default {
     //修改
     //驳回
     handleUnAudit() {
-      if (this.newOpt[0].nClick) {
+      if (this.newOpt[1].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        if (this.curRowData["order_status"] == "已跟单一审") {
+        if (this.curRowData["order_status"] == "已客审") {
           this.$put(this.urls.merchandiserdepts + "/" + id + "/unaudit").then(
             () => {
               this.refresh();
               this.$message({
-                message: "驳回成功",
+                message: "驳回客审成功",
                 type: "success"
               });
+              this.newOpt[0].nClick = true;
+              this.newOpt[1].nClick = true;
+              this.newOpt[2].nClick = true;
+              this.newOpt[3].nClick = true;
+              this.newOpt[4].nClick = true;
+              this.newOpt[5].nClick = true;
+              this.newOpt[6].nClick = true;
+              this.newOpt[7].nClick = true;
+              this.newOpt[8].nClick = true;
+              this.newOpt[9].nClick = true;
+              this.newOpt[10].nClick = true;
+              this.newOpt[11].nClick = true;
+              this.newOpt[12].nClick = false;
             },
             err => {
               this.$message.error(err.response.data.message);
             }
           );
-        } else {
-          this.$message.error("跟单一审后才能驳回");
+        }
+        if (this.curRowData["order_status"] == "已跟单一审") {
+          this.$put(
+            this.urls.merchandiserdepts + "/" + id + "/unoneaudit"
+          ).then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "驳回跟单一审成功",
+                type: "success"
+              });
+              this.newOpt[0].nClick = true;
+              this.newOpt[1].nClick = true;
+              this.newOpt[2].nClick = true;
+              this.newOpt[3].nClick = true;
+              this.newOpt[4].nClick = true;
+              this.newOpt[5].nClick = true;
+              this.newOpt[6].nClick = true;
+              this.newOpt[7].nClick = true;
+              this.newOpt[8].nClick = true;
+              this.newOpt[9].nClick = true;
+              this.newOpt[10].nClick = true;
+              this.newOpt[11].nClick = true;
+              this.newOpt[12].nClick = false;
+            },
+            err => {
+              this.$message.error(err.response.data.message);
+            }
+          );
+        }
+        if (this.curRowData["order_status"] == "已财审") {
+          this.$put(this.urls.merchandiserdepts + "/" + id + "/unfdaudit").then(
+            () => {
+              this.refresh();
+              this.$message({
+                message: "驳回财审成功",
+                type: "success"
+              });
+              this.newOpt[0].nClick = true;
+              this.newOpt[1].nClick = true;
+              this.newOpt[2].nClick = true;
+              this.newOpt[3].nClick = true;
+              this.newOpt[4].nClick = true;
+              this.newOpt[5].nClick = true;
+              this.newOpt[6].nClick = true;
+              this.newOpt[7].nClick = true;
+              this.newOpt[8].nClick = true;
+              this.newOpt[9].nClick = true;
+              this.newOpt[10].nClick = true;
+              this.newOpt[11].nClick = true;
+              this.newOpt[12].nClick = false;
+            },
+            err => {
+              this.$message.error(err.response.data.message);
+            }
+          );
         }
       }
     },
@@ -3026,19 +3093,33 @@ export default {
       }
     },
     handleunCargoAudit() {
-      this.newOpt[0].nClick = true;
-      this.newOpt[1].nClick = false;
-      this.newOpt[2].nClick = true;
-      this.newOpt[3].nClick = false;
-      this.newOpt[4].nClick = true;
-      this.newOpt[5].nClick = true;
-      this.newOpt[6].nClick = true;
-      this.newOpt[7].nClick = false;
-      this.newOpt[8].nClick = false;
-      this.newOpt[9].nClick = false;
-      this.newOpt[10].nClick = false;
-      this.newOpt[11].nClick = false;
-      this.newOpt[12].nClick = false;
+      if (this.curRowData["order_status"] == "已货审") {
+        this.$put(this.urls.merchandiserdepts + "/" + id + "/unfdaudit").then(
+          () => {
+            this.refresh();
+            this.$message({
+              message: "驳回货审成功",
+              type: "success"
+            });
+            this.newOpt[0].nClick = true;
+            this.newOpt[1].nClick = true;
+            this.newOpt[2].nClick = true;
+            this.newOpt[3].nClick = true;
+            this.newOpt[4].nClick = true;
+            this.newOpt[5].nClick = true;
+            this.newOpt[6].nClick = true;
+            this.newOpt[7].nClick = true;
+            this.newOpt[8].nClick = true;
+            this.newOpt[9].nClick = true;
+            this.newOpt[10].nClick = true;
+            this.newOpt[11].nClick = true;
+            this.newOpt[12].nClick = false;
+          },
+          err => {
+            this.$message.error(err.response.data.message);
+          }
+        );
+      }
     },
     warehouseChg(val) {
       let id = this.checkboxId ? this.checkboxId : this.curRowId;
@@ -3720,7 +3801,7 @@ export default {
         order_transMStart: "",
         order_order_transMEndmark: ""
       };
-    },
+    }
   },
   mounted() {
     this.fetchData();

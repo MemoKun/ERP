@@ -267,6 +267,16 @@ class MerchandiserDepartmentsController extends Controller
             'unAudit'
         );
     }
+    public function isUnFdAudit(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_FD_AUDIT,
+            '财审驳回出错',
+            'refuseFinancialAudit'
+        );
+    }
+
 
     /**
      * 跟单一审
@@ -312,6 +322,16 @@ class MerchandiserDepartmentsController extends Controller
             !$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_ONE_AUDIT,
             '跟单一审退审出错',
             'unOneAudit'
+        );
+    }
+
+    public function isUnCargoAudit(Order $order)
+    {
+        return $this->traitAction(
+            $order,
+            !$order->status || $order->getOriginal('order_status') != $order::ORDER_STATUS_CARGO_AUDIT,
+            '驳回货审出错',
+            'unCargoAudit'
         );
     }
 

@@ -826,8 +826,13 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.merchandiserdepts.isunoneaudit');
         $api->put('merchandiserdepts/{order}/cargoaudit', 'MerchandiserDepartmentsController@isCargoAudit')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.iscargoaudit');
+        $api->put('merchandiserdepts/{order}/uncargoaudit', 'MerchandiserDepartmentsController@isUnCargoAudit')->middleware('permission:跟单部')
+            ->name('api.merchandiserdepts.isuncargoaudit');
+        $api->put('merchandiserdepts/{order}/unfdaudit', 'MerchandiserDepartmentsController@isUnFdAudit')->middleware('permission:跟单部')
+            ->name('api.merchandiserdepts.isunfdAudit');
         $api->patch('merchandiserdepts/{order}', 'MerchandiserDepartmentsController@update')->middleware('permission:跟单部')
             ->name('api.merchandiserdepts.update');
+        
         // $api->put('merchandiserdepts/{order}/splitorder', 'MerchandiserDepartmentsController@isSplitOrder')->middleware('permission:跟单部')
         //     ->name('api.merchandiserdepts.issplitorder');
         // $api->put('merchandiserdepts/mergerorder', 'MerchandiserDepartmentsController@isMergerOrder')->middleware('permission:跟单部')

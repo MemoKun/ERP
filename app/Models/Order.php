@@ -462,6 +462,18 @@ class Order extends Model
     {
         $this->order_status = self::ORDER_STATUS_CS_AUDIT;
         $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new OrderOperationRecord();
+        $operationData->orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = '驳回跟单一审';
+        $operationData->description = '驳回跟单一审';
+        $operationData->save();
+
+
     }
 
     /**
@@ -507,6 +519,28 @@ class Order extends Model
     }
 
     /**
+     * 退回财审
+     *
+     * @return bool
+     */
+     public function refuseFinancialAudit()
+     {
+         $this->order_status = self::ORDER_STATUS_ONE_AUDIT;
+         $this->save();
+ 
+         $userId = Auth::guard('api')->id();
+         $userName = User::find($userId)->real_name;
+         $operationData = new OrderOperationRecord();
+         $operationData->orders_id = $this->id;
+         $operationData->user_id = Auth::guard('api')->id();
+         $operationData->user_name = $userName;
+         $operationData->operation = '跟单-驳回财审';
+         $operationData->description = '跟单-驳回财审,状态变更为：跟单一审';
+         $operationData->save();
+     }
+
+
+    /**
      * 跟单货审
      *
      * @return bool
@@ -522,8 +556,24 @@ class Order extends Model
         $operationData->orders_id = $this->id;
         $operationData->user_id = Auth::guard('api')->id();
         $operationData->user_name = $userName;
-        $operationData->operation = '跟单货审';
-        $operationData->description = '跟单货审';
+        $operationData->operation = '跟单部-跟单货审';
+        $operationData->description = '跟单部-跟单货审';
+        $operationData->save();
+    }
+
+    public function unCargoAudit()
+    {
+        $this->order_status = self::ORDER_STATUS_CARGO_AUDIT;
+        $this->save();
+
+        $userId = Auth::guard('api')->id();
+        $userName = User::find($userId)->real_name;
+        $operationData = new OrderOperationRecord();
+        $operationData->orders_id = $this->id;
+        $operationData->user_id = Auth::guard('api')->id();
+        $operationData->user_name = $userName;
+        $operationData->operation = '跟单部-驳回货审';
+        $operationData->description = '跟单部-驳回货审，状态变为：已财审';
         $operationData->save();
     }
 

@@ -906,7 +906,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: "驳回",
         icon: "bf-reject",
-        ent: this.handleUnOneAudit,
+        ent: this.handleUnAudit,
         nClick: true
       }, {
         cnt: "审核",
@@ -2665,22 +2665,81 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleUnAudit: function handleUnAudit() {
       var _this4 = this;
 
-      if (this.newOpt[0].nClick) {
+      if (this.newOpt[1].nClick) {
         return;
       } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        if (this.curRowData["order_status"] == "已跟单一审") {
-          this.$put(this.urls.merchandiserdepts + "/" + id + "/unaudit").then(function () {
+        var _id = this.checkboxId ? this.checkboxId : this.curRowId;
+        if (this.curRowData["order_status"] == "已客审") {
+          this.$put(this.urls.merchandiserdepts + "/" + _id + "/unaudit").then(function () {
             _this4.refresh();
             _this4.$message({
-              message: "驳回成功",
+              message: "驳回客审成功",
               type: "success"
             });
+            _this4.newOpt[0].nClick = true;
+            _this4.newOpt[1].nClick = true;
+            _this4.newOpt[2].nClick = true;
+            _this4.newOpt[3].nClick = true;
+            _this4.newOpt[4].nClick = true;
+            _this4.newOpt[5].nClick = true;
+            _this4.newOpt[6].nClick = true;
+            _this4.newOpt[7].nClick = true;
+            _this4.newOpt[8].nClick = true;
+            _this4.newOpt[9].nClick = true;
+            _this4.newOpt[10].nClick = true;
+            _this4.newOpt[11].nClick = true;
+            _this4.newOpt[12].nClick = false;
           }, function (err) {
             _this4.$message.error(err.response.data.message);
           });
-        } else {
-          this.$message.error("跟单一审后才能驳回");
+        }
+        if (this.curRowData["order_status"] == "已跟单一审") {
+          this.$put(this.urls.merchandiserdepts + "/" + _id + "/unoneaudit").then(function () {
+            _this4.refresh();
+            _this4.$message({
+              message: "驳回跟单一审成功",
+              type: "success"
+            });
+            _this4.newOpt[0].nClick = true;
+            _this4.newOpt[1].nClick = true;
+            _this4.newOpt[2].nClick = true;
+            _this4.newOpt[3].nClick = true;
+            _this4.newOpt[4].nClick = true;
+            _this4.newOpt[5].nClick = true;
+            _this4.newOpt[6].nClick = true;
+            _this4.newOpt[7].nClick = true;
+            _this4.newOpt[8].nClick = true;
+            _this4.newOpt[9].nClick = true;
+            _this4.newOpt[10].nClick = true;
+            _this4.newOpt[11].nClick = true;
+            _this4.newOpt[12].nClick = false;
+          }, function (err) {
+            _this4.$message.error(err.response.data.message);
+          });
+        }
+        if (this.curRowData["order_status"] == "已财审") {
+          this.$put(this.urls.merchandiserdepts + "/" + _id + "/unfdaudit").then(function () {
+            _this4.refresh();
+            _this4.$message({
+              message: "驳回财审成功",
+              type: "success"
+            });
+            _this4.newOpt[0].nClick = true;
+            _this4.newOpt[1].nClick = true;
+            _this4.newOpt[2].nClick = true;
+            _this4.newOpt[3].nClick = true;
+            _this4.newOpt[4].nClick = true;
+            _this4.newOpt[5].nClick = true;
+            _this4.newOpt[6].nClick = true;
+            _this4.newOpt[7].nClick = true;
+            _this4.newOpt[8].nClick = true;
+            _this4.newOpt[9].nClick = true;
+            _this4.newOpt[10].nClick = true;
+            _this4.newOpt[11].nClick = true;
+            _this4.newOpt[12].nClick = false;
+          }, function (err) {
+            _this4.$message.error(err.response.data.message);
+          });
         }
       }
     },
@@ -2692,8 +2751,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.newOpt[2].nClick) {
         return;
       } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.merchandiserdepts + "/" + id + "/oneaudit").then(function () {
+        var _id2 = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.merchandiserdepts + "/" + _id2 + "/oneaudit").then(function () {
           _this5.refresh();
           _this5.$message({
             message: "跟单一审成功",
@@ -2763,28 +2822,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     handleunCargoAudit: function handleunCargoAudit() {
-      this.newOpt[0].nClick = true;
-      this.newOpt[1].nClick = false;
-      this.newOpt[2].nClick = true;
-      this.newOpt[3].nClick = false;
-      this.newOpt[4].nClick = true;
-      this.newOpt[5].nClick = true;
-      this.newOpt[6].nClick = true;
-      this.newOpt[7].nClick = false;
-      this.newOpt[8].nClick = false;
-      this.newOpt[9].nClick = false;
-      this.newOpt[10].nClick = false;
-      this.newOpt[11].nClick = false;
-      this.newOpt[12].nClick = false;
+      var _this7 = this;
+
+      if (this.curRowData["order_status"] == "已货审") {
+        this.$put(this.urls.merchandiserdepts + "/" + id + "/unfdaudit").then(function () {
+          _this7.refresh();
+          _this7.$message({
+            message: "驳回货审成功",
+            type: "success"
+          });
+          _this7.newOpt[0].nClick = true;
+          _this7.newOpt[1].nClick = true;
+          _this7.newOpt[2].nClick = true;
+          _this7.newOpt[3].nClick = true;
+          _this7.newOpt[4].nClick = true;
+          _this7.newOpt[5].nClick = true;
+          _this7.newOpt[6].nClick = true;
+          _this7.newOpt[7].nClick = true;
+          _this7.newOpt[8].nClick = true;
+          _this7.newOpt[9].nClick = true;
+          _this7.newOpt[10].nClick = true;
+          _this7.newOpt[11].nClick = true;
+          _this7.newOpt[12].nClick = false;
+        }, function (err) {
+          _this7.$message.error(err.response.data.message);
+        });
+      }
     },
     warehouseChg: function warehouseChg(val) {
-      var _this7 = this;
+      var _this8 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$fetch(this.urls.merchandiserdepts + "/" + id + "/stock", {
         warehouses_id: val
       }).then(function (res) {
-        _this7.cargoAuditTableVal = res["order_items"];
+        _this8.cargoAuditTableVal = res["order_items"];
       }, function (err) {
         console.log(err);
       });
@@ -2794,7 +2866,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formVal["total_distribution_fee"] = formVal["deliver_goods_fee"] - 0 + (formVal["move_upstairs_fee"] - 0) + (formVal["installation_fee"] - 0);
     },
     cargoAuditConfirm: function cargoAuditConfirm() {
-      var _this8 = this;
+      var _this9 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       var formData = this.cargoAuditFormVal;
@@ -2814,14 +2886,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         warehouses_id: formData.warehouses_id
       };
       this.$put(this.urls.merchandiserdepts + "/" + id + "/cargoaudit", submitData).then(function () {
-        _this8.refresh();
-        _this8.$message({
+        _this9.refresh();
+        _this9.$message({
           message: "货审成功",
           type: "success"
         });
-        _this8.cargoAuditMask = false;
+        _this9.cargoAuditMask = false;
       }, function (err) {
-        _this8.$message.error(err.response.data.message);
+        _this9.$message.error(err.response.data.message);
       });
     },
     cargoAuditCancel: function cargoAuditCancel() {
@@ -2834,40 +2906,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     //退回货审
     handleUnOneAudit: function handleUnOneAudit() {
-      var _this9 = this;
+      var _this10 = this;
 
       if (this.newOpt[1].nClick) {
         return;
       } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.merchandiserdepts + "/" + id + "/unoneaudit").then(function () {
-          _this9.refresh();
-          _this9.$message({
+        var _id3 = this.checkboxId ? this.checkboxId : this.curRowId;
+        this.$put(this.urls.merchandiserdepts + "/" + _id3 + "/unoneaudit").then(function () {
+          _this10.refresh();
+          _this10.$message({
             message: "驳回跟单一审成功",
             type: "success"
           });
-          _this9.newOpt[0].nClick = true;
-          _this9.newOpt[1].nClick = false;
-          _this9.newOpt[2].nClick = false;
-          _this9.newOpt[3].nClick = true;
-          _this9.newOpt[4].nClick = true;
-          _this9.newOpt[5].nClick = true;
-          _this9.newOpt[6].nClick = true;
-          _this9.newOpt[7].nClick = false;
-          _this9.newOpt[8].nClick = false;
-          _this9.newOpt[9].nClick = false;
-          _this9.newOpt[10].nClick = false;
-          _this9.newOpt[11].nClick = false;
-          _this9.newOpt[12].nClick = false;
+          _this10.newOpt[0].nClick = true;
+          _this10.newOpt[1].nClick = false;
+          _this10.newOpt[2].nClick = false;
+          _this10.newOpt[3].nClick = true;
+          _this10.newOpt[4].nClick = true;
+          _this10.newOpt[5].nClick = true;
+          _this10.newOpt[6].nClick = true;
+          _this10.newOpt[7].nClick = false;
+          _this10.newOpt[8].nClick = false;
+          _this10.newOpt[9].nClick = false;
+          _this10.newOpt[10].nClick = false;
+          _this10.newOpt[11].nClick = false;
+          _this10.newOpt[12].nClick = false;
         }, function (err) {
-          _this9.$message.error(err.response.data.message);
+          _this10.$message.error(err.response.data.message);
         });
       }
     },
 
     //发货
     stockOut: function stockOut() {
-      var _this10 = this;
+      var _this11 = this;
 
       if (this.newOpt[5].nClick) {
         this.$message({
@@ -2890,22 +2962,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.updateReceiveInfo = {};
           this.updateExpenseData = [];
           this.proRIndex = "";
-          var id = this.checkboxId ? this.checkboxId : this.curRowId;
-          this.$fetch(this.urls.customerservicedepts + "/" + id, {
+          var _id4 = this.checkboxId ? this.checkboxId : this.curRowId;
+          this.$fetch(this.urls.customerservicedepts + "/" + _id4, {
             include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails,orderOperationRecord"
           }).then(function (res) {
-            var _this10$updateReceive;
+            var _this11$updateReceive;
 
-            _this10.updateCustomerFormVal = res;
+            _this11.updateCustomerFormVal = res;
             if (res["orderItems"]["data"].length > 0) {
               res["orderItems"]["data"].map(function (item) {
-                _this10.updateProIds.push(item["combination"].id);
+                _this11.updateProIds.push(item["combination"].id);
                 item["name"] = item["combination"]["name"];
                 item["id"] = item.id;
                 item["products_id"] = item.products_id;
                 item["combinations_id"] = item.combinations_id;
                 item["productComp"] = item["combination"]["productComponents"]["data"];
-                _this10.$set(item, "newData", {
+                _this11.$set(item, "newData", {
                   quantity: item.quantity,
                   paint: item.paint,
                   is_printing: item.is_printing,
@@ -2917,14 +2989,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
               });
             }
-            _this10.updateProData = res["orderItems"]["data"];
-            _this10.updateReceiveInfo = (_this10$updateReceive = {
+            _this11.updateProData = res["orderItems"]["data"];
+            _this11.updateReceiveInfo = (_this11$updateReceive = {
               receiver_name: res.receiver_name,
               receiver_phone: res.receiver_phone,
               receiver_mobile: res.receiver_mobile,
               receiver_state: res.receiver_state
-            }, _defineProperty(_this10$updateReceive, "receiver_state", res.receiver_city), _defineProperty(_this10$updateReceive, "receiver_district", res.receiver_district), _defineProperty(_this10$updateReceive, "receiver_address", res.receiver_address), _defineProperty(_this10$updateReceive, "receiver_zip", res.receiver_zip), _this10$updateReceive);
-            _this10.updateExpenseData = res["paymentDetails"]["data"];
+            }, _defineProperty(_this11$updateReceive, "receiver_state", res.receiver_city), _defineProperty(_this11$updateReceive, "receiver_district", res.receiver_district), _defineProperty(_this11$updateReceive, "receiver_address", res.receiver_address), _defineProperty(_this11$updateReceive, "receiver_zip", res.receiver_zip), _this11$updateReceive);
+            _this11.updateExpenseData = res["paymentDetails"]["data"];
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
@@ -2933,14 +3005,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 arr1.push(arr[i]);
               }
               var str = arr1.join(",");
-              _this10.$message.error(str);
+              _this11.$message.error(str);
             }
           });
         }
       }
     },
     stockOutConfirm: function stockOutConfirm() {
-      var _this11 = this;
+      var _this12 = this;
 
       var forData = this.updateCustomerFormVal;
       var submitData = {
@@ -3074,25 +3146,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "success"
       });
       this.$patch(this.urls.merchandiserdepts + "/" + id, submitData).then(function () {
-        _this11.stockOutMask = false;
-        _this11.refresh();
-        _this11.$message({
+        _this12.stockOutMask = false;
+        _this12.refresh();
+        _this12.$message({
           message: "发货成功",
           type: "success"
         });
-        _this11.newOpt[0].nClick = false;
-        _this11.newOpt[1].nClick = true;
-        _this11.newOpt[2].nClick = true;
-        _this11.newOpt[3].nClick = true;
-        _this11.newOpt[4].nClick = true;
-        _this11.newOpt[5].nClick = true;
-        _this11.newOpt[6].nClick = false;
-        _this11.newOpt[7].nClick = false;
-        _this11.newOpt[8].nClick = true;
-        _this11.newOpt[9].nClick = true;
-        _this11.newOpt[10].nClick = true;
-        _this11.newOpt[11].nClick = false;
-        _this11.newOpt[12].nClick = false;
+        _this12.newOpt[0].nClick = false;
+        _this12.newOpt[1].nClick = true;
+        _this12.newOpt[2].nClick = true;
+        _this12.newOpt[3].nClick = true;
+        _this12.newOpt[4].nClick = true;
+        _this12.newOpt[5].nClick = true;
+        _this12.newOpt[6].nClick = false;
+        _this12.newOpt[7].nClick = false;
+        _this12.newOpt[8].nClick = true;
+        _this12.newOpt[9].nClick = true;
+        _this12.newOpt[10].nClick = true;
+        _this12.newOpt[11].nClick = false;
+        _this12.newOpt[12].nClick = false;
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -3101,7 +3173,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this11.$message.error(str);
+          _this12.$message.error(str);
         }
       });
     },
@@ -3110,7 +3182,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //导出
     //合并
     handleMergerOrder: function handleMergerOrder() {
-      var _this12 = this;
+      var _this13 = this;
 
       if (this.newOpt[8].nClick) {
         return;
@@ -3126,15 +3198,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             ids.push(item.id);
           });
           this.$put(this.urls.customerservicedepts + "/mergerorder" + "?order_id_one=" + ids[0] + "&order_id_two=" + ids[1]).then(function () {
-            _this12.refresh();
-            _this12.$message({
+            _this13.refresh();
+            _this13.$message({
               message: "订单合并成功",
               type: "success"
             });
-            _this12.mergerIds = [];
+            _this13.mergerIds = [];
           }, function (err) {
             if (err.response) {
-              _this12.$message.error("合并订单出错");
+              _this13.$message.error("合并订单出错");
             }
           });
         }
@@ -3143,7 +3215,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     //拆分
     handleSplitOrder: function handleSplitOrder() {
-      var _this13 = this;
+      var _this14 = this;
 
       if (this.newOpt[9].nClick) {
         return;
@@ -3163,7 +3235,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 quantity: ""
               }
             };
-            _this13.splitVal.push(list);
+            _this14.splitVal.push(list);
           });
         }
       }
@@ -3184,7 +3256,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     confirmSplit: function confirmSplit() {
-      var _this14 = this;
+      var _this15 = this;
 
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       var confSplit = {
@@ -3202,8 +3274,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
       this.$put(this.urls.customerservicedepts + "/" + id + "/splitorder", confSplit).then(function () {
-        _this14.splitMask = false;
-        _this14.refresh();
+        _this15.splitMask = false;
+        _this15.refresh();
         /*   this.newOpt[1].nClick = false;
           this.newOpt[2].nClick = false;
           this.newOpt[3].nClick = true;
@@ -3216,7 +3288,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.newOpt[14].nClick = true;
           this.newOpt[15].nClick = false;
           this.newOpt[18].nClick = false;*/
-        _this14.$message({
+        _this15.$message({
           message: "订单拆分成功",
           type: "success"
         });
@@ -3228,7 +3300,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this14.$message.error(str);
+          _this15.$message.error(str);
         }
       });
     },
@@ -3244,17 +3316,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     //订单采购
     orderPurchase: function orderPurchase() {
-      var _this15 = this;
+      var _this16 = this;
 
       this.orderPurchaseMask = true;
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$fetch(this.urls.merchandiserdepts + "/searchorderpurchase" + "/" + id, {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
       }).then(function (res) {
-        _this15.orderPurchaseFormVal = res;
-        _this15.orderPurchaseSubmitForm.receiver = res.receiver_name;
-        _this15.orderPurchaseSubmitForm.receiver_address = res.receiver_address;
-        _this15.orderPurchaseSubmitForm.remark = res.seller_remark;
+        _this16.orderPurchaseFormVal = res;
+        _this16.orderPurchaseSubmitForm.receiver = res.receiver_name;
+        _this16.orderPurchaseSubmitForm.receiver_address = res.receiver_address;
+        _this16.orderPurchaseSubmitForm.remark = res.seller_remark;
         if (res["orderItems"]["data"].length > 0) {
           res["orderItems"]["data"].map(function (item) {
             item["name"] = item["combination"]["name"];
@@ -3262,7 +3334,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             item["products_id"] = item.products_id;
             item["combinations_id"] = item.combinations_id;
             item["productComp"] = item["combination"]["productComponents"]["data"];
-            _this15.$set(item, "SkuData", {
+            _this16.$set(item, "SkuData", {
               created_at: item["combination"].created_at,
               id: item["combination"].id,
               name: item["combination"].name,
@@ -3277,7 +3349,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               updated_at: item["combination"].updated_at,
               productComponents: item["combination"].productComponents
             };
-            _this15.purchaseSkuVal.push(proSkuData);
+            _this16.purchaseSkuVal.push(proSkuData);
           });
         }
         //this.purchaseCompVal = res["orderItems"]["data"];
@@ -3293,7 +3365,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       row.index = rowIndex;
     },
     proCompRowClick: function proCompRowClick(row) {
-      var _this16 = this;
+      var _this17 = this;
 
       this.purchaseCompRowIndex = "index" + row.index;
       this.purchaseCompIndex = row.index;
@@ -3305,7 +3377,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           } else {
             this.compStagData.map(function (item, index) {
               if (item.id == row.id) {
-                _this16.compStagData.splice(index, 1);
+                _this17.compStagData.splice(index, 1);
               }
             });
             this.compStagData.push(row);
@@ -3329,7 +3401,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       row.index = rowIndex;
     },
     proSkuRowClick: function proSkuRowClick(row) {
-      var _this17 = this;
+      var _this18 = this;
 
       this.purchaseCompValChg = false;
       this.purchaseCompIndex = "0";
@@ -3339,7 +3411,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.purchaseSkuIndex = row.index;
       if (row["productComponents"]["data"].length > 0) {
         row["productComponents"]["data"].map(function (item) {
-          _this17.$set(item, "proPurchaseData", {
+          _this18.$set(item, "proPurchaseData", {
             purchase_quantity: "",
             shops_id: "",
             suppliers_id: "",
@@ -3362,7 +3434,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // this.specDtlInfo.arrival_time = val;
     }
   }, _defineProperty(_methods, "orderPurchaseConfirm", function orderPurchaseConfirm() {
-    var _this18 = this;
+    var _this19 = this;
 
     this.orderPurchaseSubmitForm.purchase_lists = [];
     this.purchaseSkuVal.map(function (item) {
@@ -3387,19 +3459,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
         sku.purchase_details.push(comp);
       });
-      _this18.orderPurchaseSubmitForm.purchase_lists.push(sku);
+      _this19.orderPurchaseSubmitForm.purchase_lists.push(sku);
     });
     this.$message({
       message: "测试2",
       type: "success"
     });
     this.$post(this.urls.purchases, this.orderPurchaseSubmitForm).then(function () {
-      _this18.$message({
+      _this19.$message({
         message: "新建采购单成功",
         type: "success"
       });
-      _this18.orderPurchaseMask = false;
-      _this18.refresh();
+      _this19.orderPurchaseMask = false;
+      _this19.refresh();
     }, function (err) {
       if (err.response) {
         var arr = err.response.data.errors;
@@ -3408,7 +3480,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           arr1.push(arr[i]);
         }
         var str = arr1.join(",");
-        _this18.$message.error({
+        _this19.$message.error({
           message: str
         });
       }
