@@ -2615,7 +2615,7 @@ export default {
           break;
         case 1:
           this.$fetch(this.urls.merchandiserdepts, {
-            order_status: 60,
+            order_status: [60],
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
@@ -2646,7 +2646,7 @@ export default {
           break;
         case 2:
           this.$fetch(this.urls.merchandiserdepts, {
-            order_status: 70,
+            order_status: [70],
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,
@@ -2677,7 +2677,7 @@ export default {
           break;
         case 3:
           this.$fetch(this.urls.merchandiserdepts, {
-            order_status: 80,
+            order_status: [80],
             member_nick: this.searchBox.member_nick,
             system_order_no: this.searchBox.system_order_no,
             receiver_name: this.searchBox.receiver_name,

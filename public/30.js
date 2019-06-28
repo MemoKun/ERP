@@ -896,6 +896,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -903,6 +905,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      //按钮
       newOpt: [{
         cnt: "增加",
         icon: "bf-add",
@@ -917,12 +920,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         cnt: "删除",
         icon: "bf-del",
-        ent: this.deleteChanges,
+        ent: this.deleteChangeOrder,
         nClick: true
       }, {
         cnt: "提交",
         icon: "bf-submit",
-        ent: this.submitChanges,
+        ent: this.handleSubmit,
         nClick: true
       }, {
         cnt: "审核",
@@ -945,10 +948,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ent: this.refresh,
         nClick: false
       }],
+      //工具类
+      filterBox: false,
+      //搜索
+
+      //新增
+      //修改
+      //删除
+      //锁定
+      //解锁
+      //审核
+      //退审
+      //打印
+      //刷新
+
       addTabActiveName: "0",
       middleActiveName: "0",
       bottomActiveName: "0",
-      filterBox: false,
+
       loading: true, //loading标识
       checkBoxInit: false, //checked 属性l
 
@@ -2129,9 +2146,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     */
   },
   methods: (_methods = {
-    toogleShow: function toogleShow() {
-      this.filterBox = !this.filterBox;
-    },
+    //搜索加载数据
     fetchData: function fetchData() {
       var _this = this;
 
@@ -2172,7 +2187,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.untreatedOrderListData = [];
             _this.untreatedOrderListData = res.data;
             _this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
-            _this.operationData = res.data[0]['changeOrderOperationRecord'].data ? res.data[0]['changeOrderOperationRecord'].data : [];
+            _this.operationData = res.data[0]["changeOrderOperationRecord"].data ? res.data[0]["changeOrderOperationRecord"].data : [];
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -2200,7 +2215,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.treatedOrderListData = [];
             _this.treatedOrderListData = res.data;
             _this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
-            _this.operationData = res.data[0]['changeOrderOperationRecord'].data ? res.data[0]['changeOrderOperationRecord'].data : [];
+            _this.operationData = res.data[0]["changeOrderOperationRecord"].data ? res.data[0]["changeOrderOperationRecord"].data : [];
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -2228,7 +2243,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.canceledOrderListData = [];
             _this.canceledOrderListData = res.data;
             _this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
-            _this.operationData = res.data[0]['changeOrderOperationRecord'].data ? res.data[0]['changeOrderOperationRecord'].data : [];
+            _this.operationData = res.data[0]["changeOrderOperationRecord"].data ? res.data[0]["changeOrderOperationRecord"].data : [];
             var pg = res.meta.pagination;
             _this.$store.dispatch("currentPage", pg.current_page);
             _this.$store.commit("PER_PAGE", pg.per_page);
@@ -2250,10 +2265,98 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
 
-    /**
-     * ********************************************新  增  变  更  订  单 ***************************************************
-     * 
-     **/
+    //页码
+    handlePagChg: function handlePagChg(page) {
+      var _this2 = this;
+
+      this.$fetch(this.urls.changeorders + "?page=" + page, {
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
+      }).then(function (res) {
+        var index = _this2.middleActiveName - 0;
+        switch (index) {
+          case 0:
+            _this2.newOrderListData = res.data;
+            break;
+          case 1:
+            _this2.untreatedOrderListData = res.data;
+            break;
+          case 2:
+            _this2.treatedOrderListData = res.data;
+            break;
+          case 3:
+            _this2.canceledOrderListData = rew.data;
+            break;
+        }
+      });
+    },
+
+    //搜索
+
+    //点击与选择checkbox
+    orderListRowClick: function orderListRowClick(row) {
+      this.curRowId = row.id;
+      this.curRowData = row;
+      this.operationData = row["changeOrderOperationRecord"] ? row["changeOrderOperationRecord"].data : [];
+      this.changeOrdersMainInfo = this.curRowData;
+      if (row["change_status"] == 10) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
+      if (row["change_status"] == 20) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = false;
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
+      if (row["change_status"] == 30) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+      }
+      if (row["status"] == 0) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
+    },
+    handleSelectionChange: function handleSelectionChange(val) {
+      console.log(val);
+      //拿到当前id集合
+      var delArr = [];
+      val.forEach(function (seletedIem) {
+        delArr.push(seletedIem.id);
+      });
+      console.log(+delArr);
+      this.ids = delArr.join(",");
+      console.log(delArr);
+      //拿到当前id
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
+    },
+
+
+    //新增变更
     //1、新增订单变更，功能主要为打开新增变更Dialog
     addChanges: function addChanges() {
       this.addOrderChangesMask = true;
@@ -2270,21 +2373,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     //3、选择订单加载数据·从数据库读取数据
     chooseOrderFetchData: function chooseOrderFetchData() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$fetch(this.urls.changeorders + "/searchorders", {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order"
       }).then(function (res) {
-        _this2.loading = false;
+        _this3.loading = false;
         //将数据存入chooseOrderData渲染选择订单的dialog
-        _this2.chooseOrderData = res.data;
+        _this3.chooseOrderData = res.data;
         var pg = res.meta.pagination;
-        _this2.$store.dispatch("currentPage", pg.current_page);
-        _this2.$store.commit("PER_PAGE", pg.per_page);
-        _this2.$store.commit("PAGE_TOTAL", pg.total);
-        _this2.$store.dispatch("paymentmethods", _this2.urls.paymentmethods);
-        _this2.$fetch(_this2.urls.changeorders + "/create").then(function (res) {
-          _this2.addSubData = res;
+        _this3.$store.dispatch("currentPage", pg.current_page);
+        _this3.$store.commit("PER_PAGE", pg.per_page);
+        _this3.$store.commit("PAGE_TOTAL", pg.total);
+        _this3.$store.dispatch("paymentmethods", _this3.urls.paymentmethods);
+        _this3.$fetch(_this3.urls.changeorders + "/create").then(function (res) {
+          _this3.addSubData = res;
         }, function (err) {});
         data[5].orderItems.data[0].combination.productComponents.data[0];
       }, function (err) {
@@ -2294,14 +2397,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           for (var i in arr) {
             arr1.push(arr[i]);
           }
-          _this2.$message.error(arr1.join(","));
+          _this3.$message.error(arr1.join(","));
         }
       });
     },
 
     //4、选择订单并将数据填入chooseOrderData中，产品数据存在proData，费用数据存入expenseData
     chooseOrderRowClick: function chooseOrderRowClick(row) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.chooseOrderRowIndex = "index" + row.index;
       this.chooseOrderRowId = row.id; //选择订单的当前行订单的id，也就是orders的id
@@ -2313,95 +2416,97 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$fetch(this.urls.customerservicedepts + "/" + this.chooseOrderRowId, {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails"
       }).then(function (res) {
-        _this3.id = res["id"];
-        _this3.addChangeOrderFormVal.orders_id = res["id"];
+        _this4.id = res["id"];
+        _this4.addChangeOrderFormVal.orders_id = res["id"];
         //-----变更订单与原始order分界线--------
-        _this3.addChangeOrderFormVal.system_order_no = res["system_order_no"];
-        _this3.addChangeOrderFormVal.shops_id = res["shops_id"];
-        _this3.addChangeOrderFormVal.shops_name = res["shops_name"];
-        _this3.addChangeOrderFormVal.logistics_id = res["logistics_id"];
-        _this3.addChangeOrderFormVal.logistics_sn = res["logistics_sn"];
-        _this3.addChangeOrderFormVal.billing_way = res["billing_way"];
-        _this3.addChangeOrderFormVal.promise_ship_time = res["promise_ship_time"];
-        _this3.addChangeOrderFormVal.freight_types_id = res["freight_types_id"];
-        _this3.addChangeOrderFormVal.expected_freight = res["expected_freight"];
-        _this3.addChangeOrderFormVal.actual_freight = res["actual_freight"];
-        _this3.addChangeOrderFormVal.logistics_remark = res["logistics_remark"];
-        _this3.addChangeOrderFormVal.is_logistics_checked = res["is_logistics_checked"];
-        _this3.addChangeOrderFormVal.logistics_check_remark = res["logistics_check_remark"];
-        _this3.addChangeOrderFormVal.logistics_checked_at = res["logistics_checked_at"] ? res["logistics_checked_at"] : 0;
-        _this3.addChangeOrderFormVal.distributions_id = res["distributions_id"];
-        _this3.addChangeOrderFormVal.distribution_methods_id = res["distribution_methods_id"];
-        _this3.addChangeOrderFormVal.deliver_goods_fee = res["deliver_goods_fee"];
-        _this3.addChangeOrderFormVal.move_upstairs_fee = res["move_upstairs_fee"];
-        _this3.addChangeOrderFormVal.installation_fee = res["installation_fee"];
-        _this3.addChangeOrderFormVal.total_distribution_fee = res["total_distribution_fee"];
-        _this3.addChangeOrderFormVal.distribution_phone = res["distribution_phone"];
-        _this3.addChangeOrderFormVal.distribution_no = res["distribution_no"];
-        _this3.addChangeOrderFormVal.distribution_types_id = res["distribution_types_id"];
-        _this3.addChangeOrderFormVal.is_distribution_checked = res["is_distribution_checked"];
-        _this3.addChangeOrderFormVal.distribution_check_remark = res["distribution_check_remark"];
-        _this3.addChangeOrderFormVal.distribution_checked_at = res["distribution_checked_at"];
-        _this3.addChangeOrderFormVal.service_car_fee = res["service_car_fee"];
-        _this3.addChangeOrderFormVal.service_car_info = res["service_car_info"];
-        _this3.addChangeOrderFormVal.take_delivery_goods_fee = res["take_delivery_goods_fee"];
-        _this3.addChangeOrderFormVal.take_delivery_goods_ways_id = res["take_delivery_goods_ways_id"];
-        _this3.addChangeOrderFormVal.express_fee = res["express_fee"];
-        _this3.addChangeOrderFormVal.cancel_after_verification_code = res["cancel_after_verification_code"];
-        _this3.addChangeOrderFormVal.wooden_frame_costs = res["wooden_frame_costs"];
-        _this3.addChangeOrderFormVal.preferential_cashback = res["preferential_cashback"];
-        _this3.addChangeOrderFormVal.favorable_cashback = res["favorable_cashback"];
-        _this3.addChangeOrderFormVal.customer_types_id = res["customer_types_id"];
-        _this3.addChangeOrderFormVal.is_invoice = res["is_invoice"];
-        _this3.addChangeOrderFormVal.invoice_express_fee = res["invoice_express_fee"];
-        _this3.addChangeOrderFormVal.express_invoice_title = res["express_invoice_title"];
-        _this3.addChangeOrderFormVal.contract_no = res["contract_no"];
-        _this3.addChangeOrderFormVal.payment_methods_id = res["payment_methods_id"];
-        _this3.addChangeOrderFormVal.deposit = res["deposit"];
-        _this3.addChangeOrderFormVal.document_title = res["document_title"];
-        _this3.addChangeOrderFormVal.warehouses_id = res["warehouses_id"];
-        _this3.addChangeOrderFormVal.payment_date = res["payment_date"];
-        _this3.addChangeOrderFormVal.interest_concessions = res["interest_concessions"];
-        _this3.addChangeOrderFormVal.is_notice = res["is_notice"];
-        _this3.addChangeOrderFormVal.is_cancel_after_verification = res["is_cancel_after_verification"];
-        _this3.addChangeOrderFormVal.accept_order_user = res["accept_order_user"];
-        _this3.addChangeOrderFormVal.tax_number = res["tax_number"];
-        _this3.addChangeOrderFormVal.receipt = res["receipt"];
-        _this3.addChangeOrderFormVal.buyer_message = res["buyer_message"];
-        _this3.addChangeOrderFormVal.seller_remark = res["seller_remark"];
-        _this3.addChangeOrderFormVal.customer_service_remark = res["customer_service_remark"];
-        _this3.addChangeOrderFormVal.stockout_remark = res["stockout_remark"];
-        _this3.addChangeOrderFormVal.taobao_oid = res["taobao_oid"];
-        _this3.addChangeOrderFormVal.taobao_tid = res["taobao_tid"];
-        _this3.addChangeOrderFormVal.member_nick = res["member_nick"];
-        _this3.addChangeOrderFormVal.seller_name = res["seller_name"];
-        _this3.addChangeOrderFormVal.seller_flag = res["seller_flag"];
-        _this3.addChangeOrderFormVal.est_con_time = res["est_con_time"];
-        _this3.addChangeOrderFormVal.receiver_name = res["receiver_name"];
-        _this3.addChangeOrderFormVal.receiver_phone = res["receiver_phone"];
-        _this3.addChangeOrderFormVal.receiver_mobile = res["receiver_mobile"];
-        _this3.addChangeOrderFormVal.receiver_state = res["receiver_state"];
-        _this3.addChangeOrderFormVal.receiver_city = res["receiver_city"];
-        _this3.addChangeOrderFormVal.receiver_district = res["receiver_district"];
-        _this3.addChangeOrderFormVal.receiver_address = res["receiver_address"];
-        _this3.addChangeOrderFormVal.receiver_zip = res["receiver_zip"];
-        _this3.addChangeOrderFormVal.refund_info = res["refund_info"];
-        _this3.addChangeOrderFormVal.association_taobao_oid = res["association_taobao_oid"];
-        _this3.addChangeOrderFormVal.is_merge = res["is_merge"];
-        _this3.addChangeOrderFormVal.is_split = res["is_split"];
-        _this3.addChangeOrderFormVal.is_association = res["is_association"];
-        _this3.addChangeOrderFormVal.order_items = [];
-        _this3.addChangeOrderFormVal.payment_details = [];
+        _this4.addChangeOrderFormVal.system_order_no = res["system_order_no"];
+        _this4.addChangeOrderFormVal.order_source = res["order_source"];
+        _this4.addChangeOrderFormVal.order_amount = res["order_amount"];
+        _this4.addChangeOrderFormVal.shops_id = res["shops_id"];
+        _this4.addChangeOrderFormVal.shop_name = res["shop_name"];
+        _this4.addChangeOrderFormVal.logistics_id = res["logistics_id"];
+        _this4.addChangeOrderFormVal.logistics_sn = res["logistics_sn"];
+        _this4.addChangeOrderFormVal.billing_way = res["billing_way"];
+        _this4.addChangeOrderFormVal.promise_ship_time = res["promise_ship_time"];
+        _this4.addChangeOrderFormVal.freight_types_id = res["freight_types_id"];
+        _this4.addChangeOrderFormVal.expected_freight = res["expected_freight"];
+        _this4.addChangeOrderFormVal.actual_freight = res["actual_freight"];
+        _this4.addChangeOrderFormVal.logistics_remark = res["logistics_remark"];
+        _this4.addChangeOrderFormVal.is_logistics_checked = res["is_logistics_checked"];
+        _this4.addChangeOrderFormVal.logistics_check_remark = res["logistics_check_remark"];
+        _this4.addChangeOrderFormVal.logistics_checked_at = res["logistics_checked_at"] ? res["logistics_checked_at"] : 0;
+        _this4.addChangeOrderFormVal.distributions_id = res["distributions_id"];
+        _this4.addChangeOrderFormVal.distribution_methods_id = res["distribution_methods_id"];
+        _this4.addChangeOrderFormVal.deliver_goods_fee = res["deliver_goods_fee"];
+        _this4.addChangeOrderFormVal.move_upstairs_fee = res["move_upstairs_fee"];
+        _this4.addChangeOrderFormVal.installation_fee = res["installation_fee"];
+        _this4.addChangeOrderFormVal.total_distribution_fee = res["total_distribution_fee"];
+        _this4.addChangeOrderFormVal.distribution_phone = res["distribution_phone"];
+        _this4.addChangeOrderFormVal.distribution_no = res["distribution_no"];
+        _this4.addChangeOrderFormVal.distribution_types_id = res["distribution_types_id"];
+        _this4.addChangeOrderFormVal.is_distribution_checked = res["is_distribution_checked"];
+        _this4.addChangeOrderFormVal.distribution_check_remark = res["distribution_check_remark"];
+        _this4.addChangeOrderFormVal.distribution_checked_at = res["distribution_checked_at"];
+        _this4.addChangeOrderFormVal.service_car_fee = res["service_car_fee"];
+        _this4.addChangeOrderFormVal.service_car_info = res["service_car_info"];
+        _this4.addChangeOrderFormVal.take_delivery_goods_fee = res["take_delivery_goods_fee"];
+        _this4.addChangeOrderFormVal.take_delivery_goods_ways_id = res["take_delivery_goods_ways_id"];
+        _this4.addChangeOrderFormVal.express_fee = res["express_fee"];
+        _this4.addChangeOrderFormVal.cancel_after_verification_code = res["cancel_after_verification_code"];
+        _this4.addChangeOrderFormVal.wooden_frame_costs = res["wooden_frame_costs"];
+        _this4.addChangeOrderFormVal.preferential_cashback = res["preferential_cashback"];
+        _this4.addChangeOrderFormVal.favorable_cashback = res["favorable_cashback"];
+        _this4.addChangeOrderFormVal.customer_types_id = res["customer_types_id"];
+        _this4.addChangeOrderFormVal.is_invoice = res["is_invoice"];
+        _this4.addChangeOrderFormVal.invoice_express_fee = res["invoice_express_fee"];
+        _this4.addChangeOrderFormVal.express_invoice_title = res["express_invoice_title"];
+        _this4.addChangeOrderFormVal.contract_no = res["contract_no"];
+        _this4.addChangeOrderFormVal.payment_methods_id = res["payment_methods_id"];
+        _this4.addChangeOrderFormVal.deposit = res["deposit"];
+        _this4.addChangeOrderFormVal.document_title = res["document_title"];
+        _this4.addChangeOrderFormVal.warehouses_id = res["warehouses_id"];
+        _this4.addChangeOrderFormVal.payment_date = res["payment_date"];
+        _this4.addChangeOrderFormVal.interest_concessions = res["interest_concessions"];
+        _this4.addChangeOrderFormVal.is_notice = res["is_notice"];
+        _this4.addChangeOrderFormVal.is_cancel_after_verification = res["is_cancel_after_verification"];
+        _this4.addChangeOrderFormVal.accept_order_user = res["accept_order_user"];
+        _this4.addChangeOrderFormVal.tax_number = res["tax_number"];
+        _this4.addChangeOrderFormVal.receipt = res["receipt"];
+        _this4.addChangeOrderFormVal.buyer_message = res["buyer_message"];
+        _this4.addChangeOrderFormVal.seller_remark = res["seller_remark"];
+        _this4.addChangeOrderFormVal.customer_service_remark = res["customer_service_remark"];
+        _this4.addChangeOrderFormVal.stockout_remark = res["stockout_remark"];
+        _this4.addChangeOrderFormVal.taobao_oid = res["taobao_oid"];
+        _this4.addChangeOrderFormVal.taobao_tid = res["taobao_tid"];
+        _this4.addChangeOrderFormVal.member_nick = res["member_nick"];
+        _this4.addChangeOrderFormVal.seller_name = res["seller_name"];
+        _this4.addChangeOrderFormVal.seller_flag = res["seller_flag"];
+        _this4.addChangeOrderFormVal.est_con_time = res["est_con_time"];
+        _this4.addChangeOrderFormVal.receiver_name = res["receiver_name"];
+        _this4.addChangeOrderFormVal.receiver_phone = res["receiver_phone"];
+        _this4.addChangeOrderFormVal.receiver_mobile = res["receiver_mobile"];
+        _this4.addChangeOrderFormVal.receiver_state = res["receiver_state"];
+        _this4.addChangeOrderFormVal.receiver_city = res["receiver_city"];
+        _this4.addChangeOrderFormVal.receiver_district = res["receiver_district"];
+        _this4.addChangeOrderFormVal.receiver_address = res["receiver_address"];
+        _this4.addChangeOrderFormVal.receiver_zip = res["receiver_zip"];
+        _this4.addChangeOrderFormVal.refund_info = res["refund_info"];
+        _this4.addChangeOrderFormVal.association_taobao_oid = res["association_taobao_oid"];
+        _this4.addChangeOrderFormVal.is_merge = res["is_merge"];
+        _this4.addChangeOrderFormVal.is_split = res["is_split"];
+        _this4.addChangeOrderFormVal.is_association = res["is_association"];
+        _this4.addChangeOrderFormVal.order_items = [];
+        _this4.addChangeOrderFormVal.payment_details = [];
 
         if (res["orderItems"]["data"].length > 0) {
           res["orderItems"]["data"].map(function (item) {
-            _this3.addChangeOrderProIds.push(item["combination"].id);
+            _this4.addChangeOrderProIds.push(item["combination"].id);
             item["name"] = item["combination"]["name"];
             item["id"] = item.id;
             item["products_id"] = item.products_id;
             item["combinations_id"] = item.combinations_id;
             item["productComp"] = item["combination"]["productComponents"]["data"];
-            _this3.$set(item, "newData", {
+            _this4.$set(item, "newData", {
               quantity: item.quantity,
               paint: item.paint,
               is_printing: item.is_printing,
@@ -2414,8 +2519,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
 
-        _this3.proData = res["orderItems"]["data"];
-        _this3.expenseData = res["paymentDetails"]["data"];
+        _this4.proData = res["orderItems"]["data"];
+        _this4.expenseData = res["paymentDetails"]["data"];
       }, function (err) {
         if (err.response) {
           var arr = err.response.data.errors;
@@ -2424,9 +2529,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this3.$message.error(str);
+          _this4.$message.error(str);
         }
       });
+    },
+    addOrderRowCName: function addOrderRowCName(_ref2) {
+      var row = _ref2.row,
+          rowIndex = _ref2.rowIndex;
+
+      row.index = rowIndex;
     },
 
     //5、确认选择订单-实际并不对订单进行操作，相关操作已经在chooseOrderRowClick完成
@@ -2440,7 +2551,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     //6、确认新建订单变更，并把订单提交到数据库存储
     addChangeOrdersConfirm: function addChangeOrdersConfirm() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.proData.map(function (item) {
         var proD = {
@@ -2457,23 +2568,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           under_line_total_amount: item["newData"].under_line_total_amount,
           under_line_preferential: item["newData"].under_line_preferential
         };
-        _this4.addChangeOrderFormVal.order_items.push(proD);
+        _this5.addChangeOrderFormVal.order_items.push(proD);
       });
       this.expenseData.map(function (list) {
         var expenseD = {
           payment: list.payment,
           payment_methods_id: list.payment_methods_id
         };
-        _this4.addChangeOrderFormVal.payment_details.push(expenseD);
+        _this5.addChangeOrderFormVal.payment_details.push(expenseD);
       });
       this.$post(this.urls.changeorders, this.addChangeOrderFormVal).then(function () {
-        _this4.addOrderChangesMask = false;
-        _this4.refresh();
-        _this4.$message({
+        _this5.addOrderChangesMask = false;
+        _this5.refresh();
+        _this5.$message({
           message: "添加成功",
           type: "success"
         });
-        _this4.addChangeOrderFormVal = {
+        _this5.addChangeOrderFormVal = {
           change_order_no: "",
           cancel_order_no: "",
           is_canceled: false,
@@ -2575,626 +2686,63 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
       }, function (err) {
         if (err.response) {
-          _this4.showDel = false;
+          _this5.showDel = false;
           var arr = err.response.data.errors;
           var arr1 = [];
           for (var i in arr) {
             arr1.push(arr[i]);
           }
           var str = arr1.join(",");
-          _this4.$message.error(str);
+          _this5.$message.error(str);
         }
       });
     },
 
-
-    /**
-     * ******************************************** 修  改 ***************************************************
-     * 
-     **/
-    //1、点击提交按钮，fetch数据并加载到update窗口里
-    updateChanges: function updateChanges() {
-      var _this5 = this;
-
-      if (this.newOpt[1].nClick) {
-        return;
-      } else {
-        this.updateOrderChangesMask = true;
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$fetch(this.urls.changeorders + "/" + id, {
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,changeOrderOperationRecord"
-        }).then(function (res) {
-          _this5.updateChangeOrderFormVal = res;
-          if (res["orderItems"]["data"].length > 0) {
-            res["orderItems"]["data"].map(function (item) {
-              _this5.addChangeOrderProIds.push(item["combination"].id);
-              item["name"] = item["combination"]["name"];
-              item["id"] = item.id;
-              item["products_id"] = item.products_id;
-              item["combinations_id"] = item.combinations_id;
-              item["productComp"] = item["combination"]["productComponents"]["data"];
-              _this5.$set(item, "newData", {
-                quantity: item.quantity,
-                paint: item.paint,
-                is_printing: item.is_printing,
-                printing_fee: item.printing_fee,
-                is_spot_goods: item.is_spot_goods,
-                under_line_univalent: item.under_line_univalent,
-                under_line_preferential: item.under_line_preferential,
-                total_volume: item.total_volume
-              });
-            });
-          }
-
-          _this5.proData = res["orderItems"]["data"];
-          _this5.expenseData = res["paymentDetails"]["data"];
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            _this5.$message.error(arr1.join(","));
-          }
-        });
-      }
-    },
-    updateChangeOrdersConfirm: function updateChangeOrdersConfirm() {
+    //选择商品
+    proQueryClick: function proQueryClick() {
       var _this6 = this;
 
-      var forData = this.updateChangeOrderFormVal;
-      var submitData = {
-        shops_id: forData.shops_id,
-        member_nick: forData.member_nick,
-        logistics_id: forData.logistics_id,
-        billing_way: forData.billing_way,
-        promise_ship_time: forData.promise_ship_time,
-        freight_types_id: forData.freight_types_id,
-        expected_freight: forData.expected_freight,
-        distributions_id: forData.distributions_id,
-        distribution_methods_id: forData.distribution_methods_id,
-        deliver_goods_fee: forData.deliver_goods_fee,
-        move_upstairs_fee: forData.move_upstairs_fee,
-        installation_fee: forData.installation_fee,
-        total_distribution_fee: forData.total_distribution_fee,
-        distribution_phone: forData.distribution_phone,
-        distribution_no: forData.distribution_no,
-        distribution_types_id: forData.distribution_types_id,
-        service_car_info: forData.service_car_info,
-        take_delivery_goods_fee: forData.take_delivery_goods_fee,
-        take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
-        express_fee: forData.express_fee,
-        service_car_fee: forData.service_car_fee,
-        cancel_after_verification_code: forData.cancel_after_verification_code,
-        wooden_frame_costs: forData.wooden_frame_costs,
-        preferential_cashback: forData.preferential_cashback,
-        favorable_cashback: forData.favorable_cashback,
-        customer_types_id: forData.customer_types_id,
-        is_invoice: forData.is_invoice,
-        invoice_express_fee: forData.invoice_express_fee,
-        express_invoice_title: forData.express_invoice_title,
-        contract_no: forData.contract_no,
-        payment_methods_id: forData.payment_methods_id,
-        deposit: forData.deposit,
-        document_title: forData.document_title,
-        warehouses_id: forData.warehouses_id,
-        payment_date: forData.payment_date,
-        interest_concessions: forData.interest_concessions,
-        is_notice: forData.is_notice,
-        is_cancel_after_verification: forData.is_cancel_after_verification,
-        accept_order_user: forData.accept_order_user,
-        tax_number: forData.tax_number,
-        receipt: forData.receipt,
-        logistics_remark: forData.logistics_remark,
-        seller_remark: forData.seller_remark,
-        customer_service_remark: forData.customer_service_remark,
-        buyer_message: forData.buyer_message,
-        status: forData.status,
-        receiver_name: forData.receiver_name,
-        receiver_phone: forData.receiver_phone,
-        receiver_mobile: forData.receiver_mobile,
-        receiver_state: forData.receiver_state,
-        receiver_city: forData.receiver_city,
-        receiver_district: forData.receiver_district,
-        receiver_address: forData.receiver_address,
-        receiver_zip: forData.receiver_zip,
-        order_items: [],
-        payment_details: []
-      };
-      this.proData.map(function (item) {
-        var proD = {
-          id: item.id,
-          products_id: item.products_id,
-          combinations_id: item.combinations_id,
-          quantity: item["newData"].quantity,
-          total_volume: item["newData"].total_volume,
-          paint: item["newData"].paint,
-          is_printing: item["newData"].is_printing,
-          printing_fee: item["newData"].printing_fee,
-          is_spot_goods: item["newData"].is_spot_goods,
-          under_line_univalent: item["newData"].under_line_univalent,
-          under_line_total_amount: item["newData"].under_line_total_amount,
-          under_line_preferential: item["newData"].under_line_preferential
-        };
-        submitData.order_items.push(proD);
-      });
-      this.expenseData.map(function (list) {
-        var expenseD = {
-          payment: list.payment,
-          payment_methods_id: list.payment_methods_id
-        };
-        submitData.payment_details.push(expenseD);
-      });
-      var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$patch(this.urls.changeorders + "/" + id, submitData).then(function () {
-        _this6.updateOrderChangesMask = false;
-        _this6.refresh();
-        _this6.$message({
-          message: "更新成功",
-          type: "success"
-        });
-        _this6.updateChangeOrderFormVal = {
-          change_order_no: "",
-          cancel_order_no: "",
-          is_canceled: false,
-          change_remark: "",
-          change_status: 10,
-          orders_id: 0,
-          //-----变更订单与原始order分界线--------
-          system_order_no: "",
-          shops_id: 0,
-          shops_name: "",
-          logistics_id: 0,
-          logistics_sn: "",
-          billing_way: "",
-          promise_ship_time: null,
-          freight_types_id: 0,
-          expected_freight: 0,
-          actual_freight: 0,
-          logistics_remark: "",
-          is_logistics_checked: false,
-          logistics_check_remark: "",
-          logistics_checked_at: null,
-          distributions_id: 0,
-          distribution_methods_id: 0,
-          deliver_goods_fee: 0,
-          move_upstairs_fee: 0,
-          installation_fee: 0,
-          total_distribution_fee: 0,
-          distribution_phone: "",
-          distribution_no: "",
-          distribution_types_id: 0,
-          is_distribution_checked: false,
-          distribution_check_remark: "",
-          distribution_checked_at: null,
-          service_car_fee: 0,
-          service_car_info: "",
-          take_delivery_goods_fee: 0,
-          take_delivery_goods_ways_id: 0,
-          express_fee: 0,
-          cancel_after_verification_code: "",
-          wooden_frame_costs: 0,
-          preferential_cashback: 0,
-          favorable_cashback: 0,
-          customer_types_id: 0,
-          is_invoice: false,
-          invoice_express_fee: 0,
-          express_invoice_title: "",
-          contract_no: "",
-          payment_methods_id: 0,
-          deposit: 0,
-          document_title: "",
-          warehouses_id: 0,
-          payment_date: null,
-          interest_concessions: 0,
-          is_notice: false,
-          is_cancel_after_verification: false,
-          accept_order_user: "",
-          tax_number: "",
-          receipt: "",
-          buyer_message: "",
-          seller_remark: "",
-          customer_service_remark: "",
-          stockout_remark: "",
-          taobao_oid: 0,
-          taobao_tid: 0,
-          member_nick: "",
-          seller_name: "",
-          seller_flag: "",
-          created: null,
-          est_con_time: null,
-          receiver_name: "",
-          receiver_phone: "",
-          receiver_mobile: "",
-          receiver_state: "",
-          receiver_city: "",
-          receiver_district: "",
-          receiver_address: "",
-          receiver_zip: "",
-          refund_info: "",
-          business_personnel_id: 0,
-          locker_id: 0,
-          locked_at: null,
-          auditor_id: 0,
-          audit_at: null,
-          cs_auditor_id: 0,
-          cs_audited_at: null,
-          fd_auditor_id: 0,
-          fd_audited_at: null,
-          ca_auditor_id: 0,
-          ca_audited_at: null,
-          stockout_op_id: 0,
-          stockout_at: null,
-          association_taobao_oid: 0,
-          is_merge: false,
-          is_split: false,
-          is_association: false,
-          status: true,
-          order_items: [],
-          payment_details: []
-        };
-      }, function (err) {
-        if (err.response) {
-          _this6.showDel = false;
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(",");
-          _this6.$message.error(str);
-        }
-      });
-    },
-
-
-    /**
-     * ******************************************** 提  交 ***************************************************
-     * 
-     **/
-    handleSubmit: function handleSubmit() {
-      var _this7 = this;
-
-      if (this.newOpt[3].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "submit").then(function () {
-          _this7.refresh();
-          _this7.$message({
-            message: "审核成功",
-            type: "success"
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this7.$message.error(str);
-          }
-        });
-      }
-    },
-
-
-    /**
-     * ******************************************** 审  核 ***************************************************
-     * 
-     **/
-    handleAudit: function handleAudit() {
-      var _this8 = this;
-
-      if (this.newOpt[4].nClick) {
-        return;
-      } else {
-        var id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$fetch(this.urls.changeorders + "/" + id, {
-          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
-        }).then(function (res) {
-          /*请求选中的数据并拼接用于patch Order的submit*/
-          //this.submitData = res;
-          _this8.submitData = res;
-          var patchId = res.orders_id;
-          var patchItemId = res.order_items_id;
-          var paymentDtlId = res.payment_details_id;
-          var forData = _this8.submitData;
-          var patchData = {
-            shops_id: forData.shops_id,
-            member_nick: forData.member_nick,
-            logistics_id: forData.logistics_id,
-            billing_way: forData.billing_way,
-            promise_ship_time: forData.promise_ship_time,
-            freight_types_id: forData.freight_types_id,
-            expected_freight: forData.expected_freight,
-            distributions_id: forData.distributions_id,
-            distribution_methods_id: forData.distribution_methods_id,
-            deliver_goods_fee: forData.deliver_goods_fee,
-            move_upstairs_fee: forData.move_upstairs_fee,
-            installation_fee: forData.installation_fee,
-            total_distribution_fee: forData.total_distribution_fee,
-            distribution_phone: forData.distribution_phone,
-            distribution_no: forData.distribution_no,
-            distribution_types_id: forData.distribution_types_id,
-            service_car_info: forData.service_car_info,
-            take_delivery_goods_fee: forData.take_delivery_goods_fee,
-            take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
-            express_fee: forData.express_fee,
-            service_car_fee: forData.service_car_fee,
-            cancel_after_verification_code: forData.cancel_after_verification_code,
-            wooden_frame_costs: forData.wooden_frame_costs,
-            preferential_cashback: forData.preferential_cashback,
-            favorable_cashback: forData.favorable_cashback,
-            customer_types_id: forData.customer_types_id,
-            is_invoice: forData.is_invoice,
-            invoice_express_fee: forData.invoice_express_fee,
-            express_invoice_title: forData.express_invoice_title,
-            contract_no: forData.contract_no,
-            payment_methods_id: forData.payment_methods_id,
-            deposit: forData.deposit,
-            document_title: forData.document_title,
-            warehouses_id: forData.warehouses_id,
-            payment_date: forData.payment_date,
-            interest_concessions: forData.interest_concessions,
-            is_notice: forData.is_notice,
-            is_cancel_after_verification: forData.is_cancel_after_verification,
-            accept_order_user: forData.accept_order_user,
-            tax_number: forData.tax_number,
-            receipt: forData.receipt,
-            logistics_remark: forData.logistics_remark,
-            seller_remark: forData.seller_remark,
-            customer_service_remark: forData.customer_service_remark,
-            buyer_message: forData.buyer_message,
-            status: forData.status,
-            receiver_name: forData.receiver_name,
-            receiver_phone: forData.receiver_phone,
-            receiver_mobile: forData.receiver_mobile,
-            receiver_state: forData.receiver_state,
-            receiver_city: forData.receiver_city,
-            receiver_district: forData.receiver_district,
-            receiver_address: forData.receiver_address,
-            receiver_zip: forData.receiver_zip,
-            order_items: [],
-            payment_details: []
-          };
-          /** 对orderItems进行处理*/
-          if (res["orderItems"]["data"].length > 0) {
-            res["orderItems"]["data"].map(function (item) {
-              _this8.addChangeOrderProIds.push(item["combination"].id);
-              item["name"] = item["combination"]["name"];
-              item["id"] = patchItemId; //这里赋值的是change_orders的itemid，应该赋值为order的item id
-              item["products_id"] = item.products_id;
-              item["combinations_id"] = item.combinations_id;
-              item["productComp"] = item["combination"]["productComponents"]["data"];
-              _this8.$set(item, "newData", {
-                quantity: item.quantity,
-                paint: item.paint,
-                is_printing: item.is_printing,
-                printing_fee: item.printing_fee,
-                is_spot_goods: item.is_spot_goods,
-                under_line_univalent: item.under_line_univalent,
-                under_line_preferential: item.under_line_preferential,
-                total_volume: item.total_volume
+      this.proSkuVal = [];
+      this.$fetch(this.urls.products, {
+        status: true,
+        commodity_code: this.proQuery.commodity_code,
+        component_code: this.proQuery.component_code,
+        shops_id: this.proQuery.shops_id,
+        short_name: this.proQuery.short_name,
+        include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+      }).then(function (res) {
+        _this6.proVal = res.data;
+        var comb = res.data[0]["combinations"]["data"];
+        if (comb.length > 0) {
+          var total_volume = 0;
+          comb.map(function (item) {
+            item["productComp"] = item["productComponents"]["data"];
+            if (item["productComponents"]["data"].length > 0) {
+              item["productComponents"]["data"].map(function (list) {
+                total_volume += list.volume;
               });
-            });
-          }
-          _this8.proData = res["orderItems"]["data"];
-          _this8.expenseData = res["paymentDetails"]["data"];
-          /**将proData数据加入到submitData里 */
-          _this8.proData.map(function (item) {
-            var proD = {
-              id: item.id,
-              products_id: item.products_id,
-              combinations_id: item.combinations_id,
-              quantity: item["newData"].quantity,
-              total_volume: item["newData"].total_volume,
-              paint: item["newData"].paint,
-              is_printing: item["newData"].is_printing,
-              printing_fee: item["newData"].printing_fee,
-              is_spot_goods: item["newData"].is_spot_goods,
-              under_line_univalent: item["newData"].under_line_univalent,
-              under_line_total_amount: item["newData"].under_line_total_amount,
-              under_line_preferential: item["newData"].under_line_preferential
-            };
-            patchData.order_items.push(proD);
-          });
-          /**将expenseData加入到submitData里*/
-          _this8.expenseData.map(function (list) {
-            if (list.id) {
-              var expenseD = {
-                id: paymentDtlId,
-                payment: list.payment,
-                payment_methods_id: list.payment_methods_id
-              };
-              patchData.payment_details.push(expenseD);
             } else {
-              var _expenseD = {
-                payment: list.payment,
-                payment_methods_id: list.payment_methods_id
-              };
-              patchData.payment_details.push(_expenseD);
+              total_volume = 0;
             }
+            _this6.$set(item, "newData", {
+              quantity: "",
+              paint: "",
+              is_printing: false,
+              printing_fee: "",
+              is_spot_goods: true,
+              under_line_univalent: "",
+              under_line_preferential: "",
+              total_volume: total_volume
+            });
           });
-          var id = _this8.checkboxId ? _this8.checkboxId : _this8.curRowId;
-          _this8.$patch(_this8.urls.customerservicedepts + "/" + patchId, patchData).then(function () {
-            _this8.$put(_this8.urls.changeorders + "/" + id + "/auditchanges").then(function () {
-              _this8.$message({
-                message: "审核成功",
-                type: "success"
-              });
-              _this8.refresh();
-            }, function (err) {
-              if (err.response) {
-                var arr = err.response.data.errors;
-                var arr1 = [];
-                for (var i in arr) {
-                  arr1.push(arr[i]);
-                }
-                var str = arr1.join(",");
-                _this8.$message.error(str);
-              }
-            });
-          }, function (err) {
-            if (err.response) {
-              var arr = err.response.data.errors;
-              var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
-              }
-              var str = arr1.join(",");
-              _this8.$message.error(str);
-            }
-          });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            _this8.$message.error(arr1.join(","));
-          }
-        });
-      }
-    },
-    test: function test() {
-      console.log("test");
-    },
-    confirmAddProDtl: function confirmAddProDtl() {
-      var _this9 = this;
-
-      if (this.addOrderChangesMask) {
-        this.proSubmitData.map(function (item) {
-          if (_this9.addIds.indexOf(item.id) == -1) {
-            _this9.proData.push(item);
-            _this9.addIds.push(item.id);
-            _this9.$message({
-              message: "添加商品信息成功",
-              type: "success"
-            });
-            _this9.proMask = false;
-          } else {
-            _this9.proData.map(function (list, index) {
-              if (list.id == item.id) {
-                _this9.proData.splice(index, 1);
-                _this9.proData.push(item);
-                _this9.$message({
-                  message: "添加商品信息成功",
-                  type: "success"
-                });
-                _this9.proMask = false;
-              }
-            });
-          }
-        });
-      } else {
-        this.proSubmitData.map(function (item) {
-          if (_this9.updateProIds.indexOf(item.id) == -1) {
-            _this9.updateProData.push(item);
-            _this9.updateProIds.push(item.id);
-            _this9.$message({
-              message: "添加商品信息成功",
-              type: "success"
-            });
-          } else {
-            _this9.updateProData.map(function (list, index) {
-              if (list.combinations_id == item.id) {
-                _this9.$set(item, "originalId", list.id);
-                _this9.updateProData.splice(index, 1);
-                _this9.updateProData.push(item);
-                _this9.$message({
-                  message: "添加商品信息成功",
-                  type: "success"
-                });
-              }
-            });
-          }
-        });
-      }
-    },
-    addProRCName: function addProRCName(_ref2) {
-      var row = _ref2.row,
-          rowIndex = _ref2.rowIndex;
-
-      row.index = rowIndex;
-    },
-    refresh: function refresh() {
-      this.loading = true;
-      this.fetchData();
-    },
-    addProRowClick: function addProRowClick(row) {
-      this.proRIndex = "index" + row.index;
-    },
-    addAfterSProRowCName: function addAfterSProRowCName(_ref3) {
-      var row = _ref3.row,
-          rowIndex = _ref3.rowIndex;
-
-      row.index = rowIndex;
-    },
-    addOrderRowCName: function addOrderRowCName(_ref4) {
-      var row = _ref4.row,
-          rowIndex = _ref4.rowIndex;
-
-      row.index = rowIndex;
-    },
-    quantityChg: function quantityChg(value) {
-      var _this10 = this;
-
-      if (value > 0) {
-        var proCRow = this.proCompRow;
-        if (this.proIds.indexOf(proCRow.id) == -1) {
-          this.proIds.push(proCRow.id);
-          this.proSubmitData.push(proCRow);
         } else {
-          this.proSubmitData.map(function (list, index) {
-            if (list.id == proCRow.id) {
-              _this10.proSubmitData.splice(index, 1);
-              _this10.proSubmitData.push(proCRow);
-            }
-          });
+          comb["productComp"] = [];
         }
-      }
-    },
-    addExpenseRClick: function addExpenseRClick(row) {
-      this.expenseRIndex = "index" + row.index;
-    },
-    addExpenseRCName: function addExpenseRCName(_ref5) {
-      var row = _ref5.row,
-          rowIndex = _ref5.rowIndex;
-
-      row.index = rowIndex;
-    },
-    proSkuRowClick: function proSkuRowClick(row) {
-      this.proCompRowIndex = "index" + row.index;
-      this.proCompRow = row;
-    },
-
-    /*新增行*/
-    addExpenseLine: function addExpenseLine() {
-      if (this.chooseOrderMask) {
-        this.expenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      } else {
-        this.updateExpenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      }
-    },
-    addDelExpense: function addDelExpense(index) {
-      this.expenseData.splice(index, 1);
-      this.$message({
-        message: "删除成功",
-        type: "success"
-      });
+        _this6.proSkuVal = comb;
+      }, function (err) {});
     },
     proRowClick: function proRowClick(row) {
-      var _this11 = this;
+      var _this7 = this;
 
       this.proSkuVal = [];
       this.proCompRowIndex = "";
@@ -3210,7 +2758,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           } else {
             total_volume = 0;
           }
-          _this11.$set(item, "newData", {
+          _this7.$set(item, "newData", {
             quantity: "",
             paint: "",
             is_printing: false,
@@ -3226,153 +2774,388 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
       this.proSkuVal = comb;
     },
-    proSkuCName: function proSkuCName(_ref6) {
-      var row = _ref6.row,
-          rowIndex = _ref6.rowIndex;
+    proSkuCName: function proSkuCName(_ref3) {
+      var row = _ref3.row,
+          rowIndex = _ref3.rowIndex;
+
+      row.index = rowIndex;
+    },
+    proSkuRowClick: function proSkuRowClick(row) {
+      this.proCompRowIndex = "index" + row.index;
+      this.proCompRow = row;
+    },
+    addProRowClick: function addProRowClick(row) {
+      this.proRIndex = "index" + row.index;
+    },
+    addProductToChangeOrder: function addProductToChangeOrder() {
+      this.proMask = true;
+      Object.assign(this.proQuery, this.$options.data().proQuery);
+      this.proVal = [];
+      this.proSkuVal = [];
+      this.proIds = [];
+    },
+    addProRCName: function addProRCName(_ref4) {
+      var row = _ref4.row,
+          rowIndex = _ref4.rowIndex;
 
       row.index = rowIndex;
     }
-  }, _defineProperty(_methods, "proSkuRowClick", function proSkuRowClick(row) {
+  }, _defineProperty(_methods, "addProRowClick", function addProRowClick(row) {
+    this.proRIndex = "index" + row.index;
+  }), _defineProperty(_methods, "proSkuRowClick", function proSkuRowClick(row) {
     this.proCompRowIndex = "index" + row.index;
     this.proCompRow = row;
-  }), _defineProperty(_methods, "addProRowClick", function addProRowClick(row) {
-    this.proRIndex = "index" + row.index;
-  }), _defineProperty(_methods, "addDelPro", function addDelPro(index) {
-    this.proData.splice(index, 1);
-  }), _defineProperty(_methods, "cancelAddProDtl", function cancelAddProDtl() {
-    this.proMask = false;
-  }), _defineProperty(_methods, "proQueryClick", function proQueryClick() {
-    var _this12 = this;
+  }), _defineProperty(_methods, "confirmAddProDtl", function confirmAddProDtl() {
+    var _this8 = this;
 
-    this.proSkuVal = [];
-    this.$fetch(this.urls.products, {
-      status: true,
-      commodity_code: this.proQuery.commodity_code,
-      component_code: this.proQuery.component_code,
-      shops_id: this.proQuery.shops_id,
-      short_name: this.proQuery.short_name,
-      include: "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
-    }).then(function (res) {
-      _this12.proVal = res.data;
-      var comb = res.data[0]["combinations"]["data"];
-      if (comb.length > 0) {
-        var total_volume = 0;
-        comb.map(function (item) {
-          item["productComp"] = item["productComponents"]["data"];
-          if (item["productComponents"]["data"].length > 0) {
-            item["productComponents"]["data"].map(function (list) {
-              total_volume += list.volume;
-            });
-          } else {
-            total_volume = 0;
-          }
-          _this12.$set(item, "newData", {
-            quantity: "",
-            paint: "",
-            is_printing: false,
-            printing_fee: "",
-            is_spot_goods: true,
-            under_line_univalent: "",
-            under_line_preferential: "",
-            total_volume: total_volume
+    if (this.addOrderChangesMask) {
+      this.proSubmitData.map(function (item) {
+        if (_this8.addIds.indexOf(item.id) == -1) {
+          _this8.proData.push(item);
+          _this8.addIds.push(item.id);
+          _this8.$message({
+            message: "添加商品信息成功",
+            type: "success"
           });
-        });
-      } else {
-        comb["productComp"] = [];
-      }
-      _this12.proSkuVal = comb;
-    }, function (err) {});
-  }), _defineProperty(_methods, "handlePagChg", function handlePagChg(page) {
-    var _this13 = this;
+          _this8.proMask = false;
+        } else {
+          _this8.proData.map(function (list, index) {
+            if (list.id == item.id) {
+              _this8.proData.splice(index, 1);
+              _this8.proData.push(item);
+              _this8.$message({
+                message: "添加商品信息成功",
+                type: "success"
+              });
+              _this8.proMask = false;
+            }
+          });
+        }
+      });
+    } else {
+      this.proSubmitData.map(function (item) {
+        if (_this8.updateProIds.indexOf(item.id) == -1) {
+          _this8.updateProData.push(item);
+          _this8.updateProIds.push(item.id);
+          _this8.$message({
+            message: "添加商品信息成功",
+            type: "success"
+          });
+        } else {
+          _this8.updateProData.map(function (list, index) {
+            if (list.combinations_id == item.id) {
+              _this8.$set(item, "originalId", list.id);
+              _this8.updateProData.splice(index, 1);
+              _this8.updateProData.push(item);
+              _this8.$message({
+                message: "添加商品信息成功",
+                type: "success"
+              });
+            }
+          });
+        }
+      });
+    }
+  }), _defineProperty(_methods, "quantityChg", function quantityChg(value) {
+    var _this9 = this;
 
-    this.$fetch(this.urls.changeorders + "?page=" + page, {
-      include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
-    }).then(function (res) {
-      var index = _this13.middleActiveName - 0;
-      switch (index) {
-        case 0:
-          _this13.newOrderListData = res.data;
-          break;
-        case 1:
-          _this13.untreatedOrderListData = res.data;
-          break;
-        case 2:
-          _this13.treatedOrderListData = res.data;
-          break;
-        case 3:
-          _this13.canceledOrderListData = rew.data;
-          break;
+    if (value > 0) {
+      var proCRow = this.proCompRow;
+      if (this.proIds.indexOf(proCRow.id) == -1) {
+        this.proIds.push(proCRow.id);
+        this.proSubmitData.push(proCRow);
+      } else {
+        this.proSubmitData.map(function (list, index) {
+          if (list.id == proCRow.id) {
+            _this9.proSubmitData.splice(index, 1);
+            _this9.proSubmitData.push(proCRow);
+          }
+        });
+      }
+    }
+  }), _defineProperty(_methods, "addExpenseRClick", function addExpenseRClick(row) {
+    this.expenseRIndex = "index" + row.index;
+  }), _defineProperty(_methods, "addExpenseRCName", function addExpenseRCName(_ref5) {
+    var row = _ref5.row,
+        rowIndex = _ref5.rowIndex;
+
+    row.index = rowIndex;
+  }), _defineProperty(_methods, "addExpenseLine", function addExpenseLine() {
+    if (this.chooseOrderMask) {
+      this.expenseData.push({
+        payment_methods_id: "",
+        payment: ""
+      });
+    } else {
+      this.updateExpenseData.push({
+        payment_methods_id: "",
+        payment: ""
+      });
+    }
+  }), _defineProperty(_methods, "addDelExpense", function addDelExpense(index) {
+    this.expenseData.splice(index, 1);
+    this.$message({
+      message: "删除成功",
+      type: "success"
+    });
+  }), _defineProperty(_methods, "updateChanges", function updateChanges() {
+    var _this10 = this;
+
+    if (this.newOpt[1].nClick) {
+      return;
+    } else {
+      this.updateOrderChangesMask = true;
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$fetch(this.urls.changeorders + "/" + id, {
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails.order,changeOrderOperationRecord"
+      }).then(function (res) {
+        _this10.updateChangeOrderFormVal = res;
+        if (res["orderItems"]["data"].length > 0) {
+          res["orderItems"]["data"].map(function (item) {
+            _this10.addChangeOrderProIds.push(item["combination"].id);
+            item["name"] = item["combination"]["name"];
+            item["id"] = item.id;
+            item["products_id"] = item.products_id;
+            item["combinations_id"] = item.combinations_id;
+            item["productComp"] = item["combination"]["productComponents"]["data"];
+            _this10.$set(item, "newData", {
+              quantity: item.quantity,
+              paint: item.paint,
+              is_printing: item.is_printing,
+              printing_fee: item.printing_fee,
+              is_spot_goods: item.is_spot_goods,
+              under_line_univalent: item.under_line_univalent,
+              under_line_preferential: item.under_line_preferential,
+              total_volume: item.total_volume
+            });
+          });
+        }
+
+        _this10.proData = res["orderItems"]["data"];
+        _this10.expenseData = res["paymentDetails"]["data"];
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          _this10.$message.error(arr1.join(","));
+        }
+      });
+    }
+  }), _defineProperty(_methods, "updateChangeOrdersConfirm", function updateChangeOrdersConfirm() {
+    var _this11 = this;
+
+    var forData = this.updateChangeOrderFormVal;
+    var submitData = {
+      shops_id: forData.shops_id,
+      member_nick: forData.member_nick,
+      logistics_id: forData.logistics_id,
+      billing_way: forData.billing_way,
+      promise_ship_time: forData.promise_ship_time,
+      freight_types_id: forData.freight_types_id,
+      expected_freight: forData.expected_freight,
+      distributions_id: forData.distributions_id,
+      distribution_methods_id: forData.distribution_methods_id,
+      deliver_goods_fee: forData.deliver_goods_fee,
+      move_upstairs_fee: forData.move_upstairs_fee,
+      installation_fee: forData.installation_fee,
+      total_distribution_fee: forData.total_distribution_fee,
+      distribution_phone: forData.distribution_phone,
+      distribution_no: forData.distribution_no,
+      distribution_types_id: forData.distribution_types_id,
+      service_car_info: forData.service_car_info,
+      take_delivery_goods_fee: forData.take_delivery_goods_fee,
+      take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
+      express_fee: forData.express_fee,
+      service_car_fee: forData.service_car_fee,
+      cancel_after_verification_code: forData.cancel_after_verification_code,
+      wooden_frame_costs: forData.wooden_frame_costs,
+      preferential_cashback: forData.preferential_cashback,
+      favorable_cashback: forData.favorable_cashback,
+      customer_types_id: forData.customer_types_id,
+      is_invoice: forData.is_invoice,
+      invoice_express_fee: forData.invoice_express_fee,
+      express_invoice_title: forData.express_invoice_title,
+      contract_no: forData.contract_no,
+      payment_methods_id: forData.payment_methods_id,
+      deposit: forData.deposit,
+      document_title: forData.document_title,
+      warehouses_id: forData.warehouses_id,
+      payment_date: forData.payment_date,
+      interest_concessions: forData.interest_concessions,
+      is_notice: forData.is_notice,
+      is_cancel_after_verification: forData.is_cancel_after_verification,
+      accept_order_user: forData.accept_order_user,
+      tax_number: forData.tax_number,
+      receipt: forData.receipt,
+      logistics_remark: forData.logistics_remark,
+      seller_remark: forData.seller_remark,
+      customer_service_remark: forData.customer_service_remark,
+      buyer_message: forData.buyer_message,
+      status: forData.status,
+      receiver_name: forData.receiver_name,
+      receiver_phone: forData.receiver_phone,
+      receiver_mobile: forData.receiver_mobile,
+      receiver_state: forData.receiver_state,
+      receiver_city: forData.receiver_city,
+      receiver_district: forData.receiver_district,
+      receiver_address: forData.receiver_address,
+      receiver_zip: forData.receiver_zip,
+      order_items: [],
+      payment_details: []
+    };
+    this.proData.map(function (item) {
+      var proD = {
+        id: item.id,
+        products_id: item.products_id,
+        combinations_id: item.combinations_id,
+        quantity: item["newData"].quantity,
+        total_volume: item["newData"].total_volume,
+        paint: item["newData"].paint,
+        is_printing: item["newData"].is_printing,
+        printing_fee: item["newData"].printing_fee,
+        is_spot_goods: item["newData"].is_spot_goods,
+        under_line_univalent: item["newData"].under_line_univalent,
+        under_line_total_amount: item["newData"].under_line_total_amount,
+        under_line_preferential: item["newData"].under_line_preferential
+      };
+      submitData.order_items.push(proD);
+    });
+    this.expenseData.map(function (list) {
+      var expenseD = {
+        payment: list.payment,
+        payment_methods_id: list.payment_methods_id
+      };
+      submitData.payment_details.push(expenseD);
+    });
+    var id = this.checkboxId ? this.checkboxId : this.curRowId;
+    this.$patch(this.urls.changeorders + "/" + id, submitData).then(function () {
+      _this11.updateOrderChangesMask = false;
+      _this11.refresh();
+      _this11.$message({
+        message: "更新成功",
+        type: "success"
+      });
+      _this11.updateChangeOrderFormVal = {
+        change_order_no: "",
+        cancel_order_no: "",
+        is_canceled: false,
+        change_remark: "",
+        change_status: 10,
+        orders_id: 0,
+        //-----变更订单与原始order分界线--------
+        system_order_no: "",
+        shops_id: 0,
+        shops_name: "",
+        logistics_id: 0,
+        logistics_sn: "",
+        billing_way: "",
+        promise_ship_time: null,
+        freight_types_id: 0,
+        expected_freight: 0,
+        actual_freight: 0,
+        logistics_remark: "",
+        is_logistics_checked: false,
+        logistics_check_remark: "",
+        logistics_checked_at: null,
+        distributions_id: 0,
+        distribution_methods_id: 0,
+        deliver_goods_fee: 0,
+        move_upstairs_fee: 0,
+        installation_fee: 0,
+        total_distribution_fee: 0,
+        distribution_phone: "",
+        distribution_no: "",
+        distribution_types_id: 0,
+        is_distribution_checked: false,
+        distribution_check_remark: "",
+        distribution_checked_at: null,
+        service_car_fee: 0,
+        service_car_info: "",
+        take_delivery_goods_fee: 0,
+        take_delivery_goods_ways_id: 0,
+        express_fee: 0,
+        cancel_after_verification_code: "",
+        wooden_frame_costs: 0,
+        preferential_cashback: 0,
+        favorable_cashback: 0,
+        customer_types_id: 0,
+        is_invoice: false,
+        invoice_express_fee: 0,
+        express_invoice_title: "",
+        contract_no: "",
+        payment_methods_id: 0,
+        deposit: 0,
+        document_title: "",
+        warehouses_id: 0,
+        payment_date: null,
+        interest_concessions: 0,
+        is_notice: false,
+        is_cancel_after_verification: false,
+        accept_order_user: "",
+        tax_number: "",
+        receipt: "",
+        buyer_message: "",
+        seller_remark: "",
+        customer_service_remark: "",
+        stockout_remark: "",
+        taobao_oid: 0,
+        taobao_tid: 0,
+        member_nick: "",
+        seller_name: "",
+        seller_flag: "",
+        created: null,
+        est_con_time: null,
+        receiver_name: "",
+        receiver_phone: "",
+        receiver_mobile: "",
+        receiver_state: "",
+        receiver_city: "",
+        receiver_district: "",
+        receiver_address: "",
+        receiver_zip: "",
+        refund_info: "",
+        business_personnel_id: 0,
+        locker_id: 0,
+        locked_at: null,
+        auditor_id: 0,
+        audit_at: null,
+        cs_auditor_id: 0,
+        cs_audited_at: null,
+        fd_auditor_id: 0,
+        fd_audited_at: null,
+        ca_auditor_id: 0,
+        ca_audited_at: null,
+        stockout_op_id: 0,
+        stockout_at: null,
+        association_taobao_oid: 0,
+        is_merge: false,
+        is_split: false,
+        is_association: false,
+        status: true,
+        order_items: [],
+        payment_details: []
+      };
+    }, function (err) {
+      if (err.response) {
+        _this11.showDel = false;
+        var arr = err.response.data.errors;
+        var arr1 = [];
+        for (var i in arr) {
+          arr1.push(arr[i]);
+        }
+        var str = arr1.join(",");
+        _this11.$message.error(str);
       }
     });
-  }), _defineProperty(_methods, "firstHandleClick", function firstHandleClick() {
-    this.loading = true;
-    this.fetchData();
-  }), _defineProperty(_methods, "secondHandleClick", function secondHandleClick() {
-    var index = this.bottomActiveName - 0;
-    switch (index) {
-      case 0:
-        this.loading = true;
-        this.fetchData();
-        break;
-      case 1:
-        console.log(index);
-        break;
-      case 2:
-        console.log(index);
-        break;
-      case 3:
-        console.log(index);
-        break;
-    }
-  }), _defineProperty(_methods, "orderListRowClick", function orderListRowClick(row) {
-    this.curRowId = row.id;
-    this.curRowData = row;
-    this.operationData = row["changeOrderOperationRecord"] ? row["changeOrderOperationRecord"].data : [];
-    this.changeOrdersMainInfo = this.curRowData;
-    if (row["change_status"] == 10) {
-      this.newOpt[0].nClick = false;
-      this.newOpt[1].nClick = false;
-      this.newOpt[2].nClick = false;
-      this.newOpt[3].nClick = false;
-      this.newOpt[4].nClick = true;
-      this.newOpt[5].nClick = true;
-      this.newOpt[6].nClick = false;
-      this.newOpt[7].nClick = false;
-    }
-    if (row["change_status"] == 20) {
-      this.newOpt[0].nClick = false;
-      this.newOpt[1].nClick = false;
-      this.newOpt[2].nClick = false;
-      this.newOpt[3].nClick = true;
-      this.newOpt[4].nClick = false;
-      this.newOpt[5].nClick = false;
-      this.newOpt[6].nClick = false;
-      this.newOpt[7].nClick = false;
-    }
-    if (row["change_status"] == 30) {
-      this.newOpt[0].nClick = false;
-      this.newOpt[1].nClick = true;
-      this.newOpt[2].nClick = true;
-      this.newOpt[3].nClick = true;
-      this.newOpt[4].nClick = true;
-      this.newOpt[5].nClick = true;
-      this.newOpt[6].nClick = true;
-      this.newOpt[7].nClick = false;
-    }
-    if (row["status"] == 0) {
-      this.newOpt[0].nClick = false;
-      this.newOpt[1].nClick = true;
-      this.newOpt[2].nClick = true;
-      this.newOpt[3].nClick = true;
-      this.newOpt[4].nClick = true;
-      this.newOpt[5].nClick = true;
-      this.newOpt[6].nClick = false;
-      this.newOpt[7].nClick = false;
-    }
-  }), _defineProperty(_methods, "deleteChanges", function deleteChanges() {
-    console.log("deleteChanges");
-  }), _defineProperty(_methods, "submitChanges", function submitChanges() {
-    var _this14 = this;
+  }), _defineProperty(_methods, "deleteChangeOrder", function deleteChangeOrder() {
+    console.log("deleteChangeOrder");
+  }), _defineProperty(_methods, "addDelPro", function addDelPro(index) {
+    this.proData.splice(index, 1);
+  }), _defineProperty(_methods, "handleSubmit", function handleSubmit() {
+    var _this12 = this;
 
     if (this.newOpt[3].nClick) {
       return;
@@ -3380,9 +3163,209 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
       this.$put(this.urls.changeorders + "/" + id + "/submit").then(function () {
         // this.newOpt[1].nClick = true;
+        _this12.refresh();
+        _this12.$message({
+          message: "提交成功",
+          type: "success"
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          var str = arr1.join(",");
+          _this12.$message.error(str);
+        }
+      });
+    }
+  }), _defineProperty(_methods, "handleAudit", function handleAudit() {
+    var _this13 = this;
+
+    if (this.newOpt[4].nClick) {
+      return;
+    } else {
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$fetch(this.urls.changeorders + "/" + id, {
+        include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+      }).then(function (res) {
+        /*请求选中的数据并拼接用于patch Order的submit*/
+        //this.submitData = res;
+        _this13.submitData = res;
+        var patchId = res.orders_id;
+        var patchItemId = res.order_items_id;
+        var paymentDtlId = res.payment_details_id;
+
+        var forData = _this13.submitData;
+        var patchData = {
+          shops_id: forData.shops_id,
+          member_nick: forData.member_nick,
+          logistics_id: forData.logistics_id,
+          billing_way: forData.billing_way,
+          promise_ship_time: forData.promise_ship_time,
+          freight_types_id: forData.freight_types_id,
+          expected_freight: forData.expected_freight,
+          distributions_id: forData.distributions_id,
+          distribution_methods_id: forData.distribution_methods_id,
+          deliver_goods_fee: forData.deliver_goods_fee,
+          move_upstairs_fee: forData.move_upstairs_fee,
+          installation_fee: forData.installation_fee,
+          total_distribution_fee: forData.total_distribution_fee,
+          distribution_phone: forData.distribution_phone,
+          distribution_no: forData.distribution_no,
+          distribution_types_id: forData.distribution_types_id,
+          service_car_info: forData.service_car_info,
+          take_delivery_goods_fee: forData.take_delivery_goods_fee,
+          take_delivery_goods_ways_id: forData.take_delivery_goods_ways_id,
+          express_fee: forData.express_fee,
+          service_car_fee: forData.service_car_fee,
+          cancel_after_verification_code: forData.cancel_after_verification_code,
+          wooden_frame_costs: forData.wooden_frame_costs,
+          preferential_cashback: forData.preferential_cashback,
+          favorable_cashback: forData.favorable_cashback,
+          customer_types_id: forData.customer_types_id,
+          is_invoice: forData.is_invoice,
+          invoice_express_fee: forData.invoice_express_fee,
+          express_invoice_title: forData.express_invoice_title,
+          contract_no: forData.contract_no,
+          payment_methods_id: forData.payment_methods_id,
+          deposit: forData.deposit,
+          document_title: forData.document_title,
+          warehouses_id: forData.warehouses_id,
+          payment_date: forData.payment_date,
+          interest_concessions: forData.interest_concessions,
+          is_notice: forData.is_notice,
+          is_cancel_after_verification: forData.is_cancel_after_verification,
+          accept_order_user: forData.accept_order_user,
+          tax_number: forData.tax_number,
+          receipt: forData.receipt,
+          logistics_remark: forData.logistics_remark,
+          seller_remark: forData.seller_remark,
+          customer_service_remark: forData.customer_service_remark,
+          buyer_message: forData.buyer_message,
+          status: forData.status,
+          receiver_name: forData.receiver_name,
+          receiver_phone: forData.receiver_phone,
+          receiver_mobile: forData.receiver_mobile,
+          receiver_state: forData.receiver_state,
+          receiver_city: forData.receiver_city,
+          receiver_district: forData.receiver_district,
+          receiver_address: forData.receiver_address,
+          receiver_zip: forData.receiver_zip,
+          order_items: [],
+          payment_details: []
+        };
+        /** 对orderItems进行处理*/
+        if (res["orderItems"]["data"].length > 0) {
+          res["orderItems"]["data"].map(function (item) {
+            _this13.addChangeOrderProIds.push(item["combination"].id);
+            item["name"] = item["combination"]["name"];
+            item["id"] = patchItemId; //这里赋值的是change_orders的itemid，应该赋值为order的item id
+            item["products_id"] = item.products_id;
+            item["combinations_id"] = item.combinations_id;
+            item["productComp"] = item["combination"]["productComponents"]["data"];
+            _this13.$set(item, "newData", {
+              quantity: item.quantity,
+              paint: item.paint,
+              is_printing: item.is_printing,
+              printing_fee: item.printing_fee,
+              is_spot_goods: item.is_spot_goods,
+              under_line_univalent: item.under_line_univalent,
+              under_line_preferential: item.under_line_preferential,
+              total_volume: item.total_volume
+            });
+          });
+        }
+        _this13.proData = res["orderItems"]["data"];
+        _this13.expenseData = res["paymentDetails"]["data"];
+        /**将proData数据加入到submitData里 */
+        _this13.proData.map(function (item) {
+          var proD = {
+            id: item.id,
+            products_id: item.products_id,
+            combinations_id: item.combinations_id,
+            quantity: item["newData"].quantity,
+            total_volume: item["newData"].total_volume,
+            paint: item["newData"].paint,
+            is_printing: item["newData"].is_printing,
+            printing_fee: item["newData"].printing_fee,
+            is_spot_goods: item["newData"].is_spot_goods,
+            under_line_univalent: item["newData"].under_line_univalent,
+            under_line_total_amount: item["newData"].under_line_total_amount,
+            under_line_preferential: item["newData"].under_line_preferential
+          };
+          patchData.order_items.push(proD);
+        });
+        /**将expenseData加入到submitData里*/
+        _this13.expenseData.map(function (list) {
+          if (list.id) {
+            var expenseD = {
+              id: paymentDtlId,
+              payment: list.payment,
+              payment_methods_id: list.payment_methods_id
+            };
+            patchData.payment_details.push(expenseD);
+          } else {
+            var _expenseD = {
+              payment: list.payment,
+              payment_methods_id: list.payment_methods_id
+            };
+            patchData.payment_details.push(_expenseD);
+          }
+        });
+        var id = _this13.checkboxId ? _this13.checkboxId : _this13.curRowId;
+        _this13.$patch(_this13.urls.customerservicedepts + "/" + patchId, patchData).then(function () {
+          _this13.$put(_this13.urls.changeorders + "/" + id + "/auditchanges").then(function () {
+            _this13.$message({
+              message: "审核成功",
+              type: "success"
+            });
+            _this13.refresh();
+          }, function (err) {
+            if (err.response) {
+              var arr = err.response.data.errors;
+              var arr1 = [];
+              for (var i in arr) {
+                arr1.push(arr[i]);
+              }
+              var str = arr1.join(",");
+              _this13.$message.error(str);
+            }
+          });
+        }, function (err) {
+          if (err.response) {
+            var arr = err.response.data.errors;
+            var arr1 = [];
+            for (var i in arr) {
+              arr1.push(arr[i]);
+            }
+            var str = arr1.join(",");
+            _this13.$message.error(str);
+          }
+        });
+      }, function (err) {
+        if (err.response) {
+          var arr = err.response.data.errors;
+          var arr1 = [];
+          for (var i in arr) {
+            arr1.push(arr[i]);
+          }
+          _this13.$message.error(arr1.join(","));
+        }
+      });
+    }
+  }), _defineProperty(_methods, "handleUnAudit", function handleUnAudit() {
+    var _this14 = this;
+
+    if (this.newOpt[5].nClick) {
+      return;
+    } else {
+      var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      this.$put(this.urls.changeorders + "/" + id + "/unaudit").then(function () {
         _this14.refresh();
         _this14.$message({
-          message: "提交成功",
+          message: "退回提交成功",
           type: "success"
         });
       }, function (err) {
@@ -3397,17 +3380,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
-  }), _defineProperty(_methods, "handleUnAudit", function handleUnAudit() {
+  }), _defineProperty(_methods, "cancel", function cancel() {
     var _this15 = this;
 
-    if (this.newOpt[5].nClick) {
+    if (this.newOpt[6].nClick) {
       return;
     } else {
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.changeorders + "/" + id + "/unaudit").then(function () {
+      this.$put(this.urls.changeorders + "/" + id + "/cancel").then(function () {
         _this15.refresh();
         _this15.$message({
-          message: "退回提交成功",
+          message: "订单已作废",
           type: "success"
         });
       }, function (err) {
@@ -3422,12 +3405,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
-  }), _defineProperty(_methods, "addProDtl", function addProDtl() {
-    this.proMask = true;
-    Object.assign(this.proQuery, this.$options.data().proQuery);
-    this.proVal = [];
-    this.proSkuVal = [];
-    this.proIds = [];
+  }), _defineProperty(_methods, "refresh", function refresh() {
+    this.loading = true;
+    this.fetchData();
+  }), _defineProperty(_methods, "resets", function resets() {
+    this.searchBox = {};
   }), _defineProperty(_methods, "formChg", function formChg() {
     var formVal = void 0;
     if (this.addOrderChangesMask) {
@@ -3445,53 +3427,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.addOrderChangesMask = false;
   }), _defineProperty(_methods, "updateChangeOrderCancel", function updateChangeOrderCancel() {
     this.updateOrderChangesMask = false;
-  }), _defineProperty(_methods, "handleSelectionChange", function handleSelectionChange(val) {
-    console.log(val);
-    //拿到当前id集合
-    var delArr = [];
-    val.forEach(function (seletedIem) {
-      delArr.push(selecteItem.id);
-    });
-    console.log(+delArr);
-    this.ids = delArr.join(",");
-    console.log(delArr);
-    //拿到当前id
-    this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-    this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-    this.mergerIds = val;
   }), _defineProperty(_methods, "chooseOrderCancel", function chooseOrderCancel() {
     this.chooseOrderMask = false;
     this.$message({
       message: "取消选择订单",
       type: "success"
     });
-  }), _defineProperty(_methods, "cancel", function cancel() {
-    var _this16 = this;
-
-    if (this.newOpt[6].nClick) {
-      return;
-    } else {
-      var id = this.checkboxId ? this.checkboxId : this.curRowId;
-      this.$put(this.urls.changeorders + "/" + id + "/cancel").then(function () {
-        _this16.refresh();
-        _this16.$message({
-          message: "订单已作废",
-          type: "success"
-        });
-      }, function (err) {
-        if (err.response) {
-          var arr = err.response.data.errors;
-          var arr1 = [];
-          for (var i in arr) {
-            arr1.push(arr[i]);
-          }
-          var str = arr1.join(",");
-          _this16.$message.error(str);
-        }
-      });
-    }
-  }), _defineProperty(_methods, "resets", function resets() {
-    this.searchBox = {};
+  }), _defineProperty(_methods, "cancelAddProDtl", function cancelAddProDtl() {
+    this.proMask = false;
   }), _methods),
   mounted: function mounted() {
     this.fetchData();
@@ -3611,7 +3554,7 @@ var render = function() {
         "el-tabs",
         {
           staticStyle: { height: "250px" },
-          on: { "tab-click": _vm.firstHandleClick },
+          on: { "tab-click": _vm.refresh },
           model: {
             value: _vm.middleActiveName,
             callback: function($$v) {
@@ -5870,7 +5813,7 @@ var render = function() {
                         "el-button",
                         {
                           attrs: { type: "primary" },
-                          on: { click: _vm.addProDtl }
+                          on: { click: _vm.addProductToChangeOrder }
                         },
                         [_vm._v("添加商品")]
                       )
@@ -8249,7 +8192,7 @@ var render = function() {
                         "el-button",
                         {
                           attrs: { type: "primary" },
-                          on: { click: _vm.addProDtl }
+                          on: { click: _vm.addProductToChangeOrder }
                         },
                         [_vm._v("添加商品")]
                       )

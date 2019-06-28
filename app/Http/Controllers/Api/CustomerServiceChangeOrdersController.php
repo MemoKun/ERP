@@ -133,6 +133,7 @@ class CustomerServiceChangeOrdersController extends Controller
         PaymentDetailRequest $paymentDetailRequest,
         \App\Handlers\ValidatedHandler $validatedHandler
     ){
+        //$customerServiceChangeOrdersRequest->order_status = intval($customerServiceChangeOrdersRequest->order_status);
         $data[] = $customerServiceChangeOrdersRequest->validated();
         $data[] = $customerServiceChangeOrdersRequest->input('order_items');
         $data[] = $paymentDetailRequest->validated()['payment_details'] ?? null;

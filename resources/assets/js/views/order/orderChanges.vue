@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--搜索-->
     <div class="searchBox">
       <span>
         <label>变更单号</label>
@@ -22,8 +23,8 @@
       <el-button type="primary">筛选</el-button>
       <el-button @click="resets">重置</el-button>
     </div>
-    <!--*****************************************中间主要的table*******************************-->
-    <el-tabs v-model="middleActiveName" @tab-click="firstHandleClick" style="height: 250px;">
+    <!--orderList Tab-->
+    <el-tabs v-model="middleActiveName" @tab-click="refresh" style="height: 250px;">
       <el-tab-pane label="新建" name="0">
         <el-table :data="newOrderListData" fit @selection-change="handleSelectionChange" v-loading="loading" height="200" @row-click="orderListRowClick" @row-dbclick="orderListRowClick">
           <el-table-column type="selection" width="95" align="center" :checked="checkBoxInit"></el-table-column>
@@ -106,6 +107,7 @@
       </el-tab-pane>
     </el-tabs>
 
+    <!--页码-->
     <Pagination :page-url="this.urls.changeorders" @handlePagChg="handlePagChg" v-if="middleActiveName=='0'"></Pagination>
 
     <!--底部tab-->
@@ -142,12 +144,12 @@
               </span>
             </span>
             <span v-else-if="item.type=='select'">
-            <el-select v-model.trim="changeOrdersMainInfo[item.prop]" :placeholder="item.holder" disabled>
-              <span v-for="list in addSubData[item.stateVal]" :key="list.id">
-                <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
-              </span>
-            </el-select>
-          </span>
+              <el-select v-model.trim="changeOrdersMainInfo[item.prop]" :placeholder="item.holder" disabled>
+                <span v-for="list in addSubData[item.stateVal]" :key="list.id">
+                  <el-option :label="list.name?list.name:list.nick" :value="list.id"></el-option>
+                </span>
+              </el-select>
+            </span>
             <span v-else-if="item.type=='number'">
               <el-input type="number" v-model.trim="changeOrdersMainInfo[item.prop]" :placeholder="item.holder" disabled></el-input>
             </span>
@@ -174,7 +176,7 @@
       </el-tab-pane>
     </el-tabs>
 
-    <!--*********************************以下为*新增订单变更*所需的Dialog*****************************-->
+    <!--新增变更 包含新增订单界面、选择订单、添加商品三个界面-->
 
     <!--新增订单变更-->
     <el-dialog title="新增订单变更" :visible.sync="addOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
@@ -365,7 +367,7 @@
       <div slot="footer" class="dialog-footer clearfix">
         <div style="float: left">
           <el-button type="primary" @click="chooseOrders" v-if="addTabActiveName=='0'">选择订单</el-button>
-          <el-button type="primary" @click="addProDtl" v-if="addTabActiveName=='0'">添加商品</el-button>
+          <el-button type="primary" @click="addProductToChangeOrder" v-if="addTabActiveName=='0'">添加商品</el-button>
           <el-button type="primary" @click="addExpenseLine" v-if="addTabActiveName=='2'">新增费用类型</el-button>
         </div>
         <div style="float: right">
@@ -528,7 +530,7 @@
       </div>
     </el-dialog>
 
-    <!--*********************************以下为*修改*所需的Dialog*****************************-->
+    <!--修改变更 包含修改界面、选择订单、商品明细三个界面-->
 
     <!--修改-->
     <el-dialog title="变更订单修改" :visible.sync="updateOrderChangesMask" :class="{'more-forms':moreForms,'threeParts':threeParts}" class="bigDialog">
@@ -719,7 +721,7 @@
       <div slot="footer" class="dialog-footer clearfix">
         <div style="float: left">
           <el-button type="primary" @click="chooseOrders" v-if="addTabActiveName=='0'">选择订单</el-button>
-          <el-button type="primary" @click="addProDtl" v-if="addTabActiveName=='0'">添加商品</el-button>
+          <el-button type="primary" @click="addProductToChangeOrder" v-if="addTabActiveName=='0'">添加商品</el-button>
           <el-button type="primary" @click="addExpenseLine" v-if="addTabActiveName=='2'">新增费用类型</el-button>
         </div>
         <div style="float: right">
@@ -892,6 +894,7 @@ import {
 export default {
   data() {
     return {
+      //按钮
       newOpt: [
         {
           cnt: "增加",
@@ -909,13 +912,13 @@ export default {
         {
           cnt: "删除",
           icon: "bf-del",
-          ent: this.deleteChanges,
+          ent: this.deleteChangeOrder,
           nClick: true
         },
         {
           cnt: "提交",
           icon: "bf-submit",
-          ent: this.submitChanges,
+          ent: this.handleSubmit,
           nClick: true
         },
         {
@@ -943,10 +946,24 @@ export default {
           nClick: false
         }
       ],
+      //工具类
+      filterBox: false,
+      //搜索
+
+      //新增
+      //修改
+      //删除
+      //锁定
+      //解锁
+      //审核
+      //退审
+      //打印
+      //刷新
+      
       addTabActiveName: "0",
       middleActiveName: "0",
       bottomActiveName: "0",
-      filterBox: false,
+      
       loading: true, //loading标识
       checkBoxInit: false, //checked 属性l
 
@@ -2137,20 +2154,20 @@ export default {
           holder: "请选择物流公司",
           type: "select",
           stateVal: "logistics",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "承诺日期",
           prop: "promise_ship_time",
           type: "text",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "预计运费",
           prop: "expected_freight",
           holder: "请输入预计运费",
           type: "number",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "运费类型",
@@ -2158,7 +2175,7 @@ export default {
           holder: "请选择运费类型",
           type: "select",
           stateVal: "freight_type",
-          addChgAble: true,
+          addChgAble: true
         },
         /*{
           label: "三包服务",
@@ -2179,68 +2196,68 @@ export default {
           prop: "receiver_name",
           holder: "请输入姓名",
           type: "text",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "固定电话",
           prop: "receiver_phone",
           holder: "请输入固定电话",
           type: "number",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "手机",
           prop: "receiver_mobile",
           holder: "请输入手机号码",
           type: "number",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "省",
           width: "120",
           prop: "receiver_state",
           type: "text",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "市",
           width: "120",
           prop: "receiver_city",
           type: "text",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "区",
           width: "120",
           prop: "receiver_district",
           type: "text",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "邮编",
           prop: "receiver_zip",
           holder: "请输入邮编",
           type: "text",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "地址",
           prop: "receiver_address",
           type: "text",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "配送方式",
           prop: "distribution_methods_id",
           type: "select",
-          stateVal:"distribution_method",
-          addChgAble: true,
+          stateVal: "distribution_method",
+          addChgAble: true
         },
         {
           label: "配送信息",
           prop: "service_car_info",
           type: "text",
-          addChgAble: true,
+          addChgAble: true
         },
         {
           label: "买家留言",
@@ -2285,7 +2302,7 @@ export default {
       rejectReasonData: [], //驳回原因
       offListData: [], //优惠列表
       imageData: [], //订单图片
-      innerNote:[],//内部便签
+      innerNote: [], //内部便签
 
       //批量选择 批量删除
       ids: [],
@@ -2344,7 +2361,7 @@ export default {
           type: "text"
         }
       ],
-      updateOrderChangesMask: false
+      updateOrderChangesMask: false,
     };
   },
   computed: {
@@ -2380,9 +2397,7 @@ export default {
 */
   },
   methods: {
-    toogleShow() {
-      this.filterBox = !this.filterBox;
-    },
+    //搜索加载数据
     fetchData() {
       let index = this.middleActiveName - 0;
       switch (index) {
@@ -2395,7 +2410,7 @@ export default {
               this.loading = false;
               this.newOrderListData = [];
               this.newOrderListData = res.data;
-              this.changeOrdersMainInfo = res.data[0]?res.data[0]:{};
+              this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2429,8 +2444,11 @@ export default {
               this.loading = false;
               this.untreatedOrderListData = [];
               this.untreatedOrderListData = res.data;
-              this.changeOrdersMainInfo = res.data[0]?res.data[0]:{};
-              this.operationData = res.data[0]['changeOrderOperationRecord'].data?res.data[0]['changeOrderOperationRecord'].data:[];
+              this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
+              this.operationData = res.data[0]["changeOrderOperationRecord"]
+                .data
+                ? res.data[0]["changeOrderOperationRecord"].data
+                : [];
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2464,8 +2482,11 @@ export default {
               this.loading = false;
               this.treatedOrderListData = [];
               this.treatedOrderListData = res.data;
-              this.changeOrdersMainInfo = res.data[0]?res.data[0]:{};
-              this.operationData = res.data[0]['changeOrderOperationRecord'].data?res.data[0]['changeOrderOperationRecord'].data:[];
+              this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
+              this.operationData = res.data[0]["changeOrderOperationRecord"]
+                .data
+                ? res.data[0]["changeOrderOperationRecord"].data
+                : [];
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2499,8 +2520,11 @@ export default {
               this.loading = false;
               this.canceledOrderListData = [];
               this.canceledOrderListData = res.data;
-              this.changeOrdersMainInfo = res.data[0]?res.data[0]:{};
-              this.operationData = res.data[0]['changeOrderOperationRecord'].data?res.data[0]['changeOrderOperationRecord'].data:[];
+              this.changeOrdersMainInfo = res.data[0] ? res.data[0] : {};
+              this.operationData = res.data[0]["changeOrderOperationRecord"]
+                .data
+                ? res.data[0]["changeOrderOperationRecord"].data
+                : [];
               let pg = res.meta.pagination;
               this.$store.dispatch("currentPage", pg.current_page);
               this.$store.commit("PER_PAGE", pg.per_page);
@@ -2526,10 +2550,97 @@ export default {
           );
       }
     },
-    /**
-     * ********************************************新  增  变  更  订  单 ***************************************************
-     * 
-     **/
+    //页码
+    handlePagChg(page) {
+      this.$fetch(this.urls.changeorders + "?page=" + page, {
+        include:
+          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
+      }).then(res => {
+        let index = this.middleActiveName - 0;
+        switch (index) {
+          case 0:
+            this.newOrderListData = res.data;
+            break;
+          case 1:
+            this.untreatedOrderListData = res.data;
+            break;
+          case 2:
+            this.treatedOrderListData = res.data;
+            break;
+          case 3:
+            this.canceledOrderListData = rew.data;
+            break;
+        }
+      });
+    },
+    //搜索
+
+    //点击与选择checkbox
+    orderListRowClick(row) {
+      this.curRowId = row.id;
+      this.curRowData = row;
+      this.operationData = row["changeOrderOperationRecord"]
+        ? row["changeOrderOperationRecord"].data
+        : [];
+      this.changeOrdersMainInfo = this.curRowData;
+      if (row["change_status"] == 10) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = false;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
+      if (row["change_status"] == 20) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = false;
+        this.newOpt[2].nClick = false;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = false;
+        this.newOpt[5].nClick = false;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
+      if (row["change_status"] == 30) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = true;
+        this.newOpt[7].nClick = false;
+      }
+      if (row["status"] == 0) {
+        this.newOpt[0].nClick = false;
+        this.newOpt[1].nClick = true;
+        this.newOpt[2].nClick = true;
+        this.newOpt[3].nClick = true;
+        this.newOpt[4].nClick = true;
+        this.newOpt[5].nClick = true;
+        this.newOpt[6].nClick = false;
+        this.newOpt[7].nClick = false;
+      }
+    },
+    handleSelectionChange(val) {
+      console.log(val);
+      //拿到当前id集合
+      let delArr = [];
+      val.forEach(seletedIem => {
+        delArr.push(seletedIem.id);
+      });
+      console.log(+delArr);
+      this.ids = delArr.join(",");
+      console.log(delArr);
+      //拿到当前id
+      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
+      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
+      this.mergerIds = val;
+    },
+
+    //新增变更
     //1、新增订单变更，功能主要为打开新增变更Dialog
     addChanges() {
       this.addOrderChangesMask = true;
@@ -2598,8 +2709,10 @@ export default {
           this.addChangeOrderFormVal.orders_id = res["id"];
           //-----变更订单与原始order分界线--------
           this.addChangeOrderFormVal.system_order_no = res["system_order_no"];
+          this.addChangeOrderFormVal.order_source = res["order_source"];
+          this.addChangeOrderFormVal.order_amount = res["order_amount"];
           this.addChangeOrderFormVal.shops_id = res["shops_id"];
-          this.addChangeOrderFormVal.shops_name = res["shops_name"];
+          this.addChangeOrderFormVal.shop_name = res["shop_name"];
           this.addChangeOrderFormVal.logistics_id = res["logistics_id"];
           this.addChangeOrderFormVal.logistics_sn = res["logistics_sn"];
           this.addChangeOrderFormVal.billing_way = res["billing_way"];
@@ -2743,6 +2856,9 @@ export default {
           }
         }
       );
+    },
+    addOrderRowCName({ row, rowIndex }) {
+      row.index = rowIndex;
     },
     //5、确认选择订单-实际并不对订单进行操作，相关操作已经在chooseOrderRowClick完成
     chooseOrderConfirm() {
@@ -2901,11 +3017,203 @@ export default {
         }
       );
     },
-
-    /**
-     * ******************************************** 修  改 ***************************************************
-     * 
-     **/
+    //选择商品
+    proQueryClick() {
+      this.proSkuVal = [];
+      this.$fetch(this.urls.products, {
+        status: true,
+        commodity_code: this.proQuery.commodity_code,
+        component_code: this.proQuery.component_code,
+        shops_id: this.proQuery.shops_id,
+        short_name: this.proQuery.short_name,
+        include:
+          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
+      }).then(
+        res => {
+          this.proVal = res.data;
+          let comb = res.data[0]["combinations"]["data"];
+          if (comb.length > 0) {
+            let total_volume = 0;
+            comb.map(item => {
+              item["productComp"] = item["productComponents"]["data"];
+              if (item["productComponents"]["data"].length > 0) {
+                item["productComponents"]["data"].map(list => {
+                  total_volume += list.volume;
+                });
+              } else {
+                total_volume = 0;
+              }
+              this.$set(item, "newData", {
+                quantity: "",
+                paint: "",
+                is_printing: false,
+                printing_fee: "",
+                is_spot_goods: true,
+                under_line_univalent: "",
+                under_line_preferential: "",
+                total_volume: total_volume
+              });
+            });
+          } else {
+            comb["productComp"] = [];
+          }
+          this.proSkuVal = comb;
+        },
+        err => {}
+      );
+    },
+    proRowClick(row) {
+      this.proSkuVal = [];
+      this.proCompRowIndex = "";
+      let comb = row["combinations"]["data"];
+      if (comb.length > 0) {
+        let total_volume = 0;
+        comb.map(item => {
+          item["productComp"] = item["productComponents"]["data"];
+          if (item["productComponents"]["data"].length > 0) {
+            item["productComponents"]["data"].map(list => {
+              total_volume += list.volume;
+            });
+          } else {
+            total_volume = 0;
+          }
+          this.$set(item, "newData", {
+            quantity: "",
+            paint: "",
+            is_printing: false,
+            printing_fee: "0.0",
+            is_spot_goods: false,
+            under_line_univalent: "0.0",
+            under_line_preferential: "0.0",
+            total_volume: total_volume
+          });
+        });
+      } else {
+        comb["productComp"] = [];
+      }
+      this.proSkuVal = comb;
+    },
+    proSkuCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    proSkuRowClick(row) {
+      this.proCompRowIndex = `index${row.index}`;
+      this.proCompRow = row;
+    },
+    addProRowClick(row) {
+      this.proRIndex = `index${row.index}`;
+    },
+    addProductToChangeOrder() {
+      this.proMask = true;
+      Object.assign(this.proQuery, this.$options.data().proQuery);
+      this.proVal = [];
+      this.proSkuVal = [];
+      this.proIds = [];
+    },
+    addProRCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    addProRowClick(row) {
+      this.proRIndex = `index${row.index}`;
+    },
+    proSkuRowClick(row) {
+      this.proCompRowIndex = `index${row.index}`;
+      this.proCompRow = row;
+    },
+    confirmAddProDtl() {
+      if (this.addOrderChangesMask) {
+        this.proSubmitData.map(item => {
+          if (this.addIds.indexOf(item.id) == -1) {
+            this.proData.push(item);
+            this.addIds.push(item.id);
+            this.$message({
+              message: "添加商品信息成功",
+              type: "success"
+            });
+            this.proMask = false;
+          } else {
+            this.proData.map((list, index) => {
+              if (list.id == item.id) {
+                this.proData.splice(index, 1);
+                this.proData.push(item);
+                this.$message({
+                  message: "添加商品信息成功",
+                  type: "success"
+                });
+                this.proMask = false;
+              }
+            });
+          }
+        });
+      } else {
+        this.proSubmitData.map(item => {
+          if (this.updateProIds.indexOf(item.id) == -1) {
+            this.updateProData.push(item);
+            this.updateProIds.push(item.id);
+            this.$message({
+              message: "添加商品信息成功",
+              type: "success"
+            });
+          } else {
+            this.updateProData.map((list, index) => {
+              if (list.combinations_id == item.id) {
+                this.$set(item, "originalId", list.id);
+                this.updateProData.splice(index, 1);
+                this.updateProData.push(item);
+                this.$message({
+                  message: "添加商品信息成功",
+                  type: "success"
+                });
+              }
+            });
+          }
+        });
+      }
+    },
+    quantityChg(value) {
+      if (value > 0) {
+        let proCRow = this.proCompRow;
+        if (this.proIds.indexOf(proCRow.id) == -1) {
+          this.proIds.push(proCRow.id);
+          this.proSubmitData.push(proCRow);
+        } else {
+          this.proSubmitData.map((list, index) => {
+            if (list.id == proCRow.id) {
+              this.proSubmitData.splice(index, 1);
+              this.proSubmitData.push(proCRow);
+            }
+          });
+        }
+      }
+    },
+    //费用类型
+    addExpenseRClick(row) {
+      this.expenseRIndex = `index${row.index}`;
+    },
+    addExpenseRCName({ row, rowIndex }) {
+      row.index = rowIndex;
+    },
+    addExpenseLine() {
+      if (this.chooseOrderMask) {
+        this.expenseData.push({
+          payment_methods_id: "",
+          payment: ""
+        });
+      } else {
+        this.updateExpenseData.push({
+          payment_methods_id: "",
+          payment: ""
+        });
+      }
+    },
+    addDelExpense(index) {
+      this.expenseData.splice(index, 1);
+      this.$message({
+        message: "删除成功",
+        type: "success"
+      });
+    },
+    //修改变更
     //1、点击提交按钮，fetch数据并加载到update窗口里
     updateChanges() {
       if (this.newOpt[1].nClick) {
@@ -3165,21 +3473,25 @@ export default {
         }
       );
     },
-
-    /**
-     * ******************************************** 提  交 ***************************************************
-     * 
-     **/
+    //删除
+    deleteChangeOrder() {
+      console.log("deleteChangeOrder");
+    },
+    addDelPro(index) {
+      this.proData.splice(index, 1);
+    },
+    //提交
     handleSubmit() {
       if (this.newOpt[3].nClick) {
         return;
       } else {
         let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.customerservicedepts + "/" + id + "submit").then(
+        this.$put(this.urls.changeorders + "/" + id + "/submit").then(
           () => {
+            // this.newOpt[1].nClick = true;
             this.refresh();
             this.$message({
-              message: "审核成功",
+              message: "提交成功",
               type: "success"
             });
           },
@@ -3197,11 +3509,7 @@ export default {
         );
       }
     },
-
-    /**
-     * ******************************************** 审  核 ***************************************************
-     * 
-     **/
+    //审核
     handleAudit() {
       if (this.newOpt[4].nClick) {
         return;
@@ -3218,6 +3526,7 @@ export default {
             let patchId = res.orders_id;
             let patchItemId = res.order_items_id;
             let paymentDtlId = res.payment_details_id;
+
             let forData = this.submitData;
             let patchData = {
               shops_id: forData.shops_id,
@@ -3394,336 +3703,7 @@ export default {
         );
       }
     },
-    test() {
-      console.log("test");
-    },
-    confirmAddProDtl() {
-      if (this.addOrderChangesMask) {
-        this.proSubmitData.map(item => {
-          if (this.addIds.indexOf(item.id) == -1) {
-            this.proData.push(item);
-            this.addIds.push(item.id);
-            this.$message({
-              message: "添加商品信息成功",
-              type: "success"
-            });
-            this.proMask = false;
-          } else {
-            this.proData.map((list, index) => {
-              if (list.id == item.id) {
-                this.proData.splice(index, 1);
-                this.proData.push(item);
-                this.$message({
-                  message: "添加商品信息成功",
-                  type: "success"
-                });
-                this.proMask = false;
-              }
-            });
-          }
-        });
-      } else {
-        this.proSubmitData.map(item => {
-          if (this.updateProIds.indexOf(item.id) == -1) {
-            this.updateProData.push(item);
-            this.updateProIds.push(item.id);
-            this.$message({
-              message: "添加商品信息成功",
-              type: "success"
-            });
-          } else {
-            this.updateProData.map((list, index) => {
-              if (list.combinations_id == item.id) {
-                this.$set(item, "originalId", list.id);
-                this.updateProData.splice(index, 1);
-                this.updateProData.push(item);
-                this.$message({
-                  message: "添加商品信息成功",
-                  type: "success"
-                });
-              }
-            });
-          }
-        });
-      }
-    },
-    addProRCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    refresh() {
-      this.loading = true;
-      this.fetchData();
-    },
-    addProRowClick(row) {
-      this.proRIndex = `index${row.index}`;
-    },
-    addAfterSProRowCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    addOrderRowCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    quantityChg(value) {
-      if (value > 0) {
-        let proCRow = this.proCompRow;
-        if (this.proIds.indexOf(proCRow.id) == -1) {
-          this.proIds.push(proCRow.id);
-          this.proSubmitData.push(proCRow);
-        } else {
-          this.proSubmitData.map((list, index) => {
-            if (list.id == proCRow.id) {
-              this.proSubmitData.splice(index, 1);
-              this.proSubmitData.push(proCRow);
-            }
-          });
-        }
-      }
-    },
-    addExpenseRClick(row) {
-      this.expenseRIndex = `index${row.index}`;
-    },
-    addExpenseRCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    proSkuRowClick(row) {
-      this.proCompRowIndex = `index${row.index}`;
-      this.proCompRow = row;
-    },
-    /*新增行*/
-    addExpenseLine() {
-      if (this.chooseOrderMask) {
-        this.expenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      } else {
-        this.updateExpenseData.push({
-          payment_methods_id: "",
-          payment: ""
-        });
-      }
-    },
-    addDelExpense(index) {
-      this.expenseData.splice(index, 1);
-      this.$message({
-        message: "删除成功",
-        type: "success"
-      });
-    },
-    proRowClick(row) {
-      this.proSkuVal = [];
-      this.proCompRowIndex = "";
-      let comb = row["combinations"]["data"];
-      if (comb.length > 0) {
-        let total_volume = 0;
-        comb.map(item => {
-          item["productComp"] = item["productComponents"]["data"];
-          if (item["productComponents"]["data"].length > 0) {
-            item["productComponents"]["data"].map(list => {
-              total_volume += list.volume;
-            });
-          } else {
-            total_volume = 0;
-          }
-          this.$set(item, "newData", {
-            quantity: "",
-            paint: "",
-            is_printing: false,
-            printing_fee: "0.0",
-            is_spot_goods: false,
-            under_line_univalent: "0.0",
-            under_line_preferential: "0.0",
-            total_volume: total_volume
-          });
-        });
-      } else {
-        comb["productComp"] = [];
-      }
-      this.proSkuVal = comb;
-    },
-    proSkuCName({ row, rowIndex }) {
-      row.index = rowIndex;
-    },
-    proSkuRowClick(row) {
-      this.proCompRowIndex = `index${row.index}`;
-      this.proCompRow = row;
-    },
-    addProRowClick(row) {
-      this.proRIndex = `index${row.index}`;
-    },
-    addDelPro(index) {
-      this.proData.splice(index, 1);
-    },
-    cancelAddProDtl() {
-      this.proMask = false;
-    },
-    proQueryClick() {
-      this.proSkuVal = [];
-      this.$fetch(this.urls.products, {
-        status: true,
-        commodity_code: this.proQuery.commodity_code,
-        component_code: this.proQuery.component_code,
-        shops_id: this.proQuery.shops_id,
-        short_name: this.proQuery.short_name,
-        include:
-          "productComponents.product,shop,supplier,goodsCategory,combinations.productComponents"
-      }).then(
-        res => {
-          this.proVal = res.data;
-          let comb = res.data[0]["combinations"]["data"];
-          if (comb.length > 0) {
-            let total_volume = 0;
-            comb.map(item => {
-              item["productComp"] = item["productComponents"]["data"];
-              if (item["productComponents"]["data"].length > 0) {
-                item["productComponents"]["data"].map(list => {
-                  total_volume += list.volume;
-                });
-              } else {
-                total_volume = 0;
-              }
-              this.$set(item, "newData", {
-                quantity: "",
-                paint: "",
-                is_printing: false,
-                printing_fee: "",
-                is_spot_goods: true,
-                under_line_univalent: "",
-                under_line_preferential: "",
-                total_volume: total_volume
-              });
-            });
-          } else {
-            comb["productComp"] = [];
-          }
-          this.proSkuVal = comb;
-        },
-        err => {}
-      );
-    },
-    /*页码*/
-    handlePagChg(page) {
-      this.$fetch(this.urls.changeorders + "?page=" + page, {
-        include:
-          "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails,changeOrderOperationRecord"
-      }).then(res => {
-        let index = this.middleActiveName - 0;
-        switch (index) {
-          case 0:
-            this.newOrderListData = res.data;
-            break;
-          case 1:
-            this.untreatedOrderListData = res.data;
-            break;
-          case 2:
-            this.treatedOrderListData = res.data;
-            break;
-          case 3:
-            this.canceledOrderListData = rew.data;
-            break;
-        }
-      });
-    },
-    firstHandleClick() {
-      this.loading = true;
-      this.fetchData();
-    },
-    secondHandleClick() {
-      let index = this.bottomActiveName - 0;
-      switch (index) {
-        case 0:
-          this.loading = true;
-          this.fetchData();
-          break;
-        case 1:
-          console.log(index);
-          break;
-        case 2:
-          console.log(index);
-          break;
-        case 3:
-          console.log(index);
-          break;
-      }
-    },
-    orderListRowClick(row) {
-      this.curRowId = row.id;
-      this.curRowData = row;
-      this.operationData = row["changeOrderOperationRecord"]?row["changeOrderOperationRecord"].data:[];
-      this.changeOrdersMainInfo = this.curRowData;
-      if (row["change_status"] == 10) {
-        this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = false;
-        this.newOpt[3].nClick = false;
-        this.newOpt[4].nClick = true;
-        this.newOpt[5].nClick = true;
-        this.newOpt[6].nClick = false;
-        this.newOpt[7].nClick = false;
-      }
-      if (row["change_status"] == 20) {
-        this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = false;
-        this.newOpt[2].nClick = false;
-        this.newOpt[3].nClick = true;
-        this.newOpt[4].nClick = false;
-        this.newOpt[5].nClick = false;
-        this.newOpt[6].nClick = false;
-        this.newOpt[7].nClick = false;
-      }
-      if (row["change_status"] == 30) {
-        this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = true;
-        this.newOpt[2].nClick = true;
-        this.newOpt[3].nClick = true;
-        this.newOpt[4].nClick = true;
-        this.newOpt[5].nClick = true;
-        this.newOpt[6].nClick = true;
-        this.newOpt[7].nClick = false;
-      }
-      if (row["status"] == 0) {
-        this.newOpt[0].nClick = false;
-        this.newOpt[1].nClick = true;
-        this.newOpt[2].nClick = true;
-        this.newOpt[3].nClick = true;
-        this.newOpt[4].nClick = true;
-        this.newOpt[5].nClick = true;
-        this.newOpt[6].nClick = false;
-        this.newOpt[7].nClick = false;
-      }
-      
-    },
-    deleteChanges() {
-      console.log("deleteChanges");
-    },
-    submitChanges() {
-      if (this.newOpt[3].nClick) {
-        return;
-      } else {
-        let id = this.checkboxId ? this.checkboxId : this.curRowId;
-        this.$put(this.urls.changeorders + "/" + id + "/submit").then(
-          () => {
-            // this.newOpt[1].nClick = true;
-            this.refresh();
-            this.$message({
-              message: "提交成功",
-              type: "success"
-            });
-          },
-          err => {
-            if (err.response) {
-              let arr = err.response.data.errors;
-              let arr1 = [];
-              for (let i in arr) {
-                arr1.push(arr[i]);
-              }
-              let str = arr1.join(",");
-              this.$message.error(str);
-            }
-          }
-        );
-      }
-    },
+    //退审
     handleUnAudit() {
       if (this.newOpt[5].nClick) {
         return;
@@ -3751,62 +3731,7 @@ export default {
         );
       }
     },
-    addProDtl() {
-      this.proMask = true;
-      Object.assign(this.proQuery, this.$options.data().proQuery);
-      this.proVal = [];
-      this.proSkuVal = [];
-      this.proIds = [];
-    },
-    formChg() {
-      let formVal;
-      if (this.addOrderChangesMask) {
-        formVal = this.addChangeOrderFormVal;
-      } else {
-        formVal = this.updateChangeOrderFormVal;
-      }
-      formVal["total_distribution_fee"] =
-        formVal["deliver_goods_fee"] -
-        0 +
-        (formVal["move_upstairs_fee"] - 0) +
-        (formVal["installation_fee"] - 0);
-      if (this.addOrderChangesMask) {
-        this.addChangeOrderFormVal.total_distribution_fee =
-          formVal["total_distribution_fee"];
-      } else {
-        this.updateChangeOrderFormVal.total_distribution_fee =
-          formVal["total_distribution_fee"];
-      }
-    },
-    addChangeOrderCancel() {
-      this.addOrderChangesMask = false;
-    },
-    updateChangeOrderCancel() {
-      this.updateOrderChangesMask = false;
-    },
-    //批量删除操作
-    handleSelectionChange(val) {
-      console.log(val);
-      //拿到当前id集合
-      let delArr = [];
-      val.forEach(seletedIem => {
-        delArr.push(selecteItem.id);
-      });
-      console.log(+delArr);
-      this.ids = delArr.join(",");
-      console.log(delArr);
-      //拿到当前id
-      this.checkboxId = val.length > 0 ? val[val.length - 1].id : "";
-      this.curRowData = val.length > 0 ? val[val.length - 1] : "";
-      this.mergerIds = val;
-    },
-    chooseOrderCancel() {
-      this.chooseOrderMask = false;
-      this.$message({
-        message: "取消选择订单",
-        type: "success"
-      });
-    },
+    //作废
     cancel() {
       if (this.newOpt[6].nClick) {
         return;
@@ -3834,9 +3759,71 @@ export default {
         );
       }
     },
+    //刷新
+    refresh() {
+      this.loading = true;
+      this.fetchData();
+    },
+    //重置SearchBox
     resets() {
       this.searchBox = {};
-    }
+    },
+
+    
+    
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    formChg() {
+      let formVal;
+      if (this.addOrderChangesMask) {
+        formVal = this.addChangeOrderFormVal;
+      } else {
+        formVal = this.updateChangeOrderFormVal;
+      }
+      formVal["total_distribution_fee"] =
+        formVal["deliver_goods_fee"] -
+        0 +
+        (formVal["move_upstairs_fee"] - 0) +
+        (formVal["installation_fee"] - 0);
+      if (this.addOrderChangesMask) {
+        this.addChangeOrderFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
+      } else {
+        this.updateChangeOrderFormVal.total_distribution_fee =
+          formVal["total_distribution_fee"];
+      }
+    },
+    addChangeOrderCancel() {
+      this.addOrderChangesMask = false;
+    },
+    updateChangeOrderCancel() {
+      this.updateOrderChangesMask = false;
+    },
+    chooseOrderCancel() {
+      this.chooseOrderMask = false;
+      this.$message({
+        message: "取消选择订单",
+        type: "success"
+      });
+    },
+    cancelAddProDtl() {
+      this.proMask = false;
+    },
   },
   mounted() {
     this.fetchData();
