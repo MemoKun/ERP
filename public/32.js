@@ -1616,7 +1616,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       waitingStockOut: [],
       alreadyStockOut: [],
-
+      payDtlData: [], //支付明细
       proDtlData: [], //订单详细
       operationData: [], //操作记录
       relatedInfoData: [], //关联信息
@@ -4974,7 +4974,6 @@ var render = function() {
               _c(
                 "el-tabs",
                 {
-                  on: { "tab-click": _vm.rightHandleClick },
                   model: {
                     value: _vm.rightActiveName,
                     callback: function($$v) {

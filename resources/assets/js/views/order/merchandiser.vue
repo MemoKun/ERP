@@ -319,7 +319,7 @@
             </span>
           </el-form-item>
         </el-form>
-        <el-tabs v-model="rightActiveName" @tab-click="rightHandleClick">
+        <el-tabs v-model="rightActiveName">
           <el-tab-pane label="商品明细" name="0">
             <el-table :data="proDtlData" fit>
               <el-table-column v-for="item in orderDtlHead[rightActiveName]" :label="item.label" align="center" :width="item.width" :key="item.label">
@@ -1764,7 +1764,7 @@ export default {
 
       waitingStockOut: [],
       alreadyStockOut: [],
-
+      payDtlData:[],//支付明细
       proDtlData: [], //订单详细
       operationData: [], //操作记录
       relatedInfoData: [], //关联信息
@@ -2720,6 +2720,7 @@ export default {
         }
       });
     },
+    //获取订单明细的数据
     orderDbClick(row) {
       this.activeName = "1";
       let data = row;
