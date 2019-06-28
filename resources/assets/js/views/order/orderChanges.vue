@@ -959,11 +959,11 @@ export default {
       //退审
       //打印
       //刷新
-      
+
       addTabActiveName: "0",
       middleActiveName: "0",
       bottomActiveName: "0",
-      
+
       loading: true, //loading标识
       checkBoxInit: false, //checked 属性l
 
@@ -2361,7 +2361,7 @@ export default {
           type: "text"
         }
       ],
-      updateOrderChangesMask: false,
+      updateOrderChangesMask: false
     };
   },
   computed: {
@@ -3769,25 +3769,6 @@ export default {
       this.searchBox = {};
     },
 
-    
-    
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     formChg() {
       let formVal;
       if (this.addOrderChangesMask) {
@@ -3823,7 +3804,7 @@ export default {
     },
     cancelAddProDtl() {
       this.proMask = false;
-    },
+    }
   },
   mounted() {
     this.fetchData();

@@ -1764,7 +1764,7 @@ export default {
 
       waitingStockOut: [],
       alreadyStockOut: [],
-      payDtlData:[],//支付明细
+      payDtlData: [], //支付明细
       proDtlData: [], //订单详细
       operationData: [], //操作记录
       relatedInfoData: [], //关联信息
@@ -3725,7 +3725,9 @@ export default {
           purchase_details: []
         };
         item.productComponents.data.map(list => {
-          let comp = {
+          if (typeof(list["proPurchaseData"])==='undefined') {
+          }else{
+            let comp = {
             product_components_id: list.id,
             purchase_quantity: list["proPurchaseData"].purchase_quantity,
             shops_id: list["proPurchaseData"].shops_id,
@@ -3740,12 +3742,9 @@ export default {
             remark: list["proPurchaseData"].remark
           };
           sku.purchase_details.push(comp);
+          }
         });
         this.orderPurchaseSubmitForm.purchase_lists.push(sku);
-      });
-      this.$message({
-        message: "测试2",
-        type: "success"
       });
       this.$post(this.urls.purchases, this.orderPurchaseSubmitForm).then(
         () => {
@@ -3754,6 +3753,7 @@ export default {
             type: "success"
           });
           this.orderPurchaseMask = false;
+          this.orderPurchaseSubmitForm=[];
           this.refresh();
         },
         err => {
@@ -3802,6 +3802,29 @@ export default {
         order_transMStart: "",
         order_order_transMEndmark: ""
       };
+    },
+    isEmpty(v) {
+      switch (typeof v) {
+        case "undefined":
+          return true;
+        case "string":
+          if (v.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, "").length == 0)
+            return true;
+          break;
+        case "boolean":
+          if (!v) return true;
+          break;
+        case "number":
+          if (0 === v || isNaN(v)) return true;
+          break;
+        case "object":
+          if (null === v || v.length === 0) return true;
+          for (var i in v) {
+            return false;
+          }
+          return true;
+      }
+      return false;
     }
   },
   mounted() {

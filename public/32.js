@@ -7,6 +7,8 @@ webpackJsonp([32],{
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var _methods;
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -2464,6 +2466,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     },
+
+    //获取订单明细的数据
     orderDbClick: function orderDbClick(row) {
       this.activeName = "1";
       var data = row;
@@ -3443,27 +3447,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         purchase_details: []
       };
       item.productComponents.data.map(function (list) {
-        var comp = {
-          product_components_id: list.id,
-          purchase_quantity: list["proPurchaseData"].purchase_quantity,
-          shops_id: list["proPurchaseData"].shops_id,
-          suppliers_id: list["proPurchaseData"].suppliers_id,
-          purchase_cost: list["proPurchaseData"].purchase_cost,
-          warehouse_cost: list["proPurchaseData"].warehouse_cost,
-          purchase_freight: list["proPurchaseData"].purchase_freight,
-          commission: list["proPurchaseData"].commission,
-          discount: list["proPurchaseData"].discount,
-          wooden_frame_costs: list["proPurchaseData"].wooden_frame_costs,
-          arrival_time: list["proPurchaseData"].arrival_time,
-          remark: list["proPurchaseData"].remark
-        };
-        sku.purchase_details.push(comp);
+        if (typeof list["proPurchaseData"] === 'undefined') {} else {
+          var comp = {
+            product_components_id: list.id,
+            purchase_quantity: list["proPurchaseData"].purchase_quantity,
+            shops_id: list["proPurchaseData"].shops_id,
+            suppliers_id: list["proPurchaseData"].suppliers_id,
+            purchase_cost: list["proPurchaseData"].purchase_cost,
+            warehouse_cost: list["proPurchaseData"].warehouse_cost,
+            purchase_freight: list["proPurchaseData"].purchase_freight,
+            commission: list["proPurchaseData"].commission,
+            discount: list["proPurchaseData"].discount,
+            wooden_frame_costs: list["proPurchaseData"].wooden_frame_costs,
+            arrival_time: list["proPurchaseData"].arrival_time,
+            remark: list["proPurchaseData"].remark
+          };
+          sku.purchase_details.push(comp);
+        }
       });
       _this19.orderPurchaseSubmitForm.purchase_lists.push(sku);
-    });
-    this.$message({
-      message: "测试2",
-      type: "success"
     });
     this.$post(this.urls.purchases, this.orderPurchaseSubmitForm).then(function () {
       _this19.$message({
@@ -3471,6 +3473,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: "success"
       });
       _this19.orderPurchaseMask = false;
+      _this19.orderPurchaseSubmitForm = [];
       _this19.refresh();
     }, function (err) {
       if (err.response) {
@@ -3508,6 +3511,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       order_transMStart: "",
       order_order_transMEndmark: ""
     };
+  }), _defineProperty(_methods, "isEmpty", function isEmpty(v) {
+    switch (typeof v === "undefined" ? "undefined" : _typeof(v)) {
+      case "undefined":
+        return true;
+      case "string":
+        if (v.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, "").length == 0) return true;
+        break;
+      case "boolean":
+        if (!v) return true;
+        break;
+      case "number":
+        if (0 === v || isNaN(v)) return true;
+        break;
+      case "object":
+        if (null === v || v.length === 0) return true;
+        for (var i in v) {
+          return false;
+        }
+        return true;
+    }
+    return false;
   }), _methods),
   mounted: function mounted() {
     this.fetchData();
