@@ -1876,7 +1876,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       receiver_district: "",
       receiver_address: "",
       receiver_zip: ""
-    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "updateCustomerMask", false), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "addChangeOrderProIds", []), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delUrl", ""), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "changeDetails", []), _defineProperty(_ref, "changeDetailsHead", [{
+    }), _defineProperty(_ref, "halfForm", true), _defineProperty(_ref, "expenseData", []), _defineProperty(_ref, "expenseRIndex", ""), _defineProperty(_ref, "addSubData", []), _defineProperty(_ref, "patchOrderItemIds", []), _defineProperty(_ref, "patchPaymentDtlIds", []), _defineProperty(_ref, "patchData", {}), _defineProperty(_ref, "updateCustomerMask", false), _defineProperty(_ref, "updateActiveName", "0"), _defineProperty(_ref, "updateProData", []), _defineProperty(_ref, "updateReceiveInfo", {}), _defineProperty(_ref, "updateExpenseData", []), _defineProperty(_ref, "addChangeOrderProIds", []), _defineProperty(_ref, "showDel", false), _defineProperty(_ref, "delUrl", ""), _defineProperty(_ref, "delId", ""), _defineProperty(_ref, "changeDetails", []), _defineProperty(_ref, "changeDetailsHead", [{
       label: "组合商品",
       prop: "combinations",
       type: "checkbox"
@@ -3186,7 +3186,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     if (this.newOpt[4].nClick) {
       return;
     } else {
+      //清除之前两个ids数组里的熟知
+      this.patchOrderItemIds = [];
+      this.patchPaymentDtlIds = [];
+      this.patchData = {};
       var id = this.checkboxId ? this.checkboxId : this.curRowId;
+      //获取changeOrders的数据
       this.$fetch(this.urls.changeorders + "/" + id, {
         include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
       }).then(function (res) {
@@ -3194,11 +3199,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         //this.submitData = res;
         _this13.submitData = res;
         var patchId = res.orders_id;
-        var patchItemId = res.order_items_id;
-        var paymentDtlId = res.payment_details_id;
 
         var forData = _this13.submitData;
-        var patchData = {
+        _this13.patchData = {
           shops_id: forData.shops_id,
           member_nick: forData.member_nick,
           logistics_id: forData.logistics_id,
@@ -3261,7 +3264,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           res["orderItems"]["data"].map(function (item) {
             _this13.addChangeOrderProIds.push(item["combination"].id);
             item["name"] = item["combination"]["name"];
-            item["id"] = patchItemId; //这里赋值的是change_orders的itemid，应该赋值为order的item id
+            item["id"] = item.id; //这里赋值的是change_orders的itemid，应该赋值为order的item id
             item["products_id"] = item.products_id;
             item["combinations_id"] = item.combinations_id;
             item["productComp"] = item["combination"]["productComponents"]["data"];
@@ -3295,54 +3298,87 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             under_line_total_amount: item["newData"].under_line_total_amount,
             under_line_preferential: item["newData"].under_line_preferential
           };
-          patchData.order_items.push(proD);
+          _this13.patchData.order_items.push(proD);
         });
         /**将expenseData加入到submitData里*/
         _this13.expenseData.map(function (list) {
           if (list.id) {
             var expenseD = {
-              id: paymentDtlId,
+              id: list.id,
               payment: list.payment,
               payment_methods_id: list.payment_methods_id
             };
-            patchData.payment_details.push(expenseD);
+            _this13.patchData.payment_details.push(expenseD);
           } else {
             var _expenseD = {
               payment: list.payment,
               payment_methods_id: list.payment_methods_id
             };
-            patchData.payment_details.push(_expenseD);
+            _this13.patchData.payment_details.push(_expenseD);
           }
         });
-        var id = _this13.checkboxId ? _this13.checkboxId : _this13.curRowId;
-        _this13.$patch(_this13.urls.customerservicedepts + "/" + patchId, patchData).then(function () {
-          _this13.$put(_this13.urls.changeorders + "/" + id + "/auditchanges").then(function () {
-            _this13.$message({
-              message: "审核成功",
-              type: "success"
+
+        //获取原始的订单数据
+        _this13.$fetch(_this13.urls.customerservicedepts + "/" + patchId, {
+          include: "shop,logistic,freightType,distribution,distributionMethod,distributionType,takeDeliveryGoodsWay,customerType,paymentMethod,warehouses,orderItems.combination.productComponents,orderItems.product,businessPersonnel,locker,paymentDetails.paymentMethod,paymentDetails"
+        }).then(function (res) {
+          //这一步是将所有原始订单里的order items 的id都压入patchOrderItemIds这个数组
+          if (res["orderItems"]["data"].length > 0) {
+            res["orderItems"]["data"].map(function (item) {
+              _this13.patchOrderItemIds.push(item.id);
             });
-            _this13.refresh();
+          }
+          //这一步是将所有原始订单的payment detail 的id都压入patchPaymentDtlIds这个数组
+          if (res["paymentDetails"]["data"].length > 0) {
+            res["paymentDetails"]["data"].map(function (item) {
+              _this13.patchPaymentDtlIds.push(item.id);
+            });
+          }
+
+          //这两个if是用来整合patchData的相关id
+          if (_this13.patchData.order_items.length > 0) {
+            for (var i = 0; i < _this13.patchData.order_items.length; i++) {
+              _this13.patchData.order_items[i].id = _this13.patchOrderItemIds[i];
+            }
+          }
+          if (_this13.patchData.payment_details.length > 0) {
+            for (var j = 0; j < _this13.patchData.payment_details.length; j++) {
+              _this13.patchData.payment_details[j].id = _this13.patchPaymentDtlIds[j];
+            }
+          }
+          _this13.$message({
+            message: "后台修改订单数据成功！",
+            type: "success"
+          });
+          _this13.$patch(_this13.urls.customerservicedepts + "/" + patchId, _this13.patchData).then(function () {
+            _this13.$put(_this13.urls.changeorders + "/" + id + "/auditchanges").then(function () {
+              _this13.$message({
+                message: "审核成功",
+                type: "success"
+              });
+              _this13.refresh();
+            }, function (err) {
+              if (err.response) {
+                var arr = err.response.data.errors;
+                var arr1 = [];
+                for (var _i in arr) {
+                  arr1.push(arr[_i]);
+                }
+                var str = arr1.join(",");
+                _this13.$message.error(str);
+              }
+            });
           }, function (err) {
             if (err.response) {
               var arr = err.response.data.errors;
               var arr1 = [];
-              for (var i in arr) {
-                arr1.push(arr[i]);
+              for (var _i2 in arr) {
+                arr1.push(arr[_i2]);
               }
               var str = arr1.join(",");
               _this13.$message.error(str);
             }
           });
-        }, function (err) {
-          if (err.response) {
-            var arr = err.response.data.errors;
-            var arr1 = [];
-            for (var i in arr) {
-              arr1.push(arr[i]);
-            }
-            var str = arr1.join(",");
-            _this13.$message.error(str);
-          }
         });
       }, function (err) {
         if (err.response) {
