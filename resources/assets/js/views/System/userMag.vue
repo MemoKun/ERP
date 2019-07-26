@@ -2,22 +2,25 @@
   <div>
     <!--查询模块-->
     <el-table :data="userListData" fit width="1000" v-loading="loading" height="400">
-      <el-table-column type="selection" width="95" align="center" :checked="checkboxInit">
-      </el-table-column>
-      <el-table-column v-for="item in tableHead[0]" :label="item.label" align="center" :width="item.width" :key="item.prop">
+      <el-table-column type="selection" width="95" align="center" :checked="checkboxInit"></el-table-column>
+      <el-table-column
+        v-for="item in tableHead[0]"
+        :label="item.label"
+        align="center"
+        :width="item.width"
+        :key="item.prop"
+      >
         <template slot-scope="scope">
           <span v-if="item.type==='checkbox'">
             <el-checkbox v-model="scope.row[item.prop]" disabled></el-checkbox>
           </span>
           <span v-else-if="item.type=='img'">
             <el-popover placement="right" trigger="hover" popper-class="picture_detail">
-              <img :src="scope.row[item.prop]">
-              <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]">
+              <img :src="scope.row[item.prop]" />
+              <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.alt]" />
             </el-popover>
           </span>
-          <span v-else>
-            {{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}
-          </span>
+          <span v-else>{{item.inProp?scope.row[item.prop][item.inProp]:scope.row[item.prop]}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -25,23 +28,46 @@
     <el-dialog title="新增用户" :visible.sync="addUserMask">
       <div>
         <el-form :model="addUserFormVal" class="addChangeOrderForm" id="form">
-          <el-form-item v-for="(item,index) in tableHead[1]" :key="index" :label="item.label" :prop="item.prop">
+          <el-form-item
+            v-for="(item,index) in tableHead[1]"
+            :key="index"
+            :label="item.label"
+            :prop="item.prop"
+          >
             <span v-if="item.type=='text'">
               <span v-if="item.inProp">
-                <el-input v-model.trim="addUserFormVal[item.prop][item.inProp]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                <el-input
+                  v-model.trim="addUserFormVal[item.prop][item.inProp]"
+                  :placeholder="item.holder"
+                  :disabled="item.addChgAble"
+                ></el-input>
               </span>
               <span v-else>
-                <el-input v-model.trim="addUserFormVal[item.prop]" :placeholder="item.holder" :disabled="item.addChgAble"></el-input>
+                <el-input
+                  v-model.trim="addUserFormVal[item.prop]"
+                  :placeholder="item.holder"
+                  :disabled="item.addChgAble"
+                ></el-input>
               </span>
             </span>
             <span v-else-if="item.type=='textarea'">
-              <el-input type="textarea" v-model.trim="addUserFormVal[item.prop]" :placehode="item.holder"></el-input>
+              <el-input
+                type="textarea"
+                v-model.trim="addUserFormVal[item.prop]"
+                :placehode="item.holder"
+              ></el-input>
             </span>
             <span v-else-if="item.type=='checkbox'">
               <el-checkbox v-model="addUserFormVal[item.prop]" :disabled="item.chgAble"></el-checkbox>
             </span>
             <span v-else-if="item.type=='DatePicker'">
-              <el-date-picker v-model="addUserFormVal[item.prop]" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+              <el-date-picker
+                v-model="addUserFormVal[item.prop]"
+                type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                placeholder="选择日期"
+              ></el-date-picker>
             </span>
           </el-form-item>
         </el-form>
@@ -55,20 +81,12 @@
     </el-dialog>
 
     <el-dialog title="批量导入用户" :visible.sync="importUsersMask">
-      <el-button type="text">导入用户Excel</el-button>
-      <el-upload class='image-uploader' :multiple='false' :auto-upload='true' list-type='text' :show-file-list='true' :before-upload="beforeUpload" :drag='true' action='' :limit="1" :on-exceed="handleExceed" :http-request="uploadFile">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" slot="tip">一次只能上传一个文件，仅限text格式，单文件不超过1MB</div>
-      </el-upload>
-      <el-button type="primary" @click="importUsersConfirm">确定</el-button>
+      <input type="file" ref="file" @change="checkFile" />
+      <button @click="importExcel()">导入</button>
     </el-dialog>
 
     <!--页码-->
     <!--<Pagination :page-url="delBatchUrl" @handlePagChg="handlePagChg"></Pagination>-->
-
   </div>
 </template>
 <script>
@@ -104,7 +122,7 @@ export default {
       ],
       loading: false,
       checkboxInit: false,
-      userListData:[],
+      userListData: [],
 
       tableHead: [
         [
@@ -215,8 +233,12 @@ export default {
       /**新增 */
       addUserMask: false,
       addUserFormVal: {},
-      importUsersMask:false,
-      xlsxFile:""
+      importUsersMask: false,
+      xlsxFile: "",
+      files: {},
+      ex: {
+        excel: {}
+      }
     };
   },
   computed: {
@@ -267,11 +289,51 @@ export default {
       this.loading = true;
       this.fetchData();
     },
-    importUsers(){
+    checkFile(e) {
+      this.files = e.target.files || e.dataTransfer.files;
+      console.log("#", this.files); // The file is in console
+      console.log("1success");
+      if (!this.files.length) return;
+      console.log("2success");
+      this.createFile(this.files[0]); //correct
+      console.log("3success");
+    },
+    createFile(file) {
+      console.log("4success");
+      var reader = new FileReader();
+      console.log("5success");
+      var vm = this;
+      console.log("6success");
+      console.log("#", vm);
+      reader.readAsDataURL(file);
+      console.log("7success");
+      vm.ex.excel = file; // my ex.excel object contain File
+      console.log("8success");
+    },
+    importExcel: function() {
+      console.log("9success");
+      var formData = new FormData();
+      console.log("#formData", formData);
+      console.log("10success");
+      formData.append("file", this.ex.excel);
+      console.log("#this.ex.excel", this.ex.excel);
+      console.log("11success");
+      console.log("#formData", formData);
+      this.axios.post(this.urls.users+'/importexcel', formData);
+      /*this.$post(this.urls.users + "/importexcel", this.ex.excel).then(res => {
+        console.log("#", res);
+      });*/
+      console.log("12success");
+    },
+
+    /**导入用户 */
+    importUsers() {
       this.importUsersMask = true;
     },
     importUsersConfirm() {
-      this.$post(this.urls.users + "/import", this.xlsxFile);
+      this.$post(this.urls.users + "/importexcel", this.xlsxFile).then(res => {
+        console.log("#", res);
+      });
     },
     beforeUpload(file) {
       console.log("beforeUpload");
@@ -298,7 +360,7 @@ export default {
       form.append("comId", this.comId);
       console.log(JSON.stringify(form));
       // let formTwo = JSON.stringify(form)
-      this.$post(this.urls.users+"/import",form).then(res => {
+      this.$post(this.urls.users + "/import", form).then(res => {
         console.log("MediaAPI.upload");
         console.log(res);
         this.$message.info("文件：" + fileObj.name + "上传成功");

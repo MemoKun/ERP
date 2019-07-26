@@ -4323,12 +4323,11 @@ export default {
       });
     },
     excelExport() {
-      this.$fetch(this.urls.excel).then(res => {
-        this.$message({
-          message: "打印成功",
-          type: "success"
-        });
-      });
+      this.$fetch(this.urls.excel).then(
+        res=>{
+          
+          }
+        );
     },
     resets() {
       this.searchBox = {};

@@ -16,6 +16,8 @@ class ExcelController extends Controller
 {
 	public function ordersExport() 
     {
+        //return json_encode(new ordersExport);
+        ob_end_clean();//清除缓冲区,避免乱码
         return Excel::download(new OrdersExport, 'orders.xlsx');
     }
 }

@@ -1,14 +1,14 @@
 webpackJsonp([15],{
 
-/***/ 1000:
+/***/ 1003:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(12)
 /* script */
-var __vue_script__ = __webpack_require__(1182)
+var __vue_script__ = __webpack_require__(1186)
 /* template */
-var __vue_template__ = __webpack_require__(1183)
+var __vue_template__ = __webpack_require__(1187)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,11 +48,29 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 1182:
+/***/ 1186:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -245,7 +263,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       addUserMask: false,
       addUserFormVal: {},
       importUsersMask: false,
-      xlsxFile: ""
+      xlsxFile: "",
+      files: {},
+      ex: {
+        excel: {}
+      }
     };
   },
 
@@ -303,11 +325,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.loading = true;
       this.fetchData();
     },
+    checkFile: function checkFile(e) {
+      this.files = e.target.files || e.dataTransfer.files;
+      console.log("#", this.files); // The file is in console
+      console.log("1success");
+      if (!this.files.length) return;
+      console.log("2success");
+      this.createFile(this.files[0]); //correct
+      console.log("3success");
+    },
+    createFile: function createFile(file) {
+      console.log("4success");
+      var reader = new FileReader();
+      console.log("5success");
+      var vm = this;
+      console.log("6success");
+      console.log("#", vm);
+      reader.readAsDataURL(file);
+      console.log("7success");
+      vm.ex.excel = file; // my ex.excel object contain File
+      console.log("8success");
+    },
+
+    importExcel: function importExcel() {
+      console.log("9success");
+      var formData = new FormData();
+      console.log("#formData", formData);
+      console.log("10success");
+      formData.append("file", this.ex.excel);
+      console.log("#this.ex.excel", this.ex.excel);
+      console.log("11success");
+      console.log("#formData", formData);
+      this.axios.post(this.urls.users + '/importexcel', formData);
+      /*this.$post(this.urls.users + "/importexcel", this.ex.excel).then(res => {
+        console.log("#", res);
+      });*/
+      console.log("12success");
+    },
+
+    /**导入用户 */
     importUsers: function importUsers() {
       this.importUsersMask = true;
     },
     importUsersConfirm: function importUsersConfirm() {
-      this.$post(this.urls.users + "/import", this.xlsxFile);
+      this.$post(this.urls.users + "/importexcel", this.xlsxFile).then(function (res) {
+        console.log("#", res);
+      });
     },
     beforeUpload: function beforeUpload(file) {
       console.log("beforeUpload");
@@ -359,7 +422,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 1183:
+/***/ 1187:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -457,13 +520,11 @@ var render = function() {
                             )
                           : _c("span", [
                               _vm._v(
-                                "\n          " +
-                                  _vm._s(
-                                    item.inProp
-                                      ? scope.row[item.prop][item.inProp]
-                                      : scope.row[item.prop]
-                                  ) +
-                                  "\n        "
+                                _vm._s(
+                                  item.inProp
+                                    ? scope.row[item.prop][item.inProp]
+                                    : scope.row[item.prop]
+                                )
                               )
                             ])
                       ]
@@ -681,57 +742,24 @@ var render = function() {
           }
         },
         [
-          _c("el-button", { attrs: { type: "text" } }, [
-            _vm._v("导入用户Excel")
-          ]),
+          _c("input", {
+            ref: "file",
+            attrs: { type: "file" },
+            on: { change: _vm.checkFile }
+          }),
           _vm._v(" "),
           _c(
-            "el-upload",
+            "button",
             {
-              staticClass: "image-uploader",
-              attrs: {
-                multiple: false,
-                "auto-upload": true,
-                "list-type": "text",
-                "show-file-list": true,
-                "before-upload": _vm.beforeUpload,
-                drag: true,
-                action: "",
-                limit: 1,
-                "on-exceed": _vm.handleExceed,
-                "http-request": _vm.uploadFile
+              on: {
+                click: function($event) {
+                  return _vm.importExcel()
+                }
               }
             },
-            [
-              _c("i", { staticClass: "el-icon-upload" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "el-upload__text" }, [
-                _vm._v("将文件拖到此处，或\n        "),
-                _c("em", [_vm._v("点击上传")])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "el-upload__tip",
-                  attrs: { slot: "tip" },
-                  slot: "tip"
-                },
-                [_vm._v("一次只能上传一个文件，仅限text格式，单文件不超过1MB")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            {
-              attrs: { type: "primary" },
-              on: { click: _vm.importUsersConfirm }
-            },
-            [_vm._v("确定")]
+            [_vm._v("导入")]
           )
-        ],
-        1
+        ]
       )
     ],
     1

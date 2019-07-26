@@ -30,7 +30,14 @@ import './icons/index.js'
 import './iconfont/iconfont.css'
 
 import qs from 'qs'
+
 Vue.prototype.$qs = qs
+
+import Vue from 'vue'
+import axios from 'axios'
+
+Vue.prototype.axios = axios
+
 
 Vue.use(Vuex,egrid)
 Vue.use(ElementUi, {

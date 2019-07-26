@@ -1775,6 +1775,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
         //获取权限
         $api->get('permissions', 'PermissionsController@index')->middleware('permission:角色管理')
             ->name('api.permissions.index');
+            
         //上传图片
         $api->post('uploadimages', 'UploadImagesController@store')
             ->name('api.uploadimages.store');
@@ -1791,8 +1792,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => 
             ->name('api.users.setroles');
         $api->get('users/{users}/getrolesassociateusers', 'UsersController@getRolesAssociateUsers')->middleware('permission:用户管理')
             ->name('api.users.getrolesassociateusers');
-        $api->post('users/import', 'UsersController@import')->middleware('permission:用户管理')
-            ->name('api.users.import');
+        $api->post('users/importexcel', 'UsersController@importExcel')->middleware('permission:用户管理')
+            ->name('api.users.importexcel');
     });
     $api->group([
         'middleware' => 'api.throttle',

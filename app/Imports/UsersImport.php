@@ -16,9 +16,17 @@ class UsersImport implements ToModel
     public function model(array $row)
     {
         return new User([
-            'name'     => $row[0],
-            'email'    => $row[1], 
-            'password' => Hash::make($row[2]),
+            'username'=> $row[0],
+            'password'=>$row[1],
+            'work_id'=>$row[2],
+            'real_name'=>$row[3],
+            'id_no'=>$row[4],
+            'phone'=>$row[5],
+            'email'=>$row[6],
+            'home_address'=>$row[7],
+            'remark'=>$row[8],
+            'remeber_token'=>$row[9],
+            'status'=>$row[10],
         ]);
     }
 }

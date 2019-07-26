@@ -102,10 +102,15 @@ class UsersController extends Controller
         return $this->response->created();
     }
 
-    public function import(Request $request)
+    /*public function import(Request $request)
     {
         Excel::import(new UsersImport, $request->file('form'));
         
         return redirect('/')->with('success', 'All good!');
+    }*/
+    public function importExcel(Request $request)
+    {
+        Excel::import(new UsersImport, $request->file('file'));
+        return back();
     }
 }
