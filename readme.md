@@ -33,6 +33,9 @@
 | barryvdh/laravel-debugbar | 页面调试工具栏 (对 phpdebugbar 的封装) | 开发环境中的 DEBUG |
 | viacreative/sudo-su | 用户切换 | 开发环境中快速切换登录账号 |
 | gregwar/captcha | 图片验证码 | api开发专用图片验证码 |
+| xethron/migrations-generator": "^2.0 | 命令行生成migration文件 | 命令行生成migration文件 |
+| "maatwebsite/excel": "^3.1" | Excel表格导入导出 | Excel表格导入导出 |
+| "spatie/laravel-permission": "^2.37" | 基于RBAC的后端权限 | 基于RBAC的后端权限 |
 *  `liyu/dingo-serializer-switch`: 单一资源输出去掉data包裹,
    在路由中添加 `'middleware' => ['serializer:array', 'bindings']`中间件：
    api输出结构：
@@ -65,8 +68,59 @@
     ]
 }
 ```
+*  关于laravel-permission
+```
+这个包允许你在数据库中管理用户的权限和角色。
 
- 
+当你安装了扩展包之后你就可以这样做：
+
+// 给用户添加一个权限
+$user->givePermissionTo('edit articles');
+
+// 通过角色添加权限。
+$user->assignRole('writer');
+
+// 给角色添加一个权限
+$role->givePermissionTo('edit articles');
+如果你给单个用户添加了多个守卫(guard)，扩展包也可以处理的很好，每一个分配给用户的守卫都有它自己的权限和角色，阅读 using multiple guards章节可以看见更多的信息。
+
+因为所有的权限将注册在Laravel's gate上，所以你可以调用 Laravel 默认的 'can' 方法来测试用户是否有权限：
+
+$user->can('edit articles');
+
+使用：
+相关
+引入：
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+相关模块：
+UsersController.php
+RolesController.php
+
+参考网址：https://segmentfault.com/a/1190000020316285?utm_source=tag-newest
+
+```
+*  关于laravel-excel
+```
+Laravel Excel功能：
+
+轻松将集合导出到Excel。
+
+使用自动分块导出查询以获得更好的性能。
+
+队列导出以获得更好的性能。
+
+轻松将Blade视图导出到Excel。
+
+轻松导入收藏。
+
+分块读取excel文件。
+
+批量处理import。
+参考网址：https://docs.laravel-excel.com/3.1/getting-started/installation.html
+```
 
 ### API说明
  
