@@ -19,7 +19,6 @@
 * 项目根目录执行命令 `composer update`安装laravel扩展包依赖,
   `viacreative/sudo-su`需要单独安装：`composer require viacreative/sudo-su`
 * 项目根目录执行命令 `npm install` (windows 及 虚拟机用户请使用`npm install --no-bin-links`)安装前端扩展;
-  具体前端工作流参照：http://note.youdao.com/noteshare?id=b1a0bd5e5858a82796ab02285d38e12f
 * 生成密钥 `php artisanpmn key:generate`
 * 生成 JWT 密钥 `php artisan jwt:secret`
 
